@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Image;
 import system.*;
 
 /**
- * 主角
+ * 主角 cokey
  */
 public final class Player extends Character {
     
