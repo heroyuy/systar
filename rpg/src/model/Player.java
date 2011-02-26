@@ -8,7 +8,7 @@ import system.*;
  * 主角 测试用
  */
 public final class Player extends Character {
-
+    
     private ScriptEngine se = ScriptEngine.getInstance();
     public static final int UP = 0;// 面向上
     public static final int DOWN = 1;// 面向下
