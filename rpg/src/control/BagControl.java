@@ -67,7 +67,7 @@ public class BagControl implements Control {
                 gd.bag_curIndex = gd.bag_topIndex = 0;
                 break;
             case Const.Key.KEY_LS:
-                if (gd.player.bag.get(gd.bag_tabIndex == 0 ? Bag.ITEM : Bag.EQUIP, gd.player.bag.getList(gd.bag_tabIndex == 0 ? Bag.ITEM : Bag.EQUIP)[gd.bag_curIndex]) != null) {
+                if (gd.player.bag.getList(gd.bag_tabIndex == 0 ? Bag.ITEM : Bag.EQUIP).length > 0 && gd.player.bag.get(gd.bag_tabIndex == 0 ? Bag.ITEM : Bag.EQUIP, gd.player.bag.getList(gd.bag_tabIndex == 0 ? Bag.ITEM : Bag.EQUIP)[gd.bag_curIndex]) != null) {
                     gd.bag_pageIndex = BagView.PAGE_CONFIRM;
                 }
                 break;
