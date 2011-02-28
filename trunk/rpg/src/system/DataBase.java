@@ -35,7 +35,7 @@ public class DataBase {
         try {
             dos.writeInt(gd.curMap.index);//当前地图
             dos.writeInt(gd.player.lev);//角色等级
-            dos.writeInt(gd.player.face);
+            dos.writeByte(gd.player.face);
             dos.writeInt(gd.player.row);
             dos.writeInt(gd.player.col);
             dos.writeInt(gd.player.money);
@@ -146,9 +146,10 @@ public class DataBase {
             int lev = dis.readInt();
             System.out.println("lev:" + lev);
             gd.player.lev = lev;
-            int face = dis.readInt();
+            byte face = dis.readByte();
             System.out.println("face:" + face);
             gd.player.face = face;
+            gd.player.changeToward(face);
             int row = dis.readInt();
             System.out.println("row:" + row);
             gd.player.row = row;
