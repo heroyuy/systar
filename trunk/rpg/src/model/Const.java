@@ -120,7 +120,7 @@ public final class Const {
          */
         public static final String[] MENU_MENU = {"开始游戏", "继续游戏", "游戏设置", "游戏帮助", "关于游戏", "退出游戏"};
         public static final String[] MENU_MAP = {"我的状态", "我的背包", "我的装备", "我的技能", "储存进度", "回主菜单"};
-        public static final String[] KINDS = {"头盔", "饰品", "铠甲", "武器", "盾牌", "战靴"};
+        public static final String[] KINDS = {"头盔", "饰品", "武器", "盾牌", "铠甲", "战靴"};
     }
 
     /**
