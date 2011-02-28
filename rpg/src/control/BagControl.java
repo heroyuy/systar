@@ -85,6 +85,7 @@ public class BagControl implements Control {
                 if (gd.bag_tabIndex == 0) {
                     //使用物品
                     //使用物品的代码写在这里
+                    gd.player.useItem(gd.player.bag.getList(Bag.ITEM)[gd.bag_curIndex]);
                 } else {
                     //穿装备
                     gd.player.takeOnEquip(gd.player.bag.getList(Bag.EQUIP)[gd.bag_curIndex]);
@@ -108,4 +109,5 @@ public class BagControl implements Control {
                 break;
         }
     }
+
 }

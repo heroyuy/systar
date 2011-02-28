@@ -223,8 +223,14 @@ public class BattleControl implements Control, Runnable {
             if (gd.enemy[i] == null) {
                 continue;
             }
-            AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-                gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
+            try {
+                AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
+                    gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
+            } catch (Exception e) {
+                System.out.println("攻击动画播放异常");
+//                e.printStackTrace();
+            }
+
             gd.enemy[i].changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
         }
 
@@ -257,8 +263,14 @@ public class BattleControl implements Control, Runnable {
 
     private void heroMagicSingleAid() {
         gd.player.changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
-        AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-            gd.player.heroBattX + 10, gd.player.heroBattY);
+        try {
+            AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
+                gd.player.heroBattX + 10, gd.player.heroBattY);
+        } catch (Exception e) {
+            System.out.println("加血动画播放异常");
+//            e.printStackTrace();
+        }
+
         gd.player.sp -= gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).sp;
         gd.isChangeHp = true;
         gd.upDecreaseHP = 0;

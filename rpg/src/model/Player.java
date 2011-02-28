@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Image;
 import system.*;
 
 /**
- * 主角
+ * 主角 cokey2
  */
 public final class Player extends Character {
 
@@ -74,13 +74,13 @@ public final class Player extends Character {
     //      初始化测试
 
     public void init() {
-        bag.add(Bag.SKILL, 0, 1);
+//        bag.add(Bag.SKILL, 0, 1);
 //        bag.add(Bag.SKILL, 1, 1);
 //        bag.add(Bag.SKILL, 2, 1);
-        bag.add(Bag.ITEM, 0, 5);
+//        bag.add(Bag.ITEM, 0, 5);
 //        bag.add(Bag.ITEM, 1, 2);
 //        bag.add(Bag.ITEM, 2, 1);
-        bag.add(Bag.EQUIP, 0, 1);
+//        bag.add(Bag.EQUIP, 0, 1);
 //        bag.add(Bag.EQUIP, 1, 1);
 //        addEquip(0);
         updateProperties();
@@ -95,6 +95,34 @@ public final class Player extends Character {
         if (exp >= this.levList[lev]) {
             levelUp();
             checkLevelUp();//递归
+        }
+    }
+
+    public void useItem(int index) {
+
+        if (bag.getList(Bag.ITEM).length > 0) {
+            Item item = gd.gameObjectManager.getItem(index);
+            if (item.kind == Item.ITEM_ASSIST) {//若物品种类为任务物品，则无法食用
+                stre += item.stre;//增加/减少力量
+                agil += item.agil;//增加/减少敏捷
+                inte += item.inte;//增加/减少智力
+                hp += item.hp;//增加/减少血量
+                sp += item.sp;//增加/减少魔法值
+                maxHp += item.maxHp;//增加/减少最大血量
+                maxSp += item.maxSp;//增加/减少最大魔法值
+                lev += item.lev;//增加等级
+                atk += item.atk;//增加/减少攻击
+                def += item.def;//增加/减少防御
+                flee += item.flee;//增加/减少闪避
+                exp += item.exp;//增加经验值
+                if (hp > maxHp) {
+                    hp = maxHp;
+                }
+                if (sp > maxSp) {
+                    sp = maxSp;
+                }
+                bag.del(Bag.ITEM, index, 1);
+            }
         }
     }
 

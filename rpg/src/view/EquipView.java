@@ -44,6 +44,7 @@ public class EquipView extends BaseView {
     }
 
     public void release() {
+        gd.bag_curIndex = 0;//回0
     }
 
     private void paint_Main(Graphics g) {
