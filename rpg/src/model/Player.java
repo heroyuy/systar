@@ -74,13 +74,13 @@ public final class Player extends Character {
     //      初始化测试
 
     public void init() {
-//        bag.add(Bag.SKILL, 0, 1);
+        bag.add(Bag.SKILL, 0, 1);
 //        bag.add(Bag.SKILL, 1, 1);
 //        bag.add(Bag.SKILL, 2, 1);
-//        bag.add(Bag.ITEM, 0, 5);
+        bag.add(Bag.ITEM, 0, 5);
 //        bag.add(Bag.ITEM, 1, 2);
 //        bag.add(Bag.ITEM, 2, 1);
-//        bag.add(Bag.EQUIP, 0, 1);
+        bag.add(Bag.EQUIP, 0, 1);
 //        bag.add(Bag.EQUIP, 1, 1);
 //        addEquip(0);
         updateProperties();
