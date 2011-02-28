@@ -51,11 +51,11 @@ public class EquipView extends BaseView {
         Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_LIGHT);
 
         String[] items = {Const.Str.KINDS[0] + ": " + ((gd.player.equipHelm == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipHelm).name),
-            Const.Str.KINDS[1] + ": " + ((gd.player.equipArmour == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipArmour).name),
+            Const.Str.KINDS[4] + ": " + ((gd.player.equipArmour == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipArmour).name),
             Const.Str.KINDS[2] + ": " + ((gd.player.equipWeapon == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipWeapon).name),
             Const.Str.KINDS[3] + ": " + ((gd.player.equipShield == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipShield).name),
-            Const.Str.KINDS[4] + ": " + ((gd.player.equipBoots == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipBoots).name),
-            Const.Str.KINDS[5] + ": " + ((gd.player.equipJewelry == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipJewelry).name)};
+            Const.Str.KINDS[5] + ": " + ((gd.player.equipBoots == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipBoots).name),
+            Const.Str.KINDS[1] + ": " + ((gd.player.equipJewelry == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipJewelry).name)};
         Painter.drawTable(g, 22, 40, 175, 30, 6, 10, items, 0, 0, gd.equip_selectIndex, Const.Anchor.LV, Painter.NODIALOG, Painter.CELL_DEEP);
 
     }

@@ -41,9 +41,9 @@ public abstract class BaseItem {
      */
     public static final byte EQUIP_HELM = 0;
     /**
-     * 铠甲
+     * 饰品
      */
-    public static final byte EQUIP_ARMOUR = 4;
+    public static final byte EQUIP_JEWELRY = 1;
     /**
      * 武器
      */
@@ -53,18 +53,18 @@ public abstract class BaseItem {
      */
     public static final byte EQUIP_SHIELD = 3;
     /**
+     * 铠甲
+     */
+    public static final byte EQUIP_ARMOUR = 4;
+    /**
      * 战靴
      */
     public static final byte EQUIP_BOOTS = 5;
-    /**
-     * 饰品
-     */
-    public static final byte EQUIP_JEWELRY = 1;
     public int index;//编号
     public String name;//名称
     public String intro;//介绍
     public Image icon;//图标
-    public int kind ;//种类
+    public int kind;//种类
     public int num;
     public int price;//购买价格
 }

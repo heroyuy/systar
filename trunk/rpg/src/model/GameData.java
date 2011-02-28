@@ -146,7 +146,8 @@ public class GameData {
     public void buildItems() {
         items = new String[gd.player.bag.getList(Bag.ITEM).length];
         for (int i = 0; i < items.length; i++) {
-            items[i] = gd.player.bag.get(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]).name;
+            Item tempItem=(Item) gd.player.bag.get(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]);
+            items[i] = tempItem.name+ "  数量：" + tempItem.num;
         }
 
         equips = new String[gd.player.bag.getList(Bag.EQUIP).length];
