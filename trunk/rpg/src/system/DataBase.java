@@ -40,6 +40,17 @@ public class DataBase {
             dos.writeInt(gd.player.col);
             dos.writeInt(gd.player.money);
             dos.writeInt(gd.player.exp);
+
+            dos.writeInt(gd.player.agil);
+            dos.writeInt(gd.player.atk);
+            dos.writeInt(gd.player.def);
+            dos.writeInt(gd.player.flee);
+            dos.writeInt(gd.player.inte);
+            dos.writeInt(gd.player.stre);
+            dos.writeInt(gd.player.maxHp);
+            dos.writeInt(gd.player.maxSp);
+//            dos.writeInt(gd.player.exp);
+//            dos.writeInt(gd.player.exp);
             dos.writeInt(gd.player.equipArmour);
             dos.writeInt(gd.player.equipBoots);
             dos.writeInt(gd.player.equipHelm);
@@ -160,6 +171,16 @@ public class DataBase {
             System.out.println("money:" + gd.player.money);
             gd.player.exp = dis.readInt();
             System.out.println("exp:" + gd.player.exp);
+
+            gd.player.agil = dis.readInt();
+            gd.player.atk = dis.readInt();
+            gd.player.def = dis.readInt();
+            gd.player.flee = dis.readInt();
+            gd.player.inte = dis.readInt();
+            gd.player.stre = dis.readInt();
+            gd.player.maxHp = dis.readInt();
+            gd.player.maxSp = dis.readInt();
+
             gd.player.equipArmour = dis.readInt();
             System.out.println("equipArmour:" + gd.player.equipArmour);
             gd.player.equipBoots = dis.readInt();
@@ -185,7 +206,7 @@ public class DataBase {
                 gd.player.bag.add(Bag.SKILL, dis.readInt(), dis.readInt());
             }
             gd.player.setLocation();
-            gd.player.init();
+//            gd.player.updateState();
             gd.player.hp = dis.readInt();
             System.out.println("hp:" + gd.player.hp);
             gd.player.sp = dis.readInt();

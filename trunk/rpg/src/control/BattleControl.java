@@ -194,8 +194,14 @@ public class BattleControl implements Control, Runnable {
     private void heroMagicSingleAttack() {
 
         gd.enemy[gd.Select_Magic_Eny].changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
+
+//        try {
         AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
             gd.enemy[gd.Select_Magic_Eny].BattX + gd.enemy[gd.Select_Magic_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Magic_Eny].BattY);
+//        } catch (Exception e) {
+//            System.out.println("攻击动画播放异常");
+////                e.printStackTrace();
+//        }
         gd.player.sp -= gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).sp;
         gd.isChangeHp = true;
         gd.upDecreaseHP = 0;
@@ -223,13 +229,13 @@ public class BattleControl implements Control, Runnable {
             if (gd.enemy[i] == null) {
                 continue;
             }
-            try {
-                AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-                    gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
-            } catch (Exception e) {
-                System.out.println("攻击动画播放异常");
-//                e.printStackTrace();
-            }
+//            try {
+            AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
+                gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
+//            } catch (Exception e) {
+//                System.out.println("攻击动画播放异常");
+////                e.printStackTrace();
+//            }
 
             gd.enemy[i].changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
         }
@@ -263,13 +269,13 @@ public class BattleControl implements Control, Runnable {
 
     private void heroMagicSingleAid() {
         gd.player.changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
-        try {
-            AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-                gd.player.heroBattX + 10, gd.player.heroBattY);
-        } catch (Exception e) {
-            System.out.println("加血动画播放异常");
-//            e.printStackTrace();
-        }
+//        try {
+        AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
+            gd.player.heroBattX + 10, gd.player.heroBattY);
+//        } catch (Exception e) {
+//            System.out.println("加血动画播放异常");
+////            e.printStackTrace();
+//        }
 
         gd.player.sp -= gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).sp;
         gd.isChangeHp = true;
@@ -489,7 +495,7 @@ public class BattleControl implements Control, Runnable {
             return;
         }
 //        System.out.println("skillname " + gd.gameObjectManager.getSkill(gd.enemy[id].skillList[temp]).name);
-//        System.out.println("aniIndex " + gd.gameObjectManager.getSkill(gd.player.skillList[temp]).aniIndex);
+//        System.out.println("aniIndex " + gd.gameObjectMana  ger.getSkill(gd.player.skillList[temp]).aniIndex);
         AnimationPlayer.getInstance().playAnimation(
             gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.enemy[id].skillList[temp]).aniIndex),
             gd.player.heroBattX + 10, gd.player.heroBattY);
@@ -536,6 +542,9 @@ public class BattleControl implements Control, Runnable {
             System.out.println("miss");
         } else {
             gd.player.changeHp = gd.enemy[id].atk - gd.player.def;
+            if (gd.player.changeHp <= 0) {
+                gd.player.changeHp = 1;
+            }
             if (isDef) {
                 //防御状态下伤害减半
                 gd.player.changeHp = gd.player.changeHp / 2;//伤害减半
