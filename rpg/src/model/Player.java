@@ -175,7 +175,7 @@ public final class Player extends Character {
                     break;
             }
         }
-
+        updateState();
     }
 
     //将英雄身上的装备脱下放到装备背包
@@ -219,7 +219,7 @@ public final class Player extends Character {
                 break;
         }
 
-
+        updateState();
     }
 
     /*
@@ -236,15 +236,6 @@ public final class Player extends Character {
      */
     //属性更新
     public void updateProperties() {
-
-        stre = gd.gameObjectManager.getPlayer().stre + streByLev * lev + 1;//初始值为
-        agil = gd.gameObjectManager.getPlayer().agil + agilByLev * lev + 1;//初始值为
-        inte = gd.gameObjectManager.getPlayer().inte + inteByLev * lev + 1;//初始值为
-        maxHp = gd.gameObjectManager.getPlayer().hp + stre * 20;//初始值为
-        maxSp = gd.gameObjectManager.getPlayer().sp + inte * 15;//初始值为
-        atk = stre * 3 + gd.gameObjectManager.getPlayer().atk;//初始值为
-        def = agil / 3 + gd.gameObjectManager.getPlayer().def;//初始值为
-        flee = agil / 10 + gd.gameObjectManager.getPlayer().flee;//初始值为
         updateState();
         hp = maxHp;
         sp = maxSp;
@@ -281,7 +272,15 @@ public final class Player extends Character {
     }
     //装备影响属性函数
 
-    private void updateState() {
+    public void updateState() {
+        stre = gd.gameObjectManager.getPlayer().stre + streByLev * lev + 1;//初始值为
+        agil = gd.gameObjectManager.getPlayer().agil + agilByLev * lev + 1;//初始值为
+        inte = gd.gameObjectManager.getPlayer().inte + inteByLev * lev + 1;//初始值为
+        maxHp = gd.gameObjectManager.getPlayer().hp + stre * 20;//初始值为
+        maxSp = gd.gameObjectManager.getPlayer().sp + inte * 15;//初始值为
+        atk = stre * 3 + gd.gameObjectManager.getPlayer().atk;//初始值为
+        def = agil / 3 + gd.gameObjectManager.getPlayer().def;//初始值为
+        flee = agil / 10 + gd.gameObjectManager.getPlayer().flee;//初始值为
         int equipList[] = new int[6];
         equipList[0] = equipHelm;
         equipList[1] = equipArmour;
