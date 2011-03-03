@@ -57,7 +57,7 @@ public class MapView extends BaseView {
                 break;
             case PAGE_WAIT:
                 Painter.drawString(g, "等待" + (gd.waitTime - gd.waitIndex) + "秒", 5, gd.screenHeight - g.getFont().getHeight(),
-                        0xffffff);
+                    0xffffff);
                 break;
 
         }
@@ -72,30 +72,34 @@ public class MapView extends BaseView {
 
     private void drawDialog(Graphics g) {
         Painter.fillRoundRect(g, 0, gd.screenHeight - g.getFont().getHeight() * 3,
-                gd.screenWidth, g.getFont().getHeight() * 3, 10, 0xaaaaaa);
+            gd.screenWidth, g.getFont().getHeight() * 3, 10, 0xaaaaaa);
 
         g.setFont(Const.Font.FONTSMALL_PLAIN);
         // 对话人
         Painter.drawString(g, gd.dialog_name + ":", 0, gd.screenHeight
-                - g.getFont().getHeight() * 3, 0xffffff);
+            - g.getFont().getHeight() * 3, 0xffffff);
         // 两行对话内容
         Painter.drawString(g, gd.dialog_content[gd.dialog_index], 0,
-                gd.screenHeight - g.getFont().getHeight() * 2, 0xffffff);
+            gd.screenHeight - g.getFont().getHeight() * 2, 0xffffff);
         if (gd.dialog_index + 1 < gd.dialog_content.length) {
             Painter.drawString(g, gd.dialog_content[gd.dialog_index + 1], 0,
-                    gd.screenHeight - g.getFont().getHeight(), 0xffffff);
+                gd.screenHeight - g.getFont().getHeight(), 0xffffff);
         }
     }
 
     private void drawMap(Graphics g) {
+
+//        System.out.println("w:" + gd.curMap.image.getWidth());
+//        System.out.println("h:" + gd.curMap.image.getHeight());
+
         g.drawRegion(gd.curMap.image, gd.curMap.x, gd.curMap.y,
-                gd.screenWidth, gd.screenHeight, 0, 0, 0, Graphics.TOP
-                | Graphics.LEFT);
+            gd.screenWidth, gd.screenHeight, 0, 0, 0, Graphics.TOP
+            | Graphics.LEFT);
     }
 
     private void drawPlayer(Graphics g) {
         g.drawImage(gd.player.getCurCharImg(), gd.player.x - gd.curMap.x, gd.player.y - gd.curMap.y,
-                Graphics.TOP | Graphics.LEFT);
+            Graphics.TOP | Graphics.LEFT);
     }
 
     private void drawMenu(Graphics g) {
