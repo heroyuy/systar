@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Vector;
 import javax.microedition.lcdui.Font;
 import model.manager.GameObjectManager;
 
@@ -78,16 +79,16 @@ public class GameData {
     /************************************************/
     //战斗界面控制变量 11.2
     public int select = 0,//主界面选择标记
-        Select_Eny = 0,//普通攻击敌人选择标记
-        Select_Good = 0,//物品选择标记
-        Top_Good = 0,//物品选择标记
-        Select_Magic = 0,//技能选择标记
-        Top_Magic = 0;//物品选择标记
+            Select_Eny = 0,//普通攻击敌人选择标记
+            Select_Good = 0,//物品选择标记
+            Top_Good = 0,//物品选择标记
+            Select_Magic = 0,//技能选择标记
+            Top_Magic = 0;//物品选择标记
 //            Select_Equip = 0;//装备选择标记
     public int Select_Magic_Eny = 0,//技能选择敌人界面标记
-        Select_Magic_Main = 0;//技能选择主界面标记
+            Select_Magic_Main = 0;//技能选择主界面标记
     public int Select_Item_Eny = 0,//物品选择敌人界面标记
-        Select_Item_Main = 0;//物品选择主界面标记
+            Select_Item_Main = 0;//物品选择主界面标记
     public int attackType = 0; //攻击类型
 //    public int enemySum = 0;//敌人总数
     public Enemy[] enemy = new Enemy[4];//最多4个敌人
@@ -115,9 +116,9 @@ public class GameData {
     public int menuIndex = -1;
     public int itemMainSelect = 0;
     public int Item_Select_Good = 0,//物品选择标记
-        Item_Top_Good = 0,//物品选择标记
-        Item_Select_Equip = 0,//技能选择标记
-        Item_Top_Equip = 0;//物品选择标记
+            Item_Top_Good = 0,//物品选择标记
+            Item_Select_Equip = 0,//技能选择标记
+            Item_Top_Equip = 0;//物品选择标记
     public int equipSelect = 0;
     public int skillSelect = 0;
     public int Skill_Top_Magic = 0;
@@ -128,11 +129,31 @@ public class GameData {
         this.dialog_name = name;
         int num = GameData.getGameData().screenWidth / font.stringWidth("好");//每行能显示的字数
         int row = content.length() / num + 1;//要显示的行数
-        dialog_content = new String[row];
-        for (int i = 0; i < row - 1; i++) {
-            dialog_content[i] = content.substring(i * num, (i + 1) * num);
+        Vector v = new Vector();
+        int p = 0, q = 0;
+        Font f = Const.Font.FONTSMALL_PLAIN;
+        String temp = null;
+        while (p < content.length()) {
+            if (q == content.length()) {
+                v.addElement(content.substring(p, q));
+                p = q;
+            }else{
+                temp=content.substring(p, q);
+                if(f.stringWidth(temp)>screenWidth-20){
+                    v.addElement(content.substring(p, q-1));
+                    p=q-1;
+                }else{
+                    q++;
+                }
+            }
+
         }
-        dialog_content[row - 1] = content.substring((row - 1) * num, content.length());
+        dialog_content = new String[v.size()];
+        for (int i = 0; i < dialog_content.length; i++) {
+            dialog_content[i]=(String) v.elementAt(i);
+        }
+        v.removeAllElements();
+        v=null;
     }
 
     private GameData() {
@@ -146,8 +167,8 @@ public class GameData {
     public void buildItems() {
         items = new String[gd.player.bag.getList(Bag.ITEM).length];
         for (int i = 0; i < items.length; i++) {
-            Item tempItem=(Item) gd.player.bag.get(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]);
-            items[i] = tempItem.name+ "  数量：" + tempItem.num;
+            Item tempItem = (Item) gd.player.bag.get(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]);
+            items[i] = tempItem.name + "  数量：" + tempItem.num;
         }
 
         equips = new String[gd.player.bag.getList(Bag.EQUIP).length];

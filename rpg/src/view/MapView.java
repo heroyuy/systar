@@ -1,7 +1,6 @@
 package view;
 
 import model.GameData;
-import control.MapControl;
 import engine.BaseView;
 import engine.GameEngine;
 import game.RpgGame;
@@ -9,8 +8,6 @@ import game.RpgGame;
 import javax.microedition.lcdui.*;
 //import engine.model.*;
 import system.Painter;
-import java.io.IOException;
-import model.Const.Anchor;
 import control.MapControl;
 import model.Const;
 
@@ -71,19 +68,18 @@ public class MapView extends BaseView {
     }
 
     private void drawDialog(Graphics g) {
-        Painter.fillRoundRect(g, 0, gd.screenHeight - g.getFont().getHeight() * 3,
-            gd.screenWidth, g.getFont().getHeight() * 3, 10, 0xaaaaaa);
-
+        Painter.drawDialog(g, 0, gd.screenHeight - g.getFont().getHeight() * 3-20,
+                gd.screenWidth, g.getFont().getHeight() * 3+20, Painter.DIALOG_DEEP);
         g.setFont(Const.Font.FONTSMALL_PLAIN);
         // 对话人
-        Painter.drawString(g, gd.dialog_name + ":", 0, gd.screenHeight
-            - g.getFont().getHeight() * 3, 0xffffff);
+        Painter.drawString(g, gd.dialog_name + ":", 10, gd.screenHeight
+                - g.getFont().getHeight() * 3-10, 0xffffff);
         // 两行对话内容
-        Painter.drawString(g, gd.dialog_content[gd.dialog_index], 0,
-            gd.screenHeight - g.getFont().getHeight() * 2, 0xffffff);
+        Painter.drawString(g, gd.dialog_content[gd.dialog_index], 10,
+                gd.screenHeight - g.getFont().getHeight() * 2-10, 0xffffff);
         if (gd.dialog_index + 1 < gd.dialog_content.length) {
-            Painter.drawString(g, gd.dialog_content[gd.dialog_index + 1], 0,
-                gd.screenHeight - g.getFont().getHeight(), 0xffffff);
+            Painter.drawString(g, gd.dialog_content[gd.dialog_index + 1], 10,
+                    gd.screenHeight - g.getFont().getHeight()-10, 0xffffff);
         }
     }
 
