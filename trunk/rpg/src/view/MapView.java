@@ -68,29 +68,29 @@ public class MapView extends BaseView {
     }
 
     private void drawDialog(Graphics g) {
-        Painter.drawDialog(g, 0, gd.screenHeight - g.getFont().getHeight() * 3-20,
-                gd.screenWidth, g.getFont().getHeight() * 3+20, Painter.DIALOG_DEEP);
+        Painter.drawDialog(g, 0, gd.screenHeight - g.getFont().getHeight() * 3 - 20,
+            gd.screenWidth, g.getFont().getHeight() * 3 + 20, Painter.DIALOG_DEEP);
         g.setFont(Const.Font.FONTSMALL_PLAIN);
         // 对话人
         Painter.drawString(g, gd.dialog_name + ":", 10, gd.screenHeight
-                - g.getFont().getHeight() * 3-10, 0xffffff);
+            - g.getFont().getHeight() * 3 - 10, 0xffffff);
         // 两行对话内容
         Painter.drawString(g, gd.dialog_content[gd.dialog_index], 10,
-                gd.screenHeight - g.getFont().getHeight() * 2-10, 0xffffff);
+            gd.screenHeight - g.getFont().getHeight() * 2 - 10, 0xffffff);
         if (gd.dialog_index + 1 < gd.dialog_content.length) {
             Painter.drawString(g, gd.dialog_content[gd.dialog_index + 1], 10,
-                    gd.screenHeight - g.getFont().getHeight()-10, 0xffffff);
+                gd.screenHeight - g.getFont().getHeight() - 10, 0xffffff);
         }
     }
 
     private void drawMap(Graphics g) {
-
-//        System.out.println("w:" + gd.curMap.image.getWidth());
-//        System.out.println("h:" + gd.curMap.image.getHeight());
-
-        g.drawRegion(gd.curMap.image, gd.curMap.x, gd.curMap.y,
-            gd.screenWidth, gd.screenHeight, 0, 0, 0, Graphics.TOP
-            | Graphics.LEFT);
+        g.setColor(0);
+        g.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
+//        System.out.println("x:" + gd.curMap.x);
+//        System.out.println("y:" + gd.curMap.y);
+        g.drawRegion(gd.curMap.image, gd.curMap.image.getWidth() <= gd.screenWidth ? 0 : gd.curMap.x, gd.curMap.image.getHeight() <= gd.screenHeight ? 0 : gd.curMap.y,
+            gd.screenWidth,
+            gd.screenHeight, 0, gd.curMap.image.getWidth() <= gd.screenWidth ? -gd.curMap.x : 0, gd.curMap.image.getHeight() <= gd.screenHeight ? -gd.curMap.y : 0, 0);
     }
 
     private void drawPlayer(Graphics g) {
