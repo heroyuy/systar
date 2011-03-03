@@ -99,6 +99,7 @@ public class DataHandler implements DataHandlerInterface {
 
     public void setAgil(int value) {
         gd.player.agil = value;
+        gd.player.maxHp = gd.gameObjectManager.getPlayer().hp + gd.player.stre * 20;//初始值为
     }
 
     public int getInte() {
@@ -107,6 +108,7 @@ public class DataHandler implements DataHandlerInterface {
 
     public void setInte(int value) {
         gd.player.inte = value;
+        gd.player.maxSp = gd.gameObjectManager.getPlayer().sp + gd.player.inte * 15;//初始值为
     }
 
     public int getItemNum(int index) {

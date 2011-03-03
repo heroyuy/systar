@@ -28,6 +28,7 @@ public class Map {
     public byte[][] scriptType;//脚本类型
     public Script[] script;//脚本
     public int x, y;//要绘制的地图region的x,y坐标
+    private GameData gd = GameData.getGameData();
 
     public void setImage(Image image) {
         int width = image.getWidth();
@@ -39,7 +40,8 @@ public class Map {
         System.out.println("height:" + height);
         System.out.println("maxRow:" + maxRow);
         System.out.println("maxCol:" + maxCol);
-        this.image = Image.createImage(cellWidth * colNum, cellHeight * rowNum);
+        //正在修改
+        this.image = Image.createImage(cellWidth * colNum < gd.screenWidth ? gd.screenWidth : cellWidth * colNum, cellHeight * rowNum < gd.screenHeight ? gd.screenHeight : cellHeight * rowNum);
         Graphics g = this.image.getGraphics();
         for (int i = 0; i < layerNum; i++) {
             for (int j = 0; j < rowNum; j++) {
@@ -99,7 +101,6 @@ public class Map {
             y = cellHeight * rowNum - GameData.getGameData().screenHeight;
         }
     }
-
 //    public Map initMap(int index) {
 //        Map map = new Map();
 //        try {
