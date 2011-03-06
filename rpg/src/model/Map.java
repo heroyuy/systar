@@ -41,7 +41,7 @@ public class Map {
         System.out.println("maxRow:" + maxRow);
         System.out.println("maxCol:" + maxCol);
         //正在修改
-        this.image = Image.createImage(cellWidth * colNum < gd.screenWidth ? gd.screenWidth : cellWidth * colNum, cellHeight * rowNum < gd.screenHeight ? gd.screenHeight : cellHeight * rowNum);
+        this.image = Image.createImage(cellWidth * colNum, cellHeight * rowNum);
         Graphics g = this.image.getGraphics();
         for (int i = 0; i < layerNum; i++) {
             for (int j = 0; j < rowNum; j++) {
@@ -86,6 +86,7 @@ public class Map {
     }
 
     public void resetRegion(Player player) {
+        System.out.println("Map.resetRegion");
         x = player.x - GameData.getGameData().screenWidth / 2;
         y = player.y - GameData.getGameData().screenHeight / 2;
         if (x < 0) {
@@ -99,6 +100,13 @@ public class Map {
         }
         if (y + GameData.getGameData().screenHeight > cellHeight * rowNum) {
             y = cellHeight * rowNum - GameData.getGameData().screenHeight;
+        }
+        if(image.getWidth()<=GameData.getGameData().screenWidth){
+            x=0;
+        }
+
+        if(image.getHeight()<=GameData.getGameData().screenHeight){
+            y=0;
         }
     }
 //    public Map initMap(int index) {

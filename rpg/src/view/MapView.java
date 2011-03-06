@@ -54,7 +54,7 @@ public class MapView extends BaseView {
                 break;
             case PAGE_WAIT:
                 Painter.drawString(g, "等待" + (gd.waitTime - gd.waitIndex) + "秒", 5, gd.screenHeight - g.getFont().getHeight(),
-                    0xffffff);
+                        0xffffff);
                 break;
 
         }
@@ -69,33 +69,32 @@ public class MapView extends BaseView {
 
     private void drawDialog(Graphics g) {
         Painter.drawDialog(g, 0, gd.screenHeight - g.getFont().getHeight() * 3 - 20,
-            gd.screenWidth, g.getFont().getHeight() * 3 + 20, Painter.DIALOG_DEEP);
+                gd.screenWidth, g.getFont().getHeight() * 3 + 20, Painter.DIALOG_DEEP);
         g.setFont(Const.Font.FONTSMALL_PLAIN);
         // 对话人
         Painter.drawString(g, gd.dialog_name + ":", 10, gd.screenHeight
-            - g.getFont().getHeight() * 3 - 10, 0xffffff);
+                - g.getFont().getHeight() * 3 - 10, 0xffffff);
         // 两行对话内容
         Painter.drawString(g, gd.dialog_content[gd.dialog_index], 10,
-            gd.screenHeight - g.getFont().getHeight() * 2 - 10, 0xffffff);
+                gd.screenHeight - g.getFont().getHeight() * 2 - 10, 0xffffff);
         if (gd.dialog_index + 1 < gd.dialog_content.length) {
             Painter.drawString(g, gd.dialog_content[gd.dialog_index + 1], 10,
-                gd.screenHeight - g.getFont().getHeight() - 10, 0xffffff);
+                    gd.screenHeight - g.getFont().getHeight() - 10, 0xffffff);
         }
     }
 
     private void drawMap(Graphics g) {
         g.setColor(0);
         g.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
-//        System.out.println("x:" + gd.curMap.x);
-//        System.out.println("y:" + gd.curMap.y);
-        g.drawRegion(gd.curMap.image, gd.curMap.image.getWidth() <= gd.screenWidth ? 0 : gd.curMap.x, gd.curMap.image.getHeight() <= gd.screenHeight ? 0 : gd.curMap.y,
-            gd.screenWidth,
-            gd.screenHeight, 0, gd.curMap.image.getWidth() <= gd.screenWidth ? -gd.curMap.x : 0, gd.curMap.image.getHeight() <= gd.screenHeight ? -gd.curMap.y : 0, 0);
+        System.out.println("x:" + gd.curMap.x);
+        System.out.println("y:" + gd.curMap.y);
+        g.drawRegion(gd.curMap.image, gd.curMap.x, gd.curMap.y,
+                gd.curMap.image.getWidth() < gd.screenWidth ? gd.curMap.image.getWidth() : gd.screenWidth, gd.curMap.image.getHeight() < gd.screenHeight ? gd.curMap.image.getHeight() : gd.screenHeight, 0, 0, 0, 0);
     }
 
     private void drawPlayer(Graphics g) {
         g.drawImage(gd.player.getCurCharImg(), gd.player.x - gd.curMap.x, gd.player.y - gd.curMap.y,
-            Graphics.TOP | Graphics.LEFT);
+                Graphics.TOP | Graphics.LEFT);
     }
 
     private void drawMenu(Graphics g) {

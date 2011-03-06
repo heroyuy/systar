@@ -509,6 +509,7 @@ public final class Player extends Character {
     }
 
     public void setLocation() {
+        System.out.println("Player.setLocation");
 //        this.row = row;
 //        this.col = col;
         x = col * gd.curMap.cellWidth + (gd.curMap.cellWidth - width) / 2;
