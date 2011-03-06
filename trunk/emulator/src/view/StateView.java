@@ -30,7 +30,7 @@ public class StateView extends BaseView {
         StateControl sc = new StateControl();
         setControl(sc);
         try {
-            head = EmulatorImage.createImage("/image/character/head.png");
+            head = EmulatorImage.createImage("product/image/character/head.png");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
