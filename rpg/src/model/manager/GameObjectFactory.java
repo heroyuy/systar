@@ -367,6 +367,7 @@ public class GameObjectFactory {
             player.row = dis.readInt();
             player.col = dis.readInt();
             player.face = dis.readInt();
+            System.out.println("row:"+player.row+"col:"+player.col+"face:"+player.face);
             //测试 可修改
 //            player.init();
             dis.close();
