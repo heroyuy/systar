@@ -20,6 +20,7 @@ public class MenuControl implements Control {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
     private DataBase db = new DataBase();
+
     public void keyPressed(View view, int key) {
         if (view instanceof MenuView) {
             if (key == Const.Key.KEY_LEFT) {
@@ -43,9 +44,9 @@ public class MenuControl implements Control {
                         break;
                     case MenuView.CONTINUE:
                         //继续游戏
-                        loadGame();
-                        
-                        game.setCurView(Const.ViewId.VIEW_MAP);
+                        if (loadGame()) {
+                            game.setCurView(Const.ViewId.VIEW_MAP);
+                        }
                         break;
                     case MenuView.SETTING:
                         //游戏设置
@@ -88,7 +89,7 @@ public class MenuControl implements Control {
         System.out.println("time: " + time);
     }
 
-    private void loadGame() {
-        db.loadDB();
+    private boolean loadGame() {
+        return db.loadDB();
     }
 }

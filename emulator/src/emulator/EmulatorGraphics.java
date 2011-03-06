@@ -3,6 +3,8 @@ package emulator;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import system.Painter;
 
 public class EmulatorGraphics {
 
@@ -81,8 +83,35 @@ public class EmulatorGraphics {
 
     public void drawRegion(EmulatorImage src, int x_src, int y_src, int width, int height, int transform, int x_dest, int y_dest, int anchor) {
         int[] xy = convertOrdinate(x_dest, y_dest, width, height, anchor);
-        g.drawImage(src, xy[0], xy[1], xy[0] + width, xy[1] + height, x_src, y_src, x_src + width, y_src + height, null);
-
+        EmulatorImage temp = EmulatorImage.createImage(width, height);
+        Graphics gg = temp.getGraphics();
+        gg.drawImage(src, 0, 0, width, height, x_src, y_src, x_src + width, y_src + height, null);
+        switch (transform) {
+            case EmulatorImage.TRANS_NONE:
+                g.drawImage(temp, xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_MIRROR:
+                g.drawImage(Painter.effect_mirror(temp), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_MIRROR_ROT180:
+                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 180), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_ROT180:
+                g.drawImage(EmulatorImage.rotateImage(temp, 180), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_MIRROR_ROT270:
+                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 270), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_ROT270:
+                g.drawImage(EmulatorImage.rotateImage(temp, 270), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_ROT90:
+                g.drawImage(EmulatorImage.rotateImage(temp, 180), xy[0], xy[1], null);
+                break;
+            case EmulatorImage.TRANS_MIRROR_ROT90:
+                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 90), xy[0], xy[1], null);
+                break;
+        }
     }
 
     public void drawChar(char ch, int x, int y, int anchor) {
