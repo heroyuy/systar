@@ -4,6 +4,15 @@
  */
 package system;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Bag;
 import model.GameData;
 
@@ -14,7 +23,6 @@ import model.GameData;
 public class DataBase {
 
     private GameData gd = GameData.getGameData();
-    private Configuration config = new Configuration();
 
 //    /**
 //     *
@@ -25,132 +33,150 @@ public class DataBase {
 //        db.saveDB();
 //        db.loadDB();
 //    }//end main()
-
     public boolean saveDB() {
-        config.setValue("gd.curMap.index", "" + gd.curMap.index);
-        config.setValue("gd.player.lev", "" + gd.player.lev);
-        config.setValue("gd.player.face", "" + gd.player.face);
-        config.setValue("gd.player.row", "" + gd.player.row);
-        config.setValue("gd.player.col", "" + gd.player.col);
-        config.setValue("gd.player.money", "" + gd.player.money);
-        config.setValue("gd.player.exp", "" + gd.player.exp);
-        config.setValue("gd.player.agil", "" + gd.player.agil);
-        config.setValue("gd.player.atk", "" + gd.player.atk);
-        config.setValue("gd.player.def", "" + gd.player.def);
-        config.setValue("gd.player.flee", "" + gd.player.flee);
-        config.setValue("gd.player.inte", "" + gd.player.inte);
-        config.setValue("gd.player.stre", "" + gd.player.stre);
-        config.setValue("gd.player.maxHp", "" + gd.player.maxHp);
-        config.setValue("gd.player.maxSp", "" + gd.player.maxSp);
-        config.setValue("gd.player.equipArmour", "" + gd.player.equipArmour);
-        config.setValue("gd.player.equipBoots", "" + gd.player.equipBoots);
-        config.setValue("gd.player.equipHelm", "" + gd.player.equipHelm);
-        config.setValue("gd.player.equipJewelry", "" + gd.player.equipJewelry);
-        config.setValue("gd.player.equipShield", "" + gd.player.equipShield);
-        config.setValue("gd.player.equipWeapon", "" + gd.player.equipWeapon);
-        config.setValue("gd.player.bag.getList(Bag.EQUIP).length", "" + gd.player.bag.getList(Bag.EQUIP).length);
-        for (int i = 0, n = gd.player.bag.getList(Bag.EQUIP).length; i < n; i++) {
-            config.setValue("gd.player.bag.getList(Bag.EQUIP)[" + i + "]", "" + gd.player.bag.getList(Bag.EQUIP)[i]);
-            config.setValue("gd.player.bag.getNum(Bag.EQUIP, gd.player.bag.getList(Bag.EQUIP)[" + i + "])",
-                "" + gd.player.bag.getNum(Bag.EQUIP, gd.player.bag.getList(Bag.EQUIP)[i]));
-        }
-        config.setValue("gd.player.bag.getList(Bag.ITEM).length", "" + gd.player.bag.getList(Bag.ITEM).length);
-        for (int i = 0, n = gd.player.bag.getList(Bag.ITEM).length; i < n; i++) {
-            config.setValue("gd.player.bag.getList(Bag.ITEM)[" + i + "]", "" + gd.player.bag.getList(Bag.EQUIP)[i]);
-            config.setValue("gd.player.bag.getNum(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[" + i + "])",
-                "" + gd.player.bag.getNum(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]));
-        }
-        config.setValue("gd.player.bag.getList(Bag.SKILL).length", "" + gd.player.bag.getList(Bag.EQUIP).length);
-        for (int i = 0, n = gd.player.bag.getList(Bag.SKILL).length; i < n; i++) {
-            config.setValue("gd.player.bag.getList(Bag.SKILL)[" + i + "]", "" + gd.player.bag.getList(Bag.EQUIP)[i]);
-            config.setValue("gd.player.bag.getNum(Bag.SKILL, gd.player.bag.getList(Bag.SKILL)[" + i + "])",
-                "" + gd.player.bag.getNum(Bag.SKILL, gd.player.bag.getList(Bag.SKILL)[i]));
-        }
-        config.setValue("gd.player.hp", "" + gd.player.hp);
-        config.setValue("gd.player.sp", "" + gd.player.sp);
-        for (int i = 0; i < 100; i++) {
-            config.setValue("gd.vars[" + i + "]", "" + gd.vars[i]);
-        }
+        FileOutputStream fos = null;
+        DataOutputStream dos = null;
+        try {
+            File f = new File("product/data.base");
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            fos = new FileOutputStream(f);
+            dos = new DataOutputStream(fos);
+            dos.writeInt(gd.curMap.index);
+            dos.writeInt(gd.player.lev);
+            dos.writeByte(gd.player.face);
+            dos.writeInt(gd.player.row);
+            dos.writeInt(gd.player.col);
+            dos.writeInt(gd.player.money);
+            dos.writeInt(gd.player.exp);
+            dos.writeInt(gd.player.agil);
+            dos.writeInt(gd.player.atk);
+            dos.writeInt(gd.player.def);
+            dos.writeInt(gd.player.flee);
+            dos.writeInt(gd.player.inte);
+            dos.writeInt(gd.player.stre);
+            dos.writeInt(gd.player.maxHp);
+            dos.writeInt(gd.player.maxSp);
+            dos.writeInt(gd.player.equipArmour);
+            dos.writeInt(gd.player.equipBoots);
+            dos.writeInt(gd.player.equipHelm);
+            dos.writeInt(gd.player.equipJewelry);
+            dos.writeInt(gd.player.equipShield);
+            dos.writeInt(gd.player.equipWeapon);
+            dos.writeInt(gd.player.bag.getList(Bag.EQUIP).length);
+            for (int i = 0, n = gd.player.bag.getList(Bag.EQUIP).length; i < n; i++) {
+                dos.writeInt(gd.player.bag.getList(Bag.EQUIP)[i]);
+                dos.writeInt(gd.player.bag.getNum(Bag.EQUIP, gd.player.bag.getList(Bag.EQUIP)[i]));
+            }
+            dos.writeInt(gd.player.bag.getList(Bag.ITEM).length);
+            for (int i = 0, n = gd.player.bag.getList(Bag.ITEM).length; i < n; i++) {
+                dos.writeInt(gd.player.bag.getList(Bag.ITEM)[i]);
+                dos.writeInt(gd.player.bag.getNum(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]));
+            }
+            dos.writeInt(gd.player.bag.getList(Bag.SKILL).length);
+            for (int i = 0, n = gd.player.bag.getList(Bag.SKILL).length; i < n; i++) {
+                dos.writeInt(gd.player.bag.getList(Bag.SKILL)[i]);
+                dos.writeInt(gd.player.bag.getNum(Bag.SKILL, gd.player.bag.getList(Bag.SKILL)[i]));
+            }
+            dos.writeInt(gd.player.hp);
+            dos.writeInt(gd.player.sp);
+            for (int i = 0; i < 100; i++) {
+                dos.writeInt(gd.vars[i]);
+            }
 
-        for (int i = 0; i < 100; i++) {
-            config.setValue("gd.switchs[" + i + "]", "" + gd.switchs[i]);
+            for (int i = 0; i < 100; i++) {
+                dos.writeBoolean(gd.switchs[i]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return true;
     }
 
     public boolean loadDB() {
 
-        int mapIndex = Integer.parseInt(config.getValue("gd.curMap.index"));
-        System.out.println("mapIndex:" + mapIndex);
-        gd.curMap = gd.gameObjectManager.getMap(mapIndex);
-        gd.player = gd.gameObjectManager.getPlayer().getClone();
-        int lev = Integer.parseInt(config.getValue("gd.player.lev"));
-        System.out.println("lev:" + lev);
-        gd.player.lev = lev;
-        byte face = Byte.parseByte(config.getValue("gd.player.face"));
-        System.out.println("face:" + face);
-        gd.player.face = face;
-        gd.player.changeToward(face);
-        int row = Integer.parseInt(config.getValue("gd.player.row"));
-        System.out.println("row:" + row);
-        gd.player.row = row;
-        int col = Integer.parseInt(config.getValue("gd.player.col"));
-        System.out.println("col:" + col);
-        gd.player.col = col;
-        gd.player.money = Integer.parseInt(config.getValue("gd.player.money"));
-        System.out.println("money:" + gd.player.money);
-        gd.player.exp = Integer.parseInt(config.getValue("gd.player.exp"));
-        System.out.println("exp:" + gd.player.exp);
-
-        gd.player.agil = Integer.parseInt(config.getValue("gd.player.agil"));
-        gd.player.atk = Integer.parseInt(config.getValue("gd.player.atk"));
-        gd.player.def = Integer.parseInt(config.getValue("gd.player.def"));
-        gd.player.flee = Integer.parseInt(config.getValue("gd.player.flee"));
-        gd.player.inte = Integer.parseInt(config.getValue("gd.player.inte"));
-        gd.player.stre = Integer.parseInt(config.getValue("gd.player.stre"));
-        gd.player.maxHp = Integer.parseInt(config.getValue("gd.player.maxHp"));
-        gd.player.maxSp = Integer.parseInt(config.getValue("gd.player.maxSp"));
-
-        gd.player.equipArmour = Integer.parseInt(config.getValue("gd.player.equipArmour"));
-        System.out.println("equipArmour:" + gd.player.equipArmour);
-        gd.player.equipBoots = Integer.parseInt(config.getValue("gd.player.equipBoots"));
-        System.out.println("equipBoots:" + gd.player.equipBoots);
-        gd.player.equipHelm = Integer.parseInt(config.getValue("gd.player.equipHelm"));
-        System.out.println("equipHelm:" + gd.player.equipHelm);
-        gd.player.equipJewelry = Integer.parseInt(config.getValue("gd.player.equipJewelry"));
-        System.out.println("equipJewelry:" + gd.player.equipJewelry);
-        gd.player.equipShield = Integer.parseInt(config.getValue("gd.player.equipShield"));
-        System.out.println("equipShield:" + gd.player.equipShield);
-        gd.player.equipWeapon = Integer.parseInt(config.getValue("gd.player.equipWeapon"));
-        System.out.println("equipWeapon:" + gd.player.equipWeapon);
-        int equipNum = Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.EQUIP).length"));
-        for (int i = 0; i < equipNum; i++) {
-            gd.player.bag.add(Bag.EQUIP, Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.EQUIP)[" + i + "]")),
-                Integer.parseInt(config.getValue("gd.player.bag.getNum(Bag.EQUIP, gd.player.bag.getList(Bag.EQUIP)[" + i + "])")));
+        FileInputStream fis = null;
+        DataInputStream dis = null;
+        try {
+            File f = new File("product/data.base");
+            if (!f.exists()) {
+                return false;
+            }
+            if (gd.gameObjectManager.getPlayer() == null) {
+                return false;
+            }
+            fis = new FileInputStream(f);
+            dis = new DataInputStream(fis);
+            int mapIndex = dis.readInt();
+            System.out.println("mapIndex:" + mapIndex);
+            gd.curMap = gd.gameObjectManager.getMap(mapIndex);
+            gd.player = gd.gameObjectManager.getPlayer().getClone();
+            int lev = dis.readInt();
+            System.out.println("lev:" + lev);
+            gd.player.lev = lev;
+            byte face = dis.readByte();
+            System.out.println("face:" + face);
+            gd.player.face = face;
+            gd.player.changeToward(face);
+            int row = dis.readInt();
+            System.out.println("row:" + row);
+            gd.player.row = row;
+            int col = dis.readInt();
+            System.out.println("col:" + col);
+            gd.player.col = col;
+            gd.player.money = dis.readInt();
+            System.out.println("money:" + gd.player.money);
+            gd.player.exp = dis.readInt();
+            System.out.println("exp:" + gd.player.exp);
+            gd.player.agil = dis.readInt();
+            gd.player.atk = dis.readInt();
+            gd.player.def = dis.readInt();
+            gd.player.flee = dis.readInt();
+            gd.player.inte = dis.readInt();
+            gd.player.stre = dis.readInt();
+            gd.player.maxHp = dis.readInt();
+            gd.player.maxSp = dis.readInt();
+            gd.player.equipArmour = dis.readInt();
+            System.out.println("equipArmour:" + gd.player.equipArmour);
+            gd.player.equipBoots = dis.readInt();
+            System.out.println("equipBoots:" + gd.player.equipBoots);
+            gd.player.equipHelm = dis.readInt();
+            System.out.println("equipHelm:" + gd.player.equipHelm);
+            gd.player.equipJewelry = dis.readInt();
+            System.out.println("equipJewelry:" + gd.player.equipJewelry);
+            gd.player.equipShield = dis.readInt();
+            System.out.println("equipShield:" + gd.player.equipShield);
+            gd.player.equipWeapon = dis.readInt();
+            System.out.println("equipWeapon:" + gd.player.equipWeapon);
+            int equipNum = dis.readInt();
+            for (int i = 0; i < equipNum; i++) {
+                gd.player.bag.add(Bag.EQUIP, dis.readInt(), dis.readInt());
+            }
+            int itemNum = dis.readInt();
+            for (int i = 0; i < itemNum; i++) {
+                gd.player.bag.add(Bag.EQUIP, dis.readInt(), dis.readInt());
+            }
+            int skillNum = dis.readInt();
+            for (int i = 0; i < skillNum; i++) {
+                gd.player.bag.add(Bag.EQUIP, dis.readInt(), dis.readInt());
+            }
+            gd.player.setLocation();
+            gd.player.hp = dis.readInt();
+            System.out.println("hp:" + gd.player.hp);
+            gd.player.sp = dis.readInt();
+            System.out.println("sp:" + gd.player.sp);
+            for (int i = 0; i < 100; i++) {
+                gd.vars[i] = dis.readInt();
+            }
+            for (int i = 0; i < 100; i++) {
+                gd.switchs[i] = dis.readBoolean();
+            }
+            gd.curMap.resetRegion(gd.player);
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        int itemNum = Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.ITEM).length"));
-        for (int i = 0; i < itemNum; i++) {
-            gd.player.bag.add(Bag.EQUIP, Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.ITEM)[" + i + "]")),
-                Integer.parseInt(config.getValue("gd.player.bag.getNum(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[" + i + "])")));
-        }
-        int skillNum = Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.SKILL).length"));
-        for (int i = 0; i < skillNum; i++) {
-            gd.player.bag.add(Bag.EQUIP, Integer.parseInt(config.getValue("gd.player.bag.getList(Bag.SKILL)[" + i + "]")),
-                Integer.parseInt(config.getValue("gd.player.bag.getNum(Bag.SKILL, gd.player.bag.getList(Bag.SKILL)[" + i + "])")));
-        }
-        gd.player.setLocation();
-        gd.player.hp = Integer.parseInt(config.getValue("gd.player.hp"));
-        System.out.println("hp:" + gd.player.hp);
-        gd.player.sp = Integer.parseInt(config.getValue("gd.player.sp"));
-        System.out.println("sp:" + gd.player.sp);
-        for (int i = 0; i < 100; i++) {
-            gd.vars[i] = Integer.parseInt(config.getValue("gd.vars[" + i + "]"));
-        }
-        for (int i = 0; i < 100; i++) {
-            gd.switchs[i] = Boolean.parseBoolean(config.getValue("gd.switchs[" + i + "]"));
-        }
-        gd.curMap.resetRegion(gd.player);
-
-        return true;
     }
 }

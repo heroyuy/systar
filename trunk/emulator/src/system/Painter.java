@@ -344,6 +344,26 @@ public class Painter {
 
         g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
     }
+    /*
+     * 图片镜像特效
+     */
+
+    public static EmulatorImage effect_mirror(EmulatorImage src) {
+        int srcW = src.getWidth();
+        int srcH = src.getHeight();
+        int[] srcPixels = getPixels(src);
+        int len;
+        int temp;
+        for (int i = 0; i < srcH; i++) {
+            len = (i + 1) * srcW;
+            for (int ii = 0; ii < srcW / 2; ii++) {
+                temp = srcPixels[i * srcW + ii];
+                srcPixels[i * srcW + ii] = srcPixels[len - 1 - ii];
+                srcPixels[len - 1 - ii] = temp;
+            }
+        }
+        return drawPixels(srcPixels, srcW, srcH);
+    }
 
     /*******************************下面是各个图片处理函数***********************************/
 
@@ -503,43 +523,43 @@ public class Painter {
             switch (cha) {
                 case '0':
                     drawImage(imgNumber, 0 * width, atype * height, width, height, x, y, 0,
-                            g);
+                        g);
                     break;
                 case '1':
                     drawImage(imgNumber, 1 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '2':
                     drawImage(imgNumber, 2 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '3':
                     drawImage(imgNumber, 3 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '4':
                     drawImage(imgNumber, 4 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '5':
                     drawImage(imgNumber, 5 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '6':
                     drawImage(imgNumber, 6 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '7':
                     drawImage(imgNumber, 7 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '8':
                     drawImage(imgNumber, 8 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
                 case '9':
                     drawImage(imgNumber, 9 * width, atype * height, width, height, x, y,
-                            0, g);
+                        0, g);
                     break;
             }
             switch (type) {
@@ -593,4 +613,5 @@ public class Painter {
         g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
 
     }
+
 }
