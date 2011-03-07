@@ -39,8 +39,8 @@ public class HelpView extends BaseView {
     }
 
     public void release() {
-        gd.xIndex = 0;
-        gd.yIndex = 0;
+//        gd.xIndex = 0;
+//        gd.yIndex = 0;
         gd = null;
         font = null;
         setControl(null);

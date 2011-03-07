@@ -67,8 +67,8 @@ public class SettingView extends BaseView {
     }
 
     public void release() {
-        gd.xIndex = 0;
-        gd.yIndex = 0;
+//        gd.xIndex = 0;
+//        gd.yIndex = 0;
         gd = null;
         ge = null;
         font = null;
