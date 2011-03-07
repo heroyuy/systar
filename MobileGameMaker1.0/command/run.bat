@@ -1,0 +1,1 @@
+java -jar MobileGameMaker1.0.jar
