@@ -78,13 +78,13 @@ public class Dialog_Map extends Event_Dialog {
     private JPanel getJContentPane() {
         if (jContentPane == null) {
             jLabel2 = new JLabel();
-            jLabel2.setText("列(Y坐标)");
-            jLabel2.setLocation(new Point(15, 85));
+            jLabel2.setText("行");
+            jLabel2.setLocation(new Point(15, 50));
             jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
             jLabel2.setSize(new Dimension(60, 20));
             jLabel1 = new JLabel();
-            jLabel1.setText("行(X坐标)");
-            jLabel1.setLocation(new Point(15, 50));
+            jLabel1.setText("列");
+            jLabel1.setLocation(new Point(15, 85));
             jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
             jLabel1.setSize(new Dimension(60, 20));
             jLabel = new JLabel();
@@ -113,7 +113,7 @@ public class Dialog_Map extends Event_Dialog {
     private JTextField getJTextField_x() {
         if (jTextField_x == null) {
             jTextField_x = new JTextField();
-            jTextField_x.setLocation(new Point(80, 50));
+            jTextField_x.setLocation(new Point(80, 85));
             jTextField_x.setSize(new Dimension(120, 20));
         }
         return jTextField_x;
@@ -141,7 +141,7 @@ public class Dialog_Map extends Event_Dialog {
     private JTextField getJTextField_y() {
         if (jTextField_y == null) {
             jTextField_y = new JTextField();
-            jTextField_y.setLocation(new Point(80, 85));
+            jTextField_y.setLocation(new Point(80, 50));
             jTextField_y.setSize(new Dimension(120, 20));
         }
         return jTextField_y;
