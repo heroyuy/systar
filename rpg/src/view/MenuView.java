@@ -54,7 +54,7 @@ public class MenuView extends BaseView {
     public void paint(Graphics g) {
         g.drawImage(back, 0, 0, 0);
         g.drawImage(kuang, gd.screenWidth / 2, gd.screenHeight - 30, Graphics.VCENTER | Graphics.HCENTER);
-        g.drawRegion(menu, 0, gd.xIndex*19, 65, 19, 0, gd.screenWidth / 2, gd.screenHeight - 34, Graphics.VCENTER | Graphics.HCENTER);
+        g.drawRegion(menu, 0, gd.xIndex*19, 65, 19,0, gd.screenWidth / 2, gd.screenHeight - 34, Graphics.VCENTER | Graphics.HCENTER);
         g.drawRegion(jt, 0, 0, jt.getWidth(), jt.getHeight(), 2,
             gd.screenWidth / 2 - 40 + ((ge.getTicker() % 5 == 0) ? 0 : -3), gd.screenHeight - 30, Graphics.BOTTOM | Graphics.HCENTER);
         g.drawRegion(jt, 0, 0, jt.getWidth(), jt.getHeight(), 0,

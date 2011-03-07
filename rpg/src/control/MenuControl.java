@@ -45,9 +45,11 @@ public class MenuControl implements Control {
                         break;
                     case MenuView.CONTINUE:
                         //继续游戏
-                        loadGame();
+                        if(loadGame()){
+                            game.setCurView(Const.ViewId.VIEW_MAP);
+                        }
                         
-                        game.setCurView(Const.ViewId.VIEW_MAP);
+                        
                         break;
                     case MenuView.SETTING:
                         //游戏设置
@@ -90,7 +92,7 @@ public class MenuControl implements Control {
         System.out.println("time: " + time);
     }
 
-    private void loadGame() {
-        db.loadDB();
+    private boolean loadGame() {
+        return db.loadDB();
     }
 }
