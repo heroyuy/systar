@@ -60,6 +60,25 @@ public class Map {
                 }
             }
         }
+//        int ww = (gd.screenWidth - cellWidth * colNum) / 2;
+//        int hh = (gd.screenHeight - cellHeight * rowNum) / 2;
+//        for (int i = 0; i < layerNum; i++) {
+//            for (int j = 0; j < rowNum; j++) {
+//                for (int k = 0; k < colNum; k++) {
+////                    System.out.println("***********************");
+//                    int num = data[i][j][k];
+//                    int row = (num - 1) / maxCol;
+//                    int col = (num - 1) % maxCol;
+////                    System.out.println("num:" + num);
+////                    System.out.println("row:" + row);
+////                    System.out.println("col" + col);
+//                    if (num != 0) {
+//                        Image tempImg = Image.createImage(image, col * cellWidth, row * cellHeight, cellWidth, cellHeight, 0);
+//                        g.drawImage(tempImg, cellWidth * colNum < gd.screenWidth ? (ww + k * cellWidth) : k * cellWidth, cellHeight * rowNum < gd.screenHeight ? (hh + j * cellHeight) : j * cellHeight, 0);
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
