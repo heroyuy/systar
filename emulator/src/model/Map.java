@@ -1,5 +1,6 @@
 package model;
 
+import emulator.EmulatorGraphics;
 import emulator.EmulatorImage;
 import engine.script.Script;
 import java.awt.Graphics;
@@ -37,8 +38,8 @@ public class Map {
         System.out.println("maxRow:" + maxRow);
         System.out.println("maxCol:" + maxCol);
         //正在修改
-        this.image = EmulatorImage.createImage(cellWidth * colNum < gd.screenWidth ? gd.screenWidth : cellWidth * colNum, cellHeight * rowNum < gd.screenHeight ? gd.screenHeight : cellHeight * rowNum);
-        Graphics g = this.image.getGraphics();
+        this.image = EmulatorImage.createImage(cellWidth * colNum, cellHeight * rowNum);
+        EmulatorGraphics g = new EmulatorGraphics(this.image.getGraphics());
         for (int i = 0; i < layerNum; i++) {
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
@@ -51,8 +52,7 @@ public class Map {
 //                    System.out.println("col" + col);
                     if (num != 0) {
                         EmulatorImage tempImg = EmulatorImage.createImage(image, col * cellWidth, row * cellHeight, cellWidth, cellHeight, 0);
-
-                        g.drawImage(tempImg, k * cellWidth, j * cellHeight, null);
+                        g.drawImage(tempImg, k * cellWidth, j * cellHeight, 0);
                     }
                 }
             }
@@ -83,6 +83,7 @@ public class Map {
     }
 
     public void resetRegion(Player player) {
+        System.out.println("Map.resetRegion");
         x = player.x - GameData.getGameData().screenWidth / 2;
         y = player.y - GameData.getGameData().screenHeight / 2;
         if (x < 0) {
@@ -96,6 +97,13 @@ public class Map {
         }
         if (y + GameData.getGameData().screenHeight > cellHeight * rowNum) {
             y = cellHeight * rowNum - GameData.getGameData().screenHeight;
+        }
+        if (image.getWidth() <= GameData.getGameData().screenWidth) {
+            x = 0;
+        }
+
+        if (image.getHeight() <= GameData.getGameData().screenHeight) {
+            y = 0;
         }
     }
 //    public Map initMap(int index) {
