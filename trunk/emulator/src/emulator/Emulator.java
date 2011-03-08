@@ -509,7 +509,9 @@ public class Emulator extends JDialog {
         System.out.println("setCanvas");
         this.canvas = canvas;
         setEmulatorSize(240, 320);
+        getContentPane().removeAll();
         getContentPane().add(canvas, 0, 0);
+        getContentPane().repaint();
     }
 
     /**

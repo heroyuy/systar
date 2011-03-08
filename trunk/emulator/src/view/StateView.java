@@ -1,19 +1,13 @@
 package view;
 
-import control.SkillControl;
-import control.StateControl;
 import engine.BaseView;
 import engine.GameEngine;
 import java.io.IOException;
-import model.Bag;
-import model.Const;
 import model.GameData;
 import control.StateControl;
 import emulator.EmulatorGraphics;
 import emulator.EmulatorImage;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import system.Painter;
 
 /**
