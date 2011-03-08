@@ -22,7 +22,7 @@ public class HelpView extends BaseView {
 
     public void init() {
         setControl(new HelpControl());
-        text = "界面等待实现中";
+        text = gd.gameObjectManager.getConfig().help;
         itemWidth = font.stringWidth(text);
         x = (gd.screenWidth - itemWidth) / 2;
         y = (gd.screenHeight - font.getHeight()) / 2;
@@ -31,8 +31,8 @@ public class HelpView extends BaseView {
     public void paint(EmulatorGraphics g) {
         g.setEmulatorFont(font);
         Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
-        Painter.drawString(g, text, x, y, Color.white);
-
+        Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_DEEP);
+        Painter.drawWordWrapString(g, text, 10, 20, gd.screenWidth - 20, gd.screenHeight - 20, Color.white);
         //绘制按钮
         Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
 

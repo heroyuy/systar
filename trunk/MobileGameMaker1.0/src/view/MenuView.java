@@ -40,6 +40,7 @@ public class MenuView extends BaseView {
     public void init() {
         System.out.println("初始化菜单视图");
         setControl(new MenuControl());
+        gd.gameObjectManager.initConfig();
         itemWidth = font.stringWidth(Const.Str.MENU_MENU[0]);
         try {
             jthuang = EmulatorImage.createImage("product/image/skin/jthuang.png");

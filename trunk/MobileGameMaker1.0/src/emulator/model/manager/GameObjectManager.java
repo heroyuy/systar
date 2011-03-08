@@ -30,11 +30,12 @@ public class GameObjectManager {
     private Skill[] skillList = null;
     private Player player = null;
     private Hashtable mapList = new Hashtable();
-
-    public void init() {
-        System.out.println("init开始");
+    public void initConfig(){
         config = GameObjectFactory.createConfig();
         System.out.println("config初始化完成");
+    }
+    public void init() {
+        System.out.println("init开始");
         animationList = GameObjectFactory.createAnimationList();
         System.out.println("animation初始化完成");
         enemyList = GameObjectFactory.createEnemyList();
