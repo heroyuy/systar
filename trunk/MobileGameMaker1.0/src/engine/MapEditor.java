@@ -22,6 +22,7 @@ import converter.*;
 import java.net.URI;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import emulator.*;
 
 public class MapEditor extends JFrame implements ActionListener, ChangeListener {
 
@@ -1169,7 +1170,6 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
 //            buffImg.setRGB(0, 0, w, h, pixs, 0, pixs.length);
 //            return buffImg;
 //        }
-
         public void updateCanvas() {
             // 取得原图片
 //            if (map == null && map.getVisible() == false) {
@@ -3310,6 +3310,7 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
             gameMenu = new JMenu("游戏(G)");
             gameMenu.setMnemonic('G');
             gameMenu.add(getJMenuItem17());
+            gameMenu.add(getGameItem());
             gameMenu.add(getJMenuItem18());
 
             gameMenu.add(getJMenuItem1());
@@ -3598,6 +3599,55 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
             System.out.println("saveFinalMapVector Error");
         }
     }
+//    private Emulator emulator = null;
+//
+//    private Emulator getEmulator() {
+//        if (emulator == null) {
+//            emulator = new Emulator(this);
+//        }
+//        return emulator;
+//    }
+    private JMenuItem createGameItem = null;
+
+    private JMenuItem getGameItem() {
+        if (createGameItem == null) {
+            createGameItem = new JMenuItem();
+            createGameItem.setText("生成游戏");
+            createGameItem.addActionListener(new java.awt.event.ActionListener() {
+
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (!checkData().equals("生成成功！")) {
+                        JOptionPane.showMessageDialog(mapEditor, checkData());
+                        return;
+                    }
+                    FileUtil.createDir(Project.getProjectPath() + "\\生成的游戏");
+                    FileUtil.delAllFile(Project.getProjectPath() + "\\生成的游戏");
+                    FileUtil.delAllFile("product\\image");
+                    FileUtil.delAllFile("product\\data");
+                    FileUtil.delAllFile("product\\audio");
+
+
+                    copyGameFiles(new File(Project.getProjectPath()));//将源数据拷贝到product文件夹下
+                    converterScript();//将原始转换为最终脚本
+                    for (int i = 0, n = mapFinalVector.size(); i
+                        < n; i++) {
+                        saveFinalMap(mapFinalVector.mapAt(i));//重新存入地图
+                    }
+                    if (new File("product\\Game.jar").exists()) {
+                        FileUtil.copy(new File("product\\Game.jar"), new File(Project.getProjectPath() + "\\生成的游戏"));
+                        if (new File(Project.getProjectPath() + "\\生成的游戏\\Game.jar").exists()) {
+                            JOptionPane.showMessageDialog(mapEditor, "生成成功！");
+                        } else {
+                            JOptionPane.showMessageDialog(mapEditor, "生成失败！");
+                        }
+                    } else {
+                        System.out.println("Game.jar不存在");
+                    }
+                }
+            });
+        }
+        return createGameItem;
+    }
 
     private JMenuItem getJMenuItem17() {
         if (jMenuItem17 == null) {
@@ -3630,21 +3680,20 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
                         < n; i++) {
                         saveFinalMap(mapFinalVector.mapAt(i));//重新存入地图
                     }
-                    try {
-                        java.awt.Desktop.getDesktop().open(new File("command\\game.vbs"));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    Emulator emulator = new Emulator(mapEditor);
+                    emulator.setVisible(true);
+                    emulator.start();
+//                    try {
+//                        java.awt.Desktop.getDesktop().open(new File("command\\game.vbs"));
+//                    } catch (IOException ex) {
+//                        ex.printStackTrace();
+//                    }
 //                    try {
 //                        Thread.sleep(2000);//延迟两秒再复制，等待生产
 //                    } catch (InterruptedException ex) {
 //                        Logger.getLogger(MapEditor.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
-                    if (new File("product\\Game.jar").exists()) {
-                        FileUtil.copy(new File("product\\Game.jar"), new File(Project.getProjectPath() + "\\生成的游戏"));
-                    } else {
-                        System.out.println("Game.jar不存在");
-                    }
+
 //                    try {
 //                    FileUtil.copy(new File("product\\Game.jar"), new File(Project.getProjectPath()));
 //

@@ -1,7 +1,5 @@
 package engine;
 
-import engine.MapEditor;
-import engine.MapEditor;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,7 +19,6 @@ public abstract class Plugin {
     }
 
     public abstract JMenu getMenu();
-
     public abstract JMenuItem getMenuItem();
     public abstract JMenu getPopMenu();
 }
