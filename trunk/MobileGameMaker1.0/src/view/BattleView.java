@@ -8,7 +8,7 @@ import emulator.model.Const;
 import emulator.model.Bag;
 import emulator.model.GameData;
 import emulator.model.EnemyTroop;
-import emulator.engine.engine.animation.AnimationPlayer;
+import emulator.engine.animation.AnimationPlayer;
 import emulator.engine.BaseView;
 import emulator.engine.GameEngine;
 import control.BattleControl;

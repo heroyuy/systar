@@ -433,10 +433,10 @@ public class Emulator extends JDialog {
     private void initialize() {
         this.setSize(305, 375);
         Dimension screenSize =
-            Toolkit.getDefaultToolkit().getScreenSize();
+                Toolkit.getDefaultToolkit().getScreenSize();
         Dimension labelSize = this.getSize();
         this.setLocation(screenSize.width / 2 - (labelSize.width / 2),
-            screenSize.height / 2 - (labelSize.height / 2));//设置位置屏幕中部
+                screenSize.height / 2 - (labelSize.height / 2));//设置位置屏幕中部
         this.setJMenuBar(getJJMenuBar());
         this.setResizable(false);
         this.setTitle("模拟器");
@@ -503,7 +503,7 @@ public class Emulator extends JDialog {
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     getKeyPadDialog().setLocation(getX() + getWidth() + 10,
-                        getY());
+                            getY());
                     getKeyPadDialog().setVisible(true);
                 }
             });
@@ -515,7 +515,9 @@ public class Emulator extends JDialog {
         System.out.println("setCanvas");
         this.canvas = canvas;
         setEmulatorSize(240, 320);
+        getContentPane().removeAll();
         getContentPane().add(canvas, 0, 0);
+        getContentPane().repaint();
     }
 
     /**

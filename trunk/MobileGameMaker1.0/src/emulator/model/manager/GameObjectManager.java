@@ -10,7 +10,7 @@ import emulator.model.EnemyTroop;
 import emulator.model.BaseItem;
 import emulator.model.Config;
 import emulator.model.Player;
-import emulator.engine.engine.animation.Animation;
+import emulator.engine.animation.Animation;
 import java.util.Hashtable;
 //import model.*;
 //import test.TestData;

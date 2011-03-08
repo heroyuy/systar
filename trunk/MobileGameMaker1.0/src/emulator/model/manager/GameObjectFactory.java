@@ -1,7 +1,7 @@
 package emulator.model.manager;
 
 import emulator.EmulatorImage;
-import emulator.engine.engine.animation.Animation;
+import emulator.engine.animation.Animation;
 import emulator.engine.script.Command;
 import emulator.engine.script.Script;
 import java.io.DataInputStream;

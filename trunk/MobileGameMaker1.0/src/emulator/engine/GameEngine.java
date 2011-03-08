@@ -1,5 +1,6 @@
 package emulator.engine;
 
+import emulator.Canvas;
 import emulator.Emulator;
 import emulator.engine.script.Event;
 import emulator.engine.script.ScriptEngine;
@@ -229,5 +230,14 @@ public final class GameEngine implements Runnable {
      */
     public int getTicker() {
         return ticker;
+    }
+
+
+    public void switchToRenderLayer() {
+        emulator.setCanvas(renderLayer);
+    }
+
+    public void changeCanvas(Canvas c) {
+        emulator.setCanvas(c);
     }
 }

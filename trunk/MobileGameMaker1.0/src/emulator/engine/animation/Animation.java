@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulator.engine.engine.animation;
+package emulator.engine.animation;
 
 import emulator.EmulatorImage;
 import emulator.model.Frame;
