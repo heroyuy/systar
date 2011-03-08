@@ -3,6 +3,7 @@ package emulator.engine;
 import emulator.Emulator;
 import emulator.engine.script.Event;
 import emulator.engine.script.ScriptEngine;
+import emulator.model.GameData;
 
 /**
  * 游戏主引擎
@@ -66,6 +67,7 @@ public final class GameEngine implements Runnable {
      * 游戏实例
      */
     private Game game = null;
+    private GameData gd = GameData.getGameData();
 
     /**
      * 构造器
@@ -74,6 +76,7 @@ public final class GameEngine implements Runnable {
     private GameEngine() {
         super();
         renderLayer = new RenderLayer(this);
+        gd.gameObjectManager.initConfig();
     }
 
     /**

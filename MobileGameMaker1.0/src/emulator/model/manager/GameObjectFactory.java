@@ -31,7 +31,9 @@ public class GameObjectFactory {
         try {
             config.name = dis.readUTF();
             config.help = dis.readUTF();
+            System.out.println("help:"+config.help);
             config.about = dis.readUTF();
+            System.out.println("about:"+config.about);
             config.hp = dis.readUTF();
             config.sp = dis.readUTF();
             config.stre = dis.readUTF();
