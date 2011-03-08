@@ -30,7 +30,7 @@ public class EmulatorGraphics {
         int w = fm.stringWidth(str);
         int h = fm.getHeight();
         int[] xy = convertOrdinate(x, y, w, h, anchor);
-        g.drawString(str, xy[0], xy[1]);
+        g.drawString(str, xy[0], xy[1]+ef.getHeight());
     }
 
     public void drawImage(EmulatorImage ei, int x, int y, int anchor) {

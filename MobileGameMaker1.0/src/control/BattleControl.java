@@ -11,7 +11,7 @@ import game.RpgGame;
 import emulator.model.Const;
 import emulator.model.GameData;
 //import model.*;
-import emulator.engine.engine.animation.AnimationPlayer;
+import emulator.engine.animation.AnimationPlayer;
 import system.Tools;
 import system.Painter;
 

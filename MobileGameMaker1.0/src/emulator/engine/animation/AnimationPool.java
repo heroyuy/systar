@@ -1,4 +1,4 @@
-package emulator.engine.engine.animation;
+package emulator.engine.animation;
 
 import java.util.Vector;
 
