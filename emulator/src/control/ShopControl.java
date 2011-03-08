@@ -9,6 +9,7 @@ import engine.script.ScriptEngine;
 import game.RpgGame;
 import model.Const;
 import model.GameData;
+import view.ShopSubView;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ShopControl implements Control {
     private GameEngine ge = GameEngine.getInstance();
     private ScriptEngine se = ScriptEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
-//    private ShopSubView ssv = null;
+    private ShopSubView ssv = null;
 
     public void keyPressed(View view, int key) {
         if (view instanceof ShopView) {
@@ -50,9 +51,12 @@ public class ShopControl implements Control {
                 case Const.Key.KEY_LS:
                 case Const.Key.KEY_FIRE:
                 case Const.Key.KEY_5:
+                    System.out.println("---------------------->5");
                     if (gd.shop_pageIndex == ShopView.PAGE_MAIN) {
-//                        ssv = new ShopSubView();
-//                        ge.changeDisplayable(ssv);
+                        if (ssv == null) {
+                            ssv = new ShopSubView();
+                        }
+                        ge.changeCanvas(ssv);
                     } else {
                         gd.shop_pageIndex = ShopView.PAGE_MAIN;
                     }
