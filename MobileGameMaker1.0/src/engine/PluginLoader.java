@@ -1,7 +1,5 @@
 package engine;
 
-import engine.MapEditor;
-import engine.MapEditor;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -49,9 +47,13 @@ public class PluginLoader extends URLClassLoader {
                     name = name.substring(0, name.indexOf("."));
                     for (String cn : className) {
                         Class c = findClass(cn);
-                        if (cn.equals("plugin." + name)) {
+//                        if (c.newInstance() instanceof Plugin) {
+                        if (cn.equals("plugin." + cn)) {
+                            System.out.println("plugin:" + cn);
                             plugins[i] = c;
                         }
+//                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
