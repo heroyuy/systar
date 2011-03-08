@@ -4,6 +4,7 @@ import engine.script.Event;
 import engine.script.ScriptEngine;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
+import model.GameData;
 
 /**
  * 游戏主引擎
@@ -67,6 +68,7 @@ public final class GameEngine implements Runnable {
      * 游戏实例
      */
     private Game game = null;
+    private GameData gd = GameData.getGameData();
 
     /**
      * 构造器
@@ -75,6 +77,7 @@ public final class GameEngine implements Runnable {
     private GameEngine() {
         super();
         renderLayer = new RenderLayer(this);
+        gd.gameObjectManager.initConfig();
     }
 
     /**

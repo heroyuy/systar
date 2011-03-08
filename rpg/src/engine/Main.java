@@ -1,6 +1,7 @@
 package engine;
 
 import javax.microedition.midlet.*;
+import model.GameData;
 
 /**
  * 程序入口
