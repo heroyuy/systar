@@ -141,5 +141,6 @@ public final class Const {
         public static final byte VIEW_STATE = 8;//状态
         public static final byte VIEW_EQUIP = 9;//装备
         public static final byte VIEW_SHOP = 10;//商店
+        public static final byte VIEW_NUMBER = 11;//输入界面
     }
 }

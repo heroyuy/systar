@@ -15,7 +15,7 @@ import system.Painter;
 public class HelpView extends BaseView {
 
     private GameData gd = GameData.getGameData();
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
+    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_SMALL);
     private String text = "";
     private int itemWidth = 0;
     private int x, y;

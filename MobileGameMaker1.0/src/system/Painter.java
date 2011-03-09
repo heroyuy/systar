@@ -56,12 +56,12 @@ public class Painter {
 
     public static void drawRoundRect(EmulatorGraphics g, int x, int y, int width, int height, int anchor, Color color) {
         g.setColor(color);
-        g.drawRoundRect(x, y, width, height, anchor, anchor);
+        g.drawRoundRect(x, y, width, height, 5, anchor);
     }
 
     public static void fillRoundRect(EmulatorGraphics g, int x, int y, int width, int height, int anchor, Color color) {
         g.setColor(color);
-        g.fillRoundRect(x, y, width, height, anchor, anchor);
+        g.fillRoundRect(x, y, width, height, 5, anchor);
     }
 
     public static void drawTriangle(EmulatorGraphics g, int x1, int y1, int x2, int y2, int x3, int y3, Color color) {

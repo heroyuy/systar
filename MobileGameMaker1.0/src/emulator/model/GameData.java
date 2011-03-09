@@ -64,6 +64,8 @@ public class GameData {
     public String shop_message = "";
     public BaseItem[] shop_items_buy = null;
     public BaseItem[] shop_items_sell = null;
+    //数字输入界面
+    public StringBuffer stringBuffer = new StringBuffer();
     //对话框事件
     public String dialog_name;//对话人名
     public String[] dialog_content;//对话内容
