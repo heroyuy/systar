@@ -12,6 +12,7 @@ import emulator.model.DataHandler;
 import view.BagView;
 import view.BattleView;
 import view.EquipView;
+import view.NumberView;
 import view.ShopView;
 import view.SkillView;
 import view.StateView;
@@ -89,7 +90,11 @@ public class RpgGame extends Game {
                 curView.init();
                 setCurView(curView);
                 break;
-
+            case Const.ViewId.VIEW_NUMBER:
+                curView = new NumberView();
+                curView.init();
+                setCurView(curView);
+                break;
 
         }
     }

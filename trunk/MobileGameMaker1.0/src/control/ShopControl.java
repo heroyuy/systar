@@ -9,7 +9,8 @@ import emulator.model.Const;
 import emulator.model.GameData;
 import view.ShopView;
 import game.RpgGame;
-import view.ShopSubView;
+import view.NumberView;
+//import view.ShopSubView;
 
 /**
  *
@@ -19,9 +20,9 @@ public class ShopControl implements Control {
 
     private GameData gd = GameData.getGameData();
     private GameEngine ge = GameEngine.getInstance();
-    private ScriptEngine se = ScriptEngine.getInstance();
+//    private ScriptEngine se = ScriptEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
-    private ShopSubView ssv = null;
+//    private NumberView ssv = null;
 
     public void keyPressed(View view, int key) {
         if (view instanceof ShopView) {
@@ -53,10 +54,10 @@ public class ShopControl implements Control {
                 case Const.Key.KEY_5:
                     System.out.println("---------------------->5");
                     if (gd.shop_pageIndex == ShopView.PAGE_MAIN) {
-                        if (ssv == null) {
-                            ssv = new ShopSubView();
-                        }
-                        ge.changeCanvas(ssv);
+//                        if (ssv == null) {
+//                            ssv = new NumberView();
+//                        }
+                        game.setCurView(Const.ViewId.VIEW_NUMBER);
                     } else {
                         gd.shop_pageIndex = ShopView.PAGE_MAIN;
                     }

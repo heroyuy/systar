@@ -26,7 +26,7 @@ public class SettingView extends BaseView {
 //    private int space = 5;//行间距
 //    private int num = 2;
     private int x, y;
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
+    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_SMALL);
 
     public void init() {
         setControl(new SettingControl());
@@ -39,7 +39,7 @@ public class SettingView extends BaseView {
     public void paint(EmulatorGraphics g) {
         g.setEmulatorFont(font);
         Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
-
+        Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_DEEP);
         Painter.drawString(g, text, x, y, Color.white);
         Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
         
