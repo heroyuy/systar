@@ -85,6 +85,7 @@ public class NumberControl implements Control {
                     game.setCurView(Const.ViewId.VIEW_SHOP);
                     break;
             }
+            ge.clearKey();
         }
     }
 

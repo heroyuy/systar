@@ -3625,6 +3625,7 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
                     FileUtil.delAllFile("product\\image");
                     FileUtil.delAllFile("product\\data");
                     FileUtil.delAllFile("product\\audio");
+                    FileUtil.deleteFile("product\\Game.jar");
 
 
                     copyGameFiles(new File(Project.getProjectPath()));//将源数据拷贝到product文件夹下
@@ -3632,6 +3633,16 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
                     for (int i = 0, n = mapFinalVector.size(); i
                         < n; i++) {
                         saveFinalMap(mapFinalVector.mapAt(i));//重新存入地图
+                    }
+                    try {
+                        java.awt.Desktop.getDesktop().open(new File("command\\game.vbs"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    try{
+                        Thread.sleep(5000);//流足够的时间给脚本生成游戏，避免未生成完就执行复制
+                    }catch(Exception ex){
+                        ex.printStackTrace();
                     }
                     if (new File("product\\Game.jar").exists()) {
                         FileUtil.copy(new File("product\\Game.jar"), new File(Project.getProjectPath() + "\\生成的游戏"));
@@ -3641,6 +3652,7 @@ public class MapEditor extends JFrame implements ActionListener, ChangeListener 
                             JOptionPane.showMessageDialog(mapEditor, "生成失败！");
                         }
                     } else {
+                        JOptionPane.showMessageDialog(mapEditor, "生成失败！");
                         System.out.println("Game.jar不存在");
                     }
                 }
