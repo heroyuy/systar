@@ -86,8 +86,8 @@ public class MapView extends BaseView {
     private void drawMap(Graphics g) {
         g.setColor(0);
         g.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
-        System.out.println("x:" + gd.curMap.x);
-        System.out.println("y:" + gd.curMap.y);
+//        System.out.println("x:" + gd.curMap.x);
+//        System.out.println("y:" + gd.curMap.y);
         g.drawRegion(gd.curMap.image, gd.curMap.x, gd.curMap.y,
                 gd.curMap.image.getWidth() < gd.screenWidth ? gd.curMap.image.getWidth() : gd.screenWidth, gd.curMap.image.getHeight() < gd.screenHeight ? gd.curMap.image.getHeight() : gd.screenHeight, 0, 0, 0, 0);
     }

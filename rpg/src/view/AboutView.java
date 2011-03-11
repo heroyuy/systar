@@ -16,7 +16,7 @@ import system.Painter;
 public class AboutView extends BaseView {
 
     private GameData gd = GameData.getGameData();
-    private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE);
+    private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     private String text = "";
     private int itemWidth = 0;
     private int x, y;
