@@ -25,7 +25,7 @@ public class SettingView extends BaseView {
 //    private int space = 5;//行间距
 //    private int num = 2;
     private int x, y;
-    private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE);
+    private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     private String text = "";
 
     public void init() {
@@ -37,9 +37,11 @@ public class SettingView extends BaseView {
     }
 
     public void paint(Graphics g) {
-        g.setFont(font);
-        Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, 0x000000);
+       g.setFont(font);
+        Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
+        Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_DEEP);
         Painter.drawString(g, text, x, y, Color.white);
+        Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
 
     }
 

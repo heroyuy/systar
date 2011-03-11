@@ -105,7 +105,7 @@ public class Map {
     }
 
     public void resetRegion(Player player) {
-        System.out.println("Map.resetRegion");
+//        System.out.println("Map.resetRegion");
         x = player.x - GameData.getGameData().screenWidth / 2;
         y = player.y - GameData.getGameData().screenHeight / 2;
         if (x < 0) {

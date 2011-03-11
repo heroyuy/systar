@@ -54,12 +54,17 @@ public class MenuView extends BaseView {
     public void paint(Graphics g) {
         g.drawImage(back, 0, 0, 0);
         g.drawImage(kuang, gd.screenWidth / 2, gd.screenHeight - 30, Graphics.VCENTER | Graphics.HCENTER);
-        g.drawRegion(menu, 0, gd.xIndex*19, 65, 19,0, gd.screenWidth / 2, gd.screenHeight - 34, Graphics.VCENTER | Graphics.HCENTER);
+        g.drawRegion(menu, 0, gd.xIndex * 19, 65, 19, 0, gd.screenWidth / 2, gd.screenHeight - 34, Graphics.VCENTER | Graphics.HCENTER);
         g.drawRegion(jt, 0, 0, jt.getWidth(), jt.getHeight(), 2,
             gd.screenWidth / 2 - 40 + ((ge.getTicker() % 5 == 0) ? 0 : -3), gd.screenHeight - 30, Graphics.BOTTOM | Graphics.HCENTER);
         g.drawRegion(jt, 0, 0, jt.getWidth(), jt.getHeight(), 0,
             gd.screenWidth / 2 + 40 + ((ge.getTicker() % 5 == 0) ? 0 : 3), gd.screenHeight - 30, Graphics.BOTTOM | Graphics.HCENTER);
-//        g.setColor(~0);
+        if (gd.loadDBError) {
+            Painter.drawDialog(g, 30, (gd.screenHeight) / 2, gd.screenWidth - 60, 40, Painter.DIALOG_LIGHT);
+            Painter.drawString(g, gd.loadDBMessage, 50, (gd.screenHeight) / 2 + 10, Color.BLACK);
+        }
+
+        //        g.setColor(~0);
 //        g.drawString("手游之星@2010 demo", gd.screenWidth / 2, gd.screenHeight, Graphics.BOTTOM | Graphics.HCENTER);
     }
 
