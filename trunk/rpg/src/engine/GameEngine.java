@@ -2,6 +2,7 @@ package engine;
 
 import engine.script.Event;
 import engine.script.ScriptEngine;
+import game.RpgGame;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import model.GameData;
@@ -118,16 +119,16 @@ public final class GameEngine implements Runnable {
      */
     private void init() {
         isRun = true;
-        try {
-            game = (Game) Class.forName("game.RpgGame").newInstance();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
+//        try {
+//            game = (Game) Class.forName("game.RpgGame").newInstance();
+//        } catch (InstantiationException ex) {
+//            ex.printStackTrace();
+//        } catch (IllegalAccessException ex) {
+//            ex.printStackTrace();
+//        } catch (ClassNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
+        game = new RpgGame();
 
     }
 
