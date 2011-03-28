@@ -1,0 +1,1 @@
+java -Xms32m -Xmx256m -jar SoyoStar.jar
