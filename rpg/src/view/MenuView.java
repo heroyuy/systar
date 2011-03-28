@@ -30,7 +30,7 @@ public class MenuView extends BaseView {
     public static final byte HELP = 3;
     public static final byte ABOUT = 4;
     public static final byte EXIT = 5;
-    private Image jthuang = null,
+    private Image 
         back = null,
         kuang = null,
         menu = null,
@@ -40,7 +40,7 @@ public class MenuView extends BaseView {
         setControl(new MenuControl());
         itemWidth = font.stringWidth(Const.Str.MENU_MENU[0]);
         try {
-            jthuang = Image.createImage("/image/skin/jthuang.png");
+//            jthuang = Image.createImage("/image/skin/jthuang.png");
             back = Image.createImage("/image/skin/back.png");
             kuang = Image.createImage("/image/skin/kuang.png");
             jt = Image.createImage("/image/skin/jt.png");
