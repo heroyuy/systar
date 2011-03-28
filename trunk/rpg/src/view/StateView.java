@@ -26,16 +26,18 @@ public class StateView extends BaseView {
     public void init() {
         StateControl sc = new StateControl();
         setControl(sc);
-        try {
-            head = Image.createImage("/image/character/head.png");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        int width = gd.player.chaImage.getWidth() / 7;
+        int height = gd.player.chaImage.getHeight();
+//        try {
+        head = Image.createImage(gd.player.chaImage, width * 2, 0, width, height, 0);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
     }
 
     public void paint(Graphics g) {
         Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_LIGHT);
-        g.drawImage(head, 10, 20, 0);
+        g.drawImage(head, 20, 40, 0);
         Painter.drawString(g, gd.player.name, 20, 110, 0);
         g.setColor(0);
         Painter.drawString(g, "生命值 " + gd.player.hp + "/" + gd.player.maxHp, 100, 30, 0);
