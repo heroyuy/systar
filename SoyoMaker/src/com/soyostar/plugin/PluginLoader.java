@@ -5,10 +5,12 @@
 package com.soyostar.plugin;
 
 import com.soyostar.MainFrame;
+import com.soyostar.util.FileUtil;
 import com.soyostar.util.IOFileFilterCreater;
 import com.soyostar.util.Log;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -106,21 +108,32 @@ public class PluginLoader extends URLClassLoader {
         return item;
     }
 
-    public boolean readPlugin(MainFrame parent) throws IOException {
+    public boolean readPlugin(MainFrame parent) {
         File f = new File("plugin");
         if (!f.exists() || !f.isDirectory()) {
             f.mkdir();//假如plugin File不存在，或者不是文件夹时，创建该文件夹
         }
-        IOFileFilterCreater jarFilter = new IOFileFilterCreater("jar");
-        File[] fs = f.listFiles(jarFilter);//将jar文件过滤出来
-        int n = fs.length;
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files);//支持将插件放到各自的文件夹中 03.20
+        int n = files.size();
         for (int i = 0; i < n; i++) {
-            String path = fs[i].getAbsolutePath();
-            addURL(new File(path).toURI().toURL());
-            Plugin plugin = getClass(path);
-            if (plugin != null) {
-                plugins.add(plugin);
+            try {
+                String path = files.get(i).getAbsolutePath();
+                System.out.println(path);
+                addURL(new File(path).toURI().toURL());
+                Plugin plugin = getClass(path);
+                if (plugin != null) {
+                    plugins.add(plugin);
+                }
+            } catch (java.io.FileNotFoundException ee) {
+                continue;
+            } catch (MalformedURLException ee) {
+                continue;
+            } catch (IOException ee) {
+                continue;
             }
+
+
         }
         System.out.println("有效插件数量:" + getPluginNum());
         for (int i = 0; i < getPluginNum(); i++) {
@@ -270,6 +283,15 @@ public class PluginLoader extends URLClassLoader {
         }
         file.close();
         return null;
+    }
+
+    @Override
+    public Class<?> findClass(String name) throws ClassNotFoundException {
+        Class c = findLoadedClass(name);
+        if (c != null) {
+            System.out.println("类已加载过");
+        }
+        return super.findClass(name);
     }
 
     //插件类型

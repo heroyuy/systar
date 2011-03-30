@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +55,20 @@ public class FileUtil {
             e.printStackTrace();
             System.out.println("创建单个文件" + destFileName + "失败！");
             return false;
+        }
+    }
+
+    public static void listFile(File f, ArrayList<File> files) {
+        if (f.isDirectory()) {
+//            System.out.println("directory:" + f.getPath() + "--parent:" + f.getParent());
+            IOFileFilterCreater jarFilter = new IOFileFilterCreater("jar");
+            File[] t = f.listFiles(jarFilter);
+            for (int i = 0; i < t.length; i++) {
+                listFile(t[i], files);
+            }
+        } else {
+            files.add(f);
+//            System.out.println("fileName:" + f.getAbsolutePath() + "--parent:" + f.getParent());
         }
     }
 
