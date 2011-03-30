@@ -10,7 +10,7 @@ package com.soyostar.infomation;
  */
 public class SoftInformation {
 
-    public static final String chineseName = "SoyoMaker";//软件中文名
+    public static final String chineseName = "SoyoMaker游戏编辑器";//软件中文名
     public static final String author = "Soyostar";//软件作者
     public static final int majorVersion = 0;//主版本号：主版本号1位，只有当系统在结构和功能上有重大突破改进后才发生变化
     public static final int minorVersion = 01;//次版本号：次版本号有2位

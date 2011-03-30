@@ -78,14 +78,14 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     /** Creates new form MainFrame */
     public MainFrame() {
         long time = System.currentTimeMillis();
-        try {
-            if (PluginLoader.getInstance().readPlugin(this)) {
-                //载入插件
-                System.out.println("读取插件成功！");
-            }
-        } catch (IOException ex) {
-            Log.getLogger(MainFrame.class).error("插件读取异常！", ex);
+//        try {
+        if (PluginLoader.getInstance().readPlugin(this)) {
+            //载入插件
+            System.out.println("读取插件成功！");
         }
+//        } catch (IOException ex) {
+//            Log.getLogger(MainFrame.class).error("插件读取异常！", ex);
+//        }
 //        undoHandler = new UndoRedoHandler();
 //        undoSupport = new UndoableEditSupport();
 //        undoSupport.addUndoableEditListener(undoHandler);
@@ -1589,7 +1589,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
                 "地图为空，请先新建地图！");
             return;
         }
-        EditMapDialog emd = new EditMapDialog(this,true);
+        EditMapDialog emd = new EditMapDialog(this, true);
         emd.setVisible(true);
     }//GEN-LAST:event_editMapButtonActionPerformed
     private void systemTray() {
