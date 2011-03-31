@@ -10,7 +10,7 @@ public final class KeyValue {
 
 	public static final byte KEY_RIGHT = -4;// 右键
 
-	public static final byte KEY_FIRE = -5;// 中键
+	public static final byte KEY_MID = -5;// 中键
 
 	public static final byte KEY_LS = -6;// 左软键
 

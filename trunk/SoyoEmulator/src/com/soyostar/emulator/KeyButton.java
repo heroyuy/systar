@@ -7,11 +7,9 @@ import javax.swing.JButton;
 
 public class KeyButton extends JButton implements MouseListener {
 
-    private Emulator emulator = null;
     private int key = 0;
 
-    public KeyButton(Emulator emulator, int key) {
-        this.emulator = emulator;
+    public KeyButton(int key) {
         this.key = key;
         this.addMouseListener(this);
     }
