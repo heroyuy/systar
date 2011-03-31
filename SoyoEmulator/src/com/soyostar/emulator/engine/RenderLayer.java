@@ -37,10 +37,12 @@ public class RenderLayer extends Container implements MotionListener {
 
     @Override
     public void keyPressed(int key) {
+        System.out.println("keyPressed:"+key);
     }
 
     @Override
     public void keyReleased(int key) {
+        System.out.println("keyReleased:"+key);
     }
 
     public void onMotionDown(Motion m) {

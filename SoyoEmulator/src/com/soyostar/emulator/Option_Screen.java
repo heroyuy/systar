@@ -16,9 +16,12 @@ package com.soyostar.emulator;
  */
 public class Option_Screen extends javax.swing.JDialog {
 
+    private Emulator emulator = null;
+
     /** Creates new form Option_Screen */
-    public Option_Screen() {
+    public Option_Screen(Emulator emulator) {
         super();
+        this.emulator = emulator;
         initComponents();
     }
 
@@ -55,6 +58,11 @@ public class Option_Screen extends javax.swing.JDialog {
         });
 
         jButton2.setText("取消");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,7 +109,14 @@ public class Option_Screen extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        emulator.setEmulatorSize(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,7 +125,7 @@ public class Option_Screen extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                Option_Screen dialog = new Option_Screen();
+                Option_Screen dialog = new Option_Screen(new Emulator());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {
