@@ -46,7 +46,13 @@ public class Emulator extends javax.swing.JDialog {
         initComponents();
         view_Key = new View_Key();
         option_Key = new Option_Key();
-        option_Screen = new Option_Screen();
+        option_Screen = new Option_Screen(this);
+        startEmulator();
+    }
+
+    protected void setEmulatorSize(int width, int height) {
+        screen.setSize(width, height);
+        this.setSize(width, height);
     }
 
     /**

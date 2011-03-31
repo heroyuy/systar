@@ -11,17 +11,16 @@ import java.util.logging.Logger;
  */
 public class Main extends App {
 
-    private Display display = null;
     private GameEngine ge = null;
 
     public Main() {
-        display = Display.getDefaultDisplay();
         ge = GameEngine.getInstance();
         ge.setMain(this);
     }
 
     @Override
     public void start() {
+        System.out.println("startgame");
         if (ge.isRun()) {
             try {
                 throw new Exception("引擎已经启动");
