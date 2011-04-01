@@ -1,5 +1,6 @@
 package com.soyostar.emulator.engine;
 
+import com.soyostar.emulator.ScreenListener;
 import com.soyostar.ui.Container;
 import com.soyostar.ui.Motion;
 import com.soyostar.ui.MotionListener;
@@ -10,7 +11,7 @@ import java.awt.Color;
  *
  * 视图渲染层
  */
-public class RenderLayer extends Container implements MotionListener {
+public class RenderLayer extends Container implements MotionListener ,ScreenListener{
 
     private View curView = null;
     private GameEngine ge = null;
@@ -22,10 +23,14 @@ public class RenderLayer extends Container implements MotionListener {
         this.ge = ge;
     }
 
+    int test=0;
     @Override
     public void paint(Painter painter) {
+        System.out.println("paint");
         painter.setColor(Color.yellow);
         painter.fillRect(0, 0, getWidth(), getHeight());
+        painter.setColor(Color.blue);
+        painter.drawLine(10,10,10+test++,10);
         game = ge.getGame();
         if (game != null) {
             curView = game.getCurView();
@@ -55,5 +60,10 @@ public class RenderLayer extends Container implements MotionListener {
 
     public void onMotionUp(Motion m) {
          System.out.println("onMotionUp");
+    }
+
+    public void sizeChanged(int width, int height) {
+        this.setWidth(width);
+        this.setHeight(height);
     }
 }
