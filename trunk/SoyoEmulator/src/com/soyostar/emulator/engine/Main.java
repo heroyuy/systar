@@ -27,19 +27,24 @@ public class Main extends App {
             } catch (Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            
+        ge.start();
         }
-//        ge.start();
     }
 
     @Override
     public void stop() {
+        ge.exit();
     }
 
     @Override
     public void pause() {
+        ge.pause();
     }
 
     @Override
     public void resume() {
+        ge.resume();
     }
 }

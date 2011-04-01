@@ -47,12 +47,15 @@ public class Emulator extends javax.swing.JDialog {
         view_Key = new View_Key();
         option_Key = new Option_Key();
         option_Screen = new Option_Screen(this);
-        startEmulator();
+        setEmulatorSize(width,height);
     }
 
     protected void setEmulatorSize(int width, int height) {
         screen.setSize(width, height);
-        this.setSize(width, height);
+        this.setSize(width+18, height+63);
+        if(Display.getDefaultDisplay().getCurrentCanvas() instanceof ScreenListener){
+           ((ScreenListener)Display.getDefaultDisplay().getCurrentCanvas()).sizeChanged(width, height);
+        }
     }
 
     /**
@@ -70,22 +73,20 @@ public class Emulator extends javax.swing.JDialog {
      */
     public void exitEmulator() {
         stopEmulator();
-        setVisible(false);
+        this.setVisible(false);
     }
 
     /**
      * 启动模拟器
      */
-    private void startEmulator() {
+    public void startEmulator() {
         try {
             //注册游戏程序实例
             gameApp = (App) Class.forName("com.soyostar.emulator.engine.Main").newInstance();
             //启动游戏程序
             gameApp.start();
             //设置游戏视图为显示器大小
-
-            Display.getDefaultDisplay().getCurrentCanvas().setWidth(width);
-            Display.getDefaultDisplay().getCurrentCanvas().setHeight(height);
+            setEmulatorSize(width,height);
             //呈现游戏视图
             screen.add(Display.getDefaultDisplay().getCurrentCanvas().getView());
         } catch (InstantiationException ex) {
@@ -156,7 +157,7 @@ public class Emulator extends javax.swing.JDialog {
         jMenu1.setText("菜单");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("重启");
+        jMenuItem1.setText("启动");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -183,6 +184,7 @@ public class Emulator extends javax.swing.JDialog {
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setText("停止");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -254,7 +256,6 @@ public class Emulator extends javax.swing.JDialog {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        stopEmulator();
         startEmulator();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

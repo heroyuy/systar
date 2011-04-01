@@ -55,6 +55,10 @@ public final class GameEngine implements Runnable {
      */
     private volatile boolean isRun = false;
     /**
+     * 游戏挂起标识
+     */
+    private volatile boolean isSuspended = false;
+    /**
      * 程序入口的引用
      */
     private Main main = null;
@@ -132,22 +136,26 @@ public final class GameEngine implements Runnable {
     public void run() {
         try {
             while (isRun) {
+                System.out.println("Thread:"+Thread.currentThread().getName());
                 long time = System.currentTimeMillis();
-                curView = game.getCurView();
-                if (curView != null) {
-                    curView.dealGameEvent((Event) se.getEventQueue().poll());
-                    //处理游戏事件
-                    if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
-                        curView.dealGameEvent((Event) se.getEventQueue().poll());
-                    }
-                    //处理触屏事件
-                    curView.dealMotion();
-                    //处理按键事件
-                    curView.dealKeyEvent();
-                }
+                if (!isSuspended) {
 
-                // 渲染视图
-                renderLayer.repaint();
+//                curView = game.getCurView();
+//                if (curView != null) {
+//                    curView.dealGameEvent((Event) se.getEventQueue().poll());
+//                    //处理游戏事件
+//                    if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
+//                        curView.dealGameEvent((Event) se.getEventQueue().poll());
+//                    }
+//                    //处理触屏事件
+//                    curView.dealMotion();
+//                    //处理按键事件
+//                    curView.dealKeyEvent();
+//                }
+
+                    // 渲染视图
+                    renderLayer.repaint();
+                }
                 time = System.currentTimeMillis() - time;
 
                 // 循环等待
@@ -162,7 +170,6 @@ public final class GameEngine implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        main.stop();
     }
 
     protected void setKey(int key) {
@@ -190,14 +197,17 @@ public final class GameEngine implements Runnable {
      */
     public void start() {
         System.out.println("启动游戏引擎");
-        init();
-        if (game != null) {
-            se.start();
-            game.start();
-            new Thread(this).start();
-        } else {
-            main.stop();
-        }
+        isRun = true;
+        isSuspended=false;
+        new Thread(this).start();
+//        init();
+//        if (game != null) {
+//            se.start();
+//            game.start();
+//            new Thread(this).start();
+//        } else {
+//            main.stop();
+//        }
     }
 
     /**
@@ -206,5 +216,13 @@ public final class GameEngine implements Runnable {
      */
     public int getTicker() {
         return ticker;
+    }
+
+    public void pause() {
+        isSuspended = true;
+    }
+
+    public void resume() {
+        isSuspended = false;
     }
 }
