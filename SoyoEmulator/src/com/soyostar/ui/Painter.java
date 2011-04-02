@@ -31,6 +31,7 @@ public class Painter {
 
     protected void setGraphics(Graphics g) {
         this.g = g;
+        g.setFont(font);
     }
 
     protected Painter() {
@@ -45,15 +46,23 @@ public class Painter {
         g.setColor(color);
     }
 
-      public void drawString(String str, int x, int y, int anchor) {
+    public void setFontSize(int size) {
+        font = new Font(Font.DIALOG, font.getStyle(), size);
+        g.setFont(font);
+    }
+
+    public void setFontStyle(int style) {
+        font = new Font(Font.DIALOG, style, font.getSize());
+        g.setFont(font);
+    }
+
+    public void drawString(String str, int x, int y, int anchor) {
         FontMetrics fm = g.getFontMetrics();
         int w = fm.stringWidth(str);
         int h = fm.getHeight();
         int[] xy = convertOrdinate(x, y, w, h, anchor);
-        g.drawString(str, xy[0], xy[1]+fm.getHeight());
+        g.drawString(str, xy[0], xy[1] + fm.getHeight());
     }
-
-
 
     /**
      * 填充矩形区域
@@ -74,7 +83,6 @@ public class Painter {
         fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
     }
 
-   
     /**
      * 画直线
      * @param startX

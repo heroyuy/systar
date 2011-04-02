@@ -30,7 +30,8 @@ public class RenderLayer extends Container implements MotionListener ,ScreenList
         painter.setColor(Color.yellow);
         painter.fillRect(0, 0, getWidth(), getHeight());
         painter.setColor(Color.blue);
-        painter.drawLine(10,10,10+test++,10);
+        painter.setFontSize(test);
+        painter.drawString(++test+"",10,10,Painter.LT);
         game = ge.getGame();
         if (game != null) {
             curView = game.getCurView();
