@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Image;
 
 /**
  * 绘图类，相当于android的Canvas+Paint,j2me和swing中的Graphics
@@ -64,6 +63,18 @@ public class Painter {
         g.drawString(str, xy[0], xy[1] + fm.getHeight());
     }
 
+    public int stringWidth(String str){
+        return g.getFontMetrics().stringWidth(str);
+    }
+
+    public void drawImage(Image image, int x, int y, int anchor) {
+
+        int w = image.getWidth();
+        int h = image.getHeight();
+        int[] xy = convertOrdinate(x, y, w, h, anchor);
+        g.drawImage(image.getContext(), xy[0], xy[1], null);
+    }
+
     /**
      * 填充矩形区域
      * @param x
@@ -84,6 +95,45 @@ public class Painter {
     }
 
     /**
+     * 绘制矩形框
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
+    public void drawRect(int x, int y, int width, int height) {
+        g.drawRect(x, y, width, height);
+    }
+
+    /**
+     * 绘制矩形框
+     * @param rect
+     */
+    public void drawRect(Rect rect) {
+        drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+    }
+
+    public void drawRoundRect(int x, int y, int w, int h, int aw, int ah) {
+        g.drawRoundRect(x, y, w, h, aw, ah);
+
+    }
+
+    public void fillRoundRect(int x, int y, int w, int h, int aw, int ah) {
+        g.fillRoundRect(x, y, w, h, aw, ah);
+
+    }
+
+    public void drawRoundRect(Rect rect, int aw, int ah) {
+        g.drawRoundRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), aw, ah);
+
+    }
+
+    public void fillRoundRect(Rect rect, int aw, int ah) {
+        g.fillRoundRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), aw, ah);
+
+    }
+
+    /**
      * 画直线
      * @param startX
      * @param startY
@@ -101,6 +151,43 @@ public class Painter {
     public void drawLine(Line line) {
         g.drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(),
                 line.getEndPoint().getX(), line.getEndPoint().getY());
+    }
+
+    public void setClip(int x, int y, int w, int h) {
+        g.setClip(x, y, w, h);
+    }
+
+    public void drawRegion(Image src, int x_src, int y_src, int width, int height, int transform, int x_dest, int y_dest, int anchor) {
+        int[] xy = convertOrdinate(x_dest, y_dest, width, height, anchor);
+        Image temp = Image.createImage(width, height);
+        Graphics gg = temp.getPainter().g;
+        gg.drawImage(src.getContext(), 0, 0, width, height, x_src, y_src, x_src + width, y_src + height, null);
+        switch (transform) {
+            case Image.TRANS_NONE:
+                g.drawImage(temp.getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_MIRROR:
+                g.drawImage(Image.effect_mirror(temp).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_MIRROR_ROT180:
+                g.drawImage(Image.rotate(Image.effect_mirror(temp), 180).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_ROT180:
+                g.drawImage(Image.rotate(temp, 180).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_MIRROR_ROT270:
+                g.drawImage(Image.rotate(Image.effect_mirror(temp), 270).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_ROT270:
+                g.drawImage(Image.rotate(temp, 270).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_ROT90:
+                g.drawImage(Image.rotate(temp, 180).getContext(), xy[0], xy[1], null);
+                break;
+            case Image.TRANS_MIRROR_ROT90:
+                g.drawImage(Image.rotate(Image.effect_mirror(temp), 90).getContext(), xy[0], xy[1], null);
+                break;
+        }
     }
 
     /**

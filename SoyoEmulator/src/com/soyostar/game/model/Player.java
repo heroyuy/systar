@@ -1,8 +1,8 @@
 package com.soyostar.game.model;
 
 import com.soyostar.emulator.engine.script.ScriptEngine;
-
-
+import com.soyostar.emulator.framework.Tools;
+import com.soyostar.ui.Image;
 
 /**
  * 主角 cokey2
@@ -28,7 +28,7 @@ public final class Player extends Character {
     public int row = 10;// 角色所在行号
     public int col = 4;// 角色当前所在列号
     public int face = DOWN;// 面向
-    private EmulatorImage curCharImg = null;
+    private Image curCharImg = null;
     public int width = 16;// 角色宽度
     public int height = 24;// 角色高度
     private GameData gd = GameData.getGameData();
@@ -331,37 +331,37 @@ public final class Player extends Character {
         }
     }
 
-    public EmulatorImage getCurCharImg() {
+    public Image getCurCharImg() {
         return curCharImg;
     }
     /**
      * 上 00立正 01左脚 02右脚 下 10立正 11左脚 12右脚 左 20立正 21左脚 22右脚 右 30立正 31左脚 32右脚
      */
-    private EmulatorImage[][] steps = new EmulatorImage[4][3];
+    private Image[][] steps = new Image[4][3];
 
-    public void setCharImg(EmulatorImage img) {
+    public void setCharImg(Image img) {
         chaImage = img;
         width = img.getWidth() / 7;
         height = img.getHeight();
-        steps[0][0] = EmulatorImage.createImage(img, 0, 0, width, height, 0);// 上立正
-        steps[0][1] = EmulatorImage.createImage(img, width, 0, width, height, 2);// 上左脚
-        steps[0][2] = EmulatorImage.createImage(img, width, 0, width, height, 0);// 上右脚
+        steps[0][0] = Image.createImage(img, 0, 0, width, height, 0);// 上立正
+        steps[0][1] = Image.createImage(img, width, 0, width, height, 2);// 上左脚
+        steps[0][2] = Image.createImage(img, width, 0, width, height, 0);// 上右脚
 
-        steps[1][0] = EmulatorImage.createImage(img, width * 2, 0, width, height, 0);// 下立正
-        steps[1][1] = EmulatorImage.createImage(img, width * 3, 0, width, height, 2);// 下左脚
-        steps[1][2] = EmulatorImage.createImage(img, width * 3, 0, width, height, 0);// 下右脚
+        steps[1][0] = Image.createImage(img, width * 2, 0, width, height, 0);// 下立正
+        steps[1][1] = Image.createImage(img, width * 3, 0, width, height, 2);// 下左脚
+        steps[1][2] = Image.createImage(img, width * 3, 0, width, height, 0);// 下右脚
 
-        steps[2][0] = EmulatorImage.createImage(img, width * 4, 0, width, height, 0);// 左立正
-        steps[2][1] = EmulatorImage.createImage(img, width * 6, 0, width, height, 0);// 左左脚
-        steps[2][2] = EmulatorImage.createImage(img, width * 5, 0, width, height, 0);// 左右脚
+        steps[2][0] = Image.createImage(img, width * 4, 0, width, height, 0);// 左立正
+        steps[2][1] = Image.createImage(img, width * 6, 0, width, height, 0);// 左左脚
+        steps[2][2] = Image.createImage(img, width * 5, 0, width, height, 0);// 左右脚
 
-        steps[3][0] = EmulatorImage.createImage(img, width * 4, 0, width, height, 2);// 右立正
-        steps[3][1] = EmulatorImage.createImage(img, width * 6, 0, width, height, 2);// 右左脚
-        steps[3][2] = EmulatorImage.createImage(img, width * 5, 0, width, height, 2);// 右右脚
+        steps[3][0] = Image.createImage(img, width * 4, 0, width, height, 2);// 右立正
+        steps[3][1] = Image.createImage(img, width * 6, 0, width, height, 2);// 右左脚
+        steps[3][2] = Image.createImage(img, width * 5, 0, width, height, 2);// 右右脚
 
         curCharImg = steps[face][0];
     }
-    public EmulatorImage chaImage = null;
+    public Image chaImage = null;
 
     /**
      * 向上行走

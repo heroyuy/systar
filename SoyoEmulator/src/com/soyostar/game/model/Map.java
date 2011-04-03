@@ -1,7 +1,8 @@
 package com.soyostar.game.model;
 
 import com.soyostar.emulator.engine.script.Script;
-import java.awt.Graphics;
+import com.soyostar.ui.Image;
+import com.soyostar.ui.Painter;
 
 /**
  * 地图
@@ -11,7 +12,7 @@ public class Map {
     public int index;//编号
     public String name;//名称
     public String musicName;
-    public EmulatorImage image;//地图全图
+    public Image image;//地图全图
     public int layerNum;//图层数
     public int rowNum;//行数
     public int colNum;//列数
@@ -25,7 +26,7 @@ public class Map {
     public int x, y;//要绘制的地图region的x,y坐标
     private GameData gd = GameData.getGameData();
 
-    public void setImage(EmulatorImage image) {
+    public void setImage(Image image) {
         int width = image.getWidth();
         int height = image.getHeight();
         int maxRow = height / cellHeight;
@@ -36,8 +37,8 @@ public class Map {
         System.out.println("maxRow:" + maxRow);
         System.out.println("maxCol:" + maxCol);
         //正在修改
-        this.image = EmulatorImage.createImage(cellWidth * colNum, cellHeight * rowNum);
-        EmulatorGraphics g = new EmulatorGraphics(this.image.getGraphics());
+        this.image = Image.createImage(cellWidth * colNum, cellHeight * rowNum);
+        Painter painter = image.getPainter();
         for (int i = 0; i < layerNum; i++) {
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
@@ -49,8 +50,8 @@ public class Map {
 //                    System.out.println("row:" + row);
 //                    System.out.println("col" + col);
                     if (num != 0) {
-                        EmulatorImage tempImg = EmulatorImage.createImage(image, col * cellWidth, row * cellHeight, cellWidth, cellHeight, 0);
-                        g.drawImage(tempImg, k * cellWidth, j * cellHeight, 0);
+                        Image tempImg = Image.createImage(image, col * cellWidth, row * cellHeight, cellWidth, cellHeight, 0);
+                        painter.drawImage(tempImg, k * cellWidth, j * cellHeight, 0);
                     }
                 }
             }

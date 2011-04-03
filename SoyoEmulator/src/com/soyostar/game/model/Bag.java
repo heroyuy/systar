@@ -1,5 +1,6 @@
 package com.soyostar.game.model;
 
+import java.util.ArrayList;
 
 /**
  *
@@ -24,43 +25,47 @@ public class Bag {
             list[i] = new ArrayList();
         }
     }
-/**
- * 获取背包中的物品
- * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
- * @param index 物品的编号
- * @return 如果背包中有此物品则返回此物品，否则返回null
- */
+
+    /**
+     * 获取背包中的物品
+     * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
+     * @param index 物品的编号
+     * @return 如果背包中有此物品则返回此物品，否则返回null
+     */
     public BaseItem get(byte type, int index) {
-        if (list[type].has(index)) {
+        if (list[type].contains(index)) {
             return gd.gameObjectManager.getBaseItem(type, index);
         } else {
             return null;
         }
     }
-/**
- * 获取背包中的物品数量
- * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
- * @param index 物品的编号
- * @return 如果背包中有此物品则返回此物品，否则返回0
- */
+
+    /**
+     * 获取背包中的物品数量
+     * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
+     * @param index 物品的编号
+     * @return 如果背包中有此物品则返回此物品，否则返回0
+     */
     public int getNum(byte type, int index) {
         return gd.gameObjectManager.getBaseItem(type, index).num;
     }
-/**
- * 检查背包中是否有指定类型指定编号的物品
- * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
- * @param index 物品的编号
- * @return 如果背包中有此物品则返回true，否则返回false
- */
+
+    /**
+     * 检查背包中是否有指定类型指定编号的物品
+     * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
+     * @param index 物品的编号
+     * @return 如果背包中有此物品则返回true，否则返回false
+     */
     public boolean has(byte type, int index) {
-        return list[type].has(index);
+        return list[type].contains(index);
     }
-/**
- * 向背包中添加num个类型为type编号为index的物品
- * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
- * @param index 物品的编号
- * @param num 要添加的数量
- */
+
+    /**
+     * 向背包中添加num个类型为type编号为index的物品
+     * @param type 物品类型 可取Bag.ITEM Bag.EQUIP Bag.SKILL
+     * @param index 物品的编号
+     * @param num 要添加的数量
+     */
     public void add(byte type, int index, int num) {
         if (!has(type, index)) {
             list[type].add(index);
@@ -78,9 +83,12 @@ public class Bag {
         }
     }
 
-    public int[] getList(int type){
-        return list[type].toArray();
+    public int[] getList(int type) {
+        Integer[] temp = (Integer[]) list[type].toArray();
+        int[] res = new int[temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            res[i] = temp[i].intValue();
+        }
+        return res;
     }
-
-
 }
