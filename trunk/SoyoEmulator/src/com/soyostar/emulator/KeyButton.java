@@ -1,5 +1,6 @@
 package com.soyostar.emulator;
 
+import com.soyostar.ui.Display;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

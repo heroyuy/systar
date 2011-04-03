@@ -1,7 +1,8 @@
 package com.soyostar.emulator.engine;
 
-import com.soyostar.emulator.ScreenListener;
+
 import com.soyostar.ui.Container;
+import com.soyostar.ui.Display;
 import com.soyostar.ui.Motion;
 import com.soyostar.ui.MotionListener;
 import com.soyostar.ui.Painter;
@@ -11,7 +12,7 @@ import java.awt.Color;
  *
  * 视图渲染层
  */
-public class RenderLayer extends Container implements MotionListener ,ScreenListener{
+public class RenderLayer extends Container implements MotionListener ,Display.Callback{
 
     private View curView = null;
     private GameEngine ge = null;

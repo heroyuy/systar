@@ -1,7 +1,7 @@
 package com.soyostar.emulator.engine;
 
 import com.soyostar.emulator.framework.App;
-import com.soyostar.emulator.Display;
+import com.soyostar.ui.Display;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
