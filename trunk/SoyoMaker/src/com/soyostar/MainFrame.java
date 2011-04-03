@@ -10,7 +10,7 @@
  */
 package com.soyostar;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.dialog.AboutDialog;
 import com.soyostar.dialog.EditMapDialog;
 import com.soyostar.dialog.HelpDialog;
@@ -1208,25 +1208,25 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
 
     private void penButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penButtonActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_PEN;
+        data.currentPsType = Proxy.PS_PEN;
         penRadioMenuItem.setSelected(true);
     }//GEN-LAST:event_penButtonActionPerformed
 
     private void pourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pourButtonActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_FILL;
+        data.currentPsType = Proxy.PS_FILL;
         fillRadioMenuItem.setSelected(true);
     }//GEN-LAST:event_pourButtonActionPerformed
 
     private void eraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseButtonActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_ERASER;
+        data.currentPsType = Proxy.PS_ERASER;
         eraseRadioMenuItem.setSelected(true);
     }//GEN-LAST:event_eraseButtonActionPerformed
 
     private void chooseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseButtonActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_CHOOSE;
+        data.currentPsType = Proxy.PS_CHOOSE;
         chooseRadioMenuItem.setSelected(true);
     }//GEN-LAST:event_chooseButtonActionPerformed
 
@@ -1533,25 +1533,25 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
 
     private void penRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penRadioMenuItemActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_PEN;
+        data.currentPsType = Proxy.PS_PEN;
         penButton.setSelected(true);
     }//GEN-LAST:event_penRadioMenuItemActionPerformed
 
     private void fillRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillRadioMenuItemActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_FILL;
+        data.currentPsType = Proxy.PS_FILL;
         pourButton.setSelected(true);
     }//GEN-LAST:event_fillRadioMenuItemActionPerformed
 
     private void eraseRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseRadioMenuItemActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_ERASER;
+        data.currentPsType = Proxy.PS_ERASER;
         eraseButton.setSelected(true);
     }//GEN-LAST:event_eraseRadioMenuItemActionPerformed
 
     private void chooseRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRadioMenuItemActionPerformed
         // TODO add your handling code here:
-        data.currentPsType = GlobalData.PS_CHOOSE;
+        data.currentPsType = Proxy.PS_CHOOSE;
         chooseButton.setSelected(true);
     }//GEN-LAST:event_chooseRadioMenuItemActionPerformed
 
@@ -1665,7 +1665,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
             }
         });
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
     private LayerTableModel ltm = new LayerTableModel();
     private static String substance = "org.pushingpixels.substance.api.skin.SubstanceMarinerLookAndFeel";
 //    private static String substance = "org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFeel";//这里修改默认皮肤
@@ -1767,8 +1767,6 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private javax.swing.JMenuItem zoomOutMenuItem;
     private javax.swing.JMenuItem zoomReturnMenuItem;
     // End of variables declaration//GEN-END:variables
-//    private final UndoRedoHandler undoHandler;
-//    private final UndoableEditSupport undoSupport;
 
     public void mapChanged(MapChangedEvent e) {
     }

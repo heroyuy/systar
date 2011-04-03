@@ -4,7 +4,7 @@
  */
 package com.soyostar.undoredo;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.render.MapRender;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;

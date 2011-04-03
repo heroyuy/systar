@@ -6,7 +6,7 @@ package com.soyostar.model;
 
 import com.soyostar.model.map.TileSet;
 import com.soyostar.model.map.Layer;
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.listener.MapChangeListener;
 import com.soyostar.listener.MapChangedEvent;
 import com.soyostar.listener.TilesetChangeListener;
@@ -39,7 +39,7 @@ public class TileSetTableModel extends AbstractTableModel implements MapChangeLi
     public int getColumnCount() {
         return TILESET_COLUMN_NAME.length;
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.soyostar.data;
+package com.soyostar.proxy;
 
 import com.soyostar.MainFrame;
 import com.soyostar.brush.AbBrush;
@@ -24,9 +24,9 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author 全局数据
  */
-public class GlobalData {
+public class Proxy {
 
-    private static GlobalData data;
+    private static Proxy data;
     /**
      *
      */
@@ -56,12 +56,12 @@ public class GlobalData {
 //     */
 //    public static final int PS_EVENT = 5;
 
-    private GlobalData() {
+    private Proxy() {
     }
 
-    public synchronized static GlobalData getInstance() {
+    public synchronized static Proxy getInstance() {
         if (data == null) {
-            data = new GlobalData();
+            data = new Proxy();
         }
         return data;
     }

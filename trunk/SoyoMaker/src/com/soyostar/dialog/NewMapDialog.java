@@ -11,7 +11,7 @@
 package com.soyostar.dialog;
 
 import com.soyostar.MainFrame;
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.model.map.CollideLayer;
 import com.soyostar.model.map.Map;
 import com.soyostar.model.map.SpriteLayer;
@@ -324,7 +324,7 @@ public class NewMapDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
 
     /**
      * @param args the command line arguments

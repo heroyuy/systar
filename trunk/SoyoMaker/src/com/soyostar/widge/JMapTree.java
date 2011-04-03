@@ -4,7 +4,7 @@
  */
 package com.soyostar.widge;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.model.map.Map;
 import java.io.File;
 import java.util.Enumeration;
@@ -90,7 +90,7 @@ public class JMapTree extends JTree {
         //声明用来记录路径TreePath
         private TreePath tp;
         //处理选中某节点后发生事件的方法
-        private GlobalData data = GlobalData.getInstance();
+        private Proxy data = Proxy.getInstance();
 
         public void valueChanged(TreeSelectionEvent tse) {
             //获得根节点到选中节点的路径

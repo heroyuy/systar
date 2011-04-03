@@ -10,7 +10,7 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.model.TileSetTableModel;
 import com.soyostar.model.map.TileSet;
 import com.soyostar.util.Log;
@@ -122,7 +122,7 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
         int choose = JOptionPane.showConfirmDialog(this, "图集可能正在使用，你确定要删除吗？", "警告", JOptionPane.OK_CANCEL_OPTION);

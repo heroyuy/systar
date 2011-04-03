@@ -5,7 +5,7 @@
 package com.soyostar.widge;
 
 import com.soyostar.brush.CustomBrush;
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.listener.MapChangeListener;
 import com.soyostar.listener.MapChangedEvent;
 import com.soyostar.listener.TileRegionSelectionEvent;
@@ -105,7 +105,7 @@ public class TileSetTabbedPane extends JSnapTipTabbedPane implements TileSelecti
     /**
      *
      */
-    public GlobalData data = GlobalData.getInstance();
+    public Proxy data = Proxy.getInstance();
 
     public void tileSelected(TileSelectionEvent e) {
         data.setCurrentTile(e.getTile());

@@ -6,7 +6,7 @@ package com.soyostar.render;
 
 import com.soyostar.brush.CustomBrush;
 import com.soyostar.brush.IBrush;
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.dialog.EventManagerDialog;
 import com.soyostar.model.map.CollideLayer;
 import com.soyostar.model.map.Layer;
@@ -225,7 +225,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
             paintGrid(g2d);
         }
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
     private SelectionLayer cursorSelectionLayer = new SelectionLayer(1, 1); //当前选框
 
     /**
@@ -370,7 +370,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
             }
 
             switch (data.currentPsType) {
-                case GlobalData.PS_PEN:
+                case Proxy.PS_PEN:
                     if (data.getCurrentLayer() instanceof TileLayer) {
                         data.getBrush().startPaint(data.getCurrentMap(), tile.x, tile.y,
                             e.getButton(), data.getCurrentMap().indexOfLayer(data.getCurrentLayer()));
@@ -382,12 +382,12 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                     }
                     if (data.getCurrentLayer() instanceof SpriteLayer) {
                     }
-                case GlobalData.PS_ERASER:
-                case GlobalData.PS_FILL:
+                case Proxy.PS_ERASER:
+                case Proxy.PS_FILL:
                     paintEdit =
                         new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                     break;
-                case GlobalData.PS_CHOOSE:
+                case Proxy.PS_CHOOSE:
                     break;
 //                case GlobalData.PS_COLIIDE:
 //                    break;
@@ -428,7 +428,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     public void mouseReleased(MouseEvent e) {
         Point limp = mouseInitialPressLocation;
         switch (data.currentPsType) {
-            case GlobalData.PS_PEN:
+            case Proxy.PS_PEN:
                 if (data.getCurrentLayer() instanceof TileLayer) {
                     data.getBrush().endPaint();
                 }
@@ -438,11 +438,11 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                 if (data.getCurrentLayer() instanceof SpriteLayer) {
                 }
                 break;
-            case GlobalData.PS_ERASER:
+            case Proxy.PS_ERASER:
                 break;
-            case GlobalData.PS_CHOOSE:
+            case Proxy.PS_CHOOSE:
                 break;
-            case GlobalData.PS_FILL:
+            case Proxy.PS_FILL:
                 break;
 //            case GlobalData.PS_COLIIDE:
 //                break;
@@ -492,7 +492,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
         Point tile = screenToTileCoords(e.getX(), e.getY());
         if (mouseButton == MouseEvent.BUTTON1) {
             switch (data.currentPsType) {
-                case GlobalData.PS_PEN:
+                case Proxy.PS_PEN:
                     paintEdit.setPresentationName("绘制");
                     if (data.getBrush().isPaintingStarted()) {
                         try {
@@ -511,7 +511,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
 ////                        }
 //                    }
                     break;
-                case GlobalData.PS_ERASER:
+                case Proxy.PS_ERASER:
                     paintEdit.setPresentationName("擦除");
                     if (data.getCurrentLayer() instanceof TileLayer) {
                         ((TileLayer) data.getCurrentLayer()).setTileAt(tile.x, tile.y, null);
@@ -522,9 +522,9 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                         repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                     }
                     break;
-                case GlobalData.PS_CHOOSE:
+                case Proxy.PS_CHOOSE:
                     break;
-                case GlobalData.PS_FILL:
+                case Proxy.PS_FILL:
 //                    paintEdit.setPresentationName("填充");
                     paintEdit = null;
                     if (data.getCurrentLayer() instanceof TileLayer) {

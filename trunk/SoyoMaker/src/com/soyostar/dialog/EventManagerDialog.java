@@ -10,7 +10,7 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.model.map.SpriteLayer;
 import com.soyostar.model.script.Npc;
 import java.awt.Color;
@@ -533,7 +533,7 @@ public class EventManagerDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
 
