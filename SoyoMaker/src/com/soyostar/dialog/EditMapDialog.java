@@ -10,7 +10,7 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.project.Project;
 import java.io.File;
 import javax.swing.JOptionPane;
@@ -32,7 +32,7 @@ public class EditMapDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         init();
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
 
     private void init() {
         File file = new File(Project.getInstance().getPath() + File.separatorChar + "audio" + File.separatorChar + "music");

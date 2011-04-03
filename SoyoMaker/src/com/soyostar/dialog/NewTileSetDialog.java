@@ -10,7 +10,7 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.model.map.TileSet;
 import com.soyostar.project.Project;
 import com.soyostar.util.Log;
@@ -176,7 +176,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
 //        final String file = tilesetPathTextField.getText();
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
     private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
         // TODO add your handling code here:
         dispose();

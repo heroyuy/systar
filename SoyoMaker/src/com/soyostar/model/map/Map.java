@@ -28,6 +28,7 @@ public class Map {
     private int tileWidth, tileHeight;          //瓷砖大小
     private final List mapChangeListeners = new LinkedList();
     private Map parentMap;                      //父节点地图
+
     public Map() {
         tilesets = new ArrayList<TileSet>();
         layers = new ArrayList<Layer>();
@@ -566,8 +567,13 @@ public class Map {
      */
     public void removeLayer(Layer layer) {
         int index = layers.indexOf(layer);
-        layers.remove(layer);
-        fireLayerRemoved(index);
+        if (index != -1) {
+            layers.remove(index);
+            fireLayerRemoved(index);
+        } else {
+            System.out.println("删除图层失败:错误的图层！");
+        }
+
     }
 
     /**

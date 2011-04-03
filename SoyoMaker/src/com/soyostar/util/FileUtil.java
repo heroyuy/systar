@@ -91,7 +91,7 @@ public class FileUtil {
             System.out.println("创建目录" + destDirName + "成功！");
             return true;
         } else {
-            System.out.println("创建目录" + destDirName + "成功！");
+            System.out.println("创建目录" + destDirName + "失败！");
             return false;
         }
     }

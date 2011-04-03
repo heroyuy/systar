@@ -10,7 +10,7 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.plugin.Plugin;
 import com.soyostar.plugin.PluginLoader;
 import com.soyostar.util.Log;

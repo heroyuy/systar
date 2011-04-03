@@ -4,7 +4,7 @@
  */
 package com.soyostar.model;
 
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -33,7 +33,7 @@ public class LayerTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return LAYER_COLUMN_NAME.length;
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {

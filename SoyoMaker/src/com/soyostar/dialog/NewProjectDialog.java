@@ -11,7 +11,7 @@
 package com.soyostar.dialog;
 
 import com.soyostar.MainFrame;
-import com.soyostar.data.GlobalData;
+import com.soyostar.proxy.Proxy;
 import com.soyostar.project.Project;
 import com.soyostar.project.ProjectManager;
 import com.soyostar.util.FileUtil;
@@ -181,7 +181,7 @@ public class NewProjectDialog extends javax.swing.JDialog {
         }
 
     }
-    private GlobalData data = GlobalData.getInstance();
+    private Proxy data = Proxy.getInstance();
 
     /**
      * @param args the command line arguments
