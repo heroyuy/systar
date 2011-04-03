@@ -1,6 +1,6 @@
 package com.soyostar.emulator.engine;
 
-import com.soyostar.emulator.Display;
+import com.soyostar.ui.Display;
 import com.soyostar.emulator.engine.script.Event;
 import com.soyostar.emulator.engine.script.ScriptEngine;
 

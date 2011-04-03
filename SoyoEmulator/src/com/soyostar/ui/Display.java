@@ -1,4 +1,4 @@
-package com.soyostar.emulator;
+package com.soyostar.ui;
 
 import com.soyostar.ui.Component;
 
@@ -20,5 +20,10 @@ public class Display {
     }
 
     private Display() {
+    }
+
+    public  interface Callback {
+
+        public void sizeChanged(int width, int height);
     }
 }

@@ -10,6 +10,7 @@
  */
 package com.soyostar.emulator;
 
+import com.soyostar.ui.Display;
 import com.soyostar.emulator.framework.App;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,14 +48,14 @@ public class Emulator extends javax.swing.JDialog {
         view_Key = new View_Key();
         option_Key = new Option_Key();
         option_Screen = new Option_Screen(this);
-        setEmulatorSize(width,height);
+        setEmulatorSize(width, height);
     }
 
     protected void setEmulatorSize(int width, int height) {
         screen.setSize(width, height);
-        this.setSize(width+18, height+63);
-        if(Display.getDefaultDisplay().getCurrentCanvas() instanceof ScreenListener){
-           ((ScreenListener)Display.getDefaultDisplay().getCurrentCanvas()).sizeChanged(width, height);
+        this.setSize(width + 18, height + 63);
+        if (Display.getDefaultDisplay().getCurrentCanvas() instanceof Display.Callback) {
+            ((Display.Callback) Display.getDefaultDisplay().getCurrentCanvas()).sizeChanged(width, height);
         }
     }
 
@@ -86,7 +87,7 @@ public class Emulator extends javax.swing.JDialog {
             //启动游戏程序
             gameApp.start();
             //设置游戏视图为显示器大小
-            setEmulatorSize(width,height);
+            setEmulatorSize(width, height);
             //呈现游戏视图
             screen.add(Display.getDefaultDisplay().getCurrentCanvas().getView());
         } catch (InstantiationException ex) {
