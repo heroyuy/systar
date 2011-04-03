@@ -1,8 +1,7 @@
 package com.soyostar.game.model;
 
-import emulator.EmulatorFont;
 import java.util.Vector;
-import model.manager.GameObjectManager;
+import com.soyostar.game.model.manager.GameObjectManager;
 
 /**
  *
@@ -20,7 +19,6 @@ public class GameData {
      * 编号0-99的100个变量
      */
     public int[] vars = new int[100];
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
     //公共资源
     public int screenWidth = 240;
     public int screenHeight = 320;
@@ -131,18 +129,17 @@ public class GameData {
         int row = content.length() / num + 1;//要显示的行数
         Vector v = new Vector();
         int p = 0, q = 0;
-        EmulatorFont f = Const.Font.FONTSMALL_PLAIN;
         String temp = null;
         while (p < content.length()) {
             if (q == content.length()) {
                 v.addElement(content.substring(p, q));
                 p = q;
-            }else{
-                temp=content.substring(p, q);
-                if(f.stringWidth(temp)>screenWidth-20){
-                    v.addElement(content.substring(p, q-1));
-                    p=q-1;
-                }else{
+            } else {
+                temp = content.substring(p, q);
+                if (f.stringWidth(temp) > screenWidth - 20) {
+                    v.addElement(content.substring(p, q - 1));
+                    p = q - 1;
+                } else {
                     q++;
                 }
             }
@@ -150,10 +147,10 @@ public class GameData {
         }
         dialog_content = new String[v.size()];
         for (int i = 0; i < dialog_content.length; i++) {
-            dialog_content[i]=(String) v.elementAt(i);
+            dialog_content[i] = (String) v.elementAt(i);
         }
         v.removeAllElements();
-        v=null;
+        v = null;
     }
 
     private GameData() {

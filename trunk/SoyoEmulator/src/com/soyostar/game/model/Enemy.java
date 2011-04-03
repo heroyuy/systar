@@ -1,5 +1,8 @@
 package com.soyostar.game.model;
 
+import com.soyostar.emulator.framework.Tools;
+import com.soyostar.ui.Image;
+
 
 /**
  * 敌人
@@ -9,7 +12,7 @@ public class Enemy extends Character {
     public int index = 0;//编号
 //    private String Property; //怪物属性 元素相克 金木水火土
     private boolean isDead = false;//生存状态
-    public EmulatorImage BattImg = null;//战斗图
+    public Image BattImg = null;//战斗图
     public int[] skillList;
     /**********************************************/
     public int BattX, BattY;//战斗时坐标
