@@ -109,7 +109,7 @@ public final class GameEngine implements Runnable {
         System.out.println("初始化游戏实例");
         isRun = true;
         try {
-            game = (Game) Class.forName("game.RpgGame").newInstance();
+            game = (Game) Class.forName("com.soyostar.game.RpgGame").newInstance();
         } catch (InstantiationException ex) {
             ex.printStackTrace();
         } catch (IllegalAccessException ex) {
@@ -136,22 +136,22 @@ public final class GameEngine implements Runnable {
     public void run() {
         try {
             while (isRun) {
-                System.out.println("Thread:"+Thread.currentThread().getName());
+                System.out.println("Thread:" + Thread.currentThread().getName());
                 long time = System.currentTimeMillis();
                 if (!isSuspended) {
 
-//                curView = game.getCurView();
-//                if (curView != null) {
-//                    curView.dealGameEvent((Event) se.getEventQueue().poll());
-//                    //处理游戏事件
-//                    if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
-//                        curView.dealGameEvent((Event) se.getEventQueue().poll());
-//                    }
-//                    //处理触屏事件
-//                    curView.dealMotion();
-//                    //处理按键事件
-//                    curView.dealKeyEvent();
-//                }
+                    curView = game.getCurView();
+                    if (curView != null) {
+                        curView.dealGameEvent((Event) se.getEventQueue().poll());
+                        //处理游戏事件
+                        if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
+                            curView.dealGameEvent((Event) se.getEventQueue().poll());
+                        }
+                        //处理触屏事件
+                        curView.dealMotion();
+                        //处理按键事件
+                        curView.dealKeyEvent();
+                    }
 
                     // 渲染视图
                     renderLayer.repaint();
@@ -198,16 +198,15 @@ public final class GameEngine implements Runnable {
     public void start() {
         System.out.println("启动游戏引擎");
         isRun = true;
-        isSuspended=false;
-        new Thread(this).start();
-//        init();
-//        if (game != null) {
-//            se.start();
-//            game.start();
-//            new Thread(this).start();
-//        } else {
-//            main.stop();
-//        }
+        isSuspended = false;
+        init();
+        if (game != null) {
+            se.start();
+            game.start();
+            new Thread(this).start();
+        } else {
+            main.stop();
+        }
     }
 
     /**
