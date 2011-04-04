@@ -6,9 +6,12 @@ package com.soyostar.pluginimpl.sprite.widge;
 
 import com.soyostar.pluginimpl.sprite.model.Animation;
 import com.soyostar.pluginimpl.sprite.model.Frame;
+import com.soyostar.pluginimpl.sprite.util.ActionFrameSelection;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.event.MouseEvent;
@@ -19,7 +22,7 @@ import javax.swing.event.MouseInputListener;
  *
  * @author Administrator
  */
-public class FrameViewPane extends JPanel  implements  DragGestureListener {
+public class FrameViewPane extends JPanel implements DragGestureListener {
 
     private int selectedIndex = -1;
     private Dimension viewSize = new Dimension(128, 128);
@@ -109,6 +112,9 @@ public class FrameViewPane extends JPanel  implements  DragGestureListener {
     }
 
     public void dragGestureRecognized(DragGestureEvent dge) {
-
+        if (getSelectedFrame() != null) {
+            Transferable transferable = new ActionFrameSelection(getSelectedFrame());
+            dge.startDrag(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR), transferable);
+        }
     }
 }

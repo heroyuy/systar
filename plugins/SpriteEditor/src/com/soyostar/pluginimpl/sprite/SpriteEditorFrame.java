@@ -26,12 +26,14 @@ import com.soyostar.pluginimpl.sprite.listener.FrameChangedEvent;
 import com.soyostar.pluginimpl.sprite.listener.LayerChangeListener;
 import com.soyostar.pluginimpl.sprite.listener.LayerChangedEvent;
 import com.soyostar.pluginimpl.sprite.model.Action;
+import com.soyostar.pluginimpl.sprite.model.ActionTableModel;
 import com.soyostar.pluginimpl.sprite.model.Animation;
 import com.soyostar.pluginimpl.sprite.model.Frame;
 import com.soyostar.pluginimpl.sprite.model.FrameTableModel;
 import com.soyostar.pluginimpl.sprite.model.Layer;
 import com.soyostar.pluginimpl.sprite.model.LayerTableModel;
 import com.soyostar.pluginimpl.sprite.model.ModuleLayer;
+import com.soyostar.pluginimpl.sprite.model.SequenceTableModel;
 import com.soyostar.pluginimpl.sprite.model.TileSet;
 import com.soyostar.project.Project;
 import com.soyostar.util.Log;
@@ -73,6 +75,9 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         DragSource dragSource = DragSource.getDefaultDragSource();
         dragSource.createDefaultDragGestureRecognizer(tileSetEditPane, DnDConstants.ACTION_COPY_OR_MOVE, mema);
         DropTarget dropTarget = new DropTarget(frameEditPane, DnDConstants.ACTION_COPY, frameEditPane);
+        DragSource dragSourceAction = DragSource.getDefaultDragSource();
+        dragSourceAction.createDefaultDragGestureRecognizer(this.frameViewPane, DnDConstants.ACTION_COPY_OR_MOVE, this.frameViewPane);
+        DropTarget dropTargetAction = new DropTarget(this.actionViewPane, DnDConstants.ACTION_COPY, this.actionViewPane);
     }
 
     /** This method is called from within the constructor to
@@ -111,8 +116,6 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         upLayerButton = new javax.swing.JButton();
         downLayerButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        frameZoomInButton = new javax.swing.JButton();
-        frameZoomOutButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         layerTable = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -136,19 +139,18 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         jPanel9 = new javax.swing.JPanel();
         jSplitPane6 = new javax.swing.JSplitPane();
         jPanel11 = new javax.swing.JPanel();
-        jToolBar4 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        sequenceTable = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
         jSplitPane7 = new javax.swing.JSplitPane();
         jPanel13 = new javax.swing.JPanel();
-        actionViewPane1 = new com.soyostar.pluginimpl.sprite.widge.ActionViewPane();
+        actionViewPane = new com.soyostar.pluginimpl.sprite.widge.ActionViewPane();
         jPanel14 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        actionTable = new javax.swing.JTable();
         jToolBar3 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
+        addActionButton = new javax.swing.JButton();
+        removeActionButton = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         frameViewPane = new com.soyostar.pluginimpl.sprite.widge.FrameViewPane();
@@ -305,7 +307,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         jPanel5.setName("jPanel5"); // NOI18N
 
-        jSplitPane3.setResizeWeight(0.5);
+        jSplitPane3.setResizeWeight(0.7);
         jSplitPane3.setName("jSplitPane3"); // NOI18N
         jSplitPane3.setOneTouchExpandable(true);
 
@@ -371,30 +373,6 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         jSeparator1.setName("jSeparator1"); // NOI18N
         jToolBar1.add(jSeparator1);
 
-        frameZoomInButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/pluginimpl/sprite/resources/15.PNG"))); // NOI18N
-        frameZoomInButton.setFocusable(false);
-        frameZoomInButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        frameZoomInButton.setName("frameZoomInButton"); // NOI18N
-        frameZoomInButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        frameZoomInButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frameZoomInButtonActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(frameZoomInButton);
-
-        frameZoomOutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/pluginimpl/sprite/resources/14.PNG"))); // NOI18N
-        frameZoomOutButton.setFocusable(false);
-        frameZoomOutButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        frameZoomOutButton.setName("frameZoomOutButton"); // NOI18N
-        frameZoomOutButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        frameZoomOutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frameZoomOutButtonActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(frameZoomOutButton);
-
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
         layerTable.setModel(ltm);
@@ -418,7 +396,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
         );
 
         jSplitPane4.setBottomComponent(jPanel6);
@@ -441,7 +419,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         );
         frameEditPaneLayout.setVerticalGroup(
             frameEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -646,46 +624,21 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         jPanel11.setName("jPanel11"); // NOI18N
 
-        jToolBar4.setFloatable(false);
-        jToolBar4.setRollover(true);
-        jToolBar4.setName("jToolBar4"); // NOI18N
-
-        jButton1.setText("jButton1");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(jButton1);
-
         jScrollPane9.setName("jScrollPane9"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane9.setViewportView(jTable1);
+        sequenceTable.setModel(stm);
+        sequenceTable.setName("sequenceTable"); // NOI18N
+        jScrollPane9.setViewportView(sequenceTable);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
             .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
+            .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
         );
 
         jSplitPane6.setLeftComponent(jPanel11);
@@ -697,16 +650,16 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         jPanel13.setName("jPanel13"); // NOI18N
 
-        actionViewPane1.setName("actionViewPane1"); // NOI18N
+        actionViewPane.setName("actionViewPane"); // NOI18N
 
-        javax.swing.GroupLayout actionViewPane1Layout = new javax.swing.GroupLayout(actionViewPane1);
-        actionViewPane1.setLayout(actionViewPane1Layout);
-        actionViewPane1Layout.setHorizontalGroup(
-            actionViewPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout actionViewPaneLayout = new javax.swing.GroupLayout(actionViewPane);
+        actionViewPane.setLayout(actionViewPaneLayout);
+        actionViewPaneLayout.setHorizontalGroup(
+            actionViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 483, Short.MAX_VALUE)
         );
-        actionViewPane1Layout.setVerticalGroup(
-            actionViewPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        actionViewPaneLayout.setVerticalGroup(
+            actionViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 423, Short.MAX_VALUE)
         );
 
@@ -714,11 +667,11 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(actionViewPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(actionViewPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(actionViewPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(actionViewPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jSplitPane7.setLeftComponent(jPanel13);
@@ -727,30 +680,32 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         jScrollPane8.setName("jScrollPane8"); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable2.setName("jTable2"); // NOI18N
-        jScrollPane8.setViewportView(jTable2);
+        actionTable.setModel(atm);
+        actionTable.setName("actionTable"); // NOI18N
+        jScrollPane8.setViewportView(actionTable);
 
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
         jToolBar3.setName("jToolBar3"); // NOI18N
 
-        jButton2.setText("jButton2");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar3.add(jButton2);
+        addActionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/pluginimpl/sprite/resources/gnome-new.png"))); // NOI18N
+        addActionButton.setFocusable(false);
+        addActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addActionButton.setName("addActionButton"); // NOI18N
+        addActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionButtonActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(addActionButton);
+
+        removeActionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/pluginimpl/sprite/resources/gnome-delete.png"))); // NOI18N
+        removeActionButton.setFocusable(false);
+        removeActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeActionButton.setName("removeActionButton"); // NOI18N
+        removeActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(removeActionButton);
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -764,7 +719,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
         );
 
         jSplitPane7.setRightComponent(jPanel14);
@@ -1218,20 +1173,23 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         tileSetEditPane.setSelectedIndex(-1);
     }//GEN-LAST:event_eraserToggleButtonActionPerformed
 
-    private void frameZoomInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameZoomInButtonActionPerformed
-        // TODO add your handling code here:
-        frameEditPane.zoomUp();
-    }//GEN-LAST:event_frameZoomInButtonActionPerformed
-
-    private void frameZoomOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameZoomOutButtonActionPerformed
-        // TODO add your handling code here:
-        frameEditPane.zoomDown();
-    }//GEN-LAST:event_frameZoomOutButtonActionPerformed
-
     private void frameViewPaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameViewPaneMousePressed
         // TODO add your handling code here:
         frameViewPane.setSelectedFrame(evt.getX(), evt.getY());
     }//GEN-LAST:event_frameViewPaneMousePressed
+
+    private void addActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionButtonActionPerformed
+        // TODO add your handling code here:
+        Action act = new Action();
+        act.setName("新建动作");
+        Animation.getInstance().addAction(act);
+        addAction();
+    }//GEN-LAST:event_addActionButtonActionPerformed
+    public void addAction() {
+        actionTable.getSelectionModel().setSelectionInterval(Animation.getInstance().getActionsCount() - 1,
+            Animation.getInstance().getActionsCount() - 1);
+        currentActionIndex = Animation.getInstance().getActionsCount() - 1;
+    }
 
     /**
      * @param args the command line arguments
@@ -1254,6 +1212,24 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
             }
         });
     }
+    private int currentActionIndex = -1;
+
+    public int getCurrentActionIndex() {
+        return currentActionIndex;
+    }
+
+    public void setCurrentActionIndex(int currentActionIndex) {
+        this.currentActionIndex = currentActionIndex;
+    }
+    private int currentSequenceIndex = -1;
+
+    public int getCurrentSequenceIndex() {
+        return currentSequenceIndex;
+    }
+
+    public void setCurrentSequenceIndex(int currentSequenceIndex) {
+        this.currentSequenceIndex = currentSequenceIndex;
+    }
     private int currentFrameIndex = -1;
 
     public void setCurrentFrameIndex(int currentFrameIndex) {
@@ -1274,13 +1250,17 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     }
     private TileSetEditMouseAdapter mema;
     private FrameEditMouseAdapter fema;
+    private ActionTableModel atm = new ActionTableModel();
+    private SequenceTableModel stm = new SequenceTableModel();
     private FrameTableModel ftm = new FrameTableModel();
     private LayerTableModel ltm = new LayerTableModel();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JToolBar ToolBar;
     private javax.swing.JMenuItem aboutMenuItem;
-    private com.soyostar.pluginimpl.sprite.widge.ActionViewPane actionViewPane1;
+    private javax.swing.JTable actionTable;
+    private com.soyostar.pluginimpl.sprite.widge.ActionViewPane actionViewPane;
+    private javax.swing.JButton addActionButton;
     private javax.swing.JButton addFrameButton;
     private javax.swing.JButton addImageButton;
     private javax.swing.JButton addlayerButton;
@@ -1293,14 +1273,10 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     private com.soyostar.pluginimpl.sprite.widge.FrameEditPane frameEditPane;
     public javax.swing.JTable frameTable;
     private com.soyostar.pluginimpl.sprite.widge.FrameViewPane frameViewPane;
-    private javax.swing.JButton frameZoomInButton;
-    private javax.swing.JButton frameZoomOutButton;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JButton imagePropertyButton;
     private javax.swing.JToolBar imageToolBar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1332,12 +1308,9 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     private javax.swing.JSplitPane jSplitPane6;
     private javax.swing.JSplitPane jSplitPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
-    private javax.swing.JToolBar jToolBar4;
     public javax.swing.JTable layerTable;
     private javax.swing.JToolBar leftSideToolBar;
     private javax.swing.JButton newAniButton;
@@ -1345,11 +1318,13 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     private javax.swing.JButton openAniButton;
     private javax.swing.JMenuItem openAniMenuItem;
     private javax.swing.JToggleButton penToggleButton;
+    private javax.swing.JButton removeActionButton;
     private javax.swing.JButton removeFrameButton;
     private javax.swing.JButton removeImageButton;
     private javax.swing.JButton removeLayerButton;
     private javax.swing.JButton saveAniButton;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JTable sequenceTable;
     private javax.swing.JMenu setMenu;
     private com.soyostar.pluginimpl.sprite.widge.TileSetEditPane tileSetEditPane;
     private com.soyostar.pluginimpl.sprite.widge.TileSetViewPane tileSetViewPane;
@@ -1371,9 +1346,13 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     }
 
     public void actionAdded(AnimationChangedEvent e, Action action) {
+        actionTable.updateUI();
+        sequenceTable.updateUI();
     }
 
     public void actionRemoved(AnimationChangedEvent e, int index) {
+        actionTable.updateUI();
+        sequenceTable.updateUI();
     }
 
     public void tileSetAdded(AnimationChangedEvent e, TileSet tileset) {

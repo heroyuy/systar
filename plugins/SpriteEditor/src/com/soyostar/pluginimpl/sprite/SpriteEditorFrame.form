@@ -397,7 +397,7 @@
                       <SubComponents>
                         <Container class="javax.swing.JSplitPane" name="jSplitPane3">
                           <Properties>
-                            <Property name="resizeWeight" type="double" value="0.5"/>
+                            <Property name="resizeWeight" type="double" value="0.7"/>
                             <Property name="name" type="java.lang.String" value="jSplitPane3" noResource="true"/>
                             <Property name="oneTouchExpandable" type="boolean" value="true"/>
                           </Properties>
@@ -441,7 +441,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane3" pref="75" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane3" pref="81" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -516,34 +516,6 @@
                                           <Properties>
                                             <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
                                           </Properties>
-                                        </Component>
-                                        <Component class="javax.swing.JButton" name="frameZoomInButton">
-                                          <Properties>
-                                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                              <Image iconType="3" name="/com/soyostar/pluginimpl/sprite/resources/15.PNG"/>
-                                            </Property>
-                                            <Property name="focusable" type="boolean" value="false"/>
-                                            <Property name="horizontalTextPosition" type="int" value="0"/>
-                                            <Property name="name" type="java.lang.String" value="frameZoomInButton" noResource="true"/>
-                                            <Property name="verticalTextPosition" type="int" value="3"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="frameZoomInButtonActionPerformed"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="javax.swing.JButton" name="frameZoomOutButton">
-                                          <Properties>
-                                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                              <Image iconType="3" name="/com/soyostar/pluginimpl/sprite/resources/14.PNG"/>
-                                            </Property>
-                                            <Property name="focusable" type="boolean" value="false"/>
-                                            <Property name="horizontalTextPosition" type="int" value="0"/>
-                                            <Property name="name" type="java.lang.String" value="frameZoomOutButton" noResource="true"/>
-                                            <Property name="verticalTextPosition" type="int" value="3"/>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="frameZoomOutButtonActionPerformed"/>
-                                          </Events>
                                         </Component>
                                       </SubComponents>
                                     </Container>
@@ -631,7 +603,7 @@
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <EmptySpace min="0" pref="336" max="32767" attributes="0"/>
+                                                  <EmptySpace min="0" pref="330" max="32767" attributes="0"/>
                                               </Group>
                                             </DimensionLayout>
                                           </Layout>
@@ -948,41 +920,16 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jToolBar4" alignment="0" pref="330" max="32767" attributes="0"/>
                                   <Component id="jScrollPane9" alignment="1" pref="330" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jToolBar4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPane9" pref="396" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jScrollPane9" alignment="1" pref="425" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Container class="javax.swing.JToolBar" name="jToolBar4">
-                              <Properties>
-                                <Property name="floatable" type="boolean" value="false"/>
-                                <Property name="rollover" type="boolean" value="true"/>
-                                <Property name="name" type="java.lang.String" value="jToolBar4" noResource="true"/>
-                              </Properties>
-
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-                              <SubComponents>
-                                <Component class="javax.swing.JButton" name="jButton1">
-                                  <Properties>
-                                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                                    <Property name="focusable" type="boolean" value="false"/>
-                                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                                    <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
-                                    <Property name="verticalTextPosition" type="int" value="3"/>
-                                  </Properties>
-                                </Component>
-                              </SubComponents>
-                            </Container>
                             <Container class="javax.swing.JScrollPane" name="jScrollPane9">
                               <Properties>
                                 <Property name="name" type="java.lang.String" value="jScrollPane9" noResource="true"/>
@@ -990,17 +937,12 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTable" name="jTable1">
+                                <Component class="javax.swing.JTable" name="sequenceTable">
                                   <Properties>
-                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                      <Table columnCount="4" rowCount="4">
-                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                                      </Table>
+                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                      <Connection code="stm" type="code"/>
                                     </Property>
-                                    <Property name="name" type="java.lang.String" value="jTable1" noResource="true"/>
+                                    <Property name="name" type="java.lang.String" value="sequenceTable" noResource="true"/>
                                   </Properties>
                                 </Component>
                               </SubComponents>
@@ -1051,19 +993,19 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="actionViewPane1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="actionViewPane" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="actionViewPane1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="actionViewPane" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Container class="com.soyostar.pluginimpl.sprite.widge.ActionViewPane" name="actionViewPane1">
+                                    <Container class="com.soyostar.pluginimpl.sprite.widge.ActionViewPane" name="actionViewPane">
                                       <Properties>
-                                        <Property name="name" type="java.lang.String" value="actionViewPane1" noResource="true"/>
+                                        <Property name="name" type="java.lang.String" value="actionViewPane" noResource="true"/>
                                       </Properties>
 
                                       <Layout>
@@ -1103,7 +1045,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jToolBar3" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane8" pref="394" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane8" pref="392" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -1119,17 +1061,18 @@
 
                                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                       <SubComponents>
-                                        <Component class="javax.swing.JTable" name="jTable2">
+                                        <Component class="javax.swing.JTable" name="actionTable">
                                           <Properties>
-                                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                              <Table columnCount="4" rowCount="4">
-                                                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                                              </Table>
+                                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                              <Connection code="atm" type="code"/>
                                             </Property>
-                                            <Property name="name" type="java.lang.String" value="jTable2" noResource="true"/>
+                                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                                              <TableColumnModel selectionModel="0"/>
+                                            </Property>
+                                            <Property name="name" type="java.lang.String" value="actionTable" noResource="true"/>
+                                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                                            </Property>
                                           </Properties>
                                         </Component>
                                       </SubComponents>
@@ -1143,12 +1086,28 @@
 
                                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                                       <SubComponents>
-                                        <Component class="javax.swing.JButton" name="jButton2">
+                                        <Component class="javax.swing.JButton" name="addActionButton">
                                           <Properties>
-                                            <Property name="text" type="java.lang.String" value="jButton2"/>
+                                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                              <Image iconType="3" name="/com/soyostar/pluginimpl/sprite/resources/gnome-new.png"/>
+                                            </Property>
                                             <Property name="focusable" type="boolean" value="false"/>
                                             <Property name="horizontalTextPosition" type="int" value="0"/>
-                                            <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                                            <Property name="name" type="java.lang.String" value="addActionButton" noResource="true"/>
+                                            <Property name="verticalTextPosition" type="int" value="3"/>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addActionButtonActionPerformed"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="javax.swing.JButton" name="removeActionButton">
+                                          <Properties>
+                                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                              <Image iconType="3" name="/com/soyostar/pluginimpl/sprite/resources/gnome-delete.png"/>
+                                            </Property>
+                                            <Property name="focusable" type="boolean" value="false"/>
+                                            <Property name="horizontalTextPosition" type="int" value="0"/>
+                                            <Property name="name" type="java.lang.String" value="removeActionButton" noResource="true"/>
                                             <Property name="verticalTextPosition" type="int" value="3"/>
                                           </Properties>
                                         </Component>
