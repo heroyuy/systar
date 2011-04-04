@@ -4,6 +4,8 @@
  */
 package com.soyostar.pluginimpl.sprite.widge;
 
+import com.soyostar.pluginimpl.sprite.data.Proxy;
+import com.soyostar.pluginimpl.sprite.model.Action;
 import com.soyostar.pluginimpl.sprite.model.Frame;
 import com.soyostar.pluginimpl.sprite.model.Sequence;
 import com.soyostar.pluginimpl.sprite.util.ActionFrameSelection;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
  */
 public class ActionViewPane extends JPanel implements DropTargetListener, Runnable {
 
-    private Sequence sequence;
+    private Action action;
     private boolean isCircle = true;//循环播放
     private boolean isPlay = false;//播放标志
 
@@ -40,6 +42,14 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
         if (isPlay) {
         } else {
         }
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     /**
@@ -76,22 +86,25 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
     }
 
     public void drop(DropTargetDropEvent dtde) {
-
-        try {
-            Transferable transferable = dtde.getTransferable();
-            Object o = transferable.getTransferData(ActionFrameSelection.FRAME_FLAVOR);
-            if (o != null) {
-                if (o instanceof Frame) {
-//                        Frame m = (Frame) o;
-//                        Data.getInstance().getCurAction().addSequence(m, 0, 0);
-                    System.out.println("add frame");
+        if (action != null) {
+            try {
+                Transferable transferable = dtde.getTransferable();
+                Object o = transferable.getTransferData(ActionFrameSelection.FRAME_FLAVOR);
+                if (o != null) {
+                    if (o instanceof Frame) {
+                        Frame m = (Frame) o;
+                        Sequence seq = new Sequence();
+                        seq.setFrame(m);
+                        seq.setName("新建序列");
+                        action.addSequence(seq);
+                        System.out.println("add frame");
+                    }
                 }
+                dtde.dropComplete(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            dtde.dropComplete(true);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
     }
 
     public void run() {
