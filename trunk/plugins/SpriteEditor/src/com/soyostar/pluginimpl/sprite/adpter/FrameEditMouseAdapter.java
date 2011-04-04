@@ -46,10 +46,10 @@ public class FrameEditMouseAdapter extends MouseInputAdapter {
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             this.traget.requestFocus();
-            int zoom = this.traget.zoom;
+//            int zoom = this.traget.zoom;
             if (this.traget.frame != null) {
-                int cx = e.getX() / zoom - this.traget.getWidth() / 2;
-                int cy = e.getY() / zoom - this.traget.getHeight() / 2;
+                int cx = e.getX() - this.traget.getWidth() / 2;
+                int cy = e.getY() - this.traget.getHeight() / 2;
                 Layer layer = this.traget.frame.getLayer(Proxy.getInstance().getMainDialog().getCurrentLayerIndex());
                 switch (Proxy.getInstance().getOpType()) {
                     case Proxy.PEN:
@@ -90,7 +90,7 @@ public class FrameEditMouseAdapter extends MouseInputAdapter {
     @Override
     public void mouseDragged(MouseEvent e) {
         if ((e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) {
-            int zoom = this.traget.zoom;
+//            int zoom = this.traget.zoom;
             if (this.traget.frame != null) {
                 Layer layer = this.traget.frame.getLayer(Proxy.getInstance().getMainDialog().getCurrentLayerIndex());
                 if (layer instanceof ModuleLayer) {
@@ -99,13 +99,13 @@ public class FrameEditMouseAdapter extends MouseInputAdapter {
                         this.moveTraget.setLocation(e.getX(), e.getY());
                         int mx = this.moveTraget.x - this.moveOrgine.x;
                         int my = this.moveTraget.y - this.moveOrgine.y;
-                        if (Math.abs(mx) >= zoom) {
-                            int xx = mo.getX() + mx / zoom;
+                        if (Math.abs(mx) >= 1) {
+                            int xx = mo.getX() + mx;
                             mo.setX(xx);
                             this.moveOrgine.x = this.moveTraget.x;
                         }
-                        if (Math.abs(my) >= zoom) {
-                            int yy = mo.getY() + my / zoom;
+                        if (Math.abs(my) >= 1) {
+                            int yy = mo.getY() + my;
                             mo.setY(yy);
                             this.moveOrgine.y = this.moveTraget.y;
                         }

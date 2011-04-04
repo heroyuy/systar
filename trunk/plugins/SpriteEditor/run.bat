@@ -1,1 +1,1 @@
-java -jar spriteManager.jar
+java -jar SpriteEditor.jar

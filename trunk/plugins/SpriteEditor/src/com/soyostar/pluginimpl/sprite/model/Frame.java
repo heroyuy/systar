@@ -197,7 +197,7 @@ public class Frame {
             }
         }
 
-        System.out.println("frame:" + bound.width + "x" + bound.height);
+//        System.out.println("frame:" + bound.width + "x" + bound.height);
     }
 
     public void paintPreview(Graphics g, int x, int y, int size) {

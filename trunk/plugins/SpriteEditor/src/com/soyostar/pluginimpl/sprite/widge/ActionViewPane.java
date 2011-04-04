@@ -4,9 +4,12 @@
  */
 package com.soyostar.pluginimpl.sprite.widge;
 
+import com.soyostar.pluginimpl.sprite.model.Frame;
 import com.soyostar.pluginimpl.sprite.model.Sequence;
+import com.soyostar.pluginimpl.sprite.util.ActionFrameSelection;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
@@ -34,6 +37,9 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
         g.setColor(Color.GREEN);
         g.drawLine(0, this.getHeight() >> 1, this.getWidth(), this.getHeight() >> 1);
         g.drawLine(this.getWidth() >> 1, 0, this.getWidth() >> 1, this.getHeight());
+        if (isPlay) {
+        } else {
+        }
     }
 
     /**
@@ -70,6 +76,22 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
     }
 
     public void drop(DropTargetDropEvent dtde) {
+
+        try {
+            Transferable transferable = dtde.getTransferable();
+            Object o = transferable.getTransferData(ActionFrameSelection.FRAME_FLAVOR);
+            if (o != null) {
+                if (o instanceof Frame) {
+//                        Frame m = (Frame) o;
+//                        Data.getInstance().getCurAction().addSequence(m, 0, 0);
+                    System.out.println("add frame");
+                }
+            }
+            dtde.dropComplete(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void run() {

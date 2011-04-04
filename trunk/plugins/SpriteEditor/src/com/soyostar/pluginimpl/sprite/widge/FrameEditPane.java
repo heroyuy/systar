@@ -48,11 +48,11 @@ public class FrameEditPane extends JPanel implements DropTargetListener, Scrolla
      *
      */
     public int selectedIndex = -1;
+
     /**
      *
      */
-    public int zoom = 1;
-
+//    public int zoom = 1;
     public Dimension getPreferredScrollableViewportSize() {
         return getPreferredSize();
     }
@@ -73,29 +73,28 @@ public class FrameEditPane extends JPanel implements DropTargetListener, Scrolla
         return false;
     }
 
-    /**
-     *
-     * @param zoom
-     */
-    public void setZoom(int zoom) {
-        this.zoom = zoom;
-        this.updateUI();
-    }
-
-    /**
-     *
-     */
-    public void zoomUp() {
-        this.setZoom(Math.min(this.zoom + 1, 8));
-    }
-
-    /**
-     *
-     */
-    public void zoomDown() {
-        this.setZoom(Math.max(this.zoom - 1, 1));
-    }
-
+//    /**
+//     *
+//     * @param zoom
+//     */
+//    public void setZoom(int zoom) {
+//        this.zoom = zoom;
+//        this.updateUI();
+//    }
+//
+//    /**
+//     *
+//     */
+//    public void zoomUp() {
+//        this.setZoom(Math.min(this.zoom + 1, 8));
+//    }
+//
+//    /**
+//     *
+//     */
+//    public void zoomDown() {
+//        this.setZoom(Math.max(this.zoom - 1, 1));
+//    }
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -111,15 +110,15 @@ public class FrameEditPane extends JPanel implements DropTargetListener, Scrolla
         g2d.drawLine(tw >> 1, 0, tw >> 1, th);
 
         if (this.frame != null) {
-            this.frame.paint(g, tw >> 1, th >> 1, zoom);
+            this.frame.paint(g, tw >> 1, th >> 1, 1);
             if (this.selectedIndex >= 0) {
                 g2d.setColor(Color.RED);
                 Layer layer = this.frame.getLayer(Proxy.getInstance().getMainDialog().getCurrentLayerIndex());
                 if (layer instanceof ModuleLayer) {
                     Module mo = ((ModuleLayer) layer).getModule(selectedIndex);
                     if (mo != null) {
-                        g2d.drawRect(mo.getX() * zoom + (tw >> 1), mo.getY() * zoom + (th >> 1),
-                            mo.getWidth() * zoom, mo.getHeight() * zoom);
+                        g2d.drawRect(mo.getX() + (tw >> 1), mo.getY() + (th >> 1),
+                            mo.getWidth(), mo.getHeight());
                     }
                 }
             }
@@ -148,10 +147,6 @@ public class FrameEditPane extends JPanel implements DropTargetListener, Scrolla
         this.updateUI();
     }
 
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return new Dimension(getWidth() * zoom, getHeight() * zoom);
-//    }
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
@@ -182,10 +177,10 @@ public class FrameEditPane extends JPanel implements DropTargetListener, Scrolla
                                 ModuleLayer ml = (ModuleLayer) layer;
                                 m.setLayer(ml);
                                 m.setTile(tile);
-                                System.out.println("x:" + (p.x - (getWidth() * zoom + m.getTile().getWidth() >> 1)));
-                                System.out.println("y:" + (p.y - (getHeight() * zoom + m.getTile().getHeight() >> 1)));
-                                m.setPoint(new Point(p.x - (getWidth() * zoom + m.getTile().getWidth() >> 1),
-                                    p.y - (getHeight() * zoom + m.getTile().getHeight() >> 1)));
+                                System.out.println("x:" + (p.x - (getWidth() + m.getTile().getWidth() >> 1)));
+                                System.out.println("y:" + (p.y - (getHeight() + m.getTile().getHeight() >> 1)));
+                                m.setPoint(new Point(p.x - (getWidth() + m.getTile().getWidth() >> 1),
+                                    p.y - (getHeight() + m.getTile().getHeight() >> 1)));
                                 System.out.println("w:" + m.getWidth());
                                 System.out.println("h:" + m.getHeight());
                                 ml.addModule(m);

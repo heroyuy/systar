@@ -11,7 +11,7 @@ package com.soyostar.pluginimpl.sprite.model;
 public class Sequence {
 
     private Frame frame;
-    private int delay;
+    private int delay = 100;
     private String name = "新建序列";
 
     public String getName() {
