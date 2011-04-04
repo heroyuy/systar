@@ -123,34 +123,34 @@ public class GameData {
     public int winSelect = 0;
 
     public void setDialog(String name, String content) {
-        //此算法基本是失败的，需要重写
-        this.dialog_name = name;
-        int num = GameData.getGameData().screenWidth / font.stringWidth("好");//每行能显示的字数
-        int row = content.length() / num + 1;//要显示的行数
-        Vector v = new Vector();
-        int p = 0, q = 0;
-        String temp = null;
-        while (p < content.length()) {
-            if (q == content.length()) {
-                v.addElement(content.substring(p, q));
-                p = q;
-            } else {
-                temp = content.substring(p, q);
-                if (f.stringWidth(temp) > screenWidth - 20) {
-                    v.addElement(content.substring(p, q - 1));
-                    p = q - 1;
-                } else {
-                    q++;
-                }
-            }
-
-        }
-        dialog_content = new String[v.size()];
-        for (int i = 0; i < dialog_content.length; i++) {
-            dialog_content[i] = (String) v.elementAt(i);
-        }
-        v.removeAllElements();
-        v = null;
+//
+//        this.dialog_name = name;
+//        int num = GameData.getGameData().screenWidth / font.stringWidth("好");//每行能显示的字数
+//        int row = content.length() / num + 1;//要显示的行数
+//        Vector v = new Vector();
+//        int p = 0, q = 0;
+//        String temp = null;
+//        while (p < content.length()) {
+//            if (q == content.length()) {
+//                v.addElement(content.substring(p, q));
+//                p = q;
+//            } else {
+//                temp = content.substring(p, q);
+//                if (f.stringWidth(temp) > screenWidth - 20) {
+//                    v.addElement(content.substring(p, q - 1));
+//                    p = q - 1;
+//                } else {
+//                    q++;
+//                }
+//            }
+//
+//        }
+//        dialog_content = new String[v.size()];
+//        for (int i = 0; i < dialog_content.length; i++) {
+//            dialog_content[i] = (String) v.elementAt(i);
+//        }
+//        v.removeAllElements();
+//        v = null;
     }
 
     private GameData() {

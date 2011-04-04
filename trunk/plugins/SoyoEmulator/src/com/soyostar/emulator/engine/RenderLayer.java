@@ -1,6 +1,5 @@
 package com.soyostar.emulator.engine;
 
-
 import com.soyostar.ui.Container;
 import com.soyostar.ui.Display;
 import com.soyostar.ui.Motion;
@@ -12,7 +11,7 @@ import java.awt.Color;
  *
  * 视图渲染层
  */
-public class RenderLayer extends Container implements MotionListener ,Display.Callback{
+public class RenderLayer extends Container implements MotionListener, Display.Callback {
 
     private View curView = null;
     private GameEngine ge = null;
@@ -24,15 +23,8 @@ public class RenderLayer extends Container implements MotionListener ,Display.Ca
         this.ge = ge;
     }
 
-    int test=0;
     @Override
     public void paint(Painter painter) {
-        System.out.println("paint");
-        painter.setColor(Color.yellow);
-        painter.fillRect(0, 0, getWidth(), getHeight());
-        painter.setColor(Color.blue);
-        painter.setFontSize(test);
-        painter.drawString(++test+"",10,10,Painter.LT);
         game = ge.getGame();
         if (game != null) {
             curView = game.getCurView();
@@ -44,12 +36,12 @@ public class RenderLayer extends Container implements MotionListener ,Display.Ca
 
     @Override
     public void keyPressed(int key) {
-        System.out.println("keyPressed:"+key);
+        System.out.println("keyPressed:" + key);
     }
 
     @Override
     public void keyReleased(int key) {
-        System.out.println("keyReleased:"+key);
+        System.out.println("keyReleased:" + key);
     }
 
     public void onMotionDown(Motion m) {
@@ -57,11 +49,11 @@ public class RenderLayer extends Container implements MotionListener ,Display.Ca
     }
 
     public void onMotionMove(Motion m) {
-         System.out.println("onMotionMove");
+        System.out.println("onMotionMove");
     }
 
     public void onMotionUp(Motion m) {
-         System.out.println("onMotionUp");
+        System.out.println("onMotionUp");
     }
 
     public void sizeChanged(int width, int height) {
