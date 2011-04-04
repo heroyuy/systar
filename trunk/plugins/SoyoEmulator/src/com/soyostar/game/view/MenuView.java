@@ -21,14 +21,12 @@ public class MenuView implements View {
     public void release() {
     }
     int test = 0;
-    String tip = "";
 
     public void paint(Painter painter) {
         painter.setColor(Color.black);
         painter.fillRect(0, 0, 100, 100);
         painter.setColor(Color.white);
         painter.drawString(++test + "", 10, 10, Painter.LT);
-        painter.drawString(tip, 10, 30, Painter.LT);
     }
 
     public void dealKeyEvent() {
