@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+X-COMMENT: Main-Class will be added automatically by build
+Plugin-Main: com.soyostar.pluginimpl.sprite.SpriteManagerDialog
+Plugin-Name: 动画编辑器
+plugin-Version: Ver1.0.0
+Plugin-Description: 一款强大的动画编辑插件
+Plugin-Author: soyostar
+Plugin-View: 2
