@@ -39,15 +39,16 @@ public class Image {
      */
     public static Image createImage(String path) throws IOException {
         //待优化
-        java.awt.Image tempImage = Toolkit.getDefaultToolkit().createImage(path);
-        if (tempImage == null) {
-            throw new IOException();
+        try {
+            java.awt.Image tempImage = Toolkit.getDefaultToolkit().createImage(path);
+            ImageIcon tempIi = new ImageIcon(tempImage);
+            Image tempEi = new Image(tempIi.getIconWidth(), tempIi.getIconHeight());
+            Graphics g = tempEi.context.getGraphics();
+            g.drawImage(tempImage, 0, 0, null);
+            return tempEi;
+        } catch (Exception e) {
+            throw new IOException("图片路径错误");
         }
-        ImageIcon tempIi = new ImageIcon(tempImage);
-        Image tempEi = new Image(tempIi.getIconWidth(), tempIi.getIconHeight());
-        Graphics g = tempEi.context.getGraphics();
-        g.drawImage(tempImage, 0, 0, null);
-        return tempEi;
     }
 
     /**

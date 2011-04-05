@@ -30,31 +30,31 @@ public class FileBridge {
         try {
             switch (Type) {
                 case FILE_TYPE_SYSTEM:
-                    is = new FileInputStream(new File("product/data/system.gat"));
+                    is = new FileInputStream(new File("res/data/system.gat"));
                     break;
                 case FILE_TYPE_ANIMATION:
-                    is = new FileInputStream(new File("product/data/ani.gat"));
+                    is = new FileInputStream(new File("res/data/ani.gat"));
                     break;
                 case FILE_TYPE_ENEMY:
-                    is = new FileInputStream(new File("product/data/enemy.gat"));
+                    is = new FileInputStream(new File("res/data/enemy.gat"));
                     break;
                 case FILE_TYPE_ENEMYTROOP:
-                    is = new FileInputStream(new File("product/data/enemytroop.gat"));
+                    is = new FileInputStream(new File("res/data/enemytroop.gat"));
                     break;
                 case FILE_TYPE_ITEM:
-                    is = new FileInputStream(new File("product/data/item.gat"));
+                    is = new FileInputStream(new File("res/data/item.gat"));
                     break;
                 case FILE_TYPE_EQUIP:
-                    is = new FileInputStream(new File("product/data/equip.gat"));
+                    is = new FileInputStream(new File("res/data/equip.gat"));
                     break;
                 case FILE_TYPE_SKILL:
-                    is = new FileInputStream(new File("product/data/skill.gat"));
+                    is = new FileInputStream(new File("res/data/skill.gat"));
                     break;
                 case FILE_TYPE_PLAYER:
-                    is = new FileInputStream(new File("product/data/player.gat"));
+                    is = new FileInputStream(new File("res/data/player.gat"));
                     break;
                 case FILE_TYPE_MAP:
-                    is = new FileInputStream(new File("product/data/map/map" + index + ".gat"));
+                    is = new FileInputStream(new File("res/data/map/map" + index + ".gat"));
                     break;
                 default:
                     is = null;

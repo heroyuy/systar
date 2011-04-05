@@ -44,6 +44,7 @@ public class Emulator extends javax.swing.JDialog {
     /** Creates new form Emulator */
     public Emulator() {
         super();
+        this.setResizable(false);
         initComponents();
         view_Key = new View_Key();
         option_Key = new Option_Key();
