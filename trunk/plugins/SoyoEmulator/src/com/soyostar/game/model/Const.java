@@ -7,16 +7,17 @@ public final class Const {
 
     public static final class ImagePath {
 
-        public static final String DIALOG_DEEP = "product/image/skin/dialog.png";
-        public static final String DIALOG_LIGHT = "product/image/skin/dialog2.png";
-        public static final String CELL_LIGHT = "product/image/skin/dialog3.png";
-        public static final String CELL_DEEP = "product/image/skin/dialog4.png";
-        public static final String TRENCH = "product/image/skin/trench.png";
-        public static final String SMALLTRIANGLE = "product/image/skin/sja.png";
-        public static final String BALL = "product/image/skin/ball.png";
-        public static final String NUMS = "product/image/skin/nums.png";
-        public static final String MAPMENU = "product/image/skin/mapmenu.png";
-        public static final String SELECT = "product/image/skin/select.png";
+        public static final String DIALOG_DEEP = "image/skin/dialog.png";
+        public static final String DIALOG_LIGHT = "image/skin/dialog2.png";
+        public static final String CELL_LIGHT = "image/skin/dialog3.png";
+        public static final String CELL_DEEP = "image/skin/dialog4.png";
+        public static final String TRENCH = "image/skin/trench.png";
+        public static final String SMALLTRIANGLE = "image/skin/sja.png";
+        public static final String BALL = "image/skin/ball.png";
+        public static final String NUMS = "image/skin/nums.png";
+        public static final String MAPMENU = "image/skin/mapmenu.png";
+        public static final String SELECT = "image/skin/select.png";
+        public static final String BACK = "image/skin/back.png";
     }
 
     /**
