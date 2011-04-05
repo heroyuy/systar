@@ -47,15 +47,18 @@ public class RenderLayer extends Container implements MotionListener, Display.Ca
     }
 
     public void onMotionDown(Motion m) {
-//        System.out.println("onMotionDown");
+        System.out.println("onMotionDown:"+m.getX()+":"+m.getY());
+        ge.getPointerManager().onMotion(PointerManager.STATE_DOWN, m.getX(), m.getY());
     }
 
     public void onMotionMove(Motion m) {
-//        System.out.println("onMotionMove");
+        System.out.println("onMotionMove:"+m.getX()+":"+m.getY());
+        ge.getPointerManager().onMotion(PointerManager.STATE_MOVE, m.getX(), m.getY());
     }
 
     public void onMotionUp(Motion m) {
-//        System.out.println("onMotionUp");
+        System.out.println("onMotionUp:"+m.getX()+":"+m.getY());
+        ge.getPointerManager().onMotion(PointerManager.STATE_UP, m.getX(), m.getY());
     }
 
     public void sizeChanged(int width, int height) {

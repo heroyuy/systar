@@ -34,6 +34,14 @@ public final class GameEngine implements Runnable {
      * 按键管理器
      */
     private KeyManager keyManager = null;
+    /**
+     * 触屏管理器
+     */
+    private PointerManager pointerManager = null;
+
+    public PointerManager getPointerManager() {
+        return pointerManager;
+    }
 
     public KeyManager getKeyManager() {
         return keyManager;
@@ -83,6 +91,7 @@ public final class GameEngine implements Runnable {
         super();
         renderLayer = new RenderLayer(this);
         keyManager = new KeyManager();
+        pointerManager = new PointerManager();
         Display.getDefaultDisplay().setCurrentCanvas(renderLayer);
     }
 
@@ -145,7 +154,7 @@ public final class GameEngine implements Runnable {
     public void run() {
         try {
             while (isRun) {
-                System.out.println("Thread:" + Thread.currentThread().getName());
+//                System.out.println("Thread:" + Thread.currentThread().getName());
                 long time = System.currentTimeMillis();
                 if (!isSuspended) {
 

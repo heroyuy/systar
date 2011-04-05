@@ -26,6 +26,13 @@ public class GameData {
     public int xIndex = 0;//水平选择项编程
     public int yIndex = 0;//竖向选择项编号
     public Player player = null;//玩家
+    public Menu menu = new Menu();
+
+    public class Menu {
+
+        public int menuIndex = 0;
+        public String text = "";
+    }
     //游戏设置资源
     public boolean musicOn = false;//音乐开关
     public boolean soundOn = false;//音效开关
