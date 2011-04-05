@@ -6,6 +6,7 @@ import com.soyostar.game.model.Enemy;
 import com.soyostar.game.model.EnemyTroop;
 import com.soyostar.game.model.Equip;
 import com.soyostar.game.model.Item;
+import com.soyostar.game.model.Map;
 import com.soyostar.game.model.Player;
 import com.soyostar.game.model.Skill;
 import java.util.HashMap;
@@ -69,41 +70,52 @@ public class DataManager {
         return (EnemyTroop) enemyTroops.get(index);
     }
 
-    public EnemyTroop[] getEnemyTroop() {
-        return (Enemy[]) enemys.values().toArray();
+    public EnemyTroop[] getEnemyTroopList() {
+        return (EnemyTroop[]) enemyTroops.values().toArray();
     }
 
     //***************************************************************************************
-    //Enemy
+    //Item
     //***************************************************************************************
-    public Enemy getEnemy(int index) {
-        return (Enemy) enemys.get(index);
+    public Item getItem(int index) {
+        return (Item) items.get(index);
     }
 
-    public Enemy[] getEnemyList() {
-        return (Enemy[]) enemys.values().toArray();
-    }
-
-    //***************************************************************************************
-    //Enemy
-    //***************************************************************************************
-    public Enemy getEnemy(int index) {
-        return (Enemy) enemys.get(index);
-    }
-
-    public Enemy[] getEnemyList() {
-        return (Enemy[]) enemys.values().toArray();
+    public Item[] getItemList() {
+        return (Item[]) items.values().toArray();
     }
 
     //***************************************************************************************
-    //Enemy
+    //Equip
     //***************************************************************************************
-    public Enemy getEnemy(int index) {
-        return (Enemy) enemys.get(index);
+    public Equip getEquip(int index) {
+        return (Equip) equips.get(index);
     }
 
-    public Enemy[] getEnemyList() {
-        return (Enemy[]) enemys.values().toArray();
+    public Equip[] getEquipList() {
+        return (Equip[]) equips.values().toArray();
+    }
+
+    //***************************************************************************************
+    //Skill
+    //***************************************************************************************
+    public Skill getSkill(int index) {
+        return (Skill) enemys.get(index);
+    }
+
+    public Skill[] getSkillList() {
+        return (Skill[]) skills.values().toArray();
+    }
+
+    //***************************************************************************************
+    //Map
+    //***************************************************************************************
+    public Map getMap(int index) {
+        return (Map) maps.get(index);
+    }
+
+    public Map[] geMapList() {
+        return (Map[]) maps.values().toArray();
     }
 
     private DataManager() {
