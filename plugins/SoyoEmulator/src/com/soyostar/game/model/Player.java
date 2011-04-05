@@ -2,6 +2,7 @@ package com.soyostar.game.model;
 
 import com.soyostar.emulator.engine.script.ScriptEngine;
 import com.soyostar.emulator.framework.Tools;
+import com.soyostar.game.db.DataManager;
 import com.soyostar.ui.Image;
 
 /**
@@ -32,6 +33,7 @@ public final class Player extends Character {
     public int width = 16;// 角色宽度
     public int height = 24;// 角色高度
     private GameData gd = GameData.getGameData();
+    private DataManager dm = DataManager.getInstance();
     public int x, y;// 角色当前在地图上的坐标
     public int startTime = 0;// 角色开始移动的时间
     /********************************************************/
@@ -101,7 +103,7 @@ public final class Player extends Character {
     public void useItem(int index) {
 
         if (bag.getList(Bag.ITEM).length > 0) {
-            Item item = gd.gameObjectManager.getItem(index);
+            Item item = dm.getItem(index);
             if (item.kind == Item.ITEM_ASSIST) {//若物品种类为任务物品，则无法食用
                 stre += item.stre;//增加/减少力量
                 agil += item.agil;//增加/减少敏捷
@@ -136,7 +138,7 @@ public final class Player extends Character {
     public void takeOnEquip(int index) {
         if (bag.has(Bag.EQUIP, index)) {
             bag.del(Bag.EQUIP, index, 1);
-            switch (gd.gameObjectManager.getEquip(index).kind) {
+            switch (dm.getEquip(index).kind) {
                 case BaseItem.EQUIP_ARMOUR:
                     if (equipArmour != -1) {
                         bag.add(Bag.EQUIP, equipArmour, 1);
@@ -180,7 +182,7 @@ public final class Player extends Character {
 
     //将英雄身上的装备脱下放到装备背包
     public void takeOffEquip(int index) {
-        switch (gd.gameObjectManager.getEquip(index).kind) {
+        switch (dm.getEquip(index).kind) {
             case BaseItem.EQUIP_ARMOUR:
                 if (equipArmour != -1) {
                     bag.add(Bag.EQUIP, index, 1);
@@ -273,14 +275,14 @@ public final class Player extends Character {
     //装备影响属性函数
 
     public void updateState() {
-        stre = gd.gameObjectManager.getPlayer().stre + streByLev * lev + 1;//初始值为
-        agil = gd.gameObjectManager.getPlayer().agil + agilByLev * lev + 1;//初始值为
-        inte = gd.gameObjectManager.getPlayer().inte + inteByLev * lev + 1;//初始值为
-        maxHp = gd.gameObjectManager.getPlayer().hp + stre * 20;//初始值为
-        maxSp = gd.gameObjectManager.getPlayer().sp + inte * 15;//初始值为
-        atk = stre * 3 + gd.gameObjectManager.getPlayer().atk;//初始值为
-        def = agil / 3 + gd.gameObjectManager.getPlayer().def;//初始值为
-        flee = agil / 10 + gd.gameObjectManager.getPlayer().flee;//初始值为
+        stre = dm.getPlayer().stre + streByLev * lev + 1;//初始值为
+        agil = dm.getPlayer().agil + agilByLev * lev + 1;//初始值为
+        inte = dm.getPlayer().inte + inteByLev * lev + 1;//初始值为
+        maxHp = dm.getPlayer().hp + stre * 20;//初始值为
+        maxSp = dm.getPlayer().sp + inte * 15;//初始值为
+        atk = stre * 3 + dm.getPlayer().atk;//初始值为
+        def = agil / 3 + dm.getPlayer().def;//初始值为
+        flee = agil / 10 + dm.getPlayer().flee;//初始值为
         int equipList[] = new int[6];
         equipList[0] = equipHelm;
         equipList[1] = equipArmour;
@@ -292,15 +294,15 @@ public final class Player extends Character {
             if (equipList[i] == -1) {
                 continue;
             }
-            this.maxHp += gd.gameObjectManager.getEquip(equipList[i]).maxHp;
-            this.agil += gd.gameObjectManager.getEquip(equipList[i]).agil;
-            this.def += gd.gameObjectManager.getEquip(equipList[i]).def;
-            this.atk += gd.gameObjectManager.getEquip(equipList[i]).atk;
-            this.flee += gd.gameObjectManager.getEquip(equipList[i]).flee;
-            this.inte += gd.gameObjectManager.getEquip(equipList[i]).inte;
-            this.stre += gd.gameObjectManager.getEquip(equipList[i]).stre;
-            this.maxSp += gd.gameObjectManager.getEquip(equipList[i]).maxSp;
-            this.maxHp += gd.gameObjectManager.getEquip(equipList[i]).maxHp;
+            this.maxHp += dm.getEquip(equipList[i]).maxHp;
+            this.agil += dm.getEquip(equipList[i]).agil;
+            this.def += dm.getEquip(equipList[i]).def;
+            this.atk += dm.getEquip(equipList[i]).atk;
+            this.flee += dm.getEquip(equipList[i]).flee;
+            this.inte += dm.getEquip(equipList[i]).inte;
+            this.stre += dm.getEquip(equipList[i]).stre;
+            this.maxSp += dm.getEquip(equipList[i]).maxSp;
+            this.maxHp += dm.getEquip(equipList[i]).maxHp;
         }
     }
 

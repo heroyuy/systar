@@ -4,6 +4,7 @@
  */
 package com.soyostar.emulator.framework;
 
+import com.soyostar.game.db.DataManager;
 import com.soyostar.game.model.Bag;
 import com.soyostar.game.model.GameData;
 import java.io.DataInputStream;
@@ -23,6 +24,7 @@ import java.util.logging.Logger;
 public class DataBase {
 
     private GameData gd = GameData.getGameData();
+    private DataManager dm = DataManager.getInstance();
 
 //    /**
 //     *
@@ -103,15 +105,15 @@ public class DataBase {
             if (!f.exists()) {
                 return false;
             }
-            if (gd.gameObjectManager.getPlayer() == null) {
+            if (dm.getPlayer() == null) {
                 return false;
             }
             fis = new FileInputStream(f);
             dis = new DataInputStream(fis);
             int mapIndex = dis.readInt();
             System.out.println("mapIndex:" + mapIndex);
-            gd.curMap = gd.gameObjectManager.getMap(mapIndex);
-            gd.player = gd.gameObjectManager.getPlayer().getClone();
+            gd.curMap = dm.getMap(mapIndex);
+            gd.player = dm.getPlayer().getClone();
             int lev = dis.readInt();
             System.out.println("lev:" + lev);
             gd.player.lev = lev;
