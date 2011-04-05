@@ -1,6 +1,7 @@
 package com.soyostar.game.model;
 
-import emulator.EmulatorImage;
+import com.soyostar.ui.Image;
+
 
 
 /**
@@ -11,7 +12,7 @@ public abstract class Character {
 
     public String name;//名称
     public String intro;//介绍
-    public EmulatorImage headImg;//头像
+    public Image headImg;//头像
     public int stre;//力量
     public int agil;//敏捷
     public int inte;//智力
