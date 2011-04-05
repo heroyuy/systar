@@ -154,6 +154,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         jToolBar3 = new javax.swing.JToolBar();
         addActionButton = new javax.swing.JButton();
         removeActionButton = new javax.swing.JButton();
+        playActionButton = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         frameViewPane = new com.soyostar.pluginimpl.sprite.widge.FrameViewPane();
@@ -720,6 +721,18 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         removeActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(removeActionButton);
 
+        playActionButton.setText("播放/暂停");
+        playActionButton.setFocusable(false);
+        playActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        playActionButton.setName("playActionButton"); // NOI18N
+        playActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        playActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playActionButtonActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(playActionButton);
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -1215,6 +1228,11 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         currentSequenceIndex = sequenceTable.getSelectedRow();
         actionViewPane.setSequenceIndex(currentSequenceIndex);
     }//GEN-LAST:event_sequenceTableMouseClicked
+
+    private void playActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionButtonActionPerformed
+        // TODO add your handling code here:
+        actionViewPane.setIsPlay(!actionViewPane.isIsPlay());
+    }//GEN-LAST:event_playActionButtonActionPerformed
     public void addAction() {
         actionTable.getSelectionModel().setSelectionInterval(Animation.getInstance().getActionsCount() - 1,
             Animation.getInstance().getActionsCount() - 1);
@@ -1352,6 +1370,7 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     private javax.swing.JButton openAniButton;
     private javax.swing.JMenuItem openAniMenuItem;
     private javax.swing.JToggleButton penToggleButton;
+    private javax.swing.JButton playActionButton;
     private javax.swing.JButton removeActionButton;
     private javax.swing.JButton removeFrameButton;
     private javax.swing.JButton removeImageButton;
