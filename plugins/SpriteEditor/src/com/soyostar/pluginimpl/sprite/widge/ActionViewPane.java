@@ -40,11 +40,8 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
         g.drawLine(0, this.getHeight() >> 1, this.getWidth(), this.getHeight() >> 1);
         g.drawLine(this.getWidth() >> 1, 0, this.getWidth() >> 1, this.getHeight());
         if (action != null) {
-            if (isPlay) {
-            } else {
-                if (action.getSequence(sequenceIndex) != null) {
-                    action.getSequence(sequenceIndex).paint(g, this.getWidth() >> 1, this.getHeight() >> 1, 1);
-                }
+            if (action.getSequence(sequenceIndex) != null) {
+                action.getSequence(sequenceIndex).paint(g, this.getWidth() >> 1, this.getHeight() >> 1, 1);
             }
         }
 
@@ -126,5 +123,28 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
     }
 
     public void run() {
+        while (true) {
+            if (action != null) {
+                if (isPlay) {
+
+                    sequenceIndex++;
+                    if (sequenceIndex >= action.getSequencesCount()) {
+                        sequenceIndex = 0;
+                        if (!isCircle) {
+                            isPlay = false;
+                        }
+                    }
+                    repaint();
+                    if (action.getSequence(sequenceIndex) != null) {
+                        try {
+                            Thread.sleep(action.getSequence(sequenceIndex).getDelay());
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+
+                }
+            }
+
+        }
     }
 }
