@@ -4,7 +4,10 @@ import com.soyostar.emulator.engine.Control;
 import com.soyostar.emulator.engine.GameEngine;
 import com.soyostar.emulator.engine.script.Event;
 import com.soyostar.game.model.GameData;
-
+/**
+ *
+ * 游戏菜单视图的控制器
+ */
 public class MenuControl implements Control {
 
     GameEngine ge = GameEngine.getInstance();
