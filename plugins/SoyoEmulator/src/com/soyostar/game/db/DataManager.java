@@ -107,6 +107,8 @@ public class DataManager {
         return ((MapDao) daos.get("map")).getMap(index);
     }
 
+    
+
     public Map[] getMapList() {
         return ((MapDao) daos.get("map")).getMapList();
     }
