@@ -23,4 +23,9 @@ public interface Control {
      * @param event
      */
     public void dealGameEvent(Event event);
+
+    /**
+     * 更新模型
+     */
+    public void updateModel();
 }

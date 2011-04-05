@@ -161,15 +161,22 @@ public final class GameEngine implements Runnable {
                     curView = game.getCurView();
                     if (curView != null) {
                         if (curView.getControl() != null) {
+                            //更新游戏模型
+                            curView.getControl().updateModel();
+                            //处理游戏事件
+                            if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
+                                curView.getControl().dealGameEvent((Event) se.getEventQueue().poll());
+                            }
+                            //处理触屏事件
+                            if (pointerManager.isScreenTouched()) {
+                                curView.getControl().dealMotion();
+                            }
+                            //处理按键事件
+                            if (keyManager.isAnyKeyPressed()) {
+                                curView.getControl().dealKeyEvent();
+                            }
                         }
-                        //处理游戏事件
-                        if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
-                            curView.getControl().dealGameEvent((Event) se.getEventQueue().poll());
-                        }
-                        //处理触屏事件
-                        curView.getControl().dealMotion();
-                        //处理按键事件
-                        curView.getControl().dealKeyEvent();
+
                     }
 
                     // 渲染视图
