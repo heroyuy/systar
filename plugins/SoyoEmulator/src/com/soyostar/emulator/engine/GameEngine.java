@@ -3,7 +3,7 @@ package com.soyostar.emulator.engine;
 import com.soyostar.ui.Display;
 import com.soyostar.emulator.engine.script.Event;
 import com.soyostar.emulator.engine.script.ScriptEngine;
-import com.soyostar.game.data.access.ImageManager;
+import com.soyostar.game.db.ImageManager;
 
 /**
  * 游戏主引擎
