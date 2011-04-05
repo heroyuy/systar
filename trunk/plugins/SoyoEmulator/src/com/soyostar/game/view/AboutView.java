@@ -30,10 +30,10 @@ public class AboutView extends BaseView {
         painter.setColor(Color.black);
         painter.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
         painter.setColor(Color.white);
-        painter.drawString(text, x, y, 0);//?
+        painter.drawString(text, x, y, Painter.LT);//?
 
         //绘制按钮
-        painter.drawString("确定", 5, gd.screenHeight - painter.getFontHeight(), 0);
+        painter.drawString("确定", 5, gd.screenHeight - painter.getFontHeight(),Painter.LT);
 
     }
 

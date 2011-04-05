@@ -1,5 +1,9 @@
 package com.soyostar.ui;
 
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.game.data.access.ImageManager;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -25,6 +29,13 @@ public class Painter {
     public static final int STYLE_PLAIN = Font.PLAIN;//普通
     public static final int STYLE_BOLD = Font.BOLD;//加粗
     public static final int STYLE_ITALIC = Font.ITALIC;//斜体
+    public static final byte DIALOG_DEEP = 0;
+    public static final byte DIALOG_LIGHT = 1;
+    public static final byte NODIALOG = 2;
+    public static final byte SCROLLBAR_VERTICAL = 0;
+    public static final byte SCROLLBAR_HORIZONTAL = 1;
+    public static final byte CELL_DEEP = 0;
+    public static final byte CELL_LIGHT = 1;
     private Graphics g = null;
     private Font font = null;
 
@@ -135,6 +146,53 @@ public class Painter {
     public void fillRoundRect(Rect rect, int aw, int ah) {
         g.fillRoundRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), aw, ah);
 
+    }
+   private GameEngine ge = GameEngine.getInstance();
+    /**
+     * 在指定位置绘制指定大小的对话框
+     * @param g 画笔
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     * @param type 类型，为Painter.DIALOG_DEEP时画深色框 其它则画浅色框
+     */
+    public static void drawDialog(int x, int y, int w, int h, byte type) {
+        if (type == Painter.DIALOG_DEEP || type == Painter.DIALOG_LIGHT) {
+            Image img = ge.getImageManager().getImage(type == Painter.DIALOG_DEEP ? Const.ImagePath.DIALOG_DEEP : Const.ImagePath.DIALOG_LIGHT);
+            drawRectFrame(img, x, y, w, h);
+        } else {
+            System.out.println("参数type不对，只能为0或1");
+        }
+    }
+
+    public static void drawRectFrame(Image img, int x, int y, int w, int h) {
+        setClip(x, y, w, h);
+        int rowNum = h / (img.getHeight() / 2) + 1;
+        int colNum = w / (img.getWidth() / 2) + 1;
+        //绘制底色
+        for (int i = 0; i < colNum; i++) {
+            for (int j = 0; j < rowNum; j++) {
+                drawRegion(img, img.getWidth() / 2, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y + img.getHeight() / 2 * j, 0);
+            }
+        }
+        //绘制边框 [先水平，后竖直]
+        for (int i = 0; i < colNum; i++) {
+            drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y, 0);
+            drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x + img.getWidth() / 2 * i, y + h - img.getHeight() / 2, 0);
+        }
+        for (int i = 0; i < rowNum; i++) {
+            drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x, y + img.getHeight() / 2 * i, 0);
+            drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + img.getHeight() / 2 * i, 0);
+
+        }
+        //四个角
+        drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x, y, 0);
+        drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 2, x + w - img.getWidth() / 2, y, 0);
+        drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x, y + h - img.getHeight() / 2, 0);
+        drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + h - img.getHeight() / 2, 0);
+
+        setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
     }
 
     /**
