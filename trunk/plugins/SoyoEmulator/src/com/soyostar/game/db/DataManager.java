@@ -1,6 +1,8 @@
 package com.soyostar.game.db;
 
 import com.soyostar.emulator.engine.animation.Animation;
+import com.soyostar.game.model.Bag;
+import com.soyostar.game.model.BaseItem;
 import com.soyostar.game.model.Config;
 import com.soyostar.game.model.Enemy;
 import com.soyostar.game.model.EnemyTroop;
@@ -107,10 +109,16 @@ public class DataManager {
         return ((MapDao) daos.get("map")).getMap(index);
     }
 
-    
-
     public Map[] getMapList() {
         return ((MapDao) daos.get("map")).getMapList();
+    }
+    private static DataManager instance = null;
+
+    public static DataManager getInstance() {
+        if (instance == null) {
+            instance = new DataManager();
+        }
+        return instance;
     }
 
     private DataManager() {
@@ -139,6 +147,19 @@ public class DataManager {
         while (i.hasNext()) {
             Dao dao = (Dao) i.next();
             dao.save();
+        }
+    }
+
+    public BaseItem getBaseItem(byte type, int index) {
+        switch (type) {
+            case Bag.ITEM:
+                return ((ItemDao) daos.get("item")).getItem(index);
+            case Bag.EQUIP:
+                return ((EquipDao) daos.get("equip")).getEquip(index);
+            case Bag.SKILL:
+                return ((SkillDao) daos.get("skill")).getSkill(index);
+            default:
+                return null;
         }
     }
 }

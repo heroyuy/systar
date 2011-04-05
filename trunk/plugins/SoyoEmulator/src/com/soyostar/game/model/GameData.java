@@ -1,7 +1,7 @@
 package com.soyostar.game.model;
 
+import com.soyostar.game.db.DataManager;
 import java.util.Vector;
-import com.soyostar.game.model.manager.GameObjectManager;
 
 /**
  *
@@ -10,7 +10,7 @@ import com.soyostar.game.model.manager.GameObjectManager;
 public class GameData {
 
     private static GameData gd = new GameData();
-    public GameObjectManager gameObjectManager = new GameObjectManager();
+    private DataManager dm = DataManager.getInstance();
     /**
      * 编号0-99的100个开关
      */
@@ -185,7 +185,7 @@ public class GameData {
     public void buildList_buy() {
         gd.shop_items_buy = new BaseItem[gd.shop_list.length];
         for (int i = 0; i < gd.shop_items_buy.length; i++) {
-            gd.shop_items_buy[i] = gd.gameObjectManager.getBaseItem(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP, gd.shop_list[i]);
+            gd.shop_items_buy[i] = dm.getBaseItem(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP, gd.shop_list[i]);
         }
     }
 

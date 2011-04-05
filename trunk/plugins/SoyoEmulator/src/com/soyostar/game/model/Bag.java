@@ -1,5 +1,6 @@
 package com.soyostar.game.model;
 
+import com.soyostar.game.db.DataManager;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,7 @@ public class Bag {
     public static final byte EQUIP = 1;
     public static final byte SKILL = 2;
     GameData gd = GameData.getGameData();
+    private DataManager dm = DataManager.getInstance();
     /**
      * 背包可以放三种东西，普通物品、装备和技能
      * list[0] 普通物品
@@ -34,7 +36,7 @@ public class Bag {
      */
     public BaseItem get(byte type, int index) {
         if (list[type].contains(index)) {
-            return gd.gameObjectManager.getBaseItem(type, index);
+            return dm.getBaseItem(type, index);
         } else {
             return null;
         }
@@ -47,7 +49,7 @@ public class Bag {
      * @return 如果背包中有此物品则返回此物品，否则返回0
      */
     public int getNum(byte type, int index) {
-        return gd.gameObjectManager.getBaseItem(type, index).num;
+        return dm.getBaseItem(type, index).num;
     }
 
     /**
@@ -70,14 +72,14 @@ public class Bag {
         if (!has(type, index)) {
             list[type].add(index);
         }
-        gd.gameObjectManager.getBaseItem(type, index).num += num;
+        dm.getBaseItem(type, index).num += num;
     }
 
     public void del(byte type, int index, int num) {
         if (has(type, index)) {
-            gd.gameObjectManager.getBaseItem(type, index).num -= num;
-            if (gd.gameObjectManager.getBaseItem(type, index).num <= 0) {
-                gd.gameObjectManager.getBaseItem(type, index).num = 0;
+            dm.getBaseItem(type, index).num -= num;
+            if (dm.getBaseItem(type, index).num <= 0) {
+                dm.getBaseItem(type, index).num = 0;
                 list[type].remove(index);
             }
         }

@@ -1,6 +1,7 @@
 package com.soyostar.game.model;
 
 import com.soyostar.emulator.engine.script.DataHandlerInterface;
+import com.soyostar.game.db.DataManager;
 
 /**
  *
@@ -9,6 +10,7 @@ import com.soyostar.emulator.engine.script.DataHandlerInterface;
 public class DataHandler implements DataHandlerInterface {
 
     GameData gd = GameData.getGameData();
+    private DataManager dm = DataManager.getInstance();
 
     public int getVar(int index) {
         return gd.vars[index];
@@ -99,7 +101,7 @@ public class DataHandler implements DataHandlerInterface {
 
     public void setAgil(int value) {
         gd.player.agil = value;
-        gd.player.maxHp = gd.gameObjectManager.getPlayer().hp + gd.player.stre * 20;//初始值为
+        gd.player.maxHp = dm.getPlayer().hp + gd.player.stre * 20;//初始值为
     }
 
     public int getInte() {
@@ -108,7 +110,7 @@ public class DataHandler implements DataHandlerInterface {
 
     public void setInte(int value) {
         gd.player.inte = value;
-        gd.player.maxSp = gd.gameObjectManager.getPlayer().sp + gd.player.inte * 15;//初始值为
+        gd.player.maxSp = dm.getPlayer().sp + gd.player.inte * 15;//初始值为
     }
 
     public int getItemNum(int index) {
