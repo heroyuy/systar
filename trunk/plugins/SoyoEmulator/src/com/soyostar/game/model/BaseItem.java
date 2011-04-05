@@ -1,6 +1,6 @@
 package com.soyostar.game.model;
 
-import emulator.EmulatorImage;
+import com.soyostar.ui.Image;
 
 /**
  *
@@ -63,7 +63,7 @@ public abstract class BaseItem {
     public int index;//编号
     public String name;//名称
     public String intro;//介绍
-    public EmulatorImage icon;//图标
+    public Image icon;//图标
     public int kind;//种类
     public int num;
     public int price;//购买价格

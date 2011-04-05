@@ -27,7 +27,6 @@ public class MenuView extends BaseView {
     private int itemWidth = 0;
     private int space = 5;//行间距
     private int num = Const.Str.MENU_MENU.length;
-   
     public static final byte START = 0;
     public static final byte CONTINUE = 1;
     public static final byte SETTING = 2;
@@ -42,16 +41,13 @@ public class MenuView extends BaseView {
 
     public void init() {
         this.setControl(new MenuControl());
-      
-        try {
-            jthuang = Image.createImage("product/image/skin/jthuang.png");
-            back = Image.createImage("product/image/skin/back.png");
-            kuang = Image.createImage("product/image/skin/kuang.png");
-            jt = Image.createImage("product/image/skin/jt.png");
-            menu = Image.createImage("product/image/skin/menu.png");
-        } catch (IOException ex) {
-            Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        jthuang = ge.getImageManager().getImage("image/skin/jthuang.png");
+        back = ge.getImageManager().getImage("image/skin/back.png");
+        kuang = ge.getImageManager().getImage("image/skin/kuang.png");
+        jt = ge.getImageManager().getImage("image/skin/jt.png");
+        menu = ge.getImageManager().getImage("image/skin/menu.png");
+
     }
 
     public void release() {
@@ -64,7 +60,7 @@ public class MenuView extends BaseView {
     int test = 0;
 
     public void paint(Painter painter) {
-          itemWidth = painter.stringWidth(Const.Str.MENU_MENU[0]);
+        itemWidth = painter.stringWidth(Const.Str.MENU_MENU[0]);
 
         painter.drawImage(back, 0, 0, 0);
         painter.drawImage(kuang, gd.screenWidth / 2, gd.screenHeight - 30, Painter.HV);
