@@ -39,9 +39,15 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
         g.setColor(Color.GREEN);
         g.drawLine(0, this.getHeight() >> 1, this.getWidth(), this.getHeight() >> 1);
         g.drawLine(this.getWidth() >> 1, 0, this.getWidth() >> 1, this.getHeight());
-        if (isPlay) {
-        } else {
+        if (action != null) {
+            if (isPlay) {
+            } else {
+                if (action.getSequence(sequenceIndex) != null) {
+                    action.getSequence(sequenceIndex).paint(g, this.getWidth() >> 1, this.getHeight() >> 1, 1);
+                }
+            }
         }
+
     }
 
     public Action getAction() {
@@ -50,6 +56,17 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
 
     public void setAction(Action action) {
         this.action = action;
+        setIsPlay(false);
+    }
+    private int sequenceIndex = -1;
+
+    public int getSequenceIndex() {
+        return sequenceIndex;
+    }
+
+    public void setSequenceIndex(int index) {
+        sequenceIndex = index;
+        repaint();
     }
 
     /**
@@ -98,6 +115,7 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
                         seq.setName("新建序列");
                         action.addSequence(seq);
                         System.out.println("add frame");
+                        repaint();
                     }
                 }
                 dtde.dropComplete(true);

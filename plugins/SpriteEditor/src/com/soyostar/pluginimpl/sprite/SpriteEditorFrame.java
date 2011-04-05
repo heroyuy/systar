@@ -19,6 +19,8 @@ import com.soyostar.pluginimpl.sprite.dialog.HelpDialog;
 import com.soyostar.pluginimpl.sprite.dialog.NewAnimationDialog;
 import com.soyostar.pluginimpl.sprite.dialog.TileSetInformationDialog;
 import com.soyostar.pluginimpl.sprite.information.SoftInformation;
+import com.soyostar.pluginimpl.sprite.listener.ActionChangeListener;
+import com.soyostar.pluginimpl.sprite.listener.ActionChangedEvent;
 import com.soyostar.pluginimpl.sprite.listener.AnimationChangeListener;
 import com.soyostar.pluginimpl.sprite.listener.AnimationChangedEvent;
 import com.soyostar.pluginimpl.sprite.listener.FrameChangeListener;
@@ -33,6 +35,7 @@ import com.soyostar.pluginimpl.sprite.model.FrameTableModel;
 import com.soyostar.pluginimpl.sprite.model.Layer;
 import com.soyostar.pluginimpl.sprite.model.LayerTableModel;
 import com.soyostar.pluginimpl.sprite.model.ModuleLayer;
+import com.soyostar.pluginimpl.sprite.model.Sequence;
 import com.soyostar.pluginimpl.sprite.model.SequenceTableModel;
 import com.soyostar.pluginimpl.sprite.model.TileSet;
 import com.soyostar.project.Project;
@@ -56,7 +59,7 @@ import javax.swing.UIManager;
  *
  * @author Administrator
  */
-public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, AnimationChangeListener, LayerChangeListener, FrameChangeListener {
+public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, AnimationChangeListener, LayerChangeListener, FrameChangeListener, ActionChangeListener {
 
     /** Creates new form SpriteManagerDialog */
     public SpriteEditorFrame() {
@@ -628,6 +631,11 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         sequenceTable.setModel(stm);
         sequenceTable.setName("sequenceTable"); // NOI18N
+        sequenceTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sequenceTableMouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(sequenceTable);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -682,6 +690,11 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
 
         actionTable.setModel(atm);
         actionTable.setName("actionTable"); // NOI18N
+        actionTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                actionTableMouseClicked(evt);
+            }
+        });
         jScrollPane8.setViewportView(actionTable);
 
         jToolBar3.setFloatable(false);
@@ -1182,13 +1195,34 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
         // TODO add your handling code here:
         Action act = new Action();
         act.setName("新建动作");
+        act.addActionChangeListener(this);
         Animation.getInstance().addAction(act);
         addAction();
     }//GEN-LAST:event_addActionButtonActionPerformed
+
+    private void actionTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionTableMouseClicked
+        // TODO add your handling code here:
+        currentActionIndex = actionTable.getSelectedRow();
+        actionViewPane.setAction(Animation.getInstance().getAction(currentActionIndex));
+        sequenceTable.updateUI();
+        currentSequenceIndex = -1;
+        actionViewPane.setSequenceIndex(currentSequenceIndex);
+        sequenceTable.getSelectionModel().clearSelection();
+    }//GEN-LAST:event_actionTableMouseClicked
+
+    private void sequenceTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sequenceTableMouseClicked
+        // TODO add your handling code here:
+        currentSequenceIndex = sequenceTable.getSelectedRow();
+        actionViewPane.setSequenceIndex(currentSequenceIndex);
+    }//GEN-LAST:event_sequenceTableMouseClicked
     public void addAction() {
         actionTable.getSelectionModel().setSelectionInterval(Animation.getInstance().getActionsCount() - 1,
             Animation.getInstance().getActionsCount() - 1);
         currentActionIndex = Animation.getInstance().getActionsCount() - 1;
+        actionViewPane.setAction(Animation.getInstance().getAction(currentActionIndex));
+        currentSequenceIndex = -1;
+        actionViewPane.setSequenceIndex(currentSequenceIndex);
+        sequenceTable.getSelectionModel().clearSelection();
     }
 
     /**
@@ -1406,5 +1440,28 @@ public class SpriteEditorFrame extends javax.swing.JFrame implements IPlugin, An
     public void layerRemoved(FrameChangedEvent e, int index) {
         layerTable.updateUI();
         frameEditPane.updateUI();
+    }
+
+    public void actionChanged(ActionChangedEvent e) {
+        actionViewPane.updateUI();
+    }
+
+    public void nameChanged(ActionChangedEvent e, String oname, String nname) {
+    }
+
+    public void sequenceAdded(ActionChangedEvent e, Sequence seq) {
+        actionViewPane.updateUI();
+        currentSequenceIndex = Animation.getInstance().getAction(currentActionIndex).getSequencesCount() - 1;
+        actionViewPane.setSequenceIndex(currentSequenceIndex);
+        sequenceTable.getSelectionModel().setSelectionInterval(Animation.getInstance().getAction(currentActionIndex).getSequencesCount() - 1,
+            Animation.getInstance().getAction(currentActionIndex).getSequencesCount() - 1);
+        sequenceTable.updateUI();
+    }
+
+    public void sequenceRemoved(ActionChangedEvent e, int index) {
+        currentSequenceIndex = -1;
+        actionViewPane.setSequenceIndex(currentSequenceIndex);
+        sequenceTable.getSelectionModel().clearSelection();
+        sequenceTable.updateUI();
     }
 }
