@@ -4,14 +4,15 @@
  */
 package com.soyostar.game.tools;
 
-import com.soyostar.game.data.access.ImageManager;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.game.db.ImageManager;
 import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
 
 import com.soyostar.ui.Image;
 import com.soyostar.ui.Painter;
 import java.awt.Color;
-
-
+import java.util.Vector;
 
 /*
  * 功能：
@@ -34,7 +35,7 @@ import java.awt.Color;
  *
  * 绘图工具包
  */
-public class Toolv {
+public class Tools {
 
     public static final byte DIALOG_DEEP = 0;
     public static final byte DIALOG_LIGHT = 1;
@@ -43,18 +44,19 @@ public class Toolv {
     public static final byte SCROLLBAR_HORIZONTAL = 1;
     public static final byte CELL_DEEP = 0;
     public static final byte CELL_LIGHT = 1;
+    private static GameEngine ge = GameEngine.getInstance();
 
-/**
- * 三角形
- * @param painter
- * @param x1
- * @param y1
- * @param x2
- * @param y2
- * @param x3
- * @param y3
- * @param color
- */
+    /**
+     * 三角形
+     * @param painter
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param x3
+     * @param y3
+     * @param color
+     */
     public static void drawTriangle(Painter painter, int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
         painter.setColor(color);
         painter.drawLine(x1, y1, x2, y2);
@@ -73,7 +75,7 @@ public class Toolv {
      */
     public static void drawDialog(Painter painter, int x, int y, int w, int h, byte type) {
         if (type == Painter.DIALOG_DEEP || type == Painter.DIALOG_LIGHT) {
-            Image img = ImageManager.getImage(type == Painter.DIALOG_DEEP ? Const.ImagePath.DIALOG_DEEP : Const.ImagePath.DIALOG_LIGHT);
+            Image img = ge.getImageManager().getImage(type == Painter.DIALOG_DEEP ? Const.ImagePath.DIALOG_DEEP : Const.ImagePath.DIALOG_LIGHT);
             drawRectFrame(painter, img, x, y, w, h);
         } else {
             System.out.println("参数type不对，只能为0或1");
@@ -91,15 +93,15 @@ public class Toolv {
      * @param showNum 一屏可以显示的条目数量
      * @param maxNum 总共要显示的条目数量
      */
-    public static void drawScrollbar(EmulatorGraphics g, byte style, int a, int b1, int b2, int topIndex, int showNum, int maxNum) {
+    public static void drawScrollbar(Painter g, byte style, int a, int b1, int b2, int topIndex, int showNum, int maxNum) {
         if (b2 <= b1 || maxNum <= showNum) {
             return;
         }
-        ImageManager im = ImageManager.getInstance();
-        EmulatorImage trench = im.getImage(Const.ImagePath.TRENCH);
-        trench = EmulatorImage.createImage(trench, trench.getWidth() / 2, 0, trench.getWidth() / 2, trench.getHeight(), 6);
-        EmulatorImage triangle = im.getImage(Const.ImagePath.SMALLTRIANGLE);
-        EmulatorImage ball = im.getImage(Const.ImagePath.BALL);
+        ImageManager im = ge.getImageManager();
+        Image trench = im.getImage(Const.ImagePath.TRENCH);
+        trench = Image.createImage(trench, trench.getWidth() / 2, 0, trench.getWidth() / 2, trench.getHeight(), 6);
+        Image triangle = im.getImage(Const.ImagePath.SMALLTRIANGLE);
+        Image ball = im.getImage(Const.ImagePath.BALL);
         switch (style) {
             case Painter.SCROLLBAR_VERTICAL: {
 
@@ -110,7 +112,7 @@ public class Toolv {
                 g.setClip(a, b1 + triangle.getHeight(), wid, hei - 2 * triangle.getHeight());
                 int num = hei / trench.getHeight() + 1;
                 for (int i = 0; i < num; i++) {
-                    g.drawImage(trench, a + wid / 2, b1 + i * trench.getHeight(), EmulatorGraphics.HT);
+                    g.drawImage(trench, a + wid / 2, b1 + i * trench.getHeight(), Painter.HT);
                 }
                 g.setClip(a, b1, wid, hei);
                 //2、绘制两个三角
@@ -219,12 +221,12 @@ public class Toolv {
      * @param h 高度
      * @param type 类型，为Painter.CELL_DEEP时画深色框 其它则画浅色框
      */
-    public static void drawCell(EmulatorGraphics g, int x, int y, int w, int h, byte type) {
-        EmulatorImage img = ImageManager.getInstance().getImage(type == Painter.CELL_DEEP ? Const.ImagePath.CELL_DEEP : Const.ImagePath.CELL_LIGHT);
+    public static void drawCell(Painter g, int x, int y, int w, int h, byte type) {
+        Image img = ge.getImageManager().getImage(type == Painter.CELL_DEEP ? Const.ImagePath.CELL_DEEP : Const.ImagePath.CELL_LIGHT);
         drawRectFrame(g, img, x, y, w, h);
     }
 
-    public static void drawStringOnCell(EmulatorGraphics g, String text, Color color, int x, int y, int w, int h, int anchor, byte type) {
+    public static void drawStringOnCell(Painter g, String text, Color color, int x, int y, int w, int h, int anchor, byte type) {
         drawCell(g, x, y, w, h, type);
         if (text == null || text.equals("")) {
             return;
@@ -279,7 +281,7 @@ public class Toolv {
      * @param anchor 锚点
      * @param type 类型，为Painter.CELL_DEEP时选中框为深色框 其它则画浅色框
      */
-    public static void drawTable(EmulatorGraphics g, int x, int y, int cellWidth, int cellHeight, int cellNum, int gap, String[] texts, Color color, int topIndex, int curIndex, int anchor, byte style, byte type) {
+    public static void drawTable(Painter g, int x, int y, int cellWidth, int cellHeight, int cellNum, int gap, String[] texts, Color color, int topIndex, int curIndex, int anchor, byte style, byte type) {
         if (style != NODIALOG) {//不为0,1时不画对话框
             drawDialog(g, x, y, cellWidth + 2 * gap, cellNum * (cellHeight + gap) + gap, style);
         }
@@ -289,7 +291,7 @@ public class Toolv {
         }
     }
 
-    public static void drawTab(EmulatorGraphics g, int x, int y, int w, int h, byte type, int curIndex, String[] titles) {
+    public static void drawTab(Painter g, int x, int y, int w, int h, byte type, int curIndex, String[] titles) {
         //绘制所有耳朵
         int wid = 48, hei = 24;
         for (int i = 0; i < titles.length; i++) {
@@ -306,7 +308,7 @@ public class Toolv {
         }
     }
 
-    public static void drawRectFrame(EmulatorGraphics g, EmulatorImage img, int x, int y, int w, int h) {
+    public static void drawRectFrame(Painter g, Image img, int x, int y, int w, int h) {
         g.setClip(x, y, w, h);
         int rowNum = h / (img.getHeight() / 2) + 1;
         int colNum = w / (img.getWidth() / 2) + 1;
@@ -339,7 +341,7 @@ public class Toolv {
      * 图片镜像特效
      */
 
-    public static EmulatorImage effect_mirror(EmulatorImage src) {
+    public static Image effect_mirror(Image src) {
         int srcW = src.getWidth();
         int srcH = src.getHeight();
         int[] srcPixels = getPixels(src);
@@ -361,7 +363,7 @@ public class Toolv {
     /*
      * 获取图片RGB数据，并返回大小为width*height大小的一维数组
      */
-    public static int[] getPixels(EmulatorImage src) {
+    public static int[] getPixels(Image src) {
         int w = src.getWidth();
         int h = src.getHeight();
         int[] pixels = new int[w * h];
@@ -372,8 +374,8 @@ public class Toolv {
      *将pixels[]里的数据，生成一张图片，图片宽为w，高为h
      */
 
-    public static EmulatorImage drawPixels(int[] pixels, int w, int h) {
-        EmulatorImage image = EmulatorImage.createRGBImage(pixels, w, h, true);
+    public static Image drawPixels(int[] pixels, int w, int h) {
+        Image image = Image.createRGBImage(pixels, w, h, true);
         pixels = null;
         return image;
     }
@@ -382,7 +384,7 @@ public class Toolv {
      *destW 调整后的宽，destH调整后的高
      */
 
-    public static EmulatorImage effect_resizeImage(EmulatorImage src, int destW, int destH) {
+    public static Image effect_resizeImage(Image src, int destW, int destH) {
         int srcW = src.getWidth();
         int srcH = src.getHeight();
         int[] destPixels = new int[destW * destH];
@@ -406,7 +408,7 @@ public class Toolv {
      * 越大越不透明，只半透明不透明的部分
      * @return 处理透明度后的图片
      */
-    public static EmulatorImage effect_transparent_Other(EmulatorImage img, int transparent) {
+    public static Image effect_transparent_Other(Image img, int transparent) {
         if (transparent < 0 || transparent > 255) {
             return img;
         }
@@ -453,12 +455,12 @@ public class Toolv {
      * TIPSTR_LEFT //左边消失绘制坐标
      * TIPSTR_RIGHT //右边出现绘制坐标
      */
-    public static void drawTipString(EmulatorGraphics g, String str, int height, int TIPSTR_LEFT, int TIPSTR_RIGHT, int rectX, int rectY, int rectWidth, int rectHeight, Color color) {
+    public static void drawTipString(Painter g, String str, int height, int TIPSTR_LEFT, int TIPSTR_RIGHT, int rectX, int rectY, int rectWidth, int rectHeight, Color color) {
         g.setColor(color);
         int strWidth = g.getEmulatorFont().stringWidth(str);
         int strHeight = g.getEmulatorFont().getHeight();
         if (strWidth < rectWidth) {
-            g.drawString(str, rectX, height - strHeight / 2, EmulatorGraphics.LT);
+            g.drawString(str, rectX, height - strHeight / 2, Painter.LT);
             return;
         }
         tipStringPos -= tipStringSpeed;
@@ -471,12 +473,12 @@ public class Toolv {
         int oldClipWidth = g.getClipWidth();
         int oldClipHeight = g.getClipHeight();
         g.setClip(rectX, rectY, rectWidth, rectHeight);
-        g.drawString(str, tipStringPos, height - strHeight / 2, EmulatorGraphics.LT);
+        g.drawString(str, tipStringPos, height - strHeight / 2, Painter.LT);
         g.setClip(oldClipX, oldClipY, oldClipWidth, oldClipHeight);
 
     }
 
-    public static void drawImage(EmulatorImage src, int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anchor, EmulatorGraphics g) {
+    public static void drawImage(Image src, int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anchor, Painter g) {
         g.drawRegion(src, x_src, y_src, width, height, 0, x_dest, y_dest, anchor);
     }
     private static int width;
@@ -496,9 +498,9 @@ public class Toolv {
      * @param type
      * @param atype 0 红色图片 1 绿色图片
      */
-    public static void drawNumber(EmulatorGraphics g, int number, int x, int y, int w, int type, int atype) {
-        ImageManager im = ImageManager.getInstance();
-        EmulatorImage imgNumber = im.getImage(Const.ImagePath.NUMS);
+    public static void drawNumber(Painter g, int number, int x, int y, int w, int type, int atype) {
+        ImageManager im = ge.getImageManager();
+        Image imgNumber = im.getImage(Const.ImagePath.NUMS);
         width = imgNumber.getWidth() / w;
         height = imgNumber.getHeight() / 2;
         String strNmber = Integer.toString(number);
@@ -587,12 +589,12 @@ public class Toolv {
      * @param hei 区域高度
      * @param color 文本颜色
      */
-    public static void drawWordWrapString(EmulatorGraphics g, String str, int x, int y, int wid, int hei, Color color) {
+    public static void drawWordWrapString(Painter g, String str, int x, int y, int wid, int hei, Color color) {
         g.setClip(x, y, wid, hei);
         g.setColor(color);
         char[] txt = str.toCharArray();
         for (int i = 0, col = 0, line = 0; i < txt.length; i++) {
-            g.drawChar(txt[i], x + col * (g.getEmulatorFont().charWidth(txt[0]) + 1), y + line * (g.getEmulatorFont().getHeight()), EmulatorGraphics.LT);
+            g.drawChar(txt[i], x + col * (g.getEmulatorFont().charWidth(txt[0]) + 1), y + line * (g.getEmulatorFont().getHeight()), Painter.LT);
             if ((col + 1) * (g.getEmulatorFont().charWidth(txt[0]) + 1) >= wid) {
                 col = 0;
                 line++;
@@ -604,6 +606,4 @@ public class Toolv {
         g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
 
     }
-}
-
 }
