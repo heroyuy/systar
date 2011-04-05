@@ -31,9 +31,17 @@ public final class GameEngine implements Runnable {
      */
     private RenderLayer renderLayer = null;
     /**
+     * 按键管理器
+     */
+    private KeyManager keyManager = null;
+
+    public KeyManager getKeyManager() {
+        return keyManager;
+    }
+    /**
      * 游戏当前视图
      */
-    private View curView = null;
+    private BaseView curView = null;
     /**
      * 循环计数器
      */
@@ -74,6 +82,7 @@ public final class GameEngine implements Runnable {
     private GameEngine() {
         super();
         renderLayer = new RenderLayer(this);
+        keyManager = new KeyManager();
         Display.getDefaultDisplay().setCurrentCanvas(renderLayer);
     }
 
@@ -142,15 +151,16 @@ public final class GameEngine implements Runnable {
 
                     curView = game.getCurView();
                     if (curView != null) {
-                        curView.dealGameEvent((Event) se.getEventQueue().poll());
+                        if (curView.getControl() != null) {
+                        }
                         //处理游戏事件
                         if (!game.isDealEvent() && !se.getEventQueue().isEmpty()) {
-                            curView.dealGameEvent((Event) se.getEventQueue().poll());
+                            curView.getControl().dealGameEvent((Event) se.getEventQueue().poll());
                         }
                         //处理触屏事件
-                        curView.dealMotion();
+                        curView.getControl().dealMotion();
                         //处理按键事件
-                        curView.dealKeyEvent();
+                        curView.getControl().dealKeyEvent();
                     }
 
                     // 渲染视图

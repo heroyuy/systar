@@ -1,6 +1,6 @@
 package com.soyostar.emulator.engine;
 
-import com.soyostar.emulator.engine.script.Event;
+
 import com.soyostar.ui.Painter;
 
 /**
@@ -25,19 +25,4 @@ public interface View {
      */
     public void paint(Painter painter);
 
-    /**
-     * 按键事件
-     */
-    public void dealKeyEvent();
-
-    /**
-     * 触屏事件
-     */
-    public void dealMotion();
-
-    /**
-     * 游戏事件
-     * @param event
-     */
-    public void dealGameEvent(Event event);
 }

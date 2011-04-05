@@ -9,7 +9,7 @@ public abstract class Game implements GameInterface {
     /**
      * 游戏的当前视图
      */
-    private View curView = null;
+    private BaseView curView = null;
     /**
      * 游戏主引擎
      */
@@ -47,7 +47,7 @@ public abstract class Game implements GameInterface {
      * 获取游戏的当前视图
      * @return 游戏的当前视图，如果不存在则返回null
      */
-    public final View getCurView() {
+    public final BaseView getCurView() {
         return curView;
     }
 
@@ -55,7 +55,7 @@ public abstract class Game implements GameInterface {
      * 设置游戏的当前视图
      * @param curView 要设置为当前视图的视图
      */
-    public final void setCurView(View curView) {
+    protected final void setCurView(BaseView curView) {
         this.curView = curView;
     }
 

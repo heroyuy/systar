@@ -36,24 +36,26 @@ public class RenderLayer extends Container implements MotionListener, Display.Ca
 
     @Override
     public void keyPressed(int key) {
-        System.out.println("keyPressed:" + key);
+//        System.out.println("keyPressed:" + key);
+        ge.getKeyManager().pressKey(key);
     }
 
     @Override
     public void keyReleased(int key) {
-        System.out.println("keyReleased:" + key);
+//        System.out.println("keyReleased:" + key);
+        ge.getKeyManager().clearKeyBuffer();
     }
 
     public void onMotionDown(Motion m) {
-        System.out.println("onMotionDown");
+//        System.out.println("onMotionDown");
     }
 
     public void onMotionMove(Motion m) {
-        System.out.println("onMotionMove");
+//        System.out.println("onMotionMove");
     }
 
     public void onMotionUp(Motion m) {
-        System.out.println("onMotionUp");
+//        System.out.println("onMotionUp");
     }
 
     public void sizeChanged(int width, int height) {
