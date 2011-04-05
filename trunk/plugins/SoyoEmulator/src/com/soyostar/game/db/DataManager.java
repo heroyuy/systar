@@ -21,6 +21,11 @@ import java.util.Iterator;
 public class DataManager {
 
     private HashMap daos = null;
+    private FileBridge fb = null;
+
+    protected FileBridge getFileBridge() {
+        return fb;
+    }
 
     //***************************************************************************************
     //Config
@@ -122,6 +127,7 @@ public class DataManager {
     }
 
     private DataManager() {
+        fb = new FileBridge();
         daos = new HashMap();
         daos.put("config", new ConfigDao());
         daos.put("player", new PlayerDao());

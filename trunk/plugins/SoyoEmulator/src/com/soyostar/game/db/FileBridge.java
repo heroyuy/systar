@@ -1,4 +1,4 @@
-package com.soyostar.game.model.manager;
+package com.soyostar.game.db;
 
 import java.io.DataInputStream;
 import java.io.File;
