@@ -1,14 +1,14 @@
 package com.soyostar.game;
 
+import com.soyostar.emulator.engine.BaseView;
 import com.soyostar.emulator.engine.Game;
-import com.soyostar.emulator.engine.View;
 import com.soyostar.game.model.Const;
 import com.soyostar.game.model.DataHandler;
 import com.soyostar.game.view.MenuView;
 
 public class RpgGame extends Game {
 
-    private View curView = null;
+    private BaseView curView = null;
 
     public RpgGame() {
         super();

@@ -4,8 +4,7 @@
  */
 package com.soyostar.game.view;
 
-import com.soyostar.emulator.engine.View;
-import com.soyostar.emulator.engine.script.Event;
+import com.soyostar.emulator.engine.BaseView;
 import com.soyostar.ui.Painter;
 import java.awt.Color;
 
@@ -13,7 +12,7 @@ import java.awt.Color;
  *
  * @author Administrator
  */
-public class MenuView implements View {
+public class MenuView extends BaseView {
 
     public void init() {
     }
@@ -27,14 +26,5 @@ public class MenuView implements View {
         painter.fillRect(0, 0, 100, 100);
         painter.setColor(Color.white);
         painter.drawString(++test + "", 10, 10, Painter.LT);
-    }
-
-    public void dealKeyEvent() {
-    }
-
-    public void dealMotion() {
-    }
-
-    public void dealGameEvent(Event event) {
     }
 }
