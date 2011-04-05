@@ -62,38 +62,6 @@ public final class Const {
         public static final byte KEY_POUND = 35;//#键
     }
 
-    /**
-     * 颜色
-     */
-    public static final class Color {
-
-        public static final int black = 0xff000000;// 黑色
-        public static final int BLACK = 0xff000000;// 黑色
-        public static final int blue = 0xff0000ff;// 蓝色
-        public static final int BLUE = 0xff0000ff;// 蓝色
-        public static final int cyan = 0xff00ffff;// 青色
-        public static final int CYAN = 0xff00ffff;// 青色
-        public static final int DARK_GRAY = 0xff404040;// 深灰色
-        public static final int darkGray = 0xff404040;// 深灰色
-        public static final int gray = 0xff808080;// 灰色
-        public static final int GRAY = 0xff808080;// 灰色
-        public static final int green = 0xff00ff00;// 绿色
-        public static final int GREEN = 0xff00ff00;// 绿色
-        public static final int LIGHT_GRAY = 0xffc0c0c0;// 浅灰色
-        public static final int lightGray = 0xffc0c0c0;// 浅灰色
-        public static final int magenta = 0xffff00ff;// 洋红色
-        public static final int MAGENTA = 0xffff00ff;// 洋红色
-        public static final int orange = 0xffffc800;// 桔黄色
-        public static final int ORANGE = 0xffffc800;// 桔黄色
-        public static final int pink = 0xffffafaf;// 粉红色
-        public static final int PINK = 0xffffafaf;// 粉红色
-        public static final int red = 0xffff0000;// 红色
-        public static final int RED = 0xffff0000;// 红色
-        public static final int white = 0xffffffff;// 白色
-        public static final int WHITE = 0xffffffff;// 白色
-        public static final int yellow = 0xffffff00;// 黄色
-        public static final int YELLOW = 0xffffff00;// 黄色
-    }
 
     /**
      * 字符串
