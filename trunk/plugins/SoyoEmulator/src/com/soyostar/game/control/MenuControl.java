@@ -11,20 +11,19 @@ public class MenuControl implements Control {
     GameData gd = GameData.getGameData();
 
     public void dealKeyEvent() {
-        if (ge.getKeyManager().isAnyKeyPressed()) {
-            gd.menu.text = "有按键事件";
-        }
+        gd.menu.text = "有按键事件";
+
     }
 
     public void dealMotion() {
-        if (ge.getPointerManager().isScreenTouched()) {
-            gd.menu.text = "有触屏事件";
-        } else {
-            gd.menu.text="";
-        }
+        gd.menu.text = "有触屏事件";
         ge.getPointerManager().clear();
     }
 
     public void dealGameEvent(Event event) {
+    }
+
+    public void updateModel() {
+        gd.menu.text = "";
     }
 }
