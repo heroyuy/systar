@@ -63,8 +63,12 @@ public class Painter {
         g.drawString(str, xy[0], xy[1] + fm.getHeight());
     }
 
-    public int stringWidth(String str){
+    public int stringWidth(String str) {
         return g.getFontMetrics().stringWidth(str);
+    }
+
+    public int getFontHeight() {
+        return g.getFontMetrics().getHeight();
     }
 
     public void drawImage(Image image, int x, int y, int anchor) {

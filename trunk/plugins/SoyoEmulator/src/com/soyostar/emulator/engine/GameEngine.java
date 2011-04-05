@@ -3,6 +3,7 @@ package com.soyostar.emulator.engine;
 import com.soyostar.ui.Display;
 import com.soyostar.emulator.engine.script.Event;
 import com.soyostar.emulator.engine.script.ScriptEngine;
+import com.soyostar.game.data.access.ImageManager;
 
 /**
  * 游戏主引擎
@@ -38,6 +39,11 @@ public final class GameEngine implements Runnable {
      * 触屏管理器
      */
     private PointerManager pointerManager = null;
+    private ImageManager imageManager = null;
+
+    public ImageManager getImageManager() {
+        return imageManager;
+    }
 
     public PointerManager getPointerManager() {
         return pointerManager;
@@ -92,6 +98,7 @@ public final class GameEngine implements Runnable {
         renderLayer = new RenderLayer(this);
         keyManager = new KeyManager();
         pointerManager = new PointerManager();
+        imageManager = new ImageManager();
         Display.getDefaultDisplay().setCurrentCanvas(renderLayer);
     }
 
