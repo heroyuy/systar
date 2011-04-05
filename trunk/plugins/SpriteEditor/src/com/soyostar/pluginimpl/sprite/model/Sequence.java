@@ -4,6 +4,8 @@
  */
 package com.soyostar.pluginimpl.sprite.model;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Administrator
@@ -36,5 +38,11 @@ public class Sequence {
 
     public void setFrame(Frame frame) {
         this.frame = frame;
+    }
+
+    public void paint(Graphics g, int x, int y, int zoom) {
+        if (frame != null) {
+            frame.paint(g, x, y, zoom);
+        }
     }
 }
