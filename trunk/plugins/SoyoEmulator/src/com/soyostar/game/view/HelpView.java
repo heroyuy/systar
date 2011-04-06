@@ -1,10 +1,8 @@
 package com.soyostar.game.view;
 
 import engine.BaseView;
-import control.AboutControl;
-
 import model.GameData;
-import control.AboutControl;
+import control.HelpControl;
 import emulator.EmulatorFont;
 import emulator.EmulatorGraphics;
 import java.awt.Color;
@@ -12,9 +10,9 @@ import system.Painter;
 
 /**
  *
- * 游戏关于视图
+ * 游戏帮助视图
  */
-public class AboutView extends BaseView {
+public class HelpView extends BaseView {
 
     private GameData gd = GameData.getGameData();
     private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
@@ -23,7 +21,7 @@ public class AboutView extends BaseView {
     private int x, y;
 
     public void init() {
-        setControl(new AboutControl());
+        setControl(new HelpControl());
         text = "界面等待实现中";
         itemWidth = font.stringWidth(text);
         x = (gd.screenWidth - itemWidth) / 2;

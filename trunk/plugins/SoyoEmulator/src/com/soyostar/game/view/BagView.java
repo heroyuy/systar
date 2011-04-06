@@ -1,18 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.soyostar.game.view;
 
-import com.soyostar.emulator.engine.BaseView;
-import com.soyostar.emulator.engine.GameEngine;
-import com.soyostar.game.model.GameData;
-import com.soyostar.ui.Painter;
+import control.BagControl;
+import emulator.EmulatorGraphics;
+import engine.BaseView;
+import engine.GameEngine;
+import java.awt.Color;
+import model.Bag;
+import model.Const;
+import model.GameData;
+import system.Painter;
 
 /**
  *
- * 背包
+ * @author Administrator
  */
 public class BagView extends BaseView {
 
@@ -29,18 +29,18 @@ public class BagView extends BaseView {
         gd.buildItems();
     }
 
-    public void paint(Painter painter) {
+    public void paint(EmulatorGraphics g) {
         switch (gd.bag_pageIndex) {
             case PAGE_MAIN:
-                paint_Main(painter);
+                paint_Main(g);
                 break;
             case PAGE_CONFIRM:
-                paint_Main(painter);
-                paint_Confirm(painter);
+                paint_Main(g);
+                paint_Confirm(g);
                 break;
             case PAGE_TIP:
-                paint_Main(painter);
-                paint_Tip(painter);
+                paint_Main(g);
+                paint_Tip(g);
                 break;
         }
     }
@@ -49,7 +49,7 @@ public class BagView extends BaseView {
         gd.bag_curIndex = 0;//回0
     }
 
-    private void paint_Main(Painter painter) {
+    private void paint_Main(EmulatorGraphics g) {
 
         int th = 50;//标题栏高度
         int ih = 80;//介绍栏高度
@@ -59,7 +59,7 @@ public class BagView extends BaseView {
         /**
          * 标题
          */
-       painter.drawDialog( 0, 0, gd.screenWidth, th, Painter.DIALOG_DEEP);
+        Painter.drawDialog(g, 0, 0, gd.screenWidth, th, Painter.DIALOG_DEEP);
         g.setEmulatorFont(Const.Font.FONTLARGE_BOLD);
         g.setColor(Color.GREEN);
         g.drawString("背 包", gd.screenWidth / 2, (th - g.getEmulatorFont().getHeight()) / 2, Const.Anchor.HT);
@@ -123,6 +123,4 @@ public class BagView extends BaseView {
         }
 
     }
-}
-
 }
