@@ -1,17 +1,10 @@
 package com.soyostar.game.view;
 
-import engine.BaseView;
-import engine.GameEngine;
-import control.MenuControl;
-import model.Const;
-import model.Const.Color;
-import model.GameData;
-import system.Painter;
-import java.io.IOException;
-import control.MenuControl;
-import emulator.EmulatorFont;
-import emulator.EmulatorGraphics;
-import emulator.EmulatorImage;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.game.model.GameData;
+
+
 
 /**
  *

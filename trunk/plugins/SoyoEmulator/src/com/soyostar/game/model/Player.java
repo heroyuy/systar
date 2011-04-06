@@ -1,8 +1,9 @@
 package com.soyostar.game.model;
 
 import com.soyostar.emulator.engine.script.ScriptEngine;
-import com.soyostar.emulator.framework.Tools;
+
 import com.soyostar.game.db.DataManager;
+import com.soyostar.game.tools.Tools;
 import com.soyostar.ui.Image;
 
 /**

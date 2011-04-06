@@ -1,14 +1,13 @@
 package com.soyostar.game.control;
 
-import view.StateView;
-import engine.Control;
-import engine.GameEngine;
-import engine.View;
-import engine.script.Event;
-import engine.script.ScriptEngine;
-import game.RpgGame;
-import model.Const;
-import model.GameData;
+import com.soyostar.emulator.engine.Control;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.emulator.engine.KeyManager;
+import com.soyostar.emulator.engine.script.Event;
+import com.soyostar.emulator.engine.script.ScriptEngine;
+import com.soyostar.game.RpgGame;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
 
 /**
  *
@@ -21,17 +20,20 @@ public class StateControl implements Control {
     private ScriptEngine se = ScriptEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
 
-    public void keyPressed(View view, int key) {
-        if (view instanceof StateView) {
-            switch (key) {
-                case Const.Key.KEY_RS:
-                    game.setCurView(Const.ViewId.VIEW_MAP);
-                    break;
-            }
+
+
+    public void dealKeyEvent() {
+        if (ge.getKeyManager().isPressKey(KeyManager.KEY_RS)) {
+            game.setCurView(Const.ViewId.VIEW_MAP);
         }
-        ge.clearKey();
     }
 
-    public void dealEvent(View view, Event event) {
+    public void dealMotion() {
+    }
+
+    public void dealGameEvent(Event event) {
+    }
+
+    public void updateModel() {
     }
 }

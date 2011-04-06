@@ -143,9 +143,6 @@ public class Painter {
         g.fillRoundRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), aw, ah);
 
     }
-  
-
-  
 
     /**
      * 画直线
@@ -256,8 +253,27 @@ public class Painter {
         return xy;
     }
 
-    
- 
+    public int getClipX() {
+        return (int) g.getClipBounds().getX();
+    }
 
-    
+    public int getClipY() {
+        return (int) g.getClipBounds().getY();
+    }
+
+    public int getClipWidth() {
+        return (int) g.getClipBounds().getWidth();
+    }
+
+    public int getClipHeight() {
+        return (int) g.getClipBounds().getHeight();
+    }
+
+    public int charWidth(char c) {
+        return this.stringWidth(c + "");
+    }
+
+    public void drawChar(char c, int x, int y, byte anchor) {
+        this.drawString(c + "", x, y, anchor);
+    }
 }

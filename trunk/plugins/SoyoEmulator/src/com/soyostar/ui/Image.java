@@ -106,6 +106,12 @@ public class Image {
         return tempImage;
     }
 
+    public static Image createRGBImage(int[] pixs, int w, int h, boolean flag) {
+        Image buffImg = new Image(w, h);
+        buffImg.context.setRGB(0, 0, w, h, pixs, 0, w);
+        return buffImg;
+    }
+
     /**
      * 4.获取Image的Painter对象
      * @return
