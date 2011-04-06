@@ -1,14 +1,10 @@
 package com.soyostar.game.view;
 
-import engine.BaseView;
-import control.AboutControl;
-
-import model.GameData;
-import control.AboutControl;
-import emulator.EmulatorFont;
-import emulator.EmulatorGraphics;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.game.control.AboutControl;
+import com.soyostar.game.model.GameData;
+import com.soyostar.ui.Painter;
 import java.awt.Color;
-import system.Painter;
 
 /**
  *
@@ -17,7 +13,6 @@ import system.Painter;
 public class AboutView extends BaseView {
 
     private GameData gd = GameData.getGameData();
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
     private String text = "";
     private int itemWidth = 0;
     private int x, y;
@@ -30,13 +25,14 @@ public class AboutView extends BaseView {
         y = (gd.screenHeight - font.getHeight()) / 2;
     }
 
-    public void paint(EmulatorGraphics g) {
-        g.setEmulatorFont(font);
-        Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
-        Painter.drawString(g, text, x, y, Color.white);
+    public void paint(Painter painter) {
+        painter.setColor(Color.black);
+        painter.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
+        painter.setColor(Color.white);
+        painter.drawString(text, x, y, Painter.LT);
 
         //绘制按钮
-        Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
+        painter.drawString("确定", 5, gd.screenHeight - font.getHeight(), Painter.LT);
 
     }
 
@@ -44,7 +40,6 @@ public class AboutView extends BaseView {
         gd.xIndex = 0;
         gd.yIndex = 0;
         gd = null;
-        font = null;
         setControl(null);
     }
 }

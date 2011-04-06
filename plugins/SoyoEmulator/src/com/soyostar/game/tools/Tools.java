@@ -12,6 +12,7 @@ import com.soyostar.game.model.GameData;
 import com.soyostar.ui.Image;
 import com.soyostar.ui.Painter;
 import java.awt.Color;
+import java.util.Random;
 import java.util.Vector;
 
 /*
@@ -33,7 +34,7 @@ import java.util.Vector;
  */
 /**
  *
- * 绘图工具包
+ * 工具包
  */
 public class Tools {
 
@@ -45,6 +46,39 @@ public class Tools {
     public static final byte CELL_DEEP = 0;
     public static final byte CELL_LIGHT = 1;
     private static GameEngine ge = GameEngine.getInstance();
+
+    public static int GetRandom(int data) {
+        int rand = new Random().nextInt();
+        return Math.abs(rand % data);
+    }
+
+    public static int GetRandom(int rs, int re)//获取随机数
+    {
+        int tmp = rs + Math.abs(new Random().nextInt() % (re - rs + 1));
+        return tmp;
+    }
+    //黑色清屏
+
+    public static void cleanScreen(Painter painter) {
+        painter.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
+        painter.setColor(Color.black);
+        painter.fillRect(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
+    }
+
+    public static int[] sort(int[] arraylist) {//冒泡排序
+        int len = arraylist.length;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (arraylist[j] < arraylist[i]) {
+                    int temp = 0;
+                    temp = arraylist[j];
+                    arraylist[j] = arraylist[i];
+                    arraylist[i] = temp;
+                }
+            }
+        }
+        return arraylist;
+    }
 
     /**
      * 三角形
@@ -84,7 +118,7 @@ public class Tools {
 
     /**
      * 绘制滚动条
-     * @param g 画笔
+     * @param painter 画笔
      * @param style 风格 可取  Painter.SCROLLBAR_HORIZONTAL 水平  Painter.SCROLLBAR_VERTICAL 竖直
      * @param a 如果是水平风格则是滚动条y坐标，竖直风格则是x坐标
      * @param b1 如果是水平风格则是滚动条起始x坐标，竖直风格则是起始y坐标
@@ -93,7 +127,7 @@ public class Tools {
      * @param showNum 一屏可以显示的条目数量
      * @param maxNum 总共要显示的条目数量
      */
-    public static void drawScrollbar(Painter g, byte style, int a, int b1, int b2, int topIndex, int showNum, int maxNum) {
+    public static void drawScrollbar(Painter painter, byte style, int a, int b1, int b2, int topIndex, int showNum, int maxNum) {
         if (b2 <= b1 || maxNum <= showNum) {
             return;
         }
@@ -109,24 +143,24 @@ public class Tools {
                 int wid = triangle.getWidth();
 
                 //1、绘制条状底色
-                g.setClip(a, b1 + triangle.getHeight(), wid, hei - 2 * triangle.getHeight());
+                painter.setClip(a, b1 + triangle.getHeight(), wid, hei - 2 * triangle.getHeight());
                 int num = hei / trench.getHeight() + 1;
                 for (int i = 0; i < num; i++) {
-                    g.drawImage(trench, a + wid / 2, b1 + i * trench.getHeight(), Painter.HT);
+                    painter.drawImage(trench, a + wid / 2, b1 + i * trench.getHeight(), Painter.HT);
                 }
-                g.setClip(a, b1, wid, hei);
+                painter.setClip(a, b1, wid, hei);
                 //2、绘制两个三角
-                g.drawImage(triangle, a, b1, 0);
-                g.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 1, a, b1 + hei - triangle.getHeight(), 0);
+                painter.drawImage(triangle, a, b1, 0);
+                painter.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 1, a, b1 + hei - triangle.getHeight(), 0);
 
                 //3、绘制小球
                 if (maxNum > showNum) {
                     if (topIndex == 0) {
-                        g.drawImage(ball, a + wid / 2, b1 + triangle.getHeight(), Const.Anchor.HT);
+                        painter.drawImage(ball, a + wid / 2, b1 + triangle.getHeight(), Const.Anchor.HT);
                     } else if (topIndex == maxNum - showNum) {
-                        g.drawImage(ball, a + wid / 2, b1 + hei - triangle.getHeight() - ball.getHeight(), Const.Anchor.HT);
+                        painter.drawImage(ball, a + wid / 2, b1 + hei - triangle.getHeight() - ball.getHeight(), Const.Anchor.HT);
                     } else {
-                        g.drawImage(ball, a + wid / 2, b1 + triangle.getHeight() + (hei - 2 * triangle.getHeight()) / (maxNum - showNum) * topIndex, Const.Anchor.HT);
+                        painter.drawImage(ball, a + wid / 2, b1 + triangle.getHeight() + (hei - 2 * triangle.getHeight()) / (maxNum - showNum) * topIndex, Const.Anchor.HT);
                     }
                 }
             }
@@ -137,30 +171,30 @@ public class Tools {
                 int hei = triangle.getWidth();
 
                 //1、绘制条状底色
-                g.setClip(b1 + triangle.getHeight(), a, wid - 2 * triangle.getHeight(), hei);
+                painter.setClip(b1 + triangle.getHeight(), a, wid - 2 * triangle.getHeight(), hei);
                 int num = wid / trench.getHeight() + 1;
                 for (int i = 0; i < num; i++) {
-                    g.drawRegion(trench, 0, 0, trench.getWidth(), trench.getHeight(), 5, b1 + i * trench.getHeight(), a + hei / 2, Const.Anchor.LV);
+                    painter.drawRegion(trench, 0, 0, trench.getWidth(), trench.getHeight(), 5, b1 + i * trench.getHeight(), a + hei / 2, Const.Anchor.LV);
                 }
-                g.setClip(b1, a, wid, hei);
+                painter.setClip(b1, a, wid, hei);
                 //2、绘制两个三角
-                g.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 4, b1, a, 0);
-                g.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 5, b1 + wid - triangle.getHeight(), a, 0);
+                painter.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 4, b1, a, 0);
+                painter.drawRegion(triangle, 0, 0, triangle.getWidth(), triangle.getHeight(), 5, b1 + wid - triangle.getHeight(), a, 0);
 
                 //3、绘制小球
                 if (maxNum > showNum) {
                     if (topIndex == 0) {
-                        g.drawImage(ball, b1 + triangle.getHeight(), a + hei / 2, Const.Anchor.LV);
+                        painter.drawImage(ball, b1 + triangle.getHeight(), a + hei / 2, Const.Anchor.LV);
                     } else if (topIndex == maxNum - showNum) {
-                        g.drawImage(ball, b1 + wid - triangle.getHeight() - ball.getWidth(), a + hei / 2, Const.Anchor.LV);
+                        painter.drawImage(ball, b1 + wid - triangle.getHeight() - ball.getWidth(), a + hei / 2, Const.Anchor.LV);
                     } else {
-                        g.drawImage(ball, b1 + triangle.getHeight() + (wid - 2 * triangle.getHeight()) / (maxNum - showNum) * topIndex, a + hei / 2, Const.Anchor.LV);
+                        painter.drawImage(ball, b1 + triangle.getHeight() + (wid - 2 * triangle.getHeight()) / (maxNum - showNum) * topIndex, a + hei / 2, Const.Anchor.LV);
                     }
                 }
             }
             break;
         }
-        g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
+        painter.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
 
     }
 
@@ -214,52 +248,52 @@ public class Tools {
 
     /**
      * 在指定位置绘制指定大小的单元格
-     * @param g 画笔
+     * @param painter 画笔
      * @param x x坐标
      * @param y y坐标
      * @param w 宽度
      * @param h 高度
      * @param type 类型，为Painter.CELL_DEEP时画深色框 其它则画浅色框
      */
-    public static void drawCell(Painter g, int x, int y, int w, int h, byte type) {
+    public static void drawCell(Painter painter, int x, int y, int w, int h, byte type) {
         Image img = ge.getImageManager().getImage(type == Painter.CELL_DEEP ? Const.ImagePath.CELL_DEEP : Const.ImagePath.CELL_LIGHT);
-        drawRectFrame(g, img, x, y, w, h);
+        drawRectFrame(painter, img, x, y, w, h);
     }
 
-    public static void drawStringOnCell(Painter g, String text, Color color, int x, int y, int w, int h, int anchor, byte type) {
-        drawCell(g, x, y, w, h, type);
+    public static void drawStringOnCell(Painter painter, String text, Color color, int x, int y, int w, int h, int anchor, byte type) {
+        drawCell(painter, x, y, w, h, type);
         if (text == null || text.equals("")) {
             return;
         }
-        g.setColor(color);
+        painter.setColor(color);
         int gap = 3;//文字与边框的间距
         switch (anchor) {
             case Const.Anchor.LT:
-                g.drawString(text, x + gap, y, anchor);
+                painter.drawString(text, x + gap, y, anchor);
                 break;
             case Const.Anchor.LV:
-                g.drawString(text, x + gap, y + (h - g.getEmulatorFont().getHeight()) / 2, Const.Anchor.LT);
+                painter.drawString(text, x + gap, y + (h - painter.getFontHeight()) / 2, Const.Anchor.LT);
                 break;
             case Const.Anchor.LB:
-                g.drawString(text, x + gap, y + h, anchor);
+                painter.drawString(text, x + gap, y + h, anchor);
                 break;
             case Const.Anchor.HT:
-                g.drawString(text, x + w / 2, y, anchor);
+                painter.drawString(text, x + w / 2, y, anchor);
                 break;
             case Const.Anchor.HV:
-                g.drawString(text, x + w / 2, y + (h - g.getEmulatorFont().getHeight()) / 2, Const.Anchor.HT);
+                painter.drawString(text, x + w / 2, y + (h - painter.getFontHeight()) / 2, Const.Anchor.HT);
                 break;
             case Const.Anchor.HB:
-                g.drawString(text, x + w / 2, y + h, anchor);
+                painter.drawString(text, x + w / 2, y + h, anchor);
                 break;
             case Const.Anchor.RT:
-                g.drawString(text, x + w - gap, y, anchor);
+                painter.drawString(text, x + w - gap, y, anchor);
                 break;
             case Const.Anchor.RV:
-                g.drawString(text, x + w - gap, y + (h - g.getEmulatorFont().getHeight()) / 2, Const.Anchor.RT);
+                painter.drawString(text, x + w - gap, y + (h - painter.getFontHeight()) / 2, Const.Anchor.RT);
                 break;
             case Const.Anchor.RB:
-                g.drawString(text, x + w - gap, y + h, anchor);
+                painter.drawString(text, x + w - gap, y + h, anchor);
                 break;
         }
 
@@ -267,7 +301,7 @@ public class Tools {
 
     /**
      * 绘制表格
-     * @param g 画笔
+     * @param painter 画笔
      * @param x 起始x坐标
      * @param y 起始y坐标
      * @param cellWidth 单元格宽度
@@ -281,61 +315,60 @@ public class Tools {
      * @param anchor 锚点
      * @param type 类型，为Painter.CELL_DEEP时选中框为深色框 其它则画浅色框
      */
-    public static void drawTable(Painter g, int x, int y, int cellWidth, int cellHeight, int cellNum, int gap, String[] texts, Color color, int topIndex, int curIndex, int anchor, byte style, byte type) {
+    public static void drawTable(Painter painter, int x, int y, int cellWidth, int cellHeight, int cellNum, int gap, String[] texts, Color color, int topIndex, int curIndex, int anchor, byte style, byte type) {
         if (style != NODIALOG) {//不为0,1时不画对话框
-            drawDialog(g, x, y, cellWidth + 2 * gap, cellNum * (cellHeight + gap) + gap, style);
+            drawDialog(painter, x, y, cellWidth + 2 * gap, cellNum * (cellHeight + gap) + gap, style);
         }
 
         for (int i = 0; i < cellNum; i++) {
-            drawStringOnCell(g, i + topIndex < texts.length ? texts[i + topIndex] : null, color, x + gap, y + (cellHeight + gap) * i + gap, cellWidth, cellHeight, anchor, i + topIndex == curIndex ? (type == Painter.CELL_DEEP ? Painter.CELL_DEEP : Painter.CELL_LIGHT) : (type == Painter.CELL_DEEP ? Painter.CELL_LIGHT : Painter.CELL_DEEP));
+            drawStringOnCell(painter, i + topIndex < texts.length ? texts[i + topIndex] : null, color, x + gap, y + (cellHeight + gap) * i + gap, cellWidth, cellHeight, anchor, i + topIndex == curIndex ? (type == Painter.CELL_DEEP ? Painter.CELL_DEEP : Painter.CELL_LIGHT) : (type == Painter.CELL_DEEP ? Painter.CELL_LIGHT : Painter.CELL_DEEP));
         }
     }
 
-    public static void drawTab(Painter g, int x, int y, int w, int h, byte type, int curIndex, String[] titles) {
+    public static void drawTab(Painter painter, int x, int y, int w, int h, byte type, int curIndex, String[] titles) {
         //绘制所有耳朵
         int wid = 48, hei = 24;
         for (int i = 0; i < titles.length; i++) {
-            drawDialog(g, x + i * wid, y, wid, hei, type == DIALOG_DEEP ? DIALOG_LIGHT : DIALOG_DEEP);
+            drawDialog(painter, x + i * wid, y, wid, hei, type == DIALOG_DEEP ? DIALOG_LIGHT : DIALOG_DEEP);
         }
         //绘制选中的耳朵
-        drawDialog(g, x + curIndex * wid, y, wid, hei, type == DIALOG_DEEP ? DIALOG_DEEP : DIALOG_LIGHT);
+        drawDialog(painter, x + curIndex * wid, y, wid, hei, type == DIALOG_DEEP ? DIALOG_DEEP : DIALOG_LIGHT);
         //绘制内容框
-        drawDialog(g, x, y + hei, w, h - hei, type == DIALOG_DEEP ? DIALOG_DEEP : DIALOG_LIGHT);
+        drawDialog(painter, x, y + hei, w, h - hei, type == DIALOG_DEEP ? DIALOG_DEEP : DIALOG_LIGHT);
         //绘制标题
-        g.setEmulatorFont(Const.Font.FONTSMALL_PLAIN);
         for (int i = 0; i < titles.length; i++) {
-            g.drawString(titles[i], x + i * wid + wid / 2, y + (hei - g.getEmulatorFont().getHeight()) / 2, Const.Anchor.HT);
+            painter.drawString(titles[i], x + i * wid + wid / 2, y + (hei - painter.getFontHeight()) / 2, Const.Anchor.HT);
         }
     }
 
-    public static void drawRectFrame(Painter g, Image img, int x, int y, int w, int h) {
-        g.setClip(x, y, w, h);
+    public static void drawRectFrame(Painter painter, Image img, int x, int y, int w, int h) {
+        painter.setClip(x, y, w, h);
         int rowNum = h / (img.getHeight() / 2) + 1;
         int colNum = w / (img.getWidth() / 2) + 1;
         //绘制底色
         for (int i = 0; i < colNum; i++) {
             for (int j = 0; j < rowNum; j++) {
-                g.drawRegion(img, img.getWidth() / 2, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y + img.getHeight() / 2 * j, 0);
+                painter.drawRegion(img, img.getWidth() / 2, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y + img.getHeight() / 2 * j, 0);
             }
         }
         //绘制边框 [先水平，后竖直]
         for (int i = 0; i < colNum; i++) {
-            g.drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y, 0);
-            g.drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x + img.getWidth() / 2 * i, y + h - img.getHeight() / 2, 0);
+            painter.drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y, 0);
+            painter.drawRegion(img, img.getWidth() / 2, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x + img.getWidth() / 2 * i, y + h - img.getHeight() / 2, 0);
         }
         for (int i = 0; i < rowNum; i++) {
-            g.drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x, y + img.getHeight() / 2 * i, 0);
-            g.drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + img.getHeight() / 2 * i, 0);
+            painter.drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x, y + img.getHeight() / 2 * i, 0);
+            painter.drawRegion(img, 0, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + img.getHeight() / 2 * i, 0);
 
         }
         //四个角
-        g.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x, y, 0);
-        g.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 2, x + w - img.getWidth() / 2, y, 0);
-        g.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x, y + h - img.getHeight() / 2, 0);
-        g.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + h - img.getHeight() / 2, 0);
+        painter.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 0, x, y, 0);
+        painter.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 2, x + w - img.getWidth() / 2, y, 0);
+        painter.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 1, x, y + h - img.getHeight() / 2, 0);
+        painter.drawRegion(img, 0, 0, img.getWidth() / 2, img.getHeight() / 2, 3, x + w - img.getWidth() / 2, y + h - img.getHeight() / 2, 0);
 
 
-        g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
+        painter.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
     }
     /*
      * 图片镜像特效
@@ -455,12 +488,12 @@ public class Tools {
      * TIPSTR_LEFT //左边消失绘制坐标
      * TIPSTR_RIGHT //右边出现绘制坐标
      */
-    public static void drawTipString(Painter g, String str, int height, int TIPSTR_LEFT, int TIPSTR_RIGHT, int rectX, int rectY, int rectWidth, int rectHeight, Color color) {
-        g.setColor(color);
-        int strWidth = g.getEmulatorFont().stringWidth(str);
-        int strHeight = g.getEmulatorFont().getHeight();
+    public static void drawTipString(Painter painter, String str, int height, int TIPSTR_LEFT, int TIPSTR_RIGHT, int rectX, int rectY, int rectWidth, int rectHeight, Color color) {
+        painter.setColor(color);
+        int strWidth = painter.stringWidth(str);
+        int strHeight = painter.getFontHeight();
         if (strWidth < rectWidth) {
-            g.drawString(str, rectX, height - strHeight / 2, Painter.LT);
+            painter.drawString(str, rectX, height - strHeight / 2, Painter.LT);
             return;
         }
         tipStringPos -= tipStringSpeed;
@@ -468,18 +501,18 @@ public class Tools {
             tipStringPos = TIPSTR_RIGHT;
         }
         //裁减区
-        int oldClipX = g.getClipX();
-        int oldClipY = g.getClipY();
-        int oldClipWidth = g.getClipWidth();
-        int oldClipHeight = g.getClipHeight();
-        g.setClip(rectX, rectY, rectWidth, rectHeight);
-        g.drawString(str, tipStringPos, height - strHeight / 2, Painter.LT);
-        g.setClip(oldClipX, oldClipY, oldClipWidth, oldClipHeight);
+        int oldClipX = painter.getClipX();
+        int oldClipY = painter.getClipY();
+        int oldClipWidth = painter.getClipWidth();
+        int oldClipHeight = painter.getClipHeight();
+        painter.setClip(rectX, rectY, rectWidth, rectHeight);
+        painter.drawString(str, tipStringPos, height - strHeight / 2, Painter.LT);
+        painter.setClip(oldClipX, oldClipY, oldClipWidth, oldClipHeight);
 
     }
 
-    public static void drawImage(Image src, int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anchor, Painter g) {
-        g.drawRegion(src, x_src, y_src, width, height, 0, x_dest, y_dest, anchor);
+    public static void drawImage(Image src, int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anchor, Painter painter) {
+        painter.drawRegion(src, x_src, y_src, width, height, 0, x_dest, y_dest, anchor);
     }
     private static int width;
     private static int height;
@@ -494,11 +527,11 @@ public class Tools {
      * @param number
      * @param x
      * @param y
-     * @param g
+     * @param painter
      * @param type
      * @param atype 0 红色图片 1 绿色图片
      */
-    public static void drawNumber(Painter g, int number, int x, int y, int w, int type, int atype) {
+    public static void drawNumber(Painter painter, int number, int x, int y, int w, int type, int atype) {
         ImageManager im = ge.getImageManager();
         Image imgNumber = im.getImage(Const.ImagePath.NUMS);
         width = imgNumber.getWidth() / w;
@@ -516,43 +549,43 @@ public class Tools {
             switch (cha) {
                 case '0':
                     drawImage(imgNumber, 0 * width, atype * height, width, height, x, y, 0,
-                            g);
+                            painter);
                     break;
                 case '1':
                     drawImage(imgNumber, 1 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '2':
                     drawImage(imgNumber, 2 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '3':
                     drawImage(imgNumber, 3 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '4':
                     drawImage(imgNumber, 4 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '5':
                     drawImage(imgNumber, 5 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '6':
                     drawImage(imgNumber, 6 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '7':
                     drawImage(imgNumber, 7 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '8':
                     drawImage(imgNumber, 8 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
                 case '9':
                     drawImage(imgNumber, 9 * width, atype * height, width, height, x, y,
-                            0, g);
+                            0, painter);
                     break;
             }
             switch (type) {
@@ -581,7 +614,7 @@ public class Tools {
 
     /**
      * 在指定区域绘制自动换行的文本
-     * @param g 画笔
+     * @param painter 画笔
      * @param str 要绘制的字符串
      * @param x  起始x坐标
      * @param y  起始y坐标
@@ -589,13 +622,13 @@ public class Tools {
      * @param hei 区域高度
      * @param color 文本颜色
      */
-    public static void drawWordWrapString(Painter g, String str, int x, int y, int wid, int hei, Color color) {
-        g.setClip(x, y, wid, hei);
-        g.setColor(color);
+    public static void drawWordWrapString(Painter painter, String str, int x, int y, int wid, int hei, Color color) {
+        painter.setClip(x, y, wid, hei);
+        painter.setColor(color);
         char[] txt = str.toCharArray();
         for (int i = 0, col = 0, line = 0; i < txt.length; i++) {
-            g.drawChar(txt[i], x + col * (g.getEmulatorFont().charWidth(txt[0]) + 1), y + line * (g.getEmulatorFont().getHeight()), Painter.LT);
-            if ((col + 1) * (g.getEmulatorFont().charWidth(txt[0]) + 1) >= wid) {
+            painter.drawChar(txt[i], x + col * (painter.charWidth(txt[0]) + 1), y + line * (painter.getFontHeight()), Painter.LT);
+            if ((col + 1) * (painter.charWidth(txt[0]) + 1) >= wid) {
                 col = 0;
                 line++;
             } else {
@@ -603,7 +636,7 @@ public class Tools {
             }
 
         }
-        g.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
+        painter.setClip(0, 0, GameData.getGameData().screenWidth, GameData.getGameData().screenHeight);
 
     }
 }

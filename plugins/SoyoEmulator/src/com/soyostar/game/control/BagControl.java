@@ -1,15 +1,11 @@
 package com.soyostar.game.control;
 
-import engine.Control;
-import engine.GameEngine;
-import engine.View;
-import engine.script.Event;
-import engine.script.ScriptEngine;
-import game.RpgGame;
-import model.Bag;
-import model.Const;
-import model.GameData;
-import view.BagView;
+import com.soyostar.emulator.engine.Control;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.emulator.engine.script.Event;
+import com.soyostar.emulator.engine.script.ScriptEngine;
+import com.soyostar.game.RpgGame;
+import com.soyostar.game.model.GameData;
 
 /**
  *
@@ -37,9 +33,6 @@ public class BagControl implements Control {
             }
         }
         ge.clearKey();
-    }
-
-    public void dealEvent(View view, Event event) {
     }
 
     private void keyPressed_Main(int key) {
@@ -110,4 +103,16 @@ public class BagControl implements Control {
         }
     }
 
+    public void dealKeyEvent() {
+
+    }
+
+    public void dealMotion() {
+    }
+
+    public void dealGameEvent(Event event) {
+    }
+
+    public void updateModel() {
+    }
 }

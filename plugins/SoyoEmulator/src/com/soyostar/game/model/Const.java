@@ -62,7 +62,6 @@ public final class Const {
         public static final byte KEY_POUND = 35;//#键
     }
 
-
     /**
      * 字符串
      */
