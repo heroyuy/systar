@@ -1,6 +1,6 @@
 package com.soyostar.game.control;
 
-import view.AboutView;
+import view.HelpView;
 import engine.Control;
 import engine.GameEngine;
 import engine.View;
@@ -10,15 +10,15 @@ import model.Const;
 
 /**
  *
- * 游戏关于视图控制器
+ * 游戏帮助视图控制器
  */
-public class AboutControl implements Control{
+public class HelpControl implements Control {
 
     private GameEngine ge=GameEngine.getInstance();
     private RpgGame game = (RpgGame)ge.getGame();
 
     public void keyPressed(View view, int key) {
-        if (view instanceof AboutView) {
+        if (view instanceof HelpView) {
             if (key == Const.Key.KEY_LS) {
                 game.setCurView(Const.ViewId.VIEW_MENU);
             }
@@ -27,6 +27,4 @@ public class AboutControl implements Control{
 
     public void dealEvent(View view, Event event) {
     }
-
-
 }

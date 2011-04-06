@@ -4,12 +4,8 @@
  */
 package com.soyostar.game.db;
 
-import com.soyostar.emulator.engine.script.Command;
-import com.soyostar.emulator.engine.script.Script;
 import com.soyostar.game.model.Map;
-import com.soyostar.ui.Image;
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -21,12 +17,38 @@ public class MapDao implements Dao {
     private DataInputStream dis = null;
     private HashMap maps = null;
 
+    //增
+    public Map createMap() {
+        Map map = new Map();
+        //新map的index
+        Map[] mapList = getMapList();
+        int maxIndex = -1;//当前已有地图的最大索引号
+        for (int i = 0; i < mapList.length; i++) {
+            if (mapList[i].index > maxIndex) {
+                maxIndex = mapList[i].index;
+            }
+        }
+        map.index = maxIndex + 1;
+        maps.put(map.index, map);
+        return map;
+    }
+    //删
+
+    public void deleteMap(int index) {
+        maps.remove(index);
+    }
+
+    //改 查
     public Map getMap(int index) {
         return (Map) maps.get(index);
     }
 
     public Map[] getMapList() {
         return (Map[]) maps.values().toArray();
+    }
+
+    public boolean hasMap(int index) {
+        return maps.containsKey(index);
     }
 
     public void load() {
