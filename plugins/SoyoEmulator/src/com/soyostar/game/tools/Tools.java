@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.util.Random;
 import java.util.Vector;
 
+
 /*
  * 功能：
  * 1 drawString
@@ -336,19 +337,20 @@ public class Tools {
         //绘制内容框
         drawDialog(painter, x, y + hei, w, h - hei, type == DIALOG_DEEP ? DIALOG_DEEP : DIALOG_LIGHT);
         //绘制标题
+        painter.setFontStyle(Painter.STYLE_PLAIN);
         for (int i = 0; i < titles.length; i++) {
-            painter.drawString(titles[i], x + i * wid + wid / 2, y + (hei - painter.getFontHeight()) / 2, Const.Anchor.HT);
+            painter.drawString(titles[i], x + i * wid + wid >> 1, y + (hei - painter.getFontHeight()) >> 1, Const.Anchor.HT);
         }
     }
 
     public static void drawRectFrame(Painter painter, Image img, int x, int y, int w, int h) {
         painter.setClip(x, y, w, h);
-        int rowNum = h / (img.getHeight() / 2) + 1;
-        int colNum = w / (img.getWidth() / 2) + 1;
+        int rowNum = h / (img.getHeight() >> 1) + 1;
+        int colNum = w / (img.getWidth() >> 1) + 1;
         //绘制底色
         for (int i = 0; i < colNum; i++) {
             for (int j = 0; j < rowNum; j++) {
-                painter.drawRegion(img, img.getWidth() / 2, img.getHeight() / 2, img.getWidth() / 2, img.getHeight() / 2, 0, x + img.getWidth() / 2 * i, y + img.getHeight() / 2 * j, 0);
+                painter.drawRegion(img, img.getWidth() >> 1, img.getHeight() >> 1, img.getWidth() >> 1, img.getHeight() >> 1, 0, x + img.getWidth() / 2 * i, y + img.getHeight() / 2 * j, 0);
             }
         }
         //绘制边框 [先水平，后竖直]
@@ -408,7 +410,7 @@ public class Tools {
      */
 
     public static Image drawPixels(int[] pixels, int w, int h) {
-        Image image = Image.createRGBImage(pixels, w, h, true);
+        Image image =Image.createRGBImage(pixels, w, h);
         pixels = null;
         return image;
     }

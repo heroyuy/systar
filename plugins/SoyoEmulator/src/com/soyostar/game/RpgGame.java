@@ -4,6 +4,7 @@ import com.soyostar.emulator.engine.BaseView;
 import com.soyostar.emulator.engine.Game;
 import com.soyostar.game.model.Const;
 import com.soyostar.game.model.DataHandler;
+import com.soyostar.game.view.BagView;
 import com.soyostar.game.view.MenuView;
 
 public class RpgGame extends Game {
@@ -26,6 +27,7 @@ public class RpgGame extends Game {
                 curView = new MenuView();
                 curView.init();
                 setCurView(curView);
+              
                 break;
 //            case Const.ViewId.VIEW_MAP:
 //                curView = new MapView();
@@ -86,6 +88,7 @@ public class RpgGame extends Game {
 
     public void start() {
         setCurView(Const.ViewId.VIEW_MENU);
+
         setDataHandler(new DataHandler());
     }
 }

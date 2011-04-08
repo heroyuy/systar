@@ -1,19 +1,19 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.soyostar.game.view;
 
-import control.SettingControl;
-import engine.BaseView;
-import engine.Game;
-import engine.GameEngine;
-import game.RpgGame;
-
-import model.GameData;
-import control.SettingControl;
-import emulator.EmulatorFont;
-import emulator.EmulatorGraphics;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.game.control.SettingControl;
+import com.soyostar.game.model.GameData;
+import com.soyostar.game.tools.Tools;
+import com.soyostar.ui.Painter;
 import java.awt.Color;
-import system.Painter;
 
-/**
+/**@2011.4.6 byVV
  *
  * 游戏设置
  */
@@ -25,35 +25,40 @@ public class SettingView extends BaseView {
     private int space = 5;//行间距
     private int num = 2;
     private int x, y;
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
 
     public void init() {
         setControl(new SettingControl());
         itemWidth = 14;
-        x = (gd.screenWidth - itemWidth * 5) / 2;
-        y = (gd.screenHeight - num * font.getHeight() - (num - 1) * space) / 2;
+        x = (gd.screenWidth - itemWidth * 5) >>1;
+   
     }
 
-    public void paint(EmulatorGraphics g) {
-        g.setEmulatorFont(font);
-        Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
+    public void paint(Painter painter) {
+     y = (gd.screenHeight - num * painter.getFontHeight() - (num - 1) * space) >>1;
+     painter.setFontStyle(Painter.STYLE_PLAIN);
+         painter.setFontSize(20);
+         painter.setColor(Color.BLACK);
+        painter.fillRect( 0, 0, gd.screenWidth, gd.screenHeight);
         //绘制按钮
-        Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
+           painter.setColor( Color.white);
+        painter.drawString( "确定", 5, gd.screenHeight - painter.getFontHeight(),Painter.LT);
         //绘制阴影
-        Painter.fillRoundRect(g, x, y + gd.yIndex * (font.getHeight() + space), itemWidth * 5, font.getHeight() + space - 2, 8, Color.red);
+          painter.setColor( Color.red);
+        painter.fillRoundRect( x, y + gd.yIndex * (painter.getFontHeight() + space), itemWidth * 5, painter.getFontHeight() + space - 2, 8,8);
         //绘制选项
-        Painter.drawString(g, "音乐", x, y, Color.white);
+        painter.setColor(Color.white);
+        painter.drawString( "音乐", x, y,Painter.LT);
         if (gd.musicOn) {
-            Painter.drawString(g, "开", x + itemWidth * 3, y, Color.white);
+            painter.drawString( "开", x + itemWidth * 3, y,Painter.LT);
         } else {
-            Painter.drawString(g, "关", x + itemWidth * 3, y, Color.white);
+            painter.drawString( "关", x + itemWidth * 3, y,Painter.LT);
         }
 
-        Painter.drawString(g, "音效", x, y + font.getHeight() + space, Color.white);
+        painter.drawString( "音效", x, y +painter.getFontHeight() + space, Painter.LT);
         if (gd.soundOn) {
-            Painter.drawString(g, "开", x + itemWidth * 3, y + font.getHeight() + space, Color.white);
+            painter.drawString("开", x + itemWidth * 3, y +painter.getFontHeight()+ space, Painter.LT);
         } else {
-            Painter.drawString(g, "关", x + itemWidth * 3, y + font.getHeight() + space, Color.white);
+           painter.drawString( "关", x + itemWidth * 3, y + painter.getFontHeight()+ space,  Painter.LT);
         }
         //绘制两个三角形
         Color color = Color.white;
@@ -62,8 +67,8 @@ public class SettingView extends BaseView {
         } else {
             color = Color.blue;
         }
-        Painter.drawTriangle(g, x + itemWidth * 3 - 10, y + font.getHeight() / 2 + gd.yIndex * (font.getHeight() + space), x + itemWidth * 3 - 5, y + 2 + gd.yIndex * (font.getHeight() + space), x + itemWidth * 3 - 5, y + font.getHeight() - 2 + gd.yIndex * (font.getHeight() + space), color);
-        Painter.drawTriangle(g, x + itemWidth * 5 - 10, y + 2 + gd.yIndex * (font.getHeight() + space), x + itemWidth * 5 - 10, y + font.getHeight() - 2 + gd.yIndex * (font.getHeight() + space), x + itemWidth * 5 - 5, y + font.getHeight() / 2 + gd.yIndex * (font.getHeight() + space), color);
+       Tools.drawTriangle(painter, x + itemWidth * 3 - 10, y + painter.getFontHeight()>>1 + gd.yIndex * (painter.getFontHeight() + space), x + itemWidth * 3 - 5, y + 2 + gd.yIndex * (painter.getFontHeight() + space), x + itemWidth * 3 - 5, y +painter.getFontHeight() - 2 + gd.yIndex * (painter.getFontHeight() + space), color);
+       Tools.drawTriangle(painter, x + itemWidth * 5 - 10, y + 2 + gd.yIndex * (painter.getFontHeight() + space), x + itemWidth * 5 - 10, y + painter.getFontHeight() - 2 + gd.yIndex * (painter.getFontHeight()+ space), x + itemWidth * 5 - 5, y + painter.getFontHeight()>>1 + gd.yIndex * (painter.getFontHeight() + space), color);
 
     }
 
@@ -72,7 +77,7 @@ public class SettingView extends BaseView {
         gd.yIndex = 0;
         gd = null;
         ge = null;
-        font = null;
+      
         setControl(null);
     }
 }

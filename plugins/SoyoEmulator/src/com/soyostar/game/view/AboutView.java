@@ -20,19 +20,21 @@ public class AboutView extends BaseView {
     public void init() {
         setControl(new AboutControl());
         text = "界面等待实现中";
-        itemWidth = font.stringWidth(text);
+      
         x = (gd.screenWidth - itemWidth) / 2;
-        y = (gd.screenHeight - font.getHeight()) / 2;
+      
     }
 
     public void paint(Painter painter) {
+          itemWidth = painter.stringWidth(text);
+            y = (gd.screenHeight -  painter.getClipHeight()) / 2;
         painter.setColor(Color.black);
         painter.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
         painter.setColor(Color.white);
         painter.drawString(text, x, y, Painter.LT);
 
         //绘制按钮
-        painter.drawString("确定", 5, gd.screenHeight - font.getHeight(), Painter.LT);
+        painter.drawString("确定", 5, gd.screenHeight - painter.getClipHeight(), Painter.LT);
 
     }
 

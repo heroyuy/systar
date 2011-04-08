@@ -4,25 +4,22 @@
  */
 package com.soyostar.game.view;
 
-import model.Const;
-import model.Bag;
-import model.GameData;
-import model.EnemyTroop;
-import engine.animation.AnimationPlayer;
-import engine.BaseView;
-import engine.GameEngine;
-import control.BattleControl;
-//import model.*;
-import system.Painter;
-import java.io.IOException;
-import system.Tools;
-//import javax.microedition.lcdui.game.Sprite;
-import game.RpgGame;
-import control.BattleControl;
-import emulator.EmulatorFont;
-import emulator.EmulatorGraphics;
-import emulator.EmulatorImage;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.emulator.engine.Control;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.emulator.engine.animation.AnimationPlayer;
+import com.soyostar.game.RpgGame;
+import com.soyostar.game.control.BattleControl;
+import com.soyostar.game.model.Bag;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.EnemyTroop;
+import com.soyostar.game.model.GameData;
+import com.soyostar.game.tools.Tools;
+import com.soyostar.ui.Image;
+import com.soyostar.ui.Painter;
 import java.awt.Color;
+import java.io.IOException;
+
 
 /**
  *
@@ -50,7 +47,7 @@ public class BattleView extends BaseView {
     private GameData gd = GameData.getGameData();
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
-    private EmulatorImage battBg = null,//战斗背景
+    private Image battBg = null,//战斗背景
             //        numberImg = null,//减血图片
             //        numberImg2 = null,//加血图片
             bar = null,//英雄战斗图
@@ -70,7 +67,7 @@ public class BattleView extends BaseView {
             magic = null,
             item = null;
 //        sign = null;
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_SMALL);
+  
     private EnemyTroop enemyTroop;
 
     public BattleView() {
@@ -80,24 +77,24 @@ public class BattleView extends BaseView {
         gd.isWin = false;
         gd.isFail = false;
         try {
-            bar = EmulatorImage.createImage("product/image/skin/bar.png");
-            hp1 = EmulatorImage.createImage(bar, 0, 0, 12, 12, 0);
-            hp2 = EmulatorImage.createImage(bar, 12, 0, 12, 12, 0);
-            sp1 = EmulatorImage.createImage(bar, 24, 0, 12, 12, 0);
-            sp2 = EmulatorImage.createImage(bar, 36, 0, 12, 12, 0);
-            hpback1 = EmulatorImage.createImage(bar, 48, 0, 12, 12, 0);
-            hpback2 = EmulatorImage.createImage(bar, 60, 0, 12, 12, 0);
+            bar = Image.createImage("product/image/skin/bar.png");
+            hp1 = Image.createImage(bar, 0, 0, 12, 12, 0);
+            hp2 =Image.createImage(bar, 12, 0, 12, 12, 0);
+            sp1 = Image.createImage(bar, 24, 0, 12, 12, 0);
+            sp2 = Image.createImage(bar, 36, 0, 12, 12, 0);
+            hpback1 = Image.createImage(bar, 48, 0, 12, 12, 0);
+            hpback2 = Image.createImage(bar, 60, 0, 12, 12, 0);
 //            battBg = Image.createImage("/image/battleback/battbg.png");
             battBg = Painter.effect_transparent_Other(gd.curMap.image, 200);//200为透明度，越大越不透明
-            process = EmulatorImage.createImage("product/image/skin/process.png");
-            arr = EmulatorImage.createImage("product/image/skin/arr.png");
+            process = Image.createImage("product/image/skin/process.png");
+            arr = Image.createImage("product/image/skin/arr.png");
 //            signcess = Image.createImage("/image/skin/signcess.png");
 //            sign = Image.createImage("/image/skin/sign.png");
-            ack = EmulatorImage.createImage("product/image/skin/attack.png");
-            def = EmulatorImage.createImage("product/image/skin/defend.png");
-            escape = EmulatorImage.createImage("product/image/skin/tp.png");
-            magic = EmulatorImage.createImage("product/image/skin/skill.png");
-            item = EmulatorImage.createImage("product/image/skin/goods.png");
+            ack = Image.createImage("product/image/skin/attack.png");
+            def = Image.createImage("product/image/skin/defend.png");
+            escape = Image.createImage("product/image/skin/tp.png");
+            magic = Image.createImage("product/image/skin/skill.png");
+            item = Image.createImage("product/image/skin/goods.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,18 +131,18 @@ public class BattleView extends BaseView {
         AnimationPlayer.getInstance().removeAllAnimations();
         AnimationPlayer.getInstance().start();
 
-        setControl(new BattleControl());//注意应该把所有应该准备的资源准备好了才能开始游戏逻辑线程
+        setControl((Control) new BattleControl());//注意应该把所有应该准备的资源准备好了才能开始游戏逻辑线程
     }
 
-    private void drawMain(EmulatorGraphics g) {
-        g.drawImage(ack, 60, 165 + (gd.select == 0 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
-        g.drawImage(item, 25, 190 + (gd.select == 1 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
-        g.drawImage(def, 40, 220 + (gd.select == 2 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
-        g.drawImage(escape, 80, 220 + (gd.select == 3 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
-        g.drawImage(magic, 95, 190 + (gd.select == 4 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
+    private void drawMain(Painter painter) {
+        painter.drawImage(ack, 60, 165 + (gd.select == 0 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
+       painter.drawImage(item, 25, 190 + (gd.select == 1 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
+        painter.drawImage(def, 40, 220 + (gd.select == 2 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
+        painter.drawImage(escape, 80, 220 + (gd.select == 3 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
+        painter.drawImage(magic, 95, 190 + (gd.select == 4 ? (ge.getTicker() % 5 == 0 ? 0 : 3) : 0), 0);
     }
 
-    private void drawChoose(EmulatorGraphics g) {
+    private void drawChoose(Painter painter) {
         if (gd.attackType == 0) {
             while (gd.enemy[gd.Select_Eny] == null) {//防止越界
                 gd.Select_Eny++;
@@ -153,22 +150,22 @@ public class BattleView extends BaseView {
                     gd.Select_Eny = 0;
                 }
             }
-            g.drawImage(arr, gd.enemy[gd.Select_Eny].BattX + gd.enemy[gd.Select_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Eny].BattY - 15, 0);// 箭头
+            painter.drawImage(arr, gd.enemy[gd.Select_Eny].BattX + gd.enemy[gd.Select_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Eny].BattY - 15, 0);// 箭头
 //            g.drawImage(arr, gd.enemy[gd.Select_Eny].BattX + 5, gd.enemy[gd.Select_Eny].BattY - 10, 0);// 箭头
         }
     }
 
-    private void drawItem(EmulatorGraphics g) {
+    private void drawItem(Painter painter) {
 
         if (gd.attackType == 0) {
 
             switch (gd.Select_Item_Main) {
                 case BattleControl.Item_Main:
-                    Painter.drawDialog(g, 20, 20, 200, 225, Painter.DIALOG_LIGHT);
-                    Painter.drawDialog(g, 21, 21, 198, 24, Painter.DIALOG_DEEP);
-                    g.setColor(Color.black);
-                    g.drawString("物品", gd.screenWidth / 2, 24, EmulatorGraphics.HT);
-                    Painter.drawDialog(g, 21, 220, 198, 24, Painter.DIALOG_DEEP);
+                    Tools.drawDialog(painter, 20, 20, 200, 225, Painter.DIALOG_LIGHT);
+                    Tools.drawDialog(painter, 21, 21, 198, 24, Painter.DIALOG_DEEP);
+                    painter.setColor(Color.black);
+                    painter.drawString("物品", gd.screenWidth / 2, 24, Painter.HT);
+                    Tools.drawDialog(painter, 21, 220, 198, 24, Painter.DIALOG_DEEP);
                     if (gd.player.bag.getList(Bag.ITEM).length > 0) {
                         int min = Math.min(gd.player.bag.getList(Bag.ITEM).length, 7);
 
@@ -176,13 +173,14 @@ public class BattleView extends BaseView {
                         for (int i = 0; i < gd.player.bag.getList(Bag.ITEM).length; i++) {
                             texts[i] = gd.gameObjectManager.getItem(gd.player.bag.getList(Bag.ITEM)[i]).name + " x" + gd.gameObjectManager.getItem(gd.player.bag.getList(Bag.ITEM)[i]).num;
                         }
-                        Painter.drawTable(g, 25, 48, 175, 24, min, 0, texts, Color.black, gd.Top_Good, gd.Select_Good,
+                        Tools.drawTable(painter, 25, 48, 175, 24, min, 0, texts, Color.black, gd.Top_Good, gd.Select_Good,
                                 Const.Anchor.LV, Painter.DIALOG_LIGHT, Painter.CELL_DEEP);
-                        Painter.drawScrollbar(g, Painter.SCROLLBAR_VERTICAL, 204, 48, 220, gd.Top_Good, 7, gd.player.bag.getList(Bag.ITEM).length);
+                        Tools.drawScrollbar(painter, Painter.SCROLLBAR_VERTICAL, 204, 48, 220, gd.Top_Good, 7, gd.player.bag.getList(Bag.ITEM).length);
 //                        Painter.drawScrollbar(g, Painter.SCROLLBAR_VERTICAL, 200, 48, 200, 5, 5, 10);
-                        Painter.drawTipString(g, gd.gameObjectManager.getItem(gd.player.bag.getList(Bag.ITEM)[gd.Select_Good]).intro, 232, 30, 210, 30, 220, 180, 20, Color.black);
+                        Tools.drawTipString(painter, gd.gameObjectManager.getItem(gd.player.bag.getList(Bag.ITEM)[gd.Select_Good]).intro, 232, 30, 210, 30, 220, 180, 20, Color.black);
                     } else {
-                        Painter.drawString(g, "没有物品", 24, 50, Color.black);
+                        painter.setColor(Color.black);
+                        painter.drawString( "没有物品", 24, 50,Painter.LT);
 
                     }
 
@@ -194,35 +192,36 @@ public class BattleView extends BaseView {
                             gd.Select_Item_Eny = 0;
                         }
                     }
-                    g.drawImage(arr, gd.enemy[gd.Select_Item_Eny].BattX + gd.enemy[gd.Select_Item_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Item_Eny].BattY - 15, 0);// 箭头
+                    painter.drawImage(arr, gd.enemy[gd.Select_Item_Eny].BattX + gd.enemy[gd.Select_Item_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Item_Eny].BattY - 15, 0);// 箭头
                     break;
             }
         }
     }
 
-    private void drawMagic(EmulatorGraphics g) {
+    private void drawMagic(Painter painter) {
 
         if (gd.attackType == 0) {
 
             switch (gd.Select_Magic_Main) {
                 case BattleControl.Magic_Main:
-                    Painter.drawDialog(g, 20, 20, 200, 225, Painter.DIALOG_LIGHT);
-                    Painter.drawDialog(g, 21, 21, 198, 24, Painter.DIALOG_DEEP);
-                    g.setColor(Color.black);
-                    g.drawString("技能", gd.screenWidth / 2, 24, EmulatorGraphics.HT);
-                    Painter.drawDialog(g, 21, 220, 198, 24, Painter.DIALOG_DEEP);
+                   Tools.drawDialog(painter, 20, 20, 200, 225, Painter.DIALOG_LIGHT);
+                    Tools.drawDialog(painter, 21, 21, 198, 24, Painter.DIALOG_DEEP);
+                    painter.setColor(Color.black);
+                    painter.drawString("技能", gd.screenWidth / 2, 24, Painter.HT);
+                    Tools.drawDialog(painter, 21, 220, 198, 24, Painter.DIALOG_DEEP);
                     if (gd.player.bag.getList(Bag.SKILL).length > 0) {
                         int min = Math.min(gd.player.bag.getList(Bag.SKILL).length, 7);
                         String texts[] = new String[gd.player.bag.getList(Bag.SKILL).length];
                         for (int i = 0; i < gd.player.bag.getList(Bag.SKILL).length; i++) {
                             texts[i] = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[i]).name + " Lv" + gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[i]).num;
                         }
-                        Painter.drawTable(g, 25, 48, 175, 24, min, 0, texts, Color.black, gd.Top_Magic, gd.Select_Magic,
+                        Tools.drawTable(painter, 25, 48, 175, 24, min, 0, texts, Color.black, gd.Top_Magic, gd.Select_Magic,
                                 Const.Anchor.LV, Painter.DIALOG_LIGHT, Painter.CELL_DEEP);
-                        Painter.drawScrollbar(g, Painter.SCROLLBAR_VERTICAL, 204, 48, 220, gd.Top_Magic, 7, gd.player.bag.getList(Bag.SKILL).length);
-                        Painter.drawTipString(g, gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).intro, 232, 30, 210, 30, 220, 180, 20, Color.black);
+                        Tools.drawScrollbar(painter, Painter.SCROLLBAR_VERTICAL, 204, 48, 220, gd.Top_Magic, 7, gd.player.bag.getList(Bag.SKILL).length);
+                        Tools.drawTipString(painter, gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).intro, 232, 30, 210, 30, 220, 180, 20, Color.black);
                     } else {
-                        Painter.drawString(g, "没有技能", 24, 50, Color.black);
+                        painter.setColor(Color.black);
+                        painter.drawString( "没有技能", 24, 50, Painter.LT);
                     }
 
 
@@ -234,7 +233,7 @@ public class BattleView extends BaseView {
                             gd.Select_Magic_Eny = 0;
                         }
                     }
-                    g.drawImage(arr, gd.enemy[gd.Select_Magic_Eny].BattX + gd.enemy[gd.Select_Magic_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Magic_Eny].BattY - 15, 0);// 箭头
+                    painter.drawImage(arr, gd.enemy[gd.Select_Magic_Eny].BattX + gd.enemy[gd.Select_Magic_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Magic_Eny].BattY - 15, 0);// 箭头
 //                    g.drawImage(arr, gd.enemy[gd.Select_Magic_Eny].BattX + 5, gd.enemy[gd.Select_Magic_Eny].BattY - 10, 0);// 箭头
                     break;
             }
@@ -242,47 +241,49 @@ public class BattleView extends BaseView {
         }
     }
 
-    public void drawBg(EmulatorGraphics g) {
-        Tools.cleanScreen(g);
-        g.setEmulatorFont(font);
-        g.drawImage(battBg, 0, 0, 0);
+    public void drawBg(Painter painter) {
+        Tools.cleanScreen(painter);
+       painter.setFontStyle(Painter.STYLE_PLAIN);
+       painter.setFontSize(8);
+        painter.drawImage(battBg, 0, 0, 0);
         /**********************背景***********************/
-        g.drawRegion(hpback1, 0, 0, 12, 12, 0, 5, 270, 0);
+        painter.drawRegion(hpback1, 0, 0, 12, 12, 0, 5, 270, 0);
         int j = 0;
         for (j = 0; j < 8; j++) {
-            g.drawRegion(hpback2, 0, 0, 12, 12, 0, 17 + j * 12, 270, 0);
+            painter.drawRegion(hpback2, 0, 0, 12, 12, 0, 17 + j * 12, 270, 0);
         }
-        g.drawRegion(hpback1, 0, 0, 12, 12, 2, 17 + j * 12, 270, 0);
-        g.drawRegion(hpback1, 0, 0, 12, 12, 0, 5, 290, 0);
+        painter.drawRegion(hpback1, 0, 0, 12, 12, 2, 17 + j * 12, 270, 0);
+        painter.drawRegion(hpback1, 0, 0, 12, 12, 0, 5, 290, 0);
         for (j = 0; j < 8; j++) {
-            g.drawRegion(hpback2, 0, 0, 12, 12, 0, 17 + j * 12, 290, 0);
+            painter.drawRegion(hpback2, 0, 0, 12, 12, 0, 17 + j * 12, 290, 0);
         }
-        g.drawRegion(hpback1, 0, 0, 12, 12, 2, 17 + j * 12, 290, 0);
+        painter.drawRegion(hpback1, 0, 0, 12, 12, 2, 17 + j * 12, 290, 0);
         /************************************************/
         /*********************血条************************/
-        g.setClip(5, 270, gd.player.hp * 125 / gd.player.maxHp, 12);
-        g.drawRegion(hp1, 0, 0, 12, 12, 0, 5, 270, 0);
+        painter.setClip(5, 270, gd.player.hp * 125 / gd.player.maxHp, 12);
+        painter.drawRegion(hp1, 0, 0, 12, 12, 0, 5, 270, 0);
         int i = 0;
         for (i = 0; i < 8; i++) {
-            g.drawRegion(hp2, 0, 0, 12, 12, 0, 17 + i * 12, 270, 0);
+            painter.drawRegion(hp2, 0, 0, 12, 12, 0, 17 + i * 12, 270, 0);
         }
-        g.drawRegion(hp1, 0, 0, 12, 12, 2, 17 + i * 12, 270, 0);
-        g.setClip(0, 0, gd.screenWidth, gd.screenHeight);
+        painter.drawRegion(hp1, 0, 0, 12, 12, 2, 17 + i * 12, 270, 0);
+        painter.setClip(0, 0, gd.screenWidth, gd.screenHeight);
         /************************************************/
         /*********************魔条************************/
-        g.setClip(5, 290, gd.player.sp * 125 / gd.player.maxSp, 12);
-        g.drawRegion(sp1, 0, 0, 12, 12, 0, 5, 290, 0);
+        painter.setClip(5, 290, gd.player.sp * 125 / gd.player.maxSp, 12);
+        painter.drawRegion(sp1, 0, 0, 12, 12, 0, 5, 290, 0);
         for (i = 0; i < 8; i++) {
-            g.drawRegion(sp2, 0, 0, 12, 12, 0, 17 + i * 12, 290, 0);
+            painter.drawRegion(sp2, 0, 0, 12, 12, 0, 17 + i * 12, 290, 0);
         }
-        g.drawRegion(sp1, 0, 0, 12, 12, 2, 17 + i * 12, 290, 0);
-        g.setClip(0, 0, gd.screenWidth, gd.screenHeight);
+        painter.drawRegion(sp1, 0, 0, 12, 12, 2, 17 + i * 12, 290, 0);
+        painter.setClip(0, 0, gd.screenWidth, gd.screenHeight);
         /************************************************/
-        Painter.drawString(g, gd.player.hp + "/" + gd.player.maxHp, 140, 270, Color.ORANGE);
-        Painter.drawString(g, gd.player.sp + "/" + gd.player.maxSp, 140, 290, Color.ORANGE);
+        painter.setColor(Color.ORANGE);
+        painter.drawString(gd.player.hp + "/" + gd.player.maxHp, 140, 270, Painter.LT);
+        painter.drawString( gd.player.sp + "/" + gd.player.maxSp, 140, 290, Painter.LT);
     }
 
-    private void battleFunction(EmulatorGraphics g) {
+    private void battleFunction(Painter painter) {
         byte somebody = 0;// 默认当前有人(角色/敌人)先读完了进度
         for (int i = 0; i < gd.enemy.length; i++) {
             if (gd.enemy[i] == null) {
@@ -310,7 +311,7 @@ public class BattleView extends BaseView {
                 }
             }
         } else if (somebody == PLAYER_TIME) {//角色先读完进度
-            heroAction(g);
+            heroAction(painter);
 
         } else if (somebody == ENEMYS_TIME) {// 敌人先读完进度
             for (int i = 0; i < gd.enemy.length; i++) {
@@ -320,7 +321,7 @@ public class BattleView extends BaseView {
                 if (gd.enemy[i].waitTime >= 360) {
                     gd.attackType = gd.enemy[i].AI();//受ai函数控制
                     gd.enemyShould = i;
-                    enemyAction(i, g);
+                    enemyAction(i, painter);
                     break;// 一次只能有一个读完
                 }
             }
@@ -328,21 +329,21 @@ public class BattleView extends BaseView {
     }
     //轮到敌人时绘制
 
-    private void enemyAction(int id, EmulatorGraphics g) {
+    private void enemyAction(int id, Painter paintr) {
     }
     //轮到英雄时绘制
 
-    private void heroAction(EmulatorGraphics g) {
+    private void heroAction(Painter painter) {
 //        System.out.println("isRuning "+gd.isRuning);
         if (gd.attackType == 0) {//攻击敌人时，英雄头上箭头消失
-            g.drawImage(arr, gd.player.heroBattX + 10, gd.player.heroBattY - 15, 0);// 箭头
+            painter.drawImage(arr, gd.player.heroBattX + 10, gd.player.heroBattY - 15, 0);// 箭头
         }
     }
     static final byte PLAYER_TIME = 1;
     static final byte ENEMYS_TIME = 2;
 
-    private void moveBar(EmulatorGraphics g) {
-        g.drawImage(process, gd.screenWidth / 2, 10, Const.Anchor.HV);
+    private void moveBar(Painter painter) {
+        painter.drawImage(process, gd.screenWidth / 2, 10, Const.Anchor.HV);
         int proc = gd.player.waitTime * 116 / 360;
 
 //        g.drawRegion(Painter., 28, 0, 24, 24, 0, 40 + proc, 13, 0);
@@ -352,10 +353,10 @@ public class BattleView extends BaseView {
             }
             if (!gd.enemy[i].isDead()) {
                 int proce = gd.enemy[i].waitTime * 116 / 360;
-                g.drawImage(Painter.effect_resizeImage(gd.enemy[i].BattImg, 15, 15), gd.screenWidth / 2 - process.getWidth() / 2 + proce, 12, 0);
+                painter.drawImage(Painter.effect_resizeImage(gd.enemy[i].BattImg, 15, 15), gd.screenWidth / 2 - process.getWidth() / 2 + proce, 12, 0);
             }
         }
-        g.drawImage(Painter.effect_resizeImage(gd.player.headImg, 15, 15), gd.screenWidth / 2 - process.getWidth() / 2 + proc, 12, 0);//确保英雄在上面
+        painter.drawImage(Painter.effect_resizeImage(gd.player.headImg, 15, 15), gd.screenWidth / 2 - process.getWidth() / 2 + proc, 12, 0);//确保英雄在上面
     }
 
     //关屏动画
@@ -379,38 +380,38 @@ public class BattleView extends BaseView {
     public static int curState = 0;
     private int OpenBlock = 0;
 
-    public void paint(EmulatorGraphics g) {
+    public void paint(Painter painter) {
 
         switch (curState) {
             case OPEN:
-                drawClose(g);
+                drawClose(painter);
                 break;
             case MAIN: {
-                drawBg(g);
+                drawBg(painter);
 
                 for (int i = 0; i < gd.enemy.length; i++) {
                     if (gd.enemy[i] == null) {
                         continue;
                     }
                     if (!gd.enemy[i].isDead()) {
-                        g.drawString(gd.enemy[i].hp + "/" + gd.enemy[i].maxHp, gd.enemy[i].BattX, gd.enemy[i].BattY - 5, EmulatorGraphics.LB);//显示怪物剩余血量
+                        painter.drawString(gd.enemy[i].hp + "/" + gd.enemy[i].maxHp, gd.enemy[i].BattX, gd.enemy[i].BattY - 5, Painter.LB);//显示怪物剩余血量
 //                        g.drawString(gd.enemy[i].sp + "/" + gd.enemy[i].maxSp, gd.enemy[i].BattX, gd.enemy[i].BattY - 15, Graphics.BOTTOM | Graphics.LEFT);//显示怪物剩余血量
                         //                        if (gd.enemy[i].skillList != null) {
 ////                            System.out.println("skillSum: " + gd.enemy[i].skillList.length);
 //                            g.drawString(gd.gameObjectManager.getSkill(gd.enemy[i].skillList[0]).name, gd.enemy[i].BattX, gd.enemy[i].BattY - 15, Graphics.BOTTOM | Graphics.LEFT);//test
 //                        }
 //                        g.drawString(gd.enemy[i].name, gd.enemy[i].BattX, gd.enemy[i].BattY - 25, Graphics.BOTTOM | Graphics.LEFT);//test
-                        g.drawImage(gd.enemy[i].BattImg, gd.enemy[i].BattX, gd.enemy[i].BattY, 0);
+                       painter.drawImage(gd.enemy[i].BattImg, gd.enemy[i].BattX, gd.enemy[i].BattY, 0);
 
                     }
                 }
-                g.drawImage(gd.player.headImg, gd.player.heroBattX, gd.player.heroBattY, 0);      //战斗时英雄图片
+                painter.drawImage(gd.player.headImg, gd.player.heroBattX, gd.player.heroBattY, 0);      //战斗时英雄图片
                 if (gd.isChangeHp) {
                     switch (gd.attackType) {
                         case -1://敌人攻击
                             if (gd.player.changeHp > 0) {
                                 //画英雄受伤害文字
-                                Painter.drawNumber(g, gd.player.changeHp, gd.player.heroBattX + 10, gd.player.heroBattY + gd.upDecreaseHP - 10,
+                                Tools.drawNumber(painter, gd.player.changeHp, gd.player.heroBattX + 10, gd.player.heroBattY + gd.upDecreaseHP - 10,
                                         10, Painter.NUMBER_LEFT, Painter.REDNUM);
 //                                Painter.drawString(g, "" + gd.player.changeHp, gd.player.heroBattX, gd.player.heroBattY + gd.upDecreaseHP - 10, 0xff0000);
                             }
@@ -418,7 +419,7 @@ public class BattleView extends BaseView {
                         case 2:
                         case 7://物品恢复
                             if (gd.player.changeHp > 0) {
-                                Painter.drawNumber(g, gd.player.changeHp, gd.player.heroBattX + 10, gd.player.heroBattY + gd.upDecreaseHP - 10,
+                                Tools.drawNumber(painter, gd.player.changeHp, gd.player.heroBattX + 10, gd.player.heroBattY + gd.upDecreaseHP - 10,
                                         10, Painter.NUMBER_LEFT, Painter.GREENNUM);
 //                                Painter.drawString(g, "" + gd.player.changeHp, gd.player.heroBattX, gd.player.heroBattY + gd.upDecreaseHP - 10, 0xff00ff);
                             }
@@ -428,7 +429,7 @@ public class BattleView extends BaseView {
                                 if (gd.enemy[i] != null) {
                                     if (gd.enemy[i].changeHp > 0) {
                                         //画敌人受伤害文字
-                                        Painter.drawNumber(g, gd.enemy[i].changeHp, gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY + gd.upDecreaseHP - 10,
+                                        Tools.drawNumber(painter, gd.enemy[i].changeHp, gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY + gd.upDecreaseHP - 10,
                                                 10, Painter.NUMBER_LEFT, Painter.REDNUM);
 //                                        Painter.drawString(g, "" + gd.enemy[i].changeHp, gd.enemy[i].BattX, gd.enemy[i].BattY + gd.upDecreaseHP - 10, 0xff0000);
                                     }
@@ -438,26 +439,26 @@ public class BattleView extends BaseView {
                     }
                 }
                 if (gd.isMiss) {
-                    g.setColor(Color.RED);
-                    g.drawString("闪避", gd.player.heroBattX, gd.player.heroBattY - 10 + gd.upMiss, 0);
+                    painter.setColor(Color.RED);
+                    painter.drawString("闪避", gd.player.heroBattX, gd.player.heroBattY - 10 + gd.upMiss, 0);
                 }
-                moveBar(g);
-                battleFunction(g);
+                moveBar(painter);
+                battleFunction(painter);
                 if (gd.player.waitTime >= 360) {
                     switch (BattleControl.Select_Menu) {
                         case BattleControl.MAINMENU:
-                            drawMain(g);
+                            drawMain(painter);
                             break;
                         case BattleControl.ENEMY_COMMON_SELECT:
-                            drawChoose(g);
+                            drawChoose(painter);
                             break;
                         case BattleControl.ITEMS_SELECT:
-                            drawItem(g);
+                            drawItem(painter);
                             break;
                         case BattleControl.ESCAPE:
                             break;
                         case BattleControl.MAGIC_SELECT:
-                            drawMagic(g);
+                            drawMagic(painter);
                             break;
                     }
                 }
@@ -466,27 +467,29 @@ public class BattleView extends BaseView {
                 break;
             }
             case END:
-                drawBg(g);
+                drawBg(painter);
                 switch (gd.winSelect) {
                     case 0:
-                        Painter.drawDialog(g, 40, 100, 160, 120, Painter.DIALOG_DEEP);
-                        Painter.drawString(g, "获得经验 " + gd.allExp, 70, 140, Color.black);
-                        Painter.drawString(g, "获得金币 " + gd.allMoney, 70, 180, Color.black);
+                        Tools.drawDialog(painter, 40, 100, 160, 120, Painter.DIALOG_DEEP);
+                        painter.setColor(Color.black);
+                        painter.drawString( "获得经验 " + gd.allExp, 70, 140,Painter.LT);
+                        painter.drawString( "获得金币 " + gd.allMoney, 70, 180, Painter.LT);
                         break;
                     case 1:
-                        Painter.drawDialog(g, 40, 100, 160, 120, Painter.DIALOG_DEEP);
+                        Tools.drawDialog(painter, 40, 100, 160, 120, Painter.DIALOG_DEEP);
                         if (enemyTroop.itemList.length > 0) {
                             for (int i = 0; i < enemyTroop.itemList.length; i++) {
-                                Painter.drawString(g, "获得物品 " + gd.gameObjectManager.getItem(enemyTroop.itemList[i]).name + " x1", 45, 120 + i * 20, Color.black);
+                                 painter.setColor(Color.black);
+                                painter.drawString( "获得物品 " + gd.gameObjectManager.getItem(enemyTroop.itemList[i]).name + " x1", 45, 120 + i * 20,  Painter.LT);
                             }
                         } else {
-                            Painter.drawString(g, "没有物品", 24, 50, Color.black);
+                           painter.drawString( "没有物品", 24, 50,  Painter.LT);
                         }
                         break;
                 }
                 break;
         }
-        AnimationPlayer.getInstance().play(g);
+        AnimationPlayer.getInstance().play(painter);
     }
 
     public void release() {
@@ -523,7 +526,7 @@ public class BattleView extends BaseView {
         gd.upDecreaseHP = 0;
 //        System.out.println("isWin4 " +gd.isWin);
         gd = null;
-        font = null;
+      
         setControl(null);
     }
 }
