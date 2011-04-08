@@ -1,21 +1,22 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.soyostar.game.view;
 
-import engine.BaseView;
-import model.GameData;
-import control.HelpControl;
-import emulator.EmulatorFont;
-import emulator.EmulatorGraphics;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.game.control.HelpControl;
+import com.soyostar.game.model.GameData;
+import com.soyostar.ui.Painter;
 import java.awt.Color;
-import system.Painter;
 
-/**
+/**@2011 4.6 byVV
  *
  * 游戏帮助视图
  */
 public class HelpView extends BaseView {
 
     private GameData gd = GameData.getGameData();
-    private EmulatorFont font = EmulatorFont.getEmulatorFont(EmulatorFont.FACE_SYSTEM, EmulatorFont.STYLE_PLAIN, EmulatorFont.SIZE_LARGE);
     private String text = "";
     private int itemWidth = 0;
     private int x, y;
@@ -23,18 +24,23 @@ public class HelpView extends BaseView {
     public void init() {
         setControl(new HelpControl());
         text = "界面等待实现中";
-        itemWidth = font.stringWidth(text);
+
         x = (gd.screenWidth - itemWidth) / 2;
-        y = (gd.screenHeight - font.getHeight()) / 2;
+
     }
 
-    public void paint(EmulatorGraphics g) {
-        g.setEmulatorFont(font);
-        Painter.fillRect(g, 0, 0, gd.screenWidth, gd.screenHeight, Color.black);
-        Painter.drawString(g, text, x, y, Color.white);
+    public void paint(Painter painter) {
+        itemWidth = painter.stringWidth(text);
+        y = (gd.screenHeight - painter.getFontHeight()) >> 1;
+        painter.setFontStyle(Painter.STYLE_PLAIN);
+        painter.setFontSize(20);
+        painter.setColor(Color.black);
+        painter.fillRect(0, 0, gd.screenWidth, gd.screenHeight);
+        painter.setColor(Color.white);
+        painter.drawString(text, x, y, Painter.LT);
 
         //绘制按钮
-        Painter.drawString(g, "确定", 5, gd.screenHeight - font.getHeight(), Color.white);
+        painter.drawString("确定", 5, gd.screenHeight - painter.getFontHeight() >> 1, Painter.LT);
 
     }
 
@@ -42,7 +48,7 @@ public class HelpView extends BaseView {
         gd.xIndex = 0;
         gd.yIndex = 0;
         gd = null;
-        font = null;
+       
         setControl(null);
     }
 }

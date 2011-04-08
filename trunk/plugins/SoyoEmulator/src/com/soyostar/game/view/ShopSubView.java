@@ -1,17 +1,18 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.soyostar.game.view;
 
-import emulator.Canvas;
-import emulator.EmulatorGraphics;
-import engine.BaseView;
-import engine.GameEngine;
-import java.awt.Color;
-import java.awt.Graphics;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.game.model.Bag;
+import com.soyostar.game.model.GameData;
+import java.awt.Canvas;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import model.Bag;
-import model.GameData;
-import system.Painter;
+
 
 /**
  *

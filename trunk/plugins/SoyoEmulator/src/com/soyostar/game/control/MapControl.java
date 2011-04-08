@@ -1,21 +1,20 @@
 package com.soyostar.game.control;
 
-import model.Const;
-import model.GameData;
-import model.Player;
-import view.MapView;
-import engine.Control;
-import engine.GameEngine;
-import engine.View;
-import engine.script.Event;
-import engine.script.ScriptEngine;
-import game.RpgGame;
-import system.DataBase;
-//import model.*;
-//import test.TestData;
+import com.soyostar.emulator.engine.Control;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.emulator.engine.KeyManager;
+import com.soyostar.emulator.engine.View;
+import com.soyostar.emulator.engine.script.Event;
+import com.soyostar.emulator.engine.script.ScriptEngine;
+import com.soyostar.emulator.framework.DataBase;
+import com.soyostar.game.RpgGame;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
+import com.soyostar.game.model.Player;
+import com.soyostar.game.view.MapView;
 
 /**
- *
+ *@2011.4.8 byVV
  * 地图控制器
  */
 public class MapControl implements Control {
@@ -25,22 +24,6 @@ public class MapControl implements Control {
     private ScriptEngine se = ScriptEngine.getInstance();
     private RpgGame game = (RpgGame) ge.getGame();
     private DataBase db = new DataBase();
-
-    public void keyPressed(View view, int key) {
-        if (view instanceof MapView) {
-            switch (gd.pageIndex) {
-                case MapView.PAGE_MAP:
-                    keyPressed_map(view, key);
-                    break;
-                case MapView.PAGE_MENU:
-                    keyPressed_menu(view, key);
-                    break;
-                case MapView.PAGE_DIALOG:
-                    keyPressed_dialog(view, key);
-                    break;
-            }
-        }
-    }
 
     public void dealEvent(View view, Event event) {
         if (view instanceof MapView) {
@@ -103,94 +86,87 @@ public class MapControl implements Control {
         }
     }
 
-    private void keyPressed_map(View view, int key) {
-        System.out.println("key:" + key);
-        if (key == Const.Key.KEY_UP) {
+    private void dealKeyEvent_map() {
+//        System.out.println("key:" + key);
+        if (ge.getKeyManager().isPressKey(KeyManager.KEY_UP)) {
             for (int i = 0; i < 4; i++) {
                 gd.player.move(Player.UP);
                 view.repaint();
                 gd.player.dwell();
             }
-        } else if (key == Const.Key.KEY_DOWN) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_DOWN)) {
             for (int i = 0; i < 4; i++) {
                 gd.player.move(Player.DOWN);
                 view.repaint();
                 gd.player.dwell();
             }
-        } else if (key == Const.Key.KEY_LEFT) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_LEFT)) {
             for (int i = 0; i < 4; i++) {
                 gd.player.move(Player.LEFT);
                 view.repaint();
                 gd.player.dwell();
             }
-        } else if (key == Const.Key.KEY_RIGHT) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_RIGHT)) {
             for (int i = 0; i < 4; i++) {
                 gd.player.move(Player.RIGHT);
                 view.repaint();
                 gd.player.dwell();
             }
-        } else if (key == Const.Key.KEY_LS) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_LS)) {
             gd.pageIndex = MapView.PAGE_MENU;
             ge.clearKey();
-        } else if (key == Const.Key.KEY_5 || key == Const.Key.KEY_FIRE) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_5) || ge.getKeyManager().isPressKey(KeyManager.KEY_MID)) {
             //gd.pageIndex = MapView.PAGE_DIALOG;  //测试dialog功能用
             //检测脚本前一格是否有按键脚本
             //测试用
 //            System.out.println("添加测试脚本");
 //            se.addScript(TestData.getScript());
-            checkKeyScript();
-            ge.clearKey();
         }
     }
 
-    private void keyPressed_menu(View view, int key) {
-        switch (key) {
-            case Const.Key.KEY_LS:
-            case Const.Key.KEY_FIRE:
-                switch (gd.map_menuIndex) {
-                    case MapView.MENU_STATE:
-                        System.out.println("我的状态");
-                        game.setCurView(Const.ViewId.VIEW_STATE);
-                        break;
-                    case MapView.MENU_BAG:
-                        System.out.println("我的背包");
-                        game.setCurView(Const.ViewId.VIEW_BAG);
-                        break;
-                    case MapView.MENU_EQUIP:
-                        System.out.println("我的装备");
-                        game.setCurView(Const.ViewId.VIEW_EQUIP);
-                        break;
-                    case MapView.MENU_SKILL:
-                        System.out.println("我的技能");
-                        game.setCurView(Const.ViewId.VIEW_SKILL);
-                        break;
-                    case MapView.MENU_SAVE:
-                        System.out.println("储存进度");
-                        db.saveDB();
-                        gd.pageIndex = MapView.PAGE_MAP;
-                        break;
-                    case MapView.MENU_RETURN:
-                        System.out.println("回主菜单");
-                        game.setCurView(Const.ViewId.VIEW_MENU);
-                        break;
-                }
-                break;
-            case Const.Key.KEY_UP:
-                gd.map_menuIndex = (gd.map_menuIndex + Const.Str.MENU_MAP.length - 1) % Const.Str.MENU_MAP.length;
-                break;
-            case Const.Key.KEY_DOWN:
-                gd.map_menuIndex = (gd.map_menuIndex + 1) % Const.Str.MENU_MAP.length;
-                break;
-            case Const.Key.KEY_RS:
-                gd.pageIndex = MapView.PAGE_MAP;
-                break;
+    private void dealKeyEvent_menu() {
 
+        if (ge.getKeyManager().isPressKey(KeyManager.KEY_LS)) {
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_MID)) {
+            switch (gd.map_menuIndex) {
+                case MapView.MENU_STATE:
+                    System.out.println("我的状态");
+                    game.setCurView(Const.ViewId.VIEW_STATE);
+                    break;
+                case MapView.MENU_BAG:
+                    System.out.println("我的背包");
+                    game.setCurView(Const.ViewId.VIEW_BAG);
+                    break;
+                case MapView.MENU_EQUIP:
+                    System.out.println("我的装备");
+                    game.setCurView(Const.ViewId.VIEW_EQUIP);
+                    break;
+                case MapView.MENU_SKILL:
+                    System.out.println("我的技能");
+                    game.setCurView(Const.ViewId.VIEW_SKILL);
+                    break;
+                case MapView.MENU_SAVE:
+                    System.out.println("储存进度");
+                    db.saveDB();
+                    gd.pageIndex = MapView.PAGE_MAP;
+                    break;
+                case MapView.MENU_RETURN:
+                    System.out.println("回主菜单");
+                    game.setCurView(Const.ViewId.VIEW_MENU);
+                    break;
+            }
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_UP)) {
+            gd.map_menuIndex = (gd.map_menuIndex + Const.Str.MENU_MAP.length - 1) % Const.Str.MENU_MAP.length;
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_DOWN)) {
+            gd.map_menuIndex = (gd.map_menuIndex + 1) % Const.Str.MENU_MAP.length;
+        } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_RS)) {
+            gd.pageIndex = MapView.PAGE_MAP;
         }
-        ge.clearKey();
+
     }
 
-    private void keyPressed_dialog(View view, int key) {
-        if (key == Const.Key.KEY_5 || key == Const.Key.KEY_FIRE) {
+    private void dealKeyEvent_dialog() {
+        if (ge.getKeyManager().isPressKey(KeyManager.KEY_5) || ge.getKeyManager().isPressKey(KeyManager.KEY_MID)) {
             gd.dialog_index += 2;
             if (gd.dialog_index >= gd.dialog_content.length) {
                 gd.dialog_index = 0;
@@ -198,7 +174,6 @@ public class MapControl implements Control {
                 game.finishEvent();
             }
         }
-        ge.clearKey();
     }
 
     private void sleep(View view) {
@@ -217,7 +192,8 @@ public class MapControl implements Control {
 
     private void move(View view) {
         while (gd.moveIndex < gd.moveOrder.length) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i
+                    < 4; i++) {
                 view.repaint();
                 gd.player.move(gd.moveOrder[gd.moveIndex]);
                 gd.player.dwell();
@@ -246,20 +222,43 @@ public class MapControl implements Control {
             case Player.DOWN:
                 row = gd.player.row + 1;
                 col = gd.player.col;
-                break;
-            case Player.LEFT:
+           break;
+        case Player.LEFT:
                 row = gd.player.row;
                 col = gd.player.col - 1;
-                break;
-            case Player.RIGHT:
+            break;
+          case Player.RIGHT:
                 row = gd.player.row;
                 col = gd.player.col + 1;
-                break;
-        }
+              break;
+      }
         if (row >= 0 && row < gd.curMap.rowNum && col >= 0 && col < gd.curMap.colNum) {
             if (gd.curMap.scriptType[row][col] == 3 || gd.curMap.scriptType[row][col] == 4) {
                 se.addScript(gd.curMap.getScript(row, col));
-            }
+           }
         }
+    }
+
+    public void dealKeyEvent() {
+        switch (gd.pageIndex) {
+            case MapView.PAGE_MAP:
+                dealKeyEvent_map();
+             break;
+         case MapView.PAGE_MENU:
+                dealKeyEvent_menu();
+               break;
+          case MapView.PAGE_DIALOG:
+                dealKeyEvent_dialog();
+              break;
+        }
+    }
+
+    public void dealMotion() {
+    }
+
+    public void dealGameEvent(Event event) {
+    }
+
+    public void updateModel() {
     }
 }

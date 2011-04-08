@@ -55,6 +55,7 @@ public class Painter {
     public void setFontSize(int size) {
         font = new Font(Font.DIALOG, font.getStyle(), size);
         g.setFont(font);
+
     }
 
     public void setFontStyle(int style) {
@@ -69,6 +70,10 @@ public class Painter {
         int[] xy = convertOrdinate(x, y, w, h, anchor);
         g.drawString(str, xy[0], xy[1] + fm.getHeight());
     }
+//@2011.4.6 by VV
+//    public void drawChar(char []c, int x, int y,byte anchor) {
+//      g.drawChars(c, offset, len, x, y);
+//    }
 
     public int stringWidth(String str) {
         return g.getFontMetrics().stringWidth(str);
@@ -257,6 +262,7 @@ public class Painter {
         return (int) g.getClipBounds().getX();
     }
 
+
     public int getClipY() {
         return (int) g.getClipBounds().getY();
     }
@@ -276,4 +282,5 @@ public class Painter {
     public void drawChar(char c, int x, int y, byte anchor) {
         this.drawString(c + "", x, y, anchor);
     }
+
 }

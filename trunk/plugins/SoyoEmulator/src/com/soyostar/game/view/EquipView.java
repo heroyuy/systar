@@ -1,14 +1,21 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.soyostar.game.view;
 
-import control.EquipControl;
-import emulator.EmulatorGraphics;
-import engine.BaseView;
+import com.soyostar.emulator.engine.BaseView;
+import com.soyostar.game.control.EquipControl;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
+import com.soyostar.game.tools.Tools;
+import com.soyostar.ui.Painter;
 import java.awt.Color;
-import model.Const;
-import model.GameData;
-import system.Painter;
 
-/**
+
+
+/**@2011.4.6 by VV
  *
  * 装备视图
  */
@@ -27,18 +34,18 @@ public class EquipView extends BaseView {
         gd.equip_curEquip = gd.player.equipHelm;
     }
 
-    public void paint(EmulatorGraphics g) {
+    public void paint(Painter painter) {
         switch (gd.equip_pageIndex) {
             case PAGE_MAIN:
-                paint_Main(g);
+                paint_Main(painter);
                 break;
             case PAGE_CONFIRM:
-                paint_Main(g);
-                paint_Confirm(g);
+                paint_Main(painter);
+                paint_Confirm(painter);
                 break;
             case PAGE_TIP:
-                paint_Main(g);
-                paint_Tip(g);
+                paint_Main(painter);
+                paint_Tip(painter);
                 break;
         }
     }
@@ -47,9 +54,9 @@ public class EquipView extends BaseView {
         gd.bag_curIndex = 0;//回0
     }
 
-    private void paint_Main(EmulatorGraphics g) {
+    private void paint_Main(Painter painter) {
 
-        Painter.drawDialog(g, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_LIGHT);
+        Tools.drawDialog(painter, 0, 0, gd.screenWidth, gd.screenHeight, Painter.DIALOG_LIGHT);
 
         String[] items = {
             Const.Str.KINDS[0] + ": " + ((gd.player.equipHelm == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipHelm).name),
@@ -59,23 +66,25 @@ public class EquipView extends BaseView {
             Const.Str.KINDS[4] + ": " + ((gd.player.equipArmour == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipArmour).name),
             Const.Str.KINDS[5] + ": " + ((gd.player.equipBoots == -1) ? "空" : gd.gameObjectManager.getEquip(gd.player.equipBoots).name)
         };
-        Painter.drawTable(g, 22, 40, 175, 30, 6, 10, items, Color.black, 0, gd.equip_selectIndex, Const.Anchor.LV, Painter.NODIALOG, Painter.CELL_DEEP);
+        Tools.drawTable(painter, 22, 40, 175, 30, 6, 10, items, Color.black, 0, gd.equip_selectIndex, Const.Anchor.LV, Painter.NODIALOG, Painter.CELL_DEEP);
 
     }
 
-    private void paint_Confirm(EmulatorGraphics g) {
+    private void paint_Confirm(Painter painter) {
         int h = 50;
-        Painter.drawDialog(g, 0, gd.screenHeight - h, gd.screenWidth, h, Painter.DIALOG_DEEP);
-        g.setColor(Color.black);
-        g.drawString("是否要将装备\"" + (gd.gameObjectManager.getEquip(gd.equip_curEquip).name) + "\"脱下", gd.screenWidth / 2, gd.screenHeight - h + (h - g.getEmulatorFont().getHeight()) / 2, EmulatorGraphics.HT);
+        Tools.drawDialog(painter, 0, gd.screenHeight - h, gd.screenWidth, h, Painter.DIALOG_DEEP);
+        painter.setColor(Color.black);
+        painter.drawString("是否要将装备\"" + (gd.gameObjectManager.getEquip(gd.equip_curEquip).name) + "\"脱下", gd.screenWidth >>1, gd.screenHeight - h + (h - painter.getFontHeight()) >>1, Painter.HT);
 
     }
 
-    private void paint_Tip(EmulatorGraphics g) {
+    private void paint_Tip(Painter painter) {
         int h = 50;
-        Painter.drawDialog(g, 0, gd.screenHeight - h, gd.screenWidth, h, Painter.DIALOG_DEEP);
-        g.setColor(Color.black);
-        g.drawString("装备成功脱下", gd.screenWidth / 2, gd.screenHeight - h + (h - g.getEmulatorFont().getHeight()) / 2, EmulatorGraphics.HT);
+        Tools.drawDialog(painter, 0, gd.screenHeight - h, gd.screenWidth, h, Painter.DIALOG_DEEP);
+        painter.setColor(Color.black);
+        painter.drawString("装备成功脱下", gd.screenWidth / 2, gd.screenHeight - h + (h - painter.getFontHeight()) >>1, Painter.HT);
 
     }
 }
+
+

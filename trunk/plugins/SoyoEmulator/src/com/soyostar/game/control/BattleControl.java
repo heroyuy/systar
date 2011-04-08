@@ -1,21 +1,21 @@
 package com.soyostar.game.control;
 
-import model.Item;
-import model.Bag;
-import view.BattleView;
-import engine.Control;
-import engine.GameEngine;
-import engine.View;
-import engine.script.Event;
-import game.RpgGame;
-import model.Const;
-import model.GameData;
-//import model.*;
-import engine.animation.AnimationPlayer;
-import system.Tools;
-import system.Painter;
+import com.soyostar.emulator.engine.Control;
+import com.soyostar.emulator.engine.GameEngine;
+import com.soyostar.emulator.engine.KeyManager;
+import com.soyostar.emulator.engine.View;
+import com.soyostar.emulator.engine.animation.AnimationPlayer;
+import com.soyostar.emulator.engine.script.Event;
+import com.soyostar.game.RpgGame;
+import com.soyostar.game.model.Bag;
+import com.soyostar.game.model.Const;
+import com.soyostar.game.model.GameData;
+import com.soyostar.game.model.Item;
+import com.soyostar.game.tools.Tools;
+import com.soyostar.game.view.BattleView;
+import com.soyostar.ui.Painter;
 
-/**
+/**@2011.4.8 byVV
  *
  * @author Administrator
  */
@@ -33,17 +33,17 @@ public class BattleControl implements Control, Runnable {
     private RpgGame game = (RpgGame) ge.getGame();
     private GameData gd = GameData.getGameData();
     public static final int MAINMENU = 0, //默认界面
-        ENEMY_COMMON_SELECT = 1,//攻击界面
-        MAGIC_SELECT = 5,//技能界面
-        ITEMS_SELECT = 2,//物品界面
-        //        DEF_SELECT = 3,//装备界面
-        ESCAPE = 4;//逃跑界面
+            ENEMY_COMMON_SELECT = 1,//攻击界面
+            MAGIC_SELECT = 5,//技能界面
+            ITEMS_SELECT = 2,//物品界面
+            //        DEF_SELECT = 3,//装备界面
+            ESCAPE = 4;//逃跑界面
     public static int Select_Menu = 0;//当前界面
     private boolean isDef = false;
     public static final int Magic_Main = 0, //技能主界面
-        Magic_Chose_Eny = 1;//技能选择敌人界面
+            Magic_Chose_Eny = 1;//技能选择敌人界面
     public static final int Item_Main = 0,//物品主界面
-        Item_Chose_Eny = 1;//物品选择敌人界面
+            Item_Chose_Eny = 1;//物品选择敌人界面
 //    public static Timer timer;//用timer实现多任务调度
     private Thread thread;
 
@@ -193,7 +193,7 @@ public class BattleControl implements Control, Runnable {
 
 //        try {
         AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-            gd.enemy[gd.Select_Magic_Eny].BattX + gd.enemy[gd.Select_Magic_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Magic_Eny].BattY);
+                gd.enemy[gd.Select_Magic_Eny].BattX + gd.enemy[gd.Select_Magic_Eny].BattImg.getWidth() / 2, gd.enemy[gd.Select_Magic_Eny].BattY);
 //        } catch (Exception e) {
 //            System.out.println("攻击动画播放异常");
 ////                e.printStackTrace();
@@ -227,7 +227,7 @@ public class BattleControl implements Control, Runnable {
             }
 //            try {
             AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-                gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
+                    gd.enemy[i].BattX + gd.enemy[i].BattImg.getWidth() / 2, gd.enemy[i].BattY);
 //            } catch (Exception e) {
 //                System.out.println("攻击动画播放异常");
 ////                e.printStackTrace();
@@ -267,7 +267,7 @@ public class BattleControl implements Control, Runnable {
         gd.player.changeHp = gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).hp;
 //        try {
         AnimationPlayer.getInstance().playAnimation(gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.player.bag.getList(Bag.SKILL)[gd.Select_Magic]).aniIndex),
-            gd.player.heroBattX + 10, gd.player.heroBattY);
+                gd.player.heroBattX + 10, gd.player.heroBattY);
 //        } catch (Exception e) {
 //            System.out.println("加血动画播放异常");
 ////            e.printStackTrace();
@@ -319,79 +319,68 @@ public class BattleControl implements Control, Runnable {
         }
     }
 
-    public void keyPressed(View view, int key) {
+    public void dealKeyEvent() {
+        switch (BattleView.curState) {
+            case BattleView.OPEN:
+                break;
+            case BattleView.MAIN:
+                if (gd.player.waitTime < 360) {//当不在英雄行动序列时，不响应按键
+                    return;
+                }
 
-        if (view instanceof BattleView) {
-            switch (BattleView.curState) {
-                case BattleView.OPEN:
-                    break;
-                case BattleView.MAIN:
-                    if (gd.player.waitTime < 360) {//当不在英雄行动序列时，不响应按键
-                        return;
-                    }
-                    switch (key) {
-                        case Const.Key.KEY_UP:
-                        case Const.Key.KEY_2:
-                            up();
-                            break;
-                        case Const.Key.KEY_DOWN:
-                        case Const.Key.KEY_8:
-                            down();
-                            break;
-                        case Const.Key.KEY_LEFT:
-                        case Const.Key.KEY_4:
-                            left();
-                            break;
-                        case Const.Key.KEY_RIGHT:
-                        case Const.Key.KEY_6:
-                            right();
-                            break;
-                        case Const.Key.KEY_5:
-                        case Const.Key.KEY_FIRE:
-                            fire();
-                            break;
-                        case Const.Key.KEY_RS:
-                            back();
-                            break;
-                    }
-                    break;
+                if (ge.getKeyManager().isPressKey(KeyManager.KEY_UP)
+                        || ge.getKeyManager().isPressKey(KeyManager.KEY_2)) {
+                    up();
+                } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_DOWN) || ge.getKeyManager().isPressKey(KeyManager.KEY_8)) {
+                    down();
+                } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_LEFT) || ge.getKeyManager().isPressKey(KeyManager.KEY_4)) {
+                    left();
+                } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_RIGHT) || ge.getKeyManager().isPressKey(KeyManager.KEY_6)) {
 
-                case BattleView.END:
-                    switch (key) {
-                        case Const.Key.KEY_FIRE:
-                            switch (gd.winSelect) {
-                                case 0:
-                                    gd.winSelect = 1;
-                                    gd.player.addExp(gd.allExp);
-                                    gd.player.money += gd.allMoney;
-                                    break;
-                                case 1:
-                                    gd.winSelect = 0;
-                                    for (int i = 0; i < gd.gameObjectManager.getEnemyTroop(gd.enemyTroopID).itemList.length; i++) {
-                                        gd.player.bag.add(Bag.ITEM, gd.gameObjectManager.getEnemyTroop(gd.enemyTroopID).itemList[i], 1);
-                                    }
-                                    game.setCurView(Const.ViewId.VIEW_MAP);
-                                    game.finishEvent();
-                                    break;
+                    right();
+                } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_5) || ge.getKeyManager().isPressKey(KeyManager.KEY_FIRE)) {
+                    fire();
+                } else if (ge.getKeyManager().isPressKey(KeyManager.KEY_RS)) {
+                    back();
+                }
+
+                break;
+
+            case BattleView.END:
+
+                if (ge.getKeyManager().isPressKey(KeyManager.KEY_MID)) {
+                    switch (gd.winSelect) {
+                        case 0:
+                            gd.winSelect = 1;
+                            gd.player.addExp(gd.allExp);
+                            gd.player.money += gd.allMoney;
+                            break;
+                        case 1:
+                            gd.winSelect = 0;
+                            for (int i = 0; i < gd.gameObjectManager.getEnemyTroop(gd.enemyTroopID).itemList.length; i++) {
+                                gd.player.bag.add(Bag.ITEM, gd.gameObjectManager.getEnemyTroop(gd.enemyTroopID).itemList[i], 1);
                             }
-
+                            game.setCurView(Const.ViewId.VIEW_MAP);
+                            game.finishEvent();
                             break;
                     }
-                    System.out.println("gd.winSelect " + gd.winSelect);
-                    break;
 
-            }
+                }
+
+                System.out.println("gd.winSelect " + gd.winSelect);
+                break;
 
         }
-//        game.getCurView().repaint();
-        ge.clearKey();
+
     }
+//        game.getCurView().repaint();
 
     private void up() {
 //        System.out.println("up");
         switch (Select_Menu) {
             case MAINMENU:
                 gd.select--;
+
                 if (gd.select < 0) {
                     gd.select = 4;
                 }
@@ -493,8 +482,8 @@ public class BattleControl implements Control, Runnable {
 //        System.out.println("skillname " + gd.gameObjectManager.getSkill(gd.enemy[id].skillList[temp]).name);
 //        System.out.println("aniIndex " + gd.gameObjectMana  ger.getSkill(gd.player.skillList[temp]).aniIndex);
         AnimationPlayer.getInstance().playAnimation(
-            gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.enemy[id].skillList[temp]).aniIndex),
-            gd.player.heroBattX + 10, gd.player.heroBattY);
+                gd.gameObjectManager.getAnimation(gd.gameObjectManager.getSkill(gd.enemy[id].skillList[temp]).aniIndex),
+                gd.player.heroBattX + 10, gd.player.heroBattY);
 //        System.out.println("gd.enemy[id].name " + gd.enemy[id].name);
 //
 //        System.out.println("gd.enemy[id].skillList[temp] " + gd.enemy[id].skillList[temp]);
@@ -510,7 +499,8 @@ public class BattleControl implements Control, Runnable {
         }
         gd.isChangeHp = true;
         gd.upDecreaseHP = 0;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i
+                < 4; i++) {
             gd.upDecreaseHP -= 3;
             sleep();
         }
@@ -524,13 +514,15 @@ public class BattleControl implements Control, Runnable {
     }
 
     public void enemyCommondAttack(int id) {//敌人普通攻击
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j
+                < 4; j++) {
             enemyMove(id);
         }
         if (gd.player.isMiss()) {
             gd.isMiss = true;
             gd.upMiss = 0;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i
+                    < 4; i++) {
                 enemyBack(id);
                 gd.upMiss -= 3;
             }
@@ -548,7 +540,8 @@ public class BattleControl implements Control, Runnable {
             }
             gd.isChangeHp = true;
             gd.upDecreaseHP = 0;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i
+                    < 4; i++) {
                 enemyBack(id);
                 gd.upDecreaseHP -= 3;
             }
@@ -568,6 +561,7 @@ public class BattleControl implements Control, Runnable {
         switch (Select_Menu) {
             case MAINMENU:
                 gd.select++;
+
                 if (gd.select > 4) {
                     gd.select = 0;
                 }
@@ -621,6 +615,7 @@ public class BattleControl implements Control, Runnable {
                         if (gd.player.bag.getList(Bag.ITEM).length > 0) {
                             if (gd.Select_Good < gd.player.bag.getList(Bag.ITEM).length - 1) {
                                 gd.Select_Good++;
+
                                 if (gd.Select_Good > gd.Top_Good + 7 - 1) {
                                     if (gd.Top_Good == gd.player.bag.getList(Bag.ITEM).length - 7) {
                                         gd.Select_Good--;
@@ -746,7 +741,6 @@ public class BattleControl implements Control, Runnable {
                         }
                 }
                 break;
-
         }
     }
 
@@ -872,7 +866,6 @@ public class BattleControl implements Control, Runnable {
                 break;
             case ENEMY_COMMON_SELECT:
                 gd.attackType = 1; //1为物理攻击
-
                 break;
             case MAGIC_SELECT:
                 switch (gd.Select_Magic_Main) {
@@ -912,9 +905,7 @@ public class BattleControl implements Control, Runnable {
                             case 2://辅助性
                                 gd.attackType = 7;
                                 break;
-                        }
-//                        gd.attackType = 7; //2物品回复
-
+                        } //                        gd.attackType = 7; //2物品回复
                         break;
                     case Item_Chose_Eny:
                         gd.attackType = 5;
@@ -923,7 +914,7 @@ public class BattleControl implements Control, Runnable {
                 break;
         }
         System.out.println(
-            "gd.attackType: " + gd.attackType);
+                "gd.attackType: " + gd.attackType);
     }
 
     public void useItem() {
@@ -975,6 +966,7 @@ public class BattleControl implements Control, Runnable {
                         break;
                     case Magic_Chose_Eny:
                         gd.Select_Magic_Main = Magic_Main;
+
                         break;
                 }
                 break;
@@ -1027,14 +1019,14 @@ public class BattleControl implements Control, Runnable {
 
     private void heroCommondAttack() {
         for (int i = 0; i
-            < 4; i++) {
+                < 4; i++) {
             heroMove();
         }
         gd.enemy[gd.Select_Eny].changeHp = gd.player.atk - gd.enemy[gd.Select_Eny].def;
         gd.isChangeHp = true;
         gd.upDecreaseHP = 0;
         for (int i = 0; i
-            < 4; i++) {
+                < 4; i++) {
             heroBack();
             gd.upDecreaseHP -= 3;
 
@@ -1052,6 +1044,12 @@ public class BattleControl implements Control, Runnable {
         gd.player.waitTime = 0;
     }
 
-    public void dealEvent(View view, Event event) {
+    public void dealMotion() {
+    }
+
+    public void dealGameEvent(Event event) {
+    }
+
+    public void updateModel() {
     }
 }
