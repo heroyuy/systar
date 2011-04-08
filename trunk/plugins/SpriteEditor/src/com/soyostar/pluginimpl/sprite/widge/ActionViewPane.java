@@ -142,8 +142,19 @@ public class ActionViewPane extends JPanel implements DropTargetListener, Runnab
                         }
                     }
 
+                } else {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
                 }
             }
+
 
         }
     }
