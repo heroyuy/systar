@@ -45,11 +45,11 @@ public class MapDao extends Dao<Map> {
                     map.imageSets[i].path = dis.readUTF();
                 }
                 map.musicName = dis.readUTF();
-                map.rowNum = dis.readByte();
-                map.colNum = dis.readByte();
-                map.cellWidth = dis.readByte();
-                map.cellHeight = dis.readByte();
-                map.layerNum = dis.readByte();
+                map.rowNum = dis.readInt();
+                map.colNum = dis.readInt();
+                map.cellWidth = dis.readInt();
+                map.cellHeight = dis.readInt();
+                map.layerNum = dis.readInt();
                 map.layers = new Layer[map.layerNum];
                 for (int i = 0; i < map.layers.length; i++) {
                     map.layers[i] = new Layer();
@@ -86,7 +86,7 @@ public class MapDao extends Dao<Map> {
                     map.scripts[i].col = dis.readInt();
                     map.scripts[i].face = dis.readByte();
                     map.scripts[i].moveRule = dis.readByte();
-                    map.scripts[i].moveSpeed = dis.readByte();
+                    map.scripts[i].moveSpeed = dis.readInt();
                     map.scripts[i].commandNum = dis.readInt();
                     map.scripts[i].commands = new String[map.scripts[i].commandNum];
                     for (int j = 0; j < map.scripts[i].commands.length; j++) {
@@ -124,11 +124,11 @@ public class MapDao extends Dao<Map> {
                     dos.writeUTF(map.imageSets[i].path);
                 }
                 dos.writeUTF(map.musicName);
-                dos.writeByte(map.rowNum);
-                dos.writeByte(map.colNum);
-                dos.writeByte(map.cellWidth);
-                dos.writeByte(map.cellHeight);
-                dos.writeByte(map.layerNum);
+                dos.writeInt(map.rowNum);
+                dos.writeInt(map.colNum);
+                dos.writeInt(map.cellWidth);
+                dos.writeInt(map.cellHeight);
+                dos.writeInt(map.layerNum);
                 for (int i = 0; i < map.layers.length; i++) {
                     dos.writeInt(map.layers[i].deepth);
                     for (int j = 0; j < map.rowNum; j++) {
@@ -157,7 +157,7 @@ public class MapDao extends Dao<Map> {
                     dos.writeInt(map.scripts[i].col);
                     dos.writeByte(map.scripts[i].face);
                     dos.writeByte(map.scripts[i].moveRule);
-                    dos.writeByte(map.scripts[i].moveSpeed);
+                    dos.writeInt(map.scripts[i].moveSpeed);
                     dos.writeInt(map.scripts[i].commandNum);
                     for (int j = 0; j < map.scripts[i].commands.length; j++) {
                         dos.writeUTF(map.scripts[i].commands[j]);
