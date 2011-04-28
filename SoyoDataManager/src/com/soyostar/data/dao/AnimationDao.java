@@ -20,7 +20,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Administrator
+ * @author cokey 4.28
  */
 public class AnimationDao extends Dao<Animation> {
 
