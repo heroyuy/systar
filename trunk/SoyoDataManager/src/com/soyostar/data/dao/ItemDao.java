@@ -68,10 +68,10 @@ public class ItemDao extends Dao<Item> {
             fos = new FileOutputStream(f);
             dos = new DataOutputStream(fos);
             dos.writeInt(size());
-             Item[] items = this.getModels(Item.class);
+            Item[] items = this.getModels(Item.class);
             Item item = null;
             for (int i = 0; i < size(); i++) {
-                item =items[i];
+                item = items[i];
                 dos.writeInt(item.kind);
                 dos.writeInt(item.getIndex());
                 dos.writeUTF(item.name);

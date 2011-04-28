@@ -62,7 +62,7 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             dos = new DataOutputStream(fos);
 
             dos.writeInt(size());
-             EnemyTroop[] enemyTroops=this.getModels(EnemyTroop.class);
+            EnemyTroop[] enemyTroops = this.getModels(EnemyTroop.class);
             EnemyTroop enemyTroop = null;
             for (int i = 0; i < size(); i++) {
                 enemyTroop = enemyTroops[i];
