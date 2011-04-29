@@ -28,8 +28,8 @@ public class PlayerDao extends Dao<Player> {
             player = new Player();
             player.name = dis.readUTF();
             player.intro = dis.readUTF();
-            player.headImg = "/image/battler/" + dis.readUTF();
-            player.charImg = "/image/character/" + dis.readUTF();
+            player.headImg = dis.readUTF();
+            player.charImg = dis.readUTF();
             player.stre = dis.readInt();
             player.agil = dis.readInt();
             player.inte = dis.readInt();
@@ -68,7 +68,7 @@ public class PlayerDao extends Dao<Player> {
         FileOutputStream fos = null;
         File f = null;
         Player player = this.getModel(Player.class, 0);
-        if(player==null){
+        if (player == null) {
             return;
         }
         try {

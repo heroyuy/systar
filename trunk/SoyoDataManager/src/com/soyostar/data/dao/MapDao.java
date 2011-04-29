@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,11 +39,13 @@ public class MapDao extends Dao<Map> {
                 map.setIndex(dis.readInt());
                 map.name = dis.readUTF();
                 map.imageSetNum = dis.readInt();
-                map.imageSets = new ImageSet[map.imageSetNum];
-                for (int i = 0; i < map.imageSets.length; i++) {
-                    map.imageSets[i] = new ImageSet();
-                    map.imageSets[i].id = dis.readInt();
-                    map.imageSets[i].path = dis.readUTF();
+                map.imageSets = new ArrayList<ImageSet>();
+                ImageSet is = null;
+                for (int i = 0; i < map.imageSetNum; i++) {
+                    is = new ImageSet();
+                    is.id = dis.readInt();
+                    is.path = dis.readUTF();
+                    map.imageSets.add(is);
                 }
                 map.musicName = dis.readUTF();
                 map.rowNum = dis.readInt();
@@ -50,18 +53,20 @@ public class MapDao extends Dao<Map> {
                 map.cellWidth = dis.readInt();
                 map.cellHeight = dis.readInt();
                 map.layerNum = dis.readInt();
-                map.layers = new Layer[map.layerNum];
-                for (int i = 0; i < map.layers.length; i++) {
-                    map.layers[i] = new Layer();
-                    map.layers[i].deepth = dis.readInt();
-                    map.layers[i].tileds = new Tiled[map.rowNum][map.colNum];
+                map.layers = new ArrayList<Layer>();
+                Layer layer = null;
+                for (int i = 0; i < map.layerNum; i++) {
+                    layer = new Layer();
+                    layer.deepth = dis.readInt();
+                    layer.tileds = new Tiled[map.rowNum][map.colNum];
                     for (int j = 0; j < map.rowNum; j++) {
                         for (int k = 0; k < map.colNum; k++) {
-                            map.layers[i].tileds[j][k] = new Tiled();
-                            map.layers[i].tileds[j][k].imageSetId = dis.readInt();
-                            map.layers[i].tileds[j][k].tiledId = dis.readInt();
+                            layer.tileds[j][k] = new Tiled();
+                            layer.tileds[j][k].imageSetId = dis.readInt();
+                            layer.tileds[j][k].tiledId = dis.readInt();
                         }
                     }
+                    map.layers.add(layer);
                 }
 
                 map.way = new boolean[map.rowNum][map.colNum];
@@ -78,20 +83,22 @@ public class MapDao extends Dao<Map> {
                     }
                 }
                 map.scriptNum = dis.readInt();
-                map.scripts = new Script[map.scriptNum];
-                for (int i = 0; i < map.scripts.length; i++) {
-                    map.scripts[i] = new Script();
-                    map.scripts[i].type = dis.readByte();
-                    map.scripts[i].row = dis.readInt();
-                    map.scripts[i].col = dis.readInt();
-                    map.scripts[i].face = dis.readByte();
-                    map.scripts[i].moveRule = dis.readByte();
-                    map.scripts[i].moveSpeed = dis.readInt();
-                    map.scripts[i].commandNum = dis.readInt();
-                    map.scripts[i].commands = new String[map.scripts[i].commandNum];
-                    for (int j = 0; j < map.scripts[i].commands.length; j++) {
-                        map.scripts[i].commands[j] = dis.readUTF();
+                map.scripts = new ArrayList<Script>();
+                Script script = null;
+                for (int i = 0; i < map.scriptNum; i++) {
+                    script = new Script();
+                    script.type = dis.readByte();
+                    script.row = dis.readInt();
+                    script.col = dis.readInt();
+                    script.face = dis.readByte();
+                    script.moveRule = dis.readByte();
+                    script.moveSpeed = dis.readInt();
+                    script.commandNum = dis.readInt();
+                    script.commands = new String[script.commandNum];
+                    for (int j = 0; j < script.commands.length; j++) {
+                        script.commands[j] = dis.readUTF();
                     }
+                    map.scripts.add(script);
                 }
                 saveModel(map);
                 dis.close();
@@ -118,23 +125,23 @@ public class MapDao extends Dao<Map> {
                 map = maps[ii];
                 dos.writeInt(map.getIndex());
                 dos.writeUTF(map.name);
-                dos.writeInt(map.imageSetNum);
-                for (int i = 0; i < map.imageSets.length; i++) {
-                    dos.writeInt(map.imageSets[i].id);
-                    dos.writeUTF(map.imageSets[i].path);
+                dos.writeInt(map.imageSets.size());
+                for (int i = 0; i < map.imageSets.size(); i++) {
+                    dos.writeInt(map.imageSets.get(i).id);
+                    dos.writeUTF(map.imageSets.get(i).path);
                 }
                 dos.writeUTF(map.musicName);
                 dos.writeInt(map.rowNum);
                 dos.writeInt(map.colNum);
                 dos.writeInt(map.cellWidth);
                 dos.writeInt(map.cellHeight);
-                dos.writeInt(map.layerNum);
-                for (int i = 0; i < map.layers.length; i++) {
-                    dos.writeInt(map.layers[i].deepth);
+                dos.writeInt(map.layers.size());
+                for (int i = 0; i < map.layers.size(); i++) {
+                    dos.writeInt(map.layers.get(i).deepth);
                     for (int j = 0; j < map.rowNum; j++) {
                         for (int k = 0; k < map.colNum; k++) {
-                            dos.writeInt(map.layers[i].tileds[j][k].imageSetId);
-                            dos.writeInt(map.layers[i].tileds[j][k].tiledId);
+                            dos.writeInt(map.layers.get(i).tileds[j][k].imageSetId);
+                            dos.writeInt(map.layers.get(i).tileds[j][k].tiledId);
                         }
                     }
                 }
@@ -150,17 +157,17 @@ public class MapDao extends Dao<Map> {
                         dos.writeByte(map.scriptType[j][k]);
                     }
                 }
-                dos.writeInt(map.scriptNum);
-                for (int i = 0; i < map.scripts.length; i++) {
-                    dos.writeByte(map.scripts[i].type);
-                    dos.writeInt(map.scripts[i].row);
-                    dos.writeInt(map.scripts[i].col);
-                    dos.writeByte(map.scripts[i].face);
-                    dos.writeByte(map.scripts[i].moveRule);
-                    dos.writeInt(map.scripts[i].moveSpeed);
-                    dos.writeInt(map.scripts[i].commandNum);
-                    for (int j = 0; j < map.scripts[i].commands.length; j++) {
-                        dos.writeUTF(map.scripts[i].commands[j]);
+                dos.writeInt(map.scripts.size());
+                for (int i = 0; i < map.scripts.size(); i++) {
+                    dos.writeByte(map.scripts.get(i).type);
+                    dos.writeInt(map.scripts.get(i).row);
+                    dos.writeInt(map.scripts.get(i).col);
+                    dos.writeByte(map.scripts.get(i).face);
+                    dos.writeByte(map.scripts.get(i).moveRule);
+                    dos.writeInt(map.scripts.get(i).moveSpeed);
+                    dos.writeInt(map.scripts.get(i).commandNum);
+                    for (int j = 0; j < map.scripts.get(i).commands.length; j++) {
+                        dos.writeUTF(map.scripts.get(i).commands[j]);
                     }
                 }
                 dos.close();
