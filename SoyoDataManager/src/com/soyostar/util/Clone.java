@@ -63,12 +63,14 @@ public class Clone {
                 try {
                     //获取t1的字段的值
                     Object value = f1[i].get(t1);
-                    if ((f1[i].getType().isPrimitive()) || (value instanceof String)) {
+                    if (value == null) {
+                         f1[i].set(t2, null);
+                    } else if ((f1[i].getType().isPrimitive()) || (value instanceof String)) {
                         System.out.println("基本类型||String:" + value.getClass().getName());
                         f1[i].set(t2, value);
                     } else {
                         System.out.println("对象：" + value.getClass().getName());
-                         f1[i].set(t2, Clone.clone((Serializable)value));
+                        f1[i].set(t2, Clone.clone((Serializable) value));
                     }
                 } catch (IllegalArgumentException ex) {
                     ex.printStackTrace();
