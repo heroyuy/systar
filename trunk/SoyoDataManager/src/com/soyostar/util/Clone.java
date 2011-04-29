@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+
 /**
  *
  * @author wp_g4
@@ -63,9 +64,11 @@ public class Clone {
                     //获取t1的字段的值
                     Object value = f1[i].get(t1);
                     if ((f1[i].getType().isPrimitive()) || (value instanceof String)) {
+                        System.out.println("基本类型||String:" + value.getClass().getName());
                         f1[i].set(t2, value);
                     } else {
-                        clone(value, f1[i].get(t2));
+                        System.out.println("对象：" + value.getClass().getName());
+                         f1[i].set(t2, Clone.clone((Serializable)value));
                     }
                 } catch (IllegalArgumentException ex) {
                     ex.printStackTrace();
