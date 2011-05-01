@@ -1,7 +1,6 @@
 package engine;
 
 import emulator.MotionEvent;
-import engine.exception.NoSuchGameException;
 import engine.script.GameEvent;
 import engine.script.ScriptEngine;
 import java.io.File;
@@ -230,6 +229,7 @@ public final class GameEngine implements Runnable {
                 loadConfig();
             }
             return games.get(curGameIndex).game;
+
         }
 
         public void setCurGame(int index) {
@@ -237,10 +237,11 @@ public final class GameEngine implements Runnable {
                 curGameIndex = index;
             } else {
                 try {
-                    throw new NoSuchGameException("不存在编号为" + index + "的游戏实例");
-                } catch (NoSuchGameException ex) {
+                    throw new Exception("不存在编号为" + index + "的游戏实例");
+                } catch (Exception ex) {
                     Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             }
         }
 
@@ -253,11 +254,10 @@ public final class GameEngine implements Runnable {
                     break;
                 }
             }
-            if (hasGame) {
-            } else {
+            if (!hasGame) {
                 try {
-                    throw new NoSuchGameException("不存在名为" + fullName + "的游戏实例");
-                } catch (NoSuchGameException ex) {
+                    throw new Exception("不存在名为" + fullName + "的游戏实例");
+                } catch (Exception ex) {
                     Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

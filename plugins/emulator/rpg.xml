@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : rpg.xml
+    Created on : 2011年5月1日, 下午10:43
+    Author     : Administrator
+    Description:
+        Purpose of the document follows.
+-->
+
+<rpg>
+    <control>
+        <id>0</id>
+        <name>game.impl.control.TestControl</name>
+        <view>game.impl.view.TestView</view>
+        <view>game.impl.view.TestView2</view>
+    </control>
+    <control>
+        <id>1</id>
+        <name>game.impl.control.TestControl</name>
+        <view>game.impl.view.TestView</view>
+        <view>game.impl.view.TestView2</view>
+    </control>
+    <currentControlID>0</currentControlID>
+    <model></model>
+    <dataHandler></dataHandler>
+</rpg>
