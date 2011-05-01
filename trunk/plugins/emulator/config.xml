@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Engine>
+  <Game>
+    <ID>0</ID>
+    <FullName>gmc0</FullName>
+    <ConfigFile>gcn0</ConfigFile>
+  </Game> 
+  <Game>
+    <ID>1</ID>
+    <FullName>gmc0</FullName>
+    <ConfigFile>gcn0</ConfigFile>
+  </Game> 
+  <Game>
+    <ID>2</ID>
+    <FullName>gmc0</FullName>
+    <ConfigFile>gcn0</ConfigFile>
+  </Game> 
+  <CurrentGameID>0</CurrentGameID>
+</Engine>
