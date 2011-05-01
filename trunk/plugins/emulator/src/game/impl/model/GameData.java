@@ -1,6 +1,7 @@
 package game.impl.model;
 
 import emulator.EmulatorFont;
+import game.IModel;
 import java.util.Vector;
 import game.manager.GameObjectManager;
 
@@ -8,9 +9,8 @@ import game.manager.GameObjectManager;
  *
  * 相当于MVC中的模型（M）
  */
-public class GameData {
+public class GameData implements IModel {
 
-    private static GameData gd = new GameData();
     public GameObjectManager gameObjectManager = new GameObjectManager();
     /**
      * 编号0-99的100个开关
@@ -127,7 +127,7 @@ public class GameData {
     public void setDialog(String name, String content) {
         //此算法基本是失败的，需要重写
         this.dialog_name = name;
-        int num = GameData.getGameData().screenWidth / font.stringWidth("好");//每行能显示的字数
+        int num = screenWidth / font.stringWidth("好");//每行能显示的字数
         int row = content.length() / num + 1;//要显示的行数
         Vector v = new Vector();
         int p = 0, q = 0;
@@ -137,12 +137,12 @@ public class GameData {
             if (q == content.length()) {
                 v.addElement(content.substring(p, q));
                 p = q;
-            }else{
-                temp=content.substring(p, q);
-                if(f.stringWidth(temp)>screenWidth-20){
-                    v.addElement(content.substring(p, q-1));
-                    p=q-1;
-                }else{
+            } else {
+                temp = content.substring(p, q);
+                if (f.stringWidth(temp) > screenWidth - 20) {
+                    v.addElement(content.substring(p, q - 1));
+                    p = q - 1;
+                } else {
                     q++;
                 }
             }
@@ -150,45 +150,44 @@ public class GameData {
         }
         dialog_content = new String[v.size()];
         for (int i = 0; i < dialog_content.length; i++) {
-            dialog_content[i]=(String) v.elementAt(i);
+            dialog_content[i] = (String) v.elementAt(i);
         }
         v.removeAllElements();
-        v=null;
+        v = null;
     }
 
     private GameData() {
         super();
     }
 
-    public static GameData getGameData() {
-        return gd;
-    }
-
     public void buildItems() {
-        items = new String[gd.player.bag.getList(Bag.ITEM).length];
+        items = new String[player.bag.getList(Bag.ITEM).length];
         for (int i = 0; i < items.length; i++) {
-            Item tempItem = (Item) gd.player.bag.get(Bag.ITEM, gd.player.bag.getList(Bag.ITEM)[i]);
+            Item tempItem = (Item) player.bag.get(Bag.ITEM, player.bag.getList(Bag.ITEM)[i]);
             items[i] = tempItem.name + "  数量：" + tempItem.num;
         }
 
-        equips = new String[gd.player.bag.getList(Bag.EQUIP).length];
+        equips = new String[player.bag.getList(Bag.EQUIP).length];
         for (int i = 0; i < equips.length; i++) {
-            Equip tempEquip = (Equip) gd.player.bag.get(Bag.EQUIP, gd.player.bag.getList(Bag.EQUIP)[i]);
+            Equip tempEquip = (Equip) player.bag.get(Bag.EQUIP, player.bag.getList(Bag.EQUIP)[i]);
             equips[i] = Const.Str.KINDS[tempEquip.kind] + "  " + tempEquip.name + "  数量：" + tempEquip.num;
         }
     }
 
     public void buildList_buy() {
-        gd.shop_items_buy = new BaseItem[gd.shop_list.length];
-        for (int i = 0; i < gd.shop_items_buy.length; i++) {
-            gd.shop_items_buy[i] = gd.gameObjectManager.getBaseItem(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP, gd.shop_list[i]);
+        shop_items_buy = new BaseItem[shop_list.length];
+        for (int i = 0; i < shop_items_buy.length; i++) {
+            shop_items_buy[i] = gameObjectManager.getBaseItem(shop_type == 0 ? Bag.ITEM : Bag.EQUIP, shop_list[i]);
         }
     }
 
     public void buildList_sell() {
-        gd.shop_items_sell = new BaseItem[gd.player.bag.getList(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP).length];
-        for (int i = 0; i < gd.shop_items_sell.length; i++) {
-            gd.shop_items_sell[i] = gd.player.bag.get(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP, gd.player.bag.getList(gd.shop_type == 0 ? Bag.ITEM : Bag.EQUIP)[i]);
+        shop_items_sell = new BaseItem[player.bag.getList(shop_type == 0 ? Bag.ITEM : Bag.EQUIP).length];
+        for (int i = 0; i < shop_items_sell.length; i++) {
+            shop_items_sell[i] = player.bag.get(shop_type == 0 ? Bag.ITEM : Bag.EQUIP, player.bag.getList(shop_type == 0 ? Bag.ITEM : Bag.EQUIP)[i]);
         }
+    }
+
+    public void update() {
     }
 }

@@ -9,19 +9,33 @@
 -->
 
 <rpg>
-    <control>
-        <id>0</id>
-        <name>game.impl.control.TestControl</name>
-        <view>game.impl.view.TestView</view>
-        <view>game.impl.view.TestView2</view>
-    </control>
-    <control>
-        <id>1</id>
-        <name>game.impl.control.TestControl</name>
-        <view>game.impl.view.TestView</view>
-        <view>game.impl.view.TestView2</view>
-    </control>
-    <currentControlID>0</currentControlID>
-    <model></model>
-    <dataHandler></dataHandler>
+    <controls>
+        <control>
+            <id>0</id>
+            <fullName>game.impl.control.TestControl</fullName>
+            <views>
+                <view>
+                    <id>0</id>
+                    <fullName>game.impl.view.TestView</fullName>
+                </view>
+                <view>
+                    <id>1</id>
+                    <fullName>game.impl.view.TestView2</fullName>
+                </view>
+            </views>
+        </control>
+        <currentControlID>0</currentControlID>
+    </controls>
+    <models>
+        <model>
+            <id>0</id>
+            <fullName> game.impl.model.GameData</fullName>
+        </model>
+    </models>
+    <dataHandlers>
+        <dataHandler>
+            <id>0</id>
+            <fullName>game.impl.DataHandler</fullName>
+        </dataHandler>
+    </dataHandlers>
 </rpg>
