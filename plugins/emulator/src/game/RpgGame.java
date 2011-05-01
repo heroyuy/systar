@@ -4,13 +4,21 @@ import emulator.EmulatorGraphics;
 import emulator.MotionEvent;
 import engine.IGame;
 import engine.script.GameEvent;
-import game.impl.control.TestControl;
-import game.impl.view.TestView;
-import game.impl.view.TestView2;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class RpgGame implements IGame {
 
@@ -97,6 +105,66 @@ public class RpgGame implements IGame {
      * 4、设置数据处理器
      */
     private void loadConfig() {
+        try {
+            File f = new File(configFile);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(f);
+            Element root = doc.getDocumentElement();
+            NodeList nl = root.getElementsByTagName("control");
+            System.out.println("nl:" + nl);
+            for (int i = 0; i < nl.getLength(); i++) {
+                Element control = (Element) nl.item(i);
+                NodeList nl2 = control.getChildNodes();
+                System.out.println("nl2.getLength():" + nl2.getLength());
+                ControlNode cn = new ControlNode();
+                for (int j = 0; j < nl2.getLength(); j++) {
+                    Node node = nl2.item(j);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        if (node.getNodeName().equals("id")) {
+                            cn.id = Integer.parseInt(node.getFirstChild().getNodeValue());
+                            System.out.println("id:" + cn.id);
+                        } else if (node.getNodeName().equals("fullName")) {
+                            cn.fullName = node.getFirstChild().getNodeValue();
+                            cn.control=(AbControl) Class.forName(cn.fullName).newInstance();
+                            System.out.println("fullName:" + cn.fullName);
+                        } else if (node.getNodeName().equals("view")) {
+                            String viewName=node.getFirstChild().getNodeValue();
+                            cn.views.add(viewName);
+                            View view =(View) Class.forName(viewName).newInstance();
+                            cn.control.addView(view);
+                            System.out.println("view:" + node.getFirstChild().getNodeValue());
+                        }
+                    }
+                    controls.put(cn.id, cn);
+                }
+            }
+            curControlID = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
+            System.out.println("curControlID:" + curControlID);
+            NodeList nl3 = root.getElementsByTagName("model");
+            System.out.println("nl3.getLength():" + nl3.getLength());
+            for (int i = 0; i < nl3.getLength(); i++) {
+                String modelName=nl3.item(i).getFirstChild().getNodeValue();
+                IModel model=(IModel) Class.forName(modelName).newInstance();
+                
+                System.out.println("model:" + modelName);
+            }
+            String dataHandler = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
+            System.out.println("dataHandler:" + dataHandler);
+
+        } catch (InstantiationException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -138,7 +206,7 @@ public class RpgGame implements IGame {
 
         public int id = -1;
         public String fullName = null;
-        public String[] views = null;
-        public Control control = null;
+        public ArrayList<String> views = new ArrayList<String>();
+        public AbControl control = null;
     }
 }
