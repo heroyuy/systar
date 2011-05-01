@@ -9,14 +9,17 @@ import game.impl.view.TestView;
 import game.impl.view.TestView2;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RpgGame implements IGame {
 
-    private Map<Integer, Control> controls = null;
     private Map<Integer, IModel> models = null;
-    private int curControl = -1;
     private long startTime = 0;
     private boolean isDealingGameEvent = false;
+    private String configFile = "rpg.xml";
+    private int curControlID = -1;
+    private Map<Integer, ControlNode> controls = null;
 
     public void startGameEvent() {
         isDealingGameEvent = true;
@@ -31,8 +34,8 @@ public class RpgGame implements IGame {
     }
 
     public RpgGame() {
-        controls = new HashMap<Integer, Control>();
         models = new HashMap<Integer, IModel>();
+        controls = new HashMap<Integer, ControlNode>();
     }
 
     public void start() {
@@ -50,40 +53,40 @@ public class RpgGame implements IGame {
         for (IModel model : models.values()) {
             model.update();
         }
-        controls.get(curControl).updateModel();
+        getCurrentControl().updateModel();
     }
 
     public boolean dealGameEvent(GameEvent event) {
         if (isDealingGameEvent) {
             return false;
         }
-        controls.get(curControl).dealGameEvent(event);
+        getCurrentControl().dealGameEvent(event);
         return true;
     }
 
     public void dealKeyEvent(int key) {
-        controls.get(curControl).dealKeyEvent(key);
+        getCurrentControl().dealKeyEvent(key);
     }
 
     public void onTouchEvent(MotionEvent me) {
-        controls.get(curControl).onTouchEvent(me);
+        getCurrentControl().onTouchEvent(me);
     }
 
     public void exit() {
     }
 
     public void render(EmulatorGraphics g) {
-        controls.get(curControl).updateView(g);
+        getCurrentControl().updateView(g);
     }
 
     public void setCurControl(int index) {
-        if (controls.containsKey(index) || index != curControl) {
-            if (controls.get(curControl) != null) {
-                controls.get(curControl).onLose();
-            }
-            curControl = index;
-            controls.get(curControl).onObtain();
-        }
+        setCurrentControl(index);
+
+    }
+
+    public void setCurControl(String fullName) {
+        setCurrentControl(fullName);
+
     }
 
     /**
@@ -94,10 +97,48 @@ public class RpgGame implements IGame {
      * 4、设置数据处理器
      */
     private void loadConfig() {
-        controls.put(0, new TestControl());
-        ((AbControl)controls.get(0)).addView(new TestView());
-        ((AbControl)controls.get(0)).addView(new TestView2());
-        setCurControl(0);
 
+    }
+
+    private Control getCurrentControl() {
+        return controls.get(curControlID).control;
+    }
+
+    private void setCurrentControl(int index) {
+        if (controls.containsKey(index)) {
+            curControlID = index;
+        } else {
+            try {
+                throw new Exception("不存在ID为" + index + "的控制器");
+            } catch (Exception ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void setCurrentControl(String fullName) {
+        boolean hasControl = false;
+        for (ControlNode cd : controls.values()) {
+            if (cd.fullName.equals(fullName)) {
+                curControlID = cd.id;
+                hasControl = true;
+                break;
+            }
+        }
+        if (!hasControl) {
+            try {
+                throw new Exception("不存在名为" + fullName + "的控制器");
+            } catch (Exception ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private class ControlNode {
+
+        public int id = -1;
+        public String fullName = null;
+        public String[] views = null;
+        public Control control = null;
     }
 }
