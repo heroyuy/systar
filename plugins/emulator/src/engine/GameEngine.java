@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -46,7 +47,7 @@ public final class GameEngine implements Runnable {
     /**
      * 游戏管理器
      */
-    private GameManager gameManager=null;
+    private GameManager gameManager = null;
     /**
      * 循环计数器
      */
@@ -86,7 +87,7 @@ public final class GameEngine implements Runnable {
      */
     private GameEngine() {
         renderLayer = new RenderLayer(this);
-        gameManager=new GameManager();
+        gameManager = new GameManager();
     }
 
     /**
@@ -111,7 +112,7 @@ public final class GameEngine implements Runnable {
     private void init() {
         System.out.println("初始化游戏实例");
         isRun = true;
-        game=gameManager.getCurGame();
+        game = gameManager.getCurGame();
 
     }
 
@@ -270,12 +271,23 @@ public final class GameEngine implements Runnable {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document doc = builder.parse(f);
-                NodeList nl = doc.getElementsByTagName("Game");
-                for(int i=0;i<nl.getLength();i++){
-                  int id=Integer.parseInt(doc.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue());
-                  String fullName=doc.getElementsByTagName("FullName").item(i).getFirstChild().getNodeValue();
-                    System.out.println("id:"+id+" fullName:"+fullName);
+                Element root = doc.getDocumentElement();
+                NodeList nl = root.getElementsByTagName("Game");
+                for (int i = 0; i < nl.getLength(); i++) {
+                    int id = Integer.parseInt(root.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue());
+                    String fullName = root.getElementsByTagName("FullName").item(i).getFirstChild().getNodeValue();
+                    System.out.println("id:" + id + " fullName:" + fullName);
+                    IGame game = (IGame) Class.forName(fullName).newInstance();
+                    games.put(id, new GameNode(id, fullName, game));
                 }
+                curGameIndex = Integer.parseInt(root.getElementsByTagName("CurrentGameID").item(0).getFirstChild().getNodeValue());
+                System.out.println("CurrentGameID:" + curGameIndex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
                 Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -288,6 +300,11 @@ public final class GameEngine implements Runnable {
 
         private class GameNode {
 
+            public GameNode(int id, String fullName, IGame game) {
+                this.id = id;
+                this.fullName = fullName;
+                this.game = game;
+            }
             /**
              * 游戏ID
              */
