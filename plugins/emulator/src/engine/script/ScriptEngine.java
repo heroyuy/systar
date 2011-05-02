@@ -15,7 +15,7 @@ public final class ScriptEngine implements Runnable {
     /**
      * 游戏数据处理器
      */
-    private DataHandlerInterface dhi = null;
+    private IDataHandler dhi = null;
     /**
      * 循环延迟时间
      */
@@ -144,11 +144,11 @@ public final class ScriptEngine implements Runnable {
         isRun = false;
     }
 
-    public void setDataHandler(DataHandlerInterface dhi) {
+    public void setDataHandler(IDataHandler dhi) {
         this.dhi = dhi;
     }
 
-    public DataHandlerInterface getDataHandler() {
+    public IDataHandler getDataHandler() {
         return dhi;
     }
 }

@@ -1,12 +1,12 @@
 package game.impl;
 
-import engine.script.DataHandlerInterface;
+import engine.script.IDataHandler;
 
 /**
  *
  * 数据处理器
  */
-public class DataHandler implements DataHandlerInterface {
+public class DataHandler implements IDataHandler {
 
     public int getVar(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
