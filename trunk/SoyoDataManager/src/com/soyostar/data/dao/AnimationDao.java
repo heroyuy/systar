@@ -5,12 +5,12 @@
 package com.soyostar.data.dao;
 
 import com.soyostar.data.DataManager;
-import com.soyostar.data.model.Animation;
-import com.soyostar.data.model.Module;
-import com.soyostar.data.model.Sequence;
-import com.soyostar.data.model.SpriteLayer;
-import com.soyostar.data.model.Tile;
-import com.soyostar.data.model.TileSet;
+import com.soyostar.data.model.animation.Animation;
+import com.soyostar.data.model.animation.Module;
+import com.soyostar.data.model.animation.Sequence;
+import com.soyostar.data.model.animation.Layer;
+import com.soyostar.data.model.animation.Tile;
+import com.soyostar.data.model.animation.TileSet;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -60,7 +60,7 @@ public class AnimationDao extends Dao<Animation> {
                     Sequence seq = new Sequence();
                     int ln = dis.readInt();
                     for (int k = 0; k < ln; k++) {
-                        SpriteLayer sl = new SpriteLayer();
+                        Layer sl = new Layer();
                         sl.type = dis.readByte();
                         sl.x = dis.readInt();
                         sl.y = dis.readInt();
