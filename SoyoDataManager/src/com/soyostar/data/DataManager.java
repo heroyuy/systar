@@ -10,15 +10,15 @@ import com.soyostar.data.dao.ItemDao;
 import com.soyostar.data.dao.MapDao;
 import com.soyostar.data.dao.PlayerDao;
 import com.soyostar.data.dao.SkillDao;
-import com.soyostar.data.model.Animation;
+import com.soyostar.data.model.animation.Animation;
 import com.soyostar.data.model.Config;
 import com.soyostar.data.model.Enemy;
 import com.soyostar.data.model.EnemyTroop;
 import com.soyostar.data.model.Equip;
 import com.soyostar.data.model.Item;
-import com.soyostar.data.model.Map;
 import com.soyostar.data.model.Player;
 import com.soyostar.data.model.Skill;
+import com.soyostar.data.model.map.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 

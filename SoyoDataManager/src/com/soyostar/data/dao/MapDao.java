@@ -1,11 +1,14 @@
 package com.soyostar.data.dao;
 
 import com.soyostar.data.DataManager;
-import com.soyostar.data.model.ImageSet;
-import com.soyostar.data.model.Layer;
-import com.soyostar.data.model.Map;
-import com.soyostar.data.model.Script;
-import com.soyostar.data.model.Tiled;
+import com.soyostar.data.model.map.CollideLayer;
+import com.soyostar.data.model.map.Layer;
+import com.soyostar.data.model.map.Map;
+import com.soyostar.data.model.map.Script;
+import com.soyostar.data.model.map.SpriteLayer;
+import com.soyostar.data.model.map.Tile;
+import com.soyostar.data.model.map.TileLayer;
+import com.soyostar.data.model.map.TileSet;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -38,67 +41,70 @@ public class MapDao extends Dao<Map> {
                 dis = new DataInputStream(fis);
                 map.setIndex(dis.readInt());
                 map.name = dis.readUTF();
-                map.imageSetNum = dis.readInt();
-                map.imageSets = new ArrayList<ImageSet>();
-                ImageSet is = null;
-                for (int i = 0; i < map.imageSetNum; i++) {
-                    is = new ImageSet();
-                    is.id = dis.readInt();
-                    is.path = dis.readUTF();
-                    map.imageSets.add(is);
-                }
                 map.musicName = dis.readUTF();
                 map.rowNum = dis.readInt();
                 map.colNum = dis.readInt();
                 map.cellWidth = dis.readInt();
                 map.cellHeight = dis.readInt();
-                map.layerNum = dis.readInt();
+                map.tilesets = new ArrayList<TileSet>();
+                TileSet is = null;
+                for (int i = 0, tilesetNums = dis.readInt(); i < tilesetNums; i++) {
+                    is = new TileSet();
+                    is.setIndex(dis.readInt());
+                    is.path = dis.readUTF();
+                    map.tilesets.add(is);
+                }
                 map.layers = new ArrayList<Layer>();
                 Layer layer = null;
-                for (int i = 0; i < map.layerNum; i++) {
-                    layer = new Layer();
-                    layer.deepth = dis.readInt();
-                    layer.tileds = new Tiled[map.rowNum][map.colNum];
-                    for (int j = 0; j < map.rowNum; j++) {
-                        for (int k = 0; k < map.colNum; k++) {
-                            layer.tileds[j][k] = new Tiled();
-                            layer.tileds[j][k].imageSetId = dis.readInt();
-                            layer.tileds[j][k].tiledId = dis.readInt();
-                        }
+                for (int i = 0, layerNums = dis.readInt(); i < layerNums; i++) {
+                    int type = dis.readByte();
+                    switch (type) {
+                        case Layer.COLLIDELAYER:
+                            layer = new CollideLayer();
+                            layer.deepth = dis.readInt();
+                            ((CollideLayer) layer).collides = new boolean[map.rowNum][map.colNum];
+                            for (int j = 0; j < map.rowNum; j++) {
+                                for (int k = 0; k < map.colNum; k++) {
+                                    ((CollideLayer) layer).collides[j][k] = dis.readBoolean();
+                                }
+                            }
+                            break;
+                        case Layer.SPRITELAYER:
+                            layer = new SpriteLayer();
+                            layer.deepth = dis.readInt();
+                            ((SpriteLayer) layer).npcs = new Script[map.rowNum][map.colNum];
+                            for (int j = 0; j < map.rowNum; j++) {
+                                for (int k = 0; k < map.colNum; k++) {
+                                    ((SpriteLayer) layer).npcs[j][k] = new Script();
+                                    ((SpriteLayer) layer).npcs[j][k].type = dis.readByte();
+                                    ((SpriteLayer) layer).npcs[j][k].row = dis.readInt();
+                                    ((SpriteLayer) layer).npcs[j][k].col = dis.readInt();
+                                    ((SpriteLayer) layer).npcs[j][k].imgPath = dis.readUTF();
+                                    ((SpriteLayer) layer).npcs[j][k].face = dis.readByte();
+                                    ((SpriteLayer) layer).npcs[j][k].move = dis.readByte();
+                                    ((SpriteLayer) layer).npcs[j][k].speed = dis.readByte();
+                                    ((SpriteLayer) layer).npcs[j][k].codes = new ArrayList<String>();
+                                    int codeNums = dis.readInt();
+                                    for (int ij = 0; ij < codeNums; ij++) {
+                                        ((SpriteLayer) layer).npcs[j][k].codes.add(dis.readUTF());
+                                    }
+                                }
+                            }
+                            break;
+                        case Layer.TILELAYER:
+                            layer = new TileLayer();
+                            layer.deepth = dis.readInt();
+                            ((TileLayer) layer).tiles = new Tile[map.rowNum][map.colNum];
+                            for (int j = 0; j < map.rowNum; j++) {
+                                for (int k = 0; k < map.colNum; k++) {
+                                    ((TileLayer) layer).tiles[j][k] = new Tile();
+                                    ((TileLayer) layer).tiles[j][k].imageSetId = dis.readInt();
+                                    ((TileLayer) layer).tiles[j][k].tiledId = dis.readInt();
+                                }
+                            }
+                            break;
                     }
                     map.layers.add(layer);
-                }
-
-                map.way = new boolean[map.rowNum][map.colNum];
-                for (int j = 0; j < map.rowNum; j++) {
-                    for (int k = 0; k < map.colNum; k++) {
-                        map.way[j][k] = dis.readBoolean();
-                    }
-                }
-
-                map.scriptType = new byte[map.rowNum][map.colNum];
-                for (int j = 0; j < map.rowNum; j++) {
-                    for (int k = 0; k < map.colNum; k++) {
-                        map.scriptType[j][k] = dis.readByte();
-                    }
-                }
-                map.scriptNum = dis.readInt();
-                map.scripts = new ArrayList<Script>();
-                Script script = null;
-                for (int i = 0; i < map.scriptNum; i++) {
-                    script = new Script();
-                    script.type = dis.readByte();
-                    script.row = dis.readInt();
-                    script.col = dis.readInt();
-                    script.face = dis.readByte();
-                    script.moveRule = dis.readByte();
-                    script.moveSpeed = dis.readInt();
-                    script.commandNum = dis.readInt();
-                    script.commands = new String[script.commandNum];
-                    for (int j = 0; j < script.commands.length; j++) {
-                        script.commands[j] = dis.readUTF();
-                    }
-                    map.scripts.add(script);
                 }
                 saveModel(map);
                 dis.close();
@@ -125,51 +131,61 @@ public class MapDao extends Dao<Map> {
                 map = maps[ii];
                 dos.writeInt(map.getIndex());
                 dos.writeUTF(map.name);
-                dos.writeInt(map.imageSets.size());
-                for (int i = 0; i < map.imageSets.size(); i++) {
-                    dos.writeInt(map.imageSets.get(i).id);
-                    dos.writeUTF(map.imageSets.get(i).path);
-                }
                 dos.writeUTF(map.musicName);
                 dos.writeInt(map.rowNum);
                 dos.writeInt(map.colNum);
                 dos.writeInt(map.cellWidth);
                 dos.writeInt(map.cellHeight);
-                dos.writeInt(map.layers.size());
-                for (int i = 0; i < map.layers.size(); i++) {
-                    dos.writeInt(map.layers.get(i).deepth);
-                    for (int j = 0; j < map.rowNum; j++) {
-                        for (int k = 0; k < map.colNum; k++) {
-                            dos.writeInt(map.layers.get(i).tileds[j][k].imageSetId);
-                            dos.writeInt(map.layers.get(i).tileds[j][k].tiledId);
+                int tilesetNums = map.tilesets.size();
+                dos.writeInt(tilesetNums);
+                for (int i = 0; i < tilesetNums; i++) {
+                    dos.writeInt(map.tilesets.get(i).getIndex());
+                    dos.writeUTF(map.tilesets.get(i).path);
+                }
+                int layerNums = map.layers.size();
+                dos.writeInt(layerNums);
+                for (int i = 0; i < layerNums; i++) {
+                    if (map.layers.get(i) instanceof TileLayer) {
+                        dos.writeByte(Layer.TILELAYER);
+                        dos.writeInt(map.layers.get(i).deepth);
+                        for (int j = 0; j < map.rowNum; j++) {
+                            for (int k = 0; k < map.colNum; k++) {
+                                dos.writeInt(((TileLayer) map.layers.get(i)).tiles[j][k].imageSetId);
+                                dos.writeInt(((TileLayer) map.layers.get(i)).tiles[j][k].tiledId);
+                            }
+                        }
+                    }
+                    if (map.layers.get(i) instanceof CollideLayer) {
+                        dos.writeByte(Layer.COLLIDELAYER);
+                        dos.writeInt(map.layers.get(i).deepth);
+                        for (int j = 0; j < map.rowNum; j++) {
+                            for (int k = 0; k < map.colNum; k++) {
+                                dos.writeBoolean(((CollideLayer) map.layers.get(i)).collides[j][k]);
+                            }
+                        }
+                    }
+                    if (map.layers.get(i) instanceof SpriteLayer) {
+                        dos.writeByte(Layer.SPRITELAYER);
+                        dos.writeInt(map.layers.get(i).deepth);
+                        for (int j = 0; j < map.rowNum; j++) {
+                            for (int k = 0; k < map.colNum; k++) {
+                                dos.writeByte(((SpriteLayer) map.layers.get(i)).npcs[j][k].type);
+                                dos.writeInt(((SpriteLayer) map.layers.get(i)).npcs[j][k].row);
+                                dos.writeInt(((SpriteLayer) map.layers.get(i)).npcs[j][k].col);
+                                dos.writeUTF(((SpriteLayer) map.layers.get(i)).npcs[j][k].imgPath);
+                                dos.writeByte(((SpriteLayer) map.layers.get(i)).npcs[j][k].face);
+                                dos.writeByte(((SpriteLayer) map.layers.get(i)).npcs[j][k].move);
+                                dos.writeByte(((SpriteLayer) map.layers.get(i)).npcs[j][k].speed);
+                                int codeNums = ((SpriteLayer) map.layers.get(i)).npcs[j][k].codes.size();
+                                dos.writeInt(codeNums);
+                                for (int ij = 0; ij < codeNums; ij++) {
+                                    dos.writeUTF(((SpriteLayer) map.layers.get(i)).npcs[j][k].codes.get(ij));
+                                }
+                            }
                         }
                     }
                 }
 
-                for (int j = 0; j < map.rowNum; j++) {
-                    for (int k = 0; k < map.colNum; k++) {
-                        dos.writeBoolean(map.way[j][k]);
-                    }
-                }
-
-                for (int j = 0; j < map.rowNum; j++) {
-                    for (int k = 0; k < map.colNum; k++) {
-                        dos.writeByte(map.scriptType[j][k]);
-                    }
-                }
-                dos.writeInt(map.scripts.size());
-                for (int i = 0; i < map.scripts.size(); i++) {
-                    dos.writeByte(map.scripts.get(i).type);
-                    dos.writeInt(map.scripts.get(i).row);
-                    dos.writeInt(map.scripts.get(i).col);
-                    dos.writeByte(map.scripts.get(i).face);
-                    dos.writeByte(map.scripts.get(i).moveRule);
-                    dos.writeInt(map.scripts.get(i).moveSpeed);
-                    dos.writeInt(map.scripts.get(i).commandNum);
-                    for (int j = 0; j < map.scripts.get(i).commands.length; j++) {
-                        dos.writeUTF(map.scripts.get(i).commands[j]);
-                    }
-                }
                 dos.close();
                 fos.close();
                 f = null;
