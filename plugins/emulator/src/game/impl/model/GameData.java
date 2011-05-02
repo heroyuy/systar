@@ -156,10 +156,6 @@ public class GameData implements IModel {
         v = null;
     }
 
-    private GameData() {
-        super();
-    }
-
     public void buildItems() {
         items = new String[player.bag.getList(Bag.ITEM).length];
         for (int i = 0; i < items.length; i++) {
@@ -189,5 +185,6 @@ public class GameData implements IModel {
     }
 
     public void update() {
+        System.out.println(this.getClass().getName() + "自更新");
     }
 }
