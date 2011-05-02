@@ -52,6 +52,7 @@ public class PlayerDao extends Dao<Player> {
             player.row = dis.readInt();
             player.col = dis.readInt();
             player.face = dis.readInt();
+            player.setIndex(0);
             saveModel(player);
             dis.close();
             fis.close();
@@ -67,7 +68,11 @@ public class PlayerDao extends Dao<Player> {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
-        Player player = this.getModel(Player.class, 0);
+        Player[] players = this.getModels();
+        Player player = null;
+        if (players != null && players.length > 0) {
+            player = players[0];
+        }
         if (player == null) {
             return;
         }

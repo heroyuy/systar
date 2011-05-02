@@ -60,7 +60,11 @@ public class ConfigDao extends Dao<Config> {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
-        Config config = this.getModel(Config.class, 0);
+        Config[] configs = this.getModels();
+        Config config = null;
+        if (configs != null && configs.length > 0) {
+            config = configs[0];
+        }
         if (config == null) {
             return;
         }

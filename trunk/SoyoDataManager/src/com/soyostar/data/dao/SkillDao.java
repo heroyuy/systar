@@ -64,7 +64,7 @@ public class SkillDao extends Dao<Skill> {
             fos = new FileOutputStream(f);
             dos = new DataOutputStream(fos);
             dos.writeInt(size());
-            Skill[] skills = this.getModels(Skill.class);
+            Skill[] skills = this.getModels();
             Skill skill = null;
             for (int i = 0; i < size(); i++) {
                 skill = skills[i];
