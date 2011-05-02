@@ -1,7 +1,15 @@
 package com.soyostar.data.dao;
 
 import com.soyostar.data.model.Config;
+import com.soyostar.data.model.Enemy;
+import com.soyostar.data.model.EnemyTroop;
+import com.soyostar.data.model.Equip;
+import com.soyostar.data.model.Item;
 import com.soyostar.data.model.Model;
+import com.soyostar.data.model.Player;
+import com.soyostar.data.model.Skill;
+import com.soyostar.data.model.animation.Animation;
+import com.soyostar.data.model.map.Map;
 import com.soyostar.util.Clone;
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -64,16 +72,31 @@ public class ModelStore<M extends Model> {
      * @param model
      */
     public void saveModel(M model) {
+        M res = null;
         if (model instanceof Config) {
-            Config c = (Config) model;
-            System.out.println(c.getIndex() + c.about);
+            res = (M) new Config();
+        } else if (model instanceof Player) {
+            res = (M) new Player();
+        } else if (model instanceof Enemy) {
+            res = (M) new Enemy();
+        } else if (model instanceof EnemyTroop) {
+            res = (M) new EnemyTroop();
+        } else if (model instanceof Item) {
+            res = (M) new Item();
+        } else if (model instanceof Skill) {
+            res = (M) new Skill();
+        } else if (model instanceof Equip) {
+            res = (M) new Equip();
+        } else if (model instanceof Map) {
+            res = (M) new Map();
+        } else if (model instanceof Animation) {
+            res = (M) new Animation();
         }
-        Model m = Clone.clone(model);
-        if (m instanceof Config) {
-            Config c = (Config) m;
-            System.out.println(c.getIndex() + c.about);
+        if (res != null) {
+            Clone.clone(model, res);
+            res.setIndex(model.getIndex());
+            data.put(res.getIndex(), res);
         }
-        data.put(model.getIndex(), Clone.clone(model));
     }
 
     public void delModel(int index) {
