@@ -19,6 +19,6 @@ public class Map extends Model {
     public int colNum;                      //列数
     public int cellWidth;                   //单元格宽度
     public int cellHeight;                  //单元格高度
-    public ArrayList<Layer> layers = null;
-    public ArrayList<TileSet> tilesets = null;
+    public ArrayList<Layer> layers = new ArrayList<Layer>();
+    public ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 }
