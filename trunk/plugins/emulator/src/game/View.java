@@ -9,6 +9,7 @@ import emulator.EmulatorGraphics;
  */
 public interface View {
 
+
     /**
      * 初始化视图
      *
