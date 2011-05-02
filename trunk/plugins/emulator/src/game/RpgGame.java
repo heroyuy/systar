@@ -6,7 +6,6 @@ import engine.IGame;
 import engine.script.GameEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,12 +21,12 @@ import org.xml.sax.SAXException;
 
 public class RpgGame implements IGame {
 
-    private Map<Integer, IModel> models = null;
     private long startTime = 0;
     private boolean isDealingGameEvent = false;
     private String configFile = "rpg.xml";
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
+    private Map<Integer, IModel> models = null;
 
     public void startGameEvent() {
         isDealingGameEvent = true;
@@ -116,45 +115,46 @@ public class RpgGame implements IGame {
             System.out.println("controlList:" + controlList.getLength());
             for (int i = 0; i < controlList.getLength(); i++) {
                 Element control = (Element) controlList.item(i);
-                NodeList nl2 = control.getChildNodes();
-                System.out.println("nl2.getLength():" + nl2.getLength());
-                ControlNode cn = new ControlNode();
-                for (int j = 0; j < nl2.getLength(); j++) {
-                    Node node = nl2.item(j);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        if (node.getNodeName().equals("id")) {
-                            cn.id = Integer.parseInt(node.getFirstChild().getNodeValue());
-                            System.out.println("id:" + cn.id);
-                        } else if (node.getNodeName().equals("fullName")) {
-                            cn.fullName = node.getFirstChild().getNodeValue();
-                            cn.control = (AbControl) Class.forName(cn.fullName).newInstance();
-                            System.out.println("fullName:" + cn.fullName);
-                        } else if (node.getNodeName().equals("views")) {
-                            NodeList viewlList = ((Element) node).getElementsByTagName("view");
-                            System.out.println("viewlList:" + viewlList.getLength());
-                            for (int k = 0; k < viewlList.getLength(); k++) {
-                                Element view = (Element) viewlList.item(k);
-                                NodeList nl3 = view.getChildNodes();
-                                for(int l=0;l<nl3.getLength();l++){
-                                    Node node2 = nl3.item(l);
-                                   if(node2.getNodeType()==Node.ELEMENT_NODE){
-                                       if(node2.getNodeName().equals("id")){
-
-                                       }else if(node2.getNodeName().equals("fullName")){
-
-                                       }
-                                   }
+                NodeList controlChilds = control.getChildNodes();
+                System.out.println("controlChilds.getLength():" + controlChilds.getLength());
+                int controlId = -1;
+                String controlName = null;
+                Map<Integer, String> views = new HashMap<Integer, String>();
+                for (int j = 0; j < controlChilds.getLength(); j++) {
+                    Node controlChild = controlChilds.item(j);
+                    if (controlChild.getNodeType() == Node.ELEMENT_NODE) {
+                        if (controlChild.getNodeName().equals("id")) {
+                            controlId = Integer.parseInt(controlChild.getFirstChild().getNodeValue());
+                            System.out.println("controlId:" + controlId);
+                        } else if (controlChild.getNodeName().equals("fullName")) {
+                            controlName = controlChild.getFirstChild().getNodeValue();
+                            System.out.println("controlName:" + controlName);
+                        } else if (controlChild.getNodeName().equals("views")) {
+                            NodeList viewList = ((Element) controlChild).getElementsByTagName("view");
+                            System.out.println("viewlList:" + viewList.getLength());
+                            for (int k = 0; k < viewList.getLength(); k++) {
+                                Element view = (Element) viewList.item(k);
+                                NodeList viewChilds = view.getChildNodes();
+                                int viewId = -1;
+                                String viewName = null;
+                                for (int l = 0; l < viewChilds.getLength(); l++) {
+                                    Node viewChild = viewChilds.item(l);
+                                    if (viewChild.getNodeType() == Node.ELEMENT_NODE) {
+                                        if (viewChild.getNodeName().equals("id")) {
+                                            viewId = Integer.parseInt(viewChild.getFirstChild().getNodeValue());
+                                            System.out.println("viewId:" + viewId);
+                                        } else if (viewChild.getNodeName().equals("fullName")) {
+                                            viewName = viewChild.getFirstChild().getNodeValue();
+                                            System.out.println("viewName:" + viewName);
+                                        }
+                                        views.put(viewId, viewName);
+                                    }
                                 }
                             }
-                            String viewName = node.getFirstChild().getNodeValue();
-                            cn.views.add(viewName);
-                            View view = (View) Class.forName(viewName).newInstance();
-                            cn.control.addView(view);
-                            System.out.println("view:" + node.getFirstChild().getNodeValue());
                         }
                     }
-                    controls.put(cn.id, cn);
                 }
+                controls.put(controlId, new ControlNode(controlId, controlName, views));
             }
             curControlID = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
             System.out.println("curControlID:" + curControlID);
@@ -204,7 +204,7 @@ public class RpgGame implements IGame {
     private void setCurrentControl(String fullName) {
         boolean hasControl = false;
         for (ControlNode cd : controls.values()) {
-            if (cd.fullName.equals(fullName)) {
+            if (cd.name.equals(fullName)) {
                 curControlID = cd.id;
                 hasControl = true;
                 break;
@@ -221,9 +221,28 @@ public class RpgGame implements IGame {
 
     private class ControlNode {
 
+        public ControlNode(int id, String name, Map<Integer, String> views) {
+            try {
+                this.id = id;
+                this.name = name;
+                this.control = (AbControl) Class.forName(name).newInstance();
+                for (int viewId : views.keySet()) {
+                    this.control.addView(viewId, views.get(viewId));
+                }
+            } catch (InstantiationException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         public int id = -1;
-        public String fullName = null;
-        public ArrayList<String> views = new ArrayList<String>();
+        public String name = null;
         public AbControl control = null;
+    }
+
+    private class ModelNode {
+        
     }
 }

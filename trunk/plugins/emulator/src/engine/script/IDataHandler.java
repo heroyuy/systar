@@ -4,7 +4,7 @@ package engine.script;
  *
  * 数据处理接口
  */
-public interface DataHandlerInterface {
+public interface IDataHandler {
 
     /****************************************/
     // $VAR[0]
