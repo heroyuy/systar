@@ -55,4 +55,11 @@ public abstract class AbControl implements Control {
             view.release();
         }
     }
+
+    private class ViewNode {
+
+        public int id = -1;
+        public String name = null;
+        public View view = null;
+    }
 }

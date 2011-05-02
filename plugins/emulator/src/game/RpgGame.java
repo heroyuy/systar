@@ -111,10 +111,11 @@ public class RpgGame implements IGame {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(f);
             Element root = doc.getDocumentElement();
-            NodeList nl = root.getElementsByTagName("control");
-            System.out.println("nl:" + nl);
-            for (int i = 0; i < nl.getLength(); i++) {
-                Element control = (Element) nl.item(i);
+            NodeList controlList = root.getElementsByTagName("controls");
+            controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
+            System.out.println("controlList:" + controlList.getLength());
+            for (int i = 0; i < controlList.getLength(); i++) {
+                Element control = (Element) controlList.item(i);
                 NodeList nl2 = control.getChildNodes();
                 System.out.println("nl2.getLength():" + nl2.getLength());
                 ControlNode cn = new ControlNode();
@@ -126,12 +127,28 @@ public class RpgGame implements IGame {
                             System.out.println("id:" + cn.id);
                         } else if (node.getNodeName().equals("fullName")) {
                             cn.fullName = node.getFirstChild().getNodeValue();
-                            cn.control=(AbControl) Class.forName(cn.fullName).newInstance();
+                            cn.control = (AbControl) Class.forName(cn.fullName).newInstance();
                             System.out.println("fullName:" + cn.fullName);
-                        } else if (node.getNodeName().equals("view")) {
-                            String viewName=node.getFirstChild().getNodeValue();
+                        } else if (node.getNodeName().equals("views")) {
+                            NodeList viewlList = ((Element) node).getElementsByTagName("view");
+                            System.out.println("viewlList:" + viewlList.getLength());
+                            for (int k = 0; k < viewlList.getLength(); k++) {
+                                Element view = (Element) viewlList.item(k);
+                                NodeList nl3 = view.getChildNodes();
+                                for(int l=0;l<nl3.getLength();l++){
+                                    Node node2 = nl3.item(l);
+                                   if(node2.getNodeType()==Node.ELEMENT_NODE){
+                                       if(node2.getNodeName().equals("id")){
+
+                                       }else if(node2.getNodeName().equals("fullName")){
+
+                                       }
+                                   }
+                                }
+                            }
+                            String viewName = node.getFirstChild().getNodeValue();
                             cn.views.add(viewName);
-                            View view =(View) Class.forName(viewName).newInstance();
+                            View view = (View) Class.forName(viewName).newInstance();
                             cn.control.addView(view);
                             System.out.println("view:" + node.getFirstChild().getNodeValue());
                         }
@@ -144,9 +161,9 @@ public class RpgGame implements IGame {
             NodeList nl3 = root.getElementsByTagName("model");
             System.out.println("nl3.getLength():" + nl3.getLength());
             for (int i = 0; i < nl3.getLength(); i++) {
-                String modelName=nl3.item(i).getFirstChild().getNodeValue();
-                IModel model=(IModel) Class.forName(modelName).newInstance();
-                
+                String modelName = nl3.item(i).getFirstChild().getNodeValue();
+                IModel model = (IModel) Class.forName(modelName).newInstance();
+
                 System.out.println("model:" + modelName);
             }
             String dataHandler = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
