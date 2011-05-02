@@ -26,7 +26,7 @@ public class RpgGame implements IGame {
     private String configFile = "rpg.xml";
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
-    private Map<Integer, IModel> models = null;
+    private Map<Integer, ModelNode> models = null;
 
     public void startGameEvent() {
         isDealingGameEvent = true;
@@ -41,7 +41,7 @@ public class RpgGame implements IGame {
     }
 
     public RpgGame() {
-        models = new HashMap<Integer, IModel>();
+        models = new HashMap<Integer, ModelNode>();
         controls = new HashMap<Integer, ControlNode>();
     }
 
@@ -57,8 +57,8 @@ public class RpgGame implements IGame {
      */
     public void update() {
         System.out.println("自动更新Model");
-        for (IModel model : models.values()) {
-            model.update();
+        for (ModelNode mn : models.values()) {
+            mn.model.update();
         }
         getCurrentControl().updateModel();
     }
@@ -110,6 +110,7 @@ public class RpgGame implements IGame {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(f);
             Element root = doc.getDocumentElement();
+            //配置控制器
             NodeList controlList = root.getElementsByTagName("controls");
             controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
             System.out.println("controlList:" + controlList.getLength());
@@ -130,6 +131,7 @@ public class RpgGame implements IGame {
                             controlName = controlChild.getFirstChild().getNodeValue();
                             System.out.println("controlName:" + controlName);
                         } else if (controlChild.getNodeName().equals("views")) {
+                            //配置视图
                             NodeList viewList = ((Element) controlChild).getElementsByTagName("view");
                             System.out.println("viewlList:" + viewList.getLength());
                             for (int k = 0; k < viewList.getLength(); k++) {
@@ -158,23 +160,31 @@ public class RpgGame implements IGame {
             }
             curControlID = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
             System.out.println("curControlID:" + curControlID);
-            NodeList nl3 = root.getElementsByTagName("model");
-            System.out.println("nl3.getLength():" + nl3.getLength());
-            for (int i = 0; i < nl3.getLength(); i++) {
-                String modelName = nl3.item(i).getFirstChild().getNodeValue();
-                IModel model = (IModel) Class.forName(modelName).newInstance();
-
-                System.out.println("model:" + modelName);
+            //配置模型
+            NodeList modelList = root.getElementsByTagName("models");
+            modelList = ((Element) modelList.item(0)).getElementsByTagName("model");
+            System.out.println("modelList.getLength():" + modelList.getLength());
+            for (int i = 0; i < modelList.getLength(); i++) {
+                Element model = (Element) modelList.item(i);
+                NodeList modelChilds = model.getChildNodes();
+                System.out.println("modelChilds.getLength():" + modelChilds.getLength());
+                int modelId = -1;
+                String modelName = null;
+                for (int j = 0; j < modelChilds.getLength(); j++) {
+                    Node modelChild = modelChilds.item(j);
+                    if (modelChild.getNodeType() == Node.ELEMENT_NODE) {
+                        if (modelChild.getNodeName().equals("id")) {
+                            modelId = Integer.parseInt(modelChild.getFirstChild().getNodeValue());
+                            System.out.println("modelId:" + modelId);
+                        } else if (modelChild.getNodeName().equals("fullName")) {
+                            modelName = modelChild.getFirstChild().getNodeValue();
+                            System.out.println("modelName:" + modelName);
+                        }
+                    }
+                }
+                models.put(modelId, new ModelNode(modelId, modelName));
             }
-            String dataHandler = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
-            System.out.println("dataHandler:" + dataHandler);
 
-        } catch (InstantiationException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -243,6 +253,22 @@ public class RpgGame implements IGame {
     }
 
     private class ModelNode {
-        
+
+        public ModelNode(int id, String name) {
+            try {
+                this.id = id;
+                this.name = name;
+                this.model = (IModel) Class.forName(name).newInstance();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        public int id = -1;
+        public String name = null;
+        public IModel model = null;
     }
 }

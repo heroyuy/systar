@@ -29,7 +29,7 @@
     <models>
         <model>
             <id>0</id>
-            <fullName> game.impl.model.GameData</fullName>
+            <fullName>game.impl.model.GameData</fullName>
         </model>
     </models>
     <dataHandlers>
