@@ -96,7 +96,7 @@ public class AnimationDao extends Dao<Animation> {
             dos = new DataOutputStream(fos);
 
             dos.writeInt(size());
-            Animation[] animations = this.getModels(Animation.class);
+            Animation[] animations = this.getModels();
             Animation ani = null;
             for (int i = 0; i < size(); i++) {
                 ani = animations[i];

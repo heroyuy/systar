@@ -72,8 +72,8 @@ public class EnemyDao extends Dao<Enemy> {
             dos = new DataOutputStream(fos);
 
             dos.writeInt(size());
-            Enemy[] enemys=this.getModels(Enemy.class);
-            Enemy enemy =null;
+            Enemy[] enemys = this.getModels();
+            Enemy enemy = null;
             for (int i = 0; i < size(); i++) {
                 enemy = enemys[i];
                 dos.writeInt(enemy.getIndex());

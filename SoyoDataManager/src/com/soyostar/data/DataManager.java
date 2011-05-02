@@ -33,12 +33,12 @@ public class DataManager {
     //***************************************************************************************
     //Config
     //***************************************************************************************
-    public <T extends Config> T getConfig(Class<T> c) {
-        return ((ConfigDao) daos.get("config")).getModel(c, 0);
+    public Config getConfig() {
+        return ((ConfigDao) daos.get("config")).getModel(0);
     }
 
-    public <T extends Config> void saveConfig(T t) {
-        ((ConfigDao) daos.get("config")).saveModel(t);
+    public void saveConfig(Config config) {
+        ((ConfigDao) daos.get("config")).saveModel(config);
     }
 
     public void delConfig() {
@@ -48,12 +48,12 @@ public class DataManager {
     //***************************************************************************************
     //Player
     //***************************************************************************************
-    public <T extends Player> T getPlayer(Class<T> c) {
-        return ((PlayerDao) daos.get("player")).getModel(c, 0);
+    public Player getPlayer() {
+        return ((PlayerDao) daos.get("player")).getModel(0);
     }
 
-    public <T extends Player> void savePlayer(T t) {
-        ((PlayerDao) daos.get("player")).saveModel(t);
+    public void savePlayer(Player player) {
+        ((PlayerDao) daos.get("player")).saveModel(player);
     }
 
     public void delPlayer() {
@@ -63,20 +63,20 @@ public class DataManager {
     //Animation
     //***************************************************************************************
 
-    public <T extends Animation> T getAnimation(Class<T> c, int index) {
-        return ((AnimationDao) daos.get("animation")).getModel(c, index);
+    public Animation getAnimation(int index) {
+        return ((AnimationDao) daos.get("animation")).getModel(index);
     }
 
-    public <T extends Animation> T[] getAnimationList(Class<T> c) {
-        return ((AnimationDao) daos.get("animation")).getModels(c);
+    public Animation[] getAnimationList() {
+        return ((AnimationDao) daos.get("animation")).getModels();
     }
 
-    public <T extends Animation> void saveAnimation(T t) {
-        ((AnimationDao) daos.get("animation")).saveModel(t);
+    public void saveAnimation(Animation animation) {
+        ((AnimationDao) daos.get("animation")).saveModel(animation);
     }
 
-    public <T extends Animation> T newAnimation(Class<T> c) {
-        return ((AnimationDao) daos.get("animation")).newModel(c);
+    public int allocateAnimationIndex() {
+        return ((AnimationDao) daos.get("animation")).allocateIndex();
     }
 
     public void delAnimation(int index) {
@@ -89,192 +89,6 @@ public class DataManager {
 
     public int getAnimationSize() {
         return ((AnimationDao) daos.get("animation")).size();
-    }
-
-    //***************************************************************************************
-    //Enemy
-    //***************************************************************************************
-    public <T extends Enemy> T getEnemy(Class<T> c, int index) {
-        return ((EnemyDao) daos.get("enemy")).getModel(c, index);
-    }
-
-    public <T extends Enemy> T[] getEnemyList(Class<T> c) {
-        return ((EnemyDao) daos.get("enemy")).getModels(c);
-    }
-
-    public <T extends Enemy> void saveEnemy(T t) {
-        ((EnemyDao) daos.get("enemy")).saveModel(t);
-    }
-
-    public <T extends Enemy> T newEnemy(Class<T> c) {
-        return ((EnemyDao) daos.get("enemy")).newModel(c);
-    }
-
-    public void delEnemy(int index) {
-        ((EnemyDao) daos.get("enemy")).delModel(index);
-    }
-
-    public void delAllEnemy() {
-        ((EnemyDao) daos.get("enemy")).delAllModel();
-    }
-
-    public int getEnemySize() {
-        return ((EnemyDao) daos.get("enemy")).size();
-    }
-    //***************************************************************************************
-    //EnemyTroop
-    //***************************************************************************************
-
-    public <T extends EnemyTroop> T getEnemyTroop(Class<T> c, int index) {
-        return ((EnemyTroopDao) daos.get("enemyTroop")).getModel(c, index);
-    }
-
-    public <T extends EnemyTroop> T[] getEnemyTroopList(Class<T> c) {
-        return ((EnemyTroopDao) daos.get("enemyTroop")).getModels(c);
-    }
-
-    public <T extends EnemyTroop> void saveEnemyTroop(T t) {
-        ((EnemyTroopDao) daos.get("enemyTroop")).saveModel(t);
-    }
-
-    public <T extends EnemyTroop> T newEnemyTroop(Class<T> c) {
-        return ((EnemyTroopDao) daos.get("enemyTroop")).newModel(c);
-    }
-
-    public void delEnemyTroop(int index) {
-        ((EnemyTroopDao) daos.get("enemyTroop")).delModel(index);
-    }
-
-    public void delAllEnemyTroop() {
-        ((EnemyTroopDao) daos.get("enemyTroop")).delAllModel();
-    }
-
-    public int getEnemyTroopSize() {
-        return ((EnemyTroopDao) daos.get("enemyTroop")).size();
-    } 
-    //***************************************************************************************
-    //Equip
-    //***************************************************************************************
-
-    public <T extends Equip> T getEquip(Class<T> c, int index) {
-        return ((EquipDao) daos.get("equip")).getModel(c, index);
-    }
-
-    public <T extends Equip> T[] getEquipList(Class<T> c) {
-        return ((EquipDao) daos.get("equip")).getModels(c);
-    }
-
-    public <T extends Equip> void saveEquip(T t) {
-        ((EquipDao) daos.get("equip")).saveModel(t);
-    }
-
-    public <T extends Equip> T newEquip(Class<T> c) {
-        return ((EquipDao) daos.get("equip")).newModel(c);
-    }
-
-    public void delEquip(int index) {
-        ((EquipDao) daos.get("equip")).delModel(index);
-    }
-
-    public void delAllEquip() {
-        ((EquipDao) daos.get("equip")).delAllModel();
-    }
-
-    public int getEquipSize() {
-        return ((EquipDao) daos.get("equip")).size();
-    } 
-    //***************************************************************************************
-    //Item
-    //***************************************************************************************
-
-    public <T extends Item> T getItem(Class<T> c, int index) {
-        return ((ItemDao) daos.get("item")).getModel(c, index);
-    }
-
-    public <T extends Item> T[] getItemList(Class<T> c) {
-        return ((ItemDao) daos.get("item")).getModels(c);
-    }
-
-    public <T extends Item> void saveItem(T t) {
-        ((ItemDao) daos.get("item")).saveModel(t);
-    }
-
-    public <T extends Item> T newItem(Class<T> c) {
-        return ((ItemDao) daos.get("item")).newModel(c);
-    }
-
-    public void delItem(int index) {
-        ((ItemDao) daos.get("item")).delModel(index);
-    }
-
-    public void delAllItem() {
-        ((ItemDao) daos.get("item")).delAllModel();
-    }
-
-    public int getItemSize() {
-        return ((ItemDao) daos.get("item")).size();
-    } 
-    //***************************************************************************************
-    //Skill
-    //***************************************************************************************
-
-    public <T extends Skill> T getSkill(Class<T> c, int index) {
-        return ((SkillDao) daos.get("skill")).getModel(c, index);
-    }
-
-    public <T extends Skill> T[] getSkillList(Class<T> c) {
-        return ((SkillDao) daos.get("skill")).getModels(c);
-    }
-
-    public <T extends Skill> void saveSkill(T t) {
-        ((SkillDao) daos.get("skill")).saveModel(t);
-    }
-
-    public <T extends Skill> T newSkill(Class<T> c) {
-        return ((SkillDao) daos.get("skill")).newModel(c);
-    }
-
-    public void delSkill(int index) {
-        ((SkillDao) daos.get("skill")).delModel(index);
-    }
-
-    public void delAllSkill() {
-        ((SkillDao) daos.get("skill")).delAllModel();
-    }
-
-    public int getSkillSize() {
-        return ((SkillDao) daos.get("skill")).size();
-    }
-    //***************************************************************************************
-    //Map
-    //***************************************************************************************
-
-    public <T extends Map> T getMap(Class<T> c, int index) {
-        return ((MapDao) daos.get("map")).getModel(c, index);
-    }
-
-    public <T extends Map> T[] getMapList(Class<T> c) {
-        return ((MapDao) daos.get("map")).getModels(c);
-    }
-
-    public <T extends Map> void saveMap(T t) {
-        ((MapDao) daos.get("map")).saveModel(t);
-    }
-
-    public <T extends Map> T newMap(Class<T> c) {
-        return ((MapDao) daos.get("map")).newModel(c);
-    }
-
-    public void delMap(int index) {
-        ((MapDao) daos.get("map")).delModel(index);
-    }
-
-    public void delAllMap() {
-        ((MapDao) daos.get("map")).delAllModel();
-    }
-
-    public int getMapSize() {
-        return ((MapDao) daos.get("map")).size();
     }
     private static DataManager instance = null;
 
