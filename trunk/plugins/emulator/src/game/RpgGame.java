@@ -4,6 +4,7 @@ import emulator.EmulatorGraphics;
 import emulator.MotionEvent;
 import engine.IGame;
 import engine.script.GameEvent;
+import engine.script.IDataHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ public class RpgGame implements IGame {
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
     private Map<Integer, ModelNode> models = null;
+    private Map<Integer, DataHandlerNode> dataHandlers = null;
 
     public void startGameEvent() {
         isDealingGameEvent = true;
@@ -43,6 +45,7 @@ public class RpgGame implements IGame {
     public RpgGame() {
         models = new HashMap<Integer, ModelNode>();
         controls = new HashMap<Integer, ControlNode>();
+        dataHandlers = new HashMap<Integer, DataHandlerNode>();
     }
 
     public void start() {
@@ -110,6 +113,7 @@ public class RpgGame implements IGame {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(f);
             Element root = doc.getDocumentElement();
+            
             //配置控制器
             NodeList controlList = root.getElementsByTagName("controls");
             controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
@@ -131,6 +135,7 @@ public class RpgGame implements IGame {
                             controlName = controlChild.getFirstChild().getNodeValue();
                             System.out.println("controlName:" + controlName);
                         } else if (controlChild.getNodeName().equals("views")) {
+
                             //配置视图
                             NodeList viewList = ((Element) controlChild).getElementsByTagName("view");
                             System.out.println("viewlList:" + viewList.getLength());
@@ -160,6 +165,7 @@ public class RpgGame implements IGame {
             }
             curControlID = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
             System.out.println("curControlID:" + curControlID);
+
             //配置模型
             NodeList modelList = root.getElementsByTagName("models");
             modelList = ((Element) modelList.item(0)).getElementsByTagName("model");
@@ -183,6 +189,31 @@ public class RpgGame implements IGame {
                     }
                 }
                 models.put(modelId, new ModelNode(modelId, modelName));
+            }
+
+            //配置数据处理器
+            NodeList dataHandlerList = root.getElementsByTagName("dataHandlers");
+            dataHandlerList = ((Element) dataHandlerList.item(0)).getElementsByTagName("dataHandler");
+            System.out.println("dataHandlerList.getLength():" + dataHandlerList.getLength());
+            for (int i = 0; i < dataHandlerList.getLength(); i++) {
+                Element model = (Element) dataHandlerList.item(i);
+                NodeList dataHandlerChilds = model.getChildNodes();
+                System.out.println("dataHandlerChilds.getLength():" + dataHandlerChilds.getLength());
+                int dataHandlerId = -1;
+                String dataHandlerName = null;
+                for (int j = 0; j < dataHandlerChilds.getLength(); j++) {
+                    Node dataHandlerChild = dataHandlerChilds.item(j);
+                    if (dataHandlerChild.getNodeType() == Node.ELEMENT_NODE) {
+                        if (dataHandlerChild.getNodeName().equals("id")) {
+                            dataHandlerId = Integer.parseInt(dataHandlerChild.getFirstChild().getNodeValue());
+                            System.out.println("dataHandlerId:" + dataHandlerId);
+                        } else if (dataHandlerChild.getNodeName().equals("fullName")) {
+                            dataHandlerName = dataHandlerChild.getFirstChild().getNodeValue();
+                            System.out.println("dataHandlerName:" + dataHandlerName);
+                        }
+                    }
+                }
+                dataHandlers.put(dataHandlerId, new DataHandlerNode(dataHandlerId, dataHandlerName));
             }
 
         } catch (SAXException ex) {
@@ -270,5 +301,25 @@ public class RpgGame implements IGame {
         public int id = -1;
         public String name = null;
         public IModel model = null;
+    }
+
+    private class DataHandlerNode {
+
+        public DataHandlerNode(int id, String name) {
+            try {
+                this.id = id;
+                this.name = name;
+                this.dataHandler = (IDataHandler) Class.forName(name).newInstance();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        public int id = -1;
+        public String name = null;
+        public IDataHandler dataHandler = null;
     }
 }
