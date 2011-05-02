@@ -32,10 +32,5 @@
             <fullName>game.impl.model.GameData</fullName>
         </model>
     </models>
-    <dataHandlers>
-        <dataHandler>
-            <id>0</id>
-            <fullName>game.impl.DataHandler</fullName>
-        </dataHandler>
-    </dataHandlers>
+    <dataHandler>game.impl.DataHandler</dataHandler>
 </rpg>

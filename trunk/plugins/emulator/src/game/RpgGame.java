@@ -5,6 +5,7 @@ import emulator.MotionEvent;
 import engine.IGame;
 import engine.script.GameEvent;
 import engine.script.IDataHandler;
+import engine.script.ScriptEngine;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,7 +29,6 @@ public class RpgGame implements IGame {
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
     private Map<Integer, ModelNode> models = null;
-    private Map<Integer, DataHandlerNode> dataHandlers = null;
 
     public void startGameEvent() {
         isDealingGameEvent = true;
@@ -45,7 +45,6 @@ public class RpgGame implements IGame {
     public RpgGame() {
         models = new HashMap<Integer, ModelNode>();
         controls = new HashMap<Integer, ControlNode>();
-        dataHandlers = new HashMap<Integer, DataHandlerNode>();
     }
 
     public void start() {
@@ -89,16 +88,6 @@ public class RpgGame implements IGame {
         getCurrentControl().updateView(g);
     }
 
-    public void setCurControl(int index) {
-        setCurrentControl(index);
-
-    }
-
-    public void setCurControl(String fullName) {
-        setCurrentControl(fullName);
-
-    }
-
     /**
      * 根据配置文件初始化游戏
      * 1、加载所有Control
@@ -113,7 +102,7 @@ public class RpgGame implements IGame {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(f);
             Element root = doc.getDocumentElement();
-            
+            //------------------------------------开始------------------------------------
             //配置控制器
             NodeList controlList = root.getElementsByTagName("controls");
             controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
@@ -190,32 +179,17 @@ public class RpgGame implements IGame {
                 }
                 models.put(modelId, new ModelNode(modelId, modelName));
             }
-
             //配置数据处理器
-            NodeList dataHandlerList = root.getElementsByTagName("dataHandlers");
-            dataHandlerList = ((Element) dataHandlerList.item(0)).getElementsByTagName("dataHandler");
-            System.out.println("dataHandlerList.getLength():" + dataHandlerList.getLength());
-            for (int i = 0; i < dataHandlerList.getLength(); i++) {
-                Element model = (Element) dataHandlerList.item(i);
-                NodeList dataHandlerChilds = model.getChildNodes();
-                System.out.println("dataHandlerChilds.getLength():" + dataHandlerChilds.getLength());
-                int dataHandlerId = -1;
-                String dataHandlerName = null;
-                for (int j = 0; j < dataHandlerChilds.getLength(); j++) {
-                    Node dataHandlerChild = dataHandlerChilds.item(j);
-                    if (dataHandlerChild.getNodeType() == Node.ELEMENT_NODE) {
-                        if (dataHandlerChild.getNodeName().equals("id")) {
-                            dataHandlerId = Integer.parseInt(dataHandlerChild.getFirstChild().getNodeValue());
-                            System.out.println("dataHandlerId:" + dataHandlerId);
-                        } else if (dataHandlerChild.getNodeName().equals("fullName")) {
-                            dataHandlerName = dataHandlerChild.getFirstChild().getNodeValue();
-                            System.out.println("dataHandlerName:" + dataHandlerName);
-                        }
-                    }
-                }
-                dataHandlers.put(dataHandlerId, new DataHandlerNode(dataHandlerId, dataHandlerName));
-            }
-
+            String dataHandlerName = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
+            IDataHandler dataHandler = (IDataHandler) Class.forName(dataHandlerName).newInstance();
+            ScriptEngine.getInstance().setDataHandler(dataHandler);
+            //------------------------------------结束------------------------------------
+        } catch (InstantiationException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -226,11 +200,15 @@ public class RpgGame implements IGame {
 
     }
 
+    public IModel getModel(int id) {
+        return models.get(id).model;
+    }
+
     private Control getCurrentControl() {
         return controls.get(curControlID).control;
     }
 
-    private void setCurrentControl(int index) {
+    public void setCurrentControl(int index) {
         if (controls.containsKey(index)) {
             curControlID = index;
         } else {
@@ -242,7 +220,7 @@ public class RpgGame implements IGame {
         }
     }
 
-    private void setCurrentControl(String fullName) {
+    public void setCurrentControl(String fullName) {
         boolean hasControl = false;
         for (ControlNode cd : controls.values()) {
             if (cd.name.equals(fullName)) {
@@ -301,25 +279,5 @@ public class RpgGame implements IGame {
         public int id = -1;
         public String name = null;
         public IModel model = null;
-    }
-
-    private class DataHandlerNode {
-
-        public DataHandlerNode(int id, String name) {
-            try {
-                this.id = id;
-                this.name = name;
-                this.dataHandler = (IDataHandler) Class.forName(name).newInstance();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        public int id = -1;
-        public String name = null;
-        public IDataHandler dataHandler = null;
     }
 }
