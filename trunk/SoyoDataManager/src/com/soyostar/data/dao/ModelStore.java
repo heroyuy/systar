@@ -59,6 +59,14 @@ public class ModelStore<M extends Model> {
      * @return
      */
     public int allocateIndex() {
+        int max = getMaxIndex();
+        if (max >= availableIndex) {
+            availableIndex = max + 1;
+        }
+        return availableIndex++;
+    }
+
+    public int getMaxIndex() {
         int max = -1;
         Iterator<M> it = data.values().iterator();
         while (it.hasNext()) {
@@ -67,10 +75,7 @@ public class ModelStore<M extends Model> {
                 max = m.getIndex();
             }
         }
-        if (max >= availableIndex) {
-            availableIndex = max + 1;
-        }
-        return availableIndex++;
+        return max;
     }
 
     /**

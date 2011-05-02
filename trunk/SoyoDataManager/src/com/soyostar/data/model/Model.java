@@ -10,6 +10,15 @@ import java.util.logging.Logger;
  */
 public class Model implements Serializable {
 
+    public static final int CONFIG = 0;
+    public static final int PLAYER = 1;
+    public static final int ENEMY = 2;
+    public static final int ENEMYTROOP = 3;
+    public static final int EQUIP = 4;
+    public static final int ITEM = 5;
+    public static final int SKILL = 6;
+    public static final int MAP = 7;
+    public static final int ANIMATION = 8;
     private int index = -1;
 
     public final int getIndex() {
