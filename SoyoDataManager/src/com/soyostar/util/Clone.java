@@ -70,7 +70,7 @@ public class Clone {
                         f1[i].set(t2, value);
                     } else {
                         System.out.println("对象：" + value.getClass().getName());
-                        f1[i].set(t2, Clone.clone((Serializable) value));
+                        clone(value,f1[i].get(t2));
                     }
                 } catch (IllegalArgumentException ex) {
                     ex.printStackTrace();
