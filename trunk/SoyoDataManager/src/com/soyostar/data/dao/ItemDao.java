@@ -53,8 +53,7 @@ public class ItemDao extends Dao<Item> {
             fis.close();
             f = null;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("item.gat readError!");
+            System.out.println("没有可加载的Item");
         }
     }
 

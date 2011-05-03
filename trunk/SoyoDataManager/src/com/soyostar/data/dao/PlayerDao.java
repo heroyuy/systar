@@ -110,8 +110,7 @@ public class PlayerDao extends Dao<Player> {
             fos.close();
             f = null;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("找不到player.gat文件");
+            System.out.println("没有可加载的Player");
         }
     }
 //        //单元测试

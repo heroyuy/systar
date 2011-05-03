@@ -49,8 +49,7 @@ public class EquipDao extends Dao<Equip> {
             fis.close();
             f = null;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("equip.gat readError!");
+            System.out.println("没有可加载的Equip");
         }
     }
 

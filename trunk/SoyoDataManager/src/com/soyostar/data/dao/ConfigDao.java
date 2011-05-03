@@ -51,7 +51,7 @@ public class ConfigDao extends Dao<Config> {
             fis.close();
             f = null;
         } catch (IOException e) {
-            System.out.println("system.gat读取失败");
+            System.out.println("没有可加载的Config");
         }
     }
 

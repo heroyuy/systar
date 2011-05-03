@@ -82,6 +82,7 @@ public class AnimationDao extends Dao<Animation> {
                 saveModel(ani);
             }
         } catch (IOException e) {
+            System.out.println("没有可加载的Animation");
         }
     }
 

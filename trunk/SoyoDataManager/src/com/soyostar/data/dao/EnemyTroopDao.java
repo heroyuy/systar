@@ -47,8 +47,7 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             fis.close();
             f = null;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("enemytroop.gat readError!");
+            System.out.println("没有可加载的EnemyTroop");
         }
     }
 

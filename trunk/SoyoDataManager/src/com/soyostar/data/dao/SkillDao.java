@@ -49,8 +49,7 @@ public class SkillDao extends Dao<Skill> {
             fis.close();
             f = null;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("skill.gat readError!");
+            System.out.println("没有可加载的Skill");
         }
     }
 
