@@ -131,7 +131,6 @@ public class MapDao extends Dao<Map> {
                 map = maps[ii];
                 fos = new FileOutputStream(DataManager.getInstance().getPath() + "/data/map/map" + map.getIndex() + ".gat");
                 dos = new DataOutputStream(fos);
-
                 dos.writeInt(map.getIndex());
                 dos.writeUTF(map.name);
                 dos.writeUTF(map.musicName);

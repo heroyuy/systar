@@ -108,12 +108,14 @@ public class DataManager {
         }
     }
 
-    public void save() {
+    public boolean save() {
         Iterator i = daos.values().iterator();
+        boolean res = true;
         while (i.hasNext()) {
             Dao dao = (Dao) i.next();
-            dao.save();
+            res = res && dao.save();
         }
+        return res;
     }
     private String path = "D:/WorkSpace/netbeans/SoyoDataManager/res";
 
