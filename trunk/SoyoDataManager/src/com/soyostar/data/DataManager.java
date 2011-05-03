@@ -10,7 +10,6 @@ import com.soyostar.data.dao.ItemDao;
 import com.soyostar.data.dao.MapDao;
 import com.soyostar.data.dao.PlayerDao;
 import com.soyostar.data.dao.SkillDao;
-import com.soyostar.data.model.animation.Animation;
 import com.soyostar.data.model.Config;
 import com.soyostar.data.model.Enemy;
 import com.soyostar.data.model.EnemyTroop;
@@ -19,6 +18,7 @@ import com.soyostar.data.model.Item;
 import com.soyostar.data.model.Model;
 import com.soyostar.data.model.Player;
 import com.soyostar.data.model.Skill;
+import com.soyostar.data.model.animation.Animation;
 import com.soyostar.data.model.map.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,13 +30,24 @@ import java.util.Iterator;
 public class DataManager {
 
     private HashMap<Integer, Dao> daos = null;
+    private Class[] modelClass = {
+        Config.class,
+        Player.class,
+        Enemy.class,
+        EnemyTroop.class,
+        Equip.class,
+        Item.class,
+        Skill.class,
+        Map.class,
+        Animation.class
+    };
 
     public Model getModel(int type, int index) {
         return daos.get(type).getModel(index);
     }
 
     public Model[] getModels(int type) {
-        return daos.get(type).getModels();
+        return daos.get(type).getModels(modelClass[type]);
     }
 
     public void saveModel(int type, Model model) {
@@ -75,7 +86,7 @@ public class DataManager {
         daos = new HashMap<Integer, Dao>();
         daos.put(Model.CONFIG, new ConfigDao());
         daos.put(Model.PLAYER, new PlayerDao());
-        daos.put(Model.PLAYER, new MapDao());
+        daos.put(Model.MAP, new MapDao());
         daos.put(Model.SKILL, new SkillDao());
         daos.put(Model.ITEM, new ItemDao());
         daos.put(Model.EQUIP, new EquipDao());

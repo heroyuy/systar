@@ -68,7 +68,7 @@ public class PlayerDao extends Dao<Player> {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
-        Player[] players = this.getModels();
+        Player[] players = this.getModels(Player.class);
         Player player = null;
         if (players != null && players.length > 0) {
             player = players[0];

@@ -5,7 +5,7 @@ package com.soyostar.data.model;
  * @author wp_g4
  * 测试通过
  */
-public final class Player extends Model {
+public  class Player extends Model {
 
     public String name;//名称
     public String intro;//介绍
