@@ -62,7 +62,7 @@ public class PlayerDao extends Dao<Player> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -73,7 +73,7 @@ public class PlayerDao extends Dao<Player> {
             player = players[0];
         }
         if (player == null) {
-            return;
+            return true;
         }
         try {
             f = new File(DataManager.getInstance().getPath() + "/data/player.gat");
@@ -108,7 +108,9 @@ public class PlayerDao extends Dao<Player> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
+            return false;
         }
     }
 //        //单元测试

@@ -55,7 +55,7 @@ public class ConfigDao extends Dao<Config> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -66,7 +66,7 @@ public class ConfigDao extends Dao<Config> {
             config = configs[0];
         }
         if (config == null) {
-            return;
+            return true;
         }
         try {
             f = new File(DataManager.getInstance().getPath() + "/data/system.gat");
@@ -93,8 +93,10 @@ public class ConfigDao extends Dao<Config> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
             System.out.println("system.gat写入失败");
+            return false;
         }
     }
 //    //单元测试

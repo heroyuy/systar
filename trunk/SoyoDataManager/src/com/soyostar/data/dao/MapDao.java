@@ -121,7 +121,7 @@ public class MapDao extends Dao<Map> {
         }
     }
 
-    public void save() {
+    public boolean save() {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
@@ -194,7 +194,9 @@ public class MapDao extends Dao<Map> {
                 dos.close();
                 fos.close();
                 f = null;
+                return true;
             } catch (IOException ex) {
+                return false;
             }
         }
     }

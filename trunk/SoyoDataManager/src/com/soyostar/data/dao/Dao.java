@@ -6,5 +6,5 @@ public abstract class Dao<M extends Model> extends ModelStore<M> {
 
     public abstract void load();
 
-    public abstract void save();
+    public abstract boolean save();
 }

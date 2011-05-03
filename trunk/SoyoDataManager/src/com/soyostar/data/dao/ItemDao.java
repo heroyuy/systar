@@ -57,7 +57,7 @@ public class ItemDao extends Dao<Item> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -93,9 +93,10 @@ public class ItemDao extends Dao<Item> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("item.gat writeError!");
+            return false;
         }
     }
 //            //单元测试

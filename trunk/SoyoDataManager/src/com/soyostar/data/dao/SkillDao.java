@@ -53,7 +53,7 @@ public class SkillDao extends Dao<Skill> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -86,9 +86,10 @@ public class SkillDao extends Dao<Skill> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("skill.gat writeError!");
+            return false;
         }
     }
 //            //单元测试

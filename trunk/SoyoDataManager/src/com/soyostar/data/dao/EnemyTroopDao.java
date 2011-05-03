@@ -51,7 +51,7 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
         }
     }
 
-    public void save() {
+    public boolean save() {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
@@ -80,9 +80,10 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("enemytroop.gat writeError!");
+            return false;
         }
     }
 //            //单元测试
