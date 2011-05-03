@@ -13,9 +13,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,16 +28,19 @@ import java.util.ArrayList;
 public class MapDao extends Dao<Map> {
 
     public void load() {
-        try {
-            DataInputStream dis = null;
-            FileInputStream fis = null;
-            File f = null;
-            f = new File(DataManager.getInstance().getPath() + "/data/map");
-            File[] fs = f.listFiles();
-            //去除非地图文件 待实现
-            Map map = null;
-            for (int ii = 0; ii < fs.length; ii++) {
+        DataInputStream dis = null;
+        FileInputStream fis = null;
+        File f = null;
+        f = new File(DataManager.getInstance().getPath() + "/data/map");
 
+        File[] fs = f.listFiles();
+        if (fs == null) {
+            return;
+        }
+        //去除非地图文件 待实现
+        Map map = null;
+        for (int ii = 0; ii < fs.length; ii++) {
+            try {
                 map = new Map();
                 fis = new FileInputStream(fs[ii]);
                 dis = new DataInputStream(fis);
@@ -109,10 +115,9 @@ public class MapDao extends Dao<Map> {
                 dis.close();
                 fis.close();
                 f = null;
-
+            } catch (IOException ex) {
+                System.out.println("没有可加载的Map");
             }
-        } catch (IOException ex) {
-            System.out.println("没有可加载的Map");
         }
     }
 
