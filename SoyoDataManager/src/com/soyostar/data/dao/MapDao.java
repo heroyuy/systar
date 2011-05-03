@@ -13,6 +13,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -190,7 +191,7 @@ public class MapDao extends Dao<Map> {
                 fos.close();
                 f = null;
             } catch (IOException ex) {
-                Logger.getLogger(MapDao.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("没有可加载的Map");
             }
         }
     }
