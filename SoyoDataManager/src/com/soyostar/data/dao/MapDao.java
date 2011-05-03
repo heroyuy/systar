@@ -124,16 +124,14 @@ public class MapDao extends Dao<Map> {
     public boolean save() {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
-        File f = null;
-        f = new File(DataManager.getInstance().getPath() + "/data/map");
-        File[] fs = f.listFiles();
         Map[] maps = getModels(Map.class);
         Map map = null;
-        for (int ii = 0; ii < fs.length; ii++) {
-            try {
-                fos = new FileOutputStream(fs[ii]);
-                dos = new DataOutputStream(fos);
+        try {
+            for (int ii = 0; ii < size(); ii++) {
                 map = maps[ii];
+                fos = new FileOutputStream(DataManager.getInstance().getPath() + "/data/map/map" + map.getIndex() + ".gat");
+                dos = new DataOutputStream(fos);
+
                 dos.writeInt(map.getIndex());
                 dos.writeUTF(map.name);
                 dos.writeUTF(map.musicName);
@@ -193,11 +191,11 @@ public class MapDao extends Dao<Map> {
 
                 dos.close();
                 fos.close();
-                f = null;
-                return true;
-            } catch (IOException ex) {
-                return false;
             }
+            return true;
+        } catch (IOException ex) {
+            System.out.println("map.gat writeError!");
+            return false;
         }
     }
 //    //单元测试
