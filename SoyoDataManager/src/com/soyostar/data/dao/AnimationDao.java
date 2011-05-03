@@ -86,8 +86,7 @@ public class AnimationDao extends Dao<Animation> {
         }
     }
 
-    @Override
-    public void save() {
+    public boolean save() {
         DataOutputStream dos = null;
         FileOutputStream fos = null;
         File f = null;
@@ -139,7 +138,9 @@ public class AnimationDao extends Dao<Animation> {
                 }
 
             }
+            return true;
         } catch (IOException e) {
+            return false;
         }
     }
 }

@@ -53,7 +53,7 @@ public class EquipDao extends Dao<Equip> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -86,9 +86,10 @@ public class EquipDao extends Dao<Equip> {
             dos.close();
             fos.close();
             f = null;
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("equip.gat writeError!");
+            return false;
         }
     }
 //    //单元测试

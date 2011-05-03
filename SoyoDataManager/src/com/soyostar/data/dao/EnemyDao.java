@@ -60,7 +60,7 @@ public class EnemyDao extends Dao<Enemy> {
         }
     }
 
-    public void save() {
+    public boolean save() {
 
         DataOutputStream dos = null;
         FileOutputStream fos = null;
@@ -96,9 +96,10 @@ public class EnemyDao extends Dao<Enemy> {
             }
             dos.close();
             fos.close();
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("enemy.gat writeError!");
+            return false;
         }
     }
 //    //单元测试
