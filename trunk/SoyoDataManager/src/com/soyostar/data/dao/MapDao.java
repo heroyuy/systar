@@ -112,7 +112,7 @@ public class MapDao extends Dao<Map> {
                 fis.close();
                 f = null;
             } catch (IOException ex) {
-                Logger.getLogger(MapDao.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("没有可加载的Map");
             }
         }
     }
@@ -191,7 +191,6 @@ public class MapDao extends Dao<Map> {
                 fos.close();
                 f = null;
             } catch (IOException ex) {
-                System.out.println("没有可加载的Map");
             }
         }
     }
