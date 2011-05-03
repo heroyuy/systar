@@ -1,6 +1,7 @@
 package com.soyostar.data.dao;
 
 import com.soyostar.data.model.Model;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,8 +28,14 @@ public class ModelStore<M extends Model> {
      * 获取所有模型
      * @return
      */
-    public M[] getModels() {
-        return (M[]) data.values().toArray();
+    public M[] getModels(Class<M> c) {
+        M[] ms = (M[]) Array.newInstance(c, data.size());
+        int i = 0;
+        for (M m : data.values()) {
+            ms[i++] = m;
+        }
+        return ms;
+
     }
 
     /**

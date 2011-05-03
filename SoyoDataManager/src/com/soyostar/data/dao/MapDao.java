@@ -122,7 +122,7 @@ public class MapDao extends Dao<Map> {
         File f = null;
         f = new File(DataManager.getInstance().getPath() + "/data/map");
         File[] fs = f.listFiles();
-        Map[] maps = getModels();
+        Map[] maps = getModels(Map.class);
         Map map = null;
         for (int ii = 0; ii < fs.length; ii++) {
             try {

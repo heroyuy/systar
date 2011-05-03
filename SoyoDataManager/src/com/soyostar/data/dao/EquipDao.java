@@ -64,7 +64,7 @@ public class EquipDao extends Dao<Equip> {
             fos = new FileOutputStream(f);
             dos = new DataOutputStream(fos);
             dos.writeInt(size());
-            Equip[] equips = this.getModels();
+            Equip[] equips = this.getModels(Equip.class);
             Equip equip = null;
             for (int i = 0; i < size(); i++) {
                 equip = equips[i];
