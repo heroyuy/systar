@@ -1,7 +1,5 @@
 package engine.script;
 
-import game.system.Painter;
-
 /**
  * 脚本解释器
  */
@@ -143,28 +141,28 @@ public class Interpreter {
     }
 
     private void doDialog(Command command) {
-        se.addEvent(new GameEvent(GameEvent.DIALOG, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.DIALOG, script.row, script.col, command.param.split(" ")));
         curIndex++;
 
     }
 
     private void doSound(Command command) {
-        se.addEvent(new GameEvent(GameEvent.SOUND, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.SOUND, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doWait(Command command) {
-        se.addEvent(new GameEvent(GameEvent.WAIT, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.WAIT, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doItemShop(Command command) {
-        se.addEvent(new GameEvent(GameEvent.ITEMSHOP, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.ITEMSHOP, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doEquipShop(Command command) {
-        se.addEvent(new GameEvent(GameEvent.EQUIPSHOP, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.EQUIPSHOP, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
@@ -174,23 +172,23 @@ public class Interpreter {
     }
 
     private void doMap(Command command) {
-        se.addEvent(new GameEvent(GameEvent.MAP, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.MAP, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doFace(Command command) {
-        se.addEvent(new GameEvent(GameEvent.FACE, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.FACE, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doMove(Command command) {
-        se.addEvent(new GameEvent(GameEvent.MOVE, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.MOVE, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 
     private void doFight(Command command) {
 
-        se.addEvent(new GameEvent(GameEvent.FIGHT, script.row, script.col, Painter.split(command.param, " ")));
+        se.addEvent(new GameEvent(GameEvent.FIGHT, script.row, script.col, command.param.split(" ")));
         curIndex++;
     }
 }

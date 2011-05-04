@@ -3,13 +3,10 @@ package emulator;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.ImageIcon;
-import game.system.Painter;
 
 public class EmulatorImage extends BufferedImage {
 

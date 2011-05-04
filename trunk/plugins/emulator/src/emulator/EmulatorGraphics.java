@@ -3,7 +3,6 @@ package emulator;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import game.system.Painter;
 
 public class EmulatorGraphics {
 

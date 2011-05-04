@@ -1,6 +1,7 @@
 package engine.script;
 
-import game.system.Queue;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  *
@@ -31,11 +32,11 @@ public final class ScriptEngine implements Runnable {
     /**
      * 处理的脚本队列
      */
-    private Queue scriptQueue = new Queue();
+    private Queue<Script> scriptQueue = new ArrayBlockingQueue<Script>(100);
     /**
      * 脚本引擎处理脚本生成的游戏事件队列
      */
-    private Queue eventQueue = new Queue();
+    private Queue<GameEvent> eventQueue = new ArrayBlockingQueue<GameEvent>(100);
     /**
      * 表达式处理器
      */
@@ -57,11 +58,11 @@ public final class ScriptEngine implements Runnable {
         return varList;
     }
 
-    public Queue getEventQueue() {
+    public Queue<GameEvent> getEventQueue() {
         return eventQueue;
     }
 
-    public void setEventQueue(Queue eventQueue) {
+    public void setEventQueue(Queue<GameEvent> eventQueue) {
         this.eventQueue = eventQueue;
     }
 
