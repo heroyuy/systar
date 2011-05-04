@@ -42,16 +42,16 @@ public class EmulatorImage extends BufferedImage {
                 g.drawImage(temp, 0, 0, null);
                 break;
             case TRANS_MIRROR_ROT180:
-                g.drawImage(rotateImage(Painter.effect_mirror(temp), 180), 0, 0, null);
+                g.drawImage(rotateImage(effect_mirror(temp), 180), 0, 0, null);
                 break;
             case TRANS_MIRROR:
-                g.drawImage(Painter.effect_mirror(temp), 0, 0, null);
+                g.drawImage(effect_mirror(temp), 0, 0, null);
                 break;
             case TRANS_ROT180:
                 g.drawImage(rotateImage(temp, 180), 0, 0, null);
                 break;
             case TRANS_MIRROR_ROT270:
-                g.drawImage(rotateImage(Painter.effect_mirror(temp), 270), 0, 0, null);
+                g.drawImage(rotateImage(effect_mirror(temp), 270), 0, 0, null);
                 break;
             case TRANS_ROT270:
                 g.drawImage(rotateImage(temp, 270), 0, 0, null);
@@ -60,7 +60,7 @@ public class EmulatorImage extends BufferedImage {
                 g.drawImage(rotateImage(temp, 90), 0, 0, null);
                 break;
             case TRANS_MIRROR_ROT90:
-                g.drawImage(rotateImage(Painter.effect_mirror(temp), 90), 0, 0, null);
+                g.drawImage(rotateImage(effect_mirror(temp), 90), 0, 0, null);
                 break;
         }
 
@@ -137,5 +137,104 @@ public class EmulatorImage extends BufferedImage {
         }
         buffImg.setRGB(0, 0, w, h, pixs, 0, w);
         return buffImg;
+    }
+
+    /*
+     * 图片镜像特效
+     */
+    public static EmulatorImage effect_mirror(EmulatorImage src) {
+        int srcW = src.getWidth();
+        int srcH = src.getHeight();
+        int[] srcPixels = getPixels(src);
+        int len;
+        int temp;
+        for (int i = 0; i < srcH; i++) {
+            len = (i + 1) * srcW;
+            for (int ii = 0; ii < srcW / 2; ii++) {
+                temp = srcPixels[i * srcW + ii];
+                srcPixels[i * srcW + ii] = srcPixels[len - 1 - ii];
+                srcPixels[len - 1 - ii] = temp;
+            }
+        }
+        return drawPixels(srcPixels, srcW, srcH);
+    }
+
+    /*******************************下面是各个图片处理函数***********************************/
+
+    /*
+     * 获取图片RGB数据，并返回大小为width*height大小的一维数组
+     */
+    public static int[] getPixels(EmulatorImage src) {
+        int w = src.getWidth();
+        int h = src.getHeight();
+        int[] pixels = new int[w * h];
+        src.getRGB(pixels, 0, w, 0, 0, w, h);
+        return pixels;
+    }
+    /*
+     *将pixels[]里的数据，生成一张图片，图片宽为w，高为h
+     */
+
+    public static EmulatorImage drawPixels(int[] pixels, int w, int h) {
+        EmulatorImage image = EmulatorImage.createRGBImage(pixels, w, h, true);
+        pixels = null;
+        return image;
+    }
+    /*
+     *调整图片大小
+     *destW 调整后的宽，destH调整后的高
+     */
+
+    public static EmulatorImage effect_resizeImage(EmulatorImage src, int destW, int destH) {
+        int srcW = src.getWidth();
+        int srcH = src.getHeight();
+        int[] destPixels = new int[destW * destH];
+        int[] srcPixels = getPixels(src);
+        for (int destY = 0; destY < destH; ++destY) {
+            for (int destX = 0; destX < destW; ++destX) {
+                int srcX = (destX * srcW) / destW;
+                int srcY = (destY * srcH) / destH;
+                destPixels[destX + destY * destW] = srcPixels[srcX + srcY * srcW];
+            }
+        }
+        return drawPixels(destPixels, destW, destH);
+    }
+
+    /**
+     *
+     * @param img
+     *            原始图片
+     * @param transparent
+     *            透明度 0-255之间
+     * 越大越不透明，只半透明不透明的部分
+     * @return 处理透明度后的图片
+     */
+    public static EmulatorImage effect_transparent_Other(EmulatorImage img, int transparent) {
+        if (transparent < 0 || transparent > 255) {
+            return img;
+        }
+        int srcW = img.getWidth();
+        int srcH = img.getHeight();
+        int[] srcPixels = getPixels(img); //函数功能 讲图片数据存入指定数组
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        int a = 0;
+        int argb;
+        for (int i = 0; i < srcH; i++) {
+            for (int ii = 0; ii < srcW; ii++) {
+                argb = srcPixels[i * srcW + ii];
+                a = ((argb & 0xff000000) >> 24); // alpha channel
+                r = ((argb & 0x00ff0000) >> 16); // red channel
+                g = ((argb & 0x0000ff00) >> 8); // green channel
+                b = (argb & 0x000000ff); // blue channel
+                if (a != 0) {
+                    srcPixels[i * srcW + ii] = ((transparent << 24) | (r << 16) | (g << 8) | b);
+                } else {
+                    srcPixels[i * srcW + ii] = 0x00ffffff;
+                }
+            }
+        }
+        return drawPixels(srcPixels, srcW, srcH); //将数组转化为图片
     }
 }
