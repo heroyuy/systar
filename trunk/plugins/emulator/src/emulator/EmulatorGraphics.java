@@ -28,7 +28,7 @@ public class EmulatorGraphics {
         int w = fm.stringWidth(str);
         int h = fm.getHeight();
         int[] xy = convertOrdinate(x, y, w, h, anchor);
-        g.drawString(str, xy[0], xy[1]+ef.getHeight());
+        g.drawString(str, xy[0], xy[1] + ef.getHeight());
     }
 
     public void drawImage(EmulatorImage ei, int x, int y, int anchor) {
@@ -89,16 +89,16 @@ public class EmulatorGraphics {
                 g.drawImage(temp, xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_MIRROR:
-                g.drawImage(Painter.effect_mirror(temp), xy[0], xy[1], null);
+                g.drawImage(EmulatorImage.effect_mirror(temp), xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_MIRROR_ROT180:
-                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 180), xy[0], xy[1], null);
+                g.drawImage(EmulatorImage.rotateImage(EmulatorImage.effect_mirror(temp), 180), xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_ROT180:
                 g.drawImage(EmulatorImage.rotateImage(temp, 180), xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_MIRROR_ROT270:
-                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 270), xy[0], xy[1], null);
+                g.drawImage(EmulatorImage.rotateImage(EmulatorImage.effect_mirror(temp), 270), xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_ROT270:
                 g.drawImage(EmulatorImage.rotateImage(temp, 270), xy[0], xy[1], null);
@@ -107,7 +107,7 @@ public class EmulatorGraphics {
                 g.drawImage(EmulatorImage.rotateImage(temp, 180), xy[0], xy[1], null);
                 break;
             case EmulatorImage.TRANS_MIRROR_ROT90:
-                g.drawImage(EmulatorImage.rotateImage(Painter.effect_mirror(temp), 90), xy[0], xy[1], null);
+                g.drawImage(EmulatorImage.rotateImage(EmulatorImage.effect_mirror(temp), 90), xy[0], xy[1], null);
                 break;
         }
     }
