@@ -2,7 +2,6 @@ package engine.script;
 
 import engine.script.operation.Operation;
 import java.util.Vector;
-import game.system.Painter;
 
 public class ExpCalc {
 
@@ -30,7 +29,7 @@ public class ExpCalc {
     private void init(String exp) {
         // 将表达式的各元素存入向量中
         expVector.removeAllElements();
-        String[] temp = Painter.split(exp, " ");
+        String[] temp = exp.split(" ");
         for (int i = 0; i
                 < temp.length; i++) {
             expVector.addElement(temp[i]);

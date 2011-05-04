@@ -136,7 +136,7 @@ public final class GameEngine implements Runnable {
 
                 //处理游戏事件
                 if (!se.getEventQueue().isEmpty()) {
-                    if (game.dealGameEvent((GameEvent) se.getEventQueue().peck())) {
+                    if (game.dealGameEvent(se.getEventQueue().peek())) {
                         //事件处理完成
                         se.getEventQueue().poll();
                     }
