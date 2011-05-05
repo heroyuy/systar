@@ -2,16 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.impl.model;
-
-import game.AbModel;
+package game.impl.model.map;
 
 /**
  *
  * @author Administrator
  */
-public class GameData extends AbModel {
+public class SpriteLayer extends Layer {
 
-    public void update() {
-    }
+    public Script[][] npcs;
 }
