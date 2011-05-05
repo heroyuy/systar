@@ -200,7 +200,7 @@ public class RpgGame implements IGame {
 
     }
 
-    public IModel getModel(int id) {
+    public AbModel getModel(int id) {
         return models.get(id).model;
     }
 
@@ -267,7 +267,7 @@ public class RpgGame implements IGame {
             try {
                 this.id = id;
                 this.name = name;
-                this.model = (IModel) Class.forName(name).newInstance();
+                this.model = (AbModel) Class.forName(name).newInstance();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
@@ -278,6 +278,6 @@ public class RpgGame implements IGame {
         }
         public int id = -1;
         public String name = null;
-        public IModel model = null;
+        public AbModel model = null;
     }
 }
