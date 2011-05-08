@@ -5,7 +5,6 @@
 package game;
 
 import emulator.EmulatorGraphics;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -59,7 +58,7 @@ public abstract class AbControl implements Control {
     }
 
     public void updateView(EmulatorGraphics g) {
-        System.out.println("更新视图");
+//        System.out.println("更新视图");
         for (ViewNode vn : views.values()) {
             vn.view.paint(g);
         }

@@ -12,15 +12,22 @@
     <controls>
         <control>
             <id>0</id>
-            <fullName>game.impl.control.TestControl</fullName>
+            <fullName>game.impl.control.StartPageControl</fullName>
             <views>
                 <view>
                     <id>0</id>
-                    <fullName>game.impl.view.TestView</fullName>
+                    <fullName>game.impl.view.startpage.StartPageView</fullName>
                 </view>
+            </views>
+        </control>
+
+        <control>
+            <id>1</id>
+            <fullName>game.impl.control.MenuControl</fullName>
+            <views>
                 <view>
-                    <id>1</id>
-                    <fullName>game.impl.view.TestView2</fullName>
+                    <id>0</id>
+                    <fullName>game.impl.view.menu.MenuView</fullName>
                 </view>
             </views>
         </control>
