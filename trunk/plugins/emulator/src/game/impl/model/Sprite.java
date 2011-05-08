@@ -19,35 +19,43 @@ public abstract class Sprite extends AbModel {
     public static final byte FACE_RIGHT = 2;
     private byte state = STATE_STAND;
     private EmulatorImage[][] chartlets = null;
-    private int curFace = -1;
     private int curStep = -1;
+    //以下是子类需要使用的字段
+    public int row = -1;
+    public int col = -1;
+    public int face = -1;
+    public int moveSpeed = -1;
 
     public void goUp() {
         if (state == STATE_STAND) {
-            curFace = FACE_UP;
+            face = FACE_UP;
             state = STATE_WALKING;
         }
     }
 
     public void goDown() {
         if (state == STATE_STAND) {
-            curFace = FACE_DOWN;
+            face = FACE_DOWN;
             state = STATE_WALKING;
         }
     }
 
     public void goLeft() {
         if (state == STATE_STAND) {
-            curFace = FACE_LEFT;
+            face = FACE_LEFT;
             state = STATE_WALKING;
         }
     }
 
     public void goRight() {
         if (state == STATE_STAND) {
-            curFace = FACE_RIGHT;
+            face = FACE_RIGHT;
             state = STATE_WALKING;
         }
+    }
+
+    public final void setChartlet(String path) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public final void setChartlet(EmulatorImage chartlet) {
@@ -62,7 +70,7 @@ public abstract class Sprite extends AbModel {
     }
 
     public final void draw(EmulatorGraphics g, int x, int y) {
-        g.drawImage(chartlets[curFace][curStep], x, y, 0);
+        g.drawImage(chartlets[face][curStep], x, y, 0);
     }
 
     public void update() {

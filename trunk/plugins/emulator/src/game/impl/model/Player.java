@@ -1,13 +1,15 @@
 package game.impl.model;
 
 import game.AbModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author wp_g4
  * 测试通过
  */
-public  class Player extends AbModel {
+public class Player extends Sprite implements Cloneable {
 
     public String name;//名称
     public String intro;//介绍
@@ -34,6 +36,23 @@ public  class Player extends AbModel {
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //调用父类中的移动规则
+        super.update();
+
+    }
+
+    @Override
+    public Player clone() {
+        Player p = null;
+        try {
+            p = (Player) super.clone();
+            if (this.levList != null) {
+                p.levList = new int[this.levList.length];
+                System.arraycopy(this.levList, 0, p.levList, 0, p.levList.length);
+            }
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
     }
 }
