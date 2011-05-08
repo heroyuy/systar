@@ -8,7 +8,7 @@ import game.impl.model.Item;
 import game.impl.model.Player;
 import game.impl.model.Skill;
 import game.impl.model.animation.Animation;
-import game.impl.model.map.Map;
+import game.impl.model.Map;
 import java.util.HashMap;
 //import model.*;
 //import test.TestData;
@@ -42,7 +42,7 @@ public class DataStore {
         init();
     }
 
-    public final void init() {
+    private void init() {
         System.out.println("初始化数据中心");
         DataFactory.loadConfigList(configList);
         DataFactory.loadAnimationList(animationList);
@@ -59,7 +59,7 @@ public class DataStore {
     }
 
     public Player getPlayer() {
-        return playerList.get(0);
+        return playerList.get(0).clone();
     }
 
     public Enemy getEnemy(int index) {
@@ -87,9 +87,11 @@ public class DataStore {
     }
 
     public Map getMap(int index) {
-        if (mapList.get(index) == null) {
+        if (!mapList.containsKey(index)) {
             mapList.put(index, DataFactory.loadMap(index));
         }
         return (Map) mapList.get(new Integer(index));
     }
+
+
 }

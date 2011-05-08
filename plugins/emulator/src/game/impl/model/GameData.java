@@ -5,6 +5,7 @@
 package game.impl.model;
 
 import game.AbModel;
+import game.data.DataStore;
 
 /**
  *
@@ -12,6 +13,15 @@ import game.AbModel;
  */
 public class GameData extends AbModel {
 
+    private DataStore dataStore = null;
+    private Player player = null;
+
+    public GameData() {
+        dataStore = new DataStore();
+        player=dataStore.getPlayer();
+    }
+
     public void update() {
+        player.update();
     }
 }
