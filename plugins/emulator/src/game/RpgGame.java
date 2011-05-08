@@ -58,7 +58,7 @@ public class RpgGame implements IGame {
      * 2、更新由控制器控制的Model
      */
     public void update() {
-        System.out.println("自动更新Model");
+//        System.out.println("自动更新Model");
         for (ModelNode mn : models.values()) {
             mn.model.update();
         }
@@ -152,7 +152,7 @@ public class RpgGame implements IGame {
                 }
                 controls.put(controlId, new ControlNode(controlId, controlName, views));
             }
-            curControlID = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
+            this.setCurrentControl(Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue()));
             System.out.println("curControlID:" + curControlID);
 
             //配置模型
@@ -201,6 +201,8 @@ public class RpgGame implements IGame {
     }
 
     public AbModel getModel(int id) {
+        System.out.println("models:" + models.size());
+        System.out.println("models.get(id)" + models.get(id));
         return models.get(id).model;
     }
 
@@ -209,8 +211,12 @@ public class RpgGame implements IGame {
     }
 
     public void setCurrentControl(int index) {
+        if (controls.get(curControlID) != null) {
+            controls.get(curControlID).control.onLose();
+        }
         if (controls.containsKey(index)) {
             curControlID = index;
+            controls.get(curControlID).control.onObtain();
         } else {
             try {
                 throw new Exception("不存在ID为" + index + "的控制器");
@@ -221,10 +227,14 @@ public class RpgGame implements IGame {
     }
 
     public void setCurrentControl(String fullName) {
+        if (controls.get(curControlID) != null) {
+            controls.get(curControlID).control.onLose();
+        }
         boolean hasControl = false;
         for (ControlNode cd : controls.values()) {
             if (cd.name.equals(fullName)) {
                 curControlID = cd.id;
+                controls.get(curControlID).control.onObtain();
                 hasControl = true;
                 break;
             }

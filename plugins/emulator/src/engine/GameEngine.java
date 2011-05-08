@@ -1,7 +1,6 @@
 package engine;
 
 import emulator.MotionEvent;
-import engine.script.GameEvent;
 import engine.script.ScriptEngine;
 import java.io.File;
 import java.io.IOException;
@@ -197,6 +196,14 @@ public final class GameEngine implements Runnable {
         this.main = main;
         System.out.println("设置Canvas");
         main.setCanvas(renderLayer);
+    }
+
+    public int getScreenWidth() {
+        return renderLayer.getWidth();
+    }
+
+    public int getScreenHeight() {
+        return renderLayer.getHeight();
     }
 
     /**
