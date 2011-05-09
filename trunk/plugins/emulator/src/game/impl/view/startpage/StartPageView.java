@@ -4,8 +4,8 @@
  */
 package game.impl.view.startpage;
 
-import emulator.EmulatorGraphics;
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorGraphics;
+import emulator.ui.EmulatorImage;
 import engine.GameEngine;
 import game.RpgGame;
 import game.View;

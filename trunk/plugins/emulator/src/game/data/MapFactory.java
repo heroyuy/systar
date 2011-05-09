@@ -1,6 +1,6 @@
 package game.data;
 
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorImage;
 import game.impl.model.Npc;
 import game.impl.model.Map;
 import java.io.DataInputStream;

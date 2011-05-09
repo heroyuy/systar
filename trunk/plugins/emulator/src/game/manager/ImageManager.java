@@ -1,6 +1,6 @@
 package game.manager;
 
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorImage;
 import java.io.IOException;
 import java.util.Hashtable;
 

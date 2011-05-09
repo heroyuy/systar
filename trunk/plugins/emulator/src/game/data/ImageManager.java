@@ -1,6 +1,6 @@
 package game.data;
 
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorImage;
 import engine.GameEngine;
 import game.AbModel;
 import game.RpgGame;

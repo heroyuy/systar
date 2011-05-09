@@ -1,5 +1,6 @@
 package emulator;
 
+import emulator.ui.Canvas;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

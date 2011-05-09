@@ -1,9 +1,9 @@
 package engine;
 
 //import model.*;
-import emulator.Canvas;
-import emulator.EmulatorGraphics;
-import emulator.EmulatorImage;
+import emulator.ui.Canvas;
+import emulator.ui.EmulatorGraphics;
+import emulator.ui.EmulatorImage;
 import emulator.MotionEvent;
 
 /**

@@ -1,7 +1,7 @@
 package game.impl.model;
 
-import emulator.EmulatorGraphics;
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorGraphics;
+import emulator.ui.EmulatorImage;
 import game.AbModel;
 
 /**
