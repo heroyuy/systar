@@ -1,5 +1,7 @@
 package emulator;
 
+import emulator.ui.Canvas;
+
 /**
  *
  * @author Administrator

@@ -4,7 +4,7 @@
  */
 package game.impl.model;
 
-import emulator.EmulatorImage;
+import emulator.ui.EmulatorImage;
 import game.AbModel;
 import game.impl.model.Npc;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package game;
 
-import emulator.EmulatorGraphics;
+import emulator.ui.EmulatorGraphics;
 
 
 /**

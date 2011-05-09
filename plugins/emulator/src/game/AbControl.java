@@ -4,7 +4,7 @@
  */
 package game;
 
-import emulator.EmulatorGraphics;
+import emulator.ui.EmulatorGraphics;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

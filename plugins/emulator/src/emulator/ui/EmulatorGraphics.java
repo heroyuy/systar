@@ -1,4 +1,4 @@
-package emulator;
+package emulator.ui;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
