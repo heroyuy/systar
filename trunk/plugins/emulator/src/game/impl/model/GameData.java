@@ -18,12 +18,12 @@ public class GameData extends AbModel {
     public MenuState ms = new MenuState();
 
     public GameData() {
-//        dataStore = new DataStore();
-//        player=dataStore.getPlayer();
+        dataStore = new DataStore();
+        player=dataStore.getPlayer();
     }
 
     public void update() {
-//        player.update();
+        player.update();
     }
 
     public class MenuState {

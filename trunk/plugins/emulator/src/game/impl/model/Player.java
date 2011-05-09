@@ -30,15 +30,13 @@ public class Player extends Sprite implements Cloneable {
     public int[] levList = null;//经验表
     public int money;//金钱
     public int curMapIndex;// 角色当前所在地图编号
-    public int row;// 角色所在行号
-    public int col;// 角色当前所在列号
-    public int face;// 面向
 
     @Override
     public void update() {
         //调用父类中的移动规则
         super.update();
-
+        this.hp++;
+        System.out.println("hp:"+hp);
     }
 
     @Override
