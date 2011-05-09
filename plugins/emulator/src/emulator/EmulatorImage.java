@@ -73,6 +73,8 @@ public class EmulatorImage extends BufferedImage {
             throw new IOException();
         }
         ImageIcon tempIi = new ImageIcon(tempImage);
+        System.out.println("tempIi.getIconWidth():"+tempIi.getIconWidth());
+        System.out.println(" tempIi.getIconHeight():"+ tempIi.getIconHeight());
         EmulatorImage tempEi = new EmulatorImage(tempIi.getIconWidth(), tempIi.getIconHeight());
         Graphics g = tempEi.getGraphics();
         g.drawImage(tempImage, 0, 0, null);

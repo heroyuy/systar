@@ -96,6 +96,7 @@ public class RpgGame implements IGame {
      * 4、设置数据处理器
      */
     private void loadConfig() {
+        int curControlId = -1;
         try {
             File f = new File(configFile);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -152,8 +153,8 @@ public class RpgGame implements IGame {
                 }
                 controls.put(controlId, new ControlNode(controlId, controlName, views));
             }
-            this.setCurrentControl(Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue()));
-            System.out.println("curControlID:" + curControlID);
+            curControlId = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
+            System.out.println("curControlId:" + curControlId);
 
             //配置模型
             NodeList modelList = root.getElementsByTagName("models");
@@ -184,6 +185,7 @@ public class RpgGame implements IGame {
             IDataHandler dataHandler = (IDataHandler) Class.forName(dataHandlerName).newInstance();
             ScriptEngine.getInstance().setDataHandler(dataHandler);
             //------------------------------------结束------------------------------------
+            setCurrentControl(curControlId);
         } catch (InstantiationException ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {

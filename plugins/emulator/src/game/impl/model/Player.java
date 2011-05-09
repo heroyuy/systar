@@ -35,8 +35,6 @@ public class Player extends Sprite implements Cloneable {
     public void update() {
         //调用父类中的移动规则
         super.update();
-        this.hp++;
-        System.out.println("hp:"+hp);
     }
 
     @Override

@@ -14,12 +14,12 @@ import game.data.DataStore;
 public class GameData extends AbModel {
 
     private DataStore dataStore = null;
-    private Player player = null;
+    public Player player = null;
     public MenuState ms = new MenuState();
 
     public GameData() {
         dataStore = new DataStore();
-        player=dataStore.getPlayer();
+        player = dataStore.getPlayer();
     }
 
     public void update() {
