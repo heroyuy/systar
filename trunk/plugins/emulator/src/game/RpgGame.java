@@ -96,7 +96,6 @@ public class RpgGame implements IGame {
      * 4、设置数据处理器
      */
     private void loadConfig() {
-        int curControlId = -1;
         try {
             File f = new File(configFile);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -104,6 +103,37 @@ public class RpgGame implements IGame {
             Document doc = builder.parse(f);
             Element root = doc.getDocumentElement();
             //------------------------------------开始------------------------------------
+
+            //配置模型
+            NodeList modelList = root.getElementsByTagName("models");
+            modelList = ((Element) modelList.item(0)).getElementsByTagName("model");
+            System.out.println("modelList.getLength():" + modelList.getLength());
+            for (int i = 0; i < modelList.getLength(); i++) {
+                Element model = (Element) modelList.item(i);
+                NodeList modelChilds = model.getChildNodes();
+                System.out.println("modelChilds.getLength():" + modelChilds.getLength());
+                int modelId = -1;
+                String modelName = null;
+                for (int j = 0; j < modelChilds.getLength(); j++) {
+                    Node modelChild = modelChilds.item(j);
+                    if (modelChild.getNodeType() == Node.ELEMENT_NODE) {
+                        if (modelChild.getNodeName().equals("id")) {
+                            modelId = Integer.parseInt(modelChild.getFirstChild().getNodeValue());
+                            System.out.println("modelId:" + modelId);
+                        } else if (modelChild.getNodeName().equals("fullName")) {
+                            modelName = modelChild.getFirstChild().getNodeValue();
+                            System.out.println("modelName:" + modelName);
+                        }
+                    }
+                }
+                models.put(modelId, new ModelNode(modelId, modelName));
+            }
+
+            //配置数据处理器
+            String dataHandlerName = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
+            IDataHandler dataHandler = (IDataHandler) Class.forName(dataHandlerName).newInstance();
+            ScriptEngine.getInstance().setDataHandler(dataHandler);
+
             //配置控制器
             NodeList controlList = root.getElementsByTagName("controls");
             controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
@@ -153,39 +183,11 @@ public class RpgGame implements IGame {
                 }
                 controls.put(controlId, new ControlNode(controlId, controlName, views));
             }
-            curControlId = Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue());
-            System.out.println("curControlId:" + curControlId);
+            setCurrentControl(Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue()));
 
-            //配置模型
-            NodeList modelList = root.getElementsByTagName("models");
-            modelList = ((Element) modelList.item(0)).getElementsByTagName("model");
-            System.out.println("modelList.getLength():" + modelList.getLength());
-            for (int i = 0; i < modelList.getLength(); i++) {
-                Element model = (Element) modelList.item(i);
-                NodeList modelChilds = model.getChildNodes();
-                System.out.println("modelChilds.getLength():" + modelChilds.getLength());
-                int modelId = -1;
-                String modelName = null;
-                for (int j = 0; j < modelChilds.getLength(); j++) {
-                    Node modelChild = modelChilds.item(j);
-                    if (modelChild.getNodeType() == Node.ELEMENT_NODE) {
-                        if (modelChild.getNodeName().equals("id")) {
-                            modelId = Integer.parseInt(modelChild.getFirstChild().getNodeValue());
-                            System.out.println("modelId:" + modelId);
-                        } else if (modelChild.getNodeName().equals("fullName")) {
-                            modelName = modelChild.getFirstChild().getNodeValue();
-                            System.out.println("modelName:" + modelName);
-                        }
-                    }
-                }
-                models.put(modelId, new ModelNode(modelId, modelName));
-            }
-            //配置数据处理器
-            String dataHandlerName = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
-            IDataHandler dataHandler = (IDataHandler) Class.forName(dataHandlerName).newInstance();
-            ScriptEngine.getInstance().setDataHandler(dataHandler);
+            System.out.println("curControlID:" + curControlID);
+
             //------------------------------------结束------------------------------------
-            setCurrentControl(curControlId);
         } catch (InstantiationException ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
