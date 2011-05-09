@@ -45,7 +45,7 @@ public class DataStore {
     private void init() {
         System.out.println("初始化数据中心");
         DataFactory.loadConfigList(configList);
-        DataFactory.loadAnimationList(animationList);
+//        DataFactory.loadAnimationList(animationList);
         DataFactory.loadEnemyList(enemyList);
         DataFactory.loadEnemyTroopList(enemyTroopList);
         DataFactory.loadPlayerList(playerList);

@@ -338,31 +338,31 @@ public class DataFactory {
             try {
                 switch (type) {
                     case FILE_TYPE_CONFIG:
-                        fis = new FileInputStream(new File("/data/system.gat"));
+                        fis = new FileInputStream(new File("res/data/system.gat"));
                         break;
                     case FILE_TYPE_ANIMATION:
-                        fis = new FileInputStream(new File("/data/ani.gat"));
+                        fis = new FileInputStream(new File("res/data/ani.gat"));
                         break;
                     case FILE_TYPE_ENEMY:
-                        fis = new FileInputStream(new File("/data/enemy.gat"));
+                        fis = new FileInputStream(new File("res/data/enemy.gat"));
                         break;
                     case FILE_TYPE_ENEMYTROOP:
-                        fis = new FileInputStream(new File("/data/enemytroop.gat"));
+                        fis = new FileInputStream(new File("res/data/enemytroop.gat"));
                         break;
                     case FILE_TYPE_ITEM:
-                        fis = new FileInputStream(new File("/data/item.gat"));
+                        fis = new FileInputStream(new File("res/data/item.gat"));
                         break;
                     case FILE_TYPE_EQUIP:
-                        fis = new FileInputStream(new File("/data/equip.gat"));
+                        fis = new FileInputStream(new File("res/data/equip.gat"));
                         break;
                     case FILE_TYPE_SKILL:
-                        fis = new FileInputStream(new File("/data/skill.gat"));
+                        fis = new FileInputStream(new File("res/data/skill.gat"));
                         break;
                     case FILE_TYPE_PLAYER:
-                        fis = new FileInputStream(new File("/data/player.gat"));
+                        fis = new FileInputStream(new File("res/data/player.gat"));
                         break;
                     case FILE_TYPE_MAP:
-                        fis = new FileInputStream(new File("/data/map/map" + index + ".gat"));
+                        fis = new FileInputStream(new File("res/data/map/map" + index + ".gat"));
                         break;
                     default:
                         fis = null;
