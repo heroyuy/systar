@@ -6,12 +6,14 @@ package game.impl.control;
 
 import emulator.KeyValue;
 import emulator.MotionEvent;
+import emulator.ui.Rect;
 import engine.GameEngine;
 import engine.script.GameEvent;
 import game.AbControl;
 import game.Const;
 import game.RpgGame;
 import game.impl.model.GameData;
+import game.util.TouchDelegate;
 
 /**
  *
@@ -22,6 +24,7 @@ public class MenuControl extends AbControl {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel(0);
+    private TouchDelegate touchDelegate = TouchDelegate.getDefaultTouchDelegate();
 
     public void dealKeyEvent(int key) {
         switch (key) {
@@ -35,7 +38,24 @@ public class MenuControl extends AbControl {
         ge.clearKey();
     }
 
+    @Override
+    public void onObtain() {
+        super.onObtain();
+        touchDelegate.clearAllTouchRect();
+        for (int i = 0; i < Const.Text.MENU.length; i++) {
+            touchDelegate.addTouchRect(new Rect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - Const.Text.MENU.length * gd.menuState.menuHeight - (Const.Text.MENU.length - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight));
+
+        }
+    }
+
     public void onTouchEvent(MotionEvent me) {
+        if (me.getType() == MotionEvent.MOTION_DOWN) {
+            int index = touchDelegate.getTouchRectIndex(me.getX(), me.getY());
+            if(index!=-1){
+                gd.menuState.menuIndex=index;
+            }
+        }
+        
     }
 
     public void dealGameEvent(GameEvent event) {
