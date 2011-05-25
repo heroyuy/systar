@@ -6,6 +6,7 @@ package game.impl.model;
 
 import game.AbModel;
 import game.data.DataStore;
+import game.impl.state.MapState;
 import game.impl.state.MenuState;
 
 /**
@@ -14,9 +15,10 @@ import game.impl.state.MenuState;
  */
 public class GameData extends AbModel {
 
-    private DataStore dataStore = null;
+    public DataStore dataStore = null;
     public Player player = null;
     public MenuState menuState = new MenuState();
+    public MapState mapState = new MapState();
 
     public GameData() {
         dataStore = new DataStore();
