@@ -19,10 +19,13 @@ public class GameData extends AbModel {
     public Player player = null;
     public MenuState menuState = new MenuState();
     public MapState mapState = new MapState();
+    public Map curMap=null;
 
     public GameData() {
         dataStore = new DataStore();
         player = dataStore.getPlayer();
+        curMap=dataStore.getMap(player.curMapIndex);
+//        curMap=dataStore.getMap(1);
     }
 
     public void update() {

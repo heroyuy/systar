@@ -6,6 +6,7 @@ import engine.IGame;
 import engine.script.GameEvent;
 import engine.script.IDataHandler;
 import engine.script.ScriptEngine;
+import game.data.ImageManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
