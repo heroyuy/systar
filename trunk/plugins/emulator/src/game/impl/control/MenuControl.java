@@ -34,6 +34,9 @@ public class MenuControl extends AbControl {
             case KeyValue.KEY_DOWN:
                 gd.menuState.menuIndex = (gd.menuState.menuIndex + 1) % Const.Text.MENU.length;
                 break;
+            case KeyValue.KEY_LS:
+                changeScene();
+                break;
         }
         ge.clearKey();
     }
@@ -51,16 +54,34 @@ public class MenuControl extends AbControl {
     public void onTouchEvent(MotionEvent me) {
         if (me.getType() == MotionEvent.MOTION_DOWN) {
             int index = touchDelegate.getTouchRectIndex(me.getX(), me.getY());
-            if(index!=-1){
-                gd.menuState.menuIndex=index;
+            if (index != -1) {
+                gd.menuState.menuIndex = index;
             }
         }
-        
+
     }
 
     public void dealGameEvent(GameEvent event) {
     }
 
     public void updateModel() {
+    }
+
+    private void changeScene() {
+        switch (gd.menuState.menuIndex) {
+            case 0:
+                rpgGame.setCurrentControl(Const.ControlId.MAP);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
     }
 }

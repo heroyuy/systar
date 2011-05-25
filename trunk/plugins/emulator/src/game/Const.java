@@ -14,6 +14,7 @@ public interface Const {
 
         public int STARTPAGE = 0;
         public int MENU = 1;
+        public int MAP = 2;
     }
 
     public interface Text {
