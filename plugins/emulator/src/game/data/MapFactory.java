@@ -5,7 +5,6 @@ import game.impl.model.Npc;
 import game.impl.model.Map;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
@@ -29,8 +28,10 @@ public class MapFactory {
     private Npc[] npcs = null;
 
     public void loadMapData(DataInputStream dis) {
+        System.out.println("loadMapData");
         try {
             //基本属性
+            System.out.println("基本属性");
             index = dis.readInt();
             name = dis.readUTF();
             musicName = dis.readUTF();
@@ -39,6 +40,7 @@ public class MapFactory {
             cellWidth = dis.readInt();
             cellHeight = dis.readInt();
             //图集
+            System.out.println("图集");
             imageSetNum = dis.readInt();
             imageSets = new ImageSet[imageSetNum];
             for (int i = 0; i < imageSets.length; i++) {
@@ -47,6 +49,7 @@ public class MapFactory {
                 imageSets[i].path = dis.readUTF();
             }
             //图层
+            System.out.println("图层");
             layerNum = dis.readInt();
             layers = new Layer[layerNum];
             for (int i = 0; i < layers.length; i++) {
@@ -57,11 +60,17 @@ public class MapFactory {
                     for (int k = 0; k < colNum; k++) {
                         layers[i].tiles[j][k] = new Tile();
                         layers[i].tiles[j][k].imageSetId = dis.readInt();
-                        layers[i].tiles[j][k].tileIndex = dis.readInt();
+                        if (layers[i].tiles[j][k].imageSetId == -1) {
+                            layers[i].tiles[j][k].tileIndex = -1;
+                        } else {
+                            layers[i].tiles[j][k].tileIndex = dis.readInt();
+                        }
+
                     }
                 }
             }
             //通行度
+            System.out.println("通行度");
             ways = new boolean[rowNum][colNum];
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
@@ -69,6 +78,7 @@ public class MapFactory {
                 }
             }
             //NPC
+            System.out.println("NPC");
             npcNum = dis.readInt();
             npcs = new Npc[npcNum];
             for (int i = 0; i < npcs.length; i++) {
@@ -77,9 +87,10 @@ public class MapFactory {
                 npcs[i].row = dis.readInt();
                 npcs[i].col = dis.readInt();
                 npcs[i].setChartlet(dis.readUTF());
-                npcs[i].face = dis.readInt();
+                npcs[i].face = dis.readByte();
                 npcs[i].moveType = dis.readByte();
                 npcs[i].moveSpeed = dis.readInt();
+                npcs[i].transparent = dis.readBoolean();
                 npcs[i].scriptType = dis.readByte();
                 npcs[i].scriptNum = dis.readInt();
                 npcs[i].scripts = new String[npcs[i].scriptNum];
@@ -89,6 +100,7 @@ public class MapFactory {
             }
         } catch (IOException ex) {
             System.out.println("加载Map出错");
+            ex.printStackTrace();
         }
     }
 
@@ -110,6 +122,7 @@ public class MapFactory {
     }
 
     private EmulatorImage createBackground() {
+        EmulatorImage eimg = EmulatorImage.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

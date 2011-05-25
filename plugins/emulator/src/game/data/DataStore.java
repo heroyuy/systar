@@ -28,6 +28,7 @@ public class DataStore {
     private HashMap<Integer, Skill> skillList = null;
     private HashMap<Integer, Player> playerList = null;
     private HashMap<Integer, Map> mapList = null;
+    public static ImageManager imageManager = new ImageManager();
 
     public DataStore() {
         configList = new HashMap<Integer, Config>();
@@ -90,8 +91,6 @@ public class DataStore {
         if (!mapList.containsKey(index)) {
             mapList.put(index, DataFactory.loadMap(index));
         }
-        return (Map) mapList.get(new Integer(index));
+        return (Map) mapList.get(index);
     }
-
-
 }

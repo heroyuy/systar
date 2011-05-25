@@ -9,7 +9,7 @@ public class Npc extends Sprite {
     /**
      * 可穿透性
      */
-    public boolean penetrable = false;
+    public boolean transparent = false;
     /**
      * 运动类型
      */

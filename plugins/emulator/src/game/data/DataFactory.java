@@ -312,7 +312,7 @@ public class DataFactory {
     }
 
     public static Map loadMap(int index) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_CONFIG, 0);
+        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_MAP, index);
         mapFactory.loadMapData(dis);
         FileConnector.release();
         return mapFactory.getMap();
