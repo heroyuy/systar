@@ -2,7 +2,7 @@ package game;
 
 import emulator.ui.EmulatorGraphics;
 import emulator.MotionEvent;
-import engine.IGame;
+import engine.Game;
 import engine.script.GameEvent;
 import engine.script.IDataHandler;
 import engine.script.ScriptEngine;
@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class RpgGame implements IGame {
+public class RpgGame extends Game {
 
     private long startTime = 0;
     private boolean isDealingGameEvent = false;

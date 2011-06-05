@@ -1,7 +1,6 @@
 package engine;
 
 import emulator.MotionEvent;
-import engine.script.ScriptEngine;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,10 +25,6 @@ public final class GameEngine implements Runnable {
      * 游戏引擎单例模式
      */
     private static GameEngine ge = new GameEngine();
-    /**
-     * 脚本引擎
-     */
-    private static ScriptEngine se = ScriptEngine.getInstance();
 
     /**
      * 获取游戏引擎运行时实例
@@ -77,7 +72,7 @@ public final class GameEngine implements Runnable {
     /**
      * 游戏实例
      */
-    private IGame game = null;
+    private Game game = null;
 
     /**
      * 构造器
@@ -100,7 +95,7 @@ public final class GameEngine implements Runnable {
      * 获取正在游戏引擎中运行的游戏实例
      * @return 正在游戏引擎中运行的游戏实例
      */
-    public IGame getGame() {
+    public Game getGame() {
         return game;
     }
 
@@ -133,14 +128,6 @@ public final class GameEngine implements Runnable {
                 //更新游戏
                 game.update();
 
-                //处理游戏事件
-                if (!se.getEventQueue().isEmpty()) {
-                    if (game.dealGameEvent(se.getEventQueue().peek())) {
-                        //事件处理完成
-                        se.getEventQueue().poll();
-                    }
-                }
-
                 //触屏处理
                 if (me != null) {
                     game.onTouchEvent(me);
@@ -165,7 +152,7 @@ public final class GameEngine implements Runnable {
                 ticker++;
             }
         } catch (InterruptedException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         main.stop();
     }
@@ -214,7 +201,6 @@ public final class GameEngine implements Runnable {
         System.out.println("启动游戏引擎");
         init();
         if (game != null) {
-            se.start();
             game.start();
             new Thread(this).start();
         } else {
@@ -231,7 +217,7 @@ public final class GameEngine implements Runnable {
         private Map<Integer, GameNode> games = null;
         private int curGameIndex = -1;
 
-        public IGame getCurGame() {
+        public Game getCurGame() {
             if (games == null) {
                 loadConfig();
             }
@@ -284,7 +270,7 @@ public final class GameEngine implements Runnable {
                     int id = Integer.parseInt(root.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue());
                     String fullName = root.getElementsByTagName("FullName").item(i).getFirstChild().getNodeValue();
                     System.out.println("id:" + id + " fullName:" + fullName);
-                    IGame game = (IGame) Class.forName(fullName).newInstance();
+                    Game game = (Game) Class.forName(fullName).newInstance();
                     games.put(id, new GameNode(id, fullName, game));
                 }
                 curGameIndex = Integer.parseInt(root.getElementsByTagName("CurrentGameID").item(0).getFirstChild().getNodeValue());
@@ -307,7 +293,7 @@ public final class GameEngine implements Runnable {
 
         private class GameNode {
 
-            public GameNode(int id, String fullName, IGame game) {
+            public GameNode(int id, String fullName, Game game) {
                 this.id = id;
                 this.fullName = fullName;
                 this.game = game;
@@ -323,7 +309,7 @@ public final class GameEngine implements Runnable {
             /**
              * 游戏实例
              */
-            public IGame game = null;
+            public Game game = null;
         }
     }
 }
