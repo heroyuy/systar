@@ -6,7 +6,6 @@ package game.impl.control;
 
 import emulator.MotionEvent;
 import engine.GameEngine;
-import engine.script.GameEvent;
 import game.AbControl;
 import game.Const;
 import game.RpgGame;
@@ -30,8 +29,7 @@ public class StartPageControl extends AbControl {
         ge.clearMotionEvent();
     }
 
-    public void dealGameEvent(GameEvent event) {
-    }
+ 
 
     public void updateModel() {
     }

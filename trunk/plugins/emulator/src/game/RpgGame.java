@@ -3,10 +3,6 @@ package game;
 import emulator.ui.EmulatorGraphics;
 import emulator.MotionEvent;
 import engine.Game;
-import engine.script.GameEvent;
-import engine.script.IDataHandler;
-import engine.script.ScriptEngine;
-import game.data.ImageManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -66,14 +62,6 @@ public class RpgGame extends Game {
         getCurrentControl().updateModel();
     }
 
-    public boolean dealGameEvent(GameEvent event) {
-        if (isDealingGameEvent) {
-            return false;
-        }
-        getCurrentControl().dealGameEvent(event);
-        return true;
-    }
-
     public void dealKeyEvent(int key) {
         getCurrentControl().dealKeyEvent(key);
     }
@@ -130,10 +118,6 @@ public class RpgGame extends Game {
                 models.put(modelId, new ModelNode(modelId, modelName));
             }
 
-            //配置数据处理器
-            String dataHandlerName = root.getElementsByTagName("dataHandler").item(0).getFirstChild().getNodeValue();
-            IDataHandler dataHandler = (IDataHandler) Class.forName(dataHandlerName).newInstance();
-            ScriptEngine.getInstance().setDataHandler(dataHandler);
 
             //配置控制器
             NodeList controlList = root.getElementsByTagName("controls");
@@ -189,12 +173,6 @@ public class RpgGame extends Game {
             System.out.println("curControlID:" + curControlID);
 
             //------------------------------------结束------------------------------------
-        } catch (InstantiationException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

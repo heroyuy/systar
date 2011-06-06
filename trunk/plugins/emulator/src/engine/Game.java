@@ -2,6 +2,8 @@ package engine;
 
 import emulator.ui.EmulatorGraphics;
 import emulator.MotionEvent;
+import engine.script.GameEventListener;
+import java.util.ArrayList;
 
 /**
  * 游戏抽象类，所有游戏实体必需继承自此类
@@ -10,11 +12,22 @@ import emulator.MotionEvent;
  */
 public abstract class Game {
 
+    private GameEventListener gameEventListener = null;
+
+    public GameEventListener getGameEventListener() {
+        return gameEventListener;
+    }
+
+    public void setGameEventListener(GameEventListener gameEventListener) {
+        this.gameEventListener = gameEventListener;
+    }
+
     /**
      * 通过脚本ID运行脚本
      * @param id
      */
     public void runScript(int id) {
+        //TODO
     }
 
     /**
