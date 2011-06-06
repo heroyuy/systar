@@ -8,7 +8,6 @@ import emulator.KeyValue;
 import emulator.MotionEvent;
 import emulator.ui.Rect;
 import engine.GameEngine;
-import engine.script.GameEvent;
 import game.AbControl;
 import game.Const;
 import game.RpgGame;
@@ -61,8 +60,6 @@ public class MenuControl extends AbControl {
 
     }
 
-    public void dealGameEvent(GameEvent event) {
-    }
 
     public void updateModel() {
     }

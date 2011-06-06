@@ -2,7 +2,6 @@ package game;
 
 import emulator.ui.EmulatorGraphics;
 import emulator.MotionEvent;
-import engine.script.GameEvent;
 
 /**
  *
@@ -32,11 +31,6 @@ public interface Control {
      */
     public void onTouchEvent(MotionEvent me);
 
-    /**
-     * 处理游戏事件
-     * @param event
-     */
-    public void dealGameEvent(GameEvent event);
 
     /**
      * 更新Model

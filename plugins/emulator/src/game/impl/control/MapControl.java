@@ -6,7 +6,6 @@ package game.impl.control;
 
 import emulator.MotionEvent;
 import engine.GameEngine;
-import engine.script.GameEvent;
 import game.AbControl;
 import game.RpgGame;
 import game.impl.model.GameData;
@@ -34,8 +33,6 @@ public class MapControl extends AbControl {
     public void onTouchEvent(MotionEvent me) {
     }
 
-    public void dealGameEvent(GameEvent event) {
-    }
 
     public void updateModel() {
     }
