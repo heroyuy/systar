@@ -3,7 +3,6 @@ package engine;
 import emulator.ui.EmulatorGraphics;
 import emulator.MotionEvent;
 import engine.script.GameEventListener;
-import java.util.ArrayList;
 
 /**
  * 游戏抽象类，所有游戏实体必需继承自此类

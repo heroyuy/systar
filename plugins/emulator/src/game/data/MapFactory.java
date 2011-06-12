@@ -123,11 +123,13 @@ public class MapFactory {
 
     private EmulatorImage createBackground() {
         EmulatorImage eimg = EmulatorImage.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
-        throw new UnsupportedOperationException("Not yet implemented");
+//        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 
     private EmulatorImage createForeground() {
-        throw new UnsupportedOperationException("Not yet implemented");
+//        throw new UnsupportedOperationException("Not yet implemented");
+         return null;
     }
 
     private class ImageSet {

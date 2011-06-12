@@ -1,19 +1,13 @@
 package engine;
 
+import com.soyostar.xml.XMLObject;
+import com.soyostar.xml.XMLParser;
 import emulator.MotionEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * 游戏主引擎
@@ -258,36 +252,21 @@ public final class GameEngine implements Runnable {
 
         private void loadConfig() {
             try {
-                //TODO 加载配置文件
+                // 加载配置文件
                 games = new HashMap<Integer, GameNode>();
-                File f = new File(configFile);
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                Document doc = builder.parse(f);
-                Element root = doc.getDocumentElement();
-                NodeList nl = root.getElementsByTagName("Game");
-                for (int i = 0; i < nl.getLength(); i++) {
-                    int id = Integer.parseInt(root.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue());
-                    String fullName = root.getElementsByTagName("FullName").item(i).getFirstChild().getNodeValue();
-                    System.out.println("id:" + id + " fullName:" + fullName);
+                XMLObject engine = XMLParser.parse(new File(configFile));
+                curGameIndex = Integer.parseInt(engine.getFirstXMLObject("CurrentGameID").getValue());
+                XMLObject[] gamesObject = engine.getXMLObjectArray("Game");
+                for (XMLObject gameObject : gamesObject) {
+                    int id = Integer.parseInt(gameObject.getFirstXMLObject("ID").getValue());
+                    String fullName = gameObject.getFirstXMLObject("FullName").getValue();
                     Game game = (Game) Class.forName(fullName).newInstance();
                     games.put(id, new GameNode(id, fullName, game));
                 }
-                curGameIndex = Integer.parseInt(root.getElementsByTagName("CurrentGameID").item(0).getFirstChild().getNodeValue());
-                System.out.println("CurrentGameID:" + curGameIndex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParserConfigurationException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
             }
+
 
         }
 
