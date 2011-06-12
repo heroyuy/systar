@@ -10,7 +10,7 @@ public interface GameEventListener {
     /**
      * 退出游戏
      */
-    public void exitGame();
+    public void exit();
 
     /**
      * 执行公共事件
