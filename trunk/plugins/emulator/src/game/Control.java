@@ -1,7 +1,8 @@
 package game;
 
-import emulator.ui.EmulatorGraphics;
-import emulator.MotionEvent;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.Painter;
+import com.soyostar.app.TouchEvent;
 
 /**
  *
@@ -20,17 +21,10 @@ public interface Control {
     public void onLose();
 
     /**
-     * 处理按键事件
-     * @param key
-     */
-    public void dealKeyEvent(int key);
-
-    /**
      * 处理触屏事件
      * @param me
      */
-    public void onTouchEvent(MotionEvent me);
-
+    public void onTouchEvent(TouchEvent te);
 
     /**
      * 更新Model
@@ -40,5 +34,11 @@ public interface Control {
     /**
      * 更新View
      */
-    public void updateView(EmulatorGraphics g);
+    public void updateView(Painter p);
+
+    /**
+     * 处理按键事件
+     * @param ke
+     */
+    public void onKeyEvent(KeyEvent ke);
 }

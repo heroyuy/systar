@@ -1,12 +1,12 @@
 package game.impl.view.menu;
 
-import emulator.ui.EmulatorGraphics;
+import com.soyostar.app.Color;
+import com.soyostar.app.Painter;
 import engine.GameEngine;
 import game.Const;
 import game.RpgGame;
 import game.View;
 import game.impl.model.GameData;
-import java.awt.Color;
 
 /**
  *
@@ -21,19 +21,19 @@ public class MenuView implements View {
     public void init() {
     }
 
-    public void paint(EmulatorGraphics eg) {
-        eg.setColor(Color.black);
-        eg.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
+    public void paint(Painter p) {
+        p.setColor(Color.BLACK);
+        p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
         int num = Const.Text.MENU.length;
         for (int i = 0; i < num; i++) {
-            eg.setColor(Color.green);
-            eg.drawRect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight);
+            p.setColor(Color.GREEN);
+            p.drawRect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight);
             if (gd.menuState.menuIndex == i) {
-                eg.setColor(Color.gray);
-                eg.fillRect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight);
+                p.setColor(Color.GRAY);
+                p.fillRect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight);
             }
-            eg.setColor(Color.green);
-            eg.drawString(Const.Text.MENU[i], ge.getScreenWidth() / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap) + gd.menuState.menuHeight / 2, EmulatorGraphics.HV);
+            p.setColor(Color.GREEN);
+            p.drawString(Const.Text.MENU[i], ge.getScreenWidth() / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap) + gd.menuState.menuHeight / 2, Painter.HV);
 
         }
     }

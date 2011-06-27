@@ -4,7 +4,7 @@
  */
 package game;
 
-import emulator.ui.EmulatorGraphics;
+import com.soyostar.app.Painter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -57,10 +57,10 @@ public abstract class AbControl implements Control {
         views.clear();
     }
 
-    public void updateView(EmulatorGraphics g) {
+    public void updateView(Painter p) {
 //        System.out.println("更新视图");
         for (ViewNode vn : views.values()) {
-            vn.view.paint(g);
+            vn.view.paint(p);
         }
     }
 

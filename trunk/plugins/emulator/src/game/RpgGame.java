@@ -1,7 +1,8 @@
 package game;
 
-import emulator.ui.EmulatorGraphics;
-import emulator.MotionEvent;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.Painter;
+import com.soyostar.app.TouchEvent;
 import engine.Game;
 import java.io.File;
 import java.io.IOException;
@@ -62,19 +63,20 @@ public class RpgGame extends Game {
         getCurrentControl().updateModel();
     }
 
-    public void dealKeyEvent(int key) {
-        getCurrentControl().dealKeyEvent(key);
+    public void onTouchEvent(TouchEvent me) {
+        getCurrentControl().onTouchEvent(me);
     }
 
-    public void onTouchEvent(MotionEvent me) {
-        getCurrentControl().onTouchEvent(me);
+    @Override
+    public void onKeyEvent(KeyEvent ke) {
+        getCurrentControl().onKeyEvent(ke);
     }
 
     public void exit() {
     }
 
-    public void render(EmulatorGraphics g) {
-        getCurrentControl().updateView(g);
+    public void render(Painter p) {
+        getCurrentControl().updateView(p);
     }
 
     /**

@@ -1,7 +1,7 @@
 package game.impl.model;
 
-import emulator.ui.EmulatorGraphics;
-import emulator.ui.EmulatorImage;
+import com.soyostar.app.Image;
+import com.soyostar.app.Painter;
 import game.AbModel;
 
 /**
@@ -18,7 +18,7 @@ public abstract class Sprite extends AbModel {
     public static final byte FACE_LEFT = 1;
     public static final byte FACE_RIGHT = 2;
     private byte state = STATE_STAND;
-    private EmulatorImage[][] chartlets = null;
+    private Image[][] chartlets = null;
     private int curStep = -1;
     //以下是子类需要使用的字段
     public int row = -1;
@@ -58,19 +58,19 @@ public abstract class Sprite extends AbModel {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public final void setChartlet(EmulatorImage chartlet) {
+    public final void setChartlet(Image chartlet) {
         int width = chartlet.getWidth() / 4;
         int height = chartlet.getHeight() / 4;
-        chartlets = new EmulatorImage[4][4];
+        chartlets = new Image[4][4];
         for (int i = 0; i < chartlets.length; i++) {
             for (int j = 0; j < chartlets[i].length; j++) {
-                chartlets[i][j] = EmulatorImage.createImage(chartlet, i * width, j * height, width, height, 0);
+                chartlets[i][j] = Image.copyImage(chartlet, i * width, j * height, width, height);
             }
         }
     }
 
-    public final void draw(EmulatorGraphics g, int x, int y) {
-        g.drawImage(chartlets[face][curStep], x, y, 0);
+    public final void draw(Painter p, int x, int y) {
+        p.drawImage(chartlets[face][curStep], x, y, 0);
     }
 
     public void update() {

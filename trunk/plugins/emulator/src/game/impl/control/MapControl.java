@@ -4,7 +4,8 @@
  */
 package game.impl.control;
 
-import emulator.MotionEvent;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.TouchEvent;
 import engine.GameEngine;
 import game.AbControl;
 import game.RpgGame;
@@ -24,16 +25,15 @@ public class MapControl extends AbControl {
     public void onObtain() {
         super.onObtain();
         gd.mapState.curMap = gd.dataStore.getMap(gd.player.curMapIndex);
-        System.out.println("gd.mapState.curMap.name->"+gd.mapState.curMap.name);
+        System.out.println("gd.mapState.curMap.name->" + gd.mapState.curMap.name);
     }
 
-    public void dealKeyEvent(int key) {
+    public void onTouchEvent(TouchEvent te) {
     }
-
-    public void onTouchEvent(MotionEvent me) {
-    }
-
 
     public void updateModel() {
+    }
+
+    public void onKeyEvent(KeyEvent ke) {
     }
 }

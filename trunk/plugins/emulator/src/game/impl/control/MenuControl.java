@@ -4,9 +4,9 @@
  */
 package game.impl.control;
 
-import emulator.KeyValue;
-import emulator.MotionEvent;
-import emulator.ui.Rect;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.Rect;
+import com.soyostar.app.TouchEvent;
 import engine.GameEngine;
 import game.AbControl;
 import game.Const;
@@ -25,20 +25,22 @@ public class MenuControl extends AbControl {
     private GameData gd = (GameData) rpgGame.getModel(0);
     private TouchDelegate touchDelegate = TouchDelegate.getDefaultTouchDelegate();
 
-    public void dealKeyEvent(int key) {
-        switch (key) {
-            case KeyValue.KEY_UP:
-                gd.menuState.menuIndex = (gd.menuState.menuIndex + Const.Text.MENU.length - 1) % Const.Text.MENU.length;
-                break;
-            case KeyValue.KEY_DOWN:
-                gd.menuState.menuIndex = (gd.menuState.menuIndex + 1) % Const.Text.MENU.length;
-                break;
-            case KeyValue.KEY_LS:
-                changeScene();
-                break;
-        }
-        ge.clearKey();
+    public void onKeyEvent(KeyEvent ke) {
     }
+//    public void dealKeyEvent(int key) {
+//        switch (key) {
+//            case KeyValue.KEY_UP:
+//                gd.menuState.menuIndex = (gd.menuState.menuIndex + Const.Text.MENU.length - 1) % Const.Text.MENU.length;
+//                break;
+//            case KeyValue.KEY_DOWN:
+//                gd.menuState.menuIndex = (gd.menuState.menuIndex + 1) % Const.Text.MENU.length;
+//                break;
+//            case KeyValue.KEY_LS:
+//                changeScene();
+//                break;
+//        }
+//        ge.clearKey();
+//    }
 
     @Override
     public void onObtain() {
@@ -50,16 +52,15 @@ public class MenuControl extends AbControl {
         }
     }
 
-    public void onTouchEvent(MotionEvent me) {
-        if (me.getType() == MotionEvent.MOTION_DOWN) {
-            int index = touchDelegate.getTouchRectIndex(me.getX(), me.getY());
+    public void onTouchEvent(TouchEvent te) {
+        if (te.getType() == TouchEvent.TOUCH_DOWN) {
+            int index = touchDelegate.getTouchRectIndex(te.getX(), te.getY());
             if (index != -1) {
                 gd.menuState.menuIndex = index;
             }
         }
 
     }
-
 
     public void updateModel() {
     }

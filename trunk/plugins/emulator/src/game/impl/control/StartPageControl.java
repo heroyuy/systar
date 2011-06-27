@@ -4,7 +4,8 @@
  */
 package game.impl.control;
 
-import emulator.MotionEvent;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.TouchEvent;
 import engine.GameEngine;
 import game.AbControl;
 import game.Const;
@@ -19,17 +20,17 @@ public class StartPageControl extends AbControl {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
 
-    public void dealKeyEvent(int key) {
+//    public void dealKeyEvent(int key) {
+//        rpgGame.setCurrentControl(Const.ControlId.MENU);
+//        ge.clearKey();
+//    }
+    public void onTouchEvent(TouchEvent me) {
         rpgGame.setCurrentControl(Const.ControlId.MENU);
-        ge.clearKey();
+        ge.clearTouchEvent();
     }
 
-    public void onTouchEvent(MotionEvent me) {
-        rpgGame.setCurrentControl(Const.ControlId.MENU);
-        ge.clearMotionEvent();
+    public void onKeyEvent(KeyEvent ke) {
     }
-
- 
 
     public void updateModel() {
     }
