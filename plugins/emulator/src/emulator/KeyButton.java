@@ -1,6 +1,7 @@
 package emulator;
 
-import emulator.ui.Canvas;
+import com.soyostar.app.Component;
+import com.soyostar.app.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -26,16 +27,17 @@ public class KeyButton extends JButton implements MouseListener {
 
     public void mousePressed(MouseEvent e) {
 
-        Canvas canvas = Emulator.getDefaultEmulator().getCurApp().getCanvas();
-        if (canvas != null) {
-            canvas.keyPressed(key);
+        Component component = Emulator.getDefaultEmulator().getCurApp().getContentPanel();
+        if (component != null) {
+            component.onKeyEvent(new KeyEvent(key, KeyEvent.KEY_DOWN));
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        Canvas canvas = Emulator.getDefaultEmulator().getCurApp().getCanvas();
-        if (canvas != null) {
-            canvas.keyReleased(key);
+
+        Component component = Emulator.getDefaultEmulator().getCurApp().getContentPanel();
+        if (component != null) {
+            component.onKeyEvent(new KeyEvent(key, KeyEvent.KEY_UP));
         }
     }
 }

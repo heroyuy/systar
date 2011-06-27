@@ -4,7 +4,7 @@
  */
 package game.util;
 
-import emulator.ui.Rect;
+import com.soyostar.app.Rect;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +46,6 @@ public class TouchDelegate {
     }
 
     private boolean isInRect(int x, int y, Rect rect) {
-        return x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height;
+        return x > rect.getX() && x < rect.getX() + rect.getWidth() && y > rect.getY() && y < rect.getY() + rect.getHeight();
     }
 }

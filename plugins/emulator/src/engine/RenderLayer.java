@@ -1,57 +1,48 @@
 package engine;
 
-//import model.*;
-import emulator.ui.Canvas;
-import emulator.ui.EmulatorGraphics;
-import emulator.ui.EmulatorImage;
-import emulator.MotionEvent;
+import com.soyostar.app.Component;
+import com.soyostar.app.Container;
+import com.soyostar.app.Image;
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.Painter;
+import com.soyostar.app.TouchEvent;
 
 /**
  *
  * 视图渲染层
  */
-public class RenderLayer extends Canvas {
+public class RenderLayer extends Container implements Component.Callback {
 
     private GameEngine ge = null;
-    private EmulatorImage buffImg;//双缓冲
-    private EmulatorGraphics buffEG;
+    private Image buffImg;//双缓冲
+    private Painter painter;
 
-    public EmulatorGraphics getEmulatorGraphics() {
-        return buffEG;
+    public Painter getPainter() {
+        return painter;
     }
 
     protected RenderLayer(GameEngine ge) {
         super();
         this.ge = ge;
-        buffImg = EmulatorImage.createImage(getWidth(), getHeight());
-        buffEG = new EmulatorGraphics(buffImg.getGraphics());
-
     }
 
     @Override
-    public void paint(EmulatorGraphics g) {
-        g.drawImage(buffImg, 0, 0, 0);
+    public void paint(Painter p) {
+        p.drawImage(buffImg, 0, 0, Painter.LT);
     }
 
     @Override
-    public void keyPressed(int key) {
-        ge.setKey(key);
+    public void onTouchEvent(TouchEvent te) {
+        ge.setTouchEvent(te);
     }
 
     @Override
-    public void keyReleased(int key) {
-        ge.clearKey();
+    public void onKeyEvent(KeyEvent ke) {
+        ge.setKey(ke);
     }
 
-    @Override
-    public void onTouchEvent(MotionEvent me) {
-        ge.setMotionEvent(me);
-    }
-
-    @Override
     public void sizeChanged(int width, int height) {
-        buffImg = EmulatorImage.createImage(width, height);
-        buffEG = new EmulatorGraphics(buffImg.getGraphics());
-
+        buffImg = Image.createImage(getWidth(), getHeight());
+        painter = buffImg.getPainter();
     }
 }

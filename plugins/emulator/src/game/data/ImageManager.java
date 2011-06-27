@@ -1,13 +1,10 @@
 package game.data;
 
-import emulator.ui.EmulatorImage;
+import com.soyostar.app.Image;
 import engine.GameEngine;
 import game.AbModel;
 import game.RpgGame;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,15 +19,12 @@ public class ImageManager extends AbModel {
     private final static int TIMEOUT = 60000;
     private HashMap<String, ImageNode> imageList = new HashMap<String, ImageNode>();
 
-    public EmulatorImage getImage(String path) {
+    public Image getImage(String path) {
         if (!imageList.containsKey(path)) {
             ImageNode in = new ImageNode();
             in.path = path;
-            try {
-                in.image = EmulatorImage.createImage(path);
-            } catch (IOException ex) {
-                Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            in.image = Image.createImage(path);
+
             imageList.put(path, in);
         }
         imageList.get(path).useTimes++;
@@ -60,6 +54,6 @@ public class ImageManager extends AbModel {
          * 图片使用次数变为0的时间
          */
         public long time = 0;
-        public EmulatorImage image = null;
+        public Image image = null;
     }
 }

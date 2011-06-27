@@ -1,8 +1,9 @@
 package engine;
 
+import com.soyostar.app.KeyEvent;
+import com.soyostar.app.TouchEvent;
 import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
-import emulator.MotionEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,13 +41,13 @@ public final class GameEngine implements Runnable {
      */
     private int ticker = 0;
     /**
-     * 按键值
+     * 按键事件
      */
-    private int key = 0;
+    private KeyEvent ke = null;
     /**
      * 当前触屏事件
      */
-    private MotionEvent me = null;
+    private TouchEvent te = null;
     /**
      * 循环等待时间
      */
@@ -123,16 +124,16 @@ public final class GameEngine implements Runnable {
                 game.update();
 
                 //触屏处理
-                if (me != null) {
-                    game.onTouchEvent(me);
+                if (te != null) {
+                    game.onTouchEvent(te);
                 }
                 // 处理按键
-                if (key != 0) {
-                    game.dealKeyEvent(key);
+                if (ke != null) {
+                    game.onKeyEvent(ke);
                 }
 
                 // 渲染视图
-                game.render(renderLayer.getEmulatorGraphics());
+                game.render(renderLayer.getPainter());
                 renderLayer.repaint();
                 time = System.currentTimeMillis() - time;
 
@@ -151,20 +152,20 @@ public final class GameEngine implements Runnable {
         main.stop();
     }
 
-    protected void setKey(int key) {
-        this.key = key;
+    protected void setKey(KeyEvent ke) {
+        this.ke = ke;
     }
 
-    protected void setMotionEvent(MotionEvent me) {
-        this.me = me;
+    protected void setTouchEvent(TouchEvent te) {
+        this.te = te;
     }
 
-    public void clearMotionEvent() {
-        me = null;
+    public void clearTouchEvent() {
+        te = null;
     }
 
-    public void clearKey() {
-        key = 0;
+    public void clearKeyEvent() {
+        ke = null;
     }
 
     /**
@@ -176,7 +177,7 @@ public final class GameEngine implements Runnable {
     public void setMain(Main main) {
         this.main = main;
         System.out.println("设置Canvas");
-        main.setCanvas(renderLayer);
+        main.setContentPanel(renderLayer);
     }
 
     public int getScreenWidth() {

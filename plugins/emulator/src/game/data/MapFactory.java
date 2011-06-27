@@ -1,6 +1,6 @@
 package game.data;
 
-import emulator.ui.EmulatorImage;
+import com.soyostar.app.Image;
 import game.impl.model.Npc;
 import game.impl.model.Map;
 import java.io.DataInputStream;
@@ -121,15 +121,15 @@ public class MapFactory {
         return map;
     }
 
-    private EmulatorImage createBackground() {
-        EmulatorImage eimg = EmulatorImage.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
+    private Image createBackground() {
+        Image eimg = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
 //        throw new UnsupportedOperationException("Not yet implemented");
         return null;
     }
 
-    private EmulatorImage createForeground() {
+    private Image createForeground() {
 //        throw new UnsupportedOperationException("Not yet implemented");
-         return null;
+        return null;
     }
 
     private class ImageSet {

@@ -1,12 +1,13 @@
 package engine;
 
-import emulator.EmulatorApp;
+import com.soyostar.app.App;
+
 
 /**
  *
  * 游戏入口 类似于j2me的midlet和android的activity
  */
-public class Main extends EmulatorApp {
+public class Main extends App {
 
     private GameEngine ge = null;
 

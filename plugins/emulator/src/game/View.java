@@ -1,6 +1,7 @@
 package game;
 
-import emulator.ui.EmulatorGraphics;
+import com.soyostar.app.Painter;
+
 
 
 /**
@@ -22,7 +23,7 @@ public interface View {
      * @param g
      *            画笔
      */
-    public void paint(EmulatorGraphics eg);
+    public void paint(Painter p);
 
     /**
      * 释放视图资源

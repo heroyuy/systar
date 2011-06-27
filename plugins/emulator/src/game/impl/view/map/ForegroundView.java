@@ -1,6 +1,6 @@
 package game.impl.view.map;
 
-import emulator.ui.EmulatorGraphics;
+import com.soyostar.app.Painter;
 import game.View;
 
 /**
@@ -13,8 +13,7 @@ public class ForegroundView implements View {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void paint(EmulatorGraphics eg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void paint(Painter p) {
     }
 
     public void release() {

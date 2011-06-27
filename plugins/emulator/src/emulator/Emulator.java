@@ -10,8 +10,12 @@
  */
 package emulator;
 
+import com.soyostar.app.App;
+import com.soyostar.app.Component;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 
 /**
  *
@@ -35,15 +39,14 @@ public class Emulator extends javax.swing.JDialog {
     private View_Key view_Key = null;
     private Option_Key option_Key = null;
     private Option_Screen option_Screen = null;
-    private EmulatorApp curApp = null;
+    private App curApp = null;
 
-    public EmulatorApp getCurApp() {
+    public App getCurApp() {
         return curApp;
     }
     private int width = 240;//模拟器屏幕宽度
     private int height = 320;//模拟器屏幕高度
-
-    private static Emulator defaultEmulator=new Emulator();
+    private static Emulator defaultEmulator = new Emulator();
 
     public static Emulator getDefaultEmulator() {
         return defaultEmulator;
@@ -61,12 +64,15 @@ public class Emulator extends javax.swing.JDialog {
 
     protected void setEmulatorSize(int width, int height) {
         screen.setSize(width, height);
-        this.setSize(width + 18, height + 63);
-        if(curApp.getCanvas()!=null){
+//        this.setSize(width + 18, height + 63);
+        if (curApp.getContentPanel() != null) {
             System.out.println("设置屏幕大小");
-            curApp.getCanvas().setSize(width, height);
-            curApp.getCanvas().sizeChanged(width, height);
+            curApp.getContentPanel().setSize(width, height);
+            if(curApp.getContentPanel() instanceof Component.Callback){
+                ((Component.Callback)curApp.getContentPanel()).sizeChanged(width, height);
+            }
         }
+        this.pack();
     }
 
     /**
@@ -94,11 +100,11 @@ public class Emulator extends javax.swing.JDialog {
         System.out.println("startEmulator");
         try {
             //注册游戏程序实例
-            curApp = (EmulatorApp) Class.forName("engine.Main").newInstance();
+            curApp = (App) Class.forName("engine.Main").newInstance();
             //设置游戏视图为显示器大小
             setEmulatorSize(width, height);
             //呈现游戏视图
-            screen.add(curApp.getCanvas());
+            screen.add(getContent(curApp.getContentPanel()));
             //启动游戏程序
             System.out.println("curApp.start()");
             curApp.start();
@@ -160,12 +166,14 @@ public class Emulator extends javax.swing.JDialog {
         screen.setLayout(screenLayout);
         screenLayout.setHorizontalGroup(
             screenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 505, Short.MAX_VALUE)
+            .addGap(0, 481, Short.MAX_VALUE)
         );
         screenLayout.setVerticalGroup(
             screenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
+            .addGap(0, 286, Short.MAX_VALUE)
         );
+
+        getContentPane().add(screen, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("菜单");
 
@@ -253,17 +261,6 @@ public class Emulator extends javax.swing.JDialog {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(screen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(screen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -327,6 +324,28 @@ public class Emulator extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+
+    }
+
+    private JComponent getContent(Component component) {
+        JComponent jComponent = null;
+        if (component != null) {
+            try {
+                Field field = Component.class.getDeclaredField("content");
+                field.setAccessible(true);
+                jComponent = (JComponent) field.get(component);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(Emulator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Emulator.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (NoSuchFieldException ex) {
+                Logger.getLogger(Emulator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(Emulator.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return jComponent;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;

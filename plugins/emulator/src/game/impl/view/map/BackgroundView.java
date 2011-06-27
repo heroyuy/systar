@@ -1,6 +1,6 @@
 package game.impl.view.map;
 
-import emulator.ui.EmulatorGraphics;
+import com.soyostar.app.Painter;
 import game.View;
 
 /**
@@ -12,7 +12,7 @@ public class BackgroundView implements View {
     public void init() {
     }
 
-    public void paint(EmulatorGraphics eg) {
+    public void paint(Painter p) {
     }
 
     public void release() {
