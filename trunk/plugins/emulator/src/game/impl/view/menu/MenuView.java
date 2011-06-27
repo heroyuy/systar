@@ -24,6 +24,9 @@ public class MenuView implements View {
     public void paint(Painter p) {
         p.setColor(Color.BLACK);
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
+        p.setColor(Color.WHITE);
+        p.drawLine(0, 20, 100, 20);
+        p.drawString("测试Test123", 0, 20, 0);
         int num = Const.Text.MENU.length;
         for (int i = 0; i < num; i++) {
             p.setColor(Color.GREEN);
