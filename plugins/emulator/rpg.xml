@@ -15,7 +15,6 @@
             <fullName>game.impl.model.GameData</fullName>
         </model>
     </models>
-    <dataHandler>game.impl.DataHandler</dataHandler>
     <controls>
         <control>
             <id>0</id>

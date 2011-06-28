@@ -3,6 +3,8 @@ package game;
 import com.soyostar.app.KeyEvent;
 import com.soyostar.app.Painter;
 import com.soyostar.app.TouchEvent;
+import com.soyostar.xml.XMLObject;
+import com.soyostar.xml.XMLParser;
 import engine.Game;
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -88,100 +87,38 @@ public class RpgGame extends Game {
      */
     private void loadConfig() {
         try {
-            File f = new File(configFile);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(f);
-            Element root = doc.getDocumentElement();
             //------------------------------------开始------------------------------------
-
+            XMLObject rpg = XMLParser.parse(new File(configFile));
             //配置模型
-            NodeList modelList = root.getElementsByTagName("models");
-            modelList = ((Element) modelList.item(0)).getElementsByTagName("model");
-            System.out.println("modelList.getLength():" + modelList.getLength());
-            for (int i = 0; i < modelList.getLength(); i++) {
-                Element model = (Element) modelList.item(i);
-                NodeList modelChilds = model.getChildNodes();
-                System.out.println("modelChilds.getLength():" + modelChilds.getLength());
-                int modelId = -1;
-                String modelName = null;
-                for (int j = 0; j < modelChilds.getLength(); j++) {
-                    Node modelChild = modelChilds.item(j);
-                    if (modelChild.getNodeType() == Node.ELEMENT_NODE) {
-                        if (modelChild.getNodeName().equals("id")) {
-                            modelId = Integer.parseInt(modelChild.getFirstChild().getNodeValue());
-                            System.out.println("modelId:" + modelId);
-                        } else if (modelChild.getNodeName().equals("fullName")) {
-                            modelName = modelChild.getFirstChild().getNodeValue();
-                            System.out.println("modelName:" + modelName);
-                        }
-                    }
-                }
-                models.put(modelId, new ModelNode(modelId, modelName));
+            XMLObject[] modelList = rpg.getFirstXMLObject("models").getXMLObjectArray("model");
+            for (XMLObject model : modelList) {
+                int id = model.getFirstXMLObject("id").getIntValue();
+                String fullName = model.getFirstXMLObject("fullName").getStringValue();
+                models.put(id, new ModelNode(id, fullName));
             }
-
-
             //配置控制器
-            NodeList controlList = root.getElementsByTagName("controls");
-            controlList = ((Element) controlList.item(0)).getElementsByTagName("control");
-            System.out.println("controlList:" + controlList.getLength());
-            for (int i = 0; i < controlList.getLength(); i++) {
-                Element control = (Element) controlList.item(i);
-                NodeList controlChilds = control.getChildNodes();
-                System.out.println("controlChilds.getLength():" + controlChilds.getLength());
-                int controlId = -1;
-                String controlName = null;
+            XMLObject[] controlList = rpg.getFirstXMLObject("controls").getXMLObjectArray("control");
+            for (XMLObject control : controlList) {
+                int id = control.getFirstXMLObject("id").getIntValue();
+                String fullName = control.getFirstXMLObject("fullName").getStringValue();
+                //配置视图
+                XMLObject[] viewList = control.getFirstXMLObject("views").getXMLObjectArray("view");
                 Map<Integer, String> views = new HashMap<Integer, String>();
-                for (int j = 0; j < controlChilds.getLength(); j++) {
-                    Node controlChild = controlChilds.item(j);
-                    if (controlChild.getNodeType() == Node.ELEMENT_NODE) {
-                        if (controlChild.getNodeName().equals("id")) {
-                            controlId = Integer.parseInt(controlChild.getFirstChild().getNodeValue());
-                            System.out.println("controlId:" + controlId);
-                        } else if (controlChild.getNodeName().equals("fullName")) {
-                            controlName = controlChild.getFirstChild().getNodeValue();
-                            System.out.println("controlName:" + controlName);
-                        } else if (controlChild.getNodeName().equals("views")) {
-
-                            //配置视图
-                            NodeList viewList = ((Element) controlChild).getElementsByTagName("view");
-                            System.out.println("viewlList:" + viewList.getLength());
-                            for (int k = 0; k < viewList.getLength(); k++) {
-                                Element view = (Element) viewList.item(k);
-                                NodeList viewChilds = view.getChildNodes();
-                                int viewId = -1;
-                                String viewName = null;
-                                for (int l = 0; l < viewChilds.getLength(); l++) {
-                                    Node viewChild = viewChilds.item(l);
-                                    if (viewChild.getNodeType() == Node.ELEMENT_NODE) {
-                                        if (viewChild.getNodeName().equals("id")) {
-                                            viewId = Integer.parseInt(viewChild.getFirstChild().getNodeValue());
-                                            System.out.println("viewId:" + viewId);
-                                        } else if (viewChild.getNodeName().equals("fullName")) {
-                                            viewName = viewChild.getFirstChild().getNodeValue();
-                                            System.out.println("viewName:" + viewName);
-                                        }
-                                        views.put(viewId, viewName);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                for (XMLObject view : viewList) {
+                    int viewId = view.getFirstXMLObject("id").getIntValue();
+                    String viewName = view.getFirstXMLObject("fullName").getStringValue();
+                    views.put(viewId, viewName);
                 }
-                controls.put(controlId, new ControlNode(controlId, controlName, views));
+                controls.put(id, new ControlNode(id, fullName, views));
             }
-            setCurrentControl(Integer.parseInt(root.getElementsByTagName("currentControlID").item(0).getFirstChild().getNodeValue()));
-
-            System.out.println("curControlID:" + curControlID);
-
+            int currentControlID = rpg.getFirstXMLObject("controls").getFirstXMLObject("currentControlID").getIntValue();
+            setCurrentControl(currentControlID);
             //------------------------------------结束------------------------------------
-        } catch (SAXException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
 
     }
 

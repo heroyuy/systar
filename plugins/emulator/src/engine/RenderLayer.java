@@ -38,7 +38,7 @@ public class RenderLayer extends Container implements Component.Callback {
 
     @Override
     public void onKeyEvent(KeyEvent ke) {
-        ge.setKey(ke);
+        ge.setKeyEvent(ke);
     }
 
     public void sizeChanged(int width, int height) {
