@@ -12,6 +12,7 @@ package emulator;
 
 import com.soyostar.app.App;
 import com.soyostar.app.Component;
+import java.awt.Dimension;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,13 +64,12 @@ public class Emulator extends javax.swing.JDialog {
     }
 
     protected void setEmulatorSize(int width, int height) {
-        screen.setSize(width, height);
-//        this.setSize(width + 18, height + 63);
+        screen.setPreferredSize(new Dimension(width, height));
         if (curApp.getContentPanel() != null) {
             System.out.println("设置屏幕大小");
             curApp.getContentPanel().setSize(width, height);
-            if(curApp.getContentPanel() instanceof Component.Callback){
-                ((Component.Callback)curApp.getContentPanel()).sizeChanged(width, height);
+            if (curApp.getContentPanel() instanceof Component.Callback) {
+                ((Component.Callback) curApp.getContentPanel()).sizeChanged(width, height);
             }
         }
         this.pack();
@@ -161,6 +161,7 @@ public class Emulator extends javax.swing.JDialog {
         jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.GroupLayout screenLayout = new javax.swing.GroupLayout(screen);
         screen.setLayout(screenLayout);
