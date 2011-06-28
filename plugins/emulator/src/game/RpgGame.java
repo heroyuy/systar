@@ -80,10 +80,9 @@ public class RpgGame extends Game {
 
     /**
      * 根据配置文件初始化游戏
-     * 1、加载所有Control
-     * 2、设置当前Control
-     * 3、加载需要自更新的Model
-     * 4、设置数据处理器
+     * 1、加载需要自更新的Model
+     * 2、加载所有Control
+     * 3、设置当前Control
      */
     private void loadConfig() {
         try {
