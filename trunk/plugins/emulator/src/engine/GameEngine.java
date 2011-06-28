@@ -152,7 +152,7 @@ public final class GameEngine implements Runnable {
         main.stop();
     }
 
-    protected void setKey(KeyEvent ke) {
+    protected void setKeyEvent(KeyEvent ke) {
         this.ke = ke;
     }
 
@@ -176,7 +176,6 @@ public final class GameEngine implements Runnable {
      */
     public void setMain(Main main) {
         this.main = main;
-        System.out.println("设置Canvas");
         main.setContentPanel(renderLayer);
     }
 
@@ -256,11 +255,11 @@ public final class GameEngine implements Runnable {
                 // 加载配置文件
                 games = new HashMap<Integer, GameNode>();
                 XMLObject engine = XMLParser.parse(new File(configFile));
-                curGameIndex = Integer.parseInt(engine.getFirstXMLObject("CurrentGameID").getValue());
+                curGameIndex = engine.getFirstXMLObject("CurrentGameID").getIntValue();
                 XMLObject[] gamesObject = engine.getXMLObjectArray("Game");
                 for (XMLObject gameObject : gamesObject) {
-                    int id = Integer.parseInt(gameObject.getFirstXMLObject("ID").getValue());
-                    String fullName = gameObject.getFirstXMLObject("FullName").getValue();
+                    int id = gameObject.getFirstXMLObject("ID").getIntValue();
+                    String fullName = gameObject.getFirstXMLObject("FullName").getStringValue();
                     Game game = (Game) Class.forName(fullName).newInstance();
                     games.put(id, new GameNode(id, fullName, game));
                 }
