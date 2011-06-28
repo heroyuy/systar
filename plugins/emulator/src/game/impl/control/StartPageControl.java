@@ -20,16 +20,16 @@ public class StartPageControl extends AbControl {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
 
-//    public void dealKeyEvent(int key) {
-//        rpgGame.setCurrentControl(Const.ControlId.MENU);
-//        ge.clearKey();
-//    }
     public void onTouchEvent(TouchEvent me) {
         rpgGame.setCurrentControl(Const.ControlId.MENU);
         ge.clearTouchEvent();
     }
 
     public void onKeyEvent(KeyEvent ke) {
+        if (ke.getType() == KeyEvent.KEY_DOWN) {
+            rpgGame.setCurrentControl(Const.ControlId.MENU);
+        }
+        ge.clearKeyEvent();
     }
 
     public void updateModel() {
