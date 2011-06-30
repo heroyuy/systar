@@ -7,6 +7,7 @@ import game.Const;
 import game.RpgGame;
 import game.View;
 import game.impl.model.GameData;
+import game.util.Skin;
 
 /**
  *
@@ -17,6 +18,7 @@ public class MenuView implements View {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel(0);
+    private Skin s = new Skin();
 
     public void init() {
     }
@@ -26,8 +28,9 @@ public class MenuView implements View {
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
         p.setColor(Color.WHITE);
         p.drawLine(0, 20, 100, 20);
-        p.drawLine(0, 20+p.getTextSize(), 100, 20+p.getTextSize());
+        p.drawLine(0, 20 + p.getTextSize(), 100, 20 + p.getTextSize());
         p.drawString("测试Test123", 0, 20+p.getTextSize(), Painter.LT);
+//        p.drawImage(s.getBackgroud(), 0, 0, Painter.LT);
         int num = Const.Text.MENU.length;
         for (int i = 0; i < num; i++) {
             p.setColor(Color.GREEN);
