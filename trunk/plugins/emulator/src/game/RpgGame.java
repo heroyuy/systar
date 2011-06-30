@@ -7,16 +7,10 @@ import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
 import engine.Game;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public class RpgGame extends Game {
 
