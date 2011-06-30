@@ -28,49 +28,59 @@ public final class GameEngine implements Runnable {
     public static GameEngine getInstance() {
         return ge;
     }
+
     /**
      * 视图渲染层
      */
     private RenderLayer renderLayer = null;
+
     /**
      * 游戏管理器
      */
     private GameManager gameManager = null;
+
     /**
      * 循环计数器
      */
     private int ticker = 0;
+
     /**
-     * 按键事件
+     * 当前按键事件
      */
     private KeyEvent ke = null;
+
     /**
      * 当前触屏事件
      */
     private TouchEvent te = null;
+
     /**
      * 循环等待时间
      */
 //    private int delay = 80;
+
     /**
      * fps
      */
     private int fps = 12;
+
     /**
      * 游戏引擎运行状态标识
      */
     private volatile boolean isRun = false;
+
     /**
      * 程序入口的引用
      */
     private Main main = null;
+
     /**
      * 游戏实例
      */
     private Game game = null;
 
     /**
-     * 构造器
+     * 无参构造器
      *
      */
     private GameEngine() {
@@ -120,6 +130,7 @@ public final class GameEngine implements Runnable {
         try {
             while (isRun) {
                 long time = System.currentTimeMillis();
+
                 //更新游戏
                 game.update();
 
@@ -127,6 +138,7 @@ public final class GameEngine implements Runnable {
                 if (te != null) {
                     game.onTouchEvent(te);
                 }
+
                 // 处理按键
                 if (ke != null) {
                     game.onKeyEvent(ke);
@@ -138,9 +150,8 @@ public final class GameEngine implements Runnable {
                 time = System.currentTimeMillis() - time;
 
                 // 循环等待
-
                 if (time < 1000 / fps) {
-                    Thread.sleep(1000 / fps - time);//保证fps维持一个定值
+                    Thread.sleep(1000 / fps - time);      //保证fps维持一个定值
                 }
 
                 // 循环计数器自增
@@ -152,18 +163,32 @@ public final class GameEngine implements Runnable {
         main.stop();
     }
 
+    /**
+     * 设置按键事件
+     * @param ke KeyEvent对象
+     */
     protected void setKeyEvent(KeyEvent ke) {
         this.ke = ke;
     }
 
+    /**
+     * 设置触摸事件
+     * @param te TouchEvent对象
+     */
     protected void setTouchEvent(TouchEvent te) {
         this.te = te;
     }
 
+    /**
+     * 清除TouchEvent事件
+     */
     public void clearTouchEvent() {
         te = null;
     }
 
+    /**
+     * 清除键盘事件
+     */
     public void clearKeyEvent() {
         ke = null;
     }
@@ -171,18 +196,26 @@ public final class GameEngine implements Runnable {
     /**
      * 设置程序入口
      *
-     * @param main
-     *            程序入口
+     * @param main  程序入口
+     *            
      */
     public void setMain(Main main) {
         this.main = main;
         main.setContentPanel(renderLayer);
     }
 
+    /**
+     * 获取屏幕宽度
+     * @return 屏幕宽度
+     */
     public int getScreenWidth() {
         return renderLayer.getWidth();
     }
 
+    /**
+     * 获取屏幕高度
+     * @return 屏幕的高度
+     */
     public int getScreenHeight() {
         return renderLayer.getHeight();
     }
@@ -211,6 +244,10 @@ public final class GameEngine implements Runnable {
         private Map<Integer, GameNode> games = null;
         private int curGameIndex = -1;
 
+        /**
+         * 获取当前game对象
+         * @return 当前game对象
+         */
         public Game getCurGame() {
             if (games == null) {
                 loadConfig();
@@ -219,6 +256,10 @@ public final class GameEngine implements Runnable {
 
         }
 
+        /**
+         * 根据键值设置当前game
+         * @param index Map中的键值
+         */
         public void setCurGame(int index) {
             if (games.containsKey(index)) {
                 curGameIndex = index;
