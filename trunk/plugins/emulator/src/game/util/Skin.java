@@ -13,7 +13,7 @@ import com.soyostar.app.Image;
 public class Skin {
 
     static Image img;
-    private static final String PATH = "res/image/skin/001-Blue01";
+    private static final String PATH = "res/image/skin/001-Blue01.png";
     //皮肤文件的路径
     public Skin() {
 //        skinPath = PATH;
