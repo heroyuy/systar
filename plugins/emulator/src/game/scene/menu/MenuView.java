@@ -1,4 +1,4 @@
-package game.impl.view.menu;
+package game.scene.menu;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;

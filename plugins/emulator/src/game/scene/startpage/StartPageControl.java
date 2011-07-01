@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.impl.control;
+package game.scene.startpage;
 
 import com.soyostar.app.KeyEvent;
 import com.soyostar.app.TouchEvent;

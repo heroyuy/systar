@@ -1,13 +1,13 @@
-package game.impl.view.map;
+package game.scene.map;
 
 import com.soyostar.app.Painter;
 import game.View;
 
 /**
- * 地图前景，位于精灵层之上，遮罩层
+ * 精灵层
  * @author Administrator
  */
-public class ForegroundView implements View {
+public class SpriteView implements View {
 
     public void init() {
         throw new UnsupportedOperationException("Not supported yet.");

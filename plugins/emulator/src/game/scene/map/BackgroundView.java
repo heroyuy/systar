@@ -1,4 +1,4 @@
-package game.impl.view.map;
+package game.scene.map;
 
 import com.soyostar.app.Painter;
 import game.View;

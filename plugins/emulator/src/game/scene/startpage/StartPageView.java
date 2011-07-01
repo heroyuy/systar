@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.impl.view.startpage;
+package game.scene.startpage;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
