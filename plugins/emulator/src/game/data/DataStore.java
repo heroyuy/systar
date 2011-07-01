@@ -10,8 +10,6 @@ import game.impl.model.Skill;
 import game.impl.model.animation.Animation;
 import game.impl.model.Map;
 import java.util.HashMap;
-//import model.*;
-//import test.TestData;
 
 /**
  *
