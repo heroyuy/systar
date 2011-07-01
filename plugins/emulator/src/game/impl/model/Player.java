@@ -1,6 +1,5 @@
 package game.impl.model;
 
-import game.AbModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
