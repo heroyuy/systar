@@ -32,9 +32,8 @@ public class StartPageView implements View {
     public void paint(Painter p) {
         p.setColor(Color.BLACK);
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
-        p.drawImage(player,  ge.getScreenWidth() / 2, ge.getScreenHeight() / 2, Painter.HV);
-//        p.setColor(Color.WHITE);
-        p.setColor(0x12345678);
+        p.drawImage(player, ge.getScreenWidth() / 2, ge.getScreenHeight() / 2, Painter.HV);
+        p.setColor(Color.WHITE);
         p.setTextSize(20);
         p.drawString("欢迎界面", ge.getScreenWidth() / 2, ge.getScreenHeight() / 2, Painter.HV);
     }
