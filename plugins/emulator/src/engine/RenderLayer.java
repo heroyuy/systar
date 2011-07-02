@@ -7,7 +7,6 @@ import com.soyostar.app.Image;
 import com.soyostar.app.KeyEvent;
 import com.soyostar.app.Painter;
 import com.soyostar.app.TouchEvent;
-import com.soyostar.app.widget.Layer;
 import com.soyostar.app.widget.WButton;
 
 /**
