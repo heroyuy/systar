@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.scene.startpage;
 
 import com.soyostar.app.Button;
@@ -19,7 +15,7 @@ import game.RpgGame;
 
 /**
  *
- * @author Administrator
+ * @author wp_g4
  */
 public class StartPageControl extends AbController implements TouchListener, ActionListener {
 
@@ -33,7 +29,9 @@ public class StartPageControl extends AbController implements TouchListener, Act
         super(render);
     }
 
+    int color = 0xffaaaaaa;
     public void updateModel() {
+        startPageLayer.setBackground(color++);
     }
 
     public void onObtain() {
