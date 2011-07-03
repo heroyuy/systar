@@ -2,8 +2,8 @@ package game.scene.menu;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
+import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
-import com.soyostar.app.widget.Layer;
 import engine.GameEngine;
 import game.Const;
 import game.RpgGame;

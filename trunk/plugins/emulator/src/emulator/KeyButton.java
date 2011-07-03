@@ -1,7 +1,7 @@
 package emulator;
 
 import com.soyostar.app.Component;
-import com.soyostar.app.KeyEvent;
+import com.soyostar.app.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

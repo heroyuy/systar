@@ -1,7 +1,7 @@
 package engine;
 
 import com.soyostar.app.Component;
-import com.soyostar.app.widget.Widget;
+import com.soyostar.app.Widget;
 
 /**
  *

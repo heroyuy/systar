@@ -1,7 +1,7 @@
 package engine;
 
 import com.soyostar.app.Component;
-import com.soyostar.app.widget.Widget;
+import com.soyostar.app.Widget;
 
 /**
  * 游戏抽象类，所有游戏实体必需继承自此类

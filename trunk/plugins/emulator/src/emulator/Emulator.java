@@ -68,9 +68,8 @@ public class Emulator extends javax.swing.JDialog {
         if (curApp.getContentPanel() != null) {
             System.out.println("设置屏幕大小");
             curApp.getContentPanel().setSize(width, height);
-            if (curApp.getContentPanel() instanceof Component.Callback) {
-                ((Component.Callback) curApp.getContentPanel()).sizeChanged(width, height);
-            }
+            curApp.getContentPanel().sizeChanged(width, height);
+
         }
         this.pack();
     }

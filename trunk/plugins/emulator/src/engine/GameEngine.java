@@ -1,7 +1,7 @@
 package engine;
 
-import com.soyostar.app.KeyEvent;
-import com.soyostar.app.TouchEvent;
+import com.soyostar.app.event.KeyEvent;
+import com.soyostar.app.event.TouchEvent;
 import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
 import java.io.File;
@@ -70,7 +70,7 @@ public final class GameEngine implements Runnable {
      *
      */
     private GameEngine() {
-        renderLayer = new RenderLayer(this);
+        renderLayer = new RenderLayer();
         gameManager = new GameManager();
     }
 
