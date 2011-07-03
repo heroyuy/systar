@@ -4,34 +4,46 @@
  */
 package game.scene.startpage;
 
-import com.soyostar.app.KeyEvent;
-import com.soyostar.app.TouchEvent;
+import com.soyostar.app.Color;
+import com.soyostar.app.Image;
+import com.soyostar.app.widget.LButton;
 import engine.GameEngine;
-import game.AbControl;
-import game.Const;
+import engine.Render;
+import game.AbController;
 import game.RpgGame;
 
 /**
  *
  * @author Administrator
  */
-public class StartPageControl extends AbControl {
+public class StartPageControl extends AbController {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
+    private StartPageLayer startPageLayer = null;
 
-    public void onTouchEvent(TouchEvent me) {
-        rpgGame.setCurrentControl(Const.ControlId.MENU);
-        ge.clearTouchEvent();
-    }
-
-    public void onKeyEvent(KeyEvent ke) {
-        if (ke.getType() == KeyEvent.KEY_DOWN) {
-            rpgGame.setCurrentControl(Const.ControlId.MENU);
-        }
-        ge.clearKeyEvent();
+    public StartPageControl(Render render) {
+        super(render);
     }
 
     public void updateModel() {
+    }
+
+    public void onObtain() {
+        System.out.println("StartPageControl-onObtain");
+        startPageLayer = new StartPageLayer();
+        startPageLayer.setVisible(true);
+        startPageLayer.setSize(ge.getScreenWidth(), ge.getScreenHeight());
+        LButton lb = new LButton(Image.createImage("res/image/battler/001-Fighter01.png"), Image.createImage("res/image/battler/002-Fighter02.png"));
+        lb.setText("你好");
+        lb.setVisible(true);
+        lb.setSize(200, 60);
+        lb.setBackground(Color.RED);
+
+        addWidget(startPageLayer);
+        addWidget(lb);
+    }
+
+    public void onLose() {
     }
 }

@@ -4,11 +4,11 @@
  */
 package game.scene.menu;
 
-import com.soyostar.app.KeyEvent;
 import com.soyostar.app.Rect;
 import com.soyostar.app.TouchEvent;
 import engine.GameEngine;
-import game.AbControl;
+import engine.Render;
+import game.AbController;
 import game.Const;
 import game.RpgGame;
 import game.impl.model.GameData;
@@ -18,33 +18,19 @@ import game.util.TouchDelegate;
  *
  * @author Administrator
  */
-public class MenuControl extends AbControl {
+public class MenuControl extends AbController {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel(0);
     private TouchDelegate touchDelegate = TouchDelegate.getDefaultTouchDelegate();
 
-    public void onKeyEvent(KeyEvent ke) {
+    public MenuControl(Render render) {
+        super(render);
     }
-//    public void dealKeyEvent(int key) {
-//        switch (key) {
-//            case KeyValue.KEY_UP:
-//                gd.menuState.menuIndex = (gd.menuState.menuIndex + Const.Text.MENU.length - 1) % Const.Text.MENU.length;
-//                break;
-//            case KeyValue.KEY_DOWN:
-//                gd.menuState.menuIndex = (gd.menuState.menuIndex + 1) % Const.Text.MENU.length;
-//                break;
-//            case KeyValue.KEY_LS:
-//                changeScene();
-//                break;
-//        }
-//        ge.clearKey();
-//    }
 
     @Override
     public void onObtain() {
-        super.onObtain();
         touchDelegate.clearAllTouchRect();
         for (int i = 0; i < Const.Text.MENU.length; i++) {
             touchDelegate.addTouchRect(new Rect((ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - Const.Text.MENU.length * gd.menuState.menuHeight - (Const.Text.MENU.length - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight));
@@ -81,5 +67,8 @@ public class MenuControl extends AbControl {
             case 5:
                 break;
         }
+    }
+
+    public void onLose() {
     }
 }

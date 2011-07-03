@@ -3,10 +3,10 @@ package game.scene.menu;
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
 import com.soyostar.app.Painter;
+import com.soyostar.app.widget.Layer;
 import engine.GameEngine;
 import game.Const;
 import game.RpgGame;
-import game.View;
 import game.impl.model.GameData;
 import game.util.Skin;
 
@@ -14,17 +14,18 @@ import game.util.Skin;
  *
  * @author Administrator
  */
-public class MenuView implements View {
+public class MenuLayer extends Layer {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel(0);
     private Skin s = new Skin();
 
-    public void init() {
-    }
 
-    public void paint(Painter p) {
+
+    @Override
+    public void paintSelf(Painter p) {
+        super.paintSelf(p);
         p.setColor(Color.BLACK);
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
         p.drawImage(Image.zoomImage(s.getBackgroud(), ge.getScreenWidth(), ge.getScreenHeight()), 0, 0, Painter.LT);
@@ -42,6 +43,4 @@ public class MenuView implements View {
         }
     }
 
-    public void release() {
-    }
 }

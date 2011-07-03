@@ -28,52 +28,38 @@ public final class GameEngine implements Runnable {
     public static GameEngine getInstance() {
         return ge;
     }
-
     /**
      * 视图渲染层
      */
     private RenderLayer renderLayer = null;
-
     /**
      * 游戏管理器
      */
     private GameManager gameManager = null;
-
     /**
      * 循环计数器
      */
     private int ticker = 0;
-
     /**
      * 当前按键事件
      */
     private KeyEvent ke = null;
-
     /**
      * 当前触屏事件
      */
     private TouchEvent te = null;
-
-    /**
-     * 循环等待时间
-     */
-//    private int delay = 80;
-
     /**
      * fps
      */
     private int fps = 12;
-
     /**
      * 游戏引擎运行状态标识
      */
     private volatile boolean isRun = false;
-
     /**
      * 程序入口的引用
      */
     private Main main = null;
-
     /**
      * 游戏实例
      */
@@ -134,18 +120,7 @@ public final class GameEngine implements Runnable {
                 //更新游戏
                 game.update();
 
-                //触屏处理
-                if (te != null) {
-                    game.onTouchEvent(te);
-                }
-
-                // 处理按键
-                if (ke != null) {
-                    game.onKeyEvent(ke);
-                }
-
                 // 渲染视图
-                game.render(renderLayer.getPainter());
                 renderLayer.repaint();
                 time = System.currentTimeMillis() - time;
 
@@ -301,7 +276,7 @@ public final class GameEngine implements Runnable {
                 for (XMLObject gameObject : gamesObject) {
                     int id = gameObject.getFirstXMLObject("ID").getIntValue();
                     String fullName = gameObject.getFirstXMLObject("FullName").getStringValue();
-                    Game game = (Game) Class.forName(fullName).newInstance();
+                    Game game = (Game) Class.forName(fullName).getConstructor(Render.class).newInstance(renderLayer);
                     games.put(id, new GameNode(id, fullName, game));
                 }
             } catch (Exception ex) {
