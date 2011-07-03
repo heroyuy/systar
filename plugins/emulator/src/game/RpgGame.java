@@ -14,19 +14,10 @@ import java.util.logging.Logger;
 public class RpgGame extends Game {
 
     private long startTime = 0;
-    private boolean isDealingGameEvent = false;
     private String configFile = "rpg.xml";
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
     private Map<Integer, ModelNode> models = null;
-
-    public void startGameEvent() {
-        isDealingGameEvent = true;
-    }
-
-    public void finishGameEvent() {
-        isDealingGameEvent = false;
-    }
 
     public long getCurTime() {
         return System.currentTimeMillis() - startTime;
@@ -115,6 +106,8 @@ public class RpgGame extends Game {
     public void setCurrentControl(int index) {
         if (controls.get(curControlID) != null) {
             controls.get(curControlID).control.onLose();
+            this.removeAllComponents();
+            this.removeAllWidgets();
         }
         if (controls.containsKey(index)) {
             curControlID = index;
