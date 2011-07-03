@@ -293,14 +293,17 @@ public final class GameEngine implements Runnable {
                 this.fullName = fullName;
                 this.game = game;
             }
+
             /**
              * 游戏ID
              */
             public int id = -1;
+
             /**
              * 游戏入口类全名
              */
             public String fullName = null;
+            
             /**
              * 游戏实例
              */
