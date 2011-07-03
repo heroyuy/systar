@@ -33,44 +33,70 @@ public abstract class Game implements Render {
      */
     public abstract void exit();
 
+    /**
+     * 添加组件
+     * @param component 待添加的组件
+     */
     public void addComponent(Component component) {
         render.addComponent(component);
     }
 
     ;
-
+    /**
+     * 移除组件
+     * @param component 待移除的组件
+     */
     public void removeComponent(Component component) {
         render.removeComponent(component);
     }
 
     ;
-
+    /**
+     * 移除所有组件
+     * 
+     */
     public void removeAllComponents() {
         render.removeAllComponents();
     }
 
     ;
-
+    /**
+     * 添加小部件
+     * @param component 待添加的小部件
+     */
     public void addWidget(Widget widget) {
         render.addWidget(widget);
     }
 
     ;
-
+    /**
+     * 移除小部件
+     * @param component 待移除的小部件
+     */
     public void removeWidget(Widget widget) {
         render.removeWidget(widget);
     }
 
     ;
-
+    /**
+     * 移除所有小部件
+     */
     public void removeAllWidgets() {
         render.removeAllWidgets();
     }
 
+    /**
+     * 获取当前Render对象
+     * @return render对象
+     */
     public Render getRender() {
         return render;
     }
 
+    /**
+     * 设置当前render对象
+     * @param render
+     */
     public void setRender(Render render) {
         this.render = render;
     }
