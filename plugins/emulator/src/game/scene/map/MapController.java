@@ -4,8 +4,6 @@
  */
 package game.scene.map;
 
-import com.soyostar.app.KeyEvent;
-import com.soyostar.app.TouchEvent;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
@@ -32,13 +30,7 @@ public class MapController extends AbController {
         System.out.println("gd.mapState.curMap.name->" + gd.mapState.curMap.name);
     }
 
-    public void onTouchEvent(TouchEvent te) {
-    }
-
     public void updateModel() {
-    }
-
-    public void onKeyEvent(KeyEvent ke) {
     }
 
     public void onLose() {

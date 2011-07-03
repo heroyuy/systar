@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.scene.menu;
 
 import com.soyostar.app.Rect;
-import com.soyostar.app.TouchEvent;
+import com.soyostar.app.event.TouchEvent;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;

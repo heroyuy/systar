@@ -1,7 +1,6 @@
 package game.scene.map;
 
-import com.soyostar.app.Painter;
-import com.soyostar.app.widget.Layer;
+import com.soyostar.app.Layer;
 
 /**
  * 地图背景，位于精灵层之下
@@ -9,7 +8,5 @@ import com.soyostar.app.widget.Layer;
  */
 public class BackgroundLayer extends Layer {
 
-    @Override
-    public void paintSelf(Painter p) {
-    }
+ 
 }

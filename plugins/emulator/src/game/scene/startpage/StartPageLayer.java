@@ -2,8 +2,8 @@ package game.scene.startpage;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
+import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
-import com.soyostar.app.widget.Layer;
 import engine.GameEngine;
 import game.RpgGame;
 import game.impl.model.GameData;
@@ -27,7 +27,6 @@ public class StartPageLayer extends Layer {
 
     @Override
     public void paintSelf(Painter p) {
-        System.out.println("StartPageLayer-paintSelf");
         super.paintSelf(p);
         p.drawImage(player, ge.getScreenWidth() / 2, ge.getScreenHeight() / 2, Painter.HV);
         p.setColor(Color.WHITE);
