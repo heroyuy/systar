@@ -63,6 +63,7 @@ public class StartPageControl extends AbController implements TouchListener, Act
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
+        System.out.println("按键");
         rpgGame.setCurrentControl(Const.ControlId.MENU);
         return true;
     }
