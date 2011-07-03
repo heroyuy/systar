@@ -4,9 +4,6 @@
  */
 package game.util;
 
-import com.soyostar.app.Painter;
-import com.soyostar.app.Rect;
-
 /**
  * 绘制各种窗口的辅助类
  * @author wp_g4

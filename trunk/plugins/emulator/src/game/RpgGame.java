@@ -1,12 +1,11 @@
 package game;
 
-import com.soyostar.app.KeyEvent;
-import com.soyostar.app.Painter;
-import com.soyostar.app.TouchEvent;
 import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
 import engine.Game;
+import engine.Render;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,7 +32,8 @@ public class RpgGame extends Game {
         return System.currentTimeMillis() - startTime;
     }
 
-    public RpgGame() {
+    public RpgGame(Render render) {
+        super(render);
         models = new HashMap<Integer, ModelNode>();
         controls = new HashMap<Integer, ControlNode>();
     }
@@ -56,20 +56,7 @@ public class RpgGame extends Game {
         getCurrentControl().updateModel();
     }
 
-    public void onTouchEvent(TouchEvent me) {
-        getCurrentControl().onTouchEvent(me);
-    }
-
-    @Override
-    public void onKeyEvent(KeyEvent ke) {
-        getCurrentControl().onKeyEvent(ke);
-    }
-
     public void exit() {
-    }
-
-    public void render(Painter p) {
-        getCurrentControl().updateView(p);
     }
 
     /**
@@ -121,7 +108,7 @@ public class RpgGame extends Game {
         return models.get(id).model;
     }
 
-    private Control getCurrentControl() {
+    private Controller getCurrentControl() {
         return controls.get(curControlID).control;
     }
 
@@ -169,10 +156,18 @@ public class RpgGame extends Game {
             try {
                 this.id = id;
                 this.name = name;
-                this.control = (AbControl) Class.forName(name).newInstance();
+                this.control = (AbController) Class.forName(name).getConstructor(Render.class).newInstance(RpgGame.this.getRender());
                 for (int viewId : views.keySet()) {
-                    this.control.addView(viewId, views.get(viewId));
+//                    this.control.addView(viewId, views.get(viewId));
                 }
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
                 Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
@@ -183,7 +178,7 @@ public class RpgGame extends Game {
         }
         public int id = -1;
         public String name = null;
-        public AbControl control = null;
+        public Controller control = null;
     }
 
     private class ModelNode {
