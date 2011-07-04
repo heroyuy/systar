@@ -17,7 +17,7 @@ import game.RpgGame;
  *
  * @author wp_g4
  */
-public class StartPageControl extends AbController implements TouchListener, ActionListener {
+public class StartPageController extends AbController implements TouchListener, ActionListener {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
@@ -25,7 +25,7 @@ public class StartPageControl extends AbController implements TouchListener, Act
     private LButton lButton = null;
     private Button button = null;
 
-    public StartPageControl(Render render) {
+    public StartPageController(Render render) {
         super(render);
     }
 
