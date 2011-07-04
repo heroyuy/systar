@@ -26,7 +26,9 @@ public class MenuLayer extends Layer {
     @Override
     public void paintSelf(Painter p) {
         super.paintSelf(p);
+     
         p.setColor(Color.BLACK);
+
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
         p.drawImage(Image.zoomImage(s.getBackgroud(), ge.getScreenWidth(), ge.getScreenHeight()), 0, 0, Painter.LT);
         int num = Const.Text.MENU.length;
@@ -41,6 +43,7 @@ public class MenuLayer extends Layer {
             p.drawString(Const.Text.MENU[i], ge.getScreenWidth() / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap) + gd.menuState.menuHeight / 2, Painter.HV);
 
         }
+           s.drawRect(p, s.getItemBackgrouds(), (ge.getScreenWidth() - gd.menuState.menuWidth) / 2,(ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 +  (gd.menuState.menuHeight + gd.menuState.gap) , gd.menuState.menuWidth, gd.menuState.menuHeight);
     }
 
 }
