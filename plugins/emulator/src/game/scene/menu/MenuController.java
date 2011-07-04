@@ -15,7 +15,7 @@ import game.util.TouchDelegate;
  *
  * @author Administrator
  */
-public class MenuControl extends AbController implements TouchListener {
+public class MenuController extends AbController implements TouchListener {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
@@ -23,7 +23,7 @@ public class MenuControl extends AbController implements TouchListener {
     private TouchDelegate touchDelegate = TouchDelegate.getDefaultTouchDelegate();
     private MenuLayer menuLayer = null;
 
-    public MenuControl(Render render) {
+    public MenuController(Render render) {
         super(render);
     }
 

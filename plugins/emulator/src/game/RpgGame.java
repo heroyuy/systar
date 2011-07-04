@@ -40,7 +40,6 @@ public class RpgGame extends Game {
      * 2、更新由控制器控制的Model
      */
     public void update() {
-//        System.out.println("自动更新Model");
         for (ModelNode mn : models.values()) {
             mn.model.update();
         }
@@ -72,15 +71,7 @@ public class RpgGame extends Game {
             for (XMLObject control : controlList) {
                 int id = control.getFirstXMLObject("id").getIntValue();
                 String fullName = control.getFirstXMLObject("fullName").getStringValue();
-                //配置视图
-                XMLObject[] viewList = control.getFirstXMLObject("views").getXMLObjectArray("view");
-                Map<Integer, String> views = new HashMap<Integer, String>();
-                for (XMLObject view : viewList) {
-                    int viewId = view.getFirstXMLObject("id").getIntValue();
-                    String viewName = view.getFirstXMLObject("fullName").getStringValue();
-                    views.put(viewId, viewName);
-                }
-                controls.put(id, new ControlNode(id, fullName, views));
+                controls.put(id, new ControlNode(id, fullName));
             }
             int currentControlID = rpg.getFirstXMLObject("controls").getFirstXMLObject("currentControlID").getIntValue();
             setCurrentControl(currentControlID);
@@ -145,14 +136,11 @@ public class RpgGame extends Game {
 
     private class ControlNode {
 
-        public ControlNode(int id, String name, Map<Integer, String> views) {
+        public ControlNode(int id, String name) {
             try {
                 this.id = id;
                 this.name = name;
                 this.control = (AbController) Class.forName(name).getConstructor(Render.class).newInstance(RpgGame.this.getRender());
-                for (int viewId : views.keySet()) {
-//                    this.control.addView(viewId, views.get(viewId));
-                }
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvocationTargetException ex) {
