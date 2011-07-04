@@ -113,4 +113,10 @@ public class Skin {
 
 
     }
+
+    public void drawRect(Painter painter,int x,int y,int width,int height){
+        Image img=Image.copyImage(this.img, 128, 64, 32, 32);
+        painter.drawImage(Image.zoomImage(img, width, height), x, y, Painter.LT);
+//        painter.drawImage(img, x, y, Painter.LT);
+    }
 }
