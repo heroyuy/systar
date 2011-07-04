@@ -21,12 +21,10 @@ public class MenuLayer extends Layer {
     private GameData gd = (GameData) rpgGame.getModel(0);
     private Skin s = new Skin();
 
-
-
     @Override
     public void paintSelf(Painter p) {
         super.paintSelf(p);
-     
+
         p.setColor(Color.BLACK);
 
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
@@ -43,7 +41,8 @@ public class MenuLayer extends Layer {
             p.drawString(Const.Text.MENU[i], ge.getScreenWidth() / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + i * (gd.menuState.menuHeight + gd.menuState.gap) + gd.menuState.menuHeight / 2, Painter.HV);
 
         }
-           s.drawRect(p, s.getItemBackgrouds(), (ge.getScreenWidth() - gd.menuState.menuWidth) / 2,(ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 +  (gd.menuState.menuHeight + gd.menuState.gap) , gd.menuState.menuWidth, gd.menuState.menuHeight);
-    }
+        s.drawRect(p, s.getItemBackgrouds(), (ge.getScreenWidth() - gd.menuState.menuWidth) / 2, (ge.getScreenHeight() - num * gd.menuState.menuHeight - (num - 1) * gd.menuState.gap) / 2 + (gd.menuState.menuHeight + gd.menuState.gap), gd.menuState.menuWidth, gd.menuState.menuHeight);
 
+        s.drawRect(p, 0, 0, 100, 100);
+    }
 }
