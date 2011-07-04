@@ -5,6 +5,7 @@
 package game.util;
 
 import com.soyostar.app.Image;
+import com.soyostar.app.Painter;
 
 /**@2011.6.29 by vv
  *本类为获取背景等图片数组的工具类
@@ -14,7 +15,6 @@ public class Skin {
 
     static Image img;
     private static final String PATH = "res/image/skin/001-Blue01.png";
-   
 
     public Skin() {
 //        skinPath = PATH;
@@ -50,10 +50,10 @@ public class Skin {
     }
 
     public Image[] getCursorArrows() {
-         Image[] img_ = new Image[4];
+        Image[] img_ = new Image[4];
         img_[0] = Image.copyImage(img, 160, 64, 16, 16);
         img_[1] = Image.copyImage(img, 160, 80, 16, 16);
-         img_[2] = Image.copyImage(img, 176, 64, 16, 16);
+        img_[2] = Image.copyImage(img, 176, 64, 16, 16);
         img_[3] = Image.copyImage(img, 176, 80, 16, 16);
 
         return img_;
@@ -80,5 +80,37 @@ public class Skin {
         img_[2] = Image.copyImage(img, 168, 24, 8, 16);
         img_[3] = Image.copyImage(img, 152, 40, 16, 8);
         return img_;
+    }
+
+    public void drawRect(Painter p, Image[] img_, int x, int y, int width, int height) {
+        Image[] img = img_;
+//        if (height % 16 != 0 && height < 32) {
+//
+//            img[0] = Image.zoomImage(img[0], 16, height / 2);
+//            img[2] = Image.zoomImage(img[2], 16, height / 2);
+//            img[6] = Image.zoomImage(img[6], 16, height / 2);
+//            img[8] = Image.zoomImage(img[8], 16, height / 2);
+//        }
+
+
+        p.drawImage(img[0], x, y, Painter.LT);
+        p.drawImage(img[2], x + width - 16, y, Painter.LT);
+        p.drawImage(img[6], x, y + height - 16, Painter.LT);
+        p.drawImage(img[8], x + width - 16, y + height - 16, Painter.LT);
+
+//        if (width > 32) {
+//            for (int i = 1; i < (width - 16) / 16; i++) {
+//                p.drawImage(img[1], x + i * 16, y, Painter.LT);
+//                p.drawImage(img[7], x + i * 16, y + height - 16, Painter.LT);
+//            }
+//        }  if (height > 32 ) {
+//             for (int i = 0; i < (height - 16) / 16; i++) {
+//                p.drawImage(img[3], x , y+ i * 16, Painter.LT);
+//                p.drawImage(img[5], x+ width - 16 , y+ i * 16 , Painter.LT);
+//            }
+//
+//        }
+
+
     }
 }
