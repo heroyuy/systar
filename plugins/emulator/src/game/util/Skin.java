@@ -82,41 +82,76 @@ public class Skin {
         return img_;
     }
 
-    public void drawRect(Painter p, Image[] img_, int x, int y, int width, int height) {
-        Image[] img = img_;
-//        if (height % 16 != 0 && height < 32) {
-//
-//            img[0] = Image.zoomImage(img[0], 16, height / 2);
-//            img[2] = Image.zoomImage(img[2], 16, height / 2);
-//            img[6] = Image.zoomImage(img[6], 16, height / 2);
-//            img[8] = Image.zoomImage(img[8], 16, height / 2);
-//        }
-
-
-        p.drawImage(img[0], x, y, Painter.LT);
-        p.drawImage(img[2], x + width - 16, y, Painter.LT);
-        p.drawImage(img[6], x, y + height - 16, Painter.LT);
-        p.drawImage(img[8], x + width - 16, y + height - 16, Painter.LT);
-
-//        if (width > 32) {
-//            for (int i = 1; i < (width - 16) / 16; i++) {
-//                p.drawImage(img[1], x + i * 16, y, Painter.LT);
-//                p.drawImage(img[7], x + i * 16, y + height - 16, Painter.LT);
-//            }
-//        }  if (height > 32 ) {
-//             for (int i = 0; i < (height - 16) / 16; i++) {
-//                p.drawImage(img[3], x , y+ i * 16, Painter.LT);
-//                p.drawImage(img[5], x+ width - 16 , y+ i * 16 , Painter.LT);
-//            }
-//
-//        }
-
-
-    }
-
-    public void drawRect(Painter painter,int x,int y,int width,int height){
-        Image img=Image.copyImage(this.img, 128, 64, 32, 32);
+    public void drawRect(Painter painter, int x, int y, int width, int height) {
+        Image img = Image.copyImage(this.img, 128, 64, 32, 32);
         painter.drawImage(Image.zoomImage(img, width, height), x, y, Painter.LT);
 //        painter.drawImage(img, x, y, Painter.LT);
     }
-}
+
+    public Image createRect(int width, int height) {
+        Image[] img_ = getFrames();
+        Image img_1 = Image.createImage(width, height);
+        Painter p = img_1.getPainter();
+        if (width <= 32) {
+            img_[0] = Image.copyImage(img, 128, 0, width / 2, height / 2);
+            img_[2] = Image.copyImage(img, 192 - width / 2, 0, width / 2, height / 2);
+            p.drawImage(img_[0], 0, 0, Painter.LT);
+            p.drawImage(img_[2], img_1.getWidth() >> 1, 0, Painter.LT);
+        } else {
+            int t = width / 16;
+            int m = width % 16;
+            for (int i = 0; i < t - 2; i++) {
+                p.drawImage(img_[1], 16 + i * 16, 0, Painter.LT);
+                p.drawImage(img_[7], 16 + i * 16, img_1.getHeight() - 16, Painter.LT);
+            }
+            if (m == 0) {
+            } else {
+                p.drawImage(Image.copyImage(img, 144, 0, m, 16), (t - 1) * 16, 0, Painter.LT);
+                p.drawImage(Image.copyImage(img, 144, 48, m, 16), (t - 1) * 16, img_1.getHeight() - 16, Painter.LT);
+            }
+            p.drawImage(img_[0], 0, 0, Painter.LT);
+            p.drawImage(img_[2], img_1.getWidth() - 16, 0, Painter.LT);
+
+        }
+        if (height <= 32) {
+            p.drawImage(img_[6], 0, img_1.getHeight() >> 1, Painter.LT);
+            p.drawImage(img_[8], img_1.getWidth() >> 1, img_1.getHeight() >> 1, Painter.LT);
+            img_[6] = Image.copyImage(img, 128, 64 - height / 2, width / 2, height / 2);
+            img_[8] = Image.copyImage(img, 192 - width / 2, 64 - height / 2, width / 2, height / 2);
+        } else {
+            int th = height / 16;
+            int mh = height % 16;
+            for (int i = 0; i < th - 2; i++) {
+                p.drawImage(img_[3], 0, 16 + i * 16, Painter.LT);
+                p.drawImage(img_[5], img_1.getWidth() - 16, 16 + i * 16, Painter.LT);
+            }
+            if (mh == 0) {
+            } else {
+                p.drawImage(Image.copyImage(img, 128, 16, 16, mh), 0, (th - 1) * 16, Painter.LT);
+                p.drawImage(Image.copyImage(img, 176, 16, 16, mh), img_1.getWidth() - 16, (th - 1) * 16, Painter.LT);
+            }
+            p.drawImage(img_[6], 0, img_1.getHeight() - 16, Painter.LT);
+            p.drawImage(img_[8], img_1.getWidth() - 16, img_1.getHeight() - 16, Painter.LT);
+        }
+        return img_1;
+
+    }
+
+    public Image createBlueBg(int width, int height, boolean hasFrame) {
+        Image img_  = Image.zoomImage(getBackgroud(), width, height);
+        if (hasFrame) {
+            Painter p = img_.getPainter();
+            p.drawImage(this.createRect(width, height), 0, 0, Painter.LT);
+        }
+        return img_;
+    }
+    public Image createAlphaBg(int width, int height, boolean hasFrame) {
+          Image img_  = Image.zoomImage(Image.copyImage(this.img, 128, 64, 32, 32), width, height);
+        if (hasFrame) {
+            Painter p = img_.getPainter();
+            p.drawImage(this.createRect(width, height), 0, 0, Painter.LT);
+        }
+        return img_;
+    }
+    }
+
