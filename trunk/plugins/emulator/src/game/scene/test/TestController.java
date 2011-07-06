@@ -9,9 +9,13 @@ import com.soyostar.app.Color;
 import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
 import com.soyostar.app.Layer;
+import com.soyostar.app.action.Actable;
+import com.soyostar.app.action.WidgetAction;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
+import game.RpgGame;
+import game.impl.model.GameData;
 
 /**
  *
@@ -20,9 +24,11 @@ import game.AbController;
 public class TestController extends AbController {
 
     private GameEngine ge = GameEngine.getInstance();
+    private RpgGame rpgGame = (RpgGame) ge.getGame();
+    private GameData gd = (GameData) rpgGame.getModel(0);
     private Layer bg = null;
     private Layer menu = null;
-     private Layer menu2 = null;
+    private Layer menu2 = null;
     private LButton lb = null;
     private Button btn = null;
 
@@ -33,7 +39,8 @@ public class TestController extends AbController {
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
-
+        Actable actable=new WidgetAction(bg);
+        gd.actionManager.addAction(actable);
 
         menu = new Layer();
         menu.setBackground(Color.BLUE);
@@ -41,7 +48,7 @@ public class TestController extends AbController {
         menu.setLocation(20, 10);
         menu.setVisible(true);
 
-           menu2 = new Layer();
+        menu2 = new Layer();
         menu2.setBackground(Color.BLUE);
         menu2.setSize(80, 40);
         menu2.setLocation(20, 80);
@@ -63,7 +70,7 @@ public class TestController extends AbController {
     public void onObtain() {
         addWidget(bg);
         bg.addWidget(menu);
-         bg.addWidget(menu2);
+        bg.addWidget(menu2);
         menu.addWidget(lb);
         addComponent(btn);
     }
