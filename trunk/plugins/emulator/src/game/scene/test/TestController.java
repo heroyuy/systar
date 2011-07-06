@@ -10,6 +10,7 @@ import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
 import com.soyostar.app.Layer;
 import com.soyostar.app.action.Actable;
+import com.soyostar.app.action.ShadeAction;
 import com.soyostar.app.action.WidgetAction;
 import engine.GameEngine;
 import engine.Render;
@@ -39,7 +40,7 @@ public class TestController extends AbController {
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
-        Actable actable=new WidgetAction(bg);
+        Actable actable=new ShadeAction(bg,0xff000000,0xff0000ff,20);
         gd.actionManager.addAction(actable);
 
         menu = new Layer();
