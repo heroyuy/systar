@@ -49,9 +49,14 @@ public final class GameEngine implements Runnable {
      */
     private TouchEvent te = null;
     /**
-     * fps
+     * 额定FPS
      */
-    private int fps = 12;
+    private final int FPS = 12;
+    /**
+     * 实际fps
+     */
+    private int fps=FPS;
+
     /**
      * 游戏引擎运行状态标识
      */
@@ -110,6 +115,13 @@ public final class GameEngine implements Runnable {
     }
 
     /**
+     * 获取fps
+     * @return fps
+     */
+    public int getFps() {
+        return fps;
+    }
+    /**
      * 游戏引擎主循环
      */
     public void run() {
@@ -122,13 +134,15 @@ public final class GameEngine implements Runnable {
 
                 // 渲染视图
                 renderLayer.repaint();
-                time = System.currentTimeMillis() - time;
+                long cost = System.currentTimeMillis() - time;
 
                 // 循环等待
-                if (time < 1000 / fps) {
-                    Thread.sleep(1000 / fps - time);      //保证fps维持一个定值
+                if (cost < 1000 / FPS) {
+                    Thread.sleep(1000 / FPS - cost);      //保证fps维持一个定值
                 }
+                long time2=System.currentTimeMillis();
 
+                fps=(int) (1000 / (time2 - time));
                 // 循环计数器自增
                 ticker++;
             }
@@ -293,17 +307,14 @@ public final class GameEngine implements Runnable {
                 this.fullName = fullName;
                 this.game = game;
             }
-
             /**
              * 游戏ID
              */
             public int id = -1;
-
             /**
              * 游戏入口类全名
              */
             public String fullName = null;
-            
             /**
              * 游戏实例
              */
