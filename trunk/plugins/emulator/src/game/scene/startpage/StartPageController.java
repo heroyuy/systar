@@ -39,7 +39,7 @@ public class StartPageController extends AbController implements TouchListener, 
         startPageLayer.setVisible(true);
         startPageLayer.setBackground(Color.BLACK);
         startPageLayer.setSize(ge.getScreenWidth(), ge.getScreenHeight());
-        startPageLayer.setTouchListenet(this);
+        startPageLayer.setTouchListener(this);
         lButton = new LButton(Image.createImage("res/image/battler/001-Fighter01.png"), Image.createImage("res/image/battler/002-Fighter02.png"));
         lButton.setText("你好");
         lButton.setVisible(true);

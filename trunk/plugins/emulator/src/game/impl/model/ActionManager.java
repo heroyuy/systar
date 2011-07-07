@@ -27,7 +27,7 @@ public class ActionManager {
     public void run() {
         Actable[] actables = actions.toArray(new Actable[0]);
         for (Actable actable : actables) {
-            if (!actable.isRunning()) {
+            if (!actable.isActive()) {
                 actions.remove(actable);
             } else {
                 actable.run();
