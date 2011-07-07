@@ -37,7 +37,7 @@ public class TestController extends AbController {
 
     public TestController(Render render) {
         super(render);
-        bg = new TestLayer();
+        bg = new Layer();
         bg.setBackground(Color.GREEN);
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
@@ -69,13 +69,20 @@ public class TestController extends AbController {
         btn.setSize(80, 30);
         btn.setLocation(100, 50);
 
-        label = new LLabel();
+        label = new LLabel() {
+
+            @Override
+            public void paint(Painter painter) {
+                this.setText("fps:" + ge.getFps()+" ticker:"+ge.getTicker());
+                super.paint(painter);
+            }
+        };
         label.setBackground(Color.GREEN);
         label.setText("LLabel");
         label.setLocation(100, 200);
         label.setSize(80, 30);
         label.setTextColor(Color.BLUE);
-        label.setTextAnchor(Painter.RB);
+        label.setTextAnchor(Painter.HV);
         label.setVisible(true);
     }
 
