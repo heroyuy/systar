@@ -55,8 +55,7 @@ public final class GameEngine implements Runnable {
     /**
      * 实际fps
      */
-    private int fps=FPS;
-
+    private int fps = FPS;
     /**
      * 游戏引擎运行状态标识
      */
@@ -121,6 +120,15 @@ public final class GameEngine implements Runnable {
     public int getFps() {
         return fps;
     }
+
+    /**
+     * 获取循环次数
+     * @return 循环次数
+     */
+    public int getTicker() {
+        return ticker;
+    }
+
     /**
      * 游戏引擎主循环
      */
@@ -140,9 +148,9 @@ public final class GameEngine implements Runnable {
                 if (cost < 1000 / FPS) {
                     Thread.sleep(1000 / FPS - cost);      //保证fps维持一个定值
                 }
-                long time2=System.currentTimeMillis();
+                long time2 = System.currentTimeMillis();
 
-                fps=(int) (1000 / (time2 - time));
+                fps = (int) (1000 / (time2 - time));
                 // 循环计数器自增
                 ticker++;
             }
