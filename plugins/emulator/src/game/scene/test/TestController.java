@@ -8,10 +8,11 @@ import com.soyostar.app.Button;
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
+import com.soyostar.app.LLabel;
 import com.soyostar.app.Layer;
-import com.soyostar.app.action.Actable;
-import com.soyostar.app.action.ShadeAction;
-import com.soyostar.app.action.WidgetAction;
+import com.soyostar.app.Painter;
+import com.soyostar.app.action.Action;
+import com.soyostar.app.action.widget.ShadeAction;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
@@ -32,6 +33,7 @@ public class TestController extends AbController {
     private Layer menu2 = null;
     private LButton lb = null;
     private Button btn = null;
+    private LLabel label = null;
 
     public TestController(Render render) {
         super(render);
@@ -40,8 +42,9 @@ public class TestController extends AbController {
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
-        Actable actable=new ShadeAction(bg,0xff000000,0xff0000ff,20);
-        gd.actionManager.addAction(actable);
+        Action action = new ShadeAction(bg, Color.BLACK, Color.RED, 20, 1000);
+        action.activate();
+        gd.actionManager.addAction(action);
 
         menu = new Layer();
         menu.setBackground(Color.BLUE);
@@ -66,6 +69,14 @@ public class TestController extends AbController {
         btn.setSize(80, 30);
         btn.setLocation(100, 50);
 
+        label = new LLabel();
+        label.setBackground(Color.GREEN);
+        label.setText("LLabel");
+        label.setLocation(100, 200);
+        label.setSize(80, 30);
+        label.setTextColor(Color.BLUE);
+        label.setTextAnchor(Painter.RB);
+        label.setVisible(true);
     }
 
     public void onObtain() {
@@ -73,6 +84,7 @@ public class TestController extends AbController {
         bg.addWidget(menu);
         bg.addWidget(menu2);
         menu.addWidget(lb);
+        bg.addWidget(label);
         addComponent(btn);
     }
 

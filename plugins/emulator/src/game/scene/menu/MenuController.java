@@ -32,7 +32,7 @@ public class MenuController extends AbController implements TouchListener {
         menuLayer = new MenuLayer();
         menuLayer.setVisible(true);
         menuLayer.setSize(ge.getScreenWidth(), ge.getScreenHeight());
-        menuLayer.setTouchListenet(this);
+        menuLayer.setTouchListener(this);
         addWidget(menuLayer);
 
         touchDelegate.clearAllTouchRect();
