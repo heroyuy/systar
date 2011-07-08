@@ -9,10 +9,9 @@ import com.soyostar.app.Color;
 import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LTextArea;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
-import com.soyostar.app.action.Action;
-import com.soyostar.app.action.widget.ShadeAction;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
@@ -35,13 +34,14 @@ public class TestController extends AbController {
     private LButton lb = null;
     private Button btn = null;
     private LLabel label = null;
+    private LTextArea lta = null;
 
     public TestController(Render render) {
         super(render);
-        Skin skin=new Skin("res/image/skin/001-Blue01.png");
+        Skin skin = new Skin("res/image/skin/windowskin_1.png");
         bg = new Layer();
 //        bg.setBackground(Color.GREEN);
-        bg.setBackgroundImage(skin.createAlphaBg(ge.getScreenWidth(), ge.getScreenHeight(), true));
+        bg.setBackgroundImage(skin.createAlphaBg(ge.getScreenWidth(), ge.getScreenHeight(), false));
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
@@ -76,7 +76,7 @@ public class TestController extends AbController {
 
             @Override
             public void paint(Painter painter) {
-                this.setText("fps:" + ge.getFps()+" ticker:"+ge.getTicker());
+                this.setText("fps:" + ge.getFps() + " ticker:" + ge.getTicker());
                 super.paint(painter);
             }
         };
@@ -87,6 +87,14 @@ public class TestController extends AbController {
         label.setTextColor(Color.BLUE);
         label.setTextAnchor(Painter.HV);
         label.setVisible(true);
+
+        lta = new LTextArea("支持图形调试的图形子类。重写 Graphics 中的大多数方法。"
+                + "DebugGraphics 对象很少通过手工创建。它们通常在 JComponent 的 "
+                + "debugGraphicsOptions 因使用 setDebugGraphicsOptions() "
+                + "方法而发生更改时自动创建。");
+        lta.setSize(100, 50);
+        lta.setLocation(10, 200);
+        lta.setVisible(true);
     }
 
     public void onObtain() {
@@ -96,6 +104,7 @@ public class TestController extends AbController {
         menu.addWidget(lb);
         bg.addWidget(label);
         addComponent(btn);
+        bg.addWidget(lta);
     }
 
     public void onLose() {
