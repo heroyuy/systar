@@ -13,19 +13,19 @@ import com.soyostar.app.Painter;
  */
 public class Skin {
 
-    static Image img;
+    private Image img = null;
 
     public Skin(String path) {
         img = Image.createImage(path);
     }
 
-    public Image getBackgroud() {
+    private Image getBackgroud() {
         Image img_ = null;
         img_ = Image.copyImage(img, 0, 0, 128, 128);
         return img_;
     }
 
-    public Image[] getBattleArrows() {
+    private Image[] getBattleArrows() {
         Image[] img_ = new Image[2];
         img_[0] = Image.copyImage(img, 128, 96, 32, 32);
         img_[1] = Image.copyImage(img, 160, 96, 32, 32);
@@ -33,7 +33,7 @@ public class Skin {
         return img_;
     }
 
-    public Image[] getItemBackgrouds() {
+    private Image[] getItemBackgrouds() {
         Image[] img_ = new Image[9];
         img_[0] = Image.copyImage(img, 128, 64, 16, 16);
         img_[1] = Image.copyImage(img, 136, 64, 16, 16);
@@ -47,7 +47,7 @@ public class Skin {
         return img_;
     }
 
-    public Image[] getCursorArrows() {
+    private Image[] getCursorArrows() {
         Image[] img_ = new Image[4];
         img_[0] = Image.copyImage(img, 160, 64, 16, 16);
         img_[1] = Image.copyImage(img, 160, 80, 16, 16);
@@ -57,7 +57,7 @@ public class Skin {
         return img_;
     }
 
-    public Image[] getFrames() {
+    private Image[] getFrames() {
         Image[] img_ = new Image[9];
         img_[0] = Image.copyImage(img, 128, 0, 16, 16);
         img_[1] = Image.copyImage(img, 144, 0, 16, 16);
@@ -71,7 +71,7 @@ public class Skin {
         return img_;
     }
 
-    public Image[] getItemArrows() {
+    private Image[] getItemArrows() {
         Image[] img_ = new Image[4];
         img_[0] = Image.copyImage(img, 152, 16, 16, 8);
         img_[1] = Image.copyImage(img, 144, 24, 8, 16);
@@ -80,13 +80,13 @@ public class Skin {
         return img_;
     }
 
-    public void drawRect(Painter painter, int x, int y, int width, int height) {
+    private void drawRect(Painter painter, int x, int y, int width, int height) {
         Image img = Image.copyImage(this.img, 128, 64, 32, 32);
         painter.drawImage(Image.zoomImage(img, width, height), x, y, Painter.LT);
 //        painter.drawImage(img, x, y, Painter.LT);
     }
 
-    public Image createRect(int width, int height) {
+    private Image createRect(int width, int height) {
         Image[] img_ = getFrames();
         Image img_1 = Image.createImage(width, height);
         Painter p = img_1.getPainter();

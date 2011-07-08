@@ -28,7 +28,7 @@ public class MenuLayer extends Layer {
         p.setColor(Color.BLACK);
 
         p.fillRect(0, 0, ge.getScreenWidth(), ge.getScreenHeight());
-        p.drawImage(Image.zoomImage(s.getBackgroud(), ge.getScreenWidth(), ge.getScreenHeight()), 0, 0, Painter.LT);
+        p.drawImage(s.createAlphaBg(getWidth(), getHeight(), false), 0, 0, Painter.LT);
         int num = Const.Text.MENU.length;
         for (int i = 0; i < num; i++) {
             p.setColor(Color.GREEN);
