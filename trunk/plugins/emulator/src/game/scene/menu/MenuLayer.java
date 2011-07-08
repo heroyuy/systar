@@ -19,7 +19,7 @@ public class MenuLayer extends Layer {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel(0);
-    private Skin s = new Skin();
+    private Skin s = new Skin("res/image/skin/001-Blue01.png");
 
     @Override
     public void paintSelf(Painter p) {

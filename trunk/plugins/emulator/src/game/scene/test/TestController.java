@@ -18,6 +18,7 @@ import engine.Render;
 import game.AbController;
 import game.RpgGame;
 import game.impl.model.GameData;
+import game.util.Skin;
 
 /**
  *
@@ -37,14 +38,16 @@ public class TestController extends AbController {
 
     public TestController(Render render) {
         super(render);
+        Skin skin=new Skin("res/image/skin/001-Blue01.png");
         bg = new Layer();
-        bg.setBackground(Color.GREEN);
+//        bg.setBackground(Color.GREEN);
+        bg.setBackgroundImage(skin.createAlphaBg(ge.getScreenWidth(), ge.getScreenHeight(), true));
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
-        Action action = new ShadeAction(bg, Color.BLACK, Color.RED, 20, 1000);
-        action.activate();
-        gd.actionManager.addAction(action);
+//        Action action = new ShadeAction(bg, Color.BLACK, Color.RED, 20, 1000);
+//        action.activate();
+//        gd.actionManager.addAction(action);
 
         menu = new Layer();
         menu.setBackground(Color.BLUE);
