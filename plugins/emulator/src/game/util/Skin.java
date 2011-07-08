@@ -14,11 +14,9 @@ import com.soyostar.app.Painter;
 public class Skin {
 
     static Image img;
-    private static final String PATH = "res/image/skin/001-Blue01.png";
 
-    public Skin() {
-//        skinPath = PATH;
-        img = Image.createImage(PATH);
+    public Skin(String path) {
+        img = Image.createImage(path);
     }
 
     public Image getBackgroud() {
@@ -138,20 +136,20 @@ public class Skin {
     }
 
     public Image createBlueBg(int width, int height, boolean hasFrame) {
-        Image img_  = Image.zoomImage(getBackgroud(), width, height);
+        Image img_ = Image.zoomImage(getBackgroud(), width, height);
         if (hasFrame) {
             Painter p = img_.getPainter();
             p.drawImage(this.createRect(width, height), 0, 0, Painter.LT);
         }
         return img_;
-    }
-    public Image createAlphaBg(int width, int height, boolean hasFrame) {
-          Image img_  = Image.zoomImage(Image.copyImage(this.img, 128, 64, 32, 32), width, height);
-        if (hasFrame) {
-            Painter p = img_.getPainter();
-            p.drawImage(this.createRect(width, height), 0, 0, Painter.LT);
-        }
-        return img_;
-    }
     }
 
+    public Image createAlphaBg(int width, int height, boolean hasFrame) {
+        Image img_ = Image.zoomImage(Image.copyImage(this.img, 128, 64, 32, 32), width, height);
+        if (hasFrame) {
+            Painter p = img_.getPainter();
+            p.drawImage(this.createRect(width, height), 0, 0, Painter.LT);
+        }
+        return img_;
+    }
+}
