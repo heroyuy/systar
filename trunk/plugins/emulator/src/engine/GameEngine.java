@@ -237,7 +237,7 @@ public final class GameEngine implements Runnable {
      */
     private class GameManager {
 
-        private String configFile = "config.xml";
+        private String configFile = "config/config.xml";
         private Map<Integer, GameNode> games = null;
         private int curGameIndex = -1;
 
