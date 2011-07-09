@@ -21,7 +21,7 @@ public class StartPageLayer extends Layer {
 
     public StartPageLayer() {
 
-        gd = (GameData) rpgGame.getModel(0);
+        gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
         player = Image.createImage("res/image/battler/" + gd.player.headImg);
     }
 

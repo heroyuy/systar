@@ -238,8 +238,8 @@ public final class GameEngine implements Runnable {
     private class GameManager {
 
         private String configFile = "config/config.xml";
-        private Map<Integer, GameNode> games = null;
-        private int curGameIndex = -1;
+        private Map<String, Game> games = null;
+        private String curGame = null;
 
         /**
          * 获取当前game对象
@@ -249,84 +249,40 @@ public final class GameEngine implements Runnable {
             if (games == null) {
                 loadConfig();
             }
-            return games.get(curGameIndex).game;
+            return games.get(curGame);
 
         }
 
-        /**
-         * 根据键值设置当前game
-         * @param index Map中的键值
-         */
-        public void setCurGame(int index) {
-            if (games.containsKey(index)) {
-                curGameIndex = index;
-            } else {
-                try {
-                    throw new Exception("不存在编号为" + index + "的游戏实例");
-                } catch (Exception ex) {
-                    Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        public void setCurGame(String fullName) {
 
-            }
-        }
-
-        public void setCvccvurGame(String fullName) {
-            boolean hasGame = false;
-            for (GameNode gn : games.values()) {
-                if (gn.fullName.equals(fullName)) {
-                    curGameIndex = gn.id;
-                    hasGame = true;
-                    break;
-                }
-            }
-            if (!hasGame) {
+            if (!games.containsKey(fullName)) {
                 try {
                     throw new Exception("不存在名为" + fullName + "的游戏实例");
                 } catch (Exception ex) {
                     Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                curGame = fullName;
             }
         }
 
         private void loadConfig() {
             try {
                 // 加载配置文件
-                games = new HashMap<Integer, GameNode>();
+                games = new HashMap<String, Game>();
                 XMLObject engine = XMLParser.parse(new File(configFile));
-                curGameIndex = engine.getFirstXMLObject("CurrentGameID").getIntValue();
-                XMLObject[] gamesObject = engine.getXMLObjectArray("Game");
+                curGame = engine.getFirstXMLObject("currentGame").getStringValue();
+                XMLObject[] gamesObject = engine.getFirstXMLObject("games").getXMLObjectArray("game");
                 for (XMLObject gameObject : gamesObject) {
-                    int id = gameObject.getFirstXMLObject("ID").getIntValue();
-                    String fullName = gameObject.getFirstXMLObject("FullName").getStringValue();
-                    Game game = (Game) Class.forName(fullName).getConstructor(Render.class).newInstance(renderLayer);
-                    games.put(id, new GameNode(id, fullName, game));
+                    String gameName = gameObject.getStringValue();
+                    Game tempGame = (Game) Class.forName(gameName).getConstructor(Render.class).newInstance(renderLayer);
+                    games.put(gameName, tempGame);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
             }
 
 
-        }
-
-        private class GameNode {
-
-            public GameNode(int id, String fullName, Game game) {
-                this.id = id;
-                this.fullName = fullName;
-                this.game = game;
-            }
-            /**
-             * 游戏ID
-             */
-            public int id = -1;
-            /**
-             * 游戏入口类全名
-             */
-            public String fullName = null;
-            /**
-             * 游戏实例
-             */
-            public Game game = null;
         }
     }
 }

@@ -5,7 +5,6 @@ import com.soyostar.xml.XMLParser;
 import engine.Game;
 import engine.Render;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,9 +14,9 @@ public class RpgGame extends Game {
 
     private long startTime = 0;
     private String configFile = "config/rpg.xml";
-    private int curControlID = -1;
-    private Map<Integer, ControlNode> controls = null;
-    private Map<Integer, ModelNode> models = null;
+    private String curController = null;
+    private Map<String, Controller> controls = null;
+    private Map<String, AbModel> models = null;
 
     public long getCurTime() {
         return System.currentTimeMillis() - startTime;
@@ -25,8 +24,8 @@ public class RpgGame extends Game {
 
     public RpgGame(Render render) {
         super(render);
-        models = new HashMap<Integer, ModelNode>();
-        controls = new HashMap<Integer, ControlNode>();
+        models = new HashMap<String, AbModel>();
+        controls = new HashMap<String, Controller>();
     }
 
     public void start() {
@@ -40,8 +39,8 @@ public class RpgGame extends Game {
      * 2、更新由控制器控制的Model
      */
     public void update() {
-        for (ModelNode mn : models.values()) {
-            mn.model.update();
+        for (AbModel model : models.values()) {
+            model.update();
         }
         getCurrentControl().updateModel();
     }
@@ -62,19 +61,19 @@ public class RpgGame extends Game {
             //配置模型
             XMLObject[] modelList = rpg.getFirstXMLObject("models").getXMLObjectArray("model");
             for (XMLObject model : modelList) {
-                int id = model.getFirstXMLObject("id").getIntValue();
-                String fullName = model.getFirstXMLObject("fullName").getStringValue();
-                models.put(id, new ModelNode(id, fullName));
+                String fullName = model.getStringValue();
+                AbModel tempModel = (AbModel) Class.forName(fullName).newInstance();
+                models.put(fullName, tempModel);
             }
             //配置控制器
-            XMLObject[] controlList = rpg.getFirstXMLObject("controls").getXMLObjectArray("control");
+            XMLObject[] controlList = rpg.getFirstXMLObject("controllers").getXMLObjectArray("controller");
             for (XMLObject control : controlList) {
-                int id = control.getFirstXMLObject("id").getIntValue();
-                String fullName = control.getFirstXMLObject("fullName").getStringValue();
-                controls.put(id, new ControlNode(id, fullName));
+                String fullName = control.getStringValue();
+                Controller tempController = (Controller) Class.forName(fullName).getConstructor(Render.class).newInstance(this);
+                controls.put(fullName, tempController);
             }
-            int currentControlID = rpg.getFirstXMLObject("controls").getFirstXMLObject("currentControlID").getIntValue();
-            setCurrentControl(currentControlID);
+            String currentController = rpg.getFirstXMLObject("currentController").getStringValue();
+            setCurrentControl(currentController);
             //------------------------------------结束------------------------------------
         } catch (Exception ex) {
             Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,101 +83,29 @@ public class RpgGame extends Game {
 
     }
 
-    public AbModel getModel(int id) {
-        System.out.println("models:" + models.size());
-        System.out.println("models.get(id)" + models.get(id));
-        return models.get(id).model;
+    public AbModel getModel(String fullName) {
+        return models.get(fullName);
     }
 
     private Controller getCurrentControl() {
-        return controls.get(curControlID).control;
-    }
-
-    public void setCurrentControl(int index) {
-        if (controls.get(curControlID) != null) {
-            controls.get(curControlID).control.onLose();
-            this.removeAllComponents();
-            this.removeAllWidgets();
-        }
-        if (controls.containsKey(index)) {
-            curControlID = index;
-            controls.get(curControlID).control.onObtain();
-        } else {
-            try {
-                throw new Exception("不存在ID为" + index + "的控制器");
-            } catch (Exception ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        return controls.get(curController);
     }
 
     public void setCurrentControl(String fullName) {
-        if (controls.get(curControlID) != null) {
-            controls.get(curControlID).control.onLose();
+        if (controls.get(curController) != null) {
+            controls.get(curController).onLose();
+            this.removeAllComponents();
+            this.removeAllWidgets();
         }
-        boolean hasControl = false;
-        for (ControlNode cd : controls.values()) {
-            if (cd.name.equals(fullName)) {
-                curControlID = cd.id;
-                controls.get(curControlID).control.onObtain();
-                hasControl = true;
-                break;
-            }
-        }
-        if (!hasControl) {
+        if (controls.containsKey(fullName)) {
+            curController = fullName;
+            controls.get(curController).onObtain();
+        } else {
             try {
                 throw new Exception("不存在名为" + fullName + "的控制器");
             } catch (Exception ex) {
                 Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    private class ControlNode {
-
-        public ControlNode(int id, String name) {
-            try {
-                this.id = id;
-                this.name = name;
-                this.control = (AbController) Class.forName(name).getConstructor(Render.class).newInstance(RpgGame.this.getRender());
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvocationTargetException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchMethodException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SecurityException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        public int id = -1;
-        public String name = null;
-        public Controller control = null;
-    }
-
-    private class ModelNode {
-
-        public ModelNode(int id, String name) {
-            try {
-                this.id = id;
-                this.name = name;
-                this.model = (AbModel) Class.forName(name).newInstance();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(RpgGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        public int id = -1;
-        public String name = null;
-        public AbModel model = null;
     }
 }

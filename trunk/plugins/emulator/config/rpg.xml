@@ -2,25 +2,12 @@
 
 <rpg>
     <models>
-        <model>
-            <id>0</id>
-            <fullName>game.impl.model.GameData</fullName>
-        </model>
+        <model>game.impl.model.GameData</model>
     </models>
-    <controls>
-        <control>
-            <id>0</id>
-            <fullName>game.scene.startpage.StartPageController</fullName>
-        </control>
-        <control>
-            <id>1</id>
-            <fullName>game.scene.menu.MenuController</fullName>
-        </control>
-
-        <control>
-            <id>2</id>
-            <fullName>game.scene.test.TestController</fullName>
-        </control>
-        <currentControlID>2</currentControlID>
-    </controls>
+    <controllers>
+        <controller>game.scene.startpage.StartPageController</controller>
+        <controller>game.scene.menu.MenuController</controller>
+        <controller>game.scene.test.TestController</controller>
+    </controllers>
+    <currentController>game.scene.startpage.StartPageController</currentController>
 </rpg>

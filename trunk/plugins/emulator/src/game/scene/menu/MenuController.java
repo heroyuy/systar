@@ -19,7 +19,7 @@ public class MenuController extends AbController implements TouchListener {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel(0);
+    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private TouchDelegate touchDelegate = TouchDelegate.getDefaultTouchDelegate();
     private MenuLayer menuLayer = null;
 
