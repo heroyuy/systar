@@ -26,7 +26,7 @@ public class SettingController extends AbController {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel(0);
+    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private LButton lbOk = null;
     private LButton lbNot = null;
     private Layer bg = null;
@@ -52,7 +52,7 @@ public class SettingController extends AbController {
 
             public void actionPerformed(Object t) {
 
-                rpgGame.setCurrentControl(Const.ControlId.MENU);
+                rpgGame.setCurrentControl("game.scene.menu.MenuController");
 //                throw new UnsupportedOperationException("Not supported yet.");
             }
         });
@@ -66,7 +66,7 @@ public class SettingController extends AbController {
         lbNot.setActionListener(new ActionListener() {
 
             public void actionPerformed(Object t) {
-                rpgGame.setCurrentControl(Const.ControlId.MENU);
+                rpgGame.setCurrentControl("game.scene.menu.MenuController");
 //                throw new UnsupportedOperationException("Not supported yet.");
             }
         });
@@ -82,10 +82,8 @@ public class SettingController extends AbController {
     }
 
     public void onLose() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void updateModel() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
