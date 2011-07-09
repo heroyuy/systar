@@ -134,6 +134,7 @@ public class Skin {
         return img_1;
 
     }
+
     public Image createBlueBg(int width, int height, boolean hasFrame) {
         Image img_ = Image.zoomImage(getBackgroud(), width, height);
         if (hasFrame) {
@@ -143,11 +144,11 @@ public class Skin {
         return img_;
     }
 
-     public Image createBgRect(int width, int height) {
-        Image[] img_ =this.getItemBackgrouds();
+    public Image createBgRect(int width, int height) {
+        Image[] img_ = this.getItemBackgrouds();
         Image img_1 = Image.createImage(width, height);
         Painter p = img_1.getPainter();
-        if (width <=16) {
+        if (width <= 16) {
             img_[0] = Image.copyImage(img, 128, 64, width / 2, height / 2);
             img_[2] = Image.copyImage(img, 160 - width / 2, 64, width / 2, height / 2);
             p.drawImage(img_[0], 0, 0, Painter.LT);
@@ -157,24 +158,24 @@ public class Skin {
         } else {
             int t = width / 8;
             int m = width % 8;
-            for (int i = 0; i < t-2; i++) {
+            for (int i = 0; i < t - 2; i++) {
                 p.drawImage(Image.copyImage(img, 136, 64, 8, 8), 8 + i * 8, 0, Painter.LT);
-                p.drawImage( Image.copyImage(img, 136, 88, 8,8), 8+ i * 8, img_1.getHeight() -8, Painter.LT);
+                p.drawImage(Image.copyImage(img, 136, 88, 8, 8), 8 + i * 8, img_1.getHeight() - 8, Painter.LT);
             }
 
             if (m == 0) {
             } else {
-                p.drawImage(Image.copyImage(img, 144,64, m, 8), (t - 1) * 8, 0, Painter.LT);
+                p.drawImage(Image.copyImage(img, 144, 64, m, 8), (t - 1) * 8, 0, Painter.LT);
                 p.drawImage(Image.copyImage(img, 144, 88, m, 8), (t - 1) * 8, img_1.getHeight() - 8, Painter.LT);
             }
 
-            p.drawImage( Image.copyImage(img, 128, 64, 8, 8), 0, 0, Painter.LT);
-            p.drawImage(Image.copyImage(img, 152, 64,8, 8),  img_1.getWidth()-8 , 0, Painter.LT);
+            p.drawImage(Image.copyImage(img, 128, 64, 8, 8), 0, 0, Painter.LT);
+            p.drawImage(Image.copyImage(img, 152, 64, 8, 8), img_1.getWidth() - 8, 0, Painter.LT);
 
         }
-        if (height <=16) {
+        if (height <= 16) {
             img_[6] = Image.copyImage(img, 128, 96 - height / 2, width / 2, height / 2);
-            img_[8] = Image.copyImage(img, 160-width/2 , 96 - height / 2, width / 2, height / 2);
+            img_[8] = Image.copyImage(img, 160 - width / 2, 96 - height / 2, width / 2, height / 2);
             p.drawImage(img_[6], 0, img_1.getHeight() >> 1, Painter.LT);
             p.drawImage(img_[8], img_1.getWidth() >> 1, img_1.getHeight() >> 1, Painter.LT);
 
@@ -182,46 +183,36 @@ public class Skin {
         } else {
             int th = height / 8;
             int mh = height % 8;
-            for (int i = 0; i < th -2; i++) {
-                p.drawImage( Image.copyImage(img, 128, 72, 8, 8), 0, 8 + i *8, Painter.LT);
-                p.drawImage(Image.copyImage(img, 152, 72, 8, 8), img_1.getWidth() -8, 8+ i *8, Painter.LT);
+            for (int i = 0; i < th - 2; i++) {
+                p.drawImage(Image.copyImage(img, 128, 72, 8, 8), 0, 8 + i * 8, Painter.LT);
+                p.drawImage(Image.copyImage(img, 152, 72, 8, 8), img_1.getWidth() - 8, 8 + i * 8, Painter.LT);
 
             }
             if (mh == 0) {
             } else {
-                p.drawImage(Image.copyImage(img, 128,80, 8, mh), 0, (th - 1) * 8, Painter.LT);
+                p.drawImage(Image.copyImage(img, 128, 80, 8, mh), 0, (th - 1) * 8, Painter.LT);
                 p.drawImage(Image.copyImage(img, 152, 80, 8, mh), img_1.getWidth() - 8, (th - 1) * 8, Painter.LT);
             }
-            p.drawImage( Image.copyImage(img, 128, 88, 8, 8), 0, img_1.getHeight() -8, Painter.LT);
-            p.drawImage(Image.copyImage(img, 152, 88, 8, 8), img_1.getWidth() -8, img_1.getHeight() -8, Painter.LT);
+            p.drawImage(Image.copyImage(img, 128, 88, 8, 8), 0, img_1.getHeight() - 8, Painter.LT);
+            p.drawImage(Image.copyImage(img, 152, 88, 8, 8), img_1.getWidth() - 8, img_1.getHeight() - 8, Painter.LT);
         }
 
         return img_1;
 
     }
 
-
-
-
     public Image createAlphaBg(int width, int height, boolean hasFrame) {
-
-       Image img_=null;
 
         Image img_ = Image.zoomImage(Image.copyImage(this.img, 128, 64, 32, 32), width, height);
 
         if (hasFrame) {
 
-           img_ = Image.zoomImage( createBgRect(width, height) , width, height);
-           Painter p=img_.getPainter();
-           p.drawImage(Image.zoomImage( Image.copyImage(img, 136, 72, 16, 16), width-16, height-16), 8, 8, Painter.LT);
-        }else{
-              img_ = Image.zoomImage( Image.copyImage(img, 136, 72, 16, 16), width, height);
+            img_ = Image.zoomImage(createBgRect(width, height), width, height);
+            Painter p = img_.getPainter();
+            p.drawImage(Image.zoomImage(Image.copyImage(img, 136, 72, 16, 16), width - 16, height - 16), 8, 8, Painter.LT);
+        } else {
+            img_ = Image.zoomImage(Image.copyImage(img, 136, 72, 16, 16), width, height);
         }
         return img_;
     }
-
-   
 }
-
-
-
