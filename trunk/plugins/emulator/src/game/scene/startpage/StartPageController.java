@@ -10,7 +10,6 @@ import com.soyostar.app.event.TouchListener;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.Const;
 import game.RpgGame;
 
 /**

@@ -12,7 +12,6 @@ import com.soyostar.app.event.ActionListener;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.Const;
 import game.RpgGame;
 import game.impl.model.GameData;
 import game.util.Skin;
