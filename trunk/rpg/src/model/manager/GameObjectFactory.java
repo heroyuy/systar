@@ -244,7 +244,7 @@ public class GameObjectFactory {
                 skillList[i].hp = dis.readInt();
                 skillList[i].sp = dis.readInt();
                 skillList[i].lev = dis.readInt();
-//                    skillList[i].atk = dis.readInt();
+                    skillList[i].atk = dis.readInt();
                 skillList[i].def = dis.readInt();
                 skillList[i].price = dis.readInt();
                 skillList[i].dpy = dis.readInt();
