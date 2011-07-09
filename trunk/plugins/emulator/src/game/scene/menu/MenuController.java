@@ -54,6 +54,11 @@ public class MenuController extends AbController implements TouchListener {
             int index = touchDelegate.getTouchRectIndex(te.getX(), te.getY());
             if (index != -1) {
                 gd.menuState.menuIndex = index;
+                switch (index) {
+                    case 2:
+                        rpgGame.setCurrentControl("game.scene.setting.SettingController");
+                        break;
+                }
             }
         }
         return true;
