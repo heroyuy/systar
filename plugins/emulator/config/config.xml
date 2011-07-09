@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Engine>
-    <Game>
-        <ID>0</ID>
-        <FullName>game.RpgGame</FullName>
-    </Game>
-    <CurrentGameID>0</CurrentGameID>
-</Engine>
+<engine>
+    <games>
+        <game>game.RpgGame</game>
+    </games>
+    <currentGame>game.RpgGame</currentGame>
+</engine>

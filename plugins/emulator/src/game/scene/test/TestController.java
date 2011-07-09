@@ -27,7 +27,7 @@ public class TestController extends AbController {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel(0);
+    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Layer bg = null;
     private Layer menu = null;
     private Layer menu2 = null;
