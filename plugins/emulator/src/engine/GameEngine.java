@@ -270,7 +270,7 @@ public final class GameEngine implements Runnable {
             }
         }
 
-        public void setCurGame(String fullName) {
+        public void setCvccvurGame(String fullName) {
             boolean hasGame = false;
             for (GameNode gn : games.values()) {
                 if (gn.fullName.equals(fullName)) {
