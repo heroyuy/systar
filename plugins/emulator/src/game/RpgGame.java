@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class RpgGame extends Game {
 
     private long startTime = 0;
-    private String configFile = "rpg.xml";
+    private String configFile = "config/rpg.xml";
     private int curControlID = -1;
     private Map<Integer, ControlNode> controls = null;
     private Map<Integer, ModelNode> models = null;
