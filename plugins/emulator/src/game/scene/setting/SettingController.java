@@ -33,19 +33,18 @@ public class SettingController extends AbController {
     public SettingController(Render render) {
         super(render);
 
-        Skin skin = new Skin("res/image/skin/windowskin_1.png");
+        Skin skin = new Skin("res/image/skin/001-Blue01.png");
         bg = new Layer();
-//        bg.setBackground(Color.GREEN);
-        bg.setBackgroundImage(skin.createAlphaBg(ge.getScreenWidth(), ge.getScreenHeight(), false));
+        bg.setBackgroundImage(skin.createBlueBg(ge.getScreenWidth(), ge.getScreenHeight(), false));
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
-        lbOk = new LButton(Image.createImage("res/image/battler/001-Fighter01.png"), Image.createImage("res/image/battler/002-Fighter02.png"));
-        lbOk.setText("   音  乐   播  放");
-        lbOk.setBackground(Color.RED);
-
+        lbOk = new LButton("   音  乐   播  放");
+        lbOk.setAfocalImage(skin.createAlphaBg(100, 35, false));
+        lbOk.setFocusImage(skin.createAlphaBg(100, 35, true));
         lbOk.setLocation(80, 80);
         lbOk.setSize(100, 35);
+        lbOk.setBackground(Color.RED);
         lbOk.setVisible(true);
         lbOk.setActionListener(new ActionListener() {
 
@@ -55,13 +54,13 @@ public class SettingController extends AbController {
 //                throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-        lbNot = new LButton(Image.createImage("res/image/battler/001-Fighter01.png"), Image.createImage("res/image/battler/002-Fighter02.png"));
-        lbNot.setText("   音  乐  关   闭  ");
+        lbNot = new LButton("   音  乐  关   闭  ");
+        lbNot.setAfocalImage(skin.createAlphaBg(100, 35, false));
+        lbNot.setFocusImage(skin.createAlphaBg(100, 35, true));
         lbNot.setLocation(80, 125);
         lbNot.setSize(100, 35);
         lbNot.setVisible(true);
         lbNot.setBackground(Color.RED);
-
         lbNot.setActionListener(new ActionListener() {
 
             public void actionPerformed(Object t) {
