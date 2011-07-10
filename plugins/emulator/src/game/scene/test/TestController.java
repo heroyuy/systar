@@ -92,8 +92,11 @@ public class TestController extends AbController {
                 + "DebugGraphics 对象很少通过手工创建。它们通常在 JComponent 的 "
                 + "debugGraphicsOptions 因使用 setDebugGraphicsOptions() "
                 + "方法而发生更改时自动创建。");
-        lta.setSize(100, 50);
+        lta.setSize(120, 80);
         lta.setLocation(10, 200);
+        lta.setMargin(5, 5, 10, 10);
+        lta.setBackground(Color.RED);
+        lta.setTextColor(Color.WHITE);
         lta.setVisible(true);
     }
 
