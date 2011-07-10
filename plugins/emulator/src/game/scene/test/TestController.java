@@ -97,6 +97,7 @@ public class TestController extends AbController {
         lta.setMargin(5, 5, 10, 10);
         lta.setBackground(Color.RED);
         lta.setTextColor(Color.WHITE);
+        lta.setLeading(5);
         lta.setVisible(true);
     }
 
