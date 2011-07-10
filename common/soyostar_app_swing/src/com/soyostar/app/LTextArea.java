@@ -25,8 +25,18 @@ public class LTextArea extends Widget {
     private int marginLeft = 0;
     private int marginRight = 0;
     private int textColor = Color.BLACK;
+    private int leading = 0;//行距
 
     public LTextArea(String text) {
+        this.text = text;
+        needUpdate = true;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
         this.text = text;
         needUpdate = true;
     }
@@ -39,11 +49,20 @@ public class LTextArea extends Widget {
         this.textColor = textColor;
     }
 
+    public int getLeading() {
+        return leading;
+    }
+
+    public void setLeading(int leading) {
+        this.leading = leading;
+    }
+
     public void setMargin(int marginTop, int marginBottom, int marginLeft, int marginRight) {
         this.marginTop = marginTop;
         this.marginBottom = marginBottom;
         this.marginLeft = marginLeft;
         this.marginRight = marginRight;
+        needUpdate = true;
     }
 
     public int getMarginBottom() {
@@ -60,6 +79,7 @@ public class LTextArea extends Widget {
 
     public void setMarginLeft(int marginLeft) {
         this.marginLeft = marginLeft;
+        needUpdate = true;
     }
 
     public int getMarginRight() {
@@ -68,6 +88,7 @@ public class LTextArea extends Widget {
 
     public void setMarginRight(int marginRight) {
         this.marginRight = marginRight;
+        needUpdate = true;
     }
 
     public int getMarginTop() {
@@ -88,13 +109,14 @@ public class LTextArea extends Widget {
                 System.out.println(str);
             }
             curOffsetY = 0;
-            totalOffsetY = texts.size() * painter.getTextSize() - (getHeight() - marginTop - marginBottom);
+            totalOffsetY = texts.size() * painter.getTextSize() + (texts.size() - 1) * leading - (getHeight() - marginTop - marginBottom);
             needUpdate = false;
         }
         painter.setColor(textColor);
         painter.setClip(0, 0, getWidth(), getHeight() - marginBottom);
         for (int i = 0; i < texts.size(); i++) {
-            painter.drawString(texts.get(i), marginLeft, marginTop + i * painter.getTextSize() + curOffsetY, Painter.LT);
+            painter.drawString(texts.get(i), marginLeft, marginTop + i * (painter.getTextSize() + leading) + curOffsetY,
+                    Painter.LT);
         }
         painter.setClip(0, 0, getWidth(), getHeight());
     }

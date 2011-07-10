@@ -2,7 +2,9 @@ package com.soyostar.app;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 
 /**
  *
@@ -16,8 +18,9 @@ class GraphicsPainter implements Painter {
 
     GraphicsPainter(Graphics graphics) {
         this.graphics = graphics;
+        ((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         point = new Point(0, 0);
-
+        setTextSize(15);
     }
 
     Graphics getGraphics() {
@@ -30,7 +33,7 @@ class GraphicsPainter implements Painter {
 
     @Override
     public void setTextSize(int size) {
-        graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, size));
+        graphics.setFont(new Font("黑体", Font.BOLD, size));
 
     }
 
