@@ -10,5 +10,5 @@
         <controller>game.scene.test.TestController</controller>
          <controller>game.scene.setting.SettingController</controller>
     </controllers>
-    <currentController>game.scene.setting.SettingController</currentController>
+    <currentController>game.scene.startpage.StartPageController</currentController>
 </rpg>
