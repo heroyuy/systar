@@ -106,8 +106,6 @@ public class LButton extends Widget {
 
     @Override
     public void paint(Painter painter) {
-//        painter.save();
-//        painter.setClip(0, 0, getWidth(), getHeight());
         painter.setColor(getBackground());
         painter.fillRect(0, 0, getWidth(), getHeight());
         switch (state) {
@@ -129,7 +127,6 @@ public class LButton extends Widget {
             painter.setTextSize(textSize);
         }
         painter.drawString(text, getWidth() / 2, getHeight() / 2, Painter.HV);
-//          painter.restore();
     }
 
     @Override

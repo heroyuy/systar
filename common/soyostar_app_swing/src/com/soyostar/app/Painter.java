@@ -158,12 +158,23 @@ public interface Painter {
     public int getColor();
 
     /**
-     * 保存画笔的当前状态，包括画笔的颜色、字号
+     * 设置裁剪区域
+     * @param x 裁剪区域 x 坐标
+     * @param y 裁剪区域 y 坐标
+     * @param width 裁剪区域宽度
+     * @param height 裁剪区域高度
      */
-    public void save();
+    public void setClip(int x, int y, int width, int height);
 
     /**
-     * 还原画笔到上一次备份的状态
+     * 设置裁剪区域
+     * @param rect 裁剪区域
      */
-    public void restore();
+    public void setClip(Rect rect);
+
+    /**
+     * 获取裁剪区域
+     * @return 裁剪区域
+     */
+    public Rect getClip();
 }

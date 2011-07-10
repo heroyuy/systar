@@ -100,10 +100,8 @@ public class Container extends Component {
      */
     @Override
     public final void paint(Painter painter) {
-        painter.save();
         paintSelf(painter);
         paintLayer(painter);
-        painter.restore();
     }
 
     /**

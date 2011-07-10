@@ -20,14 +20,67 @@ public class LTextArea extends Widget {
     private List<String> texts = new ArrayList<String>();
     private boolean needUpdate = false;
     private int prevY = 0;
+    private int marginTop = 0;
+    private int marginBottom = 0;
+    private int marginLeft = 0;
+    private int marginRight = 0;
+    private int textColor = Color.BLACK;
 
     public LTextArea(String text) {
         this.text = text;
         needUpdate = true;
     }
 
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
+
+    public void setMargin(int marginTop, int marginBottom, int marginLeft, int marginRight) {
+        this.marginTop = marginTop;
+        this.marginBottom = marginBottom;
+        this.marginLeft = marginLeft;
+        this.marginRight = marginRight;
+    }
+
+    public int getMarginBottom() {
+        return marginBottom;
+    }
+
+    public void setMarginBottom(int marginBottom) {
+        this.marginBottom = marginBottom;
+    }
+
+    public int getMarginLeft() {
+        return marginLeft;
+    }
+
+    public void setMarginLeft(int marginLeft) {
+        this.marginLeft = marginLeft;
+    }
+
+    public int getMarginRight() {
+        return marginRight;
+    }
+
+    public void setMarginRight(int marginRight) {
+        this.marginRight = marginRight;
+    }
+
+    public int getMarginTop() {
+        return marginTop;
+    }
+
+    public void setMarginTop(int marginTop) {
+        this.marginTop = marginTop;
+    }
+
     @Override
     public void paint(Painter painter) {
+        super.paint(painter);
         if (needUpdate) {
             texts.clear();
             analyse(painter, text);
@@ -35,12 +88,15 @@ public class LTextArea extends Widget {
                 System.out.println(str);
             }
             curOffsetY = 0;
-            totalOffsetY = texts.size() * painter.getTextSize() - getHeight();
+            totalOffsetY = texts.size() * painter.getTextSize() - (getHeight() - marginTop - marginBottom);
             needUpdate = false;
         }
+        painter.setColor(textColor);
+        painter.setClip(0, 0, getWidth(), getHeight() - marginBottom);
         for (int i = 0; i < texts.size(); i++) {
-            painter.drawString(texts.get(i), 0, i * painter.getTextSize() + curOffsetY, Painter.LT);
+            painter.drawString(texts.get(i), marginLeft, marginTop + i * painter.getTextSize() + curOffsetY, Painter.LT);
         }
+        painter.setClip(0, 0, getWidth(), getHeight());
     }
 
     @Override
@@ -71,7 +127,7 @@ public class LTextArea extends Widget {
         int index = text.length();
         while (index > 0) {
             String temp = text.substring(0, index);
-            if (painter.stringWidth(temp) > getWidth()) {
+            if (painter.stringWidth(temp) > getWidth() - marginLeft - marginRight) {
                 index--;
             } else {
                 texts.add(temp);
