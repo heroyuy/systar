@@ -46,11 +46,12 @@ public class Layer extends Widget {
                 //设置坐标系
                 ((GraphicsPainter) painter).setBasePoint(widget.getX(), widget.getY());
                 //设置裁剪区
-                Rect clip = ((GraphicsPainter) painter).getClip();
+                Rect clip = painter.getClip();
                 ((GraphicsPainter) painter).clipRect(0, 0, widget.getWidth(), widget.getHeight());
+                ((GraphicsPainter) painter).setCurClip(painter.getClip());
                 widget.paint(painter);
                 //还原裁剪区
-                ((GraphicsPainter) painter).setClip(clip);
+                ((GraphicsPainter) painter).forceClip(clip);
                 //还原坐标系
                 ((GraphicsPainter) painter).setBasePoint(-widget.getX(), -widget.getY());
             }

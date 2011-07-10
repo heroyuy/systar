@@ -3,8 +3,6 @@ package com.soyostar.app;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.util.Stack;
 
 /**
  *
@@ -13,13 +11,12 @@ import java.util.Stack;
 class GraphicsPainter implements Painter {
 
     private Graphics graphics = null;
-    private Stack<DataHolder> dataStack = null;
     private Point point = null;
+    private Rect curClip = null;
 
     GraphicsPainter(Graphics graphics) {
         this.graphics = graphics;
         point = new Point(0, 0);
-        dataStack = new Stack<DataHolder>();
 
     }
 
@@ -97,19 +94,33 @@ class GraphicsPainter implements Painter {
         graphics.fillOval(x, y, width, height);
     }
 
-    void setClip(int x, int y, int width, int height) {
-        graphics.setClip(x, y, width, height);
+    public void setClip(int x, int y, int width, int height) {
+        if (curClip != null) {
+            forceClip(curClip);
+        }
+        graphics.clipRect(x, y, width, height);
     }
 
-    void setClip(Rect clip) {
-        graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
+    public void setClip(Rect rect) {
+        if (curClip != null) {
+            forceClip(curClip);
+        }
+        graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
     }
 
     void clipRect(int x, int y, int width, int height) {
         graphics.clipRect(x, y, width, height);
     }
 
-    Rect getClip() {
+    void clipRect(Rect rect) {
+        graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+    }
+
+    void forceClip(Rect clip) {
+        graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
+    }
+
+    public Rect getClip() {
         Rectangle rectangle = graphics.getClipBounds();
         return new Rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
@@ -125,34 +136,40 @@ class GraphicsPainter implements Painter {
         return graphics.getColor().getRGB();
     }
 
-    public void save() {
-        dataStack.push(new DataHolder(graphics.getFont(), graphics.getColor()));
-    }
-
-    public void restore() {
-        DataHolder dh = dataStack.pop();
-        graphics.setFont(dh.font);
-        graphics.setColor(dh.color);
-
-    }
-
-    public void setBasePoint(int x, int y) {
+    void setBasePoint(int x, int y) {
         graphics.translate(x, y);
         point.setX(point.getX() + x);
         point.setY(point.getY() + y);
 
     }
 
-    public void setBasePoint(Point point) {
+    void setBasePoint(Point point) {
         graphics.translate(point.getX(), point.getY());
         this.point.setX(this.point.getX() + point.getX());
         this.point.setY(this.point.getY() + point.getY());
     }
 
-    public Point getBasePoint() {
+    Point getBasePoint() {
         return new Point(point);
     }
 
+    Rect getCurClip() {
+        return curClip;
+    }
+
+    void setCurClip(Rect curClip) {
+        this.curClip = curClip;
+    }
+
+    /**
+     * 辅助方法，转换坐标
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param anchor
+     * @return
+     */
     private int[] convert(int x, int y, int width, int height, int anchor) {
         int[] xy = {0, 0};
         switch (anchor) {
@@ -204,16 +221,5 @@ class GraphicsPainter implements Painter {
             break;
         }
         return xy;
-    }
-
-    private class DataHolder {
-
-        private Font font = null;
-        private java.awt.Color color = null;
-
-        private DataHolder(Font font, java.awt.Color color) {
-            this.font = font;
-            this.color = color;
-        }
     }
 }
