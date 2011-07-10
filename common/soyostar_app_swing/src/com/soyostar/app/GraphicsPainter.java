@@ -20,7 +20,7 @@ class GraphicsPainter implements Painter {
         this.graphics = graphics;
         ((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         point = new Point(0, 0);
-        setTextSize(15);
+        setTextSize(12);
     }
 
     Graphics getGraphics() {
@@ -33,7 +33,7 @@ class GraphicsPainter implements Painter {
 
     @Override
     public void setTextSize(int size) {
-        graphics.setFont(new Font("黑体", Font.BOLD, size));
+        graphics.setFont(new Font("黑体", Font.PLAIN, size));
 
     }
 
