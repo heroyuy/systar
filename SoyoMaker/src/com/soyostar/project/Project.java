@@ -8,12 +8,11 @@ import com.soyostar.data.DataManager;
 import com.soyostar.listener.ProjectChangeListener;
 import com.soyostar.listener.ProjectChangedEvent;
 import com.soyostar.model.animation.Animation;
+import com.soyostar.model.animation.Picture;
 import com.soyostar.model.map.Map;
 //import com.soyostar.model.map.MapSet;
 import com.soyostar.model.map.Npc;
 import com.soyostar.model.map.ScriptFile;
-import com.soyostar.model.map.Script;
-import com.soyostar.util.SloppyArray;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,8 +35,25 @@ public class Project {
     private HashMap<Integer, Map> maps = new HashMap<Integer, Map>();
     private HashMap<Integer, Npc> npcs = new HashMap<Integer, Npc>();
     private HashMap<Integer, Animation> anis = new HashMap<Integer, Animation>();
+    private ArrayList<Picture> pictures = new ArrayList<Picture>();
     private HashMap<Integer, ScriptFile> scripts = new HashMap<Integer, ScriptFile>();
     private DataManager dataManager = new DataManager();
+
+    public ArrayList<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void addPicture(Picture pic) {
+        pictures.add(pic);
+    }
+
+    public void removePicture(int index) {
+        pictures.remove(index);
+    }
+
+    public Picture getPicture(int index) {
+        return pictures.get(index);
+    }
 
     public HashMap<Integer, Animation> getAnimations() {
         return anis;
