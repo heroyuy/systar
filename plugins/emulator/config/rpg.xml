@@ -9,6 +9,7 @@
         <controller>game.scene.menu.MenuController</controller>
         <controller>game.scene.test.TestController</controller>
          <controller>game.scene.setting.SettingController</controller>
+         <controller>game.scene.help.HelpController</controller>
     </controllers>
-    <currentController>game.scene.test.TestController</currentController>
+    <currentController>game.scene.help.HelpController</currentController>
 </rpg>

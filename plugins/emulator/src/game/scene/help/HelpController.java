@@ -42,19 +42,18 @@ public class HelpController extends AbController{
     public HelpController(Render render){
         super(render);
         bg = new Layer();
-//        bg.setBackground(Color.GRAY);
-//        bg.set
+        bg.setBackground(Color.GRAY);
         bg.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         bg.setLocation(0, 0);
         bg.setVisible(true);
 
-        lta = new LTextArea("很早前我就说过，我很懒的，自己一般不会去敲代码的（目前自己没电脑），"
-                + "又因为最近比较忙，所以就一般模仿了。完成代码：ctrl+\\ //任何地方按下此组合键，"
+        String str = "很早前我就说过，我很懒的，自己一般不会去敲代码的（目前自己没电脑），又因为最近比较忙，"
+                + "所以就一般模仿了。完成代码：ctrl+\\ //任何地方按下此组合键，"
                 + "均会提示相应的参考字段；2、错误提示：alt + enter //顾名思义，当系统报错时，"
                 + "按下此组合可以查看系统提示；3、自动完成字符串： ctrl+L ctrl+k //后者（Ctrl+L没用过）"
                 + "组合键自动打出字符串，每按一次打出一个新串，串序自下向上；4、右键：修复自动导入"
-                + "5、右键：格式化代码风格6、导入所需包：ctrl+shift+i 7、格式化代码：alt+shift+F");
-//        lta.set
+                + "5、右键：格式化代码风格6、导入所需包：ctrl+shift+i 7、格式化代码：alt+shift+F";
+        lta = new LTextArea(str);
         lta.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         lta.setBackground(Color.GRAY);
         lta.setTextColor(Color.WHITE);
