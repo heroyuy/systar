@@ -1,0 +1,1 @@
+java -Xms32m -Xmx128m -jar SoyoMaker.jar
