@@ -37,12 +37,18 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="undoMenuItem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/soyostar/resources/16.PNG"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x64a4;&#x9500;"/>
                 <Property name="name" type="java.lang.String" value="undoMenuItem" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="redoMenuItem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/soyostar/resources/17.PNG"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x91cd;&#x505a;"/>
                 <Property name="name" type="java.lang.String" value="redoMenuItem" noResource="true"/>
               </Properties>
@@ -175,8 +181,8 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jToolBar1" alignment="0" pref="592" max="32767" attributes="0"/>
-                              <Component id="jTabbedPane1" alignment="0" pref="592" max="32767" attributes="0"/>
+                              <Component id="jToolBar1" alignment="0" pref="690" max="32767" attributes="0"/>
+                              <Component id="jTabbedPane1" alignment="0" pref="690" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -201,7 +207,10 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="addImgButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x56fe;&#x7247;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/1.PNG"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x56fe;&#x7247;"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="addImgButton" noResource="true"/>
@@ -213,7 +222,10 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="removeImgButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x56fe;&#x7247;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/11.PNG"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" value="&#x5220;&#x9664;&#x56fe;&#x7247;"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="removeImgButton" noResource="true"/>
@@ -275,7 +287,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JButton" name="jButton1">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x5143;&#x4ef6;"/>
+                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                              <Image iconType="3" name="/com/soyostar/resources/1.PNG"/>
+                            </Property>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
@@ -284,7 +298,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton2">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x5143;&#x4ef6;"/>
+                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                              <Image iconType="3" name="/com/soyostar/resources/11.PNG"/>
+                            </Property>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
@@ -408,7 +424,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JButton" name="addEffectButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x7279;&#x6548;"/>
+                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                              <Image iconType="3" name="/com/soyostar/resources/1.PNG"/>
+                            </Property>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="name" type="java.lang.String" value="addEffectButton" noResource="true"/>
@@ -417,7 +435,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="removeEffectButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x7279;&#x6548;"/>
+                            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                              <Image iconType="3" name="/com/soyostar/resources/11.PNG"/>
+                            </Property>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="name" type="java.lang.String" value="removeEffectButton" noResource="true"/>
@@ -505,7 +525,9 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="addAniButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x65b0;&#x5efa;&#x52a8;&#x753b;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/1.PNG"/>
+                                </Property>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="addAniButton" noResource="true"/>
@@ -514,7 +536,9 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="removeAniButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x52a8;&#x753b;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/11.PNG"/>
+                                </Property>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="removeAniButton" noResource="true"/>
@@ -571,7 +595,9 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="addFrameButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x5e27;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/1.PNG"/>
+                                </Property>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="addFrameButton" noResource="true"/>
@@ -580,7 +606,9 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="removeFrameButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x5e27;"/>
+                                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/com/soyostar/resources/11.PNG"/>
+                                </Property>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="name" type="java.lang.String" value="removeFrameButton" noResource="true"/>

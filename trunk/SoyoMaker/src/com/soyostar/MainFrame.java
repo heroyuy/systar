@@ -151,9 +151,9 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
         setLocationRelativeTo(null);
         setTitle(SoftInformation.chineseName + " "
-            + SoftInformation.majorVersion + "."
-            + SoftInformation.minorVersion + "."
-            + SoftInformation.modifiedVersion);
+                + SoftInformation.majorVersion + "."
+                + SoftInformation.minorVersion + "."
+                + SoftInformation.modifiedVersion);
     }
 
     /** This method is called from within the constructor to
@@ -1334,10 +1334,10 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
                 loadAllMap(root, (DefaultMutableTreeNode) mapTree.getModel().getRoot());
             }
             JOptionPane.showMessageDialog(this,
-                "项目导入成功！");
+                    "项目导入成功！");
         } else {
             JOptionPane.showMessageDialog(this, "警告",
-                "项目导入失败！", JOptionPane.WARNING_MESSAGE);
+                    "项目导入失败！", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1354,7 +1354,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
             e.printStackTrace();
             Log.getLogger(this.getClass()).error("openProject: " + file.getPath(), e);
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage(),
-                "项目导入失败！", JOptionPane.WARNING_MESSAGE);
+                    "项目导入失败！", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1370,7 +1370,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
                 //属性的取得
                 Attribute item = (Attribute) attrList.get(j);
                 newNode =
-                    new DefaultMutableTreeNode(SoftProxy.getInstance().getCurProject().getMap(Integer.parseInt(item.getValue())));
+                        new DefaultMutableTreeNode(SoftProxy.getInstance().getCurProject().getMap(Integer.parseInt(item.getValue())));
 //                if (mapTree.getSelectNode() == null) {
                 node.add(newNode);
                 ((DefaultTreeModel) mapTree.getModel()).reload(node);
@@ -1397,10 +1397,10 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
             // TODO add your handling code here:
             saveProject();
             JOptionPane.showMessageDialog(this,
-                "项目保存成功！");
+                    "项目保存成功！");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "警告",
-                "项目保存失败！", JOptionPane.WARNING_MESSAGE);
+                    "项目保存失败！", JOptionPane.WARNING_MESSAGE);
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1415,10 +1415,10 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
             if (map != null) {
                 IMapWriter softMapWriter = new DefaultSoftMapWriter();
                 softMapWriter.writeMap(map, SoftProxy.getInstance().getCurProject().getPath() + File.separatorChar
-                    + "softdata" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
+                        + "softdata" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
                 IMapWriter mapWriter = new DefaultMapWriter();
                 mapWriter.writeMap(map, SoftProxy.getInstance().getCurProject().getPath() + File.separatorChar
-                    + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
+                        + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
             }
         }
         Document doc = DocumentHelper.createDocument();
@@ -1496,12 +1496,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         NewTileSetDialog ntsd = new NewTileSetDialog(this, true);
@@ -1534,12 +1534,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private void newLayer() {
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         if (data.addLayer()) {
@@ -1570,7 +1570,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private void newMap() {
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         NewMapDialog nmd = new NewMapDialog(this, true);
@@ -1580,12 +1580,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         EditMapDialog emd = new EditMapDialog(this, true);
@@ -1596,12 +1596,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         TileSetManagerDialog tsmd = new TileSetManagerDialog(this, true);
@@ -1648,12 +1648,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private void removeLayer() {
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
 
@@ -1664,14 +1664,14 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
                 data.getCurrentMap().removeLayer(layer);
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "至少应有一个瓷砖层！");
+                        "至少应有一个瓷砖层！");
             }
         } else if (data.getCurrentLayer() instanceof CollideLayer) {
             JOptionPane.showMessageDialog(this,
-                "碰撞层不能删除！");
+                    "碰撞层不能删除！");
         } else if (data.getCurrentLayer() instanceof SpriteLayer) {
             JOptionPane.showMessageDialog(this,
-                "精灵层不能删除！");
+                    "精灵层不能删除！");
         }
 
 
@@ -1705,12 +1705,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private void upLayer() {
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         int layerIndex = data.getCurrentMap().getLayerArrayList().indexOf(data.getCurrentLayer());
@@ -1730,12 +1730,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     private void downLayer() {
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         int layerIndex = data.getCurrentMap().getLayerArrayList().indexOf(data.getCurrentLayer());
@@ -1819,9 +1819,9 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         SoftProxy.getInstance().getCurProject().getDataManager().clearAllData();
 
         setTitle(SoftInformation.chineseName + " "
-            + SoftInformation.majorVersion + "."
-            + SoftInformation.minorVersion + "."
-            + SoftInformation.modifiedVersion);
+                + SoftInformation.majorVersion + "."
+                + SoftInformation.minorVersion + "."
+                + SoftInformation.modifiedVersion);
         if (ded != null) {
 //            ded.dispose();
             ded = null;//置为null是为了再次打开数据编辑器时重新载入资源
@@ -1893,12 +1893,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
 //        System.out.println("edit map");
@@ -1913,7 +1913,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (ded == null) {
@@ -1922,6 +1922,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         ded.setVisible(true);
     }//GEN-LAST:event_dataEditorMenuItemActionPerformed
     private PreferenceDialog pf;
+
     private void setMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setMenuItemActionPerformed
         // TODO add your handling code here:
         if (pf == null) {
@@ -1946,7 +1947,7 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (tscd == null) {
@@ -1968,12 +1969,12 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
         // TODO add your handling code here:
         if (SoftProxy.getInstance().getCurProject() == null) {
             JOptionPane.showMessageDialog(this,
-                "请先新建项目！");
+                    "请先新建项目！");
             return;
         }
         if (data.getCurrentMap() == null) {
             JOptionPane.showMessageDialog(this,
-                "地图为空，请先新建地图！");
+                    "地图为空，请先新建地图！");
             return;
         }
         PreviewMapDialog prmd = new PreviewMapDialog(this, true);
@@ -2335,18 +2336,14 @@ public class MainFrame extends javax.swing.JFrame implements MapChangeListener, 
     }
 
     public void scriptAdded(ProjectChangedEvent e, ScriptFile npc) {
-
     }
 
     public void scriptRemoved(ProjectChangedEvent e, int index) {
-
     }
 
     public void animationAdded(ProjectChangedEvent e, Animation ani) {
-
     }
 
     public void animationRemoved(ProjectChangedEvent e, int index) {
-
     }
 }

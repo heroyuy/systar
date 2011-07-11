@@ -10,7 +10,13 @@
  */
 package com.soyostar.dialog;
 
-import com.soyostar.widge.JShapeButton;
+import com.soyostar.model.animation.Picture;
+import com.soyostar.proxy.SoftProxy;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 
 /**
@@ -123,7 +129,8 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        addImgButton.setText("添加图片");
+        addImgButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/1.PNG"))); // NOI18N
+        addImgButton.setToolTipText("添加图片");
         addImgButton.setFocusable(false);
         addImgButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addImgButton.setName("addImgButton"); // NOI18N
@@ -135,7 +142,8 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         });
         jToolBar1.add(addImgButton);
 
-        removeImgButton.setText("删除图片");
+        removeImgButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/11.PNG"))); // NOI18N
+        removeImgButton.setToolTipText("删除图片");
         removeImgButton.setFocusable(false);
         removeImgButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removeImgButton.setName("removeImgButton"); // NOI18N
@@ -148,8 +156,8 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,14 +178,14 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jToolBar2.setRollover(true);
         jToolBar2.setName("jToolBar2"); // NOI18N
 
-        jButton1.setText("添加元件");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/1.PNG"))); // NOI18N
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton1);
 
-        jButton2.setText("删除元件");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/11.PNG"))); // NOI18N
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setName("jButton2"); // NOI18N
@@ -248,14 +256,14 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jToolBar3.setRollover(true);
         jToolBar3.setName("jToolBar3"); // NOI18N
 
-        addEffectButton.setText("添加特效");
+        addEffectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/1.PNG"))); // NOI18N
         addEffectButton.setFocusable(false);
         addEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addEffectButton.setName("addEffectButton"); // NOI18N
         addEffectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(addEffectButton);
 
-        removeEffectButton.setText("删除特效");
+        removeEffectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/11.PNG"))); // NOI18N
         removeEffectButton.setFocusable(false);
         removeEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removeEffectButton.setName("removeEffectButton"); // NOI18N
@@ -298,14 +306,14 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jToolBar4.setRollover(true);
         jToolBar4.setName("jToolBar4"); // NOI18N
 
-        addAniButton.setText("新建动画");
+        addAniButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/1.PNG"))); // NOI18N
         addAniButton.setFocusable(false);
         addAniButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addAniButton.setName("addAniButton"); // NOI18N
         addAniButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar4.add(addAniButton);
 
-        removeAniButton.setText("删除动画");
+        removeAniButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/11.PNG"))); // NOI18N
         removeAniButton.setFocusable(false);
         removeAniButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removeAniButton.setName("removeAniButton"); // NOI18N
@@ -337,14 +345,14 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         jToolBar5.setRollover(true);
         jToolBar5.setName("jToolBar5"); // NOI18N
 
-        addFrameButton.setText("添加帧");
+        addFrameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/1.PNG"))); // NOI18N
         addFrameButton.setFocusable(false);
         addFrameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addFrameButton.setName("addFrameButton"); // NOI18N
         addFrameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar5.add(addFrameButton);
 
-        removeFrameButton.setText("删除帧");
+        removeFrameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/11.PNG"))); // NOI18N
         removeFrameButton.setFocusable(false);
         removeFrameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removeFrameButton.setName("removeFrameButton"); // NOI18N
@@ -416,10 +424,12 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
         editMenu.setText("编辑");
         editMenu.setName("editMenu"); // NOI18N
 
+        undoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/16.PNG"))); // NOI18N
         undoMenuItem.setText("撤销");
         undoMenuItem.setName("undoMenuItem"); // NOI18N
         editMenu.add(undoMenuItem);
 
+        redoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/17.PNG"))); // NOI18N
         redoMenuItem.setText("重做");
         redoMenuItem.setName("redoMenuItem"); // NOI18N
         editMenu.add(redoMenuItem);
@@ -444,6 +454,24 @@ public class SpriteEditorDialog extends javax.swing.JDialog {
 
     private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
         // TODO add your handling code here:
+        
+        JFileChooser jf = new JFileChooser();
+        jf.setCurrentDirectory(new File(SoftProxy.getInstance().getCurProject().getPath()
+                + File.separator + "image" + File.separator + "animation"));
+        int fresult;
+        fresult = jf.showOpenDialog(this);
+        if (fresult == JFileChooser.APPROVE_OPTION) { // 用户点击了“确定”按钮
+            File file = jf.getSelectedFile();
+            Picture pic = new Picture();
+            try {
+                pic.setSourceImageFile(file.getName());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            SoftProxy.getInstance().getCurProject().addPicture(pic);
+            System.out.println("image:" + file.getName());
+        }
+        
     }//GEN-LAST:event_addImgButtonActionPerformed
 
     /**
