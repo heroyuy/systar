@@ -97,7 +97,7 @@ public class LButton extends Widget {
             break;
             case TouchEvent.TOUCH_UP: {
                 this.state = STATE_AFCAL;
-                if (actionListener != null) {
+                if (actionListener != null && touchEvent.getX() >= 0 && touchEvent.getX() <= getWidth() && touchEvent.getY() >= 0 && touchEvent.getY() <= getHeight()) {
                     actionListener.actionPerformed(this);
                     state = true;
                 } else {
