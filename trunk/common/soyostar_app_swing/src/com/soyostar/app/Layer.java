@@ -51,7 +51,7 @@ public class Layer extends Widget {
 
     @Override
     public boolean dispatchTouchEvent(TouchEvent te) {
-        System.out.println("Layer-dispatchTouchEvent type:" + te.getType() + "  x:" + te.getX() + " y:" + te.getY());
+//        System.out.println("Layer-dispatchTouchEvent type:" + te.getType() + "  x:" + te.getX() + " y:" + te.getY());
         boolean state = false;
         //容器对事件进行一次拦截处理
         state = interceptTouchEvent(te);
@@ -133,7 +133,7 @@ public class Layer extends Widget {
                 break;
             }
         }
-        System.out.println("focus:" + focus);
+//        System.out.println("focus:" + focus);
         return focus;
     }
 }

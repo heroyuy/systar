@@ -86,7 +86,7 @@ public class LButton extends Widget {
 
     @Override
     public boolean dispatchTouchEvent(TouchEvent touchEvent) {
-        System.out.println("LButton-dispatchTouchEvent type:" + touchEvent.getType() + "  x:" + touchEvent.getX() + " y:" + touchEvent.getY());
+//        System.out.println("LButton-dispatchTouchEvent type:" + touchEvent.getType() + "  x:" + touchEvent.getX() + " y:" + touchEvent.getY());
         boolean state = false;
         switch (touchEvent.getType()) {
             case TouchEvent.TOUCH_DOWN:
