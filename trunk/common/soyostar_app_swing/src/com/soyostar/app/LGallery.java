@@ -13,8 +13,4 @@ public class LGallery extends LList {
     public LGallery(Adapter adapter) {
         super(adapter);
     }
-
-    @Override
-    public void paintSelf(Painter painter) {
-    }
 }

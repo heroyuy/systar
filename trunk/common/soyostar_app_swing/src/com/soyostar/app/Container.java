@@ -126,10 +126,10 @@ public class Container extends Component {
     }
 
     private void paintLayer(Painter painter) {
-        layer.paint(painter);
+        layer.paintWidget(painter);
     }
 
     private boolean onTouchEventLayer(TouchEvent touchEvent) {
-        return layer.onTouchEvent(touchEvent);
+        return layer.dispatchTouchEvent(touchEvent);
     }
 }
