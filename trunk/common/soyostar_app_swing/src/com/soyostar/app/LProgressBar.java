@@ -15,12 +15,13 @@ public class LProgressBar extends Widget {
     private int maxvalue = 0;//最大值
     private int x = 0;
     private int y = 0;
-
+ 
     public int getValue() {
 
         return value;
 
     }
+
 
     public int getMaxvalue() {
         return maxvalue;
