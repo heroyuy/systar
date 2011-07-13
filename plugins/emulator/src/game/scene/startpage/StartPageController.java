@@ -43,6 +43,7 @@ public class StartPageController extends AbController implements TouchListener, 
         lButton.setText("你好");
         lButton.setVisible(true);
         lButton.setSize(200, 60);
+        lButton.setLocation(10, 20);
         lButton.setBackground(Color.RED);
         lButton.setActionListener(this);
         button = new Button("Good!!");

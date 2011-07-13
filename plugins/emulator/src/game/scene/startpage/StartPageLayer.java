@@ -26,8 +26,8 @@ public class StartPageLayer extends Layer {
     }
 
     @Override
-    public void paintSelf(Painter p) {
-        super.paintSelf(p);
+    public void paint(Painter p) {
+        super.paint(p);
         p.drawImage(player, ge.getScreenWidth() / 2, ge.getScreenHeight() / 2, Painter.HV);
         p.setColor(Color.WHITE);
         p.setTextSize(20);

@@ -11,5 +11,5 @@
          <controller>game.scene.setting.SettingController</controller>
          <controller>game.scene.help.HelpController</controller>
     </controllers>
-    <currentController>game.scene.help.HelpController</currentController>
+    <currentController>game.scene.startpage.StartPageController</currentController>
 </rpg>
