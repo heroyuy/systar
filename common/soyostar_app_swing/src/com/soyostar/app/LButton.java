@@ -85,23 +85,28 @@ public class LButton extends Widget {
     }
 
     @Override
-    boolean onTouchEvent(TouchEvent touchEvent) {
+    public boolean dispatchTouchEvent(TouchEvent touchEvent) {
+        System.out.println("LButton-dispatchTouchEvent type:" + touchEvent.getType() + "  x:" + touchEvent.getX() + " y:" + touchEvent.getY());
+        boolean state = false;
         switch (touchEvent.getType()) {
             case TouchEvent.TOUCH_DOWN:
             case TouchEvent.TOUCH_MOVE: {
-                state = STATE_FOCUS;
+                this.state = STATE_FOCUS;
+                state = super.dispatchTouchEvent(touchEvent);
             }
             break;
             case TouchEvent.TOUCH_UP: {
-                state = STATE_AFCAL;
+                this.state = STATE_AFCAL;
                 if (actionListener != null) {
                     actionListener.actionPerformed(this);
+                    state = true;
+                } else {
+                    state = super.dispatchTouchEvent(touchEvent);
                 }
             }
-
             break;
         }
-        return true;
+        return state;
     }
 
     @Override
@@ -127,10 +132,5 @@ public class LButton extends Widget {
             painter.setTextSize(textSize);
         }
         painter.drawString(text, getWidth() / 2, getHeight() / 2, Painter.HV);
-    }
-
-    @Override
-    boolean onKeyEvent(KeyEvent keyEvent) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

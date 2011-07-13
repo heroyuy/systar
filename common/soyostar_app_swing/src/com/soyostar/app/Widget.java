@@ -1,7 +1,5 @@
 package com.soyostar.app;
 
-import com.soyostar.app.event.KeyEvent;
-import com.soyostar.app.event.KeyListener;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
 
@@ -19,15 +17,6 @@ public class Widget {
     private Image backgroundImage = null;
     private boolean visibility = false;
     private TouchListener touchListener = null;
-    private KeyListener keyListener = null;
-
-    public KeyListener getKeyListener() {
-        return keyListener;
-    }
-
-    public void setKeyListener(KeyListener keyListener) {
-        this.keyListener = keyListener;
-    }
 
     public TouchListener getTouchListener() {
         return touchListener;
@@ -118,24 +107,24 @@ public class Widget {
      * @param touchEvent 触屏事件
      * @return 若事件处理完成不需要传递到下一层继续处理则返回true，否则返回false
      */
-    boolean onTouchEvent(TouchEvent touchEvent) {
-        if (touchListener != null) {
-            return touchListener.onTouchEvent(this, touchEvent);
-        } else {
-            return true;
-        }
+    public boolean onTouchEvent(TouchEvent touchEvent) {
+        return true;
     }
 
     /**
-     * 按键事件发生时调用
-     * @param keyEvent 按键事件
-     * @return 若事件处理完成不需要传递到下一层继续处理则返回true，否则返回false
+     * 分配事件
+     * @param touchEvent
+     * @return 若事件分配成功返回true,失败返回false
      */
-    boolean onKeyEvent(KeyEvent keyEvent) {
-        if (keyListener != null) {
-            return keyListener.onKeyEvent(this, keyEvent);
-        } else {
+    public boolean dispatchTouchEvent(TouchEvent touchEvent) {
+        if (touchListener != null && touchListener.onTouchEvent(this, touchEvent)) {
             return true;
+        } else {
+            return onTouchEvent(touchEvent);
         }
+    }
+
+    public void paintWidget(Painter painter) {
+        paint(painter);
     }
 }

@@ -121,9 +121,7 @@ public class LTextArea extends Widget {
         painter.setClip(0, 0, getWidth(), getHeight());
     }
 
-    @Override
-    boolean onTouchEvent(TouchEvent te) {
-        System.out.println("te.getY():" + te.getY());
+    public boolean dispatchTouchEvent(TouchEvent te) {
         switch (te.getType()) {
             case TouchEvent.TOUCH_DOWN: {
                 prevY = te.getY();
@@ -138,8 +136,9 @@ public class LTextArea extends Widget {
                 }
             }
             break;
+
         }
-        return true;
+        return super.dispatchTouchEvent(te);
     }
 
     private void analyse(Painter painter, String text) {
