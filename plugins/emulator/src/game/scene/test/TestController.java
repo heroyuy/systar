@@ -9,6 +9,7 @@ import com.soyostar.app.Color;
 import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LProgressBar;
 import com.soyostar.app.LTextArea;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
@@ -35,6 +36,7 @@ public class TestController extends AbController {
     private Button btn = null;
     private LLabel label = null;
     private LTextArea lta = null;
+    private LProgressBar lpb = null;
 
     public TestController(Render render) {
         super(render);
@@ -88,6 +90,15 @@ public class TestController extends AbController {
         label.setTextAnchor(Painter.HV);
         label.setVisible(true);
 
+        lpb = new LProgressBar();
+        lpb.setBackground(Color.GRAY);
+        lpb.setForeground(Color.GREEN);
+        lpb.setMaxValue(100);
+        lpb.setValue(23);
+        lpb.setVisible(true);
+        lpb.setSize(150, 20);
+        lpb.setLocation(10, 150);
+
         lta = new LTextArea("支持图形调试的图形子类。重写 Graphics 中的大多数方法。"
                 + "DebugGraphics 对象很少通过手工创建。它们通常在 JComponent 的 "
                 + "debugGraphicsOptions 因使用 setDebugGraphicsOptions() "
@@ -109,6 +120,7 @@ public class TestController extends AbController {
         bg.addWidget(label);
         addComponent(btn);
         bg.addWidget(lta);
+        bg.addWidget(lpb);
     }
 
     public void onLose() {
