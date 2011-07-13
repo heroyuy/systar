@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.soyostar.app;
 
 /**
- *进度条
- * @author Administrator
+ * 进度条
+ * @author vv
  */
 public class LProgressBar extends Widget {
 
