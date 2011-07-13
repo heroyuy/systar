@@ -105,9 +105,9 @@ public class LTextArea extends Widget {
         if (needUpdate) {
             texts.clear();
             analyse(painter, text);
-            for (String str : texts) {
-                System.out.println(str);
-            }
+//            for (String str : texts) {
+//                System.out.println(str);
+//            }
             curOffsetY = 0;
             totalOffsetY = texts.size() * painter.getTextSize() + (texts.size() - 1) * leading - (getHeight() - marginTop - marginBottom);
             needUpdate = false;
