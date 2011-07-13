@@ -97,6 +97,7 @@ public class TestController extends AbController {
         lpb.setValue(23);
         lpb.setVisible(true);
         lpb.setSize(150, 20);
+        lpb.setDrawable(true);
         lpb.setLocation(10, 150);
 
         lta = new LTextArea("支持图形调试的图形子类。重写 Graphics 中的大多数方法。"
