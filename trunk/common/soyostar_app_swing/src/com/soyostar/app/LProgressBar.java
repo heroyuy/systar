@@ -1,5 +1,7 @@
 package com.soyostar.app;
 
+import com.soyostar.app.event.TouchEvent;
+
 /**
  * 进度条
  * @author vv
@@ -9,6 +11,15 @@ public class LProgressBar extends Widget {
     private int foreground = Color.YELLOW;
     private int value = 0;   //长度
     private int maxValue = 0;//最大值
+    private boolean drawable = false;
+
+    public boolean isDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(boolean drawable) {
+        this.drawable = drawable;
+    }
 
     public int getForeground() {
         return foreground;
@@ -32,6 +43,17 @@ public class LProgressBar extends Widget {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(TouchEvent te) {
+        if (drawable) {
+            value = (int) (te.getX() * 1.0 / getWidth() * maxValue);
+            if (value >= maxValue) {
+                value = maxValue;
+            }
+        }
+        return super.dispatchTouchEvent(te);
     }
 
     @Override
