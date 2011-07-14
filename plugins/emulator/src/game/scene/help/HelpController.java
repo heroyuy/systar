@@ -55,6 +55,8 @@ public class HelpController extends AbController{
                 + "5、右键：格式化代码风格6、导入所需包：ctrl+shift+i 7、格式化代码：alt+shift+F";
         lta = new LTextArea(str);
         lta.setSize(ge.getScreenWidth(), ge.getScreenHeight());
+        lta.setMargin(10,10, 15, 15);
+        lta.setLeading(5);
         lta.setBackground(Color.GRAY);
         lta.setTextColor(Color.WHITE);
         lta.setLocation(0, 0);
