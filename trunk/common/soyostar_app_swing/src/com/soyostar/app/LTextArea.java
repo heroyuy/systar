@@ -121,6 +121,7 @@ public class LTextArea extends Widget {
         painter.setClip(0, 0, getWidth(), getHeight());
     }
 
+    @Override
     public boolean dispatchTouchEvent(TouchEvent te) {
         switch (te.getType()) {
             case TouchEvent.TOUCH_DOWN: {
