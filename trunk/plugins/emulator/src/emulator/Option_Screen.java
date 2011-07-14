@@ -128,6 +128,7 @@ public class Option_Screen extends javax.swing.JDialog {
                 Option_Screen dialog = new Option_Screen( Emulator.getDefaultEmulator());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }

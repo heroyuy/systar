@@ -316,7 +316,7 @@ public class Emulator extends javax.swing.JDialog {
             public void run() {
                 Emulator dialog = new Emulator();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
