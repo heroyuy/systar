@@ -26,7 +26,6 @@ public class GameData extends AbModel {
         actionManager = new ActionManager();
         dataStore = new DataStore();
         player = dataStore.getPlayer();
-        System.out.println("player.curMapIndex:"+player.curMapIndex);
         curMap = dataStore.getMap(player.curMapIndex);
     }
 

@@ -1,9 +1,9 @@
 package game.scene.map;
 
-import com.soyostar.app.Image;
 import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 import game.impl.model.Player;
+import game.impl.model.Sprite;
 
 /**
  *
@@ -11,16 +11,16 @@ import game.impl.model.Player;
  */
 public class SpriteLayer extends Widget {
 
-    private Player player = null;
+    private Sprite sprite = null;
 
-    public SpriteLayer(Player player) {
-        this.player = player;
-        this.setSize(player.getCurStepImage().getWidth(), player.getCurStepImage().getHeight());
+    public SpriteLayer(Sprite sprite) {
+        this.sprite = sprite;
+        this.setSize(sprite.getCurStepImage().getWidth(), sprite.getCurStepImage().getHeight());
     }
 
     @Override
     public void paint(Painter painter) {
         super.paint(painter);
-        painter.drawImage(player.getCurStepImage(), 0, 0, Painter.LT);
+        painter.drawImage(sprite.getCurStepImage(), 0, 0, Painter.LT);
     }
 }

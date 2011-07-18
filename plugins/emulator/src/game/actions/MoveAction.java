@@ -4,7 +4,7 @@ import com.soyostar.app.action.Action;
 import engine.GameEngine;
 import game.RpgGame;
 import game.impl.model.GameData;
-import game.impl.model.Player;
+import game.impl.model.Sprite;
 import game.scene.map.SpriteLayer;
 
 /**
@@ -22,39 +22,39 @@ public class MoveAction extends Action {
     private static final int RIGHT = 3;
     private int face = UP;
     private int index = 0;//行动序列，0 1 2 3
-    private Player player = null;
+    private Sprite sprite = null;
     private SpriteLayer spriteLayer = null;
 
     private MoveAction() {
     }
 
-    public static MoveAction createMoveUpAction(SpriteLayer spriteLayer, Player player) {
+    public static MoveAction createMoveUpAction(SpriteLayer spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
-        ma.player = player;
+        ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
         ma.face = UP;
         return ma;
     }
 
-    public static MoveAction createMoveDownAction(SpriteLayer spriteLayer, Player player) {
+    public static MoveAction createMoveDownAction(SpriteLayer spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
-        ma.player = player;
+        ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
         ma.face = DOWN;
         return ma;
     }
 
-    public static MoveAction createMoveLeftAction(SpriteLayer spriteLayer, Player player) {
+    public static MoveAction createMoveLeftAction(SpriteLayer spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
-        ma.player = player;
+        ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
         ma.face = LEFT;
         return ma;
     }
 
-    public static MoveAction createMoveRightAction(SpriteLayer spriteLayer, Player player) {
+    public static MoveAction createMoveRightAction(SpriteLayer spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
-        ma.player = player;
+        ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
         ma.face = RIGHT;
         return ma;
@@ -76,7 +76,7 @@ public class MoveAction extends Action {
                     spriteLayer.setLocation(spriteLayer.getX() + gd.curMap.cellWidth / 4, spriteLayer.getY());
                     break;
             }
-            player.setCurStepImage(face, (index+1)%4);
+            sprite.setCurStepImage(face, (index + 1) % 4);
             index++;
         } else {
             freeze();

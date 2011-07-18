@@ -2,11 +2,15 @@ package game.data;
 
 import com.soyostar.app.Image;
 import com.soyostar.app.Painter;
-import game.impl.model.Npc;
+import game.data.DataFactory.FileConnector;
 import game.impl.model.Map;
+import game.impl.model.Npc;
+import game.impl.model.Npc.NpcState;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +30,8 @@ public class MapFactory {
     private int layerNum = -1;
     private Layer[] layers = null;
     private boolean[][] ways = null;
-    private int[][] npcIndexs = null;
+    private java.util.Map<Integer, Npc> npcs = new java.util.HashMap<Integer, Npc>();
+    private int[][] npcIndexs;
 
     public void loadMapData(DataInputStream dis) {
         System.out.println("loadMapData");
@@ -103,9 +108,13 @@ public class MapFactory {
         map.rowNum = rowNum;
         map.cellWidth = cellWidth;
         map.cellHeight = cellHeight;
-//        for (Npc npc : npcs) {
-//            map.npcList.put(npc.getIndex(), npc);
-//        }
+        for (int i = 0; i < npcIndexs.length; i++) {
+            for (int j = 0; j < npcIndexs[i].length; j++) {
+                if (npcIndexs[i][j] >= 0) {
+                    map.npcList.put(npcIndexs[i][j], getNpc(npcIndexs[i][j]));
+                }
+            }
+        }
         map.background = createBackground();
         map.foreground = createForeground();
         return map;
@@ -116,21 +125,52 @@ public class MapFactory {
         Painter painter = img.getPainter();
         Image temp = null;
         for (Layer layer : layers) {
-//            if (layer.deepth < 0) {
+            if (layer.deepth < 0) {
             for (int i = 0; i < rowNum; i++) {
                 for (int j = 0; j < colNum; j++) {
                     Tile tile = layer.tiles[i][j];
                     if (tile.imageSetId != -1) {
                         temp = imageSets.get(tile.imageSetId).image;
-                        int tx = tile.tileIndex % (temp.getWidth()/cellWidth) * cellWidth;
-                        int ty = tile.tileIndex / (temp.getWidth()/cellWidth) * cellHeight;
+                        int tx = tile.tileIndex % (temp.getWidth() / cellWidth) * cellWidth;
+                        int ty = tile.tileIndex / (temp.getWidth() / cellWidth) * cellHeight;
                         painter.drawImage(Image.copyImage(temp, tx, ty, cellWidth, cellHeight), j * cellWidth, i * cellHeight, Painter.LT);
                     }
                 }
             }
-//            }
+            }
         }
         return img;
+    }
+
+    private Npc getNpc(int index) {
+        if (!npcs.containsKey(index)) {
+            try {
+                DataInputStream dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_NPC, index);
+                Npc npc = new Npc();
+                npc.setIndex(dis.readInt());
+                npc.mapIndex = dis.readInt();
+                npc.row = dis.readInt();
+                npc.col = dis.readInt();
+                npc.stateNum = dis.readInt();
+                npc.npcStates = new NpcState[npc.stateNum];
+                for (int i = 0; i < npc.stateNum; i++) {
+                    npc.npcStates[i] = new NpcState();
+                    npc.npcStates[i].stateType = dis.readByte();
+                    String npcPath=dis.readUTF();
+                    npc.npcStates[i].face = dis.readByte();
+                    npc.npcStates[i].setCharImg("res/image/character/" + npcPath);
+                    npc.npcStates[i].move = dis.readByte();
+                    npc.npcStates[i].speed = dis.readByte();
+                    npc.npcStates[i].transparent = dis.readBoolean();
+                    npc.npcStates[i].scriptIndex = dis.readInt();
+                }
+                npc.curNpcState=npc.npcStates[0];
+                npcs.put(index, npc);
+            } catch (IOException ex) {
+                Logger.getLogger(MapFactory.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return npcs.get(index);
     }
 
     private Image createForeground() {
