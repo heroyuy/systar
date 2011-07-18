@@ -45,8 +45,8 @@ public class Emulator extends javax.swing.JDialog {
     public App getCurApp() {
         return curApp;
     }
-    private int width = 240;//模拟器屏幕宽度
-    private int height = 320;//模拟器屏幕高度
+    private int width = 800;//模拟器屏幕宽度
+    private int height = 480;//模拟器屏幕高度
     private static Emulator defaultEmulator = new Emulator();
 
     public static Emulator getDefaultEmulator() {
