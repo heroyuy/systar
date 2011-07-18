@@ -2,7 +2,6 @@ package com.soyostar.app.action.widget;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Widget;
-import com.soyostar.app.action.Actable;
 import com.soyostar.app.action.Action;
 
 /**
