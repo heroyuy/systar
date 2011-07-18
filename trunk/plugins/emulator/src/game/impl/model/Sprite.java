@@ -1,7 +1,6 @@
 package game.impl.model;
 
 import com.soyostar.app.Image;
-import com.soyostar.app.Painter;
 import game.AbModel;
 
 /**
@@ -10,79 +9,31 @@ import game.AbModel;
  */
 public abstract class Sprite extends AbModel {
 
-    public static final byte STATE_STAND = 0;
-    public static final byte STATE_WALKING = 1;
-    public static final byte STATE_TALK = 2;
-    public static final byte FACE_UP = 3;
-    public static final byte FACE_DOWN = 0;
-    public static final byte FACE_LEFT = 1;
-    public static final byte FACE_RIGHT = 2;
-    private byte state = STATE_STAND;
-    private Image[][] chartlets = null;
-    private int curStep = -1;
-    //以下是子类需要使用的字段
-    public int row = -1;
-    public int col = -1;
-    public int face = -1;
-    public int moveSpeed = -1;
+    public byte face = 0;
+    public int row = 0;
+    public int col = 0;
+    private Image[][] sequence = null;
+    private Image curStepImage = null;
 
-    public void goUp() {
-        if (state == STATE_STAND) {
-            face = FACE_UP;
-            state = STATE_WALKING;
-        }
-    }
-
-    public void goDown() {
-        if (state == STATE_STAND) {
-            face = FACE_DOWN;
-            state = STATE_WALKING;
-        }
-    }
-
-    public void goLeft() {
-        if (state == STATE_STAND) {
-            face = FACE_LEFT;
-            state = STATE_WALKING;
-        }
-    }
-
-    public void goRight() {
-        if (state == STATE_STAND) {
-            face = FACE_RIGHT;
-            state = STATE_WALKING;
-        }
-    }
-
-    public final void setChartlet(String path) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    public final void setChartlet(Image chartlet) {
-        int width = chartlet.getWidth() / 4;
-        int height = chartlet.getHeight() / 4;
-        chartlets = new Image[4][4];
-        for (int i = 0; i < chartlets.length; i++) {
-            for (int j = 0; j < chartlets[i].length; j++) {
-                chartlets[i][j] = Image.copyImage(chartlet, i * width, j * height, width, height);
+    public void setCharImg(String charImgPath) {
+        Image characterImage = Image.createImage(charImgPath);
+        sequence = new Image[4][4];
+        int w = characterImage.getWidth() / 4;
+        int h = characterImage.getHeight() / 4;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                sequence[i][j] = Image.copyImage(characterImage, j * w, i * h, w, h);
             }
         }
+        System.out.println("face:"+face);
+        curStepImage = sequence[(face + 3) % 4][0];
     }
 
-    public final void draw(Painter p, int x, int y) {
-        p.drawImage(chartlets[face][curStep], x, y, 0);
+    public Image getCurStepImage() {
+        return curStepImage;
     }
 
-    public void update() {
-        if (state == STATE_WALKING) {
-            curStep = (curStep + 1) % 4;
-            if (curStep == 0) {
-                state = STATE_STAND;
-            }
-        } else if (state == STATE_TALK) {
-            if (curStep != 0) {
-                curStep = (curStep + 1) % 4;
-            }
-        }
+    public void setCurStepImage(int face, int index) {
+        curStepImage = sequence[(face + 3) % 4][index];
     }
 }

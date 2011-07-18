@@ -1,6 +1,5 @@
 package game.data;
 
-import com.soyostar.app.Image;
 import game.impl.model.Config;
 import game.impl.model.Enemy;
 import game.impl.model.EnemyTroop;
@@ -210,7 +209,7 @@ public class DataFactory {
             player.curMapIndex = dis.readInt();
             player.row = dis.readInt();
             player.col = dis.readInt();
-            player.face = dis.readInt();
+            player.face = (byte) dis.readInt();//测试
             player.setIndex(0);
             playerList.put(player.getIndex(), player);
         } catch (IOException e) {
@@ -321,7 +320,7 @@ public class DataFactory {
     private static DataInputStream dis = null;
     private static MapFactory mapFactory = new MapFactory();
 
-    private static class FileConnector {
+    public static class FileConnector {
 
         public static final byte FILE_TYPE_CONFIG = 0;
         public static final byte FILE_TYPE_ANIMATION = 1;
@@ -332,6 +331,7 @@ public class DataFactory {
         public static final byte FILE_TYPE_SKILL = 6;
         public static final byte FILE_TYPE_PLAYER = 7;
         public static final byte FILE_TYPE_MAP = 8;
+        public static final byte FILE_TYPE_NPC = 9;
         public static FileInputStream fis = null;
         public static DataInputStream dis = null;
 
@@ -364,6 +364,9 @@ public class DataFactory {
                         break;
                     case FILE_TYPE_MAP:
                         fis = new FileInputStream(new File("res/data/map/map" + index + ".gat"));
+                        break;
+                    case FILE_TYPE_NPC:
+                        fis = new FileInputStream(new File("res/data/npc/npc" + index + ".gat"));
                         break;
                     default:
                         fis = null;

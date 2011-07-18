@@ -14,8 +14,6 @@ public class Player extends Sprite implements Cloneable {
     public String name;//名称
     public String intro;//介绍
     public String headImg;//头像
-    private Image[][] sequence = null;
-    private Image curStepImage = null;
     public int stre;//力量
     public int agil;//敏捷
     public int inte;//智力
@@ -34,8 +32,6 @@ public class Player extends Sprite implements Cloneable {
 
     @Override
     public void update() {
-        //调用父类中的移动规则
-        super.update();
     }
 
     @Override
@@ -53,25 +49,4 @@ public class Player extends Sprite implements Cloneable {
         return p;
     }
 
-    public void setCharImg(String charImgPath) {
-        Image characterImage = Image.createImage(charImgPath);
-        sequence = new Image[4][4];
-        int w = characterImage.getWidth() / 4;
-        int h = characterImage.getHeight() / 4;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                sequence[i][j] = Image.copyImage(characterImage, j * w, i * h, w, h);
-            }
-        }
-        curStepImage = sequence[(face + 3) % 4][0];
-    }
-
-    public Image getCurStepImage() {
-        return curStepImage;
-    }
-
-    public void setCurStepImage(int face, int index) {
-        System.out.println("face:"+face);
-        curStepImage = sequence[(face + 3) % 4][index];
-    }
 }
