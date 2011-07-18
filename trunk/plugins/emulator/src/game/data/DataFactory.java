@@ -1,5 +1,6 @@
 package game.data;
 
+import com.soyostar.app.Image;
 import game.impl.model.Config;
 import game.impl.model.Enemy;
 import game.impl.model.EnemyTroop;
@@ -187,7 +188,7 @@ public class DataFactory {
             player.name = dis.readUTF();
             player.intro = dis.readUTF();
             player.headImg = dis.readUTF();
-            player.charImg = dis.readUTF();
+            player.setCharImg("res" + dis.readUTF());
             player.stre = dis.readInt();
             player.agil = dis.readInt();
             player.inte = dis.readInt();

@@ -1,10 +1,12 @@
 package game.data;
 
 import com.soyostar.app.Image;
+import com.soyostar.app.Painter;
 import game.impl.model.Npc;
 import game.impl.model.Map;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
@@ -15,7 +17,7 @@ public class MapFactory {
     private int index = -1;
     private String name;                     //地图名称
     private int imageSetNum = -1;
-    private ImageSet[] imageSets = null;
+    private java.util.Map<Integer, ImageSet> imageSets = null;
     private String musicName;                //音乐名称
     private int rowNum;                      //行数
     private int colNum;                      //列数
@@ -24,8 +26,7 @@ public class MapFactory {
     private int layerNum = -1;
     private Layer[] layers = null;
     private boolean[][] ways = null;
-    private int npcNum = -1;
-    private Npc[] npcs = null;
+    private int[][] npcIndexs = null;
 
     public void loadMapData(DataInputStream dis) {
         System.out.println("loadMapData");
@@ -42,11 +43,13 @@ public class MapFactory {
             //图集
             System.out.println("图集");
             imageSetNum = dis.readInt();
-            imageSets = new ImageSet[imageSetNum];
-            for (int i = 0; i < imageSets.length; i++) {
-                imageSets[i] = new ImageSet();
-                imageSets[i].id = dis.readInt();
-                imageSets[i].path = dis.readUTF();
+            imageSets = new HashMap<Integer, ImageSet>();
+            for (int i = 0; i < imageSetNum; i++) {
+                ImageSet imageSet = new ImageSet();
+                imageSet.id = dis.readInt();
+                imageSet.path = dis.readUTF();
+                imageSet.image = Image.createImage("res" + imageSet.path);
+                imageSets.put(imageSet.id, imageSet);
             }
             //图层
             System.out.println("图层");
@@ -79,23 +82,10 @@ public class MapFactory {
             }
             //NPC
             System.out.println("NPC");
-            npcNum = dis.readInt();
-            npcs = new Npc[npcNum];
-            for (int i = 0; i < npcs.length; i++) {
-                npcs[i] = new Npc();
-                npcs[i].setIndex(dis.readInt());
-                npcs[i].row = dis.readInt();
-                npcs[i].col = dis.readInt();
-                npcs[i].setChartlet(dis.readUTF());
-                npcs[i].face = dis.readByte();
-                npcs[i].moveType = dis.readByte();
-                npcs[i].moveSpeed = dis.readInt();
-                npcs[i].transparent = dis.readBoolean();
-                npcs[i].scriptType = dis.readByte();
-                npcs[i].scriptNum = dis.readInt();
-                npcs[i].scripts = new String[npcs[i].scriptNum];
-                for (int j = 0; j < npcs[i].scripts.length; j++) {
-                    npcs[i].scripts[j] = dis.readUTF();
+            npcIndexs = new int[rowNum][colNum];
+            for (int i = 0; i < rowNum; i++) {
+                for (int j = 0; j < colNum; j++) {
+                    npcIndexs[i][j] = dis.readInt();
                 }
             }
         } catch (IOException ex) {
@@ -113,18 +103,34 @@ public class MapFactory {
         map.rowNum = rowNum;
         map.cellWidth = cellWidth;
         map.cellHeight = cellHeight;
-        for (Npc npc : npcs) {
-            map.npcList.put(npc.getIndex(), npc);
-        }
+//        for (Npc npc : npcs) {
+//            map.npcList.put(npc.getIndex(), npc);
+//        }
         map.background = createBackground();
         map.foreground = createForeground();
         return map;
     }
 
     private Image createBackground() {
-        Image eimg = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
-//        throw new UnsupportedOperationException("Not yet implemented");
-        return null;
+        Image img = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
+        Painter painter = img.getPainter();
+        Image temp = null;
+        for (Layer layer : layers) {
+//            if (layer.deepth < 0) {
+            for (int i = 0; i < rowNum; i++) {
+                for (int j = 0; j < colNum; j++) {
+                    Tile tile = layer.tiles[i][j];
+                    if (tile.imageSetId != -1) {
+                        temp = imageSets.get(tile.imageSetId).image;
+                        int tx = tile.tileIndex % (temp.getWidth()/cellWidth) * cellWidth;
+                        int ty = tile.tileIndex / (temp.getWidth()/cellWidth) * cellHeight;
+                        painter.drawImage(Image.copyImage(temp, tx, ty, cellWidth, cellHeight), j * cellWidth, i * cellHeight, Painter.LT);
+                    }
+                }
+            }
+//            }
+        }
+        return img;
     }
 
     private Image createForeground() {
@@ -136,6 +142,7 @@ public class MapFactory {
 
         public int id = -1;
         public String path = null;
+        public Image image = null;
     }
 
     private class Layer {

@@ -34,7 +34,4 @@ public class ActionManager {
             }
         }
     }
-
-    private void removeAllDeadAction() {
-    }
 }
