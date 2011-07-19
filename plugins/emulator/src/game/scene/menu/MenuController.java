@@ -61,8 +61,12 @@ public class MenuController extends AbController {
                                     rpgGame.setCurrentControl("game.scene.setting.SettingController");
                                     break;
                                 case 3:
+                                    //游戏帮助
+                                    rpgGame.setCurrentControl("game.scene.help.HelpController");
                                     break;
                                 case 4:
+                                    //关于帮助
+                                     rpgGame.setCurrentControl("game.scene.about.AboutController");
                                     break;
                                 case 5:
                                     break;

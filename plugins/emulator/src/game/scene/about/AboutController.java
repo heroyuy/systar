@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package game.scene.help;
+package game.scene.about;
 
 import com.soyostar.app.Button;
 import com.soyostar.app.Color;
@@ -19,13 +19,12 @@ import engine.Render;
 import game.AbController;
 import game.RpgGame;
 import game.impl.model.GameData;
-import game.util.Skin;
 
 /**
  *
  * @author Administrator
  */
-public class HelpController extends AbController implements TouchListener, ActionListener{
+public class AboutController extends AbController implements TouchListener, ActionListener{
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
@@ -42,7 +41,7 @@ public class HelpController extends AbController implements TouchListener, Actio
      * HelpController的构造函数
      * @param render 
      */
-    public HelpController(Render render){
+    public AboutController(Render render){
         super(render);
         bg = new Layer();
         bg.setBackground(Color.GRAY);
@@ -53,15 +52,11 @@ public class HelpController extends AbController implements TouchListener, Actio
     }
 
     public void onObtain() {
-        String str = "很早前我就说过，我很懒的，自己一般不会去敲代码的（目前自己没电脑），又因为最近比较忙，"
-                + "所以就一般模仿了。完成代码：ctrl+\\ //任何地方按下此组合键，"
-                + "均会提示相应的参考字段；2、错误提示：alt + enter //顾名思义，当系统报错时，"
-                + "按下此组合可以查看系统提示；3、自动完成字符串： ctrl+L ctrl+k //后者（Ctrl+L没用过）"
-                + "组合键自动打出字符串，每按一次打出一个新串，串序自下向上；4、右键：修复自动导入"
-                + "5、右键：格式化代码风格6、导入所需包：ctrl+shift+i 7、格式化代码：alt+shift+F";
+        String str = "这个只是关于游戏的测试版本，其中的内容是没有与实际的开发联系起来的，我们的团队会在"
+                + "以后的开发中完善这个文件中的内容。敬请大家看看我们的成果。";
         lta = new LTextArea(str);
         lta.setSize(ge.getScreenWidth(), ge.getScreenHeight());
-        lta.setMargin(10,10, 15, 15);
+        lta.setMargin(10, 10, 15, 15);
         lta.setLeading(5);
         lta.setBackground(Color.GRAY);
         lta.setTextColor(Color.WHITE);
@@ -99,7 +94,5 @@ public class HelpController extends AbController implements TouchListener, Actio
             rpgGame.setCurrentControl("game.scene.menu.MenuController");
         }
     }
-
-    
-    
+   
 }
