@@ -11,6 +11,7 @@
         <controller>game.scene.setting.SettingController</controller>
         <controller>game.scene.help.HelpController</controller>
         <controller>game.scene.map.MapController</controller>
+        <controller>game.scene.about.AboutController</controller>
     </controllers>
-    <currentController>game.scene.map.MapController</currentController>
+    <currentController>game.scene.startpage.StartPageController</currentController>
 </rpg>

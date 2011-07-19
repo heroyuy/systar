@@ -47,8 +47,8 @@ public class StartPageController extends AbController implements TouchListener, 
         lButton.setBackground(Color.RED);
         lButton.setActionListener(this);
         button = new Button("Good!!");
-        button.setWidth(50);
-        button.setHeight(20);
+        button.setWidth(100);
+        button.setHeight(50);
         button.setX(10);
         button.setY(100);
         button.setListener(this);
@@ -69,7 +69,7 @@ public class StartPageController extends AbController implements TouchListener, 
         if (t.equals(button)) {
             lButton.setText("高级按键被按了");
         } else if (t.equals(lButton)) {
-            button.setText("低级的按键被按了");
+            lButton.setText("低级的按键被按了");
         }
     }
 }
