@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.scene.map;
 
 import com.soyostar.app.Color;
@@ -20,7 +16,7 @@ import java.util.Random;
 
 /**
  *
- * @author Administrator
+ * @author wp_g4
  */
 public class MapController extends AbController implements TouchListener {
 
@@ -41,7 +37,6 @@ public class MapController extends AbController implements TouchListener {
         mapBackground.setBackgroundImage(gd.curMap.background);
         mapBackground.setTouchListener(this);
         mapForeground = new Widget();
-//        mapForeground.setBackground(Color.GREEN);
         mapForeground.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         mapForeground.setVisible(true);
         mapForeground.setBackgroundImage(gd.curMap.foreground);
@@ -105,12 +100,7 @@ public class MapController extends AbController implements TouchListener {
             MoveAction me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
             me.activate();
             gd.actionManager.addAction(me);
-//            gd.actionManager.addAction(MoveAction.createMoveDownAction(spriteLayer, gd.player));
-//            gd.actionManager.addAction(MoveAction.createMoveRightAction(spriteLayer, gd.player));
-//            gd.actionManager.addAction(MoveAction.createMoveRightAction(spriteLayer, gd.player));
-
         }
         return true;
-
     }
 }
