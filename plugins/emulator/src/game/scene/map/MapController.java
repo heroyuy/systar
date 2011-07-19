@@ -62,7 +62,7 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public void updateModel() {
-        if (ge.getTicker() % 100 == 0) {
+        if (ge.getTicker() % 10 == 0) {
             int num = new Random().nextInt(4);
             int index = new Random().nextInt(2);
             MoveAction me = null;
