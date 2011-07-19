@@ -53,6 +53,8 @@ public class MenuController extends AbController {
                         if (t.equals(lbs[i])) {
                             switch (i) {
                                 case 0:
+                                    //开始游戏
+                                    rpgGame.setCurrentControl("game.scene.map.MapController");
                                     break;
                                 case 1:
                                     break;
