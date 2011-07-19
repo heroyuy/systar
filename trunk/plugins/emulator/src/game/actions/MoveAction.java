@@ -64,6 +64,7 @@ public class MoveAction extends Action {
         if (index < 4) {
             switch (face) {
                 case UP:
+                    
                     spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - gd.curMap.cellHeight / 4);
                     break;
                 case DOWN:
@@ -78,6 +79,7 @@ public class MoveAction extends Action {
             }
             sprite.setCurStepImage(face, (index + 1) % 4);
             index++;
+
         } else {
             freeze();
         }
