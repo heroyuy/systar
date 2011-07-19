@@ -115,17 +115,17 @@ public class MapFactory {
                 }
             }
         }
-        map.background = createBackground();
-        map.foreground = createForeground();
+        createScenery(map);
         return map;
     }
 
-    private Image createBackground() {
-        Image img = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
-        Painter painter = img.getPainter();
+    private void createScenery(Map map) {
+        map.background = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
+        map.foreground = Image.createImage(this.colNum * this.cellWidth, this.rowNum * this.cellHeight);
+        Painter painterB = map.background.getPainter();
+        Painter painterF = map.foreground.getPainter();
         Image temp = null;
         for (Layer layer : layers) {
-            if (layer.deepth < 0) {
             for (int i = 0; i < rowNum; i++) {
                 for (int j = 0; j < colNum; j++) {
                     Tile tile = layer.tiles[i][j];
@@ -133,13 +133,17 @@ public class MapFactory {
                         temp = imageSets.get(tile.imageSetId).image;
                         int tx = tile.tileIndex % (temp.getWidth() / cellWidth) * cellWidth;
                         int ty = tile.tileIndex / (temp.getWidth() / cellWidth) * cellHeight;
-                        painter.drawImage(Image.copyImage(temp, tx, ty, cellWidth, cellHeight), j * cellWidth, i * cellHeight, Painter.LT);
+                        if (layer.deepth < 0) {
+                            painterB.drawImage(Image.copyImage(temp, tx, ty, cellWidth, cellHeight), j * cellWidth, i * cellHeight, Painter.LT);
+                        } else if (layer.deepth > 0) {
+                            painterF.drawImage(Image.copyImage(temp, tx, ty, cellWidth, cellHeight), j * cellWidth, i * cellHeight, Painter.LT);
+
+                        }
                     }
                 }
             }
-            }
+
         }
-        return img;
     }
 
     private Npc getNpc(int index) {
@@ -156,7 +160,7 @@ public class MapFactory {
                 for (int i = 0; i < npc.stateNum; i++) {
                     npc.npcStates[i] = new NpcState();
                     npc.npcStates[i].stateType = dis.readByte();
-                    String npcPath=dis.readUTF();
+                    String npcPath = dis.readUTF();
                     npc.npcStates[i].face = dis.readByte();
                     npc.npcStates[i].setCharImg("res/image/character/" + npcPath);
                     npc.npcStates[i].move = dis.readByte();
@@ -164,18 +168,13 @@ public class MapFactory {
                     npc.npcStates[i].transparent = dis.readBoolean();
                     npc.npcStates[i].scriptIndex = dis.readInt();
                 }
-                npc.curNpcState=npc.npcStates[0];
+                npc.curNpcState = npc.npcStates[0];
                 npcs.put(index, npc);
             } catch (IOException ex) {
                 Logger.getLogger(MapFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return npcs.get(index);
-    }
-
-    private Image createForeground() {
-//        throw new UnsupportedOperationException("Not yet implemented");
-        return null;
     }
 
     private class ImageSet {
