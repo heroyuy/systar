@@ -108,6 +108,7 @@ public class MapFactory {
         map.rowNum = rowNum;
         map.cellWidth = cellWidth;
         map.cellHeight = cellHeight;
+        map.ways = ways;
         for (int i = 0; i < npcIndexs.length; i++) {
             for (int j = 0; j < npcIndexs[i].length; j++) {
                 if (npcIndexs[i][j] >= 0) {
@@ -162,7 +163,7 @@ public class MapFactory {
                     npc.npcStates[i].stateType = dis.readByte();
                     String npcPath = dis.readUTF();
                     npc.npcStates[i].face = dis.readByte();
-                    npc.npcStates[i].setCharImg("res/image/character/" + npcPath);
+                    npc.npcStates[i].setCharImg("res" + npcPath);
                     npc.npcStates[i].move = dis.readByte();
                     npc.npcStates[i].speed = dis.readByte();
                     npc.npcStates[i].transparent = dis.readBoolean();

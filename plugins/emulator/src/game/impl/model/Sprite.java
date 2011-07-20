@@ -17,7 +17,7 @@ public abstract class Sprite extends AbModel {
 
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
+    private GameData gd = null;
     public int curMapIndex;// 角色当前所在地图编号
     public byte face = 0;
     public int row = 0;
@@ -51,11 +51,59 @@ public abstract class Sprite extends AbModel {
 
     @Override
     public void update() {
+        if (gd == null) {
+            gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
+        }
         //角色移动
-        System.out.println("角色移动");
         if (curMoveAction == null || !curMoveAction.isActive()) {
             if (!moveActionQueue.isEmpty()) {
                 curMoveAction = moveActionQueue.poll();
+                switch (curMoveAction.getFace()) {
+                    case MoveAction.UP: {
+                        if (gd.curMap.isAccessible(row - 1, col)) {
+                            //即将移动到的点可到达
+                            row--;
+                        } else {
+                            curMoveAction = null;
+                            moveActionQueue.clear();
+                            return;
+                        }
+                    }
+                    break;
+                    case MoveAction.DOWN: {
+                        if (gd.curMap.isAccessible(row + 1, col)) {
+                            //即将移动到的点可到达
+                            row++;
+                        } else {
+                            curMoveAction = null;
+                            moveActionQueue.clear();
+                            return;
+                        }
+                    }
+                    break;
+                    case MoveAction.LEFT: {
+                        if (gd.curMap.isAccessible(row, col - 1)) {
+                            //即将移动到的点可到达
+                            col--;
+                        } else {
+                            curMoveAction = null;
+                            moveActionQueue.clear();
+                            return;
+                        }
+                    }
+                    break;
+                    case MoveAction.RIGHT: {
+                        if (gd.curMap.isAccessible(row, col + 1)) {
+                            //即将移动到的点可到达
+                            col++;
+                        } else {
+                            curMoveAction = null;
+                            moveActionQueue.clear();
+                            return;
+                        }
+                    }
+                    break;
+                }
             }
         }
 
