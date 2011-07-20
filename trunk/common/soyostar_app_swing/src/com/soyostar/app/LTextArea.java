@@ -24,6 +24,7 @@ public class LTextArea extends Widget {
     private int marginBottom = 0;
     private int marginLeft = 0;
     private int marginRight = 0;
+    private int textSize = -1;
     private int textColor = Color.BLACK;
     private int leading = 0;//行距
 
@@ -39,6 +40,14 @@ public class LTextArea extends Widget {
     public void setText(String text) {
         this.text = text;
         needUpdate = true;
+    }
+
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
     }
 
     public int getTextColor() {
@@ -114,6 +123,9 @@ public class LTextArea extends Widget {
         }
         painter.setColor(textColor);
         painter.setClip(0, 0, getWidth(), getHeight() - marginBottom);
+        if (textSize > 0) {
+            painter.setTextSize(textSize);
+        }
         for (int i = 0; i < texts.size(); i++) {
             painter.drawString(texts.get(i), marginLeft, marginTop + i * (painter.getTextSize() + leading) + curOffsetY,
                     Painter.LT);
