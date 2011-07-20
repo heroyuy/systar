@@ -19,7 +19,6 @@ import engine.Render;
 import game.AbController;
 import game.RpgGame;
 import game.impl.model.GameData;
-import game.util.Skin;
 
 /**
  *
@@ -65,6 +64,7 @@ public class HelpController extends AbController implements TouchListener, Actio
         lta.setLeading(5);
         lta.setBackground(Color.GRAY);
         lta.setTextColor(Color.WHITE);
+        lta.setTextSize(20);
         lta.setLocation(0, 0);
         lta.setVisible(true);
 
