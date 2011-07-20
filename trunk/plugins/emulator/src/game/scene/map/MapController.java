@@ -109,21 +109,10 @@ public class MapController extends AbController implements TouchListener {
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            MoveAction me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
+            MoveAction me = MoveAction.createMoveRightAction(spriteLayer_player, gd.player);
             me.activate();
             gd.player.addMoveAction(me);
 
-            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
-            me.activate();
-            gd.player.addMoveAction(me);
-
-            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
-            me.activate();
-            gd.player.addMoveAction(me);
-
-            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
-            me.activate();
-            gd.player.addMoveAction(me);
         }
         return true;
     }

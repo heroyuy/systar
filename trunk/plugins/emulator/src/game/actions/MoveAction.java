@@ -16,16 +16,20 @@ public class MoveAction extends Action {
     private GameEngine ge = GameEngine.getInstance();
     private RpgGame rpgGame = (RpgGame) ge.getGame();
     private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
-    private static final int UP = 0;
-    private static final int DOWN = 1;
-    private static final int LEFT = 2;
-    private static final int RIGHT = 3;
+    public static final int UP = 0;
+    public static final int DOWN = 1;
+    public static final int LEFT = 2;
+    public static final int RIGHT = 3;
     private int face = UP;
     private int index = 0;//行动序列，0 1 2 3
     private Sprite sprite = null;
     private SpriteLayer spriteLayer = null;
 
     private MoveAction() {
+    }
+
+    public int getFace() {
+        return face;
     }
 
     public static MoveAction createMoveUpAction(SpriteLayer spriteLayer, Sprite sprite) {
@@ -61,10 +65,6 @@ public class MoveAction extends Action {
     }
 
     public void run() {
-        if (sprite.row == 0 || sprite.row == gd.dataStore.getMap(sprite.curMapIndex).rowNum - 1 || sprite.col == 0 || sprite.col == gd.dataStore.getMap(sprite.curMapIndex).colNum - 1) {
-            //精灵在边界上不能移动
-
-        }
         switch (face) {
             case UP:
                 spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - gd.curMap.cellHeight / 4);
@@ -82,20 +82,6 @@ public class MoveAction extends Action {
         sprite.setCurStepImage(face, (index + 1) % 4);
         index++;
         if (index >= 4) {
-            switch (face) {
-                case UP:
-                    sprite.row--;
-                    break;
-                case DOWN:
-                    sprite.row++;
-                    break;
-                case LEFT:
-                    sprite.col--;
-                    break;
-                case RIGHT:
-                    sprite.col++;
-                    break;
-            }
             freeze();
         }
 
