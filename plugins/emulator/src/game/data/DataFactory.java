@@ -187,7 +187,10 @@ public class DataFactory {
             player.name = dis.readUTF();
             player.intro = dis.readUTF();
             player.headImg = dis.readUTF();
-            player.setCharImg("res" + dis.readUTF());
+//            player.setCharImg("res" + dis.readUTF());
+            //测试
+            dis.readUTF();
+            player.setCharImg("res/image/character/001-Fighter01.png");
             player.stre = dis.readInt();
             player.agil = dis.readInt();
             player.inte = dis.readInt();

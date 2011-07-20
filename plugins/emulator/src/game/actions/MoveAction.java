@@ -61,27 +61,43 @@ public class MoveAction extends Action {
     }
 
     public void run() {
-        if (index < 4) {
+        if (sprite.row == 0 || sprite.row == gd.dataStore.getMap(sprite.curMapIndex).rowNum - 1 || sprite.col == 0 || sprite.col == gd.dataStore.getMap(sprite.curMapIndex).colNum - 1) {
+            //精灵在边界上不能移动
+
+        }
+        switch (face) {
+            case UP:
+                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - gd.curMap.cellHeight / 4);
+                break;
+            case DOWN:
+                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() + gd.curMap.cellHeight / 4);
+                break;
+            case LEFT:
+                spriteLayer.setLocation(spriteLayer.getX() - gd.curMap.cellWidth / 4, spriteLayer.getY());
+                break;
+            case RIGHT:
+                spriteLayer.setLocation(spriteLayer.getX() + gd.curMap.cellWidth / 4, spriteLayer.getY());
+                break;
+        }
+        sprite.setCurStepImage(face, (index + 1) % 4);
+        index++;
+        if (index >= 4) {
             switch (face) {
                 case UP:
-                    
-                    spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - gd.curMap.cellHeight / 4);
+                    sprite.row--;
                     break;
                 case DOWN:
-                    spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() + gd.curMap.cellHeight / 4);
+                    sprite.row++;
                     break;
                 case LEFT:
-                    spriteLayer.setLocation(spriteLayer.getX() - gd.curMap.cellWidth / 4, spriteLayer.getY());
+                    sprite.col--;
                     break;
                 case RIGHT:
-                    spriteLayer.setLocation(spriteLayer.getX() + gd.curMap.cellWidth / 4, spriteLayer.getY());
+                    sprite.col++;
                     break;
             }
-            sprite.setCurStepImage(face, (index + 1) % 4);
-            index++;
-
-        } else {
             freeze();
         }
+
     }
 }
