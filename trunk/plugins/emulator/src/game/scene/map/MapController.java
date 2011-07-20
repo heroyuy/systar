@@ -1,7 +1,9 @@
 package game.scene.map;
 
 import com.soyostar.app.Color;
+import com.soyostar.app.LLabel;
 import com.soyostar.app.Layer;
+import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
@@ -27,6 +29,7 @@ public class MapController extends AbController implements TouchListener {
     private Widget mapForeground = null;
     private SpriteLayer spriteLayer_player = null;
     private SpriteLayer[] spriteLayer_npcs = null;
+    private LLabel fpsLabel = null;
 
     public MapController(Render render) {
         super(render);
@@ -53,6 +56,13 @@ public class MapController extends AbController implements TouchListener {
             spriteLayer_npcs[index].setVisible(true);
             index++;
         }
+
+        fpsLabel = new LLabel();
+        fpsLabel.setSize(80, 20);
+        fpsLabel.setLocation(0, 0);
+        fpsLabel.setTextColor(Color.WHITE);
+        fpsLabel.setTextAnchor(Painter.HV);
+        fpsLabel.setVisible(true);
     }
 
     public void onObtain() {
@@ -62,12 +72,14 @@ public class MapController extends AbController implements TouchListener {
             mapBackground.addWidget(spriteLayer);
         }
         mapBackground.addWidget(mapForeground);
+        mapBackground.addWidget(fpsLabel);
     }
 
     public void onLose() {
     }
 
     public void updateModel() {
+        fpsLabel.setText(ge.getFps() + "");
         if (ge.getTicker() % 10 == 0) {
             int num = new Random().nextInt(4);
             int index = new Random().nextInt(2);
@@ -99,7 +111,19 @@ public class MapController extends AbController implements TouchListener {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
             MoveAction me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
             me.activate();
-            gd.actionManager.addAction(me);
+            gd.player.addMoveAction(me);
+
+            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
+            me.activate();
+            gd.player.addMoveAction(me);
+
+            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
+            me.activate();
+            gd.player.addMoveAction(me);
+
+            me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
+            me.activate();
+            gd.player.addMoveAction(me);
         }
         return true;
     }

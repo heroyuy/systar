@@ -1,6 +1,5 @@
 package game.impl.model;
 
-import com.soyostar.app.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,11 +27,6 @@ public class Player extends Sprite implements Cloneable {
     public int inteByLev;// 智力成长
     public int[] levList = null;//经验表
     public int money;//金钱
-    public int curMapIndex;// 角色当前所在地图编号
-
-    @Override
-    public void update() {
-    }
 
     @Override
     public Player clone() {
@@ -48,5 +42,4 @@ public class Player extends Sprite implements Cloneable {
         }
         return p;
     }
-
 }

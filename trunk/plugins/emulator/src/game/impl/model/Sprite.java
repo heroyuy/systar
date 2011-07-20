@@ -1,7 +1,13 @@
 package game.impl.model;
 
 import com.soyostar.app.Image;
+import engine.GameEngine;
 import game.AbModel;
+import game.RpgGame;
+import game.actions.MoveAction;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * 游戏中可移动元素的父类，如Player、NPC等
@@ -9,11 +15,17 @@ import game.AbModel;
  */
 public abstract class Sprite extends AbModel {
 
+    private GameEngine ge = GameEngine.getInstance();
+    private RpgGame rpgGame = (RpgGame) ge.getGame();
+    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
+    public int curMapIndex;// 角色当前所在地图编号
     public byte face = 0;
     public int row = 0;
     public int col = 0;
     private Image[][] sequence = null;
     private Image curStepImage = null;
+    private Queue<MoveAction> moveActionQueue = new LinkedList<MoveAction>();
+    private MoveAction curMoveAction = null;
 
     public void setCharImg(String charImgPath) {
         Image characterImage = Image.createImage(charImgPath);
@@ -25,7 +37,7 @@ public abstract class Sprite extends AbModel {
                 sequence[i][j] = Image.copyImage(characterImage, j * w, i * h, w, h);
             }
         }
-        System.out.println("face:"+face);
+        System.out.println("face:" + face);
         curStepImage = sequence[(face + 3) % 4][0];
     }
 
@@ -35,5 +47,30 @@ public abstract class Sprite extends AbModel {
 
     public void setCurStepImage(int face, int index) {
         curStepImage = sequence[(face + 3) % 4][index];
+    }
+
+    @Override
+    public void update() {
+        //角色移动
+        System.out.println("角色移动");
+        if (curMoveAction == null || !curMoveAction.isActive()) {
+            if (!moveActionQueue.isEmpty()) {
+                curMoveAction = moveActionQueue.poll();
+            }
+        }
+
+        if (curMoveAction != null && curMoveAction.isActive()) {
+            curMoveAction.run();
+            System.out.println("curMoveAction.run()");
+        }
+    }
+
+    public void setMoveAction(List<MoveAction> moveActions) {
+        moveActionQueue.clear();
+        moveActionQueue.addAll(moveActions);
+    }
+
+    public void addMoveAction(MoveAction moveAction) {
+        moveActionQueue.add(moveAction);
     }
 }
