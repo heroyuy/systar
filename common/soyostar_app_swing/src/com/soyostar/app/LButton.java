@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.soyostar.app;
 
 import com.soyostar.app.event.ActionListener;
-import com.soyostar.app.event.KeyEvent;
 import com.soyostar.app.event.TouchEvent;
 
 /**
