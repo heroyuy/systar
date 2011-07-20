@@ -111,6 +111,9 @@ public class LTextArea extends Widget {
     @Override
     public void paint(Painter painter) {
         super.paint(painter);
+        if (textSize > 0) {
+            painter.setTextSize(textSize);
+        }
         if (needUpdate) {
             texts.clear();
             analyse(painter, text);
@@ -123,9 +126,7 @@ public class LTextArea extends Widget {
         }
         painter.setColor(textColor);
         painter.setClip(0, 0, getWidth(), getHeight() - marginBottom);
-        if (textSize > 0) {
-            painter.setTextSize(textSize);
-        }
+
         for (int i = 0; i < texts.size(); i++) {
             painter.drawString(texts.get(i), marginLeft, marginTop + i * (painter.getTextSize() + leading) + curOffsetY,
                     Painter.LT);
