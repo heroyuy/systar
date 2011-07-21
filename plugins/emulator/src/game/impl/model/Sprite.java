@@ -120,4 +120,8 @@ public abstract class Sprite extends AbModel {
     public void addMoveAction(MoveAction moveAction) {
         moveActionQueue.add(moveAction);
     }
+
+    public void removeAllMoveActions() {
+        moveActionQueue.clear();
+    }
 }

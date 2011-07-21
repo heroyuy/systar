@@ -7,6 +7,7 @@ import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
+import com.soyostar.util.astar.AStar;
 import engine.GameEngine;
 import engine.Render;
 import game.AbController;
@@ -14,6 +15,8 @@ import game.RpgGame;
 import game.actions.MoveAction;
 import game.impl.model.GameData;
 import game.impl.model.Npc;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,6 +33,7 @@ public class MapController extends AbController implements TouchListener {
     private SpriteLayer spriteLayer_player = null;
     private SpriteLayer[] spriteLayer_npcs = null;
     private LLabel fpsLabel = null;
+    private AStar aStar = new AStar();
 
     public MapController(Render render) {
         super(render);
@@ -112,9 +116,40 @@ public class MapController extends AbController implements TouchListener {
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            MoveAction me = MoveAction.createMoveRightAction(spriteLayer_player, gd.player);
-            me.activate();
-            gd.player.addMoveAction(me);
+
+            for (Npc npc : gd.curMap.npcList.values()) {
+                gd.curMap.ways[npc.row][npc.col] = false;
+            }
+            aStar.setMapData(gd.curMap.ways);
+            //起点
+            int sRow = gd.player.row;
+            int sCol = gd.player.col;
+            //终点
+            int eRow = te.getY() / gd.curMap.cellHeight;
+            int eCol = te.getX() / gd.curMap.cellWidth;
+            System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
+            int[] paths = aStar.searchDirections(sRow, sCol, eRow, eCol);
+            MoveAction me = null;
+            List<MoveAction> moveActions = new ArrayList<MoveAction>();
+            for (int p : paths) {
+                switch (p) {
+                    case 0:
+                        me = MoveAction.createMoveUpAction(spriteLayer_player, gd.player);
+                        break;
+                    case 1:
+                        me = MoveAction.createMoveDownAction(spriteLayer_player, gd.player);
+                        break;
+                    case 2:
+                        me = MoveAction.createMoveLeftAction(spriteLayer_player, gd.player);
+                        break;
+                    case 3:
+                        me = MoveAction.createMoveRightAction(spriteLayer_player, gd.player);
+                        break;
+                }
+                me.activate();
+                moveActions.add(me);
+            }
+            gd.player.setMoveAction(moveActions);
         }
         return true;
     }
