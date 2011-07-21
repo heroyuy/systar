@@ -19,7 +19,6 @@ public class Npc extends AbModel {
 
     @Override
     public void update() {
-        
     }
 
     public static class NpcState extends Sprite {
@@ -30,9 +29,5 @@ public class Npc extends AbModel {
         public int speed = 0;
         public boolean transparent = false;
         public int scriptIndex = -1;
-
-        @Override
-        public void update() {
-        }
     }
 }
