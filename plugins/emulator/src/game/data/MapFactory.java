@@ -153,7 +153,7 @@ public class MapFactory {
                 DataInputStream dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_NPC, index);
                 Npc npc = new Npc();
                 npc.setIndex(dis.readInt());
-                npc.mapIndex = dis.readInt();
+                npc.curMapIndex = dis.readInt();
                 npc.row = dis.readInt();
                 npc.col = dis.readInt();
                 npc.stateNum = dis.readInt();
@@ -161,15 +161,14 @@ public class MapFactory {
                 for (int i = 0; i < npc.stateNum; i++) {
                     npc.npcStates[i] = new NpcState();
                     npc.npcStates[i].stateType = dis.readByte();
-                    String npcPath = dis.readUTF();
+                    npc.npcStates[i].charImage = "res" + dis.readUTF();
                     npc.npcStates[i].face = dis.readByte();
-                    npc.npcStates[i].setCharImg("res" + npcPath);
                     npc.npcStates[i].move = dis.readByte();
                     npc.npcStates[i].speed = dis.readByte();
                     npc.npcStates[i].transparent = dis.readBoolean();
                     npc.npcStates[i].scriptIndex = dis.readInt();
                 }
-                npc.curNpcState = npc.npcStates[0];
+                npc.setCurNpcState(0);
                 npcs.put(index, npc);
             } catch (IOException ex) {
                 Logger.getLogger(MapFactory.class.getName()).log(Level.SEVERE, null, ex);

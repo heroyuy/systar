@@ -42,27 +42,21 @@ public class Map extends AbModel {
         if (gd == null) {
             gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
         }
-        System.out.println("row:"+row+" col:"+col+" rowNum:"+rowNum+" colNum:"+colNum);
         boolean state = row >= 0 && row < this.rowNum && col >= 0 && col < this.colNum;
-        System.out.println("state1:" + state);
         if (state) {
             state = ways[row][col];
-            System.out.println("state2:" + state);
         }
         if (state && gd.player.row == row && gd.player.col == col) {
             state = false;
-            System.out.println("state3:" + state);
         }
         if (state) {
             for (Npc npc : npcList.values()) {
                 if (npc.row == row && npc.col == col) {
                     state = false;
-                    System.out.println("state4:" + state);
                     break;
                 }
             }
         }
-         System.out.println("state:" + state);
         return state;
     }
 }

@@ -7,26 +7,30 @@ import game.AbModel;
  *
  * @author Administrator
  */
-public class Npc extends AbModel {
+public class Npc extends Sprite {
 
     public String name = "";
-    public int mapIndex = -1;
     public int stateNum = 0;
     public NpcState[] npcStates = null;
-    public int row;
-    public int col;
     public NpcState curNpcState = null;
 
     @Override
     public void update() {
+        super.update();
     }
 
-    public static class NpcState extends Sprite {
+    public void setCurNpcState(int index) {
+        curNpcState = npcStates[0];
+        setCharImg(curNpcState.charImage);
+    }
+
+    public static class NpcState {
 
         public int stateType = 0;
-        public Image charImage = null;
+        public String charImage = null;
+        public byte face = 0;
         public byte move = 0;
-        public int speed = 0;
+        public byte speed = 0;
         public boolean transparent = false;
         public int scriptIndex = -1;
     }
