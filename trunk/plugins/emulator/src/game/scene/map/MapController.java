@@ -51,8 +51,8 @@ public class MapController extends AbController implements TouchListener {
         spriteLayer_npcs = new SpriteLayer[gd.curMap.npcList.size()];
         int index = 0;
         for (Npc npc : gd.curMap.npcList.values()) {
-            spriteLayer_npcs[index] = new SpriteLayer(npc.curNpcState);
-            spriteLayer_npcs[index].setLocation(npc.col * gd.curMap.cellWidth + gd.curMap.cellWidth / 2 - npc.curNpcState.getCurStepImage().getWidth() / 2, npc.row * gd.curMap.cellHeight + gd.curMap.cellHeight / 2 - npc.curNpcState.getCurStepImage().getHeight());
+            spriteLayer_npcs[index] = new SpriteLayer(npc);
+            spriteLayer_npcs[index].setLocation(npc.col * gd.curMap.cellWidth + gd.curMap.cellWidth / 2 - npc.getCurStepImage().getWidth() / 2, npc.row * gd.curMap.cellHeight + gd.curMap.cellHeight / 2 - npc.getCurStepImage().getHeight());
             spriteLayer_npcs[index].setVisible(true);
             index++;
         }
@@ -79,6 +79,9 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public void updateModel() {
+        for (Npc npc : gd.curMap.npcList.values()) {
+            npc.update();
+        }
         fpsLabel.setText(ge.getFps() + "");
         if (ge.getTicker() % 10 == 0) {
             int num = new Random().nextInt(4);
@@ -86,24 +89,24 @@ public class MapController extends AbController implements TouchListener {
             MoveAction me = null;
             switch (num) {
                 case 0:
-                    me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], ((Npc) gd.curMap.npcList.values().toArray()[index]).curNpcState);
+                    me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
 
                     break;
                 case 1:
-                    me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], ((Npc) gd.curMap.npcList.values().toArray()[index]).curNpcState);
+                    me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
 
                     break;
                 case 2:
-                    me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], ((Npc) gd.curMap.npcList.values().toArray()[index]).curNpcState);
+                    me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
 
                     break;
                 case 3:
-                    me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], ((Npc) gd.curMap.npcList.values().toArray()[index]).curNpcState);
+                    me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
 
                     break;
             }
             me.activate();
-            gd.actionManager.addAction(me);
+            ((Npc) gd.curMap.npcList.values().toArray()[index]).addMoveAction(me);
         }
     }
 
@@ -112,7 +115,6 @@ public class MapController extends AbController implements TouchListener {
             MoveAction me = MoveAction.createMoveRightAction(spriteLayer_player, gd.player);
             me.activate();
             gd.player.addMoveAction(me);
-
         }
         return true;
     }

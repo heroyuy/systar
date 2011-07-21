@@ -109,7 +109,6 @@ public abstract class Sprite extends AbModel {
 
         if (curMoveAction != null && curMoveAction.isActive()) {
             curMoveAction.run();
-            System.out.println("curMoveAction.run()");
         }
     }
 
