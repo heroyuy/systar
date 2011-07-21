@@ -1,7 +1,6 @@
 package com.soyostar.util.astar;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public final class AStar {
      * 构造一个新的A星工具实例
      * @param mapData A星工具的地图数据
      */
-    public AStar(int[][] mapData) {
+    public AStar(boolean[][] mapData) {
         setMapData(mapData);
     }
 
@@ -35,13 +34,13 @@ public final class AStar {
      * 设置A星工具的地图数据
      * @param mapData A星工具的地图数据
      */
-    public void setMapData(int[][] mapData) {
+    public void setMapData(boolean[][] mapData) {
+        nodeList.clear();
         for (int i = 0; i < mapData.length; i++) {
             for (int j = 0; j < mapData[i].length; j++) {
-                if (mapData[i][j] == 0) {
-                    //只有值为0的方格是可通行的
-                    //key的格式为 [行号列号]，比如一个方格行号为2，列号为12，则key为 "212"
-                    nodeList.put(i + "" + j, new Node(i, j));
+                if (mapData[i][j]) {
+                    //key的格式为 [行号_列号]，比如一个方格行号为2，列号为12，则key为 "2_12"
+                    nodeList.put(i + "_" + j, new Node(i, j));
                 }
             }
         }
@@ -53,7 +52,7 @@ public final class AStar {
      * @param startCol 起点所在列号
      * @param endRow 终点所在行号
      * @param endCol 终点所在列号
-     * @return 起点到终点的可通行路径
+     * @return 起点到终点的可通行路径,坐标数组
      */
     public int[][] searchPath(int startRow, int startCol, int endRow, int endCol) {
         //清空open列表和colse列表
@@ -79,7 +78,6 @@ public final class AStar {
                 calculateNode(node, optimalNode);
             }
             closeNode(optimalNode);
-
         }
         //获取路径，从终点开始沿父结点寻找,直到起点
         Stack<Node> tempPathList = new Stack<Node>();
@@ -92,12 +90,65 @@ public final class AStar {
         while (tempPathList.size() > 0) {
             pathList.add(tempPathList.pop());
         }
-        printNodeList(pathList);
-        return null;
+        int[][] paths = new int[pathList.size()][2];
+        for (int i = 0; i < pathList.size(); i++) {
+            paths[i][0] = pathList.get(i).row;
+            paths[i][1] = pathList.get(i).col;
+        }
+        return paths;
+    }
+
+    /**
+     * 搜索从起点到终点的可通行路径
+     * @param startRow 起点所在行号
+     * @param startCol 起点所在列号
+     * @param endRow 终点所在行号
+     * @param endCol 终点所在列号
+     * @return 起点到终点的可通行路径,方向数组
+     */
+    public int[] searchDirections(int startRow, int startCol, int endRow, int endCol) {
+        int[][] paths = searchPath(startRow, startCol, endRow, endCol);
+        int[] directions = new int[paths.length];
+        int sRow = 0;
+        int sCol = 0;
+        int eRow = 0;
+        int eCol = 0;
+        for (int i = 0; i < directions.length; i++) {
+            //确定相邻两点
+            if (i == 0) {
+                sRow = startRow;
+                sCol = startCol;
+            } else {
+                sRow = paths[i - 1][0];
+                sCol = paths[i - 1][1];
+            }
+            eRow = paths[i][0];
+            eCol = paths[i][1];
+            //转换为方向
+            int offsetRow = eRow - sRow;
+            int offsetCol = eCol - sCol;
+            if (offsetRow == -1) {
+                //上
+                directions[i] = 0;
+            } else if (offsetRow == 0) {
+                //同一行，水平移动
+                if (offsetCol == -1) {
+                    //左
+                    directions[i] = 2;
+                } else if (offsetCol == 1) {
+                    //右
+                    directions[i] = 3;
+                }
+            } else if (offsetRow == 1) {
+                //下
+                directions[i] = 1;
+            }
+        }
+        return directions;
     }
 
     private Node getNode(int row, int col) {
-        return nodeList.get(row + "" + col);
+        return nodeList.get(row + "_" + col);
     }
 
     private Node getNode(String key) {
@@ -105,21 +156,21 @@ public final class AStar {
     }
 
     private void openNode(Node node) {
-        closeList.remove(node.row + "" + node.col);
-        openList.put(node.row + "" + node.col, node);
+        closeList.remove(node.row + "_" + node.col);
+        openList.put(node.row + "_" + node.col, node);
     }
 
     private void closeNode(Node node) {
-        openList.remove(node.row + "" + node.col);
-        closeList.put(node.row + "" + node.col, node);
+        openList.remove(node.row + "_" + node.col);
+        closeList.put(node.row + "_" + node.col, node);
     }
 
     private boolean isOpened(Node node) {
-        return openList.containsKey(node.row + "" + node.col);
+        return openList.containsKey(node.row + "_" + node.col);
     }
 
     private boolean isClosed(Node node) {
-        return closeList.containsKey(node.row + "" + node.col);
+        return closeList.containsKey(node.row + "_" + node.col);
     }
 
     /**
@@ -128,6 +179,7 @@ public final class AStar {
      */
     private Node getOptimalNode() {
         Node temp = null;
+        System.out.println("openList.size():" + openList.size());
         for (Node node : openList.values()) {
             if (temp == null || temp.fValue > node.fValue) {
                 temp = node;
@@ -145,13 +197,13 @@ public final class AStar {
         List<Node> accessibleNodeList = new ArrayList<Node>();
         List<String> keyList = new ArrayList<String>();
         //上
-        keyList.add((node.row - 1) + "" + node.col);
+        keyList.add((node.row - 1) + "_" + node.col);
         //下
-        keyList.add((node.row + 1) + "" + node.col);
+        keyList.add((node.row + 1) + "_" + node.col);
         //左
-        keyList.add(node.row + "" + (node.col - 1));
+        keyList.add(node.row + "_" + (node.col - 1));
         //右
-        keyList.add(node.row + "" + (node.col + 1));
+        keyList.add(node.row + "_" + (node.col + 1));
         for (String key : keyList) {
             Node temp = getNode(key);
             if (temp != null && !isClosed(temp)) {
@@ -177,13 +229,6 @@ public final class AStar {
             node.fValue = node.gValue + node.hValue;
             //将此结点加入open列表
             openNode(node);
-        }
-    }
-
-    private void printNodeList(Collection<Node> nodeList) {
-        System.out.println("--------------------->");
-        for (Node node : nodeList) {
-            System.out.println("row:" + node.row + " col:" + node.col);
         }
     }
 }

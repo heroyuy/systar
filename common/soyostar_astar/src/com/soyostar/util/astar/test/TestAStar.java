@@ -9,12 +9,16 @@ import com.soyostar.util.astar.AStar;
 public class TestAStar {
 
     public static void main(String[] args) {
-        int[][] mapData = {
-            {0, 1, 1, 0},
-            {0, 0, 1, 0},
-            {0, 0, 1, 0},
-            {1, 0, 0, 0}};
+        boolean[][] mapData = {
+            {true, false, false, true},
+            {true, true, false, true},
+            {true, true, false, true},
+            {false, true, true, true}};
         AStar aStar = new AStar(mapData);
-        aStar.searchPath(0, 0, 0, 3);
+//        aStar.searchPath(0, 0, 0, 3);
+        int[] paths = aStar.searchDirections(0, 0, 0, 3);
+        for (int p : paths) {
+            System.out.print(p + " ");
+        }
     }
 }
