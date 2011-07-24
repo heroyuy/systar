@@ -118,23 +118,15 @@ public class MapController extends AbController implements TouchListener {
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            boolean[][] ways = new boolean[gd.curMap.rowNum][gd.curMap.colNum];
-            for (int i = 0; i < ways.length; i++) {
-                for (int j = 0; j < ways[i].length; j++) {
-                    ways[i][j] = gd.curMap.ways[i][j];
+            int[][] areaIds = new int[gd.curMap.rowNum][gd.curMap.colNum];
+            for (int i = 0; i < areaIds.length; i++) {
+                for (int j = 0; j < areaIds[i].length; j++) {
+                    areaIds[i][j] = gd.curMap.areaIds[i][j];
                 }
 
             }
-            for (Npc npc : gd.curMap.npcList.values()) {
-                ways[npc.row][npc.col] = false;
-            }
-            for (int i = 0; i < ways.length; i++) {
-                for (int j = 0; j < ways[i].length; j++) {
-                    System.out.print(ways[i][j] + " ");
-                }
-                System.out.println("");
-            }
-            aStar.setMapData(ways);
+         
+            aStar.setMapData(areaIds);
             //起点
             int sRow = gd.player.row;
             int sCol = gd.player.col;

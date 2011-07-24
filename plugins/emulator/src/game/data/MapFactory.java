@@ -29,7 +29,7 @@ public class MapFactory {
     private int cellHeight;                  //单元格高度
     private int layerNum = -1;
     private Layer[] layers = null;
-    private boolean[][] ways = null;
+    private int[][] ways = null;
     private java.util.Map<Integer, Npc> npcs = new java.util.HashMap<Integer, Npc>();
     private int[][] npcIndexs;
 
@@ -79,11 +79,13 @@ public class MapFactory {
             }
             //通行度
             System.out.println("通行度");
-            ways = new boolean[rowNum][colNum];
+            ways = new int[rowNum][colNum];
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
-                    ways[j][k] = dis.readBoolean();
+                    ways[j][k] = dis.readInt();
+                    System.out.print(ways[j][k]+" ");
                 }
+                System.out.println("");
             }
             //NPC
             System.out.println("NPC");
@@ -108,7 +110,7 @@ public class MapFactory {
         map.rowNum = rowNum;
         map.cellWidth = cellWidth;
         map.cellHeight = cellHeight;
-        map.ways = ways;
+        map.areaIds = ways;
         for (int i = 0; i < npcIndexs.length; i++) {
             for (int j = 0; j < npcIndexs[i].length; j++) {
                 if (npcIndexs[i][j] >= 0) {

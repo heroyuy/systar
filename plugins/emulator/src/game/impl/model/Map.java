@@ -22,7 +22,7 @@ public class Map extends AbModel {
     public int colNum;                      //列数
     public int cellWidth;                   //单元格宽度
     public int cellHeight;                  //单元格高度
-    public boolean[][] ways = null;
+    public int[][] areaIds = null;
     public HashMap<Integer, Npc> npcList = new HashMap<Integer, Npc>();//NPC列表
     public Image background = null;//背景，精灵之下
     public Image foreground = null;//前景，精灵之上
@@ -44,7 +44,7 @@ public class Map extends AbModel {
         }
         boolean state = row >= 0 && row < this.rowNum && col >= 0 && col < this.colNum;
         if (state) {
-            state = ways[row][col];
+            state = areaIds[row][col] != -1;
         }
         if (state && gd.player.row == row && gd.player.col == col) {
             state = false;
