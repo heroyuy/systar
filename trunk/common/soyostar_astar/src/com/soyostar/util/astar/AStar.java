@@ -15,6 +15,7 @@ public final class AStar {
     private Map<String, Node> nodeList = new HashMap<String, Node>();
     private Map<String, Node> openList = new HashMap<String, Node>();
     private Map<String, Node> closeList = new HashMap<String, Node>();
+    private int[][] mapData = null;
 
     /**
      * 构造一个新的A星工具实例
@@ -26,7 +27,7 @@ public final class AStar {
      * 构造一个新的A星工具实例
      * @param mapData A星工具的地图数据
      */
-    public AStar(boolean[][] mapData) {
+    public AStar(int[][] mapData) {
         setMapData(mapData);
     }
 
@@ -34,13 +35,14 @@ public final class AStar {
      * 设置A星工具的地图数据
      * @param mapData A星工具的地图数据
      */
-    public void setMapData(boolean[][] mapData) {
+    public void setMapData(int[][] mapData) {
         nodeList.clear();
+        this.mapData = mapData;
         for (int i = 0; i < mapData.length; i++) {
             for (int j = 0; j < mapData[i].length; j++) {
-                if (mapData[i][j]) {
-                    //key的格式为 [行号_列号]，比如一个方格行号为2，列号为12，则key为 "2_12"
-                    nodeList.put(i + "_" + j, new Node(i, j));
+                //key的格式为 [行号_列号]，比如一个方格行号为2，列号为12，则key为 "2_12"
+                if (mapData[i][j] != -1) {
+                    nodeList.put(i + "_" + j, new Node(i, j, mapData[i][j]));
                 }
             }
         }
@@ -55,6 +57,13 @@ public final class AStar {
      * @return 起点到终点的可通行路径,坐标数组
      */
     public int[][] searchPath(int startRow, int startCol, int endRow, int endCol) {
+        //确定实际起点和终点
+        if (mapData[startRow][startCol] != mapData[endRow][endCol]) {
+            //起点和终点不在一个区的时候需要重新确定终点
+            Node nearestNode = getNearestNode(mapData[startRow][startCol], endRow, endCol);
+            endRow = nearestNode.row;
+            endCol = nearestNode.col;
+        }
         //清空open列表和colse列表
         openList.clear();
         closeList.clear();
@@ -107,6 +116,7 @@ public final class AStar {
      * @return 起点到终点的可通行路径,方向数组
      */
     public int[] searchDirections(int startRow, int startCol, int endRow, int endCol) {
+        long t = System.currentTimeMillis();
         int[][] paths = searchPath(startRow, startCol, endRow, endCol);
         int[] directions = new int[paths.length];
         int sRow = 0;
@@ -144,6 +154,8 @@ public final class AStar {
                 directions[i] = 1;
             }
         }
+        t = System.currentTimeMillis() - t;
+        System.out.println("寻路耗时:" + t + "ms");
         return directions;
     }
 
@@ -230,5 +242,56 @@ public final class AStar {
             //将此结点加入open列表
             openNode(node);
         }
+    }
+
+    private Node getNearestNode(int areaId, int endRow, int endCol) {
+        List<Node> nearestNodes = new ArrayList<Node>();//终点附近最近的点（区域ID为areaId）
+        //获取最近的点
+        int range = 1;//搜索范围
+        while (nearestNodes.isEmpty()) {
+            //上
+            if (endRow - range >= 0) {
+                for (int i = endCol - range; i <= endCol + range; i++) {
+                    if (i >= 0 && i < mapData[endRow - range].length && mapData[endRow - range][i] == areaId) {
+                        nearestNodes.add(nodeList.get((endRow - range) + "_" + i));
+                    }
+                }
+            }
+            //下
+            if (endRow + range < mapData.length) {
+                for (int i = endCol - range; i <= endCol + range; i++) {
+                    if (i >= 0 && i < mapData[endRow + range].length && mapData[endRow + range][i] == areaId) {
+                        nearestNodes.add(nodeList.get((endRow + range) + "_" + i));
+                    }
+                }
+            }
+            //左
+            if (endCol - range >= 0) {
+                for (int i = endRow - range + 1; i <= endRow + range - 1; i++) {
+                    if (i >= 0 && i < mapData.length && mapData[i][endCol - range] == areaId) {
+                        nearestNodes.add(nodeList.get(i + "_" + (endCol - range)));
+                    }
+                }
+            }
+            //右
+            if (endCol + range < mapData[0].length) {
+                for (int i = endRow - range + 1; i <= endRow + range - 1; i++) {
+                    if (i >= 0 && i < mapData.length && mapData[i][endCol + range] == areaId) {
+                        nearestNodes.add(nodeList.get(i + "_" + (endCol + range)));
+                    }
+                }
+            }
+            range++;
+        }
+        //获取最优点
+        Node optimalNode = null;
+        for (Node node : nearestNodes) {
+            if (optimalNode == null
+                    || (Math.abs(optimalNode.row - endRow) + Math.abs(optimalNode.col - endCol))
+                    > (Math.abs(node.row - endRow) + Math.abs(node.col - endCol))) {
+                optimalNode = node;
+            }
+        }
+        return optimalNode;
     }
 }
