@@ -8,13 +8,15 @@ class Node {
 
     public int row = 0;
     public int col = 0;
+    public int areaId = 0;
     public int fValue = 0;
     public int hValue = 0;
     public int gValue = 0;
     public Node parentNode = null;
 
-    public Node(int row, int col) {
+    public Node(int row, int col, int areaId) {
         this.row = row;
         this.col = col;
+        this.areaId = areaId;
     }
 }
