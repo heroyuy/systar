@@ -1,9 +1,6 @@
 package game.actions;
 
 import com.soyostar.app.action.Action;
-import engine.GameEngine;
-import game.RpgGame;
-import game.impl.model.GameData;
 import game.impl.model.Sprite;
 import game.scene.map.SpriteLayer;
 
@@ -13,9 +10,6 @@ import game.scene.map.SpriteLayer;
  */
 public class MoveAction extends Action {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     public static final int UP = 0;
     public static final int DOWN = 1;
     public static final int LEFT = 2;
@@ -67,16 +61,16 @@ public class MoveAction extends Action {
     public void run() {
         switch (face) {
             case UP:
-                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - gd.curMap.cellHeight / 4);
+                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() - sprite.curMap.cellHeight / 4);
                 break;
             case DOWN:
-                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() + gd.curMap.cellHeight / 4);
+                spriteLayer.setLocation(spriteLayer.getX(), spriteLayer.getY() + sprite.curMap.cellHeight / 4);
                 break;
             case LEFT:
-                spriteLayer.setLocation(spriteLayer.getX() - gd.curMap.cellWidth / 4, spriteLayer.getY());
+                spriteLayer.setLocation(spriteLayer.getX() - sprite.curMap.cellWidth / 4, spriteLayer.getY());
                 break;
             case RIGHT:
-                spriteLayer.setLocation(spriteLayer.getX() + gd.curMap.cellWidth / 4, spriteLayer.getY());
+                spriteLayer.setLocation(spriteLayer.getX() + sprite.curMap.cellWidth / 4, spriteLayer.getY());
                 break;
         }
         sprite.setCurStepImage(face, (index + 1) % 4);

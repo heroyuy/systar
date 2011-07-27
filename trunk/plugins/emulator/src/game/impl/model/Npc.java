@@ -1,8 +1,5 @@
 package game.impl.model;
 
-import com.soyostar.app.Image;
-import game.AbModel;
-
 /**
  *
  * @author Administrator

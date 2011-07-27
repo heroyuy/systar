@@ -9,6 +9,7 @@ import game.impl.model.Player;
 import game.impl.model.Skill;
 import game.impl.model.animation.Animation;
 import game.impl.model.Map;
+import game.impl.model.Npc;
 import java.util.HashMap;
 
 /**
@@ -26,9 +27,13 @@ public class DataStore {
     private HashMap<Integer, Skill> skillList = null;
     private HashMap<Integer, Player> playerList = null;
     private HashMap<Integer, Map> mapList = null;
-    public static ImageManager imageManager = new ImageManager();
+    private static DataStore instance = new DataStore();
 
-    public DataStore() {
+    public static DataStore getInstance() {
+        return instance;
+    }
+
+    private DataStore() {
         configList = new HashMap<Integer, Config>();
         animationList = new HashMap<Integer, Animation>();
         enemyList = new HashMap<Integer, Enemy>();
@@ -87,7 +92,11 @@ public class DataStore {
 
     public Map getMap(int index) {
         if (!mapList.containsKey(index)) {
-            mapList.put(index, DataFactory.loadMap(index));
+            Map map = DataFactory.loadMap(index);
+            mapList.put(index, map);
+            for (Npc npc : map.npcList.values()) {
+                npc.gotoMap(npc.curMapIndex, npc.row, npc.col);
+            }
         }
         return (Map) mapList.get(index);
     }

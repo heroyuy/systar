@@ -41,22 +41,22 @@ public class MapController extends AbController implements TouchListener {
         mapBackground.setBackground(Color.GREEN);
         mapBackground.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         mapBackground.setVisible(true);
-        mapBackground.setBackgroundImage(gd.curMap.background);
+        mapBackground.setBackgroundImage(gd.player.curMap.background);
         mapBackground.setTouchListener(this);
         mapForeground = new Widget();
         mapForeground.setSize(ge.getScreenWidth(), ge.getScreenHeight());
         mapForeground.setVisible(true);
-        mapForeground.setBackgroundImage(gd.curMap.foreground);
+        mapForeground.setBackgroundImage(gd.player.curMap.foreground);
         mapForeground.setTouchListener(this);
 
         spriteLayer_player = new SpriteLayer(gd.player);
-        spriteLayer_player.setLocation(gd.player.col * gd.curMap.cellWidth + gd.curMap.cellWidth / 2 - gd.player.getCurStepImage().getWidth() / 2, gd.player.row * gd.curMap.cellHeight + gd.curMap.cellHeight - gd.player.getCurStepImage().getHeight());
+        spriteLayer_player.setLocation(gd.player.col * gd.player.curMap.cellWidth + gd.player.curMap.cellWidth / 2 - gd.player.getCurStepImage().getWidth() / 2, gd.player.row * gd.player.curMap.cellHeight + gd.player.curMap.cellHeight - gd.player.getCurStepImage().getHeight());
         spriteLayer_player.setVisible(true);
-        spriteLayer_npcs = new SpriteLayer[gd.curMap.npcList.size()];
+        spriteLayer_npcs = new SpriteLayer[gd.player.curMap.npcList.size()];
         int index = 0;
-        for (Npc npc : gd.curMap.npcList.values()) {
+        for (Npc npc : gd.player.curMap.npcList.values()) {
             spriteLayer_npcs[index] = new SpriteLayer(npc);
-            spriteLayer_npcs[index].setLocation(npc.col * gd.curMap.cellWidth + gd.curMap.cellWidth / 2 - npc.getCurStepImage().getWidth() / 2, npc.row * gd.curMap.cellHeight + gd.curMap.cellHeight - npc.getCurStepImage().getHeight());
+            spriteLayer_npcs[index].setLocation(npc.col * gd.player.curMap.cellWidth + gd.player.curMap.cellWidth / 2 - npc.getCurStepImage().getWidth() / 2, npc.row * gd.player.curMap.cellHeight + gd.player.curMap.cellHeight - npc.getCurStepImage().getHeight());
             spriteLayer_npcs[index].setVisible(true);
             index++;
         }
@@ -83,56 +83,56 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public void updateModel() {
-        for (Npc npc : gd.curMap.npcList.values()) {
+        for (Npc npc : gd.player.curMap.npcList.values()) {
             npc.update();
         }
         fpsLabel.setText(ge.getFps() + "");
-        if (!gd.curMap.npcList.isEmpty()) {
+        if (!gd.player.curMap.npcList.isEmpty()) {
             if (ge.getTicker() % 10 == 0) {
                 int num = new Random().nextInt(4);
-                int index = new Random().nextInt(gd.curMap.npcList.size());
+                int index = new Random().nextInt(gd.player.curMap.npcList.size());
                 MoveAction me = null;
                 switch (num) {
                     case 0:
-                        me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 1:
-                        me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 2:
-                        me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 3:
-                        me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], (Npc) gd.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
 
                         break;
                 }
                 me.activate();
-                ((Npc) gd.curMap.npcList.values().toArray()[index]).addMoveAction(me);
+                ((Npc) gd.player.curMap.npcList.values().toArray()[index]).addMoveAction(me);
             }
         }
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            int[][] areaIds = new int[gd.curMap.rowNum][gd.curMap.colNum];
+            int[][] areaIds = new int[gd.player.curMap.rowNum][gd.player.curMap.colNum];
             for (int i = 0; i < areaIds.length; i++) {
                 for (int j = 0; j < areaIds[i].length; j++) {
-                    areaIds[i][j] = gd.curMap.areaIds[i][j];
+                    areaIds[i][j] = gd.player.curMap.areaIds[i][j];
                 }
 
             }
-         
+
             aStar.setMapData(areaIds);
             //起点
             int sRow = gd.player.row;
             int sCol = gd.player.col;
             //终点
-            int eRow = te.getY() / gd.curMap.cellHeight;
-            int eCol = te.getX() / gd.curMap.cellWidth;
+            int eRow = te.getY() / gd.player.curMap.cellHeight;
+            int eCol = te.getX() / gd.player.curMap.cellWidth;
             System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
             int[] paths = aStar.searchDirections(sRow, sCol, eRow, eCol);
             for (int p : paths) {

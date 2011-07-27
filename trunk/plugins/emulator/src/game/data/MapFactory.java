@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Administrator
  */
-public class MapFactory {
+class MapFactory {
 
     private int index = -1;
     private String name;                     //地图名称
@@ -83,7 +83,7 @@ public class MapFactory {
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
                     ways[j][k] = dis.readInt();
-                    System.out.print(ways[j][k]+" ");
+                    System.out.print(ways[j][k] + " ");
                 }
                 System.out.println("");
             }
