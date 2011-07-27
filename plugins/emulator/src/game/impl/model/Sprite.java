@@ -1,10 +1,9 @@
 package game.impl.model;
 
 import com.soyostar.app.Image;
-import engine.GameEngine;
 import game.AbModel;
-import game.RpgGame;
 import game.actions.MoveAction;
+import game.data.DataStore;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -15,10 +14,8 @@ import java.util.Queue;
  */
 public abstract class Sprite extends AbModel {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = null;
     public int curMapIndex;// 角色当前所在地图编号
+    public Map curMap;// 角色当前所在地图
     public byte face = 0;
     public int row = 0;
     public int col = 0;
@@ -51,16 +48,13 @@ public abstract class Sprite extends AbModel {
 
     @Override
     public void update() {
-        if (gd == null) {
-            gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
-        }
         //角色移动
         if (curMoveAction == null || !curMoveAction.isActive()) {
             if (!moveActionQueue.isEmpty()) {
                 curMoveAction = moveActionQueue.poll();
                 switch (curMoveAction.getFace()) {
                     case MoveAction.UP: {
-                        if (gd.curMap.isAccessible(row - 1, col)) {
+                        if (curMap.isAccessible(row - 1, col)) {
                             //即将移动到的点可到达
                             row--;
                         } else {
@@ -71,7 +65,7 @@ public abstract class Sprite extends AbModel {
                     }
                     break;
                     case MoveAction.DOWN: {
-                        if (gd.curMap.isAccessible(row + 1, col)) {
+                        if (curMap.isAccessible(row + 1, col)) {
                             //即将移动到的点可到达
                             row++;
                         } else {
@@ -82,7 +76,7 @@ public abstract class Sprite extends AbModel {
                     }
                     break;
                     case MoveAction.LEFT: {
-                        if (gd.curMap.isAccessible(row, col - 1)) {
+                        if (curMap.isAccessible(row, col - 1)) {
                             //即将移动到的点可到达
                             col--;
                         } else {
@@ -93,7 +87,7 @@ public abstract class Sprite extends AbModel {
                     }
                     break;
                     case MoveAction.RIGHT: {
-                        if (gd.curMap.isAccessible(row, col + 1)) {
+                        if (curMap.isAccessible(row, col + 1)) {
                             //即将移动到的点可到达
                             col++;
                         } else {
@@ -123,5 +117,12 @@ public abstract class Sprite extends AbModel {
 
     public void removeAllMoveActions() {
         moveActionQueue.clear();
+    }
+
+    public void gotoMap(int mapIndex, int row, int col) {
+        this.curMapIndex = mapIndex;
+        this.row = row;
+        this.col = col;
+        this.curMap = DataStore.getInstance().getMap(mapIndex);
     }
 }

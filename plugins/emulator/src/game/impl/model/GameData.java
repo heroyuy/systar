@@ -15,18 +15,16 @@ import game.impl.state.MenuState;
  */
 public class GameData extends AbModel {
 
-    public DataStore dataStore = null;
+    public DataStore dataStore = DataStore.getInstance();
     public Player player = null;
     public MenuState menuState = new MenuState();
     public MapState mapState = new MapState();
-    public Map curMap = null;
     public ActionManager actionManager = null;
 
     public GameData() {
         actionManager = new ActionManager();
-        dataStore = new DataStore();
         player = dataStore.getPlayer();
-        curMap = dataStore.getMap(player.curMapIndex);
+        player.gotoMap(player.curMapIndex, player.row, player.col);
     }
 
     public void update() {

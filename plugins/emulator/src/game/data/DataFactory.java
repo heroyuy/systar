@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  *
  * 游戏对象工厂
  */
-public class DataFactory {
+class DataFactory {
 
     public static void loadConfigList(HashMap<Integer, Config> configList) {
         dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_CONFIG, 0);
