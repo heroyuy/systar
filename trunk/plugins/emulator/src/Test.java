@@ -25,7 +25,6 @@ public class Test extends JFrame {
             jButton = new JButton();
             jButton.setBounds(new Rectangle(92, 60, 91, 37));
             jButton.setText("测试");
-            jButton.setText("测试");
             jButton.addActionListener(new java.awt.event.ActionListener() {
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
