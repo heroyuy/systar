@@ -23,15 +23,16 @@ public abstract class Sprite extends AbModel {
     private Image curStepImage = null;
     private Queue<MoveAction> moveActionQueue = new LinkedList<MoveAction>();
     private MoveAction curMoveAction = null;
+    public int x, y, width, height;
 
     public void setCharImg(String charImgPath) {
         Image characterImage = Image.createImage(charImgPath);
         sequence = new Image[4][4];
-        int w = characterImage.getWidth() / 4;
-        int h = characterImage.getHeight() / 4;
+        width = characterImage.getWidth() / 4;
+        height = characterImage.getHeight() / 4;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                sequence[i][j] = Image.copyImage(characterImage, j * w, i * h, w, h);
+                sequence[i][j] = Image.copyImage(characterImage, j * width, i * height, width, height);
             }
         }
         System.out.println("face:" + face);
@@ -120,9 +121,11 @@ public abstract class Sprite extends AbModel {
     }
 
     public void gotoMap(int mapIndex, int row, int col) {
-        this.curMapIndex = mapIndex;
+        curMapIndex = mapIndex;
         this.row = row;
         this.col = col;
-        this.curMap = DataStore.getInstance().getMap(mapIndex);
+        curMap = DataStore.getInstance().getMap(mapIndex);
+        x = col * curMap.cellWidth + (curMap.cellWidth - width) / 2;
+        y = (row + 1) * curMap.cellHeight - height;
     }
 }

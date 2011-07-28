@@ -2,7 +2,7 @@ package game.actions;
 
 import com.soyostar.app.action.Action;
 import game.impl.model.Sprite;
-import game.scene.map.SpriteLayer;
+import game.scene.map.LSprite;
 
 /**
  *
@@ -17,7 +17,7 @@ public class MoveAction extends Action {
     private int face = UP;
     private int index = 0;//行动序列，0 1 2 3
     private Sprite sprite = null;
-    private SpriteLayer spriteLayer = null;
+    private LSprite spriteLayer = null;
 
     private MoveAction() {
     }
@@ -26,7 +26,7 @@ public class MoveAction extends Action {
         return face;
     }
 
-    public static MoveAction createMoveUpAction(SpriteLayer spriteLayer, Sprite sprite) {
+    public static MoveAction createMoveUpAction(LSprite spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
@@ -34,7 +34,7 @@ public class MoveAction extends Action {
         return ma;
     }
 
-    public static MoveAction createMoveDownAction(SpriteLayer spriteLayer, Sprite sprite) {
+    public static MoveAction createMoveDownAction(LSprite spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
@@ -42,7 +42,7 @@ public class MoveAction extends Action {
         return ma;
     }
 
-    public static MoveAction createMoveLeftAction(SpriteLayer spriteLayer, Sprite sprite) {
+    public static MoveAction createMoveLeftAction(LSprite spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
@@ -50,7 +50,7 @@ public class MoveAction extends Action {
         return ma;
     }
 
-    public static MoveAction createMoveRightAction(SpriteLayer spriteLayer, Sprite sprite) {
+    public static MoveAction createMoveRightAction(LSprite spriteLayer, Sprite sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.spriteLayer = spriteLayer;
