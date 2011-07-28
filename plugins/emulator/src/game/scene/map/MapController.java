@@ -8,14 +8,13 @@ import com.soyostar.app.Widget;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
 import com.soyostar.util.astar.AStar;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.RpgGame;
 import game.actions.MoveAction;
-import game.impl.model.GameData;
+import game.impl.model.Map;
 import game.impl.model.Npc;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -25,12 +24,13 @@ import java.util.Random;
  */
 public class MapController extends AbController implements TouchListener {
 
-  
     private Layer mapBackground = null;
     private Widget mapForeground = null;
-    private SpriteLayer spriteLayer_player = null;
-    private SpriteLayer[] spriteLayer_npcs = null;
+    private LSprite spriteLayer_player = null;
+    private LSprite[] spriteLayer_npcs = null;
+    private List<LSprite> lSprites = null;
     private LLabel fpsLabel = null;
+    private Map curMap = null;
     private AStar aStar = new AStar();
 
     public MapController(Render render) {
@@ -47,14 +47,14 @@ public class MapController extends AbController implements TouchListener {
         mapForeground.setBackgroundImage(gd.player.curMap.foreground);
         mapForeground.setTouchListener(this);
 
-        spriteLayer_player = new SpriteLayer(gd.player);
-        spriteLayer_player.setLocation(gd.player.col * gd.player.curMap.cellWidth + gd.player.curMap.cellWidth / 2 - gd.player.getCurStepImage().getWidth() / 2, gd.player.row * gd.player.curMap.cellHeight + gd.player.curMap.cellHeight - gd.player.getCurStepImage().getHeight());
+        spriteLayer_player = new LSprite(gd.player);
+        spriteLayer_player.setLocation(gd.player.x, gd.player.y);
         spriteLayer_player.setVisible(true);
-        spriteLayer_npcs = new SpriteLayer[gd.player.curMap.npcList.size()];
+        spriteLayer_npcs = new LSprite[gd.player.curMap.npcList.size()];
         int index = 0;
         for (Npc npc : gd.player.curMap.npcList.values()) {
-            spriteLayer_npcs[index] = new SpriteLayer(npc);
-            spriteLayer_npcs[index].setLocation(npc.col * gd.player.curMap.cellWidth + gd.player.curMap.cellWidth / 2 - npc.getCurStepImage().getWidth() / 2, npc.row * gd.player.curMap.cellHeight + gd.player.curMap.cellHeight - npc.getCurStepImage().getHeight());
+            spriteLayer_npcs[index] = new LSprite(npc);
+            spriteLayer_npcs[index].setLocation(npc.x, npc.y);
             spriteLayer_npcs[index].setVisible(true);
             index++;
         }
@@ -70,7 +70,7 @@ public class MapController extends AbController implements TouchListener {
     public void onObtain() {
         addWidget(mapBackground);
         mapBackground.addWidget(spriteLayer_player);
-        for (SpriteLayer spriteLayer : spriteLayer_npcs) {
+        for (LSprite spriteLayer : spriteLayer_npcs) {
             mapBackground.addWidget(spriteLayer);
         }
         mapBackground.addWidget(mapForeground);
@@ -81,35 +81,42 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public void updateModel() {
-        for (Npc npc : gd.player.curMap.npcList.values()) {
+        //如果尚未加载地图数据或者地图有变则根据地图数据初始化场景
+        if (curMap == null || curMap != gd.player.curMap) {
+            setMap(gd.player.curMap);
+        }
+        //所有Sprite排序
+        Collections.sort(lSprites, new LSprite.LSpriteComparator());
+        //所有NPC更新
+        for (Npc npc : curMap.npcList.values()) {
             npc.update();
         }
         fpsLabel.setText(ge.getFps() + "");
-        if (!gd.player.curMap.npcList.isEmpty()) {
+        if (!curMap.npcList.isEmpty()) {
             if (ge.getTicker() % 10 == 0) {
                 int num = new Random().nextInt(4);
-                int index = new Random().nextInt(gd.player.curMap.npcList.size());
+                int index = new Random().nextInt(curMap.npcList.size());
                 MoveAction me = null;
                 switch (num) {
                     case 0:
-                        me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveUpAction(spriteLayer_npcs[index], (Npc) curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 1:
-                        me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveDownAction(spriteLayer_npcs[index], (Npc) curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 2:
-                        me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveLeftAction(spriteLayer_npcs[index], (Npc) curMap.npcList.values().toArray()[index]);
 
                         break;
                     case 3:
-                        me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], (Npc) gd.player.curMap.npcList.values().toArray()[index]);
+                        me = MoveAction.createMoveRightAction(spriteLayer_npcs[index], (Npc) curMap.npcList.values().toArray()[index]);
 
                         break;
                 }
                 me.activate();
-                ((Npc) gd.player.curMap.npcList.values().toArray()[index]).addMoveAction(me);
+                ((Npc) curMap.npcList.values().toArray()[index]).addMoveAction(me);
             }
         }
     }
@@ -160,5 +167,14 @@ public class MapController extends AbController implements TouchListener {
             gd.player.setMoveAction(moveActions);
         }
         return true;
+    }
+
+    private void setMap(Map curMap) {
+        this.curMap = curMap;
+        lSprites = new ArrayList<LSprite>();
+        lSprites.add(new LSprite(gd.player));
+        for (Npc npc : curMap.npcList.values()) {
+            lSprites.add(new LSprite(npc));
+        }
     }
 }
