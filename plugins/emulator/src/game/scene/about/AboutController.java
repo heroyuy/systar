@@ -5,7 +5,6 @@
 
 package game.scene.about;
 
-import com.soyostar.app.Button;
 import com.soyostar.app.Color;
 import com.soyostar.app.LButton;
 import com.soyostar.app.LLabel;
@@ -14,11 +13,8 @@ import com.soyostar.app.Layer;
 import com.soyostar.app.event.ActionListener;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.RpgGame;
-import game.impl.model.GameData;
 import game.util.Skin;
 
 /**
@@ -27,9 +23,6 @@ import game.util.Skin;
  */
 public class AboutController extends AbController implements TouchListener, ActionListener{
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Layer bg = null;
     private Layer menu = null;
     private Layer menu2 = null;

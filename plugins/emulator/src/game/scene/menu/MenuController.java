@@ -3,15 +3,10 @@ package game.scene.menu;
 import com.soyostar.app.Color;
 import com.soyostar.app.LButton;
 import com.soyostar.app.Layer;
-import com.soyostar.app.Rect;
 import com.soyostar.app.event.ActionListener;
-import com.soyostar.app.event.TouchEvent;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
 import game.Const;
-import game.RpgGame;
-import game.impl.model.GameData;
 import game.util.Skin;
 
 /**
@@ -20,9 +15,6 @@ import game.util.Skin;
  */
 public class MenuController extends AbController {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Layer bg = null;
     private Skin skin = null;
     private LButton[] lbs = null;

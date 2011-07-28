@@ -4,16 +4,11 @@
  */
 package game.scene.setting;
 
-import com.soyostar.app.Color;
-import com.soyostar.app.Image;
 import com.soyostar.app.LButton;
 import com.soyostar.app.Layer;
 import com.soyostar.app.event.ActionListener;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.RpgGame;
-import game.impl.model.GameData;
 import game.util.Skin;
 
 /**
@@ -23,9 +18,6 @@ import game.util.Skin;
  */
 public class SettingController extends AbController {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private LButton lbOk = null;
     private LButton lbNot = null;
     private Layer bg = null;

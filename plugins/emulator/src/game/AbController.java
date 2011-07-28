@@ -2,7 +2,9 @@ package game;
 
 import com.soyostar.app.Component;
 import com.soyostar.app.Widget;
+import engine.GameEngine;
 import engine.Render;
+import game.impl.model.GameData;
 
 /**
  *
@@ -10,6 +12,9 @@ import engine.Render;
  */
 public abstract class AbController implements Controller {
 
+    public GameEngine ge = GameEngine.getInstance();
+    public RpgGame rpgGame = (RpgGame) ge.getGame();
+    public GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Render render = null;
 
     public AbController(Render render) {

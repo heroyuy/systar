@@ -25,9 +25,7 @@ import java.util.Random;
  */
 public class MapController extends AbController implements TouchListener {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
+  
     private Layer mapBackground = null;
     private Widget mapForeground = null;
     private SpriteLayer spriteLayer_player = null;

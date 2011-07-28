@@ -1,16 +1,10 @@
 package game.scene.startpage;
 
-import com.soyostar.app.Button;
 import com.soyostar.app.Color;
-import com.soyostar.app.Image;
-import com.soyostar.app.LButton;
-import com.soyostar.app.event.ActionListener;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.RpgGame;
 
 /**
  *
@@ -18,8 +12,6 @@ import game.RpgGame;
  */
 public class StartPageController extends AbController implements TouchListener {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
     private StartPageLayer startPageLayer = null;
 
     public StartPageController(Render render) {
