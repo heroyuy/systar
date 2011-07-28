@@ -4,21 +4,13 @@
  */
 package game.scene.test;
 
-import com.soyostar.app.Button;
 import com.soyostar.app.Color;
-import com.soyostar.app.Image;
-import com.soyostar.app.LButton;
 import com.soyostar.app.LLabel;
-import com.soyostar.app.LProgressBar;
-import com.soyostar.app.LTextArea;
 import com.soyostar.app.LTextDialog;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
-import engine.GameEngine;
 import engine.Render;
 import game.AbController;
-import game.RpgGame;
-import game.impl.model.GameData;
 import game.util.Skin;
 
 /**
@@ -27,9 +19,6 @@ import game.util.Skin;
  */
 public class TestController extends AbController {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Layer bg = null;
 //    private Layer menu = null;
 //    private Layer menu2 = null;
