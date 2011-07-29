@@ -15,7 +15,9 @@ public class LSprite extends Widget {
 
     public LSprite(Sprite sprite) {
         this.sprite = sprite;
-        this.setSize(sprite.getCurStepImage().getWidth(), sprite.getCurStepImage().getHeight());
+        this.setSize(sprite.width, sprite.height);
+        this.setLocation(sprite.x, sprite.y);
+        this.setVisible(true);
     }
 
     @Override
@@ -24,14 +26,7 @@ public class LSprite extends Widget {
         painter.drawImage(sprite.getCurStepImage(), 0, 0, Painter.LT);
     }
 
-    public static class LSpriteComparator implements Comparator<LSprite> {
-
-        public int compare(LSprite ls1, LSprite ls2) {
-            int num = ls1.sprite.row - ls2.sprite.row;
-            if (num == 0) {
-                num = ls1.sprite.col - ls2.sprite.col;
-            }
-            return num;
-        }
+    public void update() {
+        this.setLocation(sprite.x, sprite.y);
     }
 }

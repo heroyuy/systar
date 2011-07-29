@@ -128,7 +128,7 @@ class DataFactory {
                 enemy.setIndex(dis.readInt());
                 enemy.name = dis.readUTF();
                 enemy.intro = dis.readUTF();
-                enemy.headImg = "/image/battler/" + dis.readUTF();
+                enemy.headImg = "res" + dis.readUTF();
                 enemy.agil = dis.readInt();
                 enemy.stre = dis.readInt();
                 enemy.inte = dis.readInt();

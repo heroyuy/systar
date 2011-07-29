@@ -4,6 +4,7 @@ import com.soyostar.app.Image;
 import game.AbModel;
 import game.actions.MoveAction;
 import game.data.DataStore;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -127,5 +128,16 @@ public abstract class Sprite extends AbModel {
         curMap = DataStore.getInstance().getMap(mapIndex);
         x = col * curMap.cellWidth + (curMap.cellWidth - width) / 2;
         y = (row + 1) * curMap.cellHeight - height;
+    }
+
+    public static class LocationComparator implements Comparator<Sprite> {
+
+        public int compare(Sprite s1, Sprite s2) {
+            int num = s1.row - s2.row;
+            if (num == 0) {
+                num = s1.col - s2.col;
+            }
+            return num;
+        }
     }
 }
