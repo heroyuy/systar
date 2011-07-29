@@ -1,12 +1,10 @@
 package game;
 
-import engine.Render;
-
 /**
  *
  * 相当于MVC中的控制器（C）
  */
-public interface Controller extends Render {
+public interface Controller {
 
     /**
      * 获取控制权时的回调方法

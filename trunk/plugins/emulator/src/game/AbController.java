@@ -17,7 +17,7 @@ public abstract class AbController implements Controller {
     public GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private Render render = null;
 
-    public AbController(Render render) {
+    void setRender(Render render) {
         this.render = render;
     }
 

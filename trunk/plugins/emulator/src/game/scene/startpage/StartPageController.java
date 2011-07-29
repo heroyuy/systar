@@ -14,10 +14,6 @@ public class StartPageController extends AbController implements TouchListener {
 
     private StartPageLayer startPageLayer = null;
 
-    public StartPageController(Render render) {
-        super(render);
-    }
-
     public void updateModel() {
     }
 
