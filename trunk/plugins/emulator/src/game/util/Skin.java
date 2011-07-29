@@ -9,7 +9,7 @@ import com.soyostar.app.Painter;
 
 /**@2011.6.29 by vv
  *本类为获取背景等图片数组的工具类
- * @author Administrator
+ * @author vv
  */
 public class Skin {
 
