@@ -3,7 +3,6 @@ package game.scene.map;
 import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 import game.impl.model.Sprite;
-import java.util.Comparator;
 
 /**
  *
