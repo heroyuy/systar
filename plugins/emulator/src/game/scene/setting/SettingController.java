@@ -23,9 +23,7 @@ public class SettingController extends AbController {
     private Layer bg = null;
     private int lbW_ = 120, lbH_ = 30, lbGap_ = 10;
 
-    public SettingController(Render render) {
-        super(render);
-
+    public SettingController() {
         Skin skin = new Skin("res/image/skin/001-Blue01.png");
         bg = new Layer();
         bg.setBackgroundImage(skin.createBlueBg(ge.getScreenWidth(), ge.getScreenHeight(), false));

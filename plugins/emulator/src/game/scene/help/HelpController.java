@@ -37,8 +37,7 @@ public class HelpController extends AbController implements TouchListener, Actio
      * HelpController的构造函数
      * @param render 
      */
-    public HelpController(Render render){
-        super(render);        
+    public HelpController(){      
         skin = new Skin("res/image/skin/001-Blue01.png");
         bg = new Layer();
         bg.setBackgroundImage(skin.createBlueBg(ge.getScreenWidth(), ge.getScreenHeight(), false));

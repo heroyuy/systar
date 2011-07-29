@@ -69,7 +69,8 @@ public class RpgGame extends Game {
             XMLObject[] controlList = rpg.getFirstXMLObject("controllers").getXMLObjectArray("controller");
             for (XMLObject control : controlList) {
                 String fullName = control.getStringValue();
-                Controller tempController = (Controller) Class.forName(fullName).getConstructor(Render.class).newInstance(this);
+                AbController tempController = (AbController) Class.forName(fullName).newInstance();
+                tempController.setRender(this);
                 controls.put(fullName, tempController);
             }
             String currentController = rpg.getFirstXMLObject("currentController").getStringValue();

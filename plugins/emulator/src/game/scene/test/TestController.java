@@ -1,4 +1,3 @@
-
 package game.scene.test;
 
 import com.soyostar.app.Color;
@@ -26,8 +25,7 @@ public class TestController extends AbController {
 //    private LProgressBar lpb = null;
     private LTextDialog ltd = null;
 
-    public TestController(Render render) {
-        super(render);
+    public TestController() {
         Skin skin = new Skin("res/image/skin/windowskin_1.png");
         bg = new Layer();
 //        bg.setBackground(Color.GREEN);

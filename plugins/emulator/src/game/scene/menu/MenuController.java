@@ -20,8 +20,7 @@ public class MenuController extends AbController {
     private LButton[] lbs = null;
     private int lbW = 120, lbH = 30, lbGap = 10;
 
-    public MenuController(Render render) {
-        super(render);
+    public MenuController() {
         skin = new Skin("res/image/skin/001-Blue01.png");
         bg = new Layer();
         bg.setBackgroundImage(skin.createBlueBg(ge.getScreenWidth(), ge.getScreenHeight(), false));

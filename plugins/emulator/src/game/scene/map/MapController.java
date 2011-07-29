@@ -8,7 +8,6 @@ import com.soyostar.app.Widget;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
 import com.soyostar.util.astar.AStar;
-import engine.Render;
 import game.AbController;
 import game.actions.MoveAction;
 import game.impl.model.Map;
@@ -27,14 +26,15 @@ public class MapController extends AbController implements TouchListener {
 
     private Layer mapBackground = null;
     private Widget mapForeground = null;
+    private Layer spriteLayer = null;
     private List<Sprite> sprites = null;
     private java.util.Map<Sprite, LSprite> lSprites = null;
+    private LWave lWave = null;
     private LLabel fpsLabel = null;
     private Map curMap = null;
     private AStar aStar = new AStar();
 
-    public MapController(Render render) {
-        super(render);
+    public MapController() {
         curMap = gd.player.curMap;
         mapBackground = new Layer();
         mapBackground.setBackground(Color.GREEN);
@@ -43,6 +43,9 @@ public class MapController extends AbController implements TouchListener {
         mapBackground.setBackgroundImage(gd.player.curMap.background);
         mapBackground.setTouchListener(this);
 
+        spriteLayer = new Layer();
+        spriteLayer.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
+        spriteLayer.setVisible(true);
 
         mapForeground = new Widget();
         mapForeground.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
@@ -71,8 +74,9 @@ public class MapController extends AbController implements TouchListener {
     public void onObtain() {
         addWidget(mapBackground);
         for (LSprite lSprite : lSprites.values()) {
-            mapBackground.addWidget(lSprite);
+            spriteLayer.addWidget(lSprite);
         }
+        mapBackground.addWidget(spriteLayer);
         mapBackground.addWidget(mapForeground);
         mapBackground.addWidget(fpsLabel);
     }
@@ -109,7 +113,8 @@ public class MapController extends AbController implements TouchListener {
             }
         }
         mapBackground.setLocation(-x, -y);
-        fpsLabel.setText(ge.getFps() + "");
+        fpsLabel.setLocation(x, y);
+        fpsLabel.setText(  "fps:"+ge.getFps());
         if (!curMap.npcList.isEmpty()) {
             if (ge.getTicker() % 10 == 0) {
                 int num = new Random().nextInt(4);
@@ -183,6 +188,9 @@ public class MapController extends AbController implements TouchListener {
                 moveActions.add(me);
             }
             gd.player.setMoveAction(moveActions);
+            mapBackground.removeWidget(lWave);
+            lWave = new LWave(eCol * curMap.cellWidth, eRow * curMap.cellHeight);
+            mapBackground.addWidget(lWave);
         }
         return true;
     }

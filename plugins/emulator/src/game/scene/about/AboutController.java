@@ -37,8 +37,7 @@ public class AboutController extends AbController implements TouchListener, Acti
      * HelpController的构造函数
      * @param render 
      */
-    public AboutController(Render render){
-        super(render);
+    public AboutController(){
         bg = new Layer();
         skin = new Skin("res/image/skin/001-Blue01.png");
         bg.setBackgroundImage(skin.createBlueBg(ge.getScreenWidth(), ge.getScreenHeight(), false));
