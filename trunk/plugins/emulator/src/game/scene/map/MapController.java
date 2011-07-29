@@ -15,7 +15,6 @@ import game.impl.model.Map;
 import game.impl.model.Npc;
 import game.impl.model.Sprite;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -36,17 +35,17 @@ public class MapController extends AbController implements TouchListener {
 
     public MapController(Render render) {
         super(render);
-        this.curMap = gd.player.curMap;
+        curMap = gd.player.curMap;
         mapBackground = new Layer();
         mapBackground.setBackground(Color.GREEN);
-        mapBackground.setSize(ge.getScreenWidth(), ge.getScreenHeight());
+        mapBackground.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
         mapBackground.setVisible(true);
         mapBackground.setBackgroundImage(gd.player.curMap.background);
         mapBackground.setTouchListener(this);
 
 
         mapForeground = new Widget();
-        mapForeground.setSize(ge.getScreenWidth(), ge.getScreenHeight());
+        mapForeground.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
         mapForeground.setVisible(true);
         mapForeground.setBackgroundImage(gd.player.curMap.foreground);
         mapForeground.setTouchListener(this);
@@ -91,8 +90,25 @@ public class MapController extends AbController implements TouchListener {
             lSprites.get(sprite).setLocation(sprite.x, sprite.y);
             lSprites.get(sprite).setZ(sprite.row);
         }
-
-
+        //根据player的位置确定视窗口的位置
+        int x = 0, y = 0;
+        if (curMap.cellWidth * curMap.colNum > ge.getScreenWidth()) {
+            x = gd.player.x - ge.getScreenWidth() / 2;
+            if (x < 0) {
+                x = 0;
+            } else if (x > curMap.cellWidth * curMap.colNum - ge.getScreenWidth()) {
+                x = curMap.cellWidth * curMap.colNum - ge.getScreenWidth();
+            }
+        }
+        if (curMap.cellHeight * curMap.rowNum > ge.getScreenHeight()) {
+            y = gd.player.y - ge.getScreenHeight() / 2;
+            if (y < 0) {
+                y = 0;
+            } else if (y > curMap.cellHeight * curMap.rowNum - ge.getScreenHeight()) {
+                y = curMap.cellHeight * curMap.rowNum - ge.getScreenHeight();
+            }
+        }
+        mapBackground.setLocation(-x, -y);
         fpsLabel.setText(ge.getFps() + "");
         if (!curMap.npcList.isEmpty()) {
             if (ge.getTicker() % 10 == 0) {
