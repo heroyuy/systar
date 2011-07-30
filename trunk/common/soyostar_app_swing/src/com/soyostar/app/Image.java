@@ -1,5 +1,7 @@
 package com.soyostar.app;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -99,6 +101,29 @@ public class Image {
     public static Image copyImage(Image src, int x, int y, int width, int height) {
         Image res = new Image();
         res.content = src.content.getSubimage(x, y, width, height);
+        return res;
+    }
+
+    /**
+     * 返回指定图像的半透明版本
+     * @param src 源图片
+     * @param alpha 透明度 0-100
+     * @return 指定图像的半透明版本
+     */
+    public static Image createAlphaImage(Image src, int alpha) {
+        if (src == null) {
+            return null;
+        }
+        if (alpha > 100) {
+            alpha = 100;
+        } else if (alpha < 0) {
+            alpha = 0;
+        }
+        Image res = Image.createImage(src.getWidth(), src.getHeight());
+        Graphics2D g = (Graphics2D) res.content.getGraphics();
+        Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (1.0 * alpha / 100)); //指定透明度
+        g.setComposite(alphaComposite);
+        g.drawImage(src.content, 0, 0, null);
         return res;
     }
 
