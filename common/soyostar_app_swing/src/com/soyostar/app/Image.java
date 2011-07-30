@@ -124,6 +124,7 @@ public class Image {
         Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (1.0 * alpha / 100)); //指定透明度
         g.setComposite(alphaComposite);
         g.drawImage(src.content, 0, 0, null);
+        g.dispose();
         return res;
     }
 
