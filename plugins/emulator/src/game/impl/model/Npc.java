@@ -1,20 +1,37 @@
 package game.impl.model;
 
+import engine.GameEngine;
+import game.actions.MoveAction;
+import java.util.Random;
+
 /**
  *
  * @author Administrator
  */
 public class Npc extends Character {
 
+    //游戏数据
     public String name = "";
     public NpcState[] npcStates = null;
     public int curNpcStateIndex = -1;
+    //功能性变量
+    private GameEngine ge = GameEngine.getInstance();
+    private Random random = new Random();
+    private int time = random.nextInt(10) + 10;
 
     @Override
     public void update() {
-        validateCurState();
         super.update();
-
+        //验证NPC状态
+        validateCurState();
+        //行走动作
+        if (ge.getTicker() % time == 0) {
+            int faceParam = random.nextInt(4);
+            MoveAction me = null;
+            me = new MoveAction(this, faceParam);
+            me.activate();
+            this.addMoveAction(me);
+        }
     }
 
     public void setCurNpcState(int index) {
@@ -33,7 +50,7 @@ public class Npc extends Character {
     }
 
     public void init() {
-        validateCurState() ;
+        validateCurState();
         x = col * curMap.cellWidth + (curMap.cellWidth - width) / 2;
         y = (row + 1) * curMap.cellHeight - height;
         setCurStepImage(face, 0);

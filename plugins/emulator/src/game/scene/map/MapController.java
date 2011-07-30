@@ -16,7 +16,6 @@ import game.impl.model.Character;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -114,34 +113,7 @@ public class MapController extends AbController implements TouchListener {
         }
         mapBackground.setLocation(-x, -y);
         fpsLabel.setLocation(x, y);
-        fpsLabel.setText(  "fps:"+ge.getFps());
-        if (!curMap.npcList.isEmpty()) {
-            if (ge.getTicker() % 10 == 0) {
-                int num = new Random().nextInt(4);
-                int index = new Random().nextInt(curMap.npcList.size());
-                MoveAction me = null;
-                switch (num) {
-                    case 0:
-                        me = MoveAction.createMoveUpAction((Npc) curMap.npcList.values().toArray()[index]);
-
-                        break;
-                    case 1:
-                        me = MoveAction.createMoveDownAction((Npc) curMap.npcList.values().toArray()[index]);
-
-                        break;
-                    case 2:
-                        me = MoveAction.createMoveLeftAction((Npc) curMap.npcList.values().toArray()[index]);
-
-                        break;
-                    case 3:
-                        me = MoveAction.createMoveRightAction((Npc) curMap.npcList.values().toArray()[index]);
-
-                        break;
-                }
-                me.activate();
-                ((Npc) curMap.npcList.values().toArray()[index]).addMoveAction(me);
-            }
-        }
+        fpsLabel.setText("fps:" + ge.getFps());
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
@@ -170,20 +142,7 @@ public class MapController extends AbController implements TouchListener {
             MoveAction me = null;
             List<MoveAction> moveActions = new ArrayList<MoveAction>();
             for (int p : paths) {
-                switch (p) {
-                    case 0:
-                        me = MoveAction.createMoveUpAction(gd.player);
-                        break;
-                    case 1:
-                        me = MoveAction.createMoveDownAction(gd.player);
-                        break;
-                    case 2:
-                        me = MoveAction.createMoveLeftAction(gd.player);
-                        break;
-                    case 3:
-                        me = MoveAction.createMoveRightAction(gd.player);
-                        break;
-                }
+                me = new MoveAction(gd.player, p);
                 me.activate();
                 moveActions.add(me);
             }

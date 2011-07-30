@@ -17,39 +17,16 @@ public class MoveAction extends Action {
     private int index = 0;//行动序列，0 1 2 3
     private Character sprite = null;
 
-    private MoveAction() {
+    public MoveAction(Character sprite, int face) {
+        if (face < UP || face > RIGHT) {
+            throw new IllegalArgumentException("方向参数不对，只能为0 1 2 3");
+        }
+        this.sprite = sprite;
+        this.face = face;
     }
 
     public int getFace() {
         return face;
-    }
-
-    public static MoveAction createMoveUpAction(Character sprite) {
-        MoveAction ma = new MoveAction();
-        ma.sprite = sprite;
-        ma.face = UP;
-        return ma;
-    }
-
-    public static MoveAction createMoveDownAction(Character sprite) {
-        MoveAction ma = new MoveAction();
-        ma.sprite = sprite;
-        ma.face = DOWN;
-        return ma;
-    }
-
-    public static MoveAction createMoveLeftAction(Character sprite) {
-        MoveAction ma = new MoveAction();
-        ma.sprite = sprite;
-        ma.face = LEFT;
-        return ma;
-    }
-
-    public static MoveAction createMoveRightAction(Character sprite) {
-        MoveAction ma = new MoveAction();
-        ma.sprite = sprite;
-        ma.face = RIGHT;
-        return ma;
     }
 
     public void run() {
