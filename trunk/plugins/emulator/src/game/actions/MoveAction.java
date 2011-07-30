@@ -1,7 +1,7 @@
 package game.actions;
 
 import com.soyostar.app.action.Action;
-import game.impl.model.Sprite;
+import game.impl.model.Character;
 
 /**
  *
@@ -15,7 +15,7 @@ public class MoveAction extends Action {
     public static final int RIGHT = 3;
     private int face = UP;
     private int index = 0;//行动序列，0 1 2 3
-    private Sprite sprite = null;
+    private Character sprite = null;
 
     private MoveAction() {
     }
@@ -24,28 +24,28 @@ public class MoveAction extends Action {
         return face;
     }
 
-    public static MoveAction createMoveUpAction(Sprite sprite) {
+    public static MoveAction createMoveUpAction(Character sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.face = UP;
         return ma;
     }
 
-    public static MoveAction createMoveDownAction(Sprite sprite) {
+    public static MoveAction createMoveDownAction(Character sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.face = DOWN;
         return ma;
     }
 
-    public static MoveAction createMoveLeftAction(Sprite sprite) {
+    public static MoveAction createMoveLeftAction(Character sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.face = LEFT;
         return ma;
     }
 
-    public static MoveAction createMoveRightAction(Sprite sprite) {
+    public static MoveAction createMoveRightAction(Character sprite) {
         MoveAction ma = new MoveAction();
         ma.sprite = sprite;
         ma.face = RIGHT;

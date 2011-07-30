@@ -98,7 +98,6 @@ public final class GameEngine implements Runnable {
      * 游戏引擎初始化
      */
     private void init() {
-        System.out.println("初始化游戏实例");
         isRun = true;
         game = gameManager.getCurGame();
 
@@ -222,7 +221,6 @@ public final class GameEngine implements Runnable {
      *
      */
     public void start() {
-        System.out.println("启动游戏引擎");
         init();
         if (game != null) {
             game.start();

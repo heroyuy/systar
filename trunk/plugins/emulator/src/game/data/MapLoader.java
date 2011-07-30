@@ -2,11 +2,12 @@ package game.data;
 
 import com.soyostar.app.Image;
 import com.soyostar.app.Painter;
-import game.data.DataFactory.FileConnector;
 import game.impl.model.Map;
 import game.impl.model.Npc;
 import game.impl.model.Npc.NpcState;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Administrator
  */
-class MapFactory {
+class MapLoader {
 
     private int index = -1;
     private String name;                     //地图名称
@@ -33,9 +34,11 @@ class MapFactory {
     private java.util.Map<Integer, Npc> npcs = new java.util.HashMap<Integer, Npc>();
     private int[][] npcIndexs;
 
-    public void loadMapData(DataInputStream dis) {
+    private void loadMap() {
         System.out.println("loadMapData");
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/map/map" + index + ".gat"));
+            DataInputStream dis = new DataInputStream(fis);
             //基本属性
             System.out.println("基本属性");
             index = dis.readInt();
@@ -83,9 +86,7 @@ class MapFactory {
             for (int j = 0; j < rowNum; j++) {
                 for (int k = 0; k < colNum; k++) {
                     ways[j][k] = dis.readInt();
-                    System.out.print(ways[j][k] + " ");
                 }
-                System.out.println("");
             }
             //NPC
             System.out.println("NPC");
@@ -95,13 +96,19 @@ class MapFactory {
                     npcIndexs[i][j] = dis.readInt();
                 }
             }
+            dis.close();
+            fis.close();
         } catch (IOException ex) {
             System.out.println("加载Map出错");
             ex.printStackTrace();
         }
     }
 
-    public Map getMap() {
+    public Map getMap(int index) {
+        if (this.index != index) {
+            this.index = index;
+            loadMap();
+        }
         Map map = new Map();
         map.setIndex(index);
         map.name = name;
@@ -114,7 +121,7 @@ class MapFactory {
         for (int i = 0; i < npcIndexs.length; i++) {
             for (int j = 0; j < npcIndexs[i].length; j++) {
                 if (npcIndexs[i][j] >= 0) {
-                    map.npcList.put(npcIndexs[i][j], getNpc(npcIndexs[i][j]));
+                    map.npcList.put(npcIndexs[i][j], getNpc(map, npcIndexs[i][j]));
                 }
             }
         }
@@ -149,18 +156,20 @@ class MapFactory {
         }
     }
 
-    private Npc getNpc(int index) {
+    private Npc getNpc(Map map, int index) {
         if (!npcs.containsKey(index)) {
             try {
-                DataInputStream dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_NPC, index);
+                FileInputStream fis = new FileInputStream(new File("res/data/npc/npc" + index + ".gat"));
+                DataInputStream dis = new DataInputStream(fis);
                 Npc npc = new Npc();
                 npc.setIndex(dis.readInt());
-                npc.curMapIndex = dis.readInt();
+                dis.readInt();//当前地图
+                npc.curMap = map;
                 npc.row = dis.readInt();
                 npc.col = dis.readInt();
-                npc.stateNum = dis.readInt();
-                npc.npcStates = new NpcState[npc.stateNum];
-                for (int i = 0; i < npc.stateNum; i++) {
+                int stateNum = dis.readInt();
+                npc.npcStates = new NpcState[stateNum];
+                for (int i = 0; i < stateNum; i++) {
                     npc.npcStates[i] = new NpcState();
                     npc.npcStates[i].stateType = dis.readByte();
                     npc.npcStates[i].charImage = "res" + dis.readUTF();
@@ -169,11 +178,12 @@ class MapFactory {
                     npc.npcStates[i].speed = dis.readByte();
                     npc.npcStates[i].transparent = dis.readBoolean();
                     npc.npcStates[i].scriptIndex = dis.readInt();
+
                 }
-                npc.setCurNpcState(0);
+                npc.init();
                 npcs.put(index, npc);
             } catch (IOException ex) {
-                Logger.getLogger(MapFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MapLoader.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return npcs.get(index);

@@ -12,7 +12,7 @@ import game.AbController;
 import game.actions.MoveAction;
 import game.impl.model.Map;
 import game.impl.model.Npc;
-import game.impl.model.Sprite;
+import game.impl.model.Character;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +27,8 @@ public class MapController extends AbController implements TouchListener {
     private Layer mapBackground = null;
     private Widget mapForeground = null;
     private Layer spriteLayer = null;
-    private List<Sprite> sprites = null;
-    private java.util.Map<Sprite, LSprite> lSprites = null;
+    private List<Character> sprites = null;
+    private java.util.Map<Character, LSprite> lSprites = null;
     private LWave lWave = null;
     private LLabel fpsLabel = null;
     private Map curMap = null;
@@ -53,13 +53,13 @@ public class MapController extends AbController implements TouchListener {
         mapForeground.setBackgroundImage(gd.player.curMap.foreground);
         mapForeground.setTouchListener(this);
 
-        sprites = new ArrayList<Sprite>();
+        sprites = new ArrayList<Character>();
         sprites.add(gd.player);
         for (Npc npc : curMap.npcList.values()) {
             sprites.add(npc);
         }
-        lSprites = new HashMap<Sprite, LSprite>();
-        for (Sprite sprite : sprites) {
+        lSprites = new HashMap<Character, LSprite>();
+        for (Character sprite : sprites) {
             lSprites.put(sprite, new LSprite(sprite));
         }
 
@@ -90,7 +90,7 @@ public class MapController extends AbController implements TouchListener {
             npc.update();
         }
         //更新所有精灵组件的位置
-        for (Sprite sprite : sprites) {
+        for (Character sprite : sprites) {
             lSprites.get(sprite).setLocation(sprite.x, sprite.y);
             lSprites.get(sprite).setZ(sprite.row);
         }

@@ -87,7 +87,6 @@ public class HelpController extends AbController implements TouchListener, Actio
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
-        System.out.println("按键");
         rpgGame.setCurrentControl("game.scene.menu.MenuController");
         return true;
     }

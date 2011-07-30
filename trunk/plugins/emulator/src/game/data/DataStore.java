@@ -1,5 +1,7 @@
 package game.data;
 
+import com.soyostar.app.Image;
+import game.impl.model.Actor;
 import game.impl.model.Config;
 import game.impl.model.Enemy;
 import game.impl.model.EnemyTroop;
@@ -9,7 +11,7 @@ import game.impl.model.Player;
 import game.impl.model.Skill;
 import game.impl.model.animation.Animation;
 import game.impl.model.Map;
-import game.impl.model.Npc;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -18,14 +20,15 @@ import java.util.HashMap;
  */
 public class DataStore {
 
-    private HashMap<Integer, Config> configList = null;
+    private DataLoader dataLoader = null;
+    private Config config = null;
     private HashMap<Integer, Animation> animationList = null;
     private HashMap<Integer, Enemy> enemyList = null;
     private HashMap<Integer, EnemyTroop> enemyTroopList = null;
     private HashMap<Integer, Item> itemList = null;
     private HashMap<Integer, Equip> equipList = null;
     private HashMap<Integer, Skill> skillList = null;
-    private HashMap<Integer, Player> playerList = null;
+    private PlayerData playerData = null;
     private HashMap<Integer, Map> mapList = null;
     private static DataStore instance = new DataStore();
 
@@ -34,36 +37,67 @@ public class DataStore {
     }
 
     private DataStore() {
-        configList = new HashMap<Integer, Config>();
+        dataLoader = new DataLoader();
+        //************************************
+        config = new Config();
         animationList = new HashMap<Integer, Animation>();
         enemyList = new HashMap<Integer, Enemy>();
         enemyTroopList = new HashMap<Integer, EnemyTroop>();
         itemList = new HashMap<Integer, Item>();
         equipList = new HashMap<Integer, Equip>();
         skillList = new HashMap<Integer, Skill>();
-        playerList = new HashMap<Integer, Player>();
+        playerData = new PlayerData();
         mapList = new HashMap<Integer, Map>();
+        //*************************************
         init();
     }
 
     private void init() {
         System.out.println("初始化数据中心");
-        DataFactory.loadConfigList(configList);
-//        DataFactory.loadAnimationList(animationList);
-        DataFactory.loadEnemyList(enemyList);
-        DataFactory.loadEnemyTroopList(enemyTroopList);
-        DataFactory.loadPlayerList(playerList);
-        DataFactory.loadSkillList(skillList);
-        DataFactory.loadItemList(itemList);
-        DataFactory.loadEquipList(equipList);
+        dataLoader.loadConfig(config);
+//      DataFactory.loadAnimationList(animationList);
+        dataLoader.loadEnemyList(enemyList);
+        dataLoader.loadEnemyTroopList(enemyTroopList);
+        dataLoader.loadPlayerData(playerData);
+        dataLoader.loadSkillList(skillList);
+        dataLoader.loadItemList(itemList);
+        dataLoader.loadEquipList(equipList);
     }
 
     public Config getConfig() {
-        return configList.get(0);
+        return config;
     }
 
     public Player getPlayer() {
-        return playerList.get(0).clone();
+        Player player = new Player();
+        player.setCharImg("res" + playerData.characterImage);
+        player.gotoMap(playerData.mapIndex, playerData.row, playerData.col, playerData.face);
+        return player;
+    }
+
+    public Actor getActor() {
+        Actor actor = new Actor();
+        actor.name = playerData.name;
+        actor.intro = playerData.intro;
+        actor.battlerImage = Image.createImage("res" + playerData.battlerImage);
+        actor.stre = playerData.stre;
+        actor.agil = playerData.agil;
+        actor.inte = playerData.inte;
+        actor.hp = actor.maxHp = playerData.maxHp;
+        actor.sp = actor.maxSp = playerData.maxSp;
+        actor.flee = playerData.flee;
+        actor.lev = playerData.lev;
+        actor.atk = playerData.atk;
+        actor.def = playerData.def;
+        actor.money = playerData.money;
+        actor.streByLev = playerData.streByLev;
+        actor.agilByLev = playerData.agilByLev;
+        actor.inteByLev = playerData.inteByLev;
+        actor.expList = Arrays.copyOf(playerData.expList, playerData.expList.length);
+        //以下为初始化
+        actor.exp = 0;
+        actor.skillList = new int[0];
+        return actor;
     }
 
     public Enemy getEnemy(int index) {
@@ -92,11 +126,8 @@ public class DataStore {
 
     public Map getMap(int index) {
         if (!mapList.containsKey(index)) {
-            Map map = DataFactory.loadMap(index);
+            Map map = dataLoader.loadMap(index);
             mapList.put(index, map);
-            for (Npc npc : map.npcList.values()) {
-                npc.gotoMap(npc.curMapIndex, npc.row, npc.col);
-            }
         }
         return (Map) mapList.get(index);
     }

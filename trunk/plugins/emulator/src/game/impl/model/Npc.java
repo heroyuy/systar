@@ -4,21 +4,39 @@ package game.impl.model;
  *
  * @author Administrator
  */
-public class Npc extends Sprite {
+public class Npc extends Character {
 
     public String name = "";
-    public int stateNum = 0;
     public NpcState[] npcStates = null;
-    public NpcState curNpcState = null;
+    public int curNpcStateIndex = -1;
 
     @Override
     public void update() {
+        validateCurState();
         super.update();
+
     }
 
     public void setCurNpcState(int index) {
-        curNpcState = npcStates[0];
-        setCharImg(curNpcState.charImage);
+        this.curNpcStateIndex = index;
+        this.face = npcStates[index].face;
+        setCharImg(npcStates[index].charImage);
+    }
+
+    private void validateCurState() {
+        //判断当前NPC所处的状态
+        //测试状态下始终使用第一个状态
+        int stateIndex = 0;
+        if (stateIndex != curNpcStateIndex) {
+            setCurNpcState(stateIndex);
+        }
+    }
+
+    public void init() {
+        validateCurState() ;
+        x = col * curMap.cellWidth + (curMap.cellWidth - width) / 2;
+        y = (row + 1) * curMap.cellHeight - height;
+        setCurStepImage(face, 0);
     }
 
     public static class NpcState {

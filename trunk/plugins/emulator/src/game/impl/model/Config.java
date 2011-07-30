@@ -7,7 +7,7 @@ import game.AbModel;
  * @author wp_g4
  * 测试通过
  */
-public class Config extends AbModel {
+public class Config {
 
     public String name = "";
     public String help = "";
@@ -27,9 +27,4 @@ public class Config extends AbModel {
     public String shield = "盾牌";
     public String boots = "战靴";
     public String jewelry = "饰品";
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
