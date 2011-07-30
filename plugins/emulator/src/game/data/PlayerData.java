@@ -4,7 +4,7 @@ package game.data;
  *
  * @author wp_g4
  */
-public class PlayerData {
+ class PlayerData {
 
     public String name;//名称
     public String intro;//介绍
