@@ -12,9 +12,24 @@ public class Layer extends Widget {
 
     private List<Widget> widgets = new ArrayList<Widget>();
     private Widget focusWidget = null;
+    ZOrdinateChangedListener zListener = new ZOrdinateChangedListener() {
+
+        public void onZOrdinateChanged(Widget widget) {
+            widgets.remove(widget);
+            Layer.this.addWidget(widget);
+        }
+    };
 
     public void addWidget(Widget widget) {
-        widgets.add(widget);
+        widget.zOrdinateChangedListener = zListener;
+        int index = 0;//新加入的组件应该插入的位置
+        for (Widget w : widgets) {
+            if (w.getZ() > widget.getZ()) {
+                break;
+            }
+            index++;
+        }
+        widgets.add(index, widget);
     }
 
     public void removeWidget(Widget widget) {
@@ -51,7 +66,6 @@ public class Layer extends Widget {
 
     @Override
     public boolean dispatchTouchEvent(TouchEvent te) {
-//        System.out.println("Layer-dispatchTouchEvent type:" + te.getType() + "  x:" + te.getX() + " y:" + te.getY());
         boolean state = false;
         //容器对事件进行一次拦截处理
         state = interceptTouchEvent(te);
@@ -133,7 +147,6 @@ public class Layer extends Widget {
                 break;
             }
         }
-//        System.out.println("focus:" + focus);
         return focus;
     }
 }

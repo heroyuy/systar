@@ -11,12 +11,14 @@ public class Widget {
 
     private int x = 0;
     private int y = 0;
+    private int z = 0;
     private int width = 0;
     private int height = 0;
     private int bgColor = 0x00000000;
     private Image backgroundImage = null;
     private boolean visibility = false;
     private TouchListener touchListener = null;
+    ZOrdinateChangedListener zOrdinateChangedListener = null;
 
     public TouchListener getTouchListener() {
         return touchListener;
@@ -56,6 +58,18 @@ public class Widget {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public void setZ(int z) {
+        boolean isChanged = z != this.z;
+        this.z = z;
+        if (isChanged && zOrdinateChangedListener != null) {
+            zOrdinateChangedListener.onZOrdinateChanged(this);
+        }
     }
 
     public void setLocation(int x, int y) {
@@ -126,5 +140,10 @@ public class Widget {
 
     public void paintWidget(Painter painter) {
         paint(painter);
+    }
+
+    interface ZOrdinateChangedListener {
+
+        public void onZOrdinateChanged(Widget widget);
     }
 }
