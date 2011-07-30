@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 /**
  *
- * @author Administrator
+ * @author wp_g4
  */
 public abstract class AbModel {
 
@@ -19,8 +15,8 @@ public abstract class AbModel {
     public final void setIndex(int index) {
         if (this.index != -1) {
             try {
-                throw new Exception("不能修改对象索引");
-            } catch (Exception ex) {
+                throw new IllegalStateException("不能修改对象索引");
+            } catch (IllegalStateException ex) {
                 ex.printStackTrace();
             }
         } else {

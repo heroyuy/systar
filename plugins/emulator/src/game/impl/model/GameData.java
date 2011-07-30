@@ -24,7 +24,6 @@ public class GameData extends AbModel {
     public GameData() {
         actionManager = new ActionManager();
         player = dataStore.getPlayer();
-        player.gotoMap(player.curMapIndex, player.row, player.col);
     }
 
     public void update() {

@@ -66,7 +66,6 @@ public class Emulator extends javax.swing.JDialog {
     protected void setEmulatorSize(int width, int height) {
         screen.setPreferredSize(new Dimension(width, height));
         if (curApp.getContentPanel() != null) {
-            System.out.println("设置屏幕大小");
             curApp.getContentPanel().setSize(width, height);
             curApp.getContentPanel().sizeChanged(width, height);
 
@@ -96,7 +95,6 @@ public class Emulator extends javax.swing.JDialog {
      * 启动模拟器
      */
     public void startEmulator() {
-        System.out.println("startEmulator");
         try {
             //注册游戏程序实例
             curApp = (App) Class.forName("engine.Main").newInstance();
@@ -105,7 +103,6 @@ public class Emulator extends javax.swing.JDialog {
             //呈现游戏视图
             screen.add(getContent(curApp.getContentPanel()));
             //启动游戏程序
-            System.out.println("curApp.start()");
             curApp.start();
         } catch (InstantiationException ex) {
             Logger.getLogger(Emulator.class.getName()).log(Level.SEVERE, null, ex);

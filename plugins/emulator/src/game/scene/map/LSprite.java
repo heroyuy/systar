@@ -2,7 +2,7 @@ package game.scene.map;
 
 import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
-import game.impl.model.Sprite;
+import game.impl.model.Character;
 
 /**
  *
@@ -10,9 +10,9 @@ import game.impl.model.Sprite;
  */
 public class LSprite extends Widget {
 
-    private Sprite sprite = null;
+    private Character sprite = null;
 
-    public LSprite(Sprite sprite) {
+    public LSprite(Character sprite) {
         this.sprite = sprite;
         this.setSize(sprite.width, sprite.height);
         this.setLocation(sprite.x, sprite.y);

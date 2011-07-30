@@ -1,5 +1,6 @@
 package game.data;
 
+import com.soyostar.app.Image;
 import game.impl.model.Config;
 import game.impl.model.Enemy;
 import game.impl.model.EnemyTroop;
@@ -27,13 +28,14 @@ import java.util.logging.Logger;
  *
  * 游戏对象工厂
  */
-class DataFactory {
+class DataLoader {
 
-    public static void loadConfigList(HashMap<Integer, Config> configList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_CONFIG, 0);
-        Config config = null;
+    public MapLoader mapLoader = new MapLoader();
+
+    public void loadConfig(Config config) {
         try {
-            config = new Config();
+            FileInputStream fis = new FileInputStream(new File("res/data/system.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             config.name = dis.readUTF();
             config.help = dis.readUTF();
             config.about = dis.readUTF();
@@ -52,18 +54,18 @@ class DataFactory {
             config.shield = dis.readUTF();
             config.boots = dis.readUTF();
             config.jewelry = dis.readUTF();
-            //游戏只有一个Config，编号为0
-            config.setIndex(0);
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Config出错");
         }
-        configList.put(config.getIndex(), config);
-        FileConnector.release();
     }
 
-    public static void loadAnimationList(HashMap<Integer, Animation> animationList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_ANIMATION, 0);
+    public void loadAnimationList(HashMap<Integer, Animation> animationList) {
+
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/ani.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int aniNum = dis.readInt();
             Animation ani = null;
             for (int i = 0; i < aniNum; i++) {
@@ -112,15 +114,18 @@ class DataFactory {
                 }
                 animationList.put(ani.getIndex(), ani);
             }
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Animation出错");
         }
-        FileConnector.release();
     }
 
-    public static void loadEnemyList(HashMap<Integer, Enemy> enemyList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_ENEMY, 0);
+    public void loadEnemyList(HashMap<Integer, Enemy> enemyList) {
+
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/enemy.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int enemySum = dis.readInt();
             Enemy enemy = null;
             for (int i = 0; i < enemySum; i++) {
@@ -128,7 +133,7 @@ class DataFactory {
                 enemy.setIndex(dis.readInt());
                 enemy.name = dis.readUTF();
                 enemy.intro = dis.readUTF();
-                enemy.headImg = "res" + dis.readUTF();
+                enemy.battlerImage = Image.createImage("res" + dis.readUTF());
                 enemy.agil = dis.readInt();
                 enemy.stre = dis.readInt();
                 enemy.inte = dis.readInt();
@@ -145,16 +150,20 @@ class DataFactory {
                     enemy.skillList[j] = dis.readInt();
                 }
                 enemyList.put(enemy.getIndex(), enemy);
+
+                dis.close();
+                fis.close();
             }
         } catch (IOException e) {
             System.out.println("加载Enemy出错");
         }
-        FileConnector.release();
+
     }
 
-    public static void loadEnemyTroopList(HashMap<Integer, EnemyTroop> enemyTroopList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_ENEMYTROOP, 0);
+    public void loadEnemyTroopList(HashMap<Integer, EnemyTroop> enemyTroopList) {
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/enemytroop.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int enemyTroopSum = dis.readInt();
             EnemyTroop enemyTroop = null;
             for (int i = 0; i < enemyTroopSum; i++) {
@@ -173,54 +182,58 @@ class DataFactory {
                 }
                 enemyTroopList.put(enemyTroop.getIndex(), enemyTroop);
             }
+
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载EnemyTroop出错");
         }
-        FileConnector.release();
+
     }
 
-    public static void loadPlayerList(HashMap<Integer, Player> playerList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_PLAYER, 0);
-        Player player = null;
-        try {
-            player = new Player();
-            player.name = dis.readUTF();
-            player.intro = dis.readUTF();
-            player.headImg = dis.readUTF();
-            player.setCharImg("res" + dis.readUTF());
-            player.stre = dis.readInt();
-            player.agil = dis.readInt();
-            player.inte = dis.readInt();
-            player.hp = dis.readInt();
-            player.sp = dis.readInt();
-            player.lev = dis.readInt();
-            player.atk = dis.readInt();
-            player.def = dis.readInt();
-            player.flee = dis.readInt();
-            player.streByLev = dis.readInt();
-            player.agilByLev = dis.readInt();
-            player.inteByLev = dis.readInt();
+    public void loadPlayerData(PlayerData playerData) {
 
-            player.levList = new int[player.lev];
-            for (int i = 0; i < player.levList.length; i++) {
-                player.levList[i] = dis.readInt();
+        try {
+            FileInputStream fis = new FileInputStream(new File("res/data/player.gat"));
+            DataInputStream dis = new DataInputStream(fis);
+            playerData.name = dis.readUTF();
+            playerData.intro = dis.readUTF();
+            playerData.battlerImage = dis.readUTF();
+            playerData.characterImage = dis.readUTF();
+            playerData.stre = dis.readInt();
+            playerData.agil = dis.readInt();
+            playerData.inte = dis.readInt();
+            playerData.maxHp = dis.readInt();
+            playerData.maxSp = dis.readInt();
+            playerData.lev = dis.readInt();
+            playerData.atk = dis.readInt();
+            playerData.def = dis.readInt();
+            playerData.flee = dis.readInt();
+            playerData.streByLev = dis.readInt();
+            playerData.agilByLev = dis.readInt();
+            playerData.inteByLev = dis.readInt();
+
+            playerData.expList = new int[playerData.lev];
+            for (int i = 0; i < playerData.expList.length; i++) {
+                playerData.expList[i] = dis.readInt();
             }
-            player.money = dis.readInt();
-            player.curMapIndex = dis.readInt();
-            player.row = dis.readInt();
-            player.col = dis.readInt();
-            player.face = (byte) dis.readInt();//测试
-            player.setIndex(0);
-            playerList.put(player.getIndex(), player);
+            playerData.money = dis.readInt();
+            playerData.mapIndex = dis.readInt();
+            playerData.row = dis.readInt();
+            playerData.col = dis.readInt();
+            playerData.face = (byte) dis.readInt();//测试
+            dis.close();
+            fis.close();
         } catch (IOException e) {
-            System.out.println("加载Player出错");
+            System.out.println("加载playerData出错");
         }
-        FileConnector.release();
+
     }
 
-    public static void loadSkillList(HashMap<Integer, Skill> skillList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_SKILL, 0);
+    public void loadSkillList(HashMap<Integer, Skill> skillList) {
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/skill.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int skillSum = dis.readInt();
             Skill skill = null;
             for (int i = 0; i < skillSum; i++) {
@@ -241,16 +254,19 @@ class DataFactory {
                 skill.aniIndex = dis.readInt();
                 skillList.put(skill.getIndex(), skill);
             }
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Skill出错");
         }
 
-        FileConnector.release();
+
     }
 
-    public static void loadItemList(HashMap<Integer, Item> itemList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_ITEM, 0);
+    public void loadItemList(HashMap<Integer, Item> itemList) {
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/item.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int itemSum = dis.readInt();
             Item item = null;
             for (int i = 0; i < itemSum; i++) {
@@ -275,15 +291,19 @@ class DataFactory {
                 item.price = dis.readInt();
                 itemList.put(item.getIndex(), item);
             }
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Item出错");
         }
-        FileConnector.release();
+
     }
 
-    public static void loadEquipList(HashMap<Integer, Equip> equipList) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_EQUIP, 0);
+    public void loadEquipList(HashMap<Integer, Equip> equipList) {
+
         try {
+            FileInputStream fis = new FileInputStream(new File("res/data/equip.gat"));
+            DataInputStream dis = new DataInputStream(fis);
             int equipSum = dis.readInt();
             Equip equip = null;
             for (int i = 0; i < equipSum; i++) {
@@ -305,37 +325,34 @@ class DataFactory {
                 equip.price = dis.readInt();
                 equipList.put(equip.getIndex(), equip);
             }
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Equip出错");
         }
-        FileConnector.release();
+
     }
 
-    public static Map loadMap(int index) {
-        dis = FileConnector.openDataInputStream(FileConnector.FILE_TYPE_MAP, index);
-        mapFactory.loadMapData(dis);
-        FileConnector.release();
-        return mapFactory.getMap();
+    public Map loadMap(int index) {
+        return mapLoader.getMap(index);
     }
-    private static DataInputStream dis = null;
-    private static MapFactory mapFactory = new MapFactory();
 
-    public static class FileConnector {
+    public class FileConnector {
 
-        public static final byte FILE_TYPE_CONFIG = 0;
-        public static final byte FILE_TYPE_ANIMATION = 1;
-        public static final byte FILE_TYPE_ENEMY = 2;
-        public static final byte FILE_TYPE_ENEMYTROOP = 3;
-        public static final byte FILE_TYPE_ITEM = 4;
-        public static final byte FILE_TYPE_EQUIP = 5;
-        public static final byte FILE_TYPE_SKILL = 6;
-        public static final byte FILE_TYPE_PLAYER = 7;
-        public static final byte FILE_TYPE_MAP = 8;
-        public static final byte FILE_TYPE_NPC = 9;
-        public static FileInputStream fis = null;
-        public static DataInputStream dis = null;
+        public final byte FILE_TYPE_CONFIG = 0;
+        public final byte FILE_TYPE_ANIMATION = 1;
+        public final byte FILE_TYPE_ENEMY = 2;
+        public final byte FILE_TYPE_ENEMYTROOP = 3;
+        public final byte FILE_TYPE_ITEM = 4;
+        public final byte FILE_TYPE_EQUIP = 5;
+        public final byte FILE_TYPE_SKILL = 6;
+        public final byte FILE_TYPE_PLAYER = 7;
+        public final byte FILE_TYPE_MAP = 8;
+        public final byte FILE_TYPE_NPC = 9;
+        public FileInputStream fis = null;
+        public DataInputStream dis = null;
 
-        public static DataInputStream openDataInputStream(byte type, int index) {
+        public DataInputStream openDataInputStream(byte type, int index) {
             try {
                 switch (type) {
                     case FILE_TYPE_CONFIG:
@@ -373,17 +390,17 @@ class DataFactory {
                 }
                 dis = new DataInputStream(fis);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(DataFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DataLoader.class.getName()).log(Level.SEVERE, null, ex);
             }
             return dis;
         }
 
-        public static void release() {
+        public void release() {
             try {
                 dis.close();
                 fis.close();
             } catch (IOException ex) {
-                Logger.getLogger(DataFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DataLoader.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
