@@ -46,7 +46,9 @@ public class MoveAction extends Action {
         }
         sprite.setCurStepImage(face, (index + 1) % 4);
         index++;
+        sprite.moving = true;
         if (index >= 4) {
+            sprite.moving = false;
             freeze();
         }
 

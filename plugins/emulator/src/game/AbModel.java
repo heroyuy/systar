@@ -1,11 +1,17 @@
 package game;
 
+import engine.GameEngine;
+import game.impl.model.GameData;
+
 /**
  *
  * @author wp_g4
  */
 public abstract class AbModel {
 
+    public GameEngine ge = GameEngine.getInstance();
+    public RpgGame rpgGame = (RpgGame) ge.getGame();
+    public GameData gd = (GameData) rpgGame.getModel("game.impl.model.GameData");
     private int index = -1;
 
     public final int getIndex() {

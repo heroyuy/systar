@@ -23,6 +23,7 @@ public abstract class Character extends AbModel {
     private Queue<MoveAction> moveActionQueue = new LinkedList<MoveAction>();
     private MoveAction curMoveAction = null;
     public int x, y, width, height;
+    public boolean moving = false;//移动标识
 
     public void setCharImg(String charImgPath) {
         Image characterImage = Image.createImage(charImgPath);
@@ -34,7 +35,6 @@ public abstract class Character extends AbModel {
                 sequence[i][j] = Image.copyImage(characterImage, j * width, i * height, width, height);
             }
         }
-
     }
 
     public Image getCurStepImage() {
@@ -46,6 +46,10 @@ public abstract class Character extends AbModel {
     }
 
     public void update() {
+        move();
+    }
+
+    private void move() {
         //角色移动
         if (curMoveAction == null || !curMoveAction.isActive()) {
             if (!moveActionQueue.isEmpty()) {
