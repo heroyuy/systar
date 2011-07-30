@@ -51,7 +51,7 @@ public final class GameEngine implements Runnable {
     /**
      * 额定FPS
      */
-    private final int FPS = 12;
+    private final int FPS = 20;
     /**
      * 实际fps
      */

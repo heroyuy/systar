@@ -1,9 +1,7 @@
 package game.impl.model;
 
 import com.soyostar.app.Image;
-import engine.GameEngine;
 import game.AbModel;
-import game.RpgGame;
 import java.util.HashMap;
 
 /**
@@ -12,9 +10,6 @@ import java.util.HashMap;
  */
 public class Map extends AbModel {
 
-    private GameEngine ge = GameEngine.getInstance();
-    private RpgGame rpgGame = (RpgGame) ge.getGame();
-    private GameData gd = null;
     //以下为游戏运行时需要直接用到的数据
     public String name;                     //地图名称
     public String musicName;                //音乐名称
@@ -58,5 +53,16 @@ public class Map extends AbModel {
             }
         }
         return state;
+    }
+
+    public Npc getNpc(int row, int col) {
+        Npc npc = null;
+        for (Npc n : npcList.values()) {
+            if (n.row == row && n.col == col) {
+                npc = n;
+                break;
+            }
+        }
+        return npc;
     }
 }

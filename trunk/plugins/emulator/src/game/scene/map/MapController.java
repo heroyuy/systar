@@ -114,6 +114,31 @@ public class MapController extends AbController implements TouchListener {
         mapBackground.setLocation(-x, -y);
         fpsLabel.setLocation(x, y);
         fpsLabel.setText("fps:" + ge.getFps());
+
+        //判断周围情况
+        Npc npc=null;
+        if(!gd.player.moving){
+            //上
+            npc=curMap.getNpc(gd.player.row-1, gd.player.col);
+            if(npc!=null){
+                System.out.println("报告！我的上方出现一个NPC，其编号为:"+npc.getIndex());
+            }
+            //下
+            npc=curMap.getNpc(gd.player.row+1, gd.player.col);
+            if(npc!=null){
+                System.out.println("报告！我的下方出现一个NPC，其编号为:"+npc.getIndex());
+            }
+            //左
+            npc=curMap.getNpc(gd.player.row, gd.player.col-1);
+            if(npc!=null){
+                System.out.println("报告！我的左方出现一个NPC，其编号为:"+npc.getIndex());
+            }
+            //右
+            npc=curMap.getNpc(gd.player.row, gd.player.col+1);
+            if(npc!=null){
+                System.out.println("报告！我的右方出现一个NPC，其编号为:"+npc.getIndex());
+            }
+        }
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {

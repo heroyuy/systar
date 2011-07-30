@@ -221,7 +221,7 @@ class DataLoader {
             playerData.mapIndex = dis.readInt();
             playerData.row = dis.readInt();
             playerData.col = dis.readInt();
-            playerData.face = (byte) dis.readInt();//测试
+            playerData.face = dis.readByte();
             dis.close();
             fis.close();
         } catch (IOException e) {
