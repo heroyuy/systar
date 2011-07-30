@@ -191,7 +191,6 @@ public final class AStar {
      */
     private Node getOptimalNode() {
         Node temp = null;
-        System.out.println("openList.size():" + openList.size());
         for (Node node : openList.values()) {
             if (temp == null || temp.fValue > node.fValue) {
                 temp = node;
