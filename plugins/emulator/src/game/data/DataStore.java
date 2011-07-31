@@ -101,6 +101,10 @@ public class DataStore {
     }
 
     public Enemy getEnemy(int index) {
+        System.out.println("index:"+index);
+        if(index==-1){
+            throw new IllegalArgumentException("不存在的Enemy编号");
+        }
         Enemy src = enemyList.get(index);
         Enemy res = new Enemy();
         res.setIndex(src.getIndex());
