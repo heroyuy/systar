@@ -169,16 +169,17 @@ class MapLoader {
                 npc.col = dis.readInt();
                 int stateNum = dis.readInt();
                 npc.npcStates = new NpcState[stateNum];
+                System.out.println("stateNum:"+stateNum);
                 for (int i = 0; i < stateNum; i++) {
                     npc.npcStates[i] = new NpcState();
                     npc.npcStates[i].stateType = dis.readByte();
+                    System.out.println("npc.npcStates["+i+"].stateType:"+npc.npcStates[i].stateType);
                     npc.npcStates[i].charImage = "res" + dis.readUTF();
                     npc.npcStates[i].face = dis.readByte();
                     npc.npcStates[i].move = dis.readByte();
                     npc.npcStates[i].speed = dis.readByte();
                     npc.npcStates[i].transparent = dis.readBoolean();
                     npc.npcStates[i].scriptIndex = dis.readInt();
-
                 }
                 npc.init();
                 npcs.put(index, npc);

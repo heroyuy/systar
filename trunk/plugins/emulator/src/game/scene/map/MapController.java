@@ -7,13 +7,13 @@ import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 import com.soyostar.app.event.TouchEvent;
 import com.soyostar.app.event.TouchListener;
-import com.soyostar.util.astar.AStar;
 import game.AbController;
 import game.actions.MoveAction;
-import game.impl.model.Map;
 import game.impl.model.Npc;
 import game.impl.model.Character;
+import game.impl.state.MapState;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,39 +26,37 @@ public class MapController extends AbController implements TouchListener {
     private Layer mapBackground = null;
     private Widget mapForeground = null;
     private Layer spriteLayer = null;
-    private List<Character> sprites = null;
     private java.util.Map<Character, LSprite> lSprites = null;
     private LWave lWave = null;
     private LLabel fpsLabel = null;
-    private Map curMap = null;
-    private AStar aStar = new AStar();
+    private int x = 0, y = 0;//当前视窗在地图上的坐标
 
     public MapController() {
-        curMap = gd.player.curMap;
+        gd.mapState.curMap = gd.player.curMap;
         mapBackground = new Layer();
         mapBackground.setBackground(Color.GREEN);
-        mapBackground.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
+        mapBackground.setSize(gd.mapState.curMap.colNum * gd.mapState.curMap.cellWidth, gd.mapState.curMap.rowNum * gd.mapState.curMap.cellHeight);
         mapBackground.setVisible(true);
-        mapBackground.setBackgroundImage(gd.player.curMap.background);
+        mapBackground.setBackgroundImage(gd.mapState.curMap.background);
         mapBackground.setTouchListener(this);
 
         spriteLayer = new Layer();
-        spriteLayer.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
+        spriteLayer.setSize(gd.mapState.curMap.colNum * gd.mapState.curMap.cellWidth, gd.mapState.curMap.rowNum * gd.mapState.curMap.cellHeight);
         spriteLayer.setVisible(true);
 
         mapForeground = new Widget();
-        mapForeground.setSize(curMap.colNum * curMap.cellWidth, curMap.rowNum * curMap.cellHeight);
+        mapForeground.setSize(gd.mapState.curMap.colNum * gd.mapState.curMap.cellWidth, gd.mapState.curMap.rowNum * gd.mapState.curMap.cellHeight);
         mapForeground.setVisible(true);
-        mapForeground.setBackgroundImage(gd.player.curMap.foreground);
+        mapForeground.setBackgroundImage(gd.mapState.curMap.foreground);
         mapForeground.setTouchListener(this);
 
-        sprites = new ArrayList<Character>();
-        sprites.add(gd.player);
-        for (Npc npc : curMap.npcList.values()) {
-            sprites.add(npc);
+        gd.mapState.sprites = new ArrayList<Character>();
+        gd.mapState.sprites.add(gd.player);
+        for (Npc npc : gd.mapState.curMap.npcList.values()) {
+            gd.mapState.sprites.add(npc);
         }
         lSprites = new HashMap<Character, LSprite>();
-        for (Character sprite : sprites) {
+        for (Character sprite : gd.mapState.sprites) {
             lSprites.put(sprite, new LSprite(sprite));
         }
 
@@ -84,82 +82,39 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public void updateModel() {
-        //所有NPC更新
-        for (Npc npc : curMap.npcList.values()) {
-            npc.update();
+        switch (gd.mapState.sceneState) {
+            case MapState.STATE_MAP:
+                updateScene_Map();
+                break;
+            case MapState.STATE_MENU:
+                updateScene_Menu();
+                break;
+            case MapState.STATE_DIALOG:
+                updateScene_Dialog();
+                break;
         }
-        //更新所有精灵组件的位置
-        for (Character sprite : sprites) {
-            lSprites.get(sprite).setLocation(sprite.x, sprite.y);
-            lSprites.get(sprite).setZ(sprite.row);
-        }
-        //根据player的位置确定视窗口的位置
-        int x = 0, y = 0;
-        if (curMap.cellWidth * curMap.colNum > ge.getScreenWidth()) {
-            x = gd.player.x - ge.getScreenWidth() / 2;
-            if (x < 0) {
-                x = 0;
-            } else if (x > curMap.cellWidth * curMap.colNum - ge.getScreenWidth()) {
-                x = curMap.cellWidth * curMap.colNum - ge.getScreenWidth();
-            }
-        }
-        if (curMap.cellHeight * curMap.rowNum > ge.getScreenHeight()) {
-            y = gd.player.y - ge.getScreenHeight() / 2;
-            if (y < 0) {
-                y = 0;
-            } else if (y > curMap.cellHeight * curMap.rowNum - ge.getScreenHeight()) {
-                y = curMap.cellHeight * curMap.rowNum - ge.getScreenHeight();
-            }
-        }
-        mapBackground.setLocation(-x, -y);
+
         fpsLabel.setLocation(x, y);
         fpsLabel.setText("fps:" + ge.getFps());
-
-        //判断周围情况
-        Npc npc=null;
-        if(!gd.player.moving){
-            //上
-            npc=curMap.getNpc(gd.player.row-1, gd.player.col);
-            if(npc!=null){
-                System.out.println("报告！我的上方出现一个NPC，其编号为:"+npc.getIndex());
-            }
-            //下
-            npc=curMap.getNpc(gd.player.row+1, gd.player.col);
-            if(npc!=null){
-                System.out.println("报告！我的下方出现一个NPC，其编号为:"+npc.getIndex());
-            }
-            //左
-            npc=curMap.getNpc(gd.player.row, gd.player.col-1);
-            if(npc!=null){
-                System.out.println("报告！我的左方出现一个NPC，其编号为:"+npc.getIndex());
-            }
-            //右
-            npc=curMap.getNpc(gd.player.row, gd.player.col+1);
-            if(npc!=null){
-                System.out.println("报告！我的右方出现一个NPC，其编号为:"+npc.getIndex());
-            }
-        }
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            int[][] areaIds = new int[gd.player.curMap.rowNum][gd.player.curMap.colNum];
+            int[][] areaIds = new int[gd.mapState.curMap.rowNum][];
             for (int i = 0; i < areaIds.length; i++) {
-                for (int j = 0; j < areaIds[i].length; j++) {
-                    areaIds[i][j] = gd.player.curMap.areaIds[i][j];
-                }
-
+                areaIds[i] = Arrays.copyOf(gd.mapState.curMap.areaIds[i], gd.mapState.curMap.areaIds[i].length);
             }
 
-            aStar.setMapData(areaIds);
+            gd.mapState.aStar.setMapData(areaIds);
             //起点
             int sRow = gd.player.row;
             int sCol = gd.player.col;
             //终点
-            int eRow = te.getY() / gd.player.curMap.cellHeight;
-            int eCol = te.getX() / gd.player.curMap.cellWidth;
+            int eRow = te.getY() / gd.mapState.curMap.cellHeight;
+            int eCol = te.getX() / gd.mapState.curMap.cellWidth;
+            gd.mapState.tarfetNpc = gd.mapState.curMap.getNpc(eRow, eCol);
             System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
-            int[] paths = aStar.searchDirections(sRow, sCol, eRow, eCol);
+            int[] paths = gd.mapState.aStar.searchDirections(sRow, sCol, eRow, eCol);
             for (int p : paths) {
                 System.out.print(p + " ");
             }
@@ -173,9 +128,100 @@ public class MapController extends AbController implements TouchListener {
             }
             gd.player.setMoveAction(moveActions);
             mapBackground.removeWidget(lWave);
-            lWave = new LWave(eCol * curMap.cellWidth, eRow * curMap.cellHeight);
+            lWave = new LWave(eCol * gd.mapState.curMap.cellWidth, eRow * gd.mapState.curMap.cellHeight);
             mapBackground.addWidget(lWave);
         }
         return true;
+    }
+
+    private void updateScene_Map() {
+        //所有NPC更新
+        for (Npc npc : gd.mapState.curMap.npcList.values()) {
+            npc.update();
+        }
+        //更新所有精灵组件的位置
+        for (Character sprite : gd.mapState.sprites) {
+            lSprites.get(sprite).setLocation(sprite.x, sprite.y);
+            lSprites.get(sprite).setZ(sprite.row);
+        }
+        //根据player的位置确定视窗口的位置
+        if (gd.mapState.curMap.cellWidth * gd.mapState.curMap.colNum > ge.getScreenWidth()) {
+            x = gd.player.x - ge.getScreenWidth() / 2;
+            if (x < 0) {
+                x = 0;
+            } else if (x > gd.mapState.curMap.cellWidth * gd.mapState.curMap.colNum - ge.getScreenWidth()) {
+                x = gd.mapState.curMap.cellWidth * gd.mapState.curMap.colNum - ge.getScreenWidth();
+            }
+        }
+        if (gd.mapState.curMap.cellHeight * gd.mapState.curMap.rowNum > ge.getScreenHeight()) {
+            y = gd.player.y - ge.getScreenHeight() / 2;
+            if (y < 0) {
+                y = 0;
+            } else if (y > gd.mapState.curMap.cellHeight * gd.mapState.curMap.rowNum - ge.getScreenHeight()) {
+                y = gd.mapState.curMap.cellHeight * gd.mapState.curMap.rowNum - ge.getScreenHeight();
+            }
+        }
+        mapBackground.setLocation(-x, -y);
+
+        //探查并处理NPC事件
+        if (!gd.player.moving) {
+            Npc npc = null;//触发发事件的NPC
+            List<Npc> npcs = searchNpc();
+            //确定触发事件的Npc
+            if (npcs.size() > 0) {
+                if (npcs.contains(gd.mapState.tarfetNpc)) {
+                    //玩家走到了目标NPC附近
+                    npc = gd.mapState.tarfetNpc;
+                } else {
+                    for (Npc n : npcs) {
+                        if (n.curNpcState.stateType == Npc.TYPE_NEAR) {
+                            npc = n;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (npc != null) {
+                gd.mapState.sceneState = MapState.STATE_DIALOG;
+            }
+        }
+    }
+
+    private void updateScene_Menu() {
+    }
+
+    private void updateScene_Dialog() {
+        //所有NPC把没走完的路走完
+        for (Npc npc : gd.mapState.curMap.npcList.values()) {
+            npc.move();
+        }
+        System.out.println("开启对话");
+    }
+
+    private List<Npc> searchNpc() {
+        //每当玩家走完一格,检查周围所有NPC
+        List<Npc> npcs = new ArrayList<Npc>();
+        Npc npc = null;
+        //上
+        npc = gd.mapState.curMap.getNpc(gd.player.row - 1, gd.player.col);
+        if (npc != null) {
+            npcs.add(npc);
+        }
+        //左
+        npc = gd.mapState.curMap.getNpc(gd.player.row, gd.player.col - 1);
+        if (npc != null) {
+            npcs.add(npc);
+        }
+        //右
+        npc = gd.mapState.curMap.getNpc(gd.player.row, gd.player.col + 1);
+        if (npc != null) {
+            npcs.add(npc);
+        }
+        //下
+        npc = gd.mapState.curMap.getNpc(gd.player.row + 1, gd.player.col);
+        if (npc != null) {
+            npcs.add(npc);
+        }
+        return npcs;
     }
 }

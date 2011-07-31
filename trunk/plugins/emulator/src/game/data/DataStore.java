@@ -101,7 +101,25 @@ public class DataStore {
     }
 
     public Enemy getEnemy(int index) {
-        return enemyList.get(index);
+        Enemy src = enemyList.get(index);
+        Enemy res = new Enemy();
+        res.setIndex(src.getIndex());
+        res.name = src.name;
+        res.intro = src.intro;
+        res.battlerImage = src.battlerImage;
+        res.stre = src.stre;
+        res.agil = src.agil;
+        res.inte = src.inte;
+        res.maxHp = src.maxHp;
+        res.maxSp = src.maxSp;
+        res.lev = src.lev;
+        res.atk = src.atk;
+        res.def = src.def;
+        res.exp = src.exp;
+        res.money = src.money;
+        res.skillList = Arrays.copyOf(src.skillList, src.skillList.length);
+
+        return res;
     }
 
     public EnemyTroop getEnemyTroop(int index) {

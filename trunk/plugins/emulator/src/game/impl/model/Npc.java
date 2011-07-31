@@ -10,12 +10,15 @@ import java.util.Random;
  */
 public class Npc extends Character {
 
+    public static final int TYPE_AUTO = 0;
+    public static final int TYPE_NEAR = 1;
+    public static final int TYPE_TOUCH = 2;
     //游戏数据
     public String name = "";
     public NpcState[] npcStates = null;
     public int curNpcStateIndex = -1;
+    public NpcState curNpcState = null;
     //功能性变量
-    private GameEngine ge = GameEngine.getInstance();
     private Random random = new Random();
     private int time = random.nextInt(10) + 10;
 
@@ -36,8 +39,9 @@ public class Npc extends Character {
 
     public void setCurNpcState(int index) {
         this.curNpcStateIndex = index;
-        this.face = npcStates[index].face;
-        setCharImg(npcStates[index].charImage);
+        curNpcState = npcStates[curNpcStateIndex];
+        this.face = curNpcState.face;
+        setCharImg(curNpcState.charImage);
     }
 
     private void validateCurState() {
