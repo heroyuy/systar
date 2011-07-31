@@ -49,7 +49,7 @@ public abstract class Character extends AbModel {
         move();
     }
 
-    private void move() {
+    public void move() {
         //角色移动
         if (curMoveAction == null || !curMoveAction.isActive()) {
             if (!moveActionQueue.isEmpty()) {
