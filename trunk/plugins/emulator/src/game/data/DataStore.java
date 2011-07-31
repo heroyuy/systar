@@ -101,8 +101,8 @@ public class DataStore {
     }
 
     public Enemy getEnemy(int index) {
-        System.out.println("index:"+index);
-        if(index==-1){
+        System.out.println("index:" + index);
+        if (index == -1) {
             throw new IllegalArgumentException("不存在的Enemy编号");
         }
         Enemy src = enemyList.get(index);
@@ -122,7 +122,6 @@ public class DataStore {
         res.exp = src.exp;
         res.money = src.money;
         res.skillList = Arrays.copyOf(src.skillList, src.skillList.length);
-
         return res;
     }
 

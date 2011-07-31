@@ -2,6 +2,7 @@ package game.scene.map;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LTextDialog;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
@@ -30,6 +31,7 @@ public class MapController extends AbController implements TouchListener {
     private Layer spriteLayer = null;
     private java.util.Map<Character, LSprite> lSprites = null;
     private LWave lWave = null;
+    private LTextDialog dialog = null;
     private LLabel fpsLabel = null;
     private int x = 0, y = 0;//当前视窗在地图上的坐标
 
@@ -63,6 +65,10 @@ public class MapController extends AbController implements TouchListener {
             lSprites.put(sprite, new LSprite(sprite));
         }
 
+        dialog = new LTextDialog("");
+        dialog.setSize(ge.getScreenWidth(), 80);
+        dialog.setLocation(0, ge.getScreenHeight() - 80);
+        dialog.setBackgroundImage(gd.mapState.skin.createAlphaBg(ge.getScreenWidth(), 80, true));
         fpsLabel = new LLabel();
         fpsLabel.setSize(80, 20);
         fpsLabel.setLocation(0, 0);
@@ -102,38 +108,17 @@ public class MapController extends AbController implements TouchListener {
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
-        if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
-            int[][] areaIds = new int[gd.mapState.curMap.rowNum][];
-            for (int i = 0; i < areaIds.length; i++) {
-                areaIds[i] = Arrays.copyOf(gd.mapState.curMap.areaIds[i], gd.mapState.curMap.areaIds[i].length);
-            }
 
-            gd.mapState.aStar.setMapData(areaIds);
-            //起点
-            int sRow = gd.player.row;
-            int sCol = gd.player.col;
-            //终点
-            int eRow = te.getY() / gd.mapState.curMap.cellHeight;
-            int eCol = te.getX() / gd.mapState.curMap.cellWidth;
-            gd.mapState.tarfetNpc = gd.mapState.curMap.getNpc(eRow, eCol);
-            System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
-            int[] paths = gd.mapState.aStar.searchDirections(sRow, sCol, eRow, eCol);
-            for (int p : paths) {
-                System.out.print(p + " ");
-            }
-            System.out.println("");
-            MoveAction me = null;
-            List<MoveAction> moveActions = new ArrayList<MoveAction>();
-            for (int p : paths) {
-                me = new MoveAction(gd.player, p);
-                me.activate();
-                moveActions.add(me);
-            }
-            gd.player.setMoveAction(moveActions);
-            mapBackground.removeWidget(lWave);
-            lWave = new LWave(eCol * gd.mapState.curMap.cellWidth, eRow * gd.mapState.curMap.cellHeight);
-            mapBackground.addWidget(lWave);
+        switch (gd.mapState.sceneState) {
+            case MapState.STATE_MAP:
+                onTouchEvent_Map(t, te);
+                break;
+            case MapState.STATE_MENU:
+                break;
+            case MapState.STATE_DIALOG:
+                break;
         }
+
         return true;
     }
 
@@ -185,6 +170,7 @@ public class MapController extends AbController implements TouchListener {
                 }
             }
             if (npc != null) {
+                gd.mapState.focusNpc = npc;
                 gd.mapState.sceneState = MapState.STATE_DIALOG;
             }
         }
@@ -198,7 +184,12 @@ public class MapController extends AbController implements TouchListener {
         for (Npc npc : gd.mapState.curMap.npcList.values()) {
             npc.move();
         }
-        System.out.println("开启对话");
+        if (!gd.mapState.hasDialog) {
+            mapBackground.addWidget(dialog);
+            dialog.setTextSize(20);
+            dialog.setText("我们来对话呀来对话");
+            dialog.setVisible(true);
+        }
     }
 
     private List<Npc> searchNpc() {
@@ -250,6 +241,41 @@ public class MapController extends AbController implements TouchListener {
             Enemy siteD = gd.dataStore.getEnemy(enemyTroop.siteD);
 //           siteD.membersIndex = 0;
             members.add(siteD);
+        }
+    }
+
+    private void onTouchEvent_Map(Object t, TouchEvent te) {
+        if (t.equals(mapForeground) && te.getType() == TouchEvent.TOUCH_DOWN) {
+            int[][] areaIds = new int[gd.mapState.curMap.rowNum][];
+            for (int i = 0; i < areaIds.length; i++) {
+                areaIds[i] = Arrays.copyOf(gd.mapState.curMap.areaIds[i], gd.mapState.curMap.areaIds[i].length);
+            }
+
+            gd.mapState.aStar.setMapData(areaIds);
+            //起点
+            int sRow = gd.player.row;
+            int sCol = gd.player.col;
+            //终点
+            int eRow = te.getY() / gd.mapState.curMap.cellHeight;
+            int eCol = te.getX() / gd.mapState.curMap.cellWidth;
+            gd.mapState.tarfetNpc = gd.mapState.curMap.getNpc(eRow, eCol);
+            System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
+            int[] paths = gd.mapState.aStar.searchDirections(sRow, sCol, eRow, eCol);
+            for (int p : paths) {
+                System.out.print(p + " ");
+            }
+            System.out.println("");
+            MoveAction me = null;
+            List<MoveAction> moveActions = new ArrayList<MoveAction>();
+            for (int p : paths) {
+                me = new MoveAction(gd.player, p);
+                me.activate();
+                moveActions.add(me);
+            }
+            gd.player.setMoveAction(moveActions);
+            mapBackground.removeWidget(lWave);
+            lWave = new LWave(eCol * gd.mapState.curMap.cellWidth, eRow * gd.mapState.curMap.cellHeight);
+            mapBackground.addWidget(lWave);
         }
     }
 }
