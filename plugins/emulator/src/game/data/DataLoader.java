@@ -127,13 +127,16 @@ class DataLoader {
             FileInputStream fis = new FileInputStream(new File("res/data/enemy.gat"));
             DataInputStream dis = new DataInputStream(fis);
             int enemySum = dis.readInt();
+            System.out.println("enemySum:" + enemySum);
             Enemy enemy = null;
             for (int i = 0; i < enemySum; i++) {
                 enemy = new Enemy();
                 enemy.setIndex(dis.readInt());
                 enemy.name = dis.readUTF();
                 enemy.intro = dis.readUTF();
-                enemy.battlerImage = Image.createImage("res" + dis.readUTF());
+                String path = "res" + dis.readUTF();
+                System.out.println("path:" + path);
+                enemy.battlerImage = Image.createImage(path);
                 enemy.agil = dis.readInt();
                 enemy.stre = dis.readInt();
                 enemy.inte = dis.readInt();
@@ -151,9 +154,10 @@ class DataLoader {
                 }
                 enemyList.put(enemy.getIndex(), enemy);
 
-                dis.close();
-                fis.close();
+
             }
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             System.out.println("加载Enemy出错");
         }
