@@ -11,6 +11,8 @@ import game.AbController;
 import game.actions.MoveAction;
 import game.impl.model.Npc;
 import game.impl.model.Character;
+import game.impl.model.Enemy;
+import game.impl.model.EnemyTroop;
 import game.impl.state.MapState;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +34,7 @@ public class MapController extends AbController implements TouchListener {
     private int x = 0, y = 0;//当前视窗在地图上的坐标
 
     public MapController() {
+        setMembers();
         gd.mapState.curMap = gd.player.curMap;
         mapBackground = new Layer();
         mapBackground.setBackground(Color.GREEN);
@@ -223,5 +226,30 @@ public class MapController extends AbController implements TouchListener {
             npcs.add(npc);
         }
         return npcs;
+    }
+
+    private void setMembers() {
+        EnemyTroop enemyTroop = gd.dataStore.getEnemyTroop(0);
+        List<Enemy> members = new ArrayList<Enemy>();
+        if (enemyTroop.siteA != -1) {
+            Enemy siteA = gd.dataStore.getEnemy(enemyTroop.siteA);
+//           siteA.membersIndex = 0;
+            members.add(siteA);
+        }
+        if (enemyTroop.siteB != -1) {
+            Enemy siteB = gd.dataStore.getEnemy(enemyTroop.siteB);
+//           siteB.membersIndex = 0;
+            members.add(siteB);
+        }
+        if (enemyTroop.siteC != -1) {
+            Enemy siteC = gd.dataStore.getEnemy(enemyTroop.siteC);
+//           siteC.membersIndex = 0;
+            members.add(siteC);
+        }
+        if (enemyTroop.siteD != -1) {
+            Enemy siteD = gd.dataStore.getEnemy(enemyTroop.siteD);
+//           siteD.membersIndex = 0;
+            members.add(siteD);
+        }
     }
 }
