@@ -2,6 +2,7 @@ package game.scene.map;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LTextArea;
 import com.soyostar.app.LTextDialog;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
@@ -31,12 +32,11 @@ public class MapController extends AbController implements TouchListener {
     private Layer spriteLayer = null;
     private java.util.Map<Character, LSprite> lSprites = null;
     private LWave lWave = null;
-    private LTextDialog dialog = null;
+    private LTextArea dialog = null;
     private LLabel fpsLabel = null;
     private int x = 0, y = 0;//当前视窗在地图上的坐标
 
     public MapController() {
-        setMembers();
         gd.mapState.curMap = gd.player.curMap;
         mapBackground = new Layer();
         mapBackground.setBackground(Color.GREEN);
@@ -65,10 +65,10 @@ public class MapController extends AbController implements TouchListener {
             lSprites.put(sprite, new LSprite(sprite));
         }
 
-        dialog = new LTextDialog("");
+        dialog = new LTextArea("");
         dialog.setSize(ge.getScreenWidth(), 80);
         dialog.setLocation(0, ge.getScreenHeight() - 80);
-        dialog.setBackgroundImage(gd.mapState.skin.createAlphaBg(ge.getScreenWidth(), 80, true));
+        dialog.setBackgroundImage(gd.mapState.skin.createAlphaBg(ge.getScreenWidth(), 100, true));
         fpsLabel = new LLabel();
         fpsLabel.setSize(80, 20);
         fpsLabel.setLocation(0, 0);
@@ -188,7 +188,10 @@ public class MapController extends AbController implements TouchListener {
             mapBackground.addWidget(dialog);
             dialog.setTextSize(20);
             dialog.setText("我们来对话呀来对话");
+            dialog.setTextColor(Color.WHITE);
+            dialog.setLocation(x, y+ge.getScreenHeight()-80);
             dialog.setVisible(true);
+            gd.mapState.hasDialog = true;
         }
     }
 
@@ -217,31 +220,6 @@ public class MapController extends AbController implements TouchListener {
             npcs.add(npc);
         }
         return npcs;
-    }
-
-    private void setMembers() {
-        EnemyTroop enemyTroop = gd.dataStore.getEnemyTroop(0);
-        List<Enemy> members = new ArrayList<Enemy>();
-        if (enemyTroop.siteA != -1) {
-            Enemy siteA = gd.dataStore.getEnemy(enemyTroop.siteA);
-//           siteA.membersIndex = 0;
-            members.add(siteA);
-        }
-        if (enemyTroop.siteB != -1) {
-            Enemy siteB = gd.dataStore.getEnemy(enemyTroop.siteB);
-//           siteB.membersIndex = 0;
-            members.add(siteB);
-        }
-        if (enemyTroop.siteC != -1) {
-            Enemy siteC = gd.dataStore.getEnemy(enemyTroop.siteC);
-//           siteC.membersIndex = 0;
-            members.add(siteC);
-        }
-        if (enemyTroop.siteD != -1) {
-            Enemy siteD = gd.dataStore.getEnemy(enemyTroop.siteD);
-//           siteD.membersIndex = 0;
-            members.add(siteD);
-        }
     }
 
     private void onTouchEvent_Map(Object t, TouchEvent te) {
