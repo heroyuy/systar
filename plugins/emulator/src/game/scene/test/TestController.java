@@ -101,7 +101,8 @@ public class TestController extends AbController {
                 + "DebugGraphics对象很少通<c>[0xff00ff00]过手工创建。它们通常在JComponent的"
                 + "debugGraphicsOptions 因<c>[0xff0000ff]使用 setDebugGraphicsOptions()"
                 + "方法而发生更改时自\n动创建。";
-        ltd = new LTextDialog(text);
+        ltd = new LTextDialog();
+        ltd.setText(text);
         ltd.setSize(200, 100);
         ltd.setLocation(20, 40);
         ltd.setBackground(Color.GRAY);
