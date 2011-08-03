@@ -17,6 +17,7 @@ public class Widget {
     private int bgColor = 0x00000000;
     private Image backgroundImage = null;
     private boolean visibility = false;
+    private boolean enabled = true;
     private TouchListener touchListener = null;
     ZOrdinateChangedListener zOrdinateChangedListener = null;
 
@@ -106,6 +107,14 @@ public class Widget {
         return visibility;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     /**
      * 绘制组件。应用程序不应直接调用 paint，而是应该使用 repaint 方法来安排重绘组件。
      * @param painter 在其中进行绘制的 Painter 上下文
@@ -122,7 +131,7 @@ public class Widget {
      * @return 若事件处理完成不需要传递到下一层继续处理则返回true，否则返回false
      */
     public boolean onTouchEvent(TouchEvent touchEvent) {
-        return true;
+        return false;
     }
 
     /**
@@ -131,6 +140,9 @@ public class Widget {
      * @return 若事件分配成功返回true,失败返回false
      */
     public boolean dispatchTouchEvent(TouchEvent touchEvent) {
+        if (!enabled) {
+            return false;
+        }
         if (touchListener != null && touchListener.onTouchEvent(this, touchEvent)) {
             return true;
         } else {

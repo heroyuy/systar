@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Administrator
+ * @author wp_g4
  */
 public class LMessageBoard extends LTextWidget {
 
@@ -83,8 +83,10 @@ public class LMessageBoard extends LTextWidget {
     private void update() {
         ticker++;
         if (ticker % 2 == 0) {
-            for(Message msg:msgList){
-                msg.alpha--;
+            for (Message msg : msgList) {
+                if (msg.alpha > 0) {
+                    msg.alpha--;
+                }
             }
         }
     }
