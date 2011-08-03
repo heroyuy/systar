@@ -26,7 +26,7 @@ import java.util.List;
 public class MapController extends AbController implements TouchListener {
 
     private Layer mapBackground = null;
-    private Widget mapForeground = null;
+    private Layer mapForeground = null;
     private Layer spriteLayer = null;
     private java.util.Map<Character, GLSprite> lSprites = null;
     private GLWave lWave = null;
@@ -48,7 +48,7 @@ public class MapController extends AbController implements TouchListener {
         spriteLayer.setSize(gd.mapState.curMap.colNum * gd.mapState.curMap.cellWidth, gd.mapState.curMap.rowNum * gd.mapState.curMap.cellHeight);
         spriteLayer.setVisible(true);
 
-        mapForeground = new Widget();
+        mapForeground = new Layer();
         mapForeground.setSize(gd.mapState.curMap.colNum * gd.mapState.curMap.cellWidth, gd.mapState.curMap.rowNum * gd.mapState.curMap.cellHeight);
         mapForeground.setVisible(true);
         mapForeground.setBackgroundImage(gd.mapState.curMap.foreground);
@@ -71,12 +71,14 @@ public class MapController extends AbController implements TouchListener {
         fpsLabel.setTextColor(Color.WHITE);
         fpsLabel.setTextAnchor(Painter.HV);
         fpsLabel.setVisible(true);
+        fpsLabel.setEnabled(false);
 
         lmb = new LMessageBoard();
         lmb.setSize(250, 120);
         lmb.setTextSize(15);
         lmb.setTextColor(Color.BLUE);
         lmb.setVisible(true);
+        lmb.setEnabled(false);
     }
 
     public void onObtain() {
@@ -86,8 +88,8 @@ public class MapController extends AbController implements TouchListener {
         }
         mapBackground.addWidget(spriteLayer);
         mapBackground.addWidget(mapForeground);
-        mapBackground.addWidget(fpsLabel);
-        mapBackground.addWidget(lmb);
+        mapForeground.addWidget(fpsLabel);
+        mapForeground.addWidget(lmb);
     }
 
     public void onLose() {
