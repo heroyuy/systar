@@ -66,6 +66,9 @@ public class Layer extends Widget {
 
     @Override
     public boolean dispatchTouchEvent(TouchEvent te) {
+        if(!isEnabled()){
+            return false;
+        }
         boolean state = false;
         //容器对事件进行一次拦截处理
         state = interceptTouchEvent(te);

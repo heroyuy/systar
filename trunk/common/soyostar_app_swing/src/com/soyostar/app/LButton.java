@@ -17,7 +17,7 @@ public class LButton extends Widget {
     private int textColor = Color.BLACK;
     private int textSize = -1;
     private ActionListener actionListener = null;
-    private int state = STATE_AFCAL;
+    private int buttonState = STATE_AFCAL;
 
     public LButton() {
     }
@@ -81,22 +81,24 @@ public class LButton extends Widget {
 
     @Override
     public boolean dispatchTouchEvent(TouchEvent touchEvent) {
-//        System.out.println("LButton-dispatchTouchEvent type:" + touchEvent.getType() + "  x:" + touchEvent.getX() + " y:" + touchEvent.getY());
+        if (!isEnabled()) {
+            return false;
+        }
         boolean state = false;
         switch (touchEvent.getType()) {
             case TouchEvent.TOUCH_DOWN:
             case TouchEvent.TOUCH_MOVE: {
-                this.state = STATE_FOCUS;
-                state = super.dispatchTouchEvent(touchEvent);
+                this.buttonState = STATE_FOCUS;
+                state = true;
             }
             break;
             case TouchEvent.TOUCH_UP: {
-                this.state = STATE_AFCAL;
+                this.buttonState = STATE_AFCAL;
                 if (actionListener != null && touchEvent.getX() >= 0 && touchEvent.getX() <= getWidth() && touchEvent.getY() >= 0 && touchEvent.getY() <= getHeight()) {
                     actionListener.actionPerformed(this);
                     state = true;
                 } else {
-                    state = super.dispatchTouchEvent(touchEvent);
+                    state = false;
                 }
             }
             break;
@@ -108,7 +110,7 @@ public class LButton extends Widget {
     public void paint(Painter painter) {
         painter.setColor(getBackground());
         painter.fillRect(0, 0, getWidth(), getHeight());
-        switch (state) {
+        switch (buttonState) {
             case STATE_AFCAL: {
                 if (afocalImage != null) {
                     painter.drawImage(afocalImage, 0, 0, Painter.LT);
