@@ -70,6 +70,7 @@ public class DataStore {
 
     public Player getPlayer() {
         Player player = new Player();
+        player.headImage = Image.createImage("res" + playerData.battlerImage);
         player.setCharImg("res" + playerData.characterImage);
         player.gotoMap(playerData.mapIndex, playerData.row, playerData.col, playerData.face);
         return player;
