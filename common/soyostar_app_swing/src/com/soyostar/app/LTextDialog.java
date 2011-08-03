@@ -22,9 +22,7 @@ public class LTextDialog extends Widget {
     private List<String> showTexts = new ArrayList<String>();
     private List<String> functionTexts = new ArrayList<String>();
 
-    public LTextDialog(String text) {
-        this.text = text;
-        needUpdate = true;
+    public LTextDialog() {
     }
 
     public String getText() {

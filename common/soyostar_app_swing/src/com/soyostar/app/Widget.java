@@ -73,13 +73,13 @@ public class Widget {
     }
 
     public void setLocation(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
+        setWidth(width);
+        setHeight(height);
     }
 
     public void setBackground(int color) {
