@@ -12,11 +12,11 @@ import com.soyostar.app.Widget;
  *
  * @author Administrator
  */
-public class LWave extends Widget {
+public class GLWave extends Widget {
 
     private int index = 0;
 
-    public LWave(int x, int y) {
+    public GLWave(int x, int y) {
         this.setLocation(x, y);
         this.setSize(32, 32);
         this.setVisible(true);

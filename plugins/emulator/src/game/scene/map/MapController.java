@@ -2,6 +2,7 @@ package game.scene.map;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LMessageBoard;
 import com.soyostar.app.LTextArea;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Painter;
@@ -27,10 +28,11 @@ public class MapController extends AbController implements TouchListener {
     private Layer mapBackground = null;
     private Widget mapForeground = null;
     private Layer spriteLayer = null;
-    private java.util.Map<Character, LSprite> lSprites = null;
-    private LWave lWave = null;
-    private LTextArea dialog = null;
+    private java.util.Map<Character, GLSprite> lSprites = null;
+    private GLWave lWave = null;
+    private GLDialog dialog = null;
     private LLabel fpsLabel = null;
+    private LMessageBoard lmb = null;
     private int x = 0, y = 0;//当前视窗在地图上的坐标
 
     public MapController() {
@@ -57,31 +59,35 @@ public class MapController extends AbController implements TouchListener {
         for (Npc npc : gd.mapState.curMap.npcList.values()) {
             gd.mapState.sprites.add(npc);
         }
-        lSprites = new HashMap<Character, LSprite>();
+        lSprites = new HashMap<Character, GLSprite>();
         for (Character sprite : gd.mapState.sprites) {
-            lSprites.put(sprite, new LSprite(sprite));
+            lSprites.put(sprite, new GLSprite(sprite));
         }
-
-        dialog = new LTextArea("");
-        dialog.setSize(ge.getScreenWidth(), 80);
-        dialog.setLocation(0, ge.getScreenHeight() - 80);
-        dialog.setBackgroundImage(gd.mapState.skin.createAlphaBg(ge.getScreenWidth(), 100, true));
+        String txt = "你深邃的眼眸 想要透漏什么密码 犹豫的嘴角 躲在严肃的背影下 压抑的空气 回绕闭塞的城堡里 谜一般的天鹅 有你说不尽的故事 孤独的身影 只有钟声陪伴 进了城堡却敲不进你的心 冷淡的表情 只剩风霜遮掩我的身躯 遮住了天地遮不住你的情 你在等待着谁 建筑了城堡 等待着天鹅的栖息 藏不住你空虚的心灵 你在眺望着谁 拥有了世界";
+        dialog = new GLDialog(gd.player.headImage, txt);
         fpsLabel = new LLabel();
         fpsLabel.setSize(80, 20);
         fpsLabel.setLocation(0, 0);
         fpsLabel.setTextColor(Color.WHITE);
         fpsLabel.setTextAnchor(Painter.HV);
         fpsLabel.setVisible(true);
+
+        lmb = new LMessageBoard();
+        lmb.setSize(250, 120);
+        lmb.setTextSize(15);
+        lmb.setTextColor(Color.BLUE);
+        lmb.setVisible(true);
     }
 
     public void onObtain() {
         addWidget(mapBackground);
-        for (LSprite lSprite : lSprites.values()) {
+        for (GLSprite lSprite : lSprites.values()) {
             spriteLayer.addWidget(lSprite);
         }
         mapBackground.addWidget(spriteLayer);
         mapBackground.addWidget(mapForeground);
         mapBackground.addWidget(fpsLabel);
+        mapBackground.addWidget(lmb);
     }
 
     public void onLose() {
@@ -102,6 +108,7 @@ public class MapController extends AbController implements TouchListener {
 
         fpsLabel.setLocation(x, y);
         fpsLabel.setText("fps:" + ge.getFps());
+        lmb.setLocation(x + 20, y + 100);
     }
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
@@ -183,11 +190,7 @@ public class MapController extends AbController implements TouchListener {
         }
         if (!gd.mapState.hasDialog) {
             mapBackground.addWidget(dialog);
-            dialog.setTextSize(20);
-            dialog.setText("我们来对话呀来对话");
-            dialog.setTextColor(Color.WHITE);
-            dialog.setLocation(x, y+ge.getScreenHeight()-80);
-            dialog.setVisible(true);
+            dialog.setLocation(x + (ge.getScreenWidth() - 600) / 2, y + ge.getScreenHeight() - 150);
             gd.mapState.hasDialog = true;
         }
     }
@@ -235,6 +238,7 @@ public class MapController extends AbController implements TouchListener {
             int eCol = te.getX() / gd.mapState.curMap.cellWidth;
             gd.mapState.tarfetNpc = gd.mapState.curMap.getNpc(eRow, eCol);
             System.out.println("sRow:" + sRow + " sCol:" + sCol + " eRow:" + eRow + " eCol:" + eCol);
+            lmb.append("寻路起点：(" + sRow + "," + sCol + ") 终点：(" + eRow + "," + eCol + ")");
             int[] paths = gd.mapState.aStar.searchDirections(sRow, sCol, eRow, eCol);
             for (int p : paths) {
                 System.out.print(p + " ");
@@ -249,7 +253,7 @@ public class MapController extends AbController implements TouchListener {
             }
             gd.player.setMoveAction(moveActions);
             mapBackground.removeWidget(lWave);
-            lWave = new LWave(eCol * gd.mapState.curMap.cellWidth, eRow * gd.mapState.curMap.cellHeight);
+            lWave = new GLWave(eCol * gd.mapState.curMap.cellWidth, eRow * gd.mapState.curMap.cellHeight);
             mapBackground.addWidget(lWave);
         }
     }

@@ -18,6 +18,7 @@ public abstract class Character extends AbModel {
     public byte face = 0;
     public int row = 0;
     public int col = 0;
+    public Image headImage = null;
     private Image[][] sequence = null;
     private Image curStepImage = null;
     private Queue<MoveAction> moveActionQueue = new LinkedList<MoveAction>();

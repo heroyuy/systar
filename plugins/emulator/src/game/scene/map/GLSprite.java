@@ -8,11 +8,11 @@ import game.impl.model.Character;
  *
  * @author wp_g4
  */
-public class LSprite extends Widget {
+public class GLSprite extends Widget {
 
     private Character sprite = null;
 
-    public LSprite(Character sprite) {
+    public GLSprite(Character sprite) {
         this.sprite = sprite;
         this.setSize(sprite.width, sprite.height);
         this.setLocation(sprite.x, sprite.y);
