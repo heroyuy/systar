@@ -88,7 +88,7 @@ public class RpgGame extends Game {
         return models.get(fullName);
     }
 
-    private Controller getCurrentControl() {
+    public Controller getCurrentControl() {
         return controls.get(curController);
     }
 
