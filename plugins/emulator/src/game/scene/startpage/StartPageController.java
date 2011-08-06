@@ -30,7 +30,9 @@ public class StartPageController extends AbController implements TouchListener {
 
     public boolean onTouchEvent(Object t, TouchEvent te) {
         if (te.getType() == TouchEvent.TOUCH_DOWN) {
-            rpgGame.setCurrentControl("game.scene.menu.MenuController");
+//            rpgGame.setCurrentControl("game.scene.menu.MenuController");
+            rpgGame.setCurrentControl("game.scene.test.TestController");
+
         }
         return true;
     }
