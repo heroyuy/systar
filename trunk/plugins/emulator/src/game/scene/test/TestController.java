@@ -1,10 +1,13 @@
 package game.scene.test;
 
 import com.soyostar.app.Color;
+import com.soyostar.app.Image;
 import com.soyostar.app.LLabel;
+import com.soyostar.app.LList;
+import com.soyostar.app.LList.ListItem;
 import com.soyostar.app.LTab;
 import com.soyostar.app.Layer;
-import com.soyostar.app.Widget;
+import com.soyostar.app.Painter;
 import game.AbController;
 import game.util.Skin;
 
@@ -24,6 +27,8 @@ public class TestController extends AbController {
 //    private LProgressBar lpb = null;
 //    private LTextDialog ltd = null;
     private LTab lTab = null;
+    private GLTab glTab = null;
+    private LList lList = null;
 
     public TestController() {
         Skin skin = new Skin("res/image/skin/001-Blue01.png");
@@ -61,7 +66,31 @@ public class TestController extends AbController {
         lab2.setText("这是不好啊的内容");
         tab2.addWidget(lab2);
         lTab.addTab("不好啊", tab2);
-        bg.addWidget(lTab);
+//        bg.addWidget(lTab);
+        glTab = new GLTab(400, 300, new String[]{"物品", "装备", "技能", "任务"});
+        glTab.setLocation(20, 20);
+        glTab.setVisible(true);
+        bg.addWidget(glTab);
+
+        lList = new LList();
+        lList.setSize(200, 200);
+        lList.setLocation(400, 20);
+        lList.setVisible(true);
+        lList.setBackgroundImage(skin.createBlueBg(200, 400, false));
+        lList.setItemHeight(50);
+        lList.setSelectedItemBackground(skin.createAlphaBg(200, 40, false));
+        String[] imags = {"001-Weapon01", "002-Weapon02", "003-Weapon03",
+            "004-Weapon04", "005-Weapon05", "006-Weapon06",
+            "007-Weapon07", "008-Weapon08", "009-Shield01", "010-Head01"};
+        for (int i = 0; i < 10; i++) {
+            ListItem li = new ListItem();
+            li.addString("第" + i + "个选项", 40, 10, Painter.LT, Color.WHITE);
+            li.addString("名称" + i, 150, 10, Painter.LT, Color.BLUE);
+            li.addImage(Image.createImage("res/image/icon/equip/" + imags[i] + ".png"), 10, 40 / 2, Painter.LV);
+            lList.addListItem(li);
+        }
+        lList.setSelectedIndex(8);
+        bg.addWidget(lList);
 //        Action action = new ShadeAction(bg, Color.BLACK, Color.RED, 20, 1000);
 //        action.activate();
 //        gd.actionManager.addAction(action);

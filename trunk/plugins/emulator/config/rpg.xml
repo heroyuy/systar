@@ -13,5 +13,5 @@
         <controller>game.scene.map.MapController</controller>
         <controller>game.scene.about.AboutController</controller>
     </controllers>
-    <currentController>game.scene.startpage.StartPageController</currentController>
+    <currentController>game.scene.test.TestController</currentController>
 </rpg>
