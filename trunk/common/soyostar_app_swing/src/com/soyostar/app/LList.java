@@ -8,6 +8,7 @@ import com.soyostar.app.LList.ListItem.ImageItem;
 import com.soyostar.app.LList.ListItem.StringItem;
 import com.soyostar.app.event.TouchEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,8 +26,24 @@ public class LList extends Widget {
             imageList.add(new ImageItem(img, x, y, anchor));
         }
 
+        public void removeImage(int index) {
+            imageList.remove(index);
+        }
+
+        public void removeAllImages() {
+            imageList.clear();
+        }
+
         public void addString(String str, int x, int y, int anchor, int color) {
             stringList.add(new StringItem(str, x, y, anchor, color));
+        }
+
+        public void removeString(int index) {
+            stringList.remove(index);
+        }
+
+        public void removeAllStrings() {
+            stringList.clear();
         }
 
         class ImageItem {
@@ -108,6 +125,30 @@ public class LList extends Widget {
 
     public void addListItem(ListItem listItem) {
         itemList.add(listItem);
+    }
+
+    public void addListItem(int index, ListItem listItem) {
+        itemList.add(index, listItem);
+    }
+
+    public void addListItem(Collection<ListItem> c) {
+        itemList.addAll(c);
+    }
+
+    public void removeListItem(ListItem listItem) {
+        itemList.remove(listItem);
+    }
+
+    public void removeListItem(int index) {
+        itemList.remove(index);
+    }
+
+    public void removeListItem(Collection<ListItem> c) {
+        itemList.removeAll(c);
+    }
+
+    public void removeAllListItems() {
+        itemList.clear();
     }
 
     @Override
