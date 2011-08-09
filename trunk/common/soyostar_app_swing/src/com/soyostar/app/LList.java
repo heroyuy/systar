@@ -26,6 +26,10 @@ public class LList extends Widget {
             imageList.add(new ImageItem(img, x, y, anchor));
         }
 
+        public void addImage(int index, Image img, int x, int y, int anchor) {
+            imageList.add(index, new ImageItem(img, x, y, anchor));
+        }
+
         public void removeImage(int index) {
             imageList.remove(index);
         }
@@ -36,6 +40,10 @@ public class LList extends Widget {
 
         public void addString(String str, int x, int y, int anchor, int color) {
             stringList.add(new StringItem(str, x, y, anchor, color));
+        }
+
+        public void addString(int index, String str, int x, int y, int anchor, int color) {
+            stringList.add(index, new StringItem(str, x, y, anchor, color));
         }
 
         public void removeString(int index) {
@@ -149,6 +157,10 @@ public class LList extends Widget {
 
     public void removeAllListItems() {
         itemList.clear();
+    }
+
+    public ListItem getListItem(int index) {
+        return itemList.get(index);
     }
 
     @Override
