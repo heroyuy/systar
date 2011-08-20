@@ -2,7 +2,6 @@ package game.scene.map;
 
 import game.impl.model.Character;
 
-import com.soyostar.app.Image;
 import com.soyostar.app.Painter;
 import com.soyostar.app.Widget;
 
@@ -25,7 +24,7 @@ public class GLSprite extends Widget {
 	public void paint(Painter painter) {
 		super.paint(painter);
 		// sprite.getCurStepImage().changeBrightness(1.0f, 3.0f, 1.0f);
-		sprite.getCurStepImage().grayed();
+		sprite.getCurStepImage().gray();
 		painter.drawImage(sprite.getCurStepImage(), 0, 0, Painter.LT);
 	}
 
