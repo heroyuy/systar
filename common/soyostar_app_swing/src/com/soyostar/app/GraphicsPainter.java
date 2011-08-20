@@ -64,7 +64,7 @@ class GraphicsPainter implements Painter {
             return;
         }
         int[] xy = convert(x, y, img.getWidth(), img.getHeight(), anchor);
-        graphics.drawImage(img.getContent(), xy[0], xy[1], null);
+        graphics.drawImage(img.content, xy[0], xy[1], null);
     }
 
     @Override
