@@ -6,6 +6,7 @@ package game.scene.map;
 
 import com.soyostar.app.Color;
 import com.soyostar.app.Image;
+import com.soyostar.app.ImageUtils;
 import com.soyostar.app.LTextArea;
 import com.soyostar.app.Layer;
 import com.soyostar.app.Widget;
@@ -27,7 +28,7 @@ public class GLDialog extends Layer {
     public GLDialog(Image haed,String content) {
         //设置背景
         this.setSize(width, height);
-        this.setBackgroundImage(Image.createAlphaImage(skin.createBlueBg(width, height, true),80));
+        this.setBackgroundImage(ImageUtils.createAlphaImage(skin.createBlueBg(width, height, true),80));
         this.setVisible(true);
         //设置头像框
         headImage=new Widget();

@@ -1,6 +1,8 @@
 package game.impl.model;
 
 import com.soyostar.app.Image;
+import com.soyostar.app.ImageUtils;
+
 import game.AbModel;
 import game.actions.MoveAction;
 import game.data.DataStore;
@@ -28,14 +30,14 @@ public abstract class Character extends AbModel {
 	public boolean moving = false;// 移动标识
 
 	public void setCharImg(String charImgPath) {
-		Image characterImage = Image.createImage(charImgPath);
+		Image characterImage = new Image(charImgPath);
 		sequence = new Image[4][4];
 		width = characterImage.getWidth() / 4;
 		height = characterImage.getHeight() / 4;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				sequence[i][j] = Image.copyImage(characterImage, j * width, i
-						* height, width, height);
+				sequence[i][j] = ImageUtils.getSubImage(characterImage, j
+						* width, i * height, width, height);
 			}
 		}
 	}
