@@ -4,12 +4,19 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ByteLookupTable;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.DirectColorModel;
+import java.awt.image.LookupOp;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.GrayFilter;
 
 /**
  * 图形图像
@@ -78,6 +85,8 @@ public class Image {
 		Image image = new Image();
 		try {
 			image.content = ImageIO.read(new File(fileName));
+			System.out.println(fileName + ":"
+					+ image.content.getColorModel().getClass().getName());
 		} catch (IOException ex) {
 			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -231,17 +240,18 @@ public class Image {
 	 * 
 	 * @param src
 	 *            源图片
-	 * @param rgb
-	 *            目标色值，三元色，依次为 R G B
+	 * @param argb
+	 *            目标色值，依次为A R G B
 	 * @param type
 	 *            变色类型，负值为减淡，正值为加深
 	 * @return 变色处理后的图片
 	 */
-	public static Image tone(Image src, int rgb, int type) {
+	public static Image tone(Image src, int argb, int type) {
 		Image res = Image.copyImage(src, 0, 0, src.getWidth(), src.getHeight());
-		int r = Color.getRed(rgb);
-		int g = Color.getGreen(rgb);
-		int b = Color.getBlue(rgb);
+		int a = Color.getAlpha(argb);
+		int r = Color.getRed(argb);
+		int g = Color.getGreen(argb);
+		int b = Color.getBlue(argb);
 		for (int i = 0; i < res.getWidth(); i++) {
 			for (int j = 0; j < res.getHeight(); j++) {
 				int oldArgb = res.content.getRGB(i, j);
@@ -249,14 +259,62 @@ public class Image {
 				int oldR = Color.getRed(oldArgb);
 				int oldG = Color.getGreen(oldArgb);
 				int oldB = Color.getBlue(oldArgb);
+				int newA = type < 0 ? Math.min(oldA, a) : Math.max(oldA, a);
 				int newR = type < 0 ? Math.max(oldR, r) : Math.min(oldR, r);
 				int newG = type < 0 ? Math.max(oldG, g) : Math.min(oldG, g);
 				int newB = type < 0 ? Math.max(oldB, b) : Math.min(oldB, b);
 				res.content
-						.setRGB(i, j, Color.getColor(oldA, newR, newG, newB));
+						.setRGB(i, j, Color.getColor(newA, newR, newG, newB));
 			}
 		}
 		return res;
+	}
+
+	public static Image tone(Image src, double a, double r, double g, double b,
+			int type) {
+		int resA = (int) (255 * a);
+		if (resA > 255) {
+			resA = 255;
+		} else if (resA < 0) {
+			resA = 0;
+		}
+
+		int resR = (int) (255 * r);
+		if (resR > 255) {
+			resR = 255;
+		} else if (resR < 0) {
+			resR = 0;
+		}
+
+		int resG = (int) (255 * g);
+		if (resG > 255) {
+			resG = 255;
+		} else if (resG < 0) {
+			resG = 0;
+		}
+
+		int resB = (int) (255 * b);
+		if (resB > 255) {
+			resB = 255;
+		} else if (resB < 0) {
+			resB = 0;
+		}
+		return tone(src, Color.getColor(resA, resR, resG, resB), type);
+	}
+
+	public void changeBrightness(float rRatio, float gRatio, float bRatio) {
+		float[] scales = { rRatio, gRatio, bRatio, 1.0f };
+		float[] offsets = new float[4];
+		RescaleOp rop = new RescaleOp(scales, offsets, null);
+		((Graphics2D) content.getGraphics()).drawImage(content, rop, 0, 0);
+	}
+
+	public void grayed() {
+		ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
+
+		ColorConvertOp colorConvert = new ColorConvertOp(cs, null);
+
+		colorConvert.filter(content, content);
 	}
 
 	/**
