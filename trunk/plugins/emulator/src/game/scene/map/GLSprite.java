@@ -24,8 +24,9 @@ public class GLSprite extends Widget {
 	@Override
 	public void paint(Painter painter) {
 		super.paint(painter);
-		painter.drawImage(Image.test(sprite.getCurStepImage()), 0, 0,
-				Painter.LT);
+		// sprite.getCurStepImage().changeBrightness(1.0f, 3.0f, 1.0f);
+		sprite.getCurStepImage().grayed();
+		painter.drawImage(sprite.getCurStepImage(), 0, 0, Painter.LT);
 	}
 
 }
