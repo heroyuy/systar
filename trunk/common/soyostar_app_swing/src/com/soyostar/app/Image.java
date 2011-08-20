@@ -1,22 +1,17 @@
 package com.soyostar.app;
 
-import java.awt.AlphaComposite;
-import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.awt.image.ByteLookupTable;
 import java.awt.image.ColorConvertOp;
-import java.awt.image.DirectColorModel;
-import java.awt.image.LookupOp;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
-import javax.swing.GrayFilter;
 
 /**
  * 图形图像
@@ -33,16 +28,32 @@ public class Image {
 	 * 垂直翻转类型
 	 */
 	public static final byte VERTICAL = 1;
-	private BufferedImage content = null;
 
-	private Image() {
-	}
+	BufferedImage content = null;// 图片上下文
 
-	java.awt.Image getContent() {
-		return content;
+	BufferedImage contentBackup = null;// 图片上下文的备份
+
+	Image() {
+
 	}
 
 	private GraphicsPainter painter = null;
+
+	public Image(String fileName) {
+		try {
+			content = ImageIO.read(new File(fileName));
+		} catch (IOException ex) {
+			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	public Image(int width, int height) {
+		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
 
 	/**
 	 * 创建用于绘制图像的图形上下文
@@ -75,45 +86,8 @@ public class Image {
 	}
 
 	/**
-	 * 返回从指定文件获取像素数据的图像。
+	 * 裁剪图像
 	 * 
-	 * @param fileName
-	 *            以可识别文件格式包含像素数据的文件名。
-	 * @return 从指定文件获取像素数据的图像。
-	 */
-	public static Image createImage(String fileName) {
-		Image image = new Image();
-		try {
-			image.content = ImageIO.read(new File(fileName));
-			System.out.println(fileName + ":"
-					+ image.content.getColorModel().getClass().getName());
-		} catch (IOException ex) {
-			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return image;
-	}
-
-	/**
-	 * 创建指定大小的空白图像，背景透明
-	 * 
-	 * @param width
-	 *            所创建图像的宽度
-	 * @param height
-	 *            所创建图像的高度
-	 * @return 创建的空白图像
-	 */
-	public static Image createImage(int width, int height) {
-		Image img = new Image();
-		img.content = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		return img;
-	}
-
-	/**
-	 * 返回由指定矩形区域定义的子图像。
-	 * 
-	 * @param src
-	 *            源图像
 	 * @param x
 	 *            指定矩形区域左上角的 x 坐标
 	 * @param y
@@ -122,40 +96,27 @@ public class Image {
 	 *            指定矩形区域的宽度
 	 * @param height
 	 *            指定矩形区域的高度
-	 * @return 子图像
 	 */
-	public static Image copyImage(Image src, int x, int y, int width, int height) {
-		Image res = new Image();
-		res.content = src.content.getSubimage(x, y, width, height);
-		return res;
+	public void clip(int x, int y, int width, int height) {
+		content = getSubimage(content, x, y, width, height);
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
 	}
 
-	/**
-	 * 返回指定图像的半透明版本
-	 * 
-	 * @param src
-	 *            源图片
-	 * @param alpha
-	 *            透明度 0-100
-	 * @return 指定图像的半透明版本
-	 */
-	public static Image createAlphaImage(Image src, int alpha) {
-		if (src == null) {
-			return null;
+	public void setAlpha(int alpha) {
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				int argb = content.getRGB(i, j);
+				int a = Color.getAlpha(argb);
+				int r = Color.getRed(argb);
+				int g = Color.getGreen(argb);
+				int b = Color.getBlue(argb);
+				argb = Color.getColor(a == 0 ? a : alpha, r, g, b);
+				content.setRGB(i, j, argb);
+			}
 		}
-		if (alpha > 100) {
-			alpha = 100;
-		} else if (alpha < 0) {
-			alpha = 0;
-		}
-		Image res = Image.createImage(src.getWidth(), src.getHeight());
-		Graphics2D g = (Graphics2D) res.content.getGraphics();
-		Composite alphaComposite = AlphaComposite.getInstance(
-				AlphaComposite.SRC_OVER, (float) (1.0 * alpha / 100)); // 指定透明度
-		g.setComposite(alphaComposite);
-		g.drawImage(src.content, 0, 0, null);
-		g.dispose();
-		return res;
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
 	}
 
 	/**
@@ -167,22 +128,16 @@ public class Image {
 	 *            要旋转的度数
 	 * @return 旋转后的图像
 	 */
-	public static Image rotateImage(Image src, int angle) {
+	public void rotate(int angle) {
 		while (angle < 0) {
 			angle += 360;
 		}
 		if (angle % 90 != 0) {
 			throw new IllegalArgumentException("角度只能是90的整数倍");
 		}
-		Image res = null;
 		for (int i = 0, num = angle / 90; i < num; i++) {
-			if (res == null) {
-				res = src.rotateImageToCW90();
-			} else {
-				res = res.rotateImageToCW90();
-			}
+			rotateToCW90();
 		}
-		return res;
 	}
 
 	/**
@@ -196,12 +151,12 @@ public class Image {
 	 *            缩放后的图像高度
 	 * @return 缩放后的图像
 	 */
-	public static Image zoomImage(Image src, int width, int height) {
-		Image res = createImage(width, height);
-		Graphics g = res.content.getGraphics();
-		g.drawImage(src.content, 0, 0, width, height, null);
+	public void scale(int width, int height) {
+		Graphics g = content.getGraphics();
+		g.drawImage(content, 0, 0, width, height, null);
 		g.dispose();
-		return res;
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
 	}
 
 	/**
@@ -213,121 +168,64 @@ public class Image {
 	 *            翻转类型 HORIZONTAL（水平翻转）或者 VERTICAL（垂直翻转）
 	 * @return 翻转后的图像
 	 */
-	public static Image flipImage(Image src, byte type) {
-		int w = src.getWidth();
-		int h = src.getHeight();
-		Image res = createImage(w, h);
-		Graphics g = res.content.getGraphics();
+	public void flip(byte type) {
+		int w = getWidth();
+		int h = getHeight();
+		Graphics g = content.getGraphics();
 
 		switch (type) {
 		case Image.HORIZONTAL:
-			g.drawImage(src.content, 0, 0, w, h, w, 0, 0, h, null);
+			g.drawImage(content, 0, 0, w, h, w, 0, 0, h, null);
 			g.dispose();
 			break;
 		case Image.VERTICAL:
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.drawImage(src.content, 0, 0, w, h, 0, h, w, 0, null);
+			g2d.drawImage(content, 0, 0, w, h, 0, h, w, 0, null);
 			g2d.dispose();
 			break;
 		default:
 			throw new IllegalArgumentException("翻转类型只能是0（水平翻转）或者1（垂直翻转）");
 		}
-		return res;
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
 	}
 
-	/**
-	 * 图片变色
-	 * 
-	 * @param src
-	 *            源图片
-	 * @param argb
-	 *            目标色值，依次为A R G B
-	 * @param type
-	 *            变色类型，负值为减淡，正值为加深
-	 * @return 变色处理后的图片
-	 */
-	public static Image tone(Image src, int argb, int type) {
-		Image res = Image.copyImage(src, 0, 0, src.getWidth(), src.getHeight());
-		int a = Color.getAlpha(argb);
-		int r = Color.getRed(argb);
-		int g = Color.getGreen(argb);
-		int b = Color.getBlue(argb);
-		for (int i = 0; i < res.getWidth(); i++) {
-			for (int j = 0; j < res.getHeight(); j++) {
-				int oldArgb = res.content.getRGB(i, j);
-				int oldA = Color.getAlpha(oldArgb);
-				int oldR = Color.getRed(oldArgb);
-				int oldG = Color.getGreen(oldArgb);
-				int oldB = Color.getBlue(oldArgb);
-				int newA = type < 0 ? Math.min(oldA, a) : Math.max(oldA, a);
-				int newR = type < 0 ? Math.max(oldR, r) : Math.min(oldR, r);
-				int newG = type < 0 ? Math.max(oldG, g) : Math.min(oldG, g);
-				int newB = type < 0 ? Math.max(oldB, b) : Math.min(oldB, b);
-				res.content
-						.setRGB(i, j, Color.getColor(newA, newR, newG, newB));
-			}
-		}
-		return res;
-	}
-
-	public static Image tone(Image src, double a, double r, double g, double b,
-			int type) {
-		int resA = (int) (255 * a);
-		if (resA > 255) {
-			resA = 255;
-		} else if (resA < 0) {
-			resA = 0;
-		}
-
-		int resR = (int) (255 * r);
-		if (resR > 255) {
-			resR = 255;
-		} else if (resR < 0) {
-			resR = 0;
-		}
-
-		int resG = (int) (255 * g);
-		if (resG > 255) {
-			resG = 255;
-		} else if (resG < 0) {
-			resG = 0;
-		}
-
-		int resB = (int) (255 * b);
-		if (resB > 255) {
-			resB = 255;
-		} else if (resB < 0) {
-			resB = 0;
-		}
-		return tone(src, Color.getColor(resA, resR, resG, resB), type);
-	}
-
-	public void changeBrightness(float rRatio, float gRatio, float bRatio) {
-		float[] scales = { rRatio, gRatio, bRatio, 1.0f };
+	public void tone(int r, int g, int b) {
+		float[] scales = { r, g, b, 1.0f };
 		float[] offsets = new float[4];
 		RescaleOp rop = new RescaleOp(scales, offsets, null);
-		((Graphics2D) content.getGraphics()).drawImage(content, rop, 0, 0);
+		((Graphics2D) content.getGraphics())
+				.drawImage(contentBackup, rop, 0, 0);
 	}
 
-	public void grayed() {
+	public void gray() {
 		ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
-
 		ColorConvertOp colorConvert = new ColorConvertOp(cs, null);
-
 		colorConvert.filter(content, content);
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
 	}
 
 	/**
 	 * 辅助方法，顺时针旋转图片90度
 	 */
-	private Image rotateImageToCW90() {
+	private void rotateToCW90() {
 		int w = getWidth();
 		int h = getHeight();
-		Image res = createImage(h, w);
-		Graphics2D g2d = (Graphics2D) res.content.getGraphics();
+		Graphics2D g2d = (Graphics2D) content.getGraphics();
 		g2d.rotate(Math.toRadians(90), h, 0);
 		g2d.drawImage(content, h, 0, w, h, null);
 		g2d.dispose();
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	static BufferedImage getSubimage(BufferedImage src, int x, int y,
+			int width, int height) {
+		BufferedImage res = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
+				y + height, null);
 		return res;
 	}
 }
