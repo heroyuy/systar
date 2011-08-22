@@ -2,10 +2,7 @@ package com.soyostar.app;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
-import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -190,20 +187,78 @@ public class Image {
 				content.getHeight());
 	}
 
-	public void tone(int r, int g, int b) {
-		float[] scales = { r, g, b, 1.0f };
-		float[] offsets = new float[4];
-		RescaleOp rop = new RescaleOp(scales, offsets, null);
-		((Graphics2D) content.getGraphics())
-				.drawImage(contentBackup, rop, 0, 0);
+	public void tone(int alpha, int red, int green, int blue) {
+		if (alpha == 0 && red == 0 && green == 0 && blue == 0) {
+			content = getSubimage(contentBackup, 0, 0,
+					contentBackup.getWidth(), contentBackup.getHeight());
+			return;
+		}
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				int argb = contentBackup.getRGB(i, j);
+				int a = Color.getAlpha(argb);
+				int r = Color.getRed(argb);
+				int g = Color.getGreen(argb);
+				int b = Color.getBlue(argb);
+				if (a != 0) {
+					a += alpha;
+					if (a < 0) {
+						a = 0;
+					} else if (a > 255) {
+						a = 255;
+					}
+				}
+				r += red;
+				if (r < 0) {
+					r = 0;
+				} else if (r > 255) {
+					r = 255;
+				}
+				g += green;
+				if (g < 0) {
+					g = 0;
+				} else if (g > 255) {
+					g = 255;
+				}
+				b += blue;
+				if (b < 0) {
+					b = 0;
+				} else if (b > 255) {
+					b = 255;
+				}
+				content.setRGB(i, j, Color.getColor(a, r, g, b));
+			}
+		}
+
 	}
 
-	public void gray() {
-		ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
-		ColorConvertOp colorConvert = new ColorConvertOp(cs, null);
-		colorConvert.filter(content, content);
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+	public void gray(int mask) {
+		if (mask == 0) {
+			content = getSubimage(contentBackup, 0, 0,
+					contentBackup.getWidth(), contentBackup.getHeight());
+			return;
+		}
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				int argb = contentBackup.getRGB(i, j);
+				int a = Color.getAlpha(argb);
+				int r = Color.getRed(argb);
+				int g = Color.getGreen(argb);
+				int b = Color.getBlue(argb);
+				int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+				if (r <= mask) {
+					r = temp;
+				}
+				if (g <= mask) {
+					g = temp;
+				}
+				if (b <= mask) {
+					b = temp;
+				}
+
+				content.setRGB(i, j, Color.getColor(a, r, g, b));
+			}
+		}
 	}
 
 	/**
