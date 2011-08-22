@@ -58,6 +58,7 @@ public class Image {
 	 * @return 绘制图像的图形上下文（画笔）
 	 */
 	public Painter getPainter() {
+		// TODO 此处有BUG，当content改变时候这里却没改变
 		if (painter == null) {
 			painter = new GraphicsPainter(content.getGraphics());
 		}
@@ -259,6 +260,15 @@ public class Image {
 				content.setRGB(i, j, Color.getColor(a, r, g, b));
 			}
 		}
+	}
+
+	public Image getClone() {
+		Image res = new Image();
+		res.content = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		return res;
 	}
 
 	/**
