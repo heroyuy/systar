@@ -33,9 +33,10 @@ public class MenuController extends AbController {
 		bg.setVisible(true);
 
 		Image img = new Image("res/image/battler/001-Fighter01.png");
-		img.tone(1, 1, 2);
-		img.tone(-1, 2, 2);
-//		img.tone(0, 0, 1);
+		// img.tone(0, -100, 0, 0);
+		 img.tone(0, -100, -100, 200);
+		// img.tone(0,0, 0, 0);
+//		img.gray(150);
 		imageTest = new Widget();
 		imageTest.setVisible(true);
 		imageTest.setSize(img.getWidth(), img.getHeight());
