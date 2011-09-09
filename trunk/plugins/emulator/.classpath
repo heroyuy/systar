@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="libs/com.soyostar.xml_v1.1.jar"/>
 	<classpathentry kind="lib" path="libs/soyostar_astar.jar"/>
-	<classpathentry kind="lib" path="libs/soyostar_app_swing.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/soyostar_app_swing"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
