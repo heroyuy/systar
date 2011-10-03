@@ -11,7 +11,7 @@ smLog:info("update");
 end
 
 function paint(painter)
-smLog:info("paint->"..painter:toString());
+smLog:info("paint");
 painter:setColor(0xabcdef);
 painter:fillRect(0,0,200,100);
 painter:setColor(0xfefefe);

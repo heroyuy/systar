@@ -253,7 +253,7 @@ public class Emulator extends JDialog {
 	 */
 	private void loadConfig() {
 		try {
-			XMLObject config = XMLParser.parse(new File("config.xml"));
+			XMLObject config = XMLParser.parse(new File("config/emulator.xml"));
 			width = config.getFirstXMLObject("width").getIntValue();
 			height = config.getFirstXMLObject("height").getIntValue();
 			fps = config.getFirstXMLObject("fps").getIntValue();
