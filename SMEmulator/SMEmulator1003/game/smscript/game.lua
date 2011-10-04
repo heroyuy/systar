@@ -13,12 +13,12 @@ end
 function paint(painter)
 smLog:info("paint");
 painter:setColor(0xabcdef);
-painter:fillRect(0,0,200,100);
+painter:fillRect(0,0,800,480);
 painter:setColor(0xfefefe);
-painter:setTextSize(25);
-painter:drawString("HelloWorld!",11,11,0);
+painter:setTextSize(50);
+painter:drawString("HelloWorld!",301,201,0);
 painter:setColor(0xefefef);
-painter:drawString("HelloWorld!",10,10,0);
+painter:drawString("HelloWorld!",300,200,0);
 end
 
 function onStop()
