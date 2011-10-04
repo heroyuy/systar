@@ -84,7 +84,8 @@ public class Emulator extends JDialog {
 	 */
 	public Emulator() {
 		loadConfig();
-		ApiManager.getInstance().getLuaState().LdoFile("game/smscript/game.lua");
+		ApiManager.getInstance().getLuaState()
+				.LdoFile("game/smscript/game.lua");
 		setResizable(false);
 		setTitle("SoyoMakerEmulator");
 		getContentPane().setLayout(new BorderLayout());
