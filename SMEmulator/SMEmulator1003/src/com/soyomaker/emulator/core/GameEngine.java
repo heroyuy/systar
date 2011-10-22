@@ -51,11 +51,9 @@ public class GameEngine implements Runnable {
 	private LuaState luaState = null;
 
 	private GameEngine() {
+		loadConfig();
 		luaState = LuaStateFactory.newLuaState();
 		luaState.openLibs();
-		loadConfig();
-		registerMethods();
-		luaState.LdoFile("game/smscript/game.lua");
 	}
 
 	public int getActualFps() {
@@ -204,6 +202,8 @@ public class GameEngine implements Runnable {
 
 	void start() {
 		running = true;
+		registerMethods();
+		luaState.LdoFile("game/smscript/game.lua");
 		new Thread(this).start();
 	}
 
