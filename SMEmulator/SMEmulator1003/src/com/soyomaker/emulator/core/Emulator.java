@@ -56,7 +56,9 @@ public class Emulator extends JDialog {
 				if (painter == null || painter.getGraphics() != g) {
 					painter = new Painter(g);
 				}
-				ge.paintGame(painter);
+				if (ge.running) {
+					ge.paintGame(painter);
+				}
 			}
 
 		};

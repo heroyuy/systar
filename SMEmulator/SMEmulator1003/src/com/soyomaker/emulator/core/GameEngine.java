@@ -34,13 +34,13 @@ public class GameEngine implements Runnable {
 
 	private int height = 0;// 屏幕高度
 
-	private boolean running;// 运行标识
-
 	private int ratedFps = 0;// 额定fps
 
 	private int actualFps = 0;// 实际fps
 
 	Emulator emulator = null;
+
+	boolean running;// 运行标识
 
 	int keyX = -1;// 事件的x坐标
 
@@ -179,11 +179,14 @@ public class GameEngine implements Runnable {
 				time = System.currentTimeMillis() - time;
 
 				if (time < 1000 * 1.0 / ratedFps) {
+					actualFps = ratedFps;
 					try {
 						Thread.sleep((long) (1000 * 1.0 / ratedFps - time));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+				} else {
+					actualFps = (int) (1000 * 1.0 / time);
 				}
 
 			}
