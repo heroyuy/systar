@@ -7,13 +7,11 @@ package com.soyomaker.emulator.core;
  */
 public class Color {
 
-	private Color() {
-	}
-
 	/**
 	 * 黑色
 	 */
 	public static final int BLACK = 0xff000000;
+
 	/**
 	 * 蓝色
 	 */
@@ -67,14 +65,19 @@ public class Color {
 	}
 
 	/**
-	 * 获取颜色值的红色分量
+	 * 获取颜色值的蓝色分量
 	 * 
 	 * @param color
 	 *            颜色值
-	 * @return 颜色值的红色分量
+	 * @return 颜色值的蓝色分量
 	 */
-	public static int getRed(int color) {
-		return (color & 0x00ff0000) >>> 16;
+	public static int getBlue(int color) {
+		return color & 0x000000ff;
+	}
+
+	public static int getColor(int a, int r, int g, int b) {
+
+		return (a << 24) + (r << 16) + (g << 8) + b;
 	}
 
 	/**
@@ -89,18 +92,16 @@ public class Color {
 	}
 
 	/**
-	 * 获取颜色值的蓝色分量
+	 * 获取颜色值的红色分量
 	 * 
 	 * @param color
 	 *            颜色值
-	 * @return 颜色值的蓝色分量
+	 * @return 颜色值的红色分量
 	 */
-	public static int getBlue(int color) {
-		return color & 0x000000ff;
+	public static int getRed(int color) {
+		return (color & 0x00ff0000) >>> 16;
 	}
 
-	public static int getColor(int a, int r, int g, int b) {
-
-		return (a << 24) + (r << 16) + (g << 8) + b;
+	private Color() {
 	}
 }

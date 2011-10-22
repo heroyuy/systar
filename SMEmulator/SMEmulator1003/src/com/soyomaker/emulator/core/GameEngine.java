@@ -26,6 +26,10 @@ public class GameEngine implements Runnable {
 
 	public static final int TOUCH_TYPE_UP = 2;
 
+	public static GameEngine getInstance() {
+		return instance;
+	}
+
 	private int width = 0;// 屏幕宽度
 
 	private int height = 0;// 屏幕高度
@@ -54,12 +58,8 @@ public class GameEngine implements Runnable {
 		luaState.LdoFile("game/smscript/game.lua");
 	}
 
-	public static GameEngine getInstance() {
-		return instance;
-	}
-
-	public int getWidth() {
-		return width;
+	public int getActualFps() {
+		return actualFps;
 	}
 
 	public int getHeight() {
@@ -70,25 +70,87 @@ public class GameEngine implements Runnable {
 		return ratedFps;
 	}
 
-	public void setRatedFps(int ratedFps) {
-		this.ratedFps = ratedFps;
+	public int getWidth() {
+		return width;
 	}
 
-	public int getActualFps() {
-		return actualFps;
+	/**
+	 * 辅助方法：加载配置文件
+	 */
+	private void loadConfig() {
+		try {
+			XMLObject config = XMLParser.parse(new File("config/emulator.xml"));
+			width = config.getFirstXMLObject("width").getIntValue();
+			height = config.getFirstXMLObject("height").getIntValue();
+			ratedFps = config.getFirstXMLObject("fps").getIntValue();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NoSuchXMLObjectException e) {
+			e.printStackTrace();
+		}
 	}
 
-	void start() {
-		running = true;
-		new Thread(this).start();
+	/**
+	 * 按键事件：线程直接调用
+	 */
+	private void onTouch() {
+		if (keyX == -1 || keyY == -1 || keyType == -1) {
+			return;
+		}
+		// 此处调用lua的onTouch(x,y,type)方法
+		luaState.getGlobal("onTouch");
+		try {
+			luaState.pushObjectValue(keyX);
+			luaState.pushObjectValue(keyY);
+			luaState.pushObjectValue(keyType);
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(3, 0);
+		keyX = keyY = keyType = -1;
 	}
 
-	void stop() {
-		running = false;
+	/**
+	 * 绘图：线程间接调用
+	 * 
+	 * @param painter
+	 */
+	void paintGame(Painter painter) {
+		// 此处调用lua的paint(painter)方法
+		luaState.getGlobal("paint");
+		try {
+			luaState.pushObjectValue(painter);
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(1, 0);
 	}
 
 	void pause() {
 
+	}
+
+	private void registerMethods() {
+		try {
+			// --注册Random
+			luaState.pushObjectValue(new Random());
+			luaState.setGlobal("smRandom");
+
+			// --注册SMLog
+			luaState.pushObjectValue(new SMLog());
+			luaState.setGlobal("smLog");
+
+			// --注册GameEngine
+			luaState.pushObjectValue(this);
+			luaState.setGlobal("smGameEngine");
+
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
 	}
 
 	void resume() {
@@ -133,24 +195,17 @@ public class GameEngine implements Runnable {
 
 	}
 
-	/**
-	 * 按键事件：线程直接调用
-	 */
-	private void onTouch() {
-		if (keyX == -1 || keyY == -1 || keyType == -1) {
-			return;
-		}
-		// 此处调用lua的onTouch(x,y,type)方法
-		luaState.getGlobal("onTouch");
-		try {
-			luaState.pushObjectValue(keyX);
-			luaState.pushObjectValue(keyY);
-			luaState.pushObjectValue(keyType);
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-		luaState.call(3, 0);
-		keyX = keyY = keyType = -1;
+	public void setRatedFps(int ratedFps) {
+		this.ratedFps = ratedFps;
+	}
+
+	void start() {
+		running = true;
+		new Thread(this).start();
+	}
+
+	void stop() {
+		running = false;
 	}
 
 	/**
@@ -160,61 +215,6 @@ public class GameEngine implements Runnable {
 		// 此处调用lua的update()方法
 		luaState.getGlobal("update");
 		luaState.call(0, 0);
-	}
-
-	/**
-	 * 绘图：线程间接调用
-	 * 
-	 * @param painter
-	 */
-	void paintGame(Painter painter) {
-		// 此处调用lua的paint(painter)方法
-		luaState.getGlobal("paint");
-		try {
-			luaState.pushObjectValue(painter);
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-		luaState.call(1, 0);
-	}
-
-	/**
-	 * 辅助方法：加载配置文件
-	 */
-	private void loadConfig() {
-		try {
-			XMLObject config = XMLParser.parse(new File("config/emulator.xml"));
-			width = config.getFirstXMLObject("width").getIntValue();
-			height = config.getFirstXMLObject("height").getIntValue();
-			ratedFps = config.getFirstXMLObject("fps").getIntValue();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NoSuchXMLObjectException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void registerMethods() {
-		try {
-			// --注册Random
-			luaState.pushObjectValue(new Random());
-			luaState.setGlobal("smRandom");
-
-			// --注册SMLog
-			luaState.pushObjectValue(new SMLog());
-			luaState.setGlobal("smLog");
-
-			// --注册GameEngine
-			luaState.pushObjectValue(this);
-			luaState.setGlobal("smGameEngine");
-
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

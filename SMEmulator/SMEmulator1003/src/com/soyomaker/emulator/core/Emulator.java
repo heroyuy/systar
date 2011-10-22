@@ -20,12 +20,6 @@ public class Emulator extends JDialog {
 
 	private static final long serialVersionUID = -8809949650600479176L;
 
-	private GameEngine ge = GameEngine.getInstance();
-
-	private JPanel contentPanel = null;
-
-	private Painter painter = null;
-
 	/**
 	 * Launch the application.
 	 */
@@ -38,6 +32,12 @@ public class Emulator extends JDialog {
 			e.printStackTrace();
 		}
 	}
+
+	private GameEngine ge = GameEngine.getInstance();
+
+	private JPanel contentPanel = null;
+
+	private Painter painter = null;
 
 	/**
 	 * Create the dialog.
@@ -61,16 +61,16 @@ public class Emulator extends JDialog {
 
 		};
 		MouseAdapter mouseAdapter = new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				ge.keyX = e.getX();
-				ge.keyY = e.getY();
-				ge.keyType = GameEngine.TOUCH_TYPE_DOWN;
-			}
-
 			public void mouseDragged(MouseEvent e) {
 				ge.keyX = e.getX();
 				ge.keyY = e.getY();
 				ge.keyType = GameEngine.TOUCH_TYPE_MOVE;
+			}
+
+			public void mousePressed(MouseEvent e) {
+				ge.keyX = e.getX();
+				ge.keyY = e.getY();
+				ge.keyType = GameEngine.TOUCH_TYPE_DOWN;
 			}
 
 			public void mouseReleased(MouseEvent e) {
@@ -117,6 +117,10 @@ public class Emulator extends JDialog {
 		});
 	}
 
+	void repaintGame() {
+		contentPanel.repaint();
+	}
+
 	/**
 	 * 开始游戏,由模拟器调用
 	 */
@@ -129,10 +133,6 @@ public class Emulator extends JDialog {
 	 */
 	private void stopGame() {
 		ge.stop();
-	}
-
-	void repaintGame() {
-		contentPanel.repaint();
 	}
 
 }

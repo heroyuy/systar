@@ -26,15 +26,30 @@ public class Image {
 	 */
 	public static final byte VERTICAL = 1;
 
+	static BufferedImage getSubimage(BufferedImage src, int x, int y,
+			int width, int height) {
+		BufferedImage res = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
+				y + height, null);
+		return res;
+	}
+
 	BufferedImage content = null;// 图片上下文
 
 	BufferedImage contentBackup = null;// 图片上下文的备份
+
+	private Painter painter = null;
 
 	Image() {
 
 	}
 
-	private Painter painter = null;
+	public Image(int width, int height) {
+		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
 
 	public Image(String fileName) {
 		try {
@@ -44,43 +59,6 @@ public class Image {
 		}
 		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
 				content.getHeight());
-	}
-
-	public Image(int width, int height) {
-		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-	}
-
-	/**
-	 * 创建用于绘制图像的图形上下文
-	 * 
-	 * @return 绘制图像的图形上下文（画笔）
-	 */
-	public Painter getPainter() {
-		// TODO 此处有BUG，当content改变时候这里却没改变
-		if (painter == null) {
-			painter = new Painter(content.getGraphics());
-		}
-		return painter;
-	}
-
-	/**
-	 * 返回 Image 的宽度。
-	 * 
-	 * @return 此Image的宽度。
-	 */
-	public int getWidth() {
-		return content.getWidth();
-	}
-
-	/**
-	 * 返回 Image 的高度。
-	 * 
-	 * @return 此Image的高度。
-	 */
-	public int getHeight() {
-		return content.getHeight();
 	}
 
 	/**
@@ -97,62 +75,6 @@ public class Image {
 	 */
 	public void clip(int x, int y, int width, int height) {
 		content = getSubimage(content, x, y, width, height);
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-	}
-
-	public void setAlpha(int alpha) {
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				int argb = content.getRGB(i, j);
-				int a = Color.getAlpha(argb);
-				int r = Color.getRed(argb);
-				int g = Color.getGreen(argb);
-				int b = Color.getBlue(argb);
-				argb = Color.getColor(a == 0 ? a : alpha, r, g, b);
-				content.setRGB(i, j, argb);
-			}
-		}
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-	}
-
-	/**
-	 * 旋转图片，角度只能是90的倍数，可正可负，角度为正时顺时针旋转，为负时逆时针旋转。
-	 * 
-	 * @param src
-	 *            源图像
-	 * @param angle
-	 *            要旋转的度数
-	 * @return 旋转后的图像
-	 */
-	public void rotate(int angle) {
-		while (angle < 0) {
-			angle += 360;
-		}
-		if (angle % 90 != 0) {
-			throw new IllegalArgumentException("角度只能是90的整数倍");
-		}
-		for (int i = 0, num = angle / 90; i < num; i++) {
-			rotateToCW90();
-		}
-	}
-
-	/**
-	 * 缩放图像
-	 * 
-	 * @param src
-	 *            源图像
-	 * @param width
-	 *            缩放后的图像宽度
-	 * @param height
-	 *            缩放后的图像高度
-	 * @return 缩放后的图像
-	 */
-	public void scale(int width, int height) {
-		Graphics g = content.getGraphics();
-		g.drawImage(content, 0, 0, width, height, null);
-		g.dispose();
 		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
 				content.getHeight());
 	}
@@ -183,6 +105,145 @@ public class Image {
 			break;
 		default:
 			throw new IllegalArgumentException("翻转类型只能是0（水平翻转）或者1（垂直翻转）");
+		}
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	public Image getClone() {
+		Image res = new Image();
+		res.content = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		return res;
+	}
+
+	/**
+	 * 返回 Image 的高度。
+	 * 
+	 * @return 此Image的高度。
+	 */
+	public int getHeight() {
+		return content.getHeight();
+	}
+
+	/**
+	 * 创建用于绘制图像的图形上下文
+	 * 
+	 * @return 绘制图像的图形上下文（画笔）
+	 */
+	public Painter getPainter() {
+		// TODO 此处有BUG，当content改变时候这里却没改变
+		if (painter == null) {
+			painter = new Painter(content.getGraphics());
+		}
+		return painter;
+	}
+
+	/**
+	 * 返回 Image 的宽度。
+	 * 
+	 * @return 此Image的宽度。
+	 */
+	public int getWidth() {
+		return content.getWidth();
+	}
+
+	public void gray(int mask) {
+		if (mask == 0) {
+			content = getSubimage(contentBackup, 0, 0,
+					contentBackup.getWidth(), contentBackup.getHeight());
+			return;
+		}
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				int argb = contentBackup.getRGB(i, j);
+				int a = Color.getAlpha(argb);
+				int r = Color.getRed(argb);
+				int g = Color.getGreen(argb);
+				int b = Color.getBlue(argb);
+				int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+				if (r <= mask) {
+					r = temp;
+				}
+				if (g <= mask) {
+					g = temp;
+				}
+				if (b <= mask) {
+					b = temp;
+				}
+
+				content.setRGB(i, j, Color.getColor(a, r, g, b));
+			}
+		}
+	}
+
+	/**
+	 * 旋转图片，角度只能是90的倍数，可正可负，角度为正时顺时针旋转，为负时逆时针旋转。
+	 * 
+	 * @param src
+	 *            源图像
+	 * @param angle
+	 *            要旋转的度数
+	 * @return 旋转后的图像
+	 */
+	public void rotate(int angle) {
+		while (angle < 0) {
+			angle += 360;
+		}
+		if (angle % 90 != 0) {
+			throw new IllegalArgumentException("角度只能是90的整数倍");
+		}
+		for (int i = 0, num = angle / 90; i < num; i++) {
+			rotateToCW90();
+		}
+	}
+
+	/**
+	 * 辅助方法，顺时针旋转图片90度
+	 */
+	private void rotateToCW90() {
+		int w = getWidth();
+		int h = getHeight();
+		Graphics2D g2d = (Graphics2D) content.getGraphics();
+		g2d.rotate(Math.toRadians(90), h, 0);
+		g2d.drawImage(content, h, 0, w, h, null);
+		g2d.dispose();
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	/**
+	 * 缩放图像
+	 * 
+	 * @param src
+	 *            源图像
+	 * @param width
+	 *            缩放后的图像宽度
+	 * @param height
+	 *            缩放后的图像高度
+	 * @return 缩放后的图像
+	 */
+	public void scale(int width, int height) {
+		Graphics g = content.getGraphics();
+		g.drawImage(content, 0, 0, width, height, null);
+		g.dispose();
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	public void setAlpha(int alpha) {
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				int argb = content.getRGB(i, j);
+				int a = Color.getAlpha(argb);
+				int r = Color.getRed(argb);
+				int g = Color.getGreen(argb);
+				int b = Color.getBlue(argb);
+				argb = Color.getColor(a == 0 ? a : alpha, r, g, b);
+				content.setRGB(i, j, argb);
+			}
 		}
 		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
 				content.getHeight());
@@ -231,66 +292,5 @@ public class Image {
 			}
 		}
 
-	}
-
-	public void gray(int mask) {
-		if (mask == 0) {
-			content = getSubimage(contentBackup, 0, 0,
-					contentBackup.getWidth(), contentBackup.getHeight());
-			return;
-		}
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				int argb = contentBackup.getRGB(i, j);
-				int a = Color.getAlpha(argb);
-				int r = Color.getRed(argb);
-				int g = Color.getGreen(argb);
-				int b = Color.getBlue(argb);
-				int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
-				if (r <= mask) {
-					r = temp;
-				}
-				if (g <= mask) {
-					g = temp;
-				}
-				if (b <= mask) {
-					b = temp;
-				}
-
-				content.setRGB(i, j, Color.getColor(a, r, g, b));
-			}
-		}
-	}
-
-	public Image getClone() {
-		Image res = new Image();
-		res.content = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		return res;
-	}
-
-	/**
-	 * 辅助方法，顺时针旋转图片90度
-	 */
-	private void rotateToCW90() {
-		int w = getWidth();
-		int h = getHeight();
-		Graphics2D g2d = (Graphics2D) content.getGraphics();
-		g2d.rotate(Math.toRadians(90), h, 0);
-		g2d.drawImage(content, h, 0, w, h, null);
-		g2d.dispose();
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-	}
-
-	static BufferedImage getSubimage(BufferedImage src, int x, int y,
-			int width, int height) {
-		BufferedImage res = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
-				y + height, null);
-		return res;
 	}
 }
