@@ -59,6 +59,14 @@ public class Emulator extends JDialog {
 				if (ge.running) {
 					ge.paintGame(painter);
 				}
+
+				if (ge.isShowFps()) {
+					// 显示FPS
+					painter.setColor(0xffffff);
+					painter.setTextSize(12);
+					painter.drawString(ge.getActualFps() + "", 0,
+							ge.getHeight() - painter.getTextSize(), Painter.LB);
+				}
 			}
 
 		};

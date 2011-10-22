@@ -38,6 +38,10 @@ public class GameEngine implements Runnable {
 
 	private int actualFps = 0;// 实际fps
 
+	private boolean showFps = true;// 是否显示FPS
+
+	private long time = 0;
+
 	Emulator emulator = null;
 
 	boolean running;// 运行标识
@@ -70,6 +74,14 @@ public class GameEngine implements Runnable {
 
 	public int getWidth() {
 		return width;
+	}
+
+	public int getSystemMilliTime() {
+		return (int) (System.currentTimeMillis() - time);
+	}
+
+	public boolean isShowFps() {
+		return showFps;
 	}
 
 	/**
@@ -157,16 +169,17 @@ public class GameEngine implements Runnable {
 
 	@Override
 	public void run() {
+		time = System.currentTimeMillis();
 		// 此处调用lua的onstart()方法
 		luaState.getGlobal("onStart");
 		luaState.call(0, 0);
 		while (running) {
 
-			long time = 0;
+			long t = 0;
 
 			while (running) {
 
-				time = System.currentTimeMillis();
+				t = System.currentTimeMillis();
 
 				onTouch();// 处理事件
 
@@ -174,17 +187,17 @@ public class GameEngine implements Runnable {
 
 				emulator.repaintGame();// 重绘界面
 
-				time = System.currentTimeMillis() - time;
+				t = System.currentTimeMillis() - t;
 
-				if (time < 1000 * 1.0 / ratedFps) {
+				if (t < 1000 * 1.0 / ratedFps) {
 					actualFps = ratedFps;
 					try {
-						Thread.sleep((long) (1000 * 1.0 / ratedFps - time));
+						Thread.sleep((long) (1000 * 1.0 / ratedFps - t));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				} else {
-					actualFps = (int) (1000 * 1.0 / time);
+					actualFps = (int) (1000 * 1.0 / t);
 				}
 
 			}
@@ -198,6 +211,10 @@ public class GameEngine implements Runnable {
 
 	public void setRatedFps(int ratedFps) {
 		this.ratedFps = ratedFps;
+	}
+
+	public void setShowFps(boolean showFps) {
+		this.showFps = showFps;
 	}
 
 	void start() {
