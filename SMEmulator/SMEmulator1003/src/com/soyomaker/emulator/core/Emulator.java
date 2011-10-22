@@ -174,7 +174,12 @@ public class Emulator extends JDialog {
 
 			@Override
 			public void run() {
+				
+				long time=0;
+				
 				while (running) {
+					
+					time=System.currentTimeMillis();
 
 					onTouch();// 处理事件
 
@@ -182,11 +187,17 @@ public class Emulator extends JDialog {
 
 					contentPanel.repaint();// 重绘界面
 
-					try {
-						Thread.sleep((long) (1000 * 1.0 / fps));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					time=System.currentTimeMillis()-time;
+					
+					if(time<1000 * 1.0 / fps){
+						try {
+							Thread.sleep( (long) (1000 * 1.0 / fps-time));
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					
+			
 				}
 
 				// 此处调用lua的onStop()方法
