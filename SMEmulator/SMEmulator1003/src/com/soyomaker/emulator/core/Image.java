@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
 /**
  * 图形图像
@@ -26,31 +27,41 @@ public class Image {
 	 */
 	public static final byte VERTICAL = 1;
 
-	static BufferedImage getSubimage(BufferedImage src, int x, int y,
-			int width, int height) {
-		BufferedImage res = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
-				y + height, null);
-		return res;
-	}
-
+	/* ----------------------------- 字段 ----------------------------- */
 	BufferedImage content = null;// 图片上下文
 
-	BufferedImage contentBackup = null;// 图片上下文的备份
+	private BufferedImage contentBackup = null;// 图片上下文的备份
 
 	private Painter painter = null;
 
-	Image() {
+	/* ----------------------------- 构造 ----------------------------- */
+	/**
+	 * 私有构造
+	 */
+	private Image() {
 
 	}
 
+	/**
+	 * 创建指定大小的图片
+	 * 
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 */
 	public Image(int width, int height) {
 		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
 				content.getHeight());
 	}
 
+	/**
+	 * 根据指定的文件名创建图片
+	 * 
+	 * @param fileName
+	 *            文件名
+	 */
 	public Image(String fileName) {
 		try {
 			content = ImageIO.read(new File(fileName));
@@ -60,6 +71,55 @@ public class Image {
 		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
 				content.getHeight());
 	}
+
+	/**
+	 * 复制
+	 * 
+	 * @return 复制后的图像
+	 */
+	public Image getClone() {
+		Image res = new Image();
+		res.content = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+		return res;
+	}
+
+	/* ----------------------------- 获取属性 ----------------------------- */
+
+	/**
+	 * 返回 Image 的宽度。
+	 * 
+	 * @return 此Image的宽度。
+	 */
+	public int getWidth() {
+		return content.getWidth();
+	}
+
+	/**
+	 * 返回 Image 的高度。
+	 * 
+	 * @return 此Image的高度。
+	 */
+	public int getHeight() {
+		return content.getHeight();
+	}
+
+	/**
+	 * 创建用于绘制图像的图形上下文
+	 * 
+	 * @return 绘制图像的图形上下文（画笔）
+	 */
+	public Painter getPainter() {
+		// TODO 此处有BUG，当content改变时候这里却没改变
+		if (painter == null) {
+			painter = new Painter(content.getGraphics());
+		}
+		return painter;
+	}
+
+	/* ----------------------------- 图像处理 ----------------------------- */
 
 	/**
 	 * 裁剪图像
@@ -110,46 +170,12 @@ public class Image {
 				content.getHeight());
 	}
 
-	public Image getClone() {
-		Image res = new Image();
-		res.content = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		return res;
-	}
-
 	/**
-	 * 返回 Image 的高度。
+	 * 灰度处理
 	 * 
-	 * @return 此Image的高度。
+	 * @param mask
+	 *            掩码
 	 */
-	public int getHeight() {
-		return content.getHeight();
-	}
-
-	/**
-	 * 创建用于绘制图像的图形上下文
-	 * 
-	 * @return 绘制图像的图形上下文（画笔）
-	 */
-	public Painter getPainter() {
-		// TODO 此处有BUG，当content改变时候这里却没改变
-		if (painter == null) {
-			painter = new Painter(content.getGraphics());
-		}
-		return painter;
-	}
-
-	/**
-	 * 返回 Image 的宽度。
-	 * 
-	 * @return 此Image的宽度。
-	 */
-	public int getWidth() {
-		return content.getWidth();
-	}
-
 	public void gray(int mask) {
 		if (mask == 0) {
 			content = getSubimage(contentBackup, 0, 0,
@@ -233,6 +259,12 @@ public class Image {
 				content.getHeight());
 	}
 
+	/**
+	 * 半透明处理
+	 * 
+	 * @param alpha
+	 *            alpha值
+	 */
 	public void setAlpha(int alpha) {
 		for (int i = 0; i < getWidth(); i++) {
 			for (int j = 0; j < getHeight(); j++) {
@@ -249,6 +281,36 @@ public class Image {
 				content.getHeight());
 	}
 
+	/**
+	 * 清除图片上指定区域内的像素
+	 * 
+	 * @param x
+	 *            起点 X 坐标
+	 * @param y
+	 *            起点 Y 坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 */
+	public void clear(int x, int y, int width, int height) {
+		for (int i = x; i < x + width; i++) {
+			for (int j = 0; j < y + height; j++) {
+				content.setRGB(i, j, 0);
+			}
+		}
+		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
+				content.getHeight());
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param alpha
+	 * @param red
+	 * @param green
+	 * @param blue
+	 */
 	public void tone(int alpha, int red, int green, int blue) {
 		if (alpha == 0 && red == 0 && green == 0 && blue == 0) {
 			content = getSubimage(contentBackup, 0, 0,
@@ -292,5 +354,26 @@ public class Image {
 			}
 		}
 
+	}
+
+	/* ----------------------------- 辅助方法 ----------------------------- */
+
+	private static BufferedImage getSubimage(BufferedImage src, int x, int y,
+			int width, int height) {
+		BufferedImage res = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
+				y + height, null);
+		return res;
+	}
+
+	public void printRGB() {
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				System.out.print("  0x"
+						+ Integer.toHexString(content.getRGB(i, j)));
+			}
+			System.out.println();
+		}
 	}
 }
