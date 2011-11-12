@@ -119,6 +119,10 @@ public class Image {
 		return painter;
 	}
 
+	public int getRGB(int x, int y) {
+		return content.getRGB(x, y);
+	}
+
 	/* ----------------------------- 图像处理 ----------------------------- */
 
 	/**
