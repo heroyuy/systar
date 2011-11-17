@@ -1,0 +1,9 @@
+
+<!-- Document : rpg.xml Created on : 2011年5月1日, 下午10:43 Author : Administrator 
+	Description: Purpose of the document follows. -->
+<rpg id="1111" name="rpg">
+	<id>2222</id>
+	<name>"good"</name>
+	<test a="8888"></test>
+	<test a="6666"></test>
+</rpg>

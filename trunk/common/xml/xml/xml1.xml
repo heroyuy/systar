@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Document : rpg.xml Created on : 2011年5月1日, 下午10:43 Author : Administrator 
+	Description: Purpose of the document follows. -->
+
+<rpg>
+	<models a="1">
+		<model>
+			<id>0</id>
+			<fullName>game.impl.model.GameData</fullName>
+		</model>
+	</models>
+	<dataHandler>game.impl.DataHandler</dataHandler>
+	<controls>
+		<control>
+			<id>0</id>
+			<fullName>game.impl.control.StartPageControl</fullName>
+			<views>
+				<view>
+					<id>0</id>
+					<fullName>game.impl.view.startpage.StartPageView</fullName>
+				</view>
+			</views>
+		</control>
+
+		<control>
+			<id>1</id>
+			<fullName>game.impl.control.MenuControl</fullName>
+			<views>
+				<view>
+					<id>0</id>
+					<fullName>game.impl.view.menu.MenuView</fullName>
+				</view>
+			</views>
+		</control>
+		<currentControlID>0</currentControlID>
+	</controls>
+
+</rpg>

@@ -20,12 +20,29 @@ import org.xml.sax.SAXException;
  * XML解析器
  * 
  * @author wp_g4
- * 
+ * @since 20111117
  */
 public class XMLParser {
 
 	/**
-	 * 解析指定文件为XMLObject
+	 * 将指定的XML字符串解析为XMLObject对象
+	 * 
+	 * @param xmlString
+	 *            XML字符串
+	 * @return XMLObject对象
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	public static XMLObject parse(String xmlString)
+			throws ParserConfigurationException, SAXException, IOException {
+		XMLObject xmlObject = null;
+		xmlObject = parse(new ByteArrayInputStream(xmlString.getBytes()));
+		return xmlObject;
+	}
+
+	/**
+	 * 将指定的文件解析为XMLObject对象
 	 * 
 	 * @param file
 	 *            XML文件
@@ -45,10 +62,10 @@ public class XMLParser {
 	}
 
 	/**
-	 * 解析指定的输入流为XMLObject
+	 * 将指定的输入流解析为XMLObject对象
 	 * 
 	 * @param is
-	 *            输入流
+	 *            XML输入流
 	 * @return XMLObject对象
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -65,19 +82,17 @@ public class XMLParser {
 	}
 
 	/**
-	 * 辅助方法将指定的结点解析为XMLObject
+	 * 辅助方法。将指定的node解析为XMLObject对象
 	 * 
 	 * @param node
-	 *            结点
+	 *            Dom中的结点
 	 * @return XMLObject对象
 	 */
 	private static XMLObject parse(Node node) {
 		XMLObject xmlObject = new XMLObject();
-
 		// 设置类名
 		xmlObject.setName(node.getNodeName().replaceAll("\r", "")
 				.replaceAll("\n", ""));
-
 		// 遍历属性
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			if (node.hasAttributes()) {
@@ -86,21 +101,18 @@ public class XMLParser {
 				for (int j = 0; j < nnm.getLength(); j++) {
 					Node n = nnm.item(j);
 					String aValue = n.getFirstChild().getNodeValue();
-					xmlObject.addAttribute(n.getNodeName().replaceAll("\r", "")
+					xmlObject.putAttribute(n.getNodeName().replaceAll("\r", "")
 							.replaceAll("\n", ""), aValue.replaceAll("\r", "")
 							.replaceAll("\n", ""));
-
 				}
 			}
 		}
-
 		// 遍历子结点
 		NodeList nl = node.getChildNodes();
 		for (int i = 0; i < nl.getLength(); i++) {
 			Node nn = nl.item(i);
 			if (nn.getNodeType() == Node.ELEMENT_NODE) {
-				xmlObject.addSon(nn.getNodeName().replaceAll("\r", "")
-						.replaceAll("\n", ""), parse(nn));
+				xmlObject.addChild(parse(nn));
 			} else if (nn.getNodeType() == Node.TEXT_NODE) {
 				xmlObject.setValue(nn.getNodeValue().replaceAll("\r", "")
 						.replaceAll("\n", ""));
@@ -108,22 +120,4 @@ public class XMLParser {
 		}
 		return xmlObject;
 	}
-
-	/**
-	 * 将指定的XML字符串解析为XMLObject
-	 * 
-	 * @param xmlString
-	 *            XML字符串
-	 * @return XMLObject对象
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 */
-	public static XMLObject parse(String xmlString)
-			throws ParserConfigurationException, SAXException, IOException {
-		XMLObject xmlObject = null;
-		xmlObject = parse(new ByteArrayInputStream(xmlString.getBytes()));
-		return xmlObject;
-	}
-
 }
