@@ -109,7 +109,7 @@ public class XMLObject {
 	 * 获取子XMLObject对象列表
 	 * @return 子XMLObject对象列表
 	 */
-	public XMLObject[] getAllXMLObjects() {
+	public XMLObject[] getChildList() {
 		return childList.toArray(new XMLObject[childList.size()]);
 	}
 
