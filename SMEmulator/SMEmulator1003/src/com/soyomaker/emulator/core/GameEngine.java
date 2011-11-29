@@ -39,7 +39,7 @@ public class GameEngine implements Runnable {
 
 	private int actualFps = 0;// 实际fps
 
-	private boolean showFps = true;// 是否显示FPS
+	private boolean showFps = false;// 是否显示FPS
 
 	private long time = 0;
 
@@ -57,8 +57,8 @@ public class GameEngine implements Runnable {
 
 	private GameEngine() {
 		loadConfig();
-		luaState = LuaStateFactory.newLuaState();
-		luaState.openLibs();
+		// luaState = LuaStateFactory.newLuaState();
+		// luaState.openLibs();
 	}
 
 	public int getActualFps() {
