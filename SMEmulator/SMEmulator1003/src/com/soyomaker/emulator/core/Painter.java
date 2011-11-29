@@ -233,9 +233,12 @@ public class Painter {
 	 *            锚点
 	 */
 	public void drawString(String str, int x, int y, int anchor) {
+		long t = System.currentTimeMillis();
 		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
 		graphics.drawString(str, xy[0], xy[1]
 				- graphics.getFontMetrics().getDescent() + getTextSize());
+		t = System.currentTimeMillis() - t;
+		System.out.println("t:" + t);
 	}
 
 	/**
@@ -407,7 +410,7 @@ public class Painter {
 	 *            绘制文字的尺寸
 	 */
 	public void setTextSize(int size) {
-		graphics.setFont(new Font("����", Font.PLAIN, size));
+		graphics.setFont(new Font("", Font.PLAIN, size));
 
 	}
 

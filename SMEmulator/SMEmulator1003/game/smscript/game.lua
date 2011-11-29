@@ -16,7 +16,7 @@ function update()
 end
 
 function paint(painter)
---smLog:info("paint");
+smLog:info("paint");
 painter:setColor(0xabcdef);
 painter:fillRect(0,0,800,480);
 painter:setColor(0xfefefe);
