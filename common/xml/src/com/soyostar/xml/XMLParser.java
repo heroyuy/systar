@@ -80,7 +80,7 @@ public class XMLParser {
 		xmlObject = parse(doc.getDocumentElement());
 		return xmlObject;
 	}
-
+	
 	/**
 	 * 辅助方法。将指定的node解析为XMLObject对象
 	 * 
