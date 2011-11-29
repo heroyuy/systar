@@ -21,6 +21,7 @@ public class XMLCreateTest {
 		xmlObject2.putAttribute("type", "itouch");
 		xmlObject.addChild(xmlObject2);
 		System.out.println(xmlObject.toString());
+		xmlObject.saveAsFile("xml/createtest.xml");
 	}
 
 }

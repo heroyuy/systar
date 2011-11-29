@@ -1,27 +1,33 @@
 package com.soyostar.xml;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * XMLObject
+ * 
  * @author wp_g4
  * @since 20111117
  */
 public class XMLObject {
 
-	/**名称*/
+	/** 名称 */
 	private String name = "";
-	/**值*/
+	/** 值 */
 	private String value = "";
-	/**属性集*/
+	/** 属性集 */
 	private OrderedMap<String, String> attributeMap = new OrderedMap<String, String>();
-	/**子XMLObject对象集*/
+	/** 子XMLObject对象集 */
 	private List<XMLObject> childList = new LinkedList<XMLObject>();
 
 	/**
 	 * 设置XMLObject对象的名称
-	 * @param name 名称
+	 * 
+	 * @param name
+	 *            名称
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -29,28 +35,32 @@ public class XMLObject {
 
 	/**
 	 * 获取XMLObject对象的名称
+	 * 
 	 * @return XMLObject对象的名称
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * 设置XMLObject对象的值
-	 * @param value 值
+	 * 
+	 * @param value
+	 *            值
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * 获取XMLObject对象的值
+	 * 
 	 * @return XMLObject对象的值
 	 */
 	public String getValue() {
 		return value;
 	}
-	
+
 	/**
 	 * 添加属性
 	 * 
@@ -75,7 +85,9 @@ public class XMLObject {
 
 	/**
 	 * 获取属性值
-	 * @param name 属性名
+	 * 
+	 * @param name
+	 *            属性名
 	 * @return 属性值
 	 */
 	public String getAttribute(String name) {
@@ -85,10 +97,12 @@ public class XMLObject {
 		}
 		return attributeMap.get(name);
 	}
-	
+
 	/**
 	 * 添加子XMLObject对象
-	 * @param xmlObject 子XMLObject对象
+	 * 
+	 * @param xmlObject
+	 *            子XMLObject对象
 	 */
 	public void addChild(XMLObject xmlObject) {
 		childList.add(xmlObject);
@@ -107,16 +121,30 @@ public class XMLObject {
 
 	/**
 	 * 获取子XMLObject对象列表
+	 * 
 	 * @return 子XMLObject对象列表
 	 */
 	public XMLObject[] getChildList() {
 		return childList.toArray(new XMLObject[childList.size()]);
 	}
 
+	public void saveAsFile(String path) {
+		String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		String xmlContent = xmlHeader + this.toString();
+		try {
+			FileWriter fw = new FileWriter(new File(path));
+			fw.write(xmlContent);
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		boolean hasSonXMLObject = childList.size() != 0
-				|| !value.equals("");
+		boolean hasSonXMLObject = childList.size() != 0 || !value.equals("");
 		// 拼装头尾
 		String src = hasSonXMLObject ? ("<" + name + ">" + "</" + name + ">")
 				: ("<" + name + "/>");
