@@ -43,8 +43,8 @@ public class Emulator extends JDialog {
 	 * Create the dialog.
 	 */
 	public Emulator() {
-		ge.emulator = this;
 		setResizable(false);
+		ge.emulator = this;
 		setTitle("SoyoMakerEmulator");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel = new JPanel() {
