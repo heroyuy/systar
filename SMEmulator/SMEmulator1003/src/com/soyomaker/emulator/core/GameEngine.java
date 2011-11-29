@@ -57,8 +57,8 @@ public class GameEngine implements Runnable {
 
 	private GameEngine() {
 		loadConfig();
-		// luaState = LuaStateFactory.newLuaState();
-		// luaState.openLibs();
+		luaState = LuaStateFactory.newLuaState();
+		luaState.openLibs();
 	}
 
 	public int getActualFps() {
