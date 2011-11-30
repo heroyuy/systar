@@ -95,7 +95,6 @@ public class Emulator extends JDialog {
 		contentPanel.setLayout(null);
 		contentPanel.setPreferredSize(new Dimension(ge.getWidth(), ge
 				.getHeight()));
-		pack();
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -125,6 +124,7 @@ public class Emulator extends JDialog {
 				stopGame();
 			}
 		});
+		pack();
 	}
 
 	void repaintGame() {

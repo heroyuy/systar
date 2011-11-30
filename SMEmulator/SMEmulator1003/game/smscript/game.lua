@@ -21,12 +21,9 @@ painter:setColor(0xabcdef);
 painter:fillRect(0,0,800,480);
 painter:setColor(0xfefefe);
 painter:setTextSize(50);
-painter:drawString("HelloWorld!",301,201,0);
+painter:drawString("HelloWorld!",1,1,0);
 painter:setColor(0xefefef);
-painter:drawString("HelloWorld!",300,200,0);
-painter:setColor(0xffffff);
-painter:setTextSize(15);
-painter:drawString(smGameEngine:getActualFps().."",50,50,0);
+painter:drawString("HelloWorld!",0,430,0);
 painter:drawImage(img,0,0,0);
 end
 
