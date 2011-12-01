@@ -33,4 +33,8 @@ public class Equip extends Model {
 	private int statusNum;
 
 	private Status[] statuses;
+
+	// ------------Enemy装备特有字段------------
+
+	private int rate;
 }
