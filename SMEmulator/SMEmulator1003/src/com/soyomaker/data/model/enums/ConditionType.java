@@ -2,7 +2,9 @@ package com.soyomaker.data.model.enums;
 
 public enum ConditionType {
 
-	ROUND(0), HP(1), LEV(2), SWITCH(3), VARIABLE(4);
+	ACTION_ROUND(0), ACTION_HP(1), ACTION_LEV(2), ACTION_SWITCH(3), ACTION_VARIABLE(
+			4), EVENT_ROUND(0), EVENT_ENEMY(1), EVENT_ROLE(2), EVENT_SWITCH(3), EVENT_VARIABLE(
+			4), REMOVE_BATTLE(0), REMOVE_DAMAGE(1), REMOVE_ROUND(2);
 
 	private int id;
 
