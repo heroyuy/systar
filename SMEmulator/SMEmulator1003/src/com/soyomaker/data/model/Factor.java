@@ -2,7 +2,7 @@ package com.soyomaker.data.model;
 
 import com.soyomaker.data.model.enums.FactorType;
 
-public class Factor {
+public class Factor  extends Model{
 
 	private FactorType factorType;
 

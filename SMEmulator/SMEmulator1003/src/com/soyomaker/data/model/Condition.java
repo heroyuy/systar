@@ -2,7 +2,7 @@ package com.soyomaker.data.model;
 
 import com.soyomaker.data.model.enums.ConditionType;
 
-public class Condition {
+public class Condition   extends Model{
 
 	private ConditionType conditionType;
 
