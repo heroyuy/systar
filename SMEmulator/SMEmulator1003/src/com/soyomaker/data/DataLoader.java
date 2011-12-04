@@ -31,7 +31,6 @@ public class DataLoader {
 			for (int i = 0; i < map.getImageSetNum(); i++) {
 				ImageSet imageSet = new ImageSet();
 				imageSet.setId(dis.readInt());
-				System.out.println("imageSetId:"+imageSet.getId());
 				imageSet.setPath(dis.readUTF());
 				map.putImageSets(imageSet);
 			}

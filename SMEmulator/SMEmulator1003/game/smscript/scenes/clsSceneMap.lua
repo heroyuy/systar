@@ -29,6 +29,7 @@ end
 -- 绘图
 function clsSceneMap:paint(painter)
 smLog:info("地图场景绘制")
+painter:setColor(4294967295)
 painter:drawImage(g_mapBg,0,0,0)
 end
 

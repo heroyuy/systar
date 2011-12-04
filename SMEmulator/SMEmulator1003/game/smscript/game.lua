@@ -5,6 +5,8 @@ function onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
+  smGameEngine:setRatedFps(100)
+  smLog:setDebug(true)
   --创建地图场景
   game_sceneMap=clsSceneMap:new()
   game_curScene=nil;

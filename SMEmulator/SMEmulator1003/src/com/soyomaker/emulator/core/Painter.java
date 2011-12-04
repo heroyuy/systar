@@ -255,12 +255,9 @@ public class Painter {
 	 *            锚点
 	 */
 	public void drawString(String str, int x, int y, int anchor) {
-		long t = System.currentTimeMillis();
 		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
 		graphics.drawString(str, xy[0], xy[1]
 				- graphics.getFontMetrics().getDescent() + getTextSize());
-		t = System.currentTimeMillis() - t;
-		System.out.println("t:" + t);
 	}
 
 	/**
@@ -412,6 +409,7 @@ public class Painter {
 	 *            颜色
 	 */
 	public void setColor(int color) {
+		 System.out.println("color:0x" + Integer.toHexString(color));
 		java.awt.Color c = new java.awt.Color(color, false);
 		graphics.setColor(c);
 
