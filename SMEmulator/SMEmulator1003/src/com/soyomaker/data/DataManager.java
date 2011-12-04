@@ -19,6 +19,7 @@ public class DataManager {
 
 	private static DataManager instance;
 
+	/************************ DataHolder ************************/
 	private HashMap<Integer, Vocation> vocationMap = new HashMap<Integer, Vocation>();
 	private HashMap<Integer, Player> playerMap = new HashMap<Integer, Player>();
 	private HashMap<Integer, Skill> skillMap = new HashMap<Integer, Skill>();
@@ -31,6 +32,9 @@ public class DataManager {
 	private HashMap<Integer, NPC> npcMap = new HashMap<Integer, NPC>();
 	private HashMap<Integer, Animation> animationMap = new HashMap<Integer, Animation>();
 	private Config config = null;
+
+	/************************ DataLoader ************************/
+	DataLoader dataLoader = new DataLoader();
 
 	public static DataManager getInstance() {
 		if (instance == null) {
@@ -46,9 +50,16 @@ public class DataManager {
 	/************************************ 获取方法 ******************************************/
 
 	public Vocation getVocation(int id) {
-		if (vocationMap.size() == 0) {
+		if (!vocationMap.containsKey(id)) {
 
 		}
 		return vocationMap.get(id);
+	}
+
+	public Map getMap(int id) {
+		if (!mapMap.containsKey(id)) {
+			mapMap.put(id, dataLoader.loadMap(id));
+		}
+		return mapMap.get(id);
 	}
 }

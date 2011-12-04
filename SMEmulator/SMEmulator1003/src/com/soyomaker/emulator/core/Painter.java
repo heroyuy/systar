@@ -155,6 +155,28 @@ public class Painter {
 	}
 
 	/**
+	 * 绘制图片
+	 * 
+	 * @param img
+	 *            要绘制的图片
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
+	 */
+	public void drawImage(Image img, int srcx, int srcy, int width, int height,
+			int x, int y, int anchor) {
+		if (img == null) {
+			return;
+		}
+		int[] xy = convert(x, y, width, height, anchor);
+		graphics.drawImage(img.content, xy[0], xy[1], xy[0] + width, xy[1]
+				+ height, srcx, srcy, srcx + width, srcy + height, null);
+	}
+
+	/**
 	 * 绘制直线
 	 * 
 	 * @param x1
