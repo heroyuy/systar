@@ -56,16 +56,20 @@ public class Emulator extends JDialog {
 				if (painter == null || painter.getGraphics() != g) {
 					painter = new Painter(g);
 				}
+				// 清屏
+				painter.setColor(0x000000);
+				painter.fillRect(0, 0, ge.getWidth(), ge.getHeight());
+				// 绘制游戏
 				if (ge.running) {
 					ge.paintGame(painter);
 				}
 
+				// 显示FPS
 				if (ge.isShowFps()) {
-					// 显示FPS
 					painter.setColor(0xffffff);
-					painter.setTextSize(12);
-					painter.drawString(ge.getActualFps() + "", 0,
-							ge.getHeight() - painter.getTextSize(), Painter.LB);
+					painter.setTextSize(15);
+					painter.drawString(ge.getActualFps() + "", 10,
+							ge.getHeight(), Painter.LB);
 				}
 			}
 

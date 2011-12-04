@@ -3,6 +3,8 @@ function onStart()
   --导入需要的文件
   package.path = package.path .. ";.\\game\\smscript\\?.lua"
   require("requires")
+  --配置引擎
+  smGameEngine:setShowFps(true)
   --创建地图场景
   game_sceneMap=clsSceneMap:new()
   game_curScene=nil;
@@ -26,8 +28,6 @@ end
 --绘制屏幕
 function paint(painter)
   if game_curScene then
-    painter:setColor(0x000000)
-    painter:fillRect(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
     game_curScene:paint(painter)
   end
 end
