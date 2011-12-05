@@ -298,6 +298,8 @@ public class Image {
 	 *            区域高度
 	 */
 	public void clear(int x, int y, int width, int height) {
+		System.out.println("clear->x:" + x + " y:" + y + " w:" + width + " h:"
+				+ height);
 		for (int i = x; i < x + width; i++) {
 			for (int j = 0; j < y + height; j++) {
 				content.setRGB(i, j, 0);

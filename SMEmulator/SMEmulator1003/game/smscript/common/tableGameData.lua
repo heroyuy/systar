@@ -1,2 +1,2 @@
-g_gameData={player={x=0,y=0,w=32,h=32},}
+g_gameData={player={x=20,y=18,w=32,h=32},}
 
