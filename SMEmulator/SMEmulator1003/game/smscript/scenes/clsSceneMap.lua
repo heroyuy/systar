@@ -14,8 +14,19 @@ function clsSceneMap:onStart()
 end
 -- 处理触屏
 function clsSceneMap:onTouch(x,y,type)
+    local lx=math.floor(x/cellWidth)
+    local ly=math.floor(y/cellHeight)
+    smLog:info("lx:"..lx.." ly:"..ly.." px:"..g_gameData.player.x.." py:"..g_gameData.player.y)
 	if type == 0 then
-	smLog:info("地图场景-按下事件")
+	  if lx>g_gameData.player.x then
+	    g_gameData.player.x=g_gameData.player.x+1
+	  elseif lx<g_gameData.player.x then
+	    g_gameData.player.x=g_gameData.player.x-1
+	  elseif ly<g_gameData.player.y then
+	    g_gameData.player.y=g_gameData.player.y-1
+	  elseif ly>g_gameData.player.y then
+	    g_gameData.player.y=g_gameData.player.y+1
+	  end
 	end
 end
 
@@ -29,8 +40,8 @@ end
 -- 绘图
 function clsSceneMap:paint(painter)
 smLog:info("地图场景绘制")
-painter:setColor(4294967295)
-painter:drawImage(g_mapBg,0,0,0)
+clsSceneMap:paintMap(painter)
+clsSceneMap:paintPlayer(painter)
 end
 
 -- 退出
@@ -38,22 +49,23 @@ function clsSceneMap:onStop()
   smLog:info("地图场景退出")
 end
 
+--初始化地图
 function clsSceneMap:initMap()
   smLog:info("init map")
   --读地图数据
   g_mapData=smDataManager:getMap(0)
-  local row=g_mapData:getRowNum()
-  local col=g_mapData:getColNum()
-  local width=g_mapData:getCellWidth()
-  local height=g_mapData:getCellHeight()
-  smLog:info("row:"..row.." col:"..col.." width:"..width.." height:"..height)
+  mapRowNum=g_mapData:getRowNum()
+  mapColNum=g_mapData:getColNum()
+  cellWidth=g_mapData:getCellWidth()
+  cellHeight=g_mapData:getCellHeight()
+  smLog:info("mapRowNum:"..mapRowNum.." mapColNum:"..mapColNum.." cellWidth:"..cellWidth.." cellHeight:"..cellHeight)
   --创建bufferImage
   g_mapBg=smImageFactory:createImage(smGameEngine:getWidth(),smGameEngine:getHeight())
   g_bufferPainter=g_mapBg:getPainter()
   g_imageSet={}
   local layerNum=g_mapData:getLayerNum()
-  local rowNum=smGameEngine:getHeight()/height
-  local colNum=smGameEngine:getWidth()/width
+  local rowNum=smGameEngine:getHeight()/cellHeight
+  local colNum=smGameEngine:getWidth()/cellWidth
   smLog:info("layerNum:"..layerNum.." rowNum:"..rowNum.." colNum:"..colNum)
   --绘制缓冲图
   for i=0,layerNum-1 do
@@ -78,12 +90,27 @@ function clsSceneMap:initMap()
           end
           --绘制
           if imageSetId~=-1 then
-            local imgColNum=g_imageSet[imageSetId]:getWidth()/width
-            local sx=math.mod(tiledIndex,imgColNum)*width
-            local sy=math.floor(tiledIndex/imgColNum)*width
-            g_bufferPainter:drawImage(g_imageSet[imageSetId],sx,sy,width,height,k*width,j*height,0)
+            local imgColNum=g_imageSet[imageSetId]:getWidth()/cellWidth
+            local sx=math.mod(tiledIndex,imgColNum)*cellWidth
+            local sy=math.floor(tiledIndex/imgColNum)*cellWidth
+            g_bufferPainter:drawImage(g_imageSet[imageSetId],sx,sy,cellWidth,cellHeight,k*cellWidth,j*cellHeight,0)
           end
       end
     end
   end
 end
+
+--绘制地图
+function clsSceneMap:paintMap(painter)
+  painter:drawImage(g_mapBg,0,0,0)
+end
+
+--绘制角色
+function clsSceneMap:paintPlayer(painter)
+  painter:setColor(0xabcdef)
+  local x=g_gameData.player.x*cellWidth
+  local y=g_gameData.player.y*cellHeight
+  painter:fillRect(x,y,g_gameData.player.w,g_gameData.player.h);
+end
+
+

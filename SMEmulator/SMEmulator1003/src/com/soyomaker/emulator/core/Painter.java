@@ -409,7 +409,6 @@ public class Painter {
 	 *            颜色
 	 */
 	public void setColor(int color) {
-		 System.out.println("color:0x" + Integer.toHexString(color));
 		java.awt.Color c = new java.awt.Color(color, false);
 		graphics.setColor(c);
 
