@@ -109,6 +109,7 @@ function clsSceneMap:update()
   sx=nsx
   sy=nsy
   smLog:info(collectgarbage("count").."Kb")
+  collectgarbage("collect")
 end
 
 -- 绘图
