@@ -9,14 +9,14 @@ function clsSceneMap:new()
 end
 -- 开始
 function clsSceneMap:onStart()
-  --smLog:info("地图场景启动")
+  smLog:info("地图场景启动")
   clsSceneMap:initMap()
 end
 -- 处理触屏
 function clsSceneMap:onTouch(x,y,type)
     local lx=math.floor(x/cellWidth)
     local ly=math.floor(y/cellHeight)
-    --smLog:info("lx:"..(lx+sx).." ly:"..(ly+sy).." px:"..g_gameData.player.x.." py:"..g_gameData.player.y)
+    smLog:info("lx:"..(lx+sx).." ly:"..(ly+sy).." px:"..g_gameData.player.x.." py:"..g_gameData.player.y)
 	if type == 0 then
 	  if lx+sx>g_gameData.player.x then
 	    g_gameData.player.x=g_gameData.player.x+1
@@ -33,7 +33,7 @@ end
 
 -- 更新
 function clsSceneMap:update()
-  --smLog:info("地图场景更新")
+  smLog:info("地图场景更新")
   --计算新的起始位置
   local px=g_gameData.player.x
   local py=g_gameData.player.y
@@ -65,25 +65,25 @@ function clsSceneMap:update()
   end
   sx=nsx
   sy=nsy
-  --smLog:info(collectgarbage("count").."Kb")
+  smLog:info(collectgarbage("count").."Kb")
   collectgarbage("collect")
 end
 
 -- 绘图
 function clsSceneMap:paint(painter)
---smLog:info("地图场景绘制")
+smLog:info("地图场景绘制")
 clsSceneMap:paintMap(painter)
 clsSceneMap:paintPlayer(painter)
 end
 
 -- 退出
 function clsSceneMap:onStop()
-  --smLog:info("地图场景退出")
+  smLog:info("地图场景退出")
 end
 
 --初始化地图
 function clsSceneMap:initMap()
-  --smLog:info("init map")
+  smLog:info("init map")
   --读地图数据
   g_mapData=smDataManager:getMap(0)
   --取地图属性
@@ -91,7 +91,7 @@ function clsSceneMap:initMap()
   mapColNum=g_mapData:getColNum()
   cellWidth=g_mapData:getCellWidth()
   cellHeight=g_mapData:getCellHeight()
-  --smLog:info("mapRowNum:"..mapRowNum.." mapColNum:"..mapColNum.." cellWidth:"..cellWidth.." cellHeight:"..cellHeight)
+  smLog:info("mapRowNum:"..mapRowNum.." mapColNum:"..mapColNum.." cellWidth:"..cellWidth.." cellHeight:"..cellHeight)
   --创建bufferImage
   g_mapBg=smImageFactory:createImage(smGameEngine:getWidth(),smGameEngine:getHeight())
   g_mapBg_backup=smImageFactory:createImage(smGameEngine:getWidth(),smGameEngine:getHeight())
@@ -103,7 +103,7 @@ function clsSceneMap:initMap()
   --屏幕可显示的单元格行、列数
   screenRowNum=smGameEngine:getHeight()/cellHeight
   screenColNum=smGameEngine:getWidth()/cellWidth
-  --smLog:info("layerNum:"..layerNum.." screenRowNum:"..screenRowNum.." screenColNum:"..screenColNum)
+  smLog:info("layerNum:"..layerNum.." screenRowNum:"..screenRowNum.." screenColNum:"..screenColNum)
   --根据玩家当前位置计算起始单元格编号
   local px=g_gameData.player.x
   local py=g_gameData.player.y
@@ -122,23 +122,23 @@ function clsSceneMap:initMap()
   --绘制缓冲图
   for i=0,layerNum-1 do
     local layer=g_mapData:getLayer(i)
-    --smLog:info(layer:toString())
+    smLog:info(layer:toString())
     for j=sy,sy+screenRowNum-1 do
       for k=sx,sx+screenColNum-1 do
         local cell=layer:getCell(j,k)
-        --smLog:info(cell:toString())
+        smLog:info(cell:toString())
         local imageSetId=cell:getImageSetId()
         local tiledIndex=cell:getTiledIndex()
           --加载图集
-          --smLog:info("imageSetId:"..imageSetId)
+          smLog:info("imageSetId:"..imageSetId)
           if imageSetId~=-1 and g_imageSet[imageSetId]==nil then
-            --smLog:info("加载图集")
+            smLog:info("加载图集")
             local imageSet=g_mapData:getImageSet(imageSetId)
-            --smLog:info("--")
+            smLog:info("--")
             local path=imageSet:getPath()
-            --smLog:info(".\\game"..path)
+            smLog:info(".\\game"..path)
             g_imageSet[imageSetId]=smImageFactory:createImage(".\\game"..path)
-            --smLog:info(g_imageSet[imageSetId]:toString())
+            smLog:info(g_imageSet[imageSetId]:toString())
           end
           --绘制
           if imageSetId~=-1 then
@@ -168,42 +168,42 @@ end
 --右移
 function clsSceneMap:moveRight()
   --(1)清除原备份
-  --smLog:info("1")
+  smLog:info("1")
   local iw=g_mapBg_backup:getWidth()
   local ih=g_mapBg_backup:getHeight()
   g_mapBg_backup:clear(0,0,iw,ih)
   --(2)备份当前地图
-  --smLog:info("2")
+  smLog:info("2")
   g_mapBg_backup:getPainter():drawImage(g_mapBg,0,0,0)
   --(3)清除地图
-  --smLog:info("3")
+  smLog:info("3")
   g_mapBg:clear(0,0,g_mapBg_backup:getWidth(),g_mapBg_backup:getHeight())
   --(4)从备份中绘制地图的可用部分
-  --smLog:info("4")
+  smLog:info("4")
   g_bufferPainter:drawImage(g_mapBg_backup,cellWidth,0,smGameEngine:getWidth()-cellWidth,smGameEngine:getHeight(),0,0,0)
   --(5)从地图数据中绘制因移动显示出来的区域
   local colIndex=nsx+screenColNum-1
-  --smLog:info("nsx:"..nsx.." colIndex:"..colIndex)
+  smLog:info("nsx:"..nsx.." colIndex:"..colIndex)
   local layerNum=g_mapData:getLayerNum()
   --绘制缓冲图
   for i=0,layerNum-1 do
     local layer=g_mapData:getLayer(i)
-    --smLog:info(layer:toString())
+    smLog:info(layer:toString())
     for j=nsy,nsy+screenRowNum-1 do
       local cell=layer:getCell(j,colIndex)
-      --smLog:info(cell:toString())
+      smLog:info(cell:toString())
       local imageSetId=cell:getImageSetId()
       local tiledIndex=cell:getTiledIndex()
       --加载图集
-      --smLog:info("imageSetId:"..imageSetId)
+      smLog:info("imageSetId:"..imageSetId)
       if imageSetId~=-1 and g_imageSet[imageSetId]==nil then
-        --smLog:info("加载图集")
+        smLog:info("加载图集")
         local imageSet=g_mapData:getImageSet(imageSetId)
-        --smLog:info("--")
+        smLog:info("--")
         local path=imageSet:getPath()
-        --smLog:info(".\\game"..path)
+        smLog:info(".\\game"..path)
         g_imageSet[imageSetId]=smImageFactory:createImage(".\\game"..path)
-        --smLog:info(g_imageSet[imageSetId]:toString())
+        smLog:info(g_imageSet[imageSetId]:toString())
       end
       --绘制
       if imageSetId~=-1 then
@@ -219,42 +219,42 @@ end
 --左移
 function clsSceneMap:moveLeft()
   --(1)清除原备份
-  --smLog:info("1")
+  smLog:info("1")
   local iw=g_mapBg_backup:getWidth()
   local ih=g_mapBg_backup:getHeight()
   g_mapBg_backup:clear(0,0,iw,ih)
   --(2)备份当前地图
-  --smLog:info("2")
+  smLog:info("2")
   g_mapBg_backup:getPainter():drawImage(g_mapBg,0,0,0)
   --(3)清除地图
-  --smLog:info("3")
+  smLog:info("3")
   g_mapBg:clear(0,0,g_mapBg_backup:getWidth(),g_mapBg_backup:getHeight())
   --(4)从备份中绘制地图的可用部分
-  --smLog:info("4")
+  smLog:info("4")
   g_bufferPainter:drawImage(g_mapBg_backup,0,0,smGameEngine:getWidth()-cellWidth,smGameEngine:getHeight(),cellWidth,0,0)
   --(5)从地图数据中绘制因移动显示出来的区域
   local colIndex=nsx
-  --smLog:info("nsx:"..nsx.." colIndex:"..colIndex)
+  smLog:info("nsx:"..nsx.." colIndex:"..colIndex)
   local layerNum=g_mapData:getLayerNum()
   --绘制缓冲图
   for i=0,layerNum-1 do
     local layer=g_mapData:getLayer(i)
-    --smLog:info(layer:toString())
+    smLog:info(layer:toString())
     for j=nsy,nsy+screenRowNum-1 do
       local cell=layer:getCell(j,colIndex)
-      --smLog:info(cell:toString())
+      smLog:info(cell:toString())
       local imageSetId=cell:getImageSetId()
       local tiledIndex=cell:getTiledIndex()
       --加载图集
-      --smLog:info("imageSetId:"..imageSetId)
+      smLog:info("imageSetId:"..imageSetId)
       if imageSetId~=-1 and g_imageSet[imageSetId]==nil then
-        --smLog:info("加载图集")
+        smLog:info("加载图集")
         local imageSet=g_mapData:getImageSet(imageSetId)
-        --smLog:info("--")
+        smLog:info("--")
         local path=imageSet:getPath()
-        --smLog:info(".\\game"..path)
+        smLog:info(".\\game"..path)
         g_imageSet[imageSetId]=smImageFactory:createImage(".\\game"..path)
-        --smLog:info(g_imageSet[imageSetId]:toString())
+        smLog:info(g_imageSet[imageSetId]:toString())
       end
       --绘制
       if imageSetId~=-1 then
@@ -270,42 +270,42 @@ end
 --下移
 function clsSceneMap:moveDown()
   --(1)清除原备份
-  --smLog:info("1")
+  smLog:info("1")
   local iw=g_mapBg_backup:getWidth()
   local ih=g_mapBg_backup:getHeight()
   g_mapBg_backup:clear(0,0,iw,ih)
   --(2)备份当前地图
-  --smLog:info("2")
+  smLog:info("2")
   g_mapBg_backup:getPainter():drawImage(g_mapBg,0,0,0)
   --(3)清除地图
-  --smLog:info("3")
+  smLog:info("3")
   g_mapBg:clear(0,0,g_mapBg_backup:getWidth(),g_mapBg_backup:getHeight())
   --(4)从备份中绘制地图的可用部分
-  --smLog:info("4")
+  smLog:info("4")
   g_bufferPainter:drawImage(g_mapBg_backup,0,cellHeight,smGameEngine:getWidth(),smGameEngine:getHeight()-cellHeight,0,0,0)
   --(5)从地图数据中绘制因移动显示出来的区域
   local rowIndex=nsy+screenRowNum-1
-  --smLog:info("nsy:"..nsy.." rowIndex:"..rowIndex)
+  smLog:info("nsy:"..nsy.." rowIndex:"..rowIndex)
   local layerNum=g_mapData:getLayerNum()
   --绘制缓冲图
   for i=0,layerNum-1 do
     local layer=g_mapData:getLayer(i)
-    --smLog:info(layer:toString())
+    smLog:info(layer:toString())
     for j=nsx,nsx+screenColNum-1 do
       local cell=layer:getCell(rowIndex,j)
-      --smLog:info(cell:toString())
+      smLog:info(cell:toString())
       local imageSetId=cell:getImageSetId()
       local tiledIndex=cell:getTiledIndex()
       --加载图集
-      --smLog:info("imageSetId:"..imageSetId)
+      smLog:info("imageSetId:"..imageSetId)
       if imageSetId~=-1 and g_imageSet[imageSetId]==nil then
-        --smLog:info("加载图集")
+        smLog:info("加载图集")
         local imageSet=g_mapData:getImageSet(imageSetId)
-        --smLog:info("--")
+        smLog:info("--")
         local path=imageSet:getPath()
-        --smLog:info(".\\game"..path)
+        smLog:info(".\\game"..path)
         g_imageSet[imageSetId]=smImageFactory:createImage(".\\game"..path)
-        --smLog:info(g_imageSet[imageSetId]:toString())
+        smLog:info(g_imageSet[imageSetId]:toString())
       end
       --绘制
       if imageSetId~=-1 then
@@ -321,42 +321,42 @@ end
 --上移
 function clsSceneMap:moveUp()
   --(1)清除原备份
-  --smLog:info("1")
+  smLog:info("1")
   local iw=g_mapBg_backup:getWidth()
   local ih=g_mapBg_backup:getHeight()
   g_mapBg_backup:clear(0,0,iw,ih)
   --(2)备份当前地图
-  --smLog:info("2")
+  smLog:info("2")
   g_mapBg_backup:getPainter():drawImage(g_mapBg,0,0,0)
   --(3)清除地图
-  --smLog:info("3")
+  smLog:info("3")
   g_mapBg:clear(0,0,g_mapBg_backup:getWidth(),g_mapBg_backup:getHeight())
   --(4)从备份中绘制地图的可用部分
-  --smLog:info("4")
+  smLog:info("4")
   g_bufferPainter:drawImage(g_mapBg_backup,0,0,smGameEngine:getWidth(),smGameEngine:getHeight()-cellHeight,0,cellHeight,0)
   --(5)从地图数据中绘制因移动显示出来的区域
   local rowIndex=nsy
-  --smLog:info("nsy:"..nsy.." rowIndex:"..rowIndex)
+  smLog:info("nsy:"..nsy.." rowIndex:"..rowIndex)
   local layerNum=g_mapData:getLayerNum()
   --绘制缓冲图
   for i=0,layerNum-1 do
     local layer=g_mapData:getLayer(i)
-    --smLog:info(layer:toString())
+    smLog:info(layer:toString())
     for j=nsx,nsx+screenColNum-1 do
       local cell=layer:getCell(rowIndex,j)
-      --smLog:info(cell:toString())
+      smLog:info(cell:toString())
       local imageSetId=cell:getImageSetId()
       local tiledIndex=cell:getTiledIndex()
       --加载图集
-      --smLog:info("imageSetId:"..imageSetId)
+      smLog:info("imageSetId:"..imageSetId)
       if imageSetId~=-1 and g_imageSet[imageSetId]==nil then
-        --smLog:info("加载图集")
+        smLog:info("加载图集")
         local imageSet=g_mapData:getImageSet(imageSetId)
-        --smLog:info("--")
+        smLog:info("--")
         local path=imageSet:getPath()
-        --smLog:info(".\\game"..path)
+        smLog:info(".\\game"..path)
         g_imageSet[imageSetId]=smImageFactory:createImage(".\\game"..path)
-        --smLog:info(g_imageSet[imageSetId]:toString())
+        smLog:info(g_imageSet[imageSetId]:toString())
       end
       --绘制
       if imageSetId~=-1 then
