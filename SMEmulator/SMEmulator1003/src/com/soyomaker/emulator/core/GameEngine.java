@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.keplerproject.luajava.LuaException;
+import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.xml.sax.SAXException;
@@ -42,6 +43,8 @@ public class GameEngine implements Runnable {
 
 	private boolean showFps = false;// 是否显示FPS
 
+	private boolean showStatusBar = true;// 是否显示状态栏
+
 	private long time = 0;
 
 	Emulator emulator = null;
@@ -70,20 +73,37 @@ public class GameEngine implements Runnable {
 		return height;
 	}
 
-	public int getRatedFps() {
-		return ratedFps;
+	float getLuaMemory() {
+		luaState.getGlobal("collectgarbage");
+		try {
+			luaState.pushObjectValue("count");
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(1, 1);
+		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
+		LuaObject lobj = luaState.getLuaObject("result");
+		return (float) (lobj.getNumber() * 1024);
 	}
 
-	public int getWidth() {
-		return width;
+	public int getRatedFps() {
+		return ratedFps;
 	}
 
 	public int getSystemMilliTime() {
 		return (int) (System.currentTimeMillis() - time);
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
 	public boolean isShowFps() {
 		return showFps;
+	}
+
+	public boolean isShowStatusBar() {
+		return showStatusBar;
 	}
 
 	/**
@@ -95,6 +115,8 @@ public class GameEngine implements Runnable {
 			width = config.getFirstXMLObject("width").getIntValue();
 			height = config.getFirstXMLObject("height").getIntValue();
 			ratedFps = config.getFirstXMLObject("fps").getIntValue();
+			showStatusBar = Boolean.parseBoolean(config.getFirstXMLObject(
+					"showStatusBar").getStringValue());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

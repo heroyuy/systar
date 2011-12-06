@@ -15,6 +15,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.border.BevelBorder;
+import javax.swing.JLabel;
+import java.awt.Point;
+import java.text.DecimalFormat;
+
+import javax.swing.SwingConstants;
+import javax.swing.JProgressBar;
 
 public class Emulator extends JDialog {
 
@@ -35,9 +43,13 @@ public class Emulator extends JDialog {
 
 	private GameEngine ge = GameEngine.getInstance();
 
+	private Timer timer = null;
+
 	private JPanel contentPanel = null;
 
 	private Painter painter = null;
+	private JProgressBar progressBar;
+	private JLabel labelLuaMemory;
 
 	/**
 	 * Create the dialog.
@@ -46,7 +58,6 @@ public class Emulator extends JDialog {
 		setResizable(false);
 		ge.emulator = this;
 		setTitle("SoyoMakerEmulator");
-		getContentPane().setLayout(new BorderLayout());
 		contentPanel = new JPanel() {
 
 			private static final long serialVersionUID = 7608812515686704871L;
@@ -62,14 +73,13 @@ public class Emulator extends JDialog {
 				// 绘制游戏
 				if (ge.running) {
 					ge.paintGame(painter);
-				}
-
-				// 显示FPS
-				if (ge.isShowFps()) {
-					painter.setColor(0xffffff);
-					painter.setTextSize(15);
-					painter.drawString(ge.getActualFps() + "", 10,
-							ge.getHeight(), Painter.LB);
+					// 显示FPS
+					if (ge.isShowFps()) {
+						painter.setColor(0xffffff);
+						painter.setTextSize(20);
+						painter.drawString("FPS:" + ge.getActualFps() + "", 20,
+								ge.getHeight() - 10, Painter.LB);
+					}
 				}
 			}
 
@@ -95,10 +105,69 @@ public class Emulator extends JDialog {
 		};
 		contentPanel.addMouseListener(mouseAdapter);
 		contentPanel.addMouseMotionListener(mouseAdapter);
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().setLayout(new BorderLayout(0, 0));
+		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		contentPanel.setPreferredSize(new Dimension(ge.getWidth(), ge
 				.getHeight()));
+
+		if (ge.isShowStatusBar()) {
+
+			JPanel panel = new JPanel();
+			panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
+					null, null));
+			panel.setPreferredSize(new Dimension(10, 20));
+			panel.setSize(new Dimension(0, 20));
+			getContentPane().add(panel, BorderLayout.SOUTH);
+			panel.setLayout(null);
+
+			JLabel lblNewLabel = new JLabel("内存占用");
+			lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+			lblNewLabel.setSize(new Dimension(0, 20));
+			lblNewLabel.setPreferredSize(new Dimension(48, 20));
+			lblNewLabel.setLocation(new Point(5, 0));
+			lblNewLabel.setBounds(10, 0, 54, 15);
+			panel.add(lblNewLabel);
+
+			JLabel lblJava = new JLabel("Java:");
+			lblJava.setBounds(100, 0, 31, 15);
+			panel.add(lblJava);
+
+			progressBar = new JProgressBar();
+			progressBar.setBounds(141, 1, 146, 14);
+			progressBar.setStringPainted(true);
+			panel.add(progressBar);
+
+			JLabel lblLua = new JLabel("Lua:");
+			lblLua.setBounds(340, 0, 25, 15);
+			panel.add(lblLua);
+
+			labelLuaMemory = new JLabel("0KB");
+			labelLuaMemory.setBounds(375, 0, 123, 15);
+			panel.add(labelLuaMemory);
+
+			// 更新内存状态
+			timer = new Timer(1000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// Lua
+					if (ge.running) {
+						labelLuaMemory.setText(convertMemoryInfo(ge
+								.getLuaMemory()));
+					}
+					// Java
+					long totalMemory = Runtime.getRuntime().totalMemory();
+					long freeMemory = Runtime.getRuntime().freeMemory();
+					progressBar.setMaximum((int) totalMemory);
+					progressBar.setValue((int) (totalMemory - freeMemory));
+					progressBar.setString(convertMemoryInfo(totalMemory
+							- freeMemory)
+							+ "/" + convertMemoryInfo(totalMemory));
+				}
+			});
+			timer.start();
+		}
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -147,6 +216,23 @@ public class Emulator extends JDialog {
 	 */
 	private void stopGame() {
 		ge.stop();
+		this.repaintGame();// 清屏
+		labelLuaMemory.setText("0KB");
 	}
 
+	private String convertMemoryInfo(float memory) {
+		String res = "";
+		float temp = 0;
+		DecimalFormat dcmFmt = new DecimalFormat("0.00");
+		if ((temp = memory / 1024 / 1024 / 1024) > 1) {
+			res = dcmFmt.format(temp) + "GB";
+		} else if ((temp = memory / 1024 / 1024) > 1) {
+			res = dcmFmt.format(temp) + "MB";
+		} else if ((temp = memory / 1024) > 1) {
+			res = dcmFmt.format(temp) + "KB";
+		} else {
+			res = dcmFmt.format(temp) + "B";
+		}
+		return res;
+	}
 }
