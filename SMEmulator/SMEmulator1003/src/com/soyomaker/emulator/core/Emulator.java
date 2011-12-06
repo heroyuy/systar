@@ -50,6 +50,8 @@ public class Emulator extends JDialog {
 	private Painter painter = null;
 	private JProgressBar progressBar;
 	private JLabel labelLuaMemory;
+	private JMenuItem menuItemRun;
+	private JMenuItem menuItemStop;
 
 	/**
 	 * Create the dialog.
@@ -175,21 +177,26 @@ public class Emulator extends JDialog {
 		JMenu mnNewMenu = new JMenu("菜单");
 		menuBar.add(mnNewMenu);
 
-		JMenuItem menuItem = new JMenuItem("运行");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemRun = new JMenuItem("运行");
+		menuItemRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuItemRun.setEnabled(false);
 				startGame();
+				menuItemStop.setEnabled(true);
 			}
 		});
-		mnNewMenu.add(menuItem);
+		mnNewMenu.add(menuItemRun);
 
-		JMenuItem menuItem_1 = new JMenuItem("停止");
-		menuItem_1.addActionListener(new ActionListener() {
+		menuItemStop = new JMenuItem("停止");
+		menuItemStop.setEnabled(false);
+		menuItemStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuItemStop.setEnabled(false);
 				stopGame();
+				menuItemRun.setEnabled(true);
 			}
 		});
-		mnNewMenu.add(menuItem_1);
+		mnNewMenu.add(menuItemStop);
 
 		this.addWindowListener(new WindowAdapter() {
 			@Override
