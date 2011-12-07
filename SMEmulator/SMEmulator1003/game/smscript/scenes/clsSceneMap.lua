@@ -1,17 +1,20 @@
 clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
+
 function clsSceneMap:new()
 	local self = {}
 	self = clsScene:new()
 	setmetatable(self,clsSceneMap)
 	return self
 end
+
 -- 开始
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   clsSceneMap:initMap()
 end
+
 -- 处理触屏
 function clsSceneMap:onTouch(x,y,type)
     local lx=math.floor(x/cellWidth)
@@ -30,9 +33,13 @@ function clsSceneMap:onTouch(x,y,type)
 	end
 end
 
-
+local x=0
 -- 更新
 function clsSceneMap:update()
+  x=x+1
+  if math.mod(x,1)==0 then
+    g_gameData.player.x=g_gameData.player.x+1
+  end
   smLog:info("地图场景更新")
   --计算新的起始位置
   local px=g_gameData.player.x
