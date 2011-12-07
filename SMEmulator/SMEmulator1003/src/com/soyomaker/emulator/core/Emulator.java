@@ -208,7 +208,9 @@ public class Emulator extends JDialog {
 	}
 
 	void repaintGame() {
-		contentPanel.repaint();
+//		 contentPanel.repaint();
+		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(),
+				contentPanel.getWidth(), contentPanel.getHeight());
 	}
 
 	/**

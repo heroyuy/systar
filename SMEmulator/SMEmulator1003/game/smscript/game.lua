@@ -5,8 +5,8 @@ function onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(20)
-  smLog:setDebug(false)
+  smGameEngine:setRatedFps(30)
+  smLog:setDebug(true)
   --加载数据
   dofile(".\\game\\smscript\\GameData.data")
   --创建地图场景
