@@ -1,161 +1,343 @@
 package com.soyostar.lua;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+import com.soyostar.lua.util.LuaFileUtil;
+
+/**
+ * Lua表
+ * 
+ * @author wp_g4
+ * 
+ */
 public class LuaTable {
 
-	private List<LuaNode> childList = new LinkedList<LuaNode>();
+	private List<LuaNode> nodeList = new LinkedList<LuaNode>();// 结点列表
 
-	public void addChild(byte child) {
-		childList.add(new LuaNode(child));
-	}
-	
-	public void addChild(String key,byte child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(byte node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(byte[] childs) {
-		for (byte child : childs) {
-			childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, byte node) {
+		nodeList.add(new LuaNode(key, node));
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(byte[] nodes) {
+		for (byte node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(boolean child) {
-		childList.add(new LuaNode(child));
-	}
-	
-	public void addChild(String key,boolean child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(boolean node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(boolean[] childs) {
-		for (boolean child : childs) {
-			childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, boolean node) {
+		nodeList.add(new LuaNode(key, node));
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(boolean[] nodes) {
+		for (boolean node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(short child) {
-		childList.add(new LuaNode(child));
-	}
-	
-	public void addChild(String key,short child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(short node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(short[] childs) {
-		for (short child : childs) {
-			childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, short node) {
+		nodeList.add(new LuaNode(key, node));
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(short[] nodes) {
+		for (short node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(int child) {
-		childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(int node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(String key,int child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, int Node) {
+		nodeList.add(new LuaNode(key, Node));
 	}
-	
-	public void addChild(int[] childs) {
-		for (int child : childs) {
-			childList.add(new LuaNode(child));
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(int[] nodes) {
+		for (int node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(long child) {
-		childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(long node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(String key,long child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, long node) {
+		nodeList.add(new LuaNode(key, node));
 	}
-	
-	public void addChild(long[] childs) {
-		for (long child : childs) {
-			childList.add(new LuaNode(child));
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(long[] nodes) {
+		for (long node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(float child) {
-		childList.add(new LuaNode(child));
-	}
-	
-	public void addChild(String key,float child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(float node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(float[] childs) {
-		for (float child : childs) {
-			childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, float node) {
+		nodeList.add(new LuaNode(key, node));
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(float[] nodes) {
+		for (float node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(double child) {
-		childList.add(new LuaNode(child));
-	}
-	
-	public void addChild(String key,double child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(double node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(double[] childs) {
-		for (double child : childs) {
-			childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, double node) {
+		nodeList.add(new LuaNode(key, node));
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(double[] nodes) {
+		for (double node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
 
-	public void addChild(String child) {
-		childList.add(new LuaNode(child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(String key,String child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, String node) {
+		nodeList.add(new LuaNode(key, node));
 	}
-	
-	public void addChild(String[] childs) {
-		for (String child : childs) {
-			childList.add(new LuaNode(child));
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(String[] nodes) {
+		for (String node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
-	
-	public void addChild(LuaTable child) {
-		childList.add(new LuaNode(child));
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(LuaTable node) {
+		nodeList.add(new LuaNode(node));
 	}
 
-	public void addChild(String key,LuaTable child) {
-		childList.add(new LuaNode(key,child));
+	/**
+	 * 添加结点
+	 * 
+	 * @param key
+	 *            健
+	 * @param node
+	 *            结点
+	 */
+	public void addNode(String key, LuaTable node) {
+		nodeList.add(new LuaNode(key, node));
 	}
-	
-	public void addChild(LuaTable[] childs) {
-		for (LuaTable child : childs) {
-			childList.add(new LuaNode(child));
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param nodes
+	 *            结点数组
+	 */
+	public void addNode(LuaTable[] nodes) {
+		for (LuaTable node : nodes) {
+			nodeList.add(new LuaNode(node));
 		}
 	}
-
-
-
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		// (1)、拼接自身
 		sb.append("{}");
 		// (2)、拼接子对象
-		StringBuffer childSb = new StringBuffer();
-		for (int i = 0; i < childList.size(); i++) {
-			LuaNode child = childList.get(i);
+		StringBuffer NodeSb = new StringBuffer();
+		for (int i = 0; i < nodeList.size(); i++) {
+			LuaNode Node = nodeList.get(i);
 			// a 清空
-			childSb.setLength(0);
+			NodeSb.setLength(0);
 			// b 内容
-			childSb.append(child);
+			NodeSb.append(Node);
 			// c 分隔符
-			if (i != childList.size() - 1) {
-				childSb.append(",");
+			if (i != nodeList.size() - 1) {
+				NodeSb.append(",");
 			}
-			sb.insert(sb.length() - 1, childSb);
+			sb.insert(sb.length() - 1, NodeSb);
 		}
 		return sb.toString();
 	}
@@ -165,14 +347,15 @@ public class LuaTable {
 	 */
 	public static void main(String[] args) {
 		LuaTable lt = new LuaTable();
-		lt.addChild(1);
-		lt.addChild("2");
+		lt.addNode(1);
+		lt.addNode("2");
 		LuaTable ltId = new LuaTable();
-		ltId.addChild("id",101.001);
-		ltId.addChild("playerId");
-		lt.addChild(ltId);
-		lt.addChild(false);
+		ltId.addNode(101.001);
+		ltId.addNode("playerId");
+		lt.addNode("id", ltId);
+		lt.addNode(false);
 		System.out.println(lt);
+		LuaFileUtil.writeToFile(lt, "res/sth.gat");
 	}
 
 }
