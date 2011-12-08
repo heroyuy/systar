@@ -13,8 +13,8 @@ import org.keplerproject.luajava.LuaStateFactory;
 import org.xml.sax.SAXException;
 
 import com.soyomaker.data.DataManager;
-import com.soyomaker.emulator.api.ImageFactory;
-import com.soyomaker.emulator.api.SMLog;
+import com.soyomaker.emulator.utils.ImageFactory;
+import com.soyomaker.emulator.utils.SMLog;
 import com.soyostar.xml.NoSuchXMLObjectException;
 import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
