@@ -10,7 +10,7 @@ function onStart()
   --加载数据
   dofile(".\\game\\smscript\\GameData.data")
   --test
-  globalDataLoader:loadPlayer()
+  smDataLoader:loadPlayer()
   --创建地图场景
   game_sceneMap=clsSceneMap:new()
   game_curScene=nil;

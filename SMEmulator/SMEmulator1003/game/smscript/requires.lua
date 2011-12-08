@@ -6,4 +6,5 @@ package.path = package.path .. ";.\\game\\smscript\\common\\utils\\?.lua"
 -- 场景
 require("clsScene")
 require("clsSceneMap")
-require("globalDataLoader")
+require("DataLoader")
+require("System")
