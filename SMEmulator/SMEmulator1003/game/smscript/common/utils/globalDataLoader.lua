@@ -3,11 +3,10 @@ globalDataLoader={}
 globalDataLoader.loadPlayer=function()
   smLog:setDebug(true)
   local t=os.time()
-  dofile(".\\game\\luadata\\player.gat")
+  dofile(".\\game\\luadata\\test.gat")
   t=os.time()-t
   smLog:info("time"..t)
-  --smLog:info("name:"..players[0])
-  print(players[0])
-  io.flush()
+  print(item)
+  smLog:info(item.name)
   smLog:setDebug(false)
 end
