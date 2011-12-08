@@ -208,7 +208,7 @@ public class Emulator extends JDialog {
 	}
 
 	void repaintGame() {
-//		 contentPanel.repaint();
+		// contentPanel.repaint();
 		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(),
 				contentPanel.getWidth(), contentPanel.getHeight());
 	}
@@ -226,7 +226,9 @@ public class Emulator extends JDialog {
 	private void stopGame() {
 		ge.stop();
 		this.repaintGame();// 清屏
-		labelLuaMemory.setText("0KB");
+		if (ge.isShowStatusBar()) {
+			labelLuaMemory.setText("0KB");
+		}
 	}
 
 	private String convertMemoryInfo(float memory) {

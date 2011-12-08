@@ -5,7 +5,7 @@ function onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(40)
+  smGameEngine:setRatedFps(50)
   smLog:setDebug(false)
   --加载数据
   dofile(".\\game\\smscript\\GameData.data")
