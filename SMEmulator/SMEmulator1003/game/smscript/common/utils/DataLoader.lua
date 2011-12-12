@@ -6,6 +6,9 @@
 
 smDataLoader={}
 
+--初始化数据字典
+globalDictionary={map={},npc={}}
+
 --定义文件路径
 smDataLoader.vocationPath=".\\game\\luadata\\vocation.gat";
 smDataLoader.playerPath=".\\game\\luadata\\player.gat";
@@ -15,7 +18,7 @@ smDataLoader.equipPath=".\\game\\luadata\\equip.gat";
 smDataLoader.enemyPath=".\\game\\luadata\\enemy.gat";
 smDataLoader.enemyTroopPath=".\\game\\luadata\\enemyTroop.gat";
 smDataLoader.statusPath=".\\game\\luadata\\status.gat";
-smDataLoader.mapPath=".\\game\\luadata\\map{index}.gat";
+smDataLoader.mapPath=".\\game\\luadata\\map\\map{index}.gat";
 smDataLoader.npcPath=".\\game\\luadata\\npc{index}.gat";
 smDataLoader.animationPath=".\\game\\luadata\\animation.gat";
 smDataLoader.systemPath=".\\game\\luadata\\system.gat";
@@ -28,6 +31,9 @@ end
 --加载Player数据
 smDataLoader.loadPlayer=function()
   dofile(smDataLoader.playerPath)
+  smLog:setDebug(true)
+  smLog:info(globalDictionary.players[1].name)
+  smLog:setDebug(false)
 end
 
 --加载Skill数据
@@ -62,14 +68,16 @@ end
 
 --加载Map数据
 smDataLoader.loadMap=function(id)
-  local path=string.gsub(smDataLoader.mapPath,"{index}",id)
+  local t=os.time()
+  local path=string.gsub(smDataLoader.mapPath,"{index}",0)
   dofile(path)
+  t=os.time()-t
+  print(t)
 end
 
 --加载NPC数据
 smDataLoader.loadNPC=function(id)
-  local path=string.gsub(smDataLoader.npcPath,"{index}",id)
-  dofile(path)
+  dofile(".\\game\\luadata\\map\\map0.gat")
 end
 
 --加载Animation数据

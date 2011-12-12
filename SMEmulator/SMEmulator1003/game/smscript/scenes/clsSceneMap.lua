@@ -37,7 +37,7 @@ local x=0
 -- 更新
 function clsSceneMap:update()
   x=x+1
-  if math.mod(x,4)==0 then
+  if math.mod(x,2)==0 then
     g_gameData.player.x=g_gameData.player.x+1
   end
   smLog:info("地图场景更新")

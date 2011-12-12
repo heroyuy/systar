@@ -4,17 +4,19 @@ function onStart()
   package.path = package.path .. ";.\\game\\smscript\\?.lua"
   require("requires")
   --配置引擎
-  smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(50)
-  smLog:setDebug(false)
+  --smGameEngine:setShowFps(true)
+  --smGameEngine:setRatedFps(50)
+  --smLog:setDebug(false)
   --加载数据
-  dofile(".\\game\\smscript\\GameData.data")
+  --dofile(".\\game\\smscript\\GameData.data")
   --test
-  smDataLoader:loadPlayer()
+  smDataLoader:loadMap(12)
+  globalDictionary=nil  
+  collectgarbage("collect")
   --创建地图场景
-  game_sceneMap=clsSceneMap:new()
-  game_curScene=nil;
-  changeScene(0)
+  --game_sceneMap=clsSceneMap:new()
+  --game_curScene=nil;
+  --changeScene(0)
 end
 
 --触屏事件
