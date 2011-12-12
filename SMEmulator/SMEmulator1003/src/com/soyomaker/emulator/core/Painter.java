@@ -1,5 +1,6 @@
 package com.soyomaker.emulator.core;
 
+import java.awt.AlphaComposite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,10 +50,16 @@ public class Painter {
 	 */
 	public static final int RB = 8;
 
-	private Graphics graphics = null;
-	private Point point = null;
-	private Rect curClip = null;
+	private Graphics graphics = null;// 图形上下文
+	private Point point = null;// 原点
+	private Rect curClip = null;// 当前裁剪区
 
+	/**
+	 * 创建画笔
+	 * 
+	 * @param graphics
+	 *            图形上下文
+	 */
 	Painter(Graphics graphics) {
 		this.graphics = graphics;
 		((Graphics2D) this.graphics).setRenderingHint(
@@ -62,24 +69,47 @@ public class Painter {
 		setTextSize(12);
 	}
 
+	/**
+	 * 裁剪区域
+	 * 
+	 * @param x
+	 *            区域x坐标
+	 * @param y
+	 *            区域y坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 */
 	void clipRect(int x, int y, int width, int height) {
 		graphics.clipRect(x, y, width, height);
 	}
 
+	/**
+	 * 裁剪区域
+	 * 
+	 * @param rect
+	 *            区域
+	 */
 	void clipRect(Rect rect) {
 		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
 				rect.getHeight());
 	}
 
 	/**
-	 * ������ת�����
+	 * 坐标转换
 	 * 
 	 * @param x
+	 *            x坐标
 	 * @param y
+	 *            y坐标
 	 * @param width
+	 *            宽度
 	 * @param height
+	 *            高度
 	 * @param anchor
-	 * @return
+	 *            锚点
+	 * @return 新的坐标
 	 */
 	private int[] convert(int x, int y, int width, int height, int anchor) {
 		int[] xy = { 0, 0 };
@@ -135,6 +165,27 @@ public class Painter {
 	}
 
 	/**
+	 * 将图像的源区域拷贝到指定点
+	 * 
+	 * @param x
+	 *            源区域x坐标
+	 * @param y
+	 *            源区域y坐标
+	 * @param width
+	 *            源区域宽度
+	 * @param height
+	 *            源区域高度
+	 * @param dx
+	 *            指定点x坐标
+	 * @param dy
+	 *            指定点y坐标
+	 */
+	public void copyArea(int x, int y, int width, int height, int dx, int dy) {
+		((Graphics2D) graphics).setComposite(AlphaComposite.Src);
+		graphics.copyArea(x, y, width, height, dx - x, dy - y);
+	}
+
+	/**
 	 * 绘制图片
 	 * 
 	 * @param img
@@ -151,18 +202,26 @@ public class Painter {
 			return;
 		}
 		int[] xy = convert(x, y, img.getWidth(), img.getHeight(), anchor);
-		graphics.drawImage(img.content, xy[0], xy[1], null);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], null);
 	}
 
 	/**
-	 * 绘制图片
+	 * 绘制图片的指定区域
 	 * 
 	 * @param img
 	 *            要绘制的图片
+	 * @param srcx
+	 *            指定区域的x坐标
+	 * @param srcy
+	 *            指定区域的y坐标
+	 * @param width
+	 *            指定区域的宽度
+	 * @param height
+	 *            指定区域的高度
 	 * @param x
-	 *            绘制的位置的 x 坐标
+	 *            绘制位置的 x 坐标
 	 * @param y
-	 *            绘制的位置的 y 坐标
+	 *            绘制位置的 y 坐标
 	 * @param anchor
 	 *            锚点
 	 */
@@ -172,7 +231,7 @@ public class Painter {
 			return;
 		}
 		int[] xy = convert(x, y, width, height, anchor);
-		graphics.drawImage(img.content, xy[0], xy[1], xy[0] + width, xy[1]
+		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1]
 				+ height, srcx, srcy, srcx + width, srcy + height, null);
 	}
 
@@ -310,11 +369,22 @@ public class Painter {
 		graphics.fillRoundRect(x, y, width, height, arcSize, arcSize);
 	}
 
+	/**
+	 * 强制裁剪
+	 * 
+	 * @param clip
+	 *            裁剪区
+	 */
 	void forceClip(Rect clip) {
 		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(),
 				clip.getHeight());
 	}
 
+	/**
+	 * 获取基准点
+	 * 
+	 * @return 基准点
+	 */
 	Point getBasePoint() {
 		return new Point(point);
 	}
@@ -335,14 +405,24 @@ public class Painter {
 	 * 
 	 * @return 当前画笔颜色
 	 */
-	public int getColor() {
-		return graphics.getColor().getRGB();
+	public Color getColor() {
+		return new Color(graphics.getColor().getRGB());
 	}
 
+	/**
+	 * 获取当前裁剪区
+	 * 
+	 * @return 当前裁剪区
+	 */
 	Rect getCurClip() {
 		return curClip;
 	}
 
+	/**
+	 * 获取图形上下文
+	 * 
+	 * @return 图形上下文
+	 */
 	Graphics getGraphics() {
 		return graphics;
 	}
@@ -356,6 +436,14 @@ public class Painter {
 		return graphics.getFont().getSize();
 	}
 
+	/**
+	 * 设置基准点
+	 * 
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 */
 	void setBasePoint(int x, int y) {
 		graphics.translate(x, y);
 		point.setX(point.getX() + x);
@@ -363,6 +451,12 @@ public class Painter {
 
 	}
 
+	/**
+	 * 设置基准点
+	 * 
+	 * @param point
+	 *            基准点
+	 */
 	void setBasePoint(Point point) {
 		graphics.translate(point.getX(), point.getY());
 		this.point.setX(this.point.getX() + point.getX());
@@ -408,16 +502,28 @@ public class Painter {
 	 * @param color
 	 *            颜色
 	 */
-	public void setColor(int color) {
-		java.awt.Color c = new java.awt.Color(color, false);
+	public void setColor(Color color) {
+		java.awt.Color c = new java.awt.Color(color.getArgb(), true);
 		graphics.setColor(c);
 
 	}
 
+	/**
+	 * 设置当前裁剪区
+	 * 
+	 * @param curClip
+	 *            裁剪区
+	 */
 	void setCurClip(Rect curClip) {
 		this.curClip = curClip;
 	}
 
+	/**
+	 * 设置图形上下文
+	 * 
+	 * @param graphics
+	 *            图形上下文
+	 */
 	void setGraphics(Graphics graphics) {
 		this.graphics = graphics;
 	}

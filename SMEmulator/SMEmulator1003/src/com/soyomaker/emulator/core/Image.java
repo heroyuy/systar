@@ -3,13 +3,14 @@ package com.soyomaker.emulator.core;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.IndexColorModel;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
 /**
  * 图形图像
@@ -28,19 +29,11 @@ public class Image {
 	public static final byte VERTICAL = 1;
 
 	/* ----------------------------- 字段 ----------------------------- */
-	BufferedImage content = null;// 图片上下文
-
-	private BufferedImage contentBackup = null;// 图片上下文的备份
+	private BufferedImage content = null;// 图片上下文
 
 	private Painter painter = null;
 
 	/* ----------------------------- 构造 ----------------------------- */
-	/**
-	 * 私有构造
-	 */
-	private Image() {
-
-	}
 
 	/**
 	 * 创建指定大小的图片
@@ -52,8 +45,7 @@ public class Image {
 	 */
 	public Image(int width, int height) {
 		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+		painter = new Painter(content.getGraphics());
 	}
 
 	/**
@@ -65,25 +57,31 @@ public class Image {
 	public Image(String fileName) {
 		try {
 			content = ImageIO.read(new File(fileName));
+			painter = new Painter(content.getGraphics());
+			if (content.getColorModel() instanceof IndexColorModel) {
+				BufferedImage temp = content;
+				content = new BufferedImage(temp.getWidth(), temp.getHeight(),
+						BufferedImage.TYPE_INT_ARGB);
+				content.getGraphics().drawImage(temp, 0, 0, null);
+				painter = new Painter(content.getGraphics());
+			}
 		} catch (IOException ex) {
 			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
 	}
 
 	/**
-	 * 复制
+	 * 根据指定的Image对象创建一个新的Image对象
 	 * 
-	 * @return 复制后的图像
+	 * @param image
+	 *            源Image对象
+	 * 
 	 */
-	public Image getClone() {
-		Image res = new Image();
-		res.content = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		res.contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
-		return res;
+	public Image(Image image) {
+		content = new BufferedImage(image.getWidth(), image.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		painter = new Painter(content.getGraphics());
+		painter.drawImage(image, 0, 0, Painter.LT);
 	}
 
 	/* ----------------------------- 获取属性 ----------------------------- */
@@ -91,7 +89,7 @@ public class Image {
 	/**
 	 * 返回 Image 的宽度。
 	 * 
-	 * @return 此Image的宽度。
+	 * @return 宽度。
 	 */
 	public int getWidth() {
 		return content.getWidth();
@@ -100,30 +98,64 @@ public class Image {
 	/**
 	 * 返回 Image 的高度。
 	 * 
-	 * @return 此Image的高度。
+	 * @return 高度。
 	 */
 	public int getHeight() {
 		return content.getHeight();
 	}
 
 	/**
-	 * 创建用于绘制图像的图形上下文
+	 * 获取用于绘制图像的图形上下文
 	 * 
 	 * @return 绘制图像的图形上下文（画笔）
 	 */
 	public Painter getPainter() {
-		// TODO 此处有BUG，当content改变时候这里却没改变
-		if (painter == null) {
-			painter = new Painter(content.getGraphics());
-		}
 		return painter;
 	}
 
-	public int getRGB(int x, int y) {
-		return content.getRGB(x, y);
+	public Color getRGB(int x, int y) {
+		return new Color(content.getRGB(x, y));
 	}
 
 	/* ----------------------------- 图像处理 ----------------------------- */
+
+	/**
+	 * 清除图像
+	 * 
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 */
+	public void clear(int x, int y, int width, int height) {
+		int[] rgbs = new int[width * height];
+		content.setRGB(x, y, width, height, rgbs, 0, width);
+	}
+
+	/**
+	 * 将图像的源区域拷贝到指定点
+	 * 
+	 * @param srcX
+	 *            源区域x坐标
+	 * @param srcY
+	 *            源区域y坐标
+	 * @param srcWidth
+	 *            源区域宽度
+	 * @param srcHeight
+	 *            源区域高度
+	 * @param x
+	 *            指定点x坐标
+	 * @param y
+	 *            指定点y坐标
+	 */
+	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight,
+			int x, int y) {
+		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
+	}
 
 	/**
 	 * 裁剪图像
@@ -136,11 +168,12 @@ public class Image {
 	 *            指定矩形区域的宽度
 	 * @param height
 	 *            指定矩形区域的高度
+	 * @return 裁剪后的图像
 	 */
-	public void clip(int x, int y, int width, int height) {
-		content = getSubimage(content, x, y, width, height);
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+	public Image clip(int x, int y, int width, int height) {
+		Image res = new Image(width, height);
+		res.getPainter().drawImage(this, x, y, width, height, 0, 0, Painter.LT);
+		return res;
 	}
 
 	/**
@@ -152,26 +185,23 @@ public class Image {
 	 *            翻转类型 HORIZONTAL（水平翻转）或者 VERTICAL（垂直翻转）
 	 * @return 翻转后的图像
 	 */
-	public void flip(byte type) {
+	public Image flip(byte type) {
 		int w = getWidth();
 		int h = getHeight();
-		Graphics g = content.getGraphics();
-
+		Image res = new Image(w, h);
+		Graphics g = res.content.getGraphics();
 		switch (type) {
 		case Image.HORIZONTAL:
-			g.drawImage(content, 0, 0, w, h, w, 0, 0, h, null);
-			g.dispose();
+			g.drawImage(this.content, 0, 0, w, h, w, 0, 0, h, null);
 			break;
 		case Image.VERTICAL:
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.drawImage(content, 0, 0, w, h, 0, h, w, 0, null);
-			g2d.dispose();
+			g2d.drawImage(this.content, 0, 0, w, h, 0, h, w, 0, null);
 			break;
 		default:
 			throw new IllegalArgumentException("翻转类型只能是0（水平翻转）或者1（垂直翻转）");
 		}
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+		return res;
 	}
 
 	/**
@@ -179,38 +209,39 @@ public class Image {
 	 * 
 	 * @param mask
 	 *            掩码
+	 * @return 处理后的图像
 	 */
-	public void gray(int mask) {
-		if (mask == 0) {
-			content = getSubimage(contentBackup, 0, 0,
-					contentBackup.getWidth(), contentBackup.getHeight());
-			return;
-		}
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				int argb = contentBackup.getRGB(i, j);
-				int a = Color.getAlpha(argb);
-				int r = Color.getRed(argb);
-				int g = Color.getGreen(argb);
-				int b = Color.getBlue(argb);
-				int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
-				if (r <= mask) {
-					r = temp;
-				}
-				if (g <= mask) {
-					g = temp;
-				}
-				if (b <= mask) {
-					b = temp;
-				}
+	@Deprecated
+	public Image gray(int mask) {
+		Image image = new Image(this);
+		if (mask != 0) {
+			for (int i = 0; i < getWidth(); i++) {
+				for (int j = 0; j < getHeight(); j++) {
+					Color color = image.getRGB(i, j);
+					int a = color.getAlpha();
+					int r = color.getRed();
+					int g = color.getGreen();
+					int b = color.getBlue();
+					int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+					if (r <= mask) {
+						r = temp;
+					}
+					if (g <= mask) {
+						g = temp;
+					}
+					if (b <= mask) {
+						b = temp;
+					}
 
-				content.setRGB(i, j, Color.getColor(a, r, g, b));
+					image.content.setRGB(i, j, new Color(a, r, g, b).getArgb());
+				}
 			}
 		}
+		return image;
 	}
 
 	/**
-	 * 旋转图片，角度只能是90的倍数，可正可负，角度为正时顺时针旋转，为负时逆时针旋转。
+	 * 旋转图片
 	 * 
 	 * @param src
 	 *            源图像
@@ -218,30 +249,48 @@ public class Image {
 	 *            要旋转的度数
 	 * @return 旋转后的图像
 	 */
-	public void rotate(int angle) {
-		while (angle < 0) {
+	public Image rotate(int angle) {
+		// 将度数调整到 [0,360)
+		if (angle < 0) {
+			angle %= 360;
 			angle += 360;
+		} else if (angle >= 360) {
+			angle %= 360;
 		}
-		if (angle % 90 != 0) {
-			throw new IllegalArgumentException("角度只能是90的整数倍");
+		if (angle == 0) {
+			return new Image(this);
 		}
-		for (int i = 0, num = angle / 90; i < num; i++) {
-			rotateToCW90();
+		double radian = Math.toRadians(angle);
+		// 计算旋转后的图片的宽高
+		int w = (int) (Math.abs(this.getWidth() * Math.cos(radian)) + Math
+				.abs(this.getHeight() * Math.sin(radian)));
+		int h = (int) (Math.abs(this.getWidth() * Math.sin(radian)) + Math
+				.abs(this.getHeight() * Math.cos(radian)));
+		// 计算偏移量
+		int tx = 0, ty = 0;
+		if (angle > 0 && angle <= 90) {
+			// (0,90]
+			tx = (int) (this.getHeight() * Math.sin(radian));
+			ty = 0;
+		} else if (angle > 90 && angle <= 180) {
+			tx = (int) (this.getHeight() * Math.cos(radian - Math.PI / 2) + this
+					.getWidth() * Math.sin(radian - Math.PI / 2));
+			ty = (int) (this.getHeight() * Math.sin(radian - Math.PI / 2));
+		} else if (angle > 180 && angle <= 270) {
+			tx = (int) (this.getWidth() * Math.cos(radian - Math.PI));
+			ty = (int) (this.getWidth() * Math.sin(radian - Math.PI) + this
+					.getHeight() * Math.cos(radian - Math.PI));
+		} else if (angle > 270 && angle < 360) {
+			tx = 0;
+			ty = (int) (this.getWidth() * Math.cos(radian - Math.PI * 3 / 2));
 		}
-	}
 
-	/**
-	 * 辅助方法，顺时针旋转图片90度
-	 */
-	private void rotateToCW90() {
-		int w = getWidth();
-		int h = getHeight();
-		Graphics2D g2d = (Graphics2D) content.getGraphics();
-		g2d.rotate(Math.toRadians(90), h, 0);
-		g2d.drawImage(content, h, 0, w, h, null);
-		g2d.dispose();
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+		Image image = new Image(w, h);
+		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
+		g2d.translate(tx, ty);
+		g2d.rotate(Math.toRadians(angle), 0, 0);
+		g2d.drawImage(this.content, 0, 0, null);
+		return image;
 	}
 
 	/**
@@ -255,12 +304,11 @@ public class Image {
 	 *            缩放后的图像高度
 	 * @return 缩放后的图像
 	 */
-	public void scale(int width, int height) {
-		Graphics g = content.getGraphics();
-		g.drawImage(content, 0, 0, width, height, null);
-		g.dispose();
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+	public Image scale(int width, int height) {
+		Image image = new Image(width, height);
+		Graphics g = image.content.getGraphics();
+		g.drawImage(this.content, 0, 0, width, height, null);
+		return image;
 	}
 
 	/**
@@ -268,120 +316,55 @@ public class Image {
 	 * 
 	 * @param alpha
 	 *            alpha值
+	 * @return 半透明处理后的图像
 	 */
-	public void setAlpha(int alpha) {
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				int argb = content.getRGB(i, j);
-				int a = Color.getAlpha(argb);
-				int r = Color.getRed(argb);
-				int g = Color.getGreen(argb);
-				int b = Color.getBlue(argb);
-				argb = Color.getColor(a == 0 ? a : alpha, r, g, b);
-				content.setRGB(i, j, argb);
-			}
-		}
-		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-				content.getHeight());
+	public Image alpha(float alpha) {
+		Image image = new Image(this.getWidth(), this.getHeight());
+		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
+		float[] scales = { 1.0f, 1.0f, 1.0f, alpha };
+		float[] offsets = new float[4];
+		RescaleOp rop = new RescaleOp(scales, offsets, null);
+		g2d.drawImage(this.content, rop, 0, 0);
+		return image;
 	}
 
 	/**
-	 * 清除图片上指定区域内的像素
+	 * 变色处理
 	 * 
-	 * @param x
-	 *            起点 X 坐标
-	 * @param y
-	 *            起点 Y 坐标
-	 * @param width
-	 *            区域宽度
-	 * @param height
-	 *            区域高度
-	 */
-	public void clear(int x, int y, int width, int height) {
-		// System.out.println("clear->x:" + x + " y:" + y + " w:" + width +
-		// " h:"
-		// + height);
-//		for (int i = x; i < x + width; i++) {
-//			for (int j = 0; j < y + height; j++) {
-//				content.setRGB(i, j, 0);
-//			}
-//		}
-//		content.setRGB(x, y, width, height, new int[width * height], 0, width);
-//		contentBackup = getSubimage(content, 0, 0, content.getWidth(),
-//				content.getHeight());
-	}
-
-	/**
-	 * 变色
-	 * 
-	 * @param alpha
 	 * @param red
+	 *            红色分量
 	 * @param green
+	 *            绿色分量
 	 * @param blue
+	 *            蓝色分量
+	 * @return 变色处理后的图像
 	 */
-	public void tone(int alpha, int red, int green, int blue) {
-		if (alpha == 0 && red == 0 && green == 0 && blue == 0) {
-			content = getSubimage(contentBackup, 0, 0,
-					contentBackup.getWidth(), contentBackup.getHeight());
-			return;
+	public Image tone(float red, float green, float blue) {
+		if (red < 0) {
+			red = 0;
 		}
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				int argb = contentBackup.getRGB(i, j);
-				int a = Color.getAlpha(argb);
-				int r = Color.getRed(argb);
-				int g = Color.getGreen(argb);
-				int b = Color.getBlue(argb);
-				if (a != 0) {
-					a += alpha;
-					if (a < 0) {
-						a = 0;
-					} else if (a > 255) {
-						a = 255;
-					}
-				}
-				r += red;
-				if (r < 0) {
-					r = 0;
-				} else if (r > 255) {
-					r = 255;
-				}
-				g += green;
-				if (g < 0) {
-					g = 0;
-				} else if (g > 255) {
-					g = 255;
-				}
-				b += blue;
-				if (b < 0) {
-					b = 0;
-				} else if (b > 255) {
-					b = 255;
-				}
-				content.setRGB(i, j, Color.getColor(a, r, g, b));
-			}
+		if (green < 0) {
+			green = 0;
 		}
-
+		if (blue < 0) {
+			blue = 0;
+		}
+		float total = red + green + blue;
+		red = red / total;
+		green = green / total;
+		blue = blue / total;
+		Image image = new Image(this.getWidth(), this.getHeight());
+		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
+		float[] scales = { red, green, blue, 1.0f };
+		float[] offsets = new float[4];
+		RescaleOp rop = new RescaleOp(scales, offsets, null);
+		g2d.drawImage(this.content, rop, 0, 0);
+		return image;
 	}
 
 	/* ----------------------------- 辅助方法 ----------------------------- */
 
-	private static BufferedImage getSubimage(BufferedImage src, int x, int y,
-			int width, int height) {
-		BufferedImage res = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		res.getGraphics().drawImage(src, 0, 0, width, height, x, y, x + width,
-				y + height, null);
-		return res;
-	}
-
-	public void printRGB() {
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				System.out.print("  0x"
-						+ Integer.toHexString(content.getRGB(i, j)));
-			}
-			System.out.println();
-		}
+	BufferedImage getContent() {
+		return content;
 	}
 }

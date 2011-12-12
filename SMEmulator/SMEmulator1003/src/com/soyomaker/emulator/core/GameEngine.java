@@ -148,6 +148,14 @@ public class GameEngine implements Runnable {
 		keyX = keyY = keyType = -1;
 	}
 
+	Image img0 = new Image("game/image/character/001-Fighter01.png");
+	Image img1 = new Image("game/image/tileset/001-Grassland01.png");
+	Image img2 = new Image("game/image/battler/011-Lancer03.png");
+
+	Image img = new Image(800, 480);
+
+	int i = 0;
+
 	/**
 	 * 绘图：线程间接调用
 	 * 
@@ -162,6 +170,11 @@ public class GameEngine implements Runnable {
 			e.printStackTrace();
 		}
 		luaState.call(1, 0);
+
+		painter.drawImage(img0, 0, 0, 0);
+		painter.drawImage(img1, img0.getWidth(), 0, 0);
+		painter.drawImage(img1, img0.getWidth() + img1.getWidth(), 0, 0);
+		img0.copyArea(0, 48, 128, 48, 32, 0);
 	}
 
 	void pause() {

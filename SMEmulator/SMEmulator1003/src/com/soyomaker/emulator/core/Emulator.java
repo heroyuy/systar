@@ -3,26 +3,25 @@ package com.soyomaker.emulator.core;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
-import javax.swing.JLabel;
-import java.awt.Point;
-import java.text.DecimalFormat;
-
-import javax.swing.SwingConstants;
-import javax.swing.JProgressBar;
 
 public class Emulator extends JDialog {
 
@@ -45,9 +44,9 @@ public class Emulator extends JDialog {
 
 	private Timer timer = null;
 
+	private Painter painter;
 	private JPanel contentPanel = null;
 
-	private Painter painter = null;
 	private JProgressBar progressBar;
 	private JLabel labelLuaMemory;
 	private JMenuItem menuItemRun;
@@ -70,14 +69,15 @@ public class Emulator extends JDialog {
 					painter = new Painter(g);
 				}
 				// 清屏
-				painter.setColor(0x000000);
+				painter.setColor(Color.BLACK);
 				painter.fillRect(0, 0, ge.getWidth(), ge.getHeight());
 				// 绘制游戏
+				ge.setShowFps(true);
 				if (ge.running) {
 					ge.paintGame(painter);
 					// 显示FPS
 					if (ge.isShowFps()) {
-						painter.setColor(0xffffff);
+						painter.setColor(Color.WHITE);
 						painter.setTextSize(20);
 						painter.drawString("FPS:" + ge.getActualFps() + "", 20,
 								ge.getHeight() - 10, Painter.LB);
@@ -202,13 +202,13 @@ public class Emulator extends JDialog {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				stopGame();
+				System.exit(0);
 			}
 		});
 		pack();
 	}
 
 	void repaintGame() {
-		// contentPanel.repaint();
 		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(),
 				contentPanel.getWidth(), contentPanel.getHeight());
 	}
