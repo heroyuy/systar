@@ -9,6 +9,10 @@ clsPlayer = {}
 setmetatable(clsPlayer,clsCharacter)
 clsPlayer.__index = clsPlayer
 
+
+--重定向需要覆盖的父类方法
+clsPlayer.updateFF=clsPlayer.update
+
 --字段定义
 clsPlayer.vocationId=0 --职业ID
 clsPlayer.level=0 --等级
@@ -24,13 +28,14 @@ clsPlayer.luck=0 --幸运
 
 --构造器
 function clsPlayer:new()
-	local self = {}
+	local self = clsCharacter:new()
 	setmetatable(self,clsPlayer)
 	return self
 end
 
-local player=clsPlayer:new()
-player.index=20
-print(player.index)
-player=clsPlayer:new()
-print(player.index)
+--更新[Player更新] 
+function clsCharacter:update()
+  --调用父类的update方法
+  self:updateFF()
+  --TODO 其它更新
+end
