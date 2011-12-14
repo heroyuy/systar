@@ -26,6 +26,30 @@ clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 
 
+clsCharacter.level=0 --等级
+clsCharacter.maxHp=0 --MaxHP值
+clsCharacter.maxSp=0 --MaxSP值
+clsCharacter.hp=0 --HP值
+clsCharacter.sp=0 --SP值
+clsCharacter.str=0 --力量
+clsCharacter.agi=0 --敏捷
+clsCharacter.int=0 --智力
+clsCharacter.vit=0 --体力
+clsCharacter.dex=0 --灵巧
+clsCharacter.luck=0 --幸运
+clsCharacter.exp=0 --经验值
+clsCharacter.money=0 --金钱
+
+clsCharacter.equip={ --装备(nil表示没有,有则存放装备ID)  TODO 此处存在问题，多实例指向同一个table,需要改到构造器中
+  [1]=nil, --头盔			
+  [2]=nil, --饰品
+  [3]=nil, --武器
+  [4]=nil, --盾牌
+  [5]=nil, --铠甲
+  [6]=nil  --战靴
+}
+
+clsCharacter.bag=clsBag:new() --背包 TODOTODO 此处可能存在问题，多实例指向同一个table,需要改到构造器中
 
 --构造器
 function clsCharacter:new()
