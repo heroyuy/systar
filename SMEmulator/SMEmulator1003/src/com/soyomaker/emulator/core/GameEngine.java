@@ -12,7 +12,6 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.xml.sax.SAXException;
 
-import com.soyomaker.data.DataManager;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMLog;
 import com.soyostar.xml.NoSuchXMLObjectException;
@@ -199,10 +198,6 @@ public class GameEngine implements Runnable {
 			// --注册ImageFactory
 			luaState.pushObjectValue(new ImageFactory());
 			luaState.setGlobal("smImageFactory");
-
-			// --注册DataManager
-			luaState.pushObjectValue(DataManager.getInstance());
-			luaState.setGlobal("smDataManager");
 
 		} catch (LuaException e) {
 			e.printStackTrace();
