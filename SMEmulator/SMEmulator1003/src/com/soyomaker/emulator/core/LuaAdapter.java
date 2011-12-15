@@ -26,6 +26,8 @@ public class LuaAdapter {
 
 	private LuaState luaState = null;
 
+	private LuaObject luaGlobalGame = null;
+
 	private LuaObject luaFunctionOnStart = null;
 
 	private LuaObject luaFunctionOnTouch = null;
@@ -56,12 +58,12 @@ public class LuaAdapter {
 			luaState.pushObjectValue(new ImageFactory());
 			luaState.setGlobal("smImageFactory");
 			// 2、转换lua实现的接口
-			LuaObject lo = luaState.getLuaObject("globalGame");
-			luaFunctionOnStart = lo.getField("onStart");
-			luaFunctionOnTouch = lo.getField("onTouch");
-			luaFunctionUpdate = lo.getField("update");
-			luaFunctionPaint = lo.getField("paint");
-			luaFunctionOnStop = lo.getField("onStop");
+			luaGlobalGame = luaState.getLuaObject("globalGame");
+			luaFunctionOnStart = luaGlobalGame.getField("onStart");
+			luaFunctionOnTouch = luaGlobalGame.getField("onTouch");
+			luaFunctionUpdate = luaGlobalGame.getField("update");
+			luaFunctionPaint = luaGlobalGame.getField("paint");
+			luaFunctionOnStop = luaGlobalGame.getField("onStop");
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +74,7 @@ public class LuaAdapter {
 	 */
 	public void onStart() {
 		try {
-			luaFunctionOnStart.call(null);
+			luaFunctionOnStart.call(new Object[] { luaGlobalGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -83,8 +85,8 @@ public class LuaAdapter {
 	 */
 	public void onTouch(int keyX, int keyY, int type) {
 		try {
-			luaFunctionOnTouch.call(new Object[] { luaFunctionOnTouch, keyX,
-					keyY, type });
+			luaFunctionOnTouch.call(new Object[] { luaGlobalGame, keyX, keyY,
+					type });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +97,7 @@ public class LuaAdapter {
 	 */
 	public void update() {
 		try {
-			luaFunctionUpdate.call(null);
+			luaFunctionUpdate.call(new Object[] { luaGlobalGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +108,7 @@ public class LuaAdapter {
 	 */
 	public void paint(Painter painter) {
 		try {
-			luaFunctionPaint.call(new Object[] { luaFunctionPaint, painter });
+			luaFunctionPaint.call(new Object[] { luaGlobalGame, painter });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -117,7 +119,7 @@ public class LuaAdapter {
 	 */
 	public void onStop() {
 		try {
-			luaFunctionOnStop.call(null);
+			luaFunctionOnStop.call(new Object[] { luaGlobalGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -134,6 +136,16 @@ public class LuaAdapter {
 		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
 		LuaObject lobj = luaState.getLuaObject("result");
 		return (float) (lobj.getNumber() * 1024);
+	}
+
+	public void callLuaGC() {
+		luaState.getGlobal("collectgarbage");
+		try {
+			luaState.pushObjectValue("collect");
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(1, 0);
 	}
 
 }

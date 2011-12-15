@@ -164,6 +164,8 @@ public class GameEngine implements Runnable {
 
 				emulator.repaintGame();// 重绘界面
 
+				this.gc();// 垃圾收集
+
 				t = System.currentTimeMillis() - t;
 
 				if (t < 1000 * 1.0 / ratedFps) {
@@ -209,6 +211,13 @@ public class GameEngine implements Runnable {
 	private void updateGame() {
 		// 此处调用lua的update()方法
 		luaAdapter.update();
+	}
+
+	/**
+	 * 垃圾收集：线程直接调用
+	 */
+	private void gc() {
+		luaAdapter.callLuaGC();
 	}
 
 }
