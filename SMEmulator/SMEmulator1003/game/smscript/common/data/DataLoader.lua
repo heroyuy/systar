@@ -24,12 +24,12 @@ smDataLoader.animationPath=".\\game\\luadata\\animation.gat";
 smDataLoader.systemPath=".\\game\\luadata\\system.gat";
 
 --加载Vocation数据
-smDataLoader.loadVocation=function()
+function smDataLoader:loadVocation()
   dofile(smDataLoader.vocationPath)
 end
 
 --加载Player数据
-smDataLoader.loadPlayer=function()
+function smDataLoader:loadPlayer()
   dofile(smDataLoader.playerPath)
   smLog:setDebug(true)
   smLog:info(globalDictionary.players[1].name)
@@ -37,55 +37,55 @@ smDataLoader.loadPlayer=function()
 end
 
 --加载Skill数据
-smDataLoader.loadSkill=function()
+function smDataLoader:loadSkill()
   dofile(smDataLoader.skillPath)
 end
 
 --加载Item数据
-smDataLoader.loadItem=function()
+function smDataLoader:loadItem()
   dofile(smDataLoader.itemPath)
 end
 
 --加载Equip数据
-smDataLoader.loadEquip=function()
+function smDataLoader:loadEquip()
   dofile(smDataLoader.equipPath)
 end
 
 --加载Enemy数据
-smDataLoader.loadEnemy=function()
+function smDataLoader:loadEnemy()
   dofile(smDataLoader.enemyPath)
 end
 
 --加载EnemyTroop数据
-smDataLoader.loadEnemyTroop=function()
+function smDataLoader:loadEnemyTroop()
   dofile(smDataLoader.enemyTroopPath)
 end
 
 --加载Status数据
-smDataLoader.loadStatus=function()
+function smDataLoader:loadStatus()
   dofile(smDataLoader.statusPath)
 end
 
 --加载Map数据
-smDataLoader.loadMap=function(id)
+function smDataLoader:loadMap(id)
   local t=os.time()
-  local path=string.gsub(smDataLoader.mapPath,"{index}",0)
+  local path=string.gsub(smDataLoader.mapPath,"{index}",id)
   dofile(path)
   t=os.time()-t
   print(t)
 end
 
 --加载NPC数据
-smDataLoader.loadNPC=function(id)
+function smDataLoader:loadNPC(id)
   dofile(".\\game\\luadata\\map\\map0.gat")
 end
 
 --加载Animation数据
-smDataLoader.loadAnimation=function()
+function smDataLoader:loadAnimation()
   dofile(smDataLoader.animationPath)
 end
 
 --加载System数据
-smDataLoader.loadSystem=function()
+function smDataLoader:loadSystem()
   dofile(smDataLoader.systemPath)
 end
