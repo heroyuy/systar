@@ -2,7 +2,6 @@ package com.soyomaker.emulator.utils;
 
 import com.soyomaker.emulator.core.Image;
 
-
 public class ImageFactory {
 
 	public Image createImage(int width, int height) {
