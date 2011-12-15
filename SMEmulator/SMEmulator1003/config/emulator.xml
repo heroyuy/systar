@@ -4,4 +4,8 @@
 	<height>480</height>
 	<fps>20</fps>
 	<showStatusBar>true</showStatusBar>
+	<game>
+		<luaFilePath>game/smscript/game.lua</luaFilePath>
+		<globalGameName>globalGame</globalGameName>
+	</game>
 </emulator>

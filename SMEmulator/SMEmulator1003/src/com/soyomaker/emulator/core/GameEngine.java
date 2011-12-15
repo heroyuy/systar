@@ -7,7 +7,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.soyostar.xml.NoSuchXMLObjectException;
 import com.soyostar.xml.XMLObject;
 import com.soyostar.xml.XMLParser;
 
@@ -37,6 +36,10 @@ public class GameEngine implements Runnable {
 
 	private boolean showStatusBar = true;// 是否显示状态栏
 
+	private String luaFilePath = null;
+
+	private String globalGameName = null;
+
 	private long time = 0;
 
 	Emulator emulator = null;
@@ -53,8 +56,6 @@ public class GameEngine implements Runnable {
 
 	private GameEngine() {
 		loadConfig();
-		luaAdapter = LuaAdapter.newInstance("game/smscript/game.lua",
-				"globalGame");
 	}
 
 	public int getActualFps() {
@@ -94,19 +95,22 @@ public class GameEngine implements Runnable {
 	 */
 	private void loadConfig() {
 		try {
-			XMLObject config = XMLParser.parse(new File("config/emulator.xml"));
-			width = config.getFirstXMLObject("width").getIntValue();
-			height = config.getFirstXMLObject("height").getIntValue();
-			ratedFps = config.getFirstXMLObject("fps").getIntValue();
-			showStatusBar = Boolean.parseBoolean(config.getFirstXMLObject(
-					"showStatusBar").getStringValue());
+			XMLObject emulatorXMLObject = XMLParser.parse(new File(
+					"config/emulator.xml"));
+			width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
+			height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
+			ratedFps = Integer.parseInt(emulatorXMLObject.getChild(2)
+					.getValue());
+			showStatusBar = Boolean.parseBoolean(emulatorXMLObject.getChild(3)
+					.getValue());
+			XMLObject gameXMLObject = emulatorXMLObject.getChild(4);
+			luaFilePath = gameXMLObject.getChild(0).getValue();
+			globalGameName = gameXMLObject.getChild(1).getValue();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NoSuchXMLObjectException e) {
 			e.printStackTrace();
 		}
 	}
@@ -190,6 +194,7 @@ public class GameEngine implements Runnable {
 	}
 
 	void start() {
+		luaAdapter = LuaAdapter.newInstance(luaFilePath, globalGameName);
 		running = true;
 		new Thread(this).start();
 	}

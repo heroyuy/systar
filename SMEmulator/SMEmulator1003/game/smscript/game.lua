@@ -7,9 +7,9 @@ function globalGame:onStart()
   package.path = package.path .. ";.\\game\\smscript\\?.lua"
   require("requires")
   --配置引擎
-  --smGameEngine:setShowFps(true)
-  --smGameEngine:setRatedFps(50)
-  --smLog:setDebug(false)
+  smGameEngine:setShowFps(true)
+  smGameEngine:setRatedFps(50)
+  smLog:setDebug(false)
   --加载数据
   --dofile(".\\game\\smscript\\GameData.data")
   --globalDictionary=nil  
