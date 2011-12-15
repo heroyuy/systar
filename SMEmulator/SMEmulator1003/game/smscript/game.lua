@@ -1,6 +1,9 @@
+globalGame={}
+
 --脚本启动
-function onStart()
+function globalGame:onStart()
   --导入需要的文件
+  print("onStart")
   package.path = package.path .. ";.\\game\\smscript\\?.lua"
   require("requires")
   --配置引擎
@@ -9,10 +12,8 @@ function onStart()
   --smLog:setDebug(false)
   --加载数据
   --dofile(".\\game\\smscript\\GameData.data")
-  --test
-  smDataLoader:loadMap(12)
-  globalDictionary=nil  
-  collectgarbage("collect")
+  --globalDictionary=nil  
+  --collectgarbage("collect")
   --创建地图场景
   --game_sceneMap=clsSceneMap:new()
   --game_curScene=nil;
@@ -20,35 +21,39 @@ function onStart()
 end
 
 --触屏事件
-function onTouch(x,y,type)
-  if game_curScene then
-    game_curScene:onTouch(x,y,type)
-  end
+function globalGame:onTouch(x,y,type)
+ print("onTouch: x:"..x.." y:"..y.." t:"..type)
+  --if game_curScene then
+   -- game_curScene:onTouch(x,y,type)
+  --end
 end
 
 --更新model
-function update()
-  if game_curScene then
-    game_curScene:update()
-  end
+function globalGame:update()
+  print("update")
+  --if game_curScene then
+  --  game_curScene:update()
+  --end
 end
 
 --绘制屏幕
-function paint(painter)
-  if game_curScene then
-    game_curScene:paint(painter)
-  end
+function globalGame:paint(painter)
+  print("paint")
+  --if game_curScene then
+  --  game_curScene:paint(painter)
+  --end
 end
 
 --退出
-function onStop()
-  if game_curScene then
-    game_curScene:onStop()
-  end
+function globalGame:onStop()
+  print("onStop")
+  --if game_curScene then
+  --  game_curScene:onStop()
+  --end
 end
 
 --切换场景
-function changeScene(index)
+function globalGame:changeScene(index)
   --(1)原场景onStop
   if game_curScene then
     game_curScene:onStop()

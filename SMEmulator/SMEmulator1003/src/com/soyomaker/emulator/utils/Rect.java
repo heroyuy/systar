@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.core;
+package com.soyomaker.emulator.utils;
 
 /**
  * 矩形

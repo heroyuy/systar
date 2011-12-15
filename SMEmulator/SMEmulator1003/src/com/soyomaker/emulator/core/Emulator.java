@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
+import com.soyomaker.emulator.utils.Color;
+
 public class Emulator extends JDialog {
 
 	private static final long serialVersionUID = -8809949650600479176L;
