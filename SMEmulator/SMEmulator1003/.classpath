@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="libs/luajava-1.1.jar"/>
 	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="libs/com.soyostar.xml_1.5.jar"/>
+	<classpathentry kind="lib" path="libs/saint.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

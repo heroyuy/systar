@@ -8,6 +8,7 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.utils.ImageFactory;
+import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
 
 /**
@@ -57,6 +58,9 @@ public class LuaAdapter {
 			// --注册ImageFactory
 			luaState.pushObjectValue(new ImageFactory());
 			luaState.setGlobal("smImageFactory");
+			// --注册SMAudioPlayer
+			luaState.pushObjectValue(SMAudioPlayer.getInstance());
+			luaState.setGlobal("smAudioPlayer");
 			// 2、转换lua实现的接口
 			luaGlobalGame = luaState.getLuaObject("globalGame");
 			luaFunctionOnStart = luaGlobalGame.getField("onStart");

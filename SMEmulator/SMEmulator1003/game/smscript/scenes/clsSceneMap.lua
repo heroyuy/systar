@@ -12,6 +12,7 @@ end
 -- 开始
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
+  smAudioPlayer:play("game/audio/music/my_love.mp3")
 end
 
 -- 处理触屏
@@ -32,4 +33,5 @@ end
 -- 退出
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
+  smAudioPlayer:stop()
 end
