@@ -15,8 +15,13 @@ function clsSceneTitle:onStart()
   smAudioPlayer:play(globalGame.PATH.."/audio/music/my_love.mp3")
   local bgLayer=clsLayer:new(0,0,800,480)
   bgLayer.backgroundImage=smImageFactory:createImage(globalGame.PATH..globalDictionary.config.titleBackground)
+  local titleBg=clsLayer:new(300,300,200,120)
+  titleBg.backgroundImage=globalSkin:createBg(200,120)
+  bgLayer:addChild(titleBg)
+  local titleFrame=clsLayer:new(295,295,210,130)
+  titleFrame.backgroundImage=globalSkin:createFrame(210,130)
+  bgLayer:addChild(titleFrame)
   globalGame.rootLayer:addChild(bgLayer)
-  globalGame.rootLayer.delegate=self
 end
 
 

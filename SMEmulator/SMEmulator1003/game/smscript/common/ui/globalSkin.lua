@@ -45,7 +45,7 @@ function globalSkin:init(skinPath)
   --字色，先行后列
   for i=1,4 do
    for j=1,8 do
-     self.textColor[i.."_"..j]=img:getRGB(64+j*8+4, 96+i*8+4)
+     self.textColor[i.."_"..j]=img:getRGB(64+(j-1)*8+4, 96+(i-1)*8+4)
    end
   end
   
