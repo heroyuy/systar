@@ -23,7 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
-import com.soyomaker.emulator.utils.Color;
 import com.soyomaker.emulator.utils.ColorFactory;
 
 public class Emulator extends JDialog {
