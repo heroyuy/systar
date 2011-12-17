@@ -15,10 +15,13 @@ clsLayer.width=0
 clsLayer.height=0
 clsLayer.backgroundColor=nil
 clsLayer.backgroundImage = null;
-clsLayer.visibility = false;
+clsLayer.visibility = true;
 clsLayer.enabled = true;
+clsLayer.clipBounds=true;
 clsLayer.delegate=nil
 clsLayer.children=nil
+
+clsLayer.focusLayer=nil
 
 --构造器
 function clsLayer:new(x,y,width,height)
@@ -38,13 +41,18 @@ function clsLayer:addChild(layer)
 end
 
 --移除子Layer
+function clsLayer:remove(index)
+  self.children:remove(index)
+end
+
+--移除子Layer
 function clsLayer:removeChild(layer)
   self.children:removeObject(layer)
 end
 
---移除子Layer
-function clsLayer:remove(index)
-  self.children:remove(index)
+--移除所有子Layer
+function clsLayer:removeAll()
+  self.children:removeAll()
 end
 
 --绘制Layer
@@ -57,10 +65,81 @@ end
 
 --绘制自身
 function clsLayer:paintLayer(painter)
-  
+  if self.backgroundColor then
+    painter:setColor(self.backgroundColor);
+    painter:fillRect(0, 0, self.width, self.height);
+  end
+  if self.backgroundImage then
+    painter.drawImage(backgroundImage, 0, 0, 0);
+  end
 end
 
 --绘制子Layer
 function clsLayer:paintChildren(painter)
-  
+  for _,layer in ipairs(self.children) do
+    if layer.visibility then
+      --设置坐标系
+      painter:setBasePoint(layer.x,layer.y)
+      --设置裁剪区
+      local clip=nil;
+      if layer.clipBounds then
+        clip=painter:getClip()
+        painter:clipRect(0,0,layer.width,layer.height)
+      end
+      --绘制子Layer
+      layer:paint(painter)
+      --还原裁剪区
+      if layer.clipBounds then
+        painter:forceClip(clip)
+      end
+      --还原坐标系
+      painter:setBasePoint(-layer.x,-layer.y)
+    end
+  end
+      
+end
+
+function clsLayer:dispatchEvent(x,y,type)
+  if type==globalUIConst.touchEventType.DOWN then
+    --如果是DOWN事件，则从子组件中寻找焦点组件
+    self.focusLayer = self:searchFocusLayer(x,y)
+  end
+  if self.focusLayer and self.focusLayer.enabled then
+    --找到焦点组件
+    self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
+  else
+    --未找到焦点组件
+    if self.deletage then
+      self.deletage:onTouch(self,x,y,type)
+    end
+  end
+  if type==globalUIConst.touchEventType.UP then
+    --如果是UP事件，则清除焦点
+    self.focusLayer = nil
+  end
+end
+
+function clsLayer:toString()
+  local str="clsLayer["
+  str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
+  str=str.."]"
+  return str
+end
+
+--搜索焦点子组件，没有则返回nil
+function clsLayer:searchFocusLayer(x,y)
+  local focus = nil;
+  --从上到下依次探查
+  for i=self.children:size(),-1,1 do
+    local layer=self.children:get(i)
+    if layer.visibility and layer.enabled then
+      --子Layer可见并且可以接收事件
+      if x >= layer.x and x <= layer.x + layer.width and y >= layer.y and y <= layer.y + layer.height then
+        --命中
+        focus = layer;
+        break;
+      end
+    end
+  end
+  return focus
 end

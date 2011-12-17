@@ -12,16 +12,8 @@ end
 function clsScene:onStart()
 end
 
--- 处理触屏
-function clsScene:onTouch(x,y,type)
-end
-
 -- 更新
 function clsScene:update()
-end
-
--- 绘图
-function clsScene:paint(painter)
 end
 
 -- 退出

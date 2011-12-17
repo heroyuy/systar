@@ -6,6 +6,8 @@ globalGame.SCENE_MAP=0 --地图场景
 --成员
 globalGame.curScene=nil
 
+globalGame.rootLayer=nil
+
 --脚本启动
 function globalGame:onStart()
   --导入需要的文件
@@ -15,22 +17,24 @@ function globalGame:onStart()
   smGameEngine:setShowFps(true)
   smGameEngine:setRatedFps(500)
   smLog:setDebug(true)
+  --配置游戏
+  self.rootLayer=clsLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  self.rootLayer.clipBounds=false
+  self.rootLayer.backgroundColor="0xffabcdef"
+  smLog:info("game-start")
   --切换到地图场景
   self:changeScene(self.SCENE_MAP)
-  --smLog:info("onStart")
 end
 
 --触屏事件
 function globalGame:onTouch(x,y,type)
-  --smLog:info("onTouch: x:"..x.." y:"..y.." t:"..type)
-  if self.curScene then
-    self.curScene:onTouch(x,y,type)
+  if self.rootLayer then
+    self.rootLayer:dispatchEvent(x,y,type)
   end
 end
 
 --更新model
 function globalGame:update()
-  --smLog:info("update")
   if self.curScene then
     self.curScene:update()
   end
@@ -38,17 +42,16 @@ end
 
 --绘制屏幕
 function globalGame:paint(painter)
-  --smLog:info("paint")
-  if self.curScene then
-    self.curScene:paint(painter)
+  if self.rootLayer then
+    self.rootLayer:paint(painter)
   end
 end
 
 --退出
 function globalGame:onStop()
-  --smLog:info("onStop")
   if self.curScene then
     self.curScene:onStop()
+    self.rootLayer:removeAll()
   end
 end
 
@@ -57,6 +60,7 @@ function globalGame:changeScene(index)
   --(1)原场景onStop
   if self.curScene then
     self.curScene:onStop()
+    self.rootLayer:removeAll()
   end
   --(2)切换场景
   self:createScene(index)
