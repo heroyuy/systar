@@ -32,14 +32,35 @@ function clsLayer:new(x,y,width,height)
   return self
 end
 
+--添加子Layer
 function clsLayer:addChild(layer)
   self.children:add(layer)
 end
 
+--移除子Layer
 function clsLayer:removeChild(layer)
   self.children:removeObject(layer)
 end
 
+--移除子Layer
 function clsLayer:remove(index)
   self.children:remove(index)
+end
+
+--绘制Layer
+function clsLayer:paint(painter)
+  --绘制自身
+  self:paintLayer(painter)
+  --绘制子Layer
+  self:paintChildren(painter)
+end
+
+--绘制自身
+function clsLayer:paintLayer(painter)
+  
+end
+
+--绘制子Layer
+function clsLayer:paintChildren(painter)
+  
 end

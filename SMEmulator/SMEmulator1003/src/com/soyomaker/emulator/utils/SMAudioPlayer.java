@@ -41,7 +41,6 @@ public class SMAudioPlayer {
 
 	public void stop() {
 		player.stop();
-		System.out.println("stop");
 	}
 
 	public static void main(String[] args) {

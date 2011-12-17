@@ -23,13 +23,13 @@ public class SMLog {
 		PropertyConfigurator.configure("config/log4j.properties");// 读取使用Java的特性文件编写的配置文件。
 	}
 
-	public void err(String msg) {
+	public void err(Object msg) {
 		if (debug) {
 			log.error(msg);
 		}
 	}
 
-	public void info(String msg) {
+	public void info(Object msg) {
 		if (debug) {
 			log.info(msg);
 		}

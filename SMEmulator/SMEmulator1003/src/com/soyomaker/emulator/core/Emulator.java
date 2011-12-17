@@ -24,6 +24,7 @@ import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
 import com.soyomaker.emulator.utils.Color;
+import com.soyomaker.emulator.utils.ColorFactory;
 
 public class Emulator extends JDialog {
 
@@ -71,7 +72,7 @@ public class Emulator extends JDialog {
 					painter = new Painter(g);
 				}
 				// 清屏
-				painter.setColor(Color.BLACK);
+				painter.setColor(ColorFactory.getInstance().BLACK);
 				painter.fillRect(0, 0, ge.getWidth(), ge.getHeight());
 				// 绘制游戏
 				ge.setShowFps(true);
@@ -79,7 +80,7 @@ public class Emulator extends JDialog {
 					ge.paintGame(painter);
 					// 显示FPS
 					if (ge.isShowFps()) {
-						painter.setColor(Color.WHITE);
+						painter.setColor(ColorFactory.getInstance().WHITE);
 						painter.setTextSize(20);
 						painter.drawString("FPS:" + ge.getActualFps() + "", 20,
 								ge.getHeight() - 10, Painter.LB);

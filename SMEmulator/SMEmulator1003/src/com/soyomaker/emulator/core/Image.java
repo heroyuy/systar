@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.soyomaker.emulator.utils.Color;
+import com.soyomaker.emulator.utils.ColorFactory;
 
 /**
  * 图形图像
@@ -116,7 +117,7 @@ public class Image {
 	}
 
 	public Color getRGB(int x, int y) {
-		return new Color(content.getRGB(x, y));
+		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
 	}
 
 	/* ----------------------------- 图像处理 ----------------------------- */
@@ -206,41 +207,42 @@ public class Image {
 		return res;
 	}
 
-	/**
-	 * 灰度处理
-	 * 
-	 * @param mask
-	 *            掩码
-	 * @return 处理后的图像
-	 */
-	@Deprecated
-	public Image gray(int mask) {
-		Image image = new Image(this);
-		if (mask != 0) {
-			for (int i = 0; i < getWidth(); i++) {
-				for (int j = 0; j < getHeight(); j++) {
-					Color color = image.getRGB(i, j);
-					int a = color.getAlpha();
-					int r = color.getRed();
-					int g = color.getGreen();
-					int b = color.getBlue();
-					int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
-					if (r <= mask) {
-						r = temp;
-					}
-					if (g <= mask) {
-						g = temp;
-					}
-					if (b <= mask) {
-						b = temp;
-					}
-
-					image.content.setRGB(i, j, new Color(a, r, g, b).getArgb());
-				}
-			}
-		}
-		return image;
-	}
+	//
+	// /**
+	// * 灰度处理
+	// *
+	// * @param mask
+	// * 掩码
+	// * @return 处理后的图像
+	// */
+	// @Deprecated
+	// public Image gray(int mask) {
+	// Image image = new Image(this);
+	// if (mask != 0) {
+	// for (int i = 0; i < getWidth(); i++) {
+	// for (int j = 0; j < getHeight(); j++) {
+	// Color color = image.getRGB(i, j);
+	// int a = color.getAlpha();
+	// int r = color.getRed();
+	// int g = color.getGreen();
+	// int b = color.getBlue();
+	// int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+	// if (r <= mask) {
+	// r = temp;
+	// }
+	// if (g <= mask) {
+	// g = temp;
+	// }
+	// if (b <= mask) {
+	// b = temp;
+	// }
+	//
+	// image.content.setRGB(i, j, new Color(a, r, g, b).getArgb());
+	// }
+	// }
+	// }
+	// return image;
+	// }
 
 	/**
 	 * 旋转图片

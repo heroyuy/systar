@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
 import com.soyomaker.emulator.utils.Color;
+import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.Point;
 import com.soyomaker.emulator.utils.Rect;
 
@@ -410,7 +411,8 @@ public class Painter {
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return new Color(graphics.getColor().getRGB());
+		return ColorFactory.getInstance()
+				.parseInt(graphics.getColor().getRGB());
 	}
 
 	/**
@@ -510,6 +512,16 @@ public class Painter {
 		java.awt.Color c = new java.awt.Color(color.getArgb(), true);
 		graphics.setColor(c);
 
+	}
+
+	/**
+	 * 设置画笔颜色
+	 * 
+	 * @param color
+	 *            颜色
+	 */
+	public void setColor(String color) {
+		this.setColor(ColorFactory.getInstance().parseString(color));
 	}
 
 	/**

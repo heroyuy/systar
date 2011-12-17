@@ -11,6 +11,8 @@ end
 
 -- 开始
 function clsSceneMap:onStart()
+  c=smColorFactory:parseString("0xffabcdef")
+  smLog:info(c:getAlpha())
   smLog:info("地图场景启动")
   smAudioPlayer:play("game/audio/music/my_love.mp3")
 end
