@@ -7,10 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
-import com.soyomaker.emulator.utils.Color;
 import com.soyomaker.emulator.utils.ColorFactory;
-import com.soyomaker.emulator.utils.Point;
-import com.soyomaker.emulator.utils.Rect;
 
 /**
  * 

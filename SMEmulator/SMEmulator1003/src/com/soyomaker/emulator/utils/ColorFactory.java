@@ -1,5 +1,7 @@
 package com.soyomaker.emulator.utils;
 
+import com.soyomaker.emulator.core.Color;
+
 public class ColorFactory {
 
 	/**

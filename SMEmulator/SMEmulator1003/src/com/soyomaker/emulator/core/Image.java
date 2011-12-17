@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.soyomaker.emulator.utils.Color;
 import com.soyomaker.emulator.utils.ColorFactory;
 
 /**

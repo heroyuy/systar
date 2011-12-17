@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.utils;
+package com.soyomaker.emulator.core;
 
 /**
  * 
