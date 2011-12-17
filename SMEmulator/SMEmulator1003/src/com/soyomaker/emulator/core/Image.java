@@ -181,8 +181,6 @@ public class Image {
 	/**
 	 * 翻转图像
 	 * 
-	 * @param src
-	 *            源图像
 	 * @param type
 	 *            翻转类型 HORIZONTAL（水平翻转）或者 VERTICAL（垂直翻转）
 	 * @return 翻转后的图像
@@ -246,8 +244,6 @@ public class Image {
 	/**
 	 * 旋转图片
 	 * 
-	 * @param src
-	 *            源图像
 	 * @param angle
 	 *            要旋转的度数
 	 * @return 旋转后的图像
@@ -299,8 +295,6 @@ public class Image {
 	/**
 	 * 缩放图像
 	 * 
-	 * @param src
-	 *            源图像
 	 * @param width
 	 *            缩放后的图像宽度
 	 * @param height
