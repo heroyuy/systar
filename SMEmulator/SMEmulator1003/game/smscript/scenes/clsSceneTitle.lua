@@ -12,9 +12,9 @@ end
 -- 开始
 function clsSceneTitle:onStart()
   smLog:info("标题场景启动")
-  smAudioPlayer:play("game/audio/music/my_love.mp3")
+  smAudioPlayer:play(globalGame.PATH.."/audio/music/my_love.mp3")
   local bgLayer=clsLayer:new(0,0,800,480)
-  bgLayer.backgroundImage=smImageFactory:createImage("game/image/picture/title.png")
+  bgLayer.backgroundImage=smImageFactory:createImage(globalGame.PATH..globalDictionary.config.titleBackground)
   globalGame.rootLayer:addChild(bgLayer)
   globalGame.rootLayer.delegate=self
 end

@@ -21,7 +21,36 @@ globalDataLoader.statusPath=".\\game\\data\\status.gat";
 globalDataLoader.mapPath=".\\game\\data\\map\\map{index}.gat";
 globalDataLoader.npcPath=".\\game\\data\\npc{index}.gat";
 globalDataLoader.animationPath=".\\game\\data\\animation.gat";
-globalDataLoader.configPath=".\\game\\data\\system.gat";
+globalDataLoader.configPath=".\\game\\data\\config.gat";
+
+--初始化
+function globalDataLoader:init()
+  --(1)加载Config信息
+  self:loadConfig()
+  --(2)加载Vocation信息
+  self:loadVocation()
+  --(3)加载Player信息
+  self:loadPlayer()
+  --(4)加载Skill信息
+  self:loadSkill()
+  --(5)加载Item信息
+  self:loadItem()
+  --(6)加载Equip信息
+  self:loadEquip()
+  --(7)加载Enemy信息
+  self:loadEnemy()
+  --(8)加载EnemyTroop信息
+  self:loadEnemyTroop()
+  --(9)加载Status信息
+  self:loadStatus()
+  --(10)加载Animation信息
+  self:loadAnimation()
+end
+
+--加载Config数据
+function globalDataLoader:loadConfig()
+  dofile(self.configPath)
+end
 
 --加载Vocation数据
 function globalDataLoader:loadVocation()
@@ -63,6 +92,11 @@ function globalDataLoader:loadStatus()
   dofile(self.statusPath)
 end
 
+--加载Animation数据
+function globalDataLoader:loadAnimation()
+  dofile(self.animationPath)
+end
+
 --加载Map数据
 function globalDataLoader:loadMap(id)
   local t=os.time()
@@ -81,12 +115,6 @@ function globalDataLoader:loadNPC(id)
   print(t)
 end
 
---加载Animation数据
-function globalDataLoader:loadAnimation()
-  dofile(self.animationPath)
-end
 
---加载System数据
-function globalDataLoader:loadConfig()
-  dofile(self.configPath)
-end
+
+

@@ -1,8 +1,10 @@
 globalGame={}
 
---标志常量
+--标志常量：场景
 globalGame.SCENE_TITLE=0 --标题场景
 globalGame.SCENE_MAP=1   --地图场景
+--标志常量：游戏路径
+globalGame.PATH=".\\game"
 
 --成员
 globalGame.curScene=nil
@@ -18,11 +20,12 @@ function globalGame:onStart()
   smGameEngine:setShowFps(true)
   smGameEngine:setRatedFps(500)
   smLog:setDebug(true)
+  smLog:info("game-start")
   --配置游戏
   self.rootLayer=clsLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.rootLayer.clipBounds=false
-  self.rootLayer.backgroundColor="0xffabcdef"
-  smLog:info("game-start")
+  --加载游戏数据
+  globalDataLoader:init()
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end
