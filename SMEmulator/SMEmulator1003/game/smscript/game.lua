@@ -1,7 +1,8 @@
 globalGame={}
 
 --标志常量
-globalGame.SCENE_MAP=0 --地图场景
+globalGame.SCENE_TITLE=0 --标题场景
+globalGame.SCENE_MAP=1   --地图场景
 
 --成员
 globalGame.curScene=nil
@@ -22,8 +23,8 @@ function globalGame:onStart()
   self.rootLayer.clipBounds=false
   self.rootLayer.backgroundColor="0xffabcdef"
   smLog:info("game-start")
-  --切换到地图场景
-  self:changeScene(self.SCENE_MAP)
+  --切换到标题场景
+  self:changeScene(self.SCENE_TITLE)
 end
 
 --触屏事件
@@ -73,7 +74,9 @@ end
 
 --辅助方法:创建场景(非当前Chunk不应该调用)
 function globalGame:createScene(index)
-  if index==self.SCENE_MAP then
+ if index==self.SCENE_TITLE then
+    self.curScene=clsSceneTitle:new()
+ elseif index==self.SCENE_MAP then
     self.curScene=clsSceneMap:new()
   end
 end 

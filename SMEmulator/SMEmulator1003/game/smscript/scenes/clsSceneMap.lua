@@ -35,6 +35,6 @@ end
 
 function clsSceneMap:onTouch(target,x,y,type)
   if type==globalUIConst.touchEventType.DOWN then
-    smLog:info(target:toString())
+    smLog:info(target:toString().."x="..x.." y="..y)
   end
 end

@@ -69,7 +69,7 @@ function clsLayer:paintLayer(painter)
     painter:fillRect(0, 0, self.width, self.height);
   end
   if self.backgroundImage then
-    painter.drawImage(backgroundImage, 0, 0, 0);
+    painter:drawImage(self.backgroundImage, 0, 0, 0);
   end
 end
 

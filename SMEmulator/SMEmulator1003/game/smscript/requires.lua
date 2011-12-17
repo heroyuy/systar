@@ -7,6 +7,7 @@ package.path = package.path .. ";.\\game\\smscript\\data\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\model\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\model\\manager\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\scenes\\?.lua"
+package.path = package.path .. ";.\\game\\smscript\\scenes\\title\\?.lua"
 
 --common\moudle
 require("clsBag")
@@ -14,6 +15,7 @@ require("clsBag")
 --common\ui
 require("globalUIConst")
 require("clsLayer")
+require("globalSkin")
 
 --common\utils
 require("System")
@@ -31,6 +33,9 @@ require("clsPlayer")
 --model\manager
 require("globalGameData")
 
--- 场景
+--scene
 require("clsScene")
 require("clsSceneMap")
+--scene\title
+require("clsSceneTitle")
+
