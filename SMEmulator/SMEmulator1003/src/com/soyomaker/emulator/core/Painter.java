@@ -83,7 +83,7 @@ public class Painter {
 	 * @param height
 	 *            区域高度
 	 */
-	void clipRect(int x, int y, int width, int height) {
+	public void clipRect(int x, int y, int width, int height) {
 		graphics.clipRect(x, y, width, height);
 	}
 
@@ -93,7 +93,7 @@ public class Painter {
 	 * @param rect
 	 *            区域
 	 */
-	void clipRect(Rect rect) {
+	public void clipRect(Rect rect) {
 		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
 				rect.getHeight());
 	}
@@ -377,7 +377,7 @@ public class Painter {
 	 * @param clip
 	 *            裁剪区
 	 */
-	void forceClip(Rect clip) {
+	public void forceClip(Rect clip) {
 		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(),
 				clip.getHeight());
 	}
@@ -387,7 +387,7 @@ public class Painter {
 	 * 
 	 * @return 基准点
 	 */
-	Point getBasePoint() {
+	public Point getBasePoint() {
 		return new Point(point);
 	}
 
@@ -417,7 +417,7 @@ public class Painter {
 	 * 
 	 * @return 当前裁剪区
 	 */
-	Rect getCurClip() {
+	public Rect getCurClip() {
 		return curClip;
 	}
 
@@ -447,7 +447,7 @@ public class Painter {
 	 * @param y
 	 *            y坐标
 	 */
-	void setBasePoint(int x, int y) {
+	public void setBasePoint(int x, int y) {
 		graphics.translate(x, y);
 		point.setX(point.getX() + x);
 		point.setY(point.getY() + y);
@@ -460,7 +460,7 @@ public class Painter {
 	 * @param point
 	 *            基准点
 	 */
-	void setBasePoint(Point point) {
+	public void setBasePoint(Point point) {
 		graphics.translate(point.getX(), point.getY());
 		this.point.setX(this.point.getX() + point.getX());
 		this.point.setY(this.point.getY() + point.getY());
@@ -527,7 +527,7 @@ public class Painter {
 	 * @param curClip
 	 *            裁剪区
 	 */
-	void setCurClip(Rect curClip) {
+	public void setCurClip(Rect curClip) {
 		this.curClip = curClip;
 	}
 

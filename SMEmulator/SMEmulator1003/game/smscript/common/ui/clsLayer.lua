@@ -20,18 +20,17 @@ clsLayer.enabled = true;
 clsLayer.clipBounds=true;
 clsLayer.delegate=nil
 clsLayer.children=nil
-
 clsLayer.focusLayer=nil
 
 --构造器
 function clsLayer:new(x,y,width,height)
   local self = {}
+  setmetatable(self,clsLayer)
   self.x=x
   self.y=y
   self.width=width
   self.height=height
-  clsLayer.children=clsList:new()
-  setmetatable(self,clsLayer)
+  self.children=clsList:new()
   return self
 end
 
@@ -77,6 +76,7 @@ end
 --绘制子Layer
 function clsLayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
+    --smLog:info(layer:toString())
     if layer.visibility then
       --设置坐标系
       painter:setBasePoint(layer.x,layer.y)
@@ -109,8 +109,8 @@ function clsLayer:dispatchEvent(x,y,type)
     self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
   else
     --未找到焦点组件
-    if self.deletage then
-      self.deletage:onTouch(self,x,y,type)
+    if self.delegate then
+      self.delegate:onTouch(self,x,y,type)
     end
   end
   if type==globalUIConst.touchEventType.UP then
@@ -130,7 +130,7 @@ end
 function clsLayer:searchFocusLayer(x,y)
   local focus = nil;
   --从上到下依次探查
-  for i=self.children:size(),-1,1 do
+  for i=self.children:size(),1,-1 do
     local layer=self.children:get(i)
     if layer.visibility and layer.enabled then
       --子Layer可见并且可以接收事件

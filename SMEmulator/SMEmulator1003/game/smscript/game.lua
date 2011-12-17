@@ -53,6 +53,7 @@ function globalGame:onStop()
     self.curScene:onStop()
     self.rootLayer:removeAll()
   end
+  smLog:info("game-stop")
 end
 
 --切换场景

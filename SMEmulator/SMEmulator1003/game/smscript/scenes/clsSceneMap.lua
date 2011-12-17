@@ -6,6 +6,11 @@ function clsSceneMap:new()
 	local self = {}
 	self = clsScene:new()
 	setmetatable(self,clsSceneMap)
+	self.pane=clsLayer:new(20,20,100,80)
+	self.pane.backgroundColor="0xffff0000"
+	self.pane.delegate=self
+	globalGame.rootLayer:addChild(self.pane)
+	globalGame.rootLayer.delegate=self
 	return self
 end
 
@@ -26,4 +31,10 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
+end
+
+function clsSceneMap:onTouch(target,x,y,type)
+  if type==globalUIConst.touchEventType.DOWN then
+    smLog:info(target:toString())
+  end
 end
