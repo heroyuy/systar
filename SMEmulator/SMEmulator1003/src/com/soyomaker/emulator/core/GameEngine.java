@@ -137,11 +137,11 @@ public class GameEngine implements Runnable {
 		luaAdapter.paint(painter);
 	}
 
-	void pause() {
+	void pauseByEmulator() {
 
 	}
 
-	void resume() {
+	void resumeByEmulator() {
 
 	}
 
@@ -195,13 +195,21 @@ public class GameEngine implements Runnable {
 		this.showFps = showFps;
 	}
 
-	void start() {
+	void startByEmulator() {
 		luaAdapter = LuaAdapter.newInstance(luaFilePath, globalGameName);
 		running = true;
 		new Thread(this).start();
 	}
 
+	void stopByEmulator() {
+		running = false;
+	}
+
+	/**
+	 * stopByLua 游戏内停止游戏
+	 */
 	public void stop() {
+		emulator.stopByEngine();
 		running = false;
 	}
 

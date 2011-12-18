@@ -216,14 +216,14 @@ public class Emulator extends JDialog {
 	 * 开始游戏,由模拟器调用
 	 */
 	private void startGame() {
-		ge.start();
+		ge.startByEmulator();
 	}
 
 	/**
 	 * 停止游戏,由模拟器调用
 	 */
 	private void stopGame() {
-		ge.stop();
+		ge.stopByEmulator();
 		this.repaintGame();// 清屏
 		if (ge.isShowStatusBar()) {
 			labelLuaMemory.setText("0KB");
@@ -244,5 +244,10 @@ public class Emulator extends JDialog {
 			res = dcmFmt.format(temp) + "B";
 		}
 		return res;
+	}
+
+	void stopByEngine() {
+		menuItemStop.setEnabled(false);
+		menuItemRun.setEnabled(true);
 	}
 }
