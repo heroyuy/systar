@@ -70,6 +70,9 @@ public class Emulator extends JDialog {
 				if (painter == null || painter.getGraphics() != g) {
 					painter = new Painter(g);
 				}
+				// 清屏
+				painter.setColor(ColorFactory.getInstance().BLACK);
+				painter.fillRect(0, 0, ge.getWidth(), ge.getHeight());
 				// 绘制游戏
 				ge.setShowFps(true);
 				if (ge.running) {
