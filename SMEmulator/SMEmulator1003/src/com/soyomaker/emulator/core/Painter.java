@@ -68,7 +68,7 @@ public class Painter {
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		point = new Point(0, 0);
-		setTextSize(12);
+		setTextSize(16);
 	}
 
 	/**

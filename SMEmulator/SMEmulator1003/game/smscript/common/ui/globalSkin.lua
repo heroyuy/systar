@@ -56,7 +56,7 @@ function globalSkin:createBg(width,height)
 end
 
 function globalSkin:createBody(width,height)
-  return self.body.scale(width,height)
+  return self.body:scale(width,height)
 end
 
 function globalSkin:createFrame(width,height)
@@ -107,4 +107,8 @@ function globalSkin:createSelectedBg(width,height)
   --中间
     painter:drawImage(self.selectedBg[5]:scale(width-2*8,height-2*8),8,8,globalUIConst.anchor.LT)
   return img
+end
+
+function globalSkin:getTextColor(i,j)
+  return self.textColor[i.."_"..j]
 end

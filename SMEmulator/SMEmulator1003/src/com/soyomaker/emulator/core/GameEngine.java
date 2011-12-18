@@ -201,7 +201,7 @@ public class GameEngine implements Runnable {
 		new Thread(this).start();
 	}
 
-	void stop() {
+	public void stop() {
 		running = false;
 	}
 

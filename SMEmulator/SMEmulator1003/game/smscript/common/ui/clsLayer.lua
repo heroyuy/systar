@@ -13,6 +13,7 @@ clsLayer.x=0
 clsLayer.y=0
 clsLayer.width=0
 clsLayer.height=0
+clsLayer.tag=0
 clsLayer.backgroundColor=nil
 clsLayer.backgroundImage = null;
 clsLayer.visibility = true;
@@ -99,6 +100,12 @@ function clsLayer:paintChildren(painter)
       
 end
 
+function clsLayer:onTouch(x,y,type)
+  if self.delegate then
+    self.delegate:onTouch(self,x,y,type)
+  end
+end
+
 function clsLayer:dispatchEvent(x,y,type)
   if type==globalUIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
@@ -109,9 +116,7 @@ function clsLayer:dispatchEvent(x,y,type)
     self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
   else
     --未找到焦点组件
-    if self.delegate then
-      self.delegate:onTouch(self,x,y,type)
-    end
+    self:onTouch(x,y,type)
   end
   if type==globalUIConst.touchEventType.UP then
     --如果是UP事件，则清除焦点
@@ -120,7 +125,7 @@ function clsLayer:dispatchEvent(x,y,type)
 end
 
 function clsLayer:toString()
-  local str="clsLayer["
+  local str="clsLayer:["
   str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
   str=str.."]"
   return str

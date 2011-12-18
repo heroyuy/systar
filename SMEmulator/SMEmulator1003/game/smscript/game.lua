@@ -11,7 +11,7 @@ globalGame.curScene=nil
 
 globalGame.rootLayer=nil
 
---脚本启动
+--脚本启动  lua层不应该调用
 function globalGame:onStart()
   --导入需要的文件
   package.path = package.path .. ";.\\game\\smscript\\?.lua"
@@ -30,28 +30,28 @@ function globalGame:onStart()
   self:changeScene(self.SCENE_TITLE)
 end
 
---触屏事件
+--触屏事件  lua层不应该调用
 function globalGame:onTouch(x,y,type)
   if self.rootLayer then
     self.rootLayer:dispatchEvent(x,y,type)
   end
 end
 
---更新model
+--更新model  lua层不应该调用
 function globalGame:update()
   if self.curScene then
     self.curScene:update()
   end
 end
 
---绘制屏幕
+--绘制屏幕  lua层不应该调用
 function globalGame:paint(painter)
   if self.rootLayer then
     self.rootLayer:paint(painter)
   end
 end
 
---退出
+--退出  lua层不应该调用
 function globalGame:onStop()
   if self.curScene then
     self.curScene:onStop()
@@ -60,7 +60,12 @@ function globalGame:onStop()
   smLog:info("game-stop")
 end
 
---切换场景
+--退出  lua调用
+function globalGame:stop()
+  smGameEngine:stop()
+end
+
+--切换场景  lua调用
 function globalGame:changeScene(index)
   --(1)原场景onStop
   if self.curScene then

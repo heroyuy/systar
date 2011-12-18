@@ -13,8 +13,9 @@ require("clsBag")
 
 --common\ui
 require("globalUIConst")
-require("clsLayer")
 require("globalSkin")
+require("clsLayer")
+require("clsButton")
 
 --common\utils
 require("System")
