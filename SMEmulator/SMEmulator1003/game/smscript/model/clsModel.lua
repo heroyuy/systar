@@ -9,7 +9,7 @@ clsModel = {}
 clsModel.__index = clsModel
 
 --字段定义
-clsModel.id=0 --角色ID
+clsModel.id=0 --模型对象ID
 
 --构造器
 function clsModel:new()

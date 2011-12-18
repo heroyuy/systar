@@ -59,6 +59,18 @@ function clsList:removeAll()
   end
 end
 
+--has方法
+function clsList:has(obj)
+  local status=false;
+  for _,v in ipairs(self) do
+    if v==obj then
+      status=true
+      break
+    end
+  end
+  return status
+end
+
 --size方法
 function clsList:size()
   return table.getn(self)
