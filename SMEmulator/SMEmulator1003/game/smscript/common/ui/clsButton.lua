@@ -9,6 +9,9 @@ clsButton={}
 setmetatable(clsButton,clsLayer)
 clsButton.__index=clsButton
 
+--重定向父类paintLayer(painter)方法
+clsButton.paintLayerF=clsButton.paintLayer
+
 --字段
 clsButton.STATE_NORMAL=0                       --普通状态
 clsButton.STATE_HIGHLIGHT=1                    --高亮状态
@@ -20,9 +23,6 @@ clsButton.textColor="0xffffffff"               --文字颜色
 clsButton.textSize=-1                          --文字大小
 clsButton.buttonState=clsButton.STATE_NORMAL   --按钮状态
 clsButton.highlightBoundTimes=1.5              --按钮高亮范围倍数
-
---重定向父类paintLayer(painter)方法
-clsButton.paintLayerF=clsButton.paintLayer
 
 --构造器
 function clsButton:new(x,y,width,height)
@@ -55,6 +55,7 @@ function clsButton:paintLayer(painter)
   end
 end
 
+--处理触屏事件（lua层不应该调用此方法）
 function clsButton:onTouch(x,y,type)
   if type==globalUIConst.touchEventType.DOWN then
     self.buttonState=clsButton.STATE_HIGHLIGHT

@@ -5,3 +5,8 @@
 --]]
 globalGameData.playerTroop.players={}  --Player列表
 globalGameData.playerTroop.curDisplayPlayerId=0   --当前显示的Player的ID
+
+function globalGameData.playerTroop:curDisplayPlayer()
+  return self.players[self.curDisplayPlayerId]
+end
+

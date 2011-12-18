@@ -55,7 +55,7 @@ function clsLayer:removeAll()
   self.children:removeAll()
 end
 
---绘制Layer
+--绘制Layer（lua层不应该调用此方法）
 function clsLayer:paint(painter)
   --绘制自身
   self:paintLayer(painter)
@@ -63,7 +63,7 @@ function clsLayer:paint(painter)
   self:paintChildren(painter)
 end
 
---绘制自身
+--绘制自身（lua层不应该调用此方法）
 function clsLayer:paintLayer(painter)
   if self.backgroundColor then
     painter:setColor(self.backgroundColor);
@@ -74,7 +74,7 @@ function clsLayer:paintLayer(painter)
   end
 end
 
---绘制子Layer
+--绘制子Layer（lua层不应该调用此方法）
 function clsLayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
     --smLog:info(layer:toString())
@@ -100,12 +100,14 @@ function clsLayer:paintChildren(painter)
       
 end
 
+--处理触屏事件（lua层不应该调用此方法）
 function clsLayer:onTouch(x,y,type)
   if self.delegate then
     self.delegate:onTouch(self,x,y,type)
   end
 end
 
+--事件分发（lua层不应该调用此方法）
 function clsLayer:dispatchEvent(x,y,type)
   if type==globalUIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
@@ -124,6 +126,11 @@ function clsLayer:dispatchEvent(x,y,type)
   end
 end
 
+--更新Layer相关元素（lua层不应该调用此方法）
+function clsLayer:update()
+end
+
+--toString
 function clsLayer:toString()
   local str="clsLayer:["
   str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height

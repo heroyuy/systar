@@ -7,7 +7,7 @@
 globalDataLoader={}
 
 --初始化数据字典
-globalDictionary={map={},npc={}}
+globalDictionary={maps={},npcs={}}
 
 --定义文件路径
 globalDataLoader.vocationPath=".\\game\\data\\vocation.gat";
@@ -108,7 +108,6 @@ function globalDataLoader:loadMap(id)
   print(t)
 end
 
---加载NPC数据
 function globalDataLoader:loadNPC(id)
   local t=os.time()
   local path=string.gsub(self.npcPath,"{index}",id)
@@ -117,6 +116,16 @@ function globalDataLoader:loadNPC(id)
   print(t)
 end
 
+function globalDictionary:getMap(id)
+  if self.maps[id]==nil then
+    globalDataLoader:loadMap(id)
+  end
+  return self.maps[id]
+end
 
-
-
+function globalDictionary:getNPC(id)
+  if self.npcs[id]==nil then
+    globalDataLoader:loadNPC(id)
+  end
+  return self.npcs[id]
+end

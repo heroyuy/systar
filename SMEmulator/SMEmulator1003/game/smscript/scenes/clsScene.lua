@@ -1,4 +1,9 @@
--- 游戏中全部场景的超级类。
+--[[
+  description:游戏中全部场景的父类
+  author:wp_g4
+  date:2011/12/12
+--]]
+
 clsScene = {}
 clsScene.__index = clsScene
 -- 构造体
