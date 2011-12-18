@@ -72,6 +72,8 @@ function clsSceneTitle:buttonTapped(target)
   local index=target.tag
   if index==1 then
     --新的游戏
+    globalGameData:newGame()
+    globalGame:changeScene(globalGame.SCENE_MAP)
   elseif index==2 then
     --读取存档
   elseif index==3 then

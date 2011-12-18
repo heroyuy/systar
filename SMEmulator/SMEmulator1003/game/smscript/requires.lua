@@ -32,6 +32,8 @@ require("clsPlayer")
 
 --model\manager
 require("globalGameData")
+require("globalGameData_playerTroop")
+require("globalGameData_publicMethod")
 
 --scene
 require("clsScene")

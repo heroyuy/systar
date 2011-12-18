@@ -3,5 +3,5 @@
   author:wp_g4
   date:2011/12/18
 --]]
-globalGameData.playerTroop.players=clsList:new()  --Player列表
+globalGameData.playerTroop.players={}  --Player列表
 globalGameData.playerTroop.curDisplayPlayerId=0   --当前显示的Player的ID

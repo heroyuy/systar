@@ -64,7 +64,7 @@ function clsList:has(obj)
   local status=false;
   for _,v in ipairs(self) do
     if v==obj then
-      status=true
+      status = true
       break
     end
   end
