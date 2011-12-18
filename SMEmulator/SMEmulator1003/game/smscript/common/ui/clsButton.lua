@@ -19,7 +19,7 @@ clsButton.normalImage=nil                      --普通时图片
 clsButton.textColor="0xffffffff"               --文字颜色
 clsButton.textSize=-1                          --文字大小
 clsButton.buttonState=clsButton.STATE_NORMAL   --按钮状态
-clsButton.highlightBoundTimes=1.5
+clsButton.highlightBoundTimes=1.5              --按钮高亮范围倍数
 
 --重定向父类paintLayer(painter)方法
 clsButton.paintLayerF=clsButton.paintLayer
@@ -59,13 +59,17 @@ function clsButton:onTouch(x,y,type)
   if type==globalUIConst.touchEventType.DOWN then
     self.buttonState=clsButton.STATE_HIGHLIGHT
   elseif type==globalUIConst.touchEventType.MOVE then
-    
+    local offsetWidth=(self.highlightBoundTimes-1)*self.width
+    local offsetHeight=(self.highlightBoundTimes-1)*self.height
+    if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
+      self.buttonState=clsButton.STATE_HIGHLIGHT
+    else
+      self.buttonState=clsButton.STATE_NORMAL
+    end
   elseif type==globalUIConst.touchEventType.UP then
-    self.buttonState=clsButton.STATE_NORMAL
-    if self.delegate then
-      if isPointInRect(x,y,0,0,self.width,self.height) then
-        self.delegate:buttonTapped(self)
-      end
+    if self.delegate and self.buttonState==clsButton.STATE_HIGHLIGHT then
+      self.buttonState=clsButton.STATE_NORMAL
+      self.delegate:buttonTapped(self)
     end
   end
 end
