@@ -4,7 +4,7 @@ globalGame={}
 globalGame.SCENE_TITLE=0 --标题场景
 globalGame.SCENE_MAP=1   --地图场景
 --标志常量：游戏路径
-globalGame.PATH=".\\game"
+globalGame.PATH="./game"
 
 --成员
 globalGame.curScene=nil

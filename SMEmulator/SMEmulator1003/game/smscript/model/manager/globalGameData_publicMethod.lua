@@ -51,3 +51,7 @@ end
 --加载游戏:从第index个存档初始化游戏
 function globalGameData:loadGame(index)
 end
+
+--更新游戏模型
+function globalGameData:update()
+end

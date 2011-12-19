@@ -9,10 +9,14 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
+--字段
+
 --构造器
 function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
+	local mapLayer=clsMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+	globalGame.rootLayer:addChild(mapLayer)
 	return self
 end
 

@@ -25,8 +25,10 @@ clsMapLayer.playerLastRow=nil      --player上次所在地图行号
 clsMapLayer.playerLastCol=nil      --player上次所在地图列号
 clsMapLayer.playerLastStep=nil     --player上次的行走状态（第x步）
 
-clsMapLayer.offsetX=nil            --X方向上的偏移
-clsMapLayer.offsetY=nil            --Y方向上的偏移
+clsMapLayer.bufferRow=nil          --缓冲区起始行号
+clsMapLayer.bufferCol=nil          --缓冲区起始列号
+clsMapLayer.bufferWidth=nil        --缓冲区宽度
+clsMapLayer.bufferHeight=nil       --缓冲区高度
 
 --构造器
 function clsMapLayer:new(x,y,width,height)
@@ -42,6 +44,11 @@ function clsMapLayer:paintLayer(painter)
   --updateMapLayer
   self:updateMapLayer()
   --绘图
+  --背景
+  painter:drawImage(self.bufferedBgImage,0,0,globalUIConst.anchor.LT)
+  --player、NPC
+  --前景
+  painter:drawImage(self.bufferedFgImage,0,0,globalUIConst.anchor.LT)
 end
 
 
@@ -64,6 +71,68 @@ function clsMapLayer:updateMapLayer()
      or self.playerLastStep~=self.player.step then
     
   end
+end
+
+--切换地图
+function clsMapLayer:changeMap(curMap)
+  --计算缓冲区大小
+  self.bufferWidth=(math.ceil(self.width/curMap.cellWidth)+self.bufferBound)*curMap.cellWidth
+  self.bufferHeight=(math.ceil(self.height/curMap.cellHeight)+self.bufferBound)*curMap.cellHeight
+  --创建缓冲前后景
+  self.bufferedBgImage=smImageFactory:createImage(self.bufferWidth,self.bufferHeight)
+  self.bufferedBgPainter=self.bufferedBgImage:getPainter()
+  self.bufferedFgImage=smImageFactory:createImage(self.bufferWidth,self.bufferHeight)
+  self.bufferedFgPainter=self.bufferedBgImage:getPainter()
+  --根据player当前位置计算缓冲区起始行、列号
+  self.bufferCol=self.player.col-math.floor(self.bufferWidth/curMap.cellWidth/2)
+  self.bufferRow=self.player.row-math.floor(self.bufferHeight/curMap.cellHeight/2)
+  if self.bufferCol<0 then
+    self.bufferCol=0
+  end
+  if self.bufferCol>curMap.colNum-self.bufferWidth/curMap.cellWidth then
+    self.bufferCol=curMap.colNum-self.bufferWidth/curMap.cellWidth
+  end
+  if self.bufferRow<0 then
+    self.bufferRow=0
+  end
+  if self.bufferRow>curMap.rowNum-self.bufferHeight/curMap.cellHeight then
+    self.bufferRow=curMap.rowNum-self.bufferHeight/curMap.cellHeight
+  end
+  --绘制缓冲图
+  for i=1,table.getn(curMap.layers) do
+    local layer=curMap.layers[i]
+    for j=self.bufferRow,self.bufferRow+self.bufferHeight/curMap.cellHeight-1 do
+      for k=self.bufferCol,self.bufferCol+self.bufferWidth/curMap.cellWidth-1 do
+        --smLog:info("j="..j.." k="..k)
+        local cell=layer[j+1][k+1]
+        local imageSetId=cell[1]
+        local tiledIndex=cell[2]
+        if imageSetId~=-1 and globalGameData.map.imageSets[imageSetId]==nil then
+          smLog:info("加载图集")
+          local imageSet=curMap.tilesets[imageSetId]
+          local path=imageSet.path
+          smLog:info(globalGame.PATH..path)
+          globalGameData.map.imageSets[imageSetId]=smImageFactory:createImage(globalGame.PATH..path)
+          smLog:info(globalGameData.map.imageSets[imageSetId])
+        end
+        if imageSetId~=-1 then
+          local imgColNum=globalGameData.map.imageSets[imageSetId]:getWidth()/curMap.cellWidth
+          local imgsx=math.mod(tiledIndex,imgColNum)*curMap.cellWidth
+          local imgsy=math.floor(tiledIndex/imgColNum)*curMap.cellWidth
+          if layer.deepth<0 then
+            --背景
+            self.bufferedBgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,curMap.cellWidth,curMap.cellHeight,
+               (k-self.bufferCol)*curMap.cellWidth,(j-self.bufferRow)*curMap.cellHeight,globalUIConst.anchor.LT)
+          elseif layer.deepth>0 then
+            --前景
+            self.bufferedFgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,curMap.cellWidth,curMap.cellHeight,
+               (k-self.bufferCol)*curMap.cellWidth,(j-self.bufferRow)*curMap.cellHeight,globalUIConst.anchor.LT)
+          end
+        end
+      end
+    end
+  end
+  self.map=curMap
 end
 
 function clsMapLayer:toString()

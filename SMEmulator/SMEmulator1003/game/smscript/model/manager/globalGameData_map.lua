@@ -4,5 +4,5 @@
   date:2011/12/18
 --]]
 
-globalGameData.map.imageSet={}  --地图图集
+globalGameData.map.imageSets={}  --地图图集
 

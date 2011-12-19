@@ -7,6 +7,7 @@ package.path = package.path .. ";.\\game\\smscript\\data\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\model\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\model\\manager\\?.lua"
 package.path = package.path .. ";.\\game\\smscript\\scenes\\?.lua"
+package.path = package.path .. ";.\\game\\smscript\\scenes\\map\\?.lua"
 
 --common\moudle
 require("clsBag")
@@ -33,10 +34,13 @@ require("clsPlayer")
 --model\manager
 require("globalGameData")
 require("globalGameData_playerTroop")
+require("globalGameData_map")
 require("globalGameData_publicMethod")
 
 --scene
 require("clsScene")
 require("clsSceneTitle")
+--scene\map
+require("clsMapLayer")
 require("clsSceneMap")
 

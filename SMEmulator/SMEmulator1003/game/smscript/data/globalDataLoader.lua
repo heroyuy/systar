@@ -105,7 +105,7 @@ function globalDataLoader:loadMap(id)
   local path=string.gsub(self.mapPath,"{index}",id)
   dofile(path)
   t=os.time()-t
-  print(t)
+  smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
 
 function globalDataLoader:loadNPC(id)
@@ -113,7 +113,7 @@ function globalDataLoader:loadNPC(id)
   local path=string.gsub(self.npcPath,"{index}",id)
   dofile(path)
   t=os.time()-t
-  print(t)
+  smLog:info("加载NPC["..id.."]耗时:"..t.."ms")
 end
 
 function globalDictionary:getMap(id)
