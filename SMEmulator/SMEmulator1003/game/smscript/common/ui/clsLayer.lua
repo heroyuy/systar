@@ -14,6 +14,7 @@ clsLayer.y=0
 clsLayer.width=0
 clsLayer.height=0
 clsLayer.tag=0
+clsLayer.arg=nil
 clsLayer.backgroundColor=nil
 clsLayer.backgroundImage = null;
 clsLayer.visibility = true;
@@ -39,6 +40,23 @@ end
 function clsLayer:addChild(layer)
   self.children:add(layer)
 end
+
+--根据序号获取子layer
+function clsLayer:getChild(index)
+  self.children:get(index)
+end
+
+--根据tag获取子layer
+function clsLayer:childWithTag(tag)
+  local child=nil;
+  for _,v in ipairs(self.children) do
+    if v.tag==tag then
+      child=v
+    end
+  end
+  return child
+end
+
 
 --移除子Layer
 function clsLayer:remove(index)
