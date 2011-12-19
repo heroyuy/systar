@@ -25,6 +25,7 @@ clsCharacter.mapId=0 --角色当前所在地图ID
 clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 
+clsCharacter.step=0 --角色当前行走步数
 
 clsCharacter.level=0 --等级
 clsCharacter.maxHp=0 --MaxHP值

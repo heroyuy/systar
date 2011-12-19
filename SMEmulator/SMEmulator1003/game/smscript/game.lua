@@ -39,6 +39,9 @@ end
 
 --更新model  lua层不应该调用
 function globalGame:update()
+  --更新数据模型
+  globalGameData:update()
+  --更新场景
   if self.curScene then
     self.curScene:update()
   end

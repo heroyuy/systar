@@ -9,20 +9,21 @@ clsLayer={}
 clsLayer.__index=clsLayer
 
 --字段
-clsLayer.x=0
-clsLayer.y=0
-clsLayer.width=0
-clsLayer.height=0
-clsLayer.tag=0
-clsLayer.arg=nil
-clsLayer.backgroundColor=nil
-clsLayer.backgroundImage = null;
-clsLayer.visibility = true;
-clsLayer.enabled = true;
-clsLayer.clipBounds=true;
-clsLayer.delegate=nil
-clsLayer.children=nil
-clsLayer.focusLayer=nil
+clsLayer.x=0                               --x坐标
+clsLayer.y=0                               --y坐标
+clsLayer.width=0                           --宽度
+clsLayer.height=0                          --高度
+clsLayer.tag=0                             --标志（可选）
+clsLayer.arg=nil                           --参数（可选）
+clsLayer.backgroundColor=nil               --背景色
+clsLayer.backgroundImage = null;           --背景图
+clsLayer.visibility = true;                --是否可见
+clsLayer.enabled = true;                   --是否接收事件
+clsLayer.clipBounds=true;                  --是否裁剪区域
+clsLayer.delegate=nil                      --事件委托
+clsLayer.children=nil                      --子layer
+clsLayer.focusLayer=nil                    --当前事件焦点子layer
+clsLayer.bufferedMode=false                --是否开启缓冲 TODO 功能尚未实现
 
 --构造器
 function clsLayer:new(x,y,width,height)
@@ -144,8 +145,9 @@ function clsLayer:dispatchEvent(x,y,type)
   end
 end
 
---更新Layer相关元素（lua层不应该调用此方法）
-function clsLayer:update()
+--通知更新界面。在缓冲模式下此方法用于通知Layer更新显示内容
+function clsLayer:notifyRefresh()
+  --TODO 尚未实现
 end
 
 --toString
@@ -156,7 +158,7 @@ function clsLayer:toString()
   return str
 end
 
---搜索焦点子组件，没有则返回nil
+--搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsLayer:searchFocusLayer(x,y)
   local focus = nil;
   --从上到下依次探查
