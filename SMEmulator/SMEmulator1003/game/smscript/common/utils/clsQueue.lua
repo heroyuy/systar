@@ -52,25 +52,27 @@ end
 
 --单元测试
 
---local q1=clsQueue:new()
---q1:push("a")
---q1:push("b")
---print(q1:pop())
---print(q1:size())
---print(q1:pop())
---print("--------------------")
+local debug=false
+if debug then
+  local q1=clsQueue:new()
+  q1:push("a")
+  q1:push("b")
+  print(q1:pop())
+  print(q1:size())
+  print(q1:pop())
+  print("--------------------")
 
---local q2=clsQueue:new()
---q2:push("a2")
---print(q2:pop())
---print(q2:size())
---print(q2:pop())
---print("--------------------")
+  local q2=clsQueue:new()
+  q2:push("a2")
+  print(q2:pop())
+  print(q2:size())
+  print(q2:pop())
+  print("--------------------")
 
---q1:push("c")
---q1:push({age=12})
---print(q1:size())
---print(q1:pop())
---local t=q1:pop()
---print(t.age)
-
+  q1:push("c")
+  q1:push({age=12})
+  print(q1:size())
+  print(q1:pop())
+  local t=q1:pop()
+  print(t.age)
+end
