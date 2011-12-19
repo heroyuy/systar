@@ -1,0 +1,1 @@
+globalDictionary.statuses={{index=0,type=0,name="战斗不能",desc="hp为0.",icon="044-Skill01.png",aniIndex=0,lastType=0,lastValue=0,parameters={{paramType=0,paramName="a",paramRule=1,paramValue=0},{paramType=1,paramName="aas",paramRule=0,paramValue=0}},conditions={{conditionType=0,conditionName="aa",param=0},{conditionType=1,conditionName="dd",param=0}},attributes={},status={}}}

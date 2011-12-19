@@ -1,0 +1,4 @@
+name=Office Silver Rollover
+extends=office-rollover.colorscheme
+kind=Light
+colorForeground=#4C535C

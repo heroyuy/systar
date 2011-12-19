@@ -1,0 +1,4 @@
+name=Office Silver Pressed
+extends=office-pressed.colorscheme
+kind=Light
+colorForeground=#4C535C
