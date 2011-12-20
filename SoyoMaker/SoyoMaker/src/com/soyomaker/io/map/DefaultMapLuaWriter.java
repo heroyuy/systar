@@ -65,7 +65,7 @@ public class DefaultMapLuaWriter implements IMapWriter {
             LuaTable ef = new LuaTable();
             ef.addNode("id", map.getTileSets().get(j).getIndex());
             ef.addNode("path", "/image/tileset/" + map.getTileSets().get(j).getTilebmpFile());
-            efs.addNode(ef);
+            efs.addNode("[" + map.getTileSets().get(j).getIndex() + "]", ef);
             if (j != map.getTileSets().size() - 1) {
                 efs.addNode("\n");
             }
@@ -104,8 +104,8 @@ public class DefaultMapLuaWriter implements IMapWriter {
                     ef.addNode("deepth", -low + j - 1);
                 }
                 ef.addNode("\n");
-                LuaTable lhs = new LuaTable();
-                lhs.addNode("\n");
+//                LuaTable lhs = new LuaTable();
+//                lhs.addNode("\n");
                 for (int m = 0; m < map.getHeight(); m++) {
                     LuaTable lws = new LuaTable();
                     for (int k = 0; k < map.getWidth(); k++) {
@@ -123,12 +123,16 @@ public class DefaultMapLuaWriter implements IMapWriter {
                         }
                         lws.addNode(ls);
                     }
-                    lhs.addNode(lws);
+//                    lhs.addNode(lws);
+//                    if (m != map.getHeight() - 1) {
+//                        lhs.addNode("\n");
+//                    }
+                    ef.addNode(lws);
                     if (m != map.getHeight() - 1) {
-                        lhs.addNode("\n");
+                        ef.addNode("\n");
                     }
                 }
-                ef.addNode(lhs);
+//                ef.addNode(lhs);
                 las.addNode(ef);
                 if (j != map.getLayerArrayList().size() - 1) {
                     las.addNode("\n");
