@@ -7,7 +7,7 @@
 --结构定义
 clsCharacter = {}
 setmetatable(clsCharacter,clsModel)
-clsCharacter.__index = clsModel
+clsCharacter.__index = clsCharacter
 
 --重定向需要覆盖的父类方法
 clsCharacter.updateF=clsCharacter.update
@@ -15,17 +15,17 @@ clsCharacter.updateF=clsCharacter.update
 --字段定义
 clsCharacter.name="" --角色名称
 clsCharacter.desc="" --角色描述
-clsCharacter.headImageName="" --头像名称
+clsCharacter.headImageName=nil --头像名称
 clsCharacter.headImage=nil --头像
-clsCharacter.charImageName="" --行走图名称
+clsCharacter.charImageName=nil --行走图名称
 clsCharacter.charImage=nil --行走图
-clsCharacter.battlerImageName="" --战斗图名称
+clsCharacter.battlerImageName=nil --战斗图名称
 clsCharacter.battlerImage=nil --战斗图
 clsCharacter.mapId=0 --角色当前所在地图ID
 clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 
-clsCharacter.step=0 --角色当前行走步数
+clsCharacter.step=0 --角色当前行走步数 取值范围[0,3]
 
 clsCharacter.level=0 --等级
 clsCharacter.maxHp=0 --MaxHP值
