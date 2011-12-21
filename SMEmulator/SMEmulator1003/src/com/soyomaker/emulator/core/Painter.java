@@ -1,6 +1,7 @@
 package com.soyomaker.emulator.core;
 
 import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -183,8 +184,10 @@ public class Painter {
 	 *            指定点y坐标
 	 */
 	public void copyArea(int x, int y, int width, int height, int dx, int dy) {
+		Composite c = ((Graphics2D) graphics).getComposite();
 		((Graphics2D) graphics).setComposite(AlphaComposite.Src);
 		graphics.copyArea(x, y, width, height, dx - x, dy - y);
+		((Graphics2D) graphics).setComposite(c);
 	}
 
 	/**
