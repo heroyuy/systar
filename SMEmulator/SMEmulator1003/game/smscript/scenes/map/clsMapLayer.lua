@@ -59,7 +59,6 @@ function clsMapLayer:onTouch(x,y,type)
   --test
   if type==globalUIConst.touchEventType.DOWN then
     self.player.col=self.player.col-1
-    smLog:info("player.col:"..self.player.col)
   end
 end
 
@@ -73,6 +72,9 @@ function clsMapLayer:updateMapLayer()
     --切换地图
     self.map=curMap
     self:initMap()
+  end
+  if smGameEngine:getActualFps()~=500 then
+    smLog:info("fps:"..smGameEngine:getActualFps())
   end
   --计算player当前物理坐标
   self.playerX,self.playerY=self:calculatePlayerLocation()

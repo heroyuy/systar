@@ -24,7 +24,6 @@ end
 -- 开始
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
-  
   smAudioPlayer:play("game/audio/music/my_love.mp3")
 end
 
@@ -37,4 +36,5 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
+  
 end
