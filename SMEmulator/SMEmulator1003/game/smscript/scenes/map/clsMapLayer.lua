@@ -143,6 +143,7 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
        rect.colNum*self.map.cellWidth,rect.rowNum*self.map.cellHeight)
   end
   --绘制
+  local times=0
   for i=1,table.getn(self.map.layers) do
     local layer=self.map.layers[i]
     for j=rect.row,rect.row+rect.rowNum-1 do
@@ -160,6 +161,9 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
           smLog:info(globalGameData.map.imageSets[imageSetId])
         end
         if imageSetId~=-1 then
+          if i==1 then
+            times=times+1
+          end
           local imgColNum=globalGameData.map.imageSets[imageSetId]:getWidth()/self.map.cellWidth
           local imgsx=math.mod(tiledIndex,imgColNum)*self.map.cellWidth
           local imgsy=math.floor(tiledIndex/imgColNum)*self.map.cellWidth
@@ -176,6 +180,7 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
       end
     end
   end
+  smLog:info("times:"..times)
 end
 
 --计算player当前物理坐标
