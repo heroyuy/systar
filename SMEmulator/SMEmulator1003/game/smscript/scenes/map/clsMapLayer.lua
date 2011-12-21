@@ -250,10 +250,6 @@ function clsMapLayer:calculateWindowLocation()
   return wx,wy
 end
 
-function clsMapLayer:refreshBufferedImage(rect)
-  
-end
-
 function clsMapLayer:toString()
   local str="clsMapLayer:["
   str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
