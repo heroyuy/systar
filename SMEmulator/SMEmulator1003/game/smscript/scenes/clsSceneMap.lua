@@ -16,7 +16,6 @@ function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
 	local mapLayer=clsMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-	mapLayer.backgroundImage=globalSkin:createBg(800,480)
 	globalGame.rootLayer:addChild(mapLayer)
 	return self
 end

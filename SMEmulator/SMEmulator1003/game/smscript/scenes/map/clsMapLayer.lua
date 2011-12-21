@@ -27,8 +27,8 @@ clsMapLayer.bufferCol=nil          --缓冲区起始列号（单位：单元格�
 clsMapLayer.bufferColNum=nil       --缓冲区宽度（单位：单元格）
 clsMapLayer.bufferRowNum=nil       --缓冲区高度（单位：单元格）
 
-clsMapLayer.playerX=nil            --当前player在地图上的x坐标(以player双脚中间为基准)（单位：像素）
-clsMapLayer.playerY=nil            --当前player在地图上的y坐标(以player双脚中间为基准)（单位：像素）
+clsMapLayer.playerX=nil            --当前player在地图上的x坐标(以player所在单元格正中间为基准)（单位：像素）
+clsMapLayer.playerY=nil            --当前player在地图上的y坐标(以player所在单元格正中间为基准)（单位：像素）
 clsMapLayer.windowX=nil            --当前窗口在地图上的x坐标（单位：像素）
 clsMapLayer.windowY=nil            --当前窗口在地图上的y坐标（单位：像素）
 
@@ -40,6 +40,7 @@ function clsMapLayer:new(x,y,width,height)
   return self
 end
 
+
 --绘制自身
 function clsMapLayer:paintLayer(painter)
   --调用父类的paintLayer方法
@@ -48,17 +49,23 @@ function clsMapLayer:paintLayer(painter)
   self:updateMapLayer()
   --绘图
   --背景
-  painter:drawImage(self.bufferedBgImage,0,0,globalUIConst.anchor.LT)
+  painter:drawImage(self.bufferedBgImage,self.windowX-self.bufferCol*self.map.cellWidth,self.windowY-self.bufferRow*self.map.cellHeight,
+     self.width,self.height,0,0,globalUIConst.anchor.LT)
   --player、NPC
+  painter:setColor("0xffabcdef")
+  painter:fillRect(self.playerX-self.map.cellWidth/2-self.windowX,self.playerY-self.map.cellHeight/2-self.windowY,self.map.cellWidth,self.map.cellHeight)
   --前景
-  painter:drawImage(self.bufferedFgImage,0,0,globalUIConst.anchor.LT)
+  painter:drawImage(self.bufferedFgImage,self.windowX-self.bufferCol*self.map.cellWidth,self.windowY-self.bufferRow*self.map.cellHeight,
+     self.width,self.height,0,0,globalUIConst.anchor.LT)
 end
 
 
 function clsMapLayer:onTouch(x,y,type)
   --test
   if type==globalUIConst.touchEventType.DOWN then
-    self.player.col=self.player.col-1
+    if self.player.row<19 then
+      self.player.row=self.player.row+1
+    end
   end
 end
 
@@ -73,7 +80,7 @@ function clsMapLayer:updateMapLayer()
     self.map=curMap
     self:initMap()
   end
-  if smGameEngine:getActualFps()~=500 then
+  if smGameEngine:getActualFps()<100 then
     smLog:info("fps:"..smGameEngine:getActualFps())
   end
   --计算player当前物理坐标
@@ -83,7 +90,7 @@ function clsMapLayer:updateMapLayer()
   --根据窗口坐标和缓冲坐标判断是否需要更新缓冲
   if self.windowX<self.bufferCol*self.map.cellWidth then
     --缓冲左越界
-    smLog:info("--left--")
+      smLog:info("--left--")
       --(1)复制可用区域
       self.bufferedBgImage:copyArea(0,0,(self.bufferColNum-1)*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight,self.map.cellWidth,0)
       self.bufferedFgImage:copyArea(0,0,(self.bufferColNum-1)*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight,self.map.cellWidth,0)
@@ -92,16 +99,39 @@ function clsMapLayer:updateMapLayer()
       --(3)重绘新区域
       local refreshBufferRect={col=0,row=0,colNum=1,rowNum=self.bufferRowNum}
       self:refreshBuffer(refreshBufferRect,true)
-      
-  end
-  if self.windowX+self.width>(self.bufferCol+self.bufferColNum)*self.map.cellWidth then
+  elseif self.windowX+self.width>(self.bufferCol+self.bufferColNum)*self.map.cellWidth then
     --缓冲右越界
-  end
-  if self.windowY<self.bufferRow*self.map.cellHeight then
+      smLog:info("--right--")
+      --(1)复制可用区域
+      self.bufferedBgImage:copyArea(self.map.cellWidth,0,(self.bufferColNum-1)*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight,0,0)
+      self.bufferedFgImage:copyArea(self.map.cellWidth,0,(self.bufferColNum-1)*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight,0,0)
+      --(2)修正缓冲区坐标(右移)
+      self.bufferCol=self.bufferCol+1
+      --(3)重绘新区域
+      local refreshBufferRect={col=self.bufferColNum-1,row=0,colNum=1,rowNum=self.bufferRowNum}
+      self:refreshBuffer(refreshBufferRect,true)
+  elseif self.windowY<self.bufferRow*self.map.cellHeight then
     --缓冲上越界
-  end
-  if self.windowY+self.height>(self.bufferRow+self.bufferRowNum)*self.map.cellHeight then
+      smLog:info("--up--")
+      --(1)复制可用区域
+      self.bufferedBgImage:copyArea(0,0,self.bufferColNum*self.map.cellWidth,(self.bufferRowNum-1)*self.map.cellHeight,0,self.map.cellHeight)
+      self.bufferedFgImage:copyArea(0,0,self.bufferColNum*self.map.cellWidth,(self.bufferRowNum-1)*self.map.cellHeight,0,self.map.cellHeight)
+      --(2)修正缓冲区坐标(左移)
+      self.bufferRow=self.bufferRow-1
+      --(3)重绘新区域
+      local refreshBufferRect={col=0,row=0,colNum=self.bufferColNum,rowNum=1}
+      self:refreshBuffer(refreshBufferRect,true)
+  elseif self.windowY+self.height>(self.bufferRow+self.bufferRowNum)*self.map.cellHeight then
     --缓冲下越界
+      smLog:info("--down--")
+      --(1)复制可用区域
+      self.bufferedBgImage:copyArea(0,self.map.cellHeight,self.bufferColNum*self.map.cellWidth,(self.bufferRowNum-1)*self.map.cellHeight,0,0)
+      self.bufferedFgImage:copyArea(0,self.map.cellHeight,self.bufferColNum*self.map.cellWidth,(self.bufferRowNum-1)*self.map.cellHeight,0,0)
+      --(2)修正缓冲区坐标(下移)
+      self.bufferRow=self.bufferRow+1
+      --(3)重绘新区域
+      local refreshBufferRect={col=0,row=self.bufferRowNum-1,colNum=self.bufferColNum,rowNum=1}
+      self:refreshBuffer(refreshBufferRect,true)
   end
 end
 
@@ -183,7 +213,7 @@ end
 --计算player当前物理坐标
 function clsMapLayer:calculatePlayerLocation()
   local px=self.player.col*self.map.cellWidth+self.map.cellWidth/2
-  local py=self.player.row*self.map.cellHeight+self.map.cellHeight
+  local py=self.player.row*self.map.cellHeight+self.map.cellHeight/2
   --根据player当前面向和行走状态进行位置修正
   if self.player.face==0 then
     --上
