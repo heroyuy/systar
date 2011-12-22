@@ -80,7 +80,7 @@ function clsMapLayer:updateMapLayer()
     self.map=curMap
     self:initMap()
   end
-  if smGameEngine:getActualFps()<100 then
+  if smGameEngine:getActualFps()<smGameEngine:getRatedFps() then
     smLog:info("fps:"..smGameEngine:getActualFps())
   end
   --计算player当前物理坐标

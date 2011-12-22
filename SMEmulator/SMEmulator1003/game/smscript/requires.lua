@@ -17,6 +17,7 @@ require("globalUIConst")
 require("globalSkin")
 require("clsLayer")
 require("clsButton")
+require("clsSprite")
 
 --common\utils
 require("System")
