@@ -26,13 +26,21 @@ function clsUISprite:new(image)
   return self
 end
 
+--设置图片
+function clsUISprite:setImage(image)
+  if type(image)=="string" then
+    image=smImageFactory:createImage(image)
+  end
+  self.image=image
+end
+
 --绘制自身
 function clsUISprite:paintLayer(painter)
   --调用父类的paintLayer方法
   self:paintLayerF(painter)
   --绘制图片
   if self.image then
-    painter:drawImage(self.image,self.width/2,self.height/2,smUIConst.anchor.HV)
+    painter:drawImage(self.image,0,0,smUIConst.anchor.LT)
   end
 end
 

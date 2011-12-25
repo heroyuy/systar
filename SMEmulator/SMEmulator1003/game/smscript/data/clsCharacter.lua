@@ -63,3 +63,9 @@ function clsCharacter:update()
   self:updateF()
   --TODO 其它更新
 end
+
+--获取角色当前要显示的行走图
+function clsCharacter:getCurCharacterImage()
+  
+end
+

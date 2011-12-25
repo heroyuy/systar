@@ -5,44 +5,44 @@
 --]]
 
 --类结构定义
-clsMapLayer={}
-setmetatable(clsMapLayer,clsUILayer)
-clsMapLayer.__index=clsMapLayer
+clsTiledMapLayer={}
+setmetatable(clsTiledMapLayer,clsUILayer)
+clsTiledMapLayer.__index=clsTiledMapLayer
 
 --重定向父类paintLayer(painter)方法
-clsMapLayer.paintLayerF=clsMapLayer.paintLayer
+clsTiledMapLayer.paintLayerF=clsTiledMapLayer.paintLayer
 
 --字段
-clsMapLayer.bufferedBgImage=nil    --背景缓冲图
-clsMapLayer.bufferedBgPainter=nil  --背景缓冲画笔
-clsMapLayer.bufferedFgImage=nil    --前景缓冲图
-clsMapLayer.bufferedFgPainter=nil  --前景缓冲画笔
-clsMapLayer.bufferBound=0          --缓冲边缘宽度（单位：单元格）
+clsTiledMapLayer.bufferedBgImage=nil    --背景缓冲图
+clsTiledMapLayer.bufferedBgPainter=nil  --背景缓冲画笔
+clsTiledMapLayer.bufferedFgImage=nil    --前景缓冲图
+clsTiledMapLayer.bufferedFgPainter=nil  --前景缓冲画笔
+clsTiledMapLayer.bufferBound=0          --缓冲边缘宽度（单位：单元格）
 
-clsMapLayer.player=nil             --当前要显示的player
-clsMapLayer.map=nil                --当前地图
+clsTiledMapLayer.player=nil             --当前要显示的player
+clsTiledMapLayer.map=nil                --当前地图
 
-clsMapLayer.bufferRow=nil          --缓冲区起始行号（单位：单元格）
-clsMapLayer.bufferCol=nil          --缓冲区起始列号（单位：单元格）
-clsMapLayer.bufferColNum=nil       --缓冲区宽度（单位：单元格）
-clsMapLayer.bufferRowNum=nil       --缓冲区高度（单位：单元格）
+clsTiledMapLayer.bufferRow=nil          --缓冲区起始行号（单位：单元格）
+clsTiledMapLayer.bufferCol=nil          --缓冲区起始列号（单位：单元格）
+clsTiledMapLayer.bufferColNum=nil       --缓冲区宽度（单位：单元格）
+clsTiledMapLayer.bufferRowNum=nil       --缓冲区高度（单位：单元格）
 
-clsMapLayer.playerX=nil            --当前player在地图上的x坐标(以player所在单元格正中间为基准)（单位：像素）
-clsMapLayer.playerY=nil            --当前player在地图上的y坐标(以player所在单元格正中间为基准)（单位：像素）
-clsMapLayer.windowX=nil            --当前窗口在地图上的x坐标（单位：像素）
-clsMapLayer.windowY=nil            --当前窗口在地图上的y坐标（单位：像素）
+clsTiledMapLayer.playerX=nil            --当前player在地图上的x坐标(以player所在单元格正中间为基准)（单位：像素）
+clsTiledMapLayer.playerY=nil            --当前player在地图上的y坐标(以player所在单元格正中间为基准)（单位：像素）
+clsTiledMapLayer.windowX=nil            --当前窗口在地图上的x坐标（单位：像素）
+clsTiledMapLayer.windowY=nil            --当前窗口在地图上的y坐标（单位：像素）
 
 
 --构造器
-function clsMapLayer:new(x,y,width,height)
+function clsTiledMapLayer:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsMapLayer)
+  setmetatable(self,clsTiledMapLayer)
   return self
 end
 
 
 --绘制自身
-function clsMapLayer:paintLayer(painter)
+function clsTiledMapLayer:paintLayer(painter)
   --调用父类的paintLayer方法
   self:paintLayerF(painter)
   --updateMapLayer
@@ -60,7 +60,7 @@ function clsMapLayer:paintLayer(painter)
 end
 
 
-function clsMapLayer:onTouch(x,y,type)
+function clsTiledMapLayer:onTouch(x,y,type)
   --test
   if type==smUIConst.touchEventType.DOWN then
     if self.player.row<19 then
@@ -70,7 +70,7 @@ function clsMapLayer:onTouch(x,y,type)
 end
 
 --更新
-function clsMapLayer:updateMapLayer()
+function clsTiledMapLayer:updateMapLayer()
   --查询当前玩家和地图
   self.player=globalData.playerTroop:curDisplayPlayer()
   local curMap=globalDictionary:getMap(self.player.mapId)
@@ -79,9 +79,6 @@ function clsMapLayer:updateMapLayer()
     --切换地图
     self.map=curMap
     self:initMap()
-  end
-  if smGameEngine:getActualFps()<smGameEngine:getRatedFps() then
-    smLog:info("fps:"..smGameEngine:getActualFps())
   end
   --计算player当前物理坐标
   self.playerX,self.playerY=self:calculatePlayerLocation()
@@ -136,7 +133,7 @@ function clsMapLayer:updateMapLayer()
 end
 
 --切换地图
-function clsMapLayer:initMap()
+function clsTiledMapLayer:initMap()
   --计算缓冲区大小
   self.bufferColNum=(math.ceil(self.width/self.map.cellWidth)+self.bufferBound)
   self.bufferRowNum=(math.ceil(self.height/self.map.cellHeight)+self.bufferBound)
@@ -166,7 +163,7 @@ function clsMapLayer:initMap()
 end
 
 --绘制缓冲区
-function clsMapLayer:refreshBuffer(rect,clearFlag)
+function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
   --清除
   if clearFlag then
     self.bufferedBgImage:clear(rect.col*self.map.cellWidth,rect.row*self.map.cellHeight,
@@ -211,7 +208,7 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
 end
 
 --计算player当前物理坐标
-function clsMapLayer:calculatePlayerLocation()
+function clsTiledMapLayer:calculatePlayerLocation()
   local px=self.player.col*self.map.cellWidth+self.map.cellWidth/2
   local py=self.player.row*self.map.cellHeight+self.map.cellHeight/2
   --根据player当前面向和行走状态进行位置修正
@@ -232,7 +229,7 @@ function clsMapLayer:calculatePlayerLocation()
 end
 
 --计算window当前物理坐标
-function clsMapLayer:calculateWindowLocation()
+function clsTiledMapLayer:calculateWindowLocation()
   local wx=self.playerX-self.width/2
   local wy=self.playerY-self.height/2
   if wx<0 then
@@ -250,8 +247,8 @@ function clsMapLayer:calculateWindowLocation()
   return wx,wy
 end
 
-function clsMapLayer:toString()
-  local str="clsMapLayer:["
+function clsTiledMapLayer:toString()
+  local str="clsTiledMapLayer:["
   str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
   str=str.."]"
   return str

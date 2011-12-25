@@ -34,7 +34,7 @@ require("globalData_public")
 --scene
 require("clsScene")
 --scene\map
-require("clsMapLayer")
+require("clsTiledMapLayer")
 require("clsSceneMap")
 --scene\title
 require("clsSceneTitle")
