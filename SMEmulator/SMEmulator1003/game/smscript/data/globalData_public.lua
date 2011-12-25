@@ -5,7 +5,7 @@
 --]]
 
 --新游戏：从字典中初始化游戏
-function globalGameData:newGame()
+function globalData:newGame()
   --初始化PlayerTroop
   for _,v in ipairs(globalDictionary.config.playersIndex) do
     local player=clsPlayer:new()
@@ -49,9 +49,9 @@ function globalGameData:newGame()
 end
 
 --加载游戏:从第index个存档初始化游戏
-function globalGameData:loadGame(index)
+function globalData:loadGame(index)
 end
 
 --更新游戏模型
-function globalGameData:update()
+function globalData:update()
 end

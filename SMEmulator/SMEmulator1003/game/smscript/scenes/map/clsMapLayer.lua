@@ -72,7 +72,7 @@ end
 --更新
 function clsMapLayer:updateMapLayer()
   --查询当前玩家和地图
-  self.player=globalGameData.playerTroop:curDisplayPlayer()
+  self.player=globalData.playerTroop:curDisplayPlayer()
   local curMap=globalDictionary:getMap(self.player.mapId)
   --判断是否切换地图
   if self.map~=curMap then
@@ -183,25 +183,25 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
         local cell=layer[self.bufferRow+j+1][self.bufferCol+k+1]
         local imageSetId=cell[1]
         local tiledIndex=cell[2]
-        if imageSetId~=-1 and globalGameData.map.imageSets[imageSetId]==nil then
+        if imageSetId~=-1 and globalData.map.imageSets[imageSetId]==nil then
           smLog:info("加载图集")
           local imageSet=self.map.tilesets[imageSetId]
           local path=imageSet.path
           smLog:info(globalGame.PATH..path)
-          globalGameData.map.imageSets[imageSetId]=smImageFactory:createImage(globalGame.PATH..path)
-          smLog:info(globalGameData.map.imageSets[imageSetId])
+          globalData.map.imageSets[imageSetId]=smImageFactory:createImage(globalGame.PATH..path)
+          smLog:info(globalData.map.imageSets[imageSetId])
         end
         if imageSetId~=-1 then
-          local imgColNum=globalGameData.map.imageSets[imageSetId]:getWidth()/self.map.cellWidth
+          local imgColNum=globalData.map.imageSets[imageSetId]:getWidth()/self.map.cellWidth
           local imgsx=math.mod(tiledIndex,imgColNum)*self.map.cellWidth
           local imgsy=math.floor(tiledIndex/imgColNum)*self.map.cellWidth
           if layer.deepth<0 then
             --背景
-            self.bufferedBgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
+            self.bufferedBgPainter:drawImage(globalData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
                k*self.map.cellWidth,j*self.map.cellHeight,smUIConst.anchor.LT)
           elseif layer.deepth>0 then
             --前景
-            self.bufferedFgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
+            self.bufferedFgPainter:drawImage(globalData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
                k*self.map.cellWidth,j*self.map.cellHeight,smUIConst.anchor.LT)
           end
         end

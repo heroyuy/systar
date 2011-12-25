@@ -5,12 +5,12 @@
 --]]
 
 --初始化
-globalGameData={}
+globalData={}
 
 --字段：公共模块
-globalGameData.playerTroop={}      --玩家队伍
+globalData.playerTroop={}      --玩家队伍
 
-globalGameData.map={}              --地图
+globalData.map={}              --地图
 
 
 

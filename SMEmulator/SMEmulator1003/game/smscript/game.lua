@@ -25,7 +25,7 @@ function globalGame:onStart()
   self.rootLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.rootLayer.clipBounds=false
   --加载游戏数据
-  globalDataLoader:init()
+  smDataLoader:init()
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end
@@ -40,7 +40,7 @@ end
 --更新model  lua层不应该调用
 function globalGame:update()
   --更新数据模型
-  globalGameData:update()
+  globalData:update()
   --更新场景
   if self.curScene then
     self.curScene:update()
