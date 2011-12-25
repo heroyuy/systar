@@ -603,15 +603,16 @@ public class EditStatusDialog extends javax.swing.JDialog {
     private void addParameterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParameterButtonActionPerformed
         // TODO add your handling code here:
         Parameter para = new Parameter();
-        int max = -1;
-        Iterator<Parameter> it = status.paras.iterator();
-        while (it.hasNext()) {
-            Parameter m = (Parameter) it.next();
-            if (m.type > max) {
-                max = m.type;
-            }
-        }
-        para.type = max + 1;
+//        int max = -1;
+//        Iterator<Parameter> it = status.paras.iterator();
+//        while (it.hasNext()) {
+//            Parameter m = (Parameter) it.next();
+//            if (m.type > max) {
+//                max = m.type;
+//            }
+//        }
+//        para.type = max + 1;
+        para.type = status.paras.size();
         status.paras.add(para);
         parameterTable.updateUI();
     }//GEN-LAST:event_addParameterButtonActionPerformed

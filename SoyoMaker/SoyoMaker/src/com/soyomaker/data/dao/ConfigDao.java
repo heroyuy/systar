@@ -287,7 +287,7 @@ public class ConfigDao extends Dao<Config> {
             ltAttr.addNode("index", config.system.attributes.get(i).id);
             ltAttr.addNode("name", config.system.attributes.get(i).name);
             ltAttr.addNode("desc", config.system.attributes.get(i).description);
-            ltAttrs.addNode(ltAttr);
+            ltAttrs.addNode("[" + config.system.attributes.get(i).id + "]", ltAttr);
             if (i != config.system.attributes.size() - 1) {
                 ltAttrs.addNode("\n");
             }

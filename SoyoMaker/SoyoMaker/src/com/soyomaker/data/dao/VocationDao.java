@@ -100,19 +100,19 @@ public class VocationDao extends Dao<Vocation> {
             for (int j = 0; j < vocation.equips.size(); j++) {
                 eqs.addNode(vocation.equips.get(j).getIndex());
             }
-            lt.addNode("equipsIndex", eqs);
+            lt.addNode("equips", eqs);
             lt.addNode("\n");
             LuaTable its = new LuaTable();
             for (int j = 0; j < vocation.items.size(); j++) {
                 its.addNode(vocation.items.get(j).getIndex());
             }
-            lt.addNode("itemsIndex", its);
+            lt.addNode("items", its);
             lt.addNode("\n");
             LuaTable sks = new LuaTable();
             for (int j = 0; j < vocation.skills.size(); j++) {
                 sks.addNode(vocation.skills.get(j).getIndex());
             }
-            lt.addNode("skillsIndex", sks);
+            lt.addNode("skills", sks);
             lt.addNode("\n");
             LuaTable attrs = new LuaTable();
             if (!vocation.attrs.isEmpty()) {
@@ -122,7 +122,7 @@ public class VocationDao extends Dao<Vocation> {
                 LuaTable attr = new LuaTable();
                 attr.addNode("index", vocation.attrs.get(j).id);
                 attr.addNode("value", vocation.attrs.get(j).value);
-                attrs.addNode(attr);
+                attrs.addNode("[" + vocation.attrs.get(j).id + "]", attr);
                 if (j != vocation.attrs.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -137,12 +137,12 @@ public class VocationDao extends Dao<Vocation> {
                 LuaTable statu = new LuaTable();
                 statu.addNode("index", vocation.status.get(j).getIndex());
                 statu.addNode("value", vocation.status.get(j).value);
-                status.addNode(statu);
+                status.addNode("[" + vocation.status.get(j).getIndex() + "]", statu);
                 if (j != vocation.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
-            lt.addNode("status", status);
+            lt.addNode("buffs", status);
             lts.addNode("[" + vocation.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

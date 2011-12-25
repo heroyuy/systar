@@ -495,7 +495,7 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     jToolBar1.setRollover(true);
     jToolBar1.setName("jToolBar1"); // NOI18N
 
-    chooseEnemyBattleImgButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyostar/resources/2.PNG"))); // NOI18N
+    chooseEnemyBattleImgButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyomaker/resources/menu_open.PNG"))); // NOI18N
     chooseEnemyBattleImgButton.setFocusable(false);
     chooseEnemyBattleImgButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     chooseEnemyBattleImgButton.setName("chooseEnemyBattleImgButton"); // NOI18N

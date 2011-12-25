@@ -185,7 +185,7 @@ public class EnemyDao extends Dao<Enemy> {
                 }
                 trea.addNode("index", enemy.treasures.get(j).getIndex());
                 trea.addNode("rate", enemy.treasures.get(j).rate);
-                treas.addNode(trea);
+                treas.addNode("[" + enemy.treasures.get(j).getIndex() + "]", trea);
                 if (j != enemy.treasures.size() - 1) {
                     treas.addNode("\n");
                 }
@@ -201,7 +201,7 @@ public class EnemyDao extends Dao<Enemy> {
                 eq.addNode("kind", enemy.equips.get(j).equipType);
                 eq.addNode("index", enemy.equips.get(j).getIndex());
                 eq.addNode("rate", enemy.equips.get(j).rate);
-                eqs.addNode(eq);
+                eqs.addNode("[" + enemy.equips.get(j).getIndex() + "]", eq);
                 if (j != enemy.equips.size() - 1) {
                     eqs.addNode("\n");
                 }
@@ -223,7 +223,7 @@ public class EnemyDao extends Dao<Enemy> {
                         paras.addNode(enemy.actions.get(j).conds.get(k).paras.get(m));
                     }
                     cond.addNode("parameters", paras);
-                    conds.addNode(cond);
+                    conds.addNode("[" + enemy.actions.get(j).conds.get(k).conditionType + "]", cond);
                 }
                 act.addNode("conditions", conds);
                 LuaTable pars = new LuaTable();
@@ -233,7 +233,7 @@ public class EnemyDao extends Dao<Enemy> {
                 act.addNode("parameters", pars);
                 act.addNode("actionType", enemy.actions.get(j).actionType);
                 act.addNode("rate", enemy.actions.get(j).rate);
-                acts.addNode(act);
+                acts.addNode("[" + enemy.actions.get(j).actionType + "]", act);
                 if (j != enemy.actions.size() - 1) {
                     acts.addNode("\n");
                 }
@@ -248,7 +248,7 @@ public class EnemyDao extends Dao<Enemy> {
                 LuaTable attr = new LuaTable();
                 attr.addNode("index", enemy.attributes.get(j).id);
                 attr.addNode("value", enemy.attributes.get(j).value);
-                attrs.addNode(attr);
+                attrs.addNode("[" + enemy.attributes.get(j).id + "]", attr);
                 if (j != enemy.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -263,12 +263,12 @@ public class EnemyDao extends Dao<Enemy> {
                 LuaTable statu = new LuaTable();
                 statu.addNode("index", enemy.status.get(j).getIndex());
                 statu.addNode("value", enemy.status.get(j).value);
-                status.addNode(statu);
+                status.addNode("[" + enemy.status.get(j).getIndex() + "]", statu);
                 if (j != enemy.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
-            lt.addNode("status", status);
+            lt.addNode("buffs", status);
             lts.addNode("[" + enemy.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

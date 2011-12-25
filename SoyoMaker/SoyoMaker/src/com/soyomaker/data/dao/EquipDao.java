@@ -175,7 +175,7 @@ public class EquipDao extends Dao<Equip> {
                 ef.addNode("index", equip.effects.get(j).effectType);
                 ef.addNode("name", equip.effects.get(j).effectName);
                 ef.addNode("value", equip.effects.get(j).effectValue);
-                efs.addNode(ef);
+                efs.addNode("[" + equip.effects.get(j).effectType + "]", ef);
                 if (j != equip.effects.size() - 1) {
                     efs.addNode("\n");
                 }
@@ -190,7 +190,7 @@ public class EquipDao extends Dao<Equip> {
                 LuaTable attr = new LuaTable();
                 attr.addNode("index", equip.attributes.get(j).id);
                 attr.addNode("value", equip.attributes.get(j).value);
-                attrs.addNode(attr);
+                attrs.addNode("[" + equip.attributes.get(j).id + "]", attr);
                 if (j != equip.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -205,12 +205,12 @@ public class EquipDao extends Dao<Equip> {
                 LuaTable statu = new LuaTable();
                 statu.addNode("index", equip.status.get(j).getIndex());
                 statu.addNode("value", equip.status.get(j).value);
-                status.addNode(statu);
+                status.addNode("[" + equip.status.get(j).getIndex() + "]", statu);
                 if (j != equip.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
-            lt.addNode("status", status);
+            lt.addNode("buffs", status);
             lts.addNode("[" + equip.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

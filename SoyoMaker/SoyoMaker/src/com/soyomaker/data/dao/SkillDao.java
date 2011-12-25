@@ -152,7 +152,7 @@ public class SkillDao extends Dao<Skill> {
                 ef.addNode("index", skill.effects.get(j).effectType);
                 ef.addNode("name", skill.effects.get(j).effectName);
                 ef.addNode("value", skill.effects.get(j).effectValue);
-                efs.addNode(ef);
+                efs.addNode("[" + skill.effects.get(j).effectType + "]", ef);
                 if (j != skill.effects.size() - 1) {
                     efs.addNode("\n");
                 }
@@ -168,12 +168,12 @@ public class SkillDao extends Dao<Skill> {
                 co.addNode("index", skill.costs.get(j).costType);
                 co.addNode("name", skill.costs.get(j).costName);
                 co.addNode("value", skill.costs.get(j).costValue);
-                cos.addNode(co);
+                cos.addNode("[" + skill.costs.get(j).costType + "]", co);
                 if (j != skill.costs.size() - 1) {
                     cos.addNode("\n");
                 }
             }
-            lt.addNode("costs", efs);
+            lt.addNode("costs", cos);
             lt.addNode("\n");
             LuaTable fas = new LuaTable();
             if (!skill.factors.isEmpty()) {
@@ -184,7 +184,7 @@ public class SkillDao extends Dao<Skill> {
                 fa.addNode("index", skill.factors.get(j).factorType);
                 fa.addNode("name", skill.factors.get(j).factorName);
                 fa.addNode("value", skill.factors.get(j).factorValue);
-                fas.addNode(fa);
+                fas.addNode("[" + skill.factors.get(j).factorType + "]", fa);
                 if (j != skill.factors.size() - 1) {
                     fas.addNode("\n");
                 }
@@ -199,7 +199,7 @@ public class SkillDao extends Dao<Skill> {
                 LuaTable attr = new LuaTable();
                 attr.addNode("index", skill.attributes.get(j).id);
                 attr.addNode("value", skill.attributes.get(j).value);
-                attrs.addNode(attr);
+                attrs.addNode("[" + skill.attributes.get(j).id + "]", attr);
                 if (j != skill.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -214,12 +214,12 @@ public class SkillDao extends Dao<Skill> {
                 LuaTable statu = new LuaTable();
                 statu.addNode("index", skill.status.get(j).getIndex());
                 statu.addNode("value", skill.status.get(j).value);
-                status.addNode(statu);
+                status.addNode("[" + skill.status.get(j).getIndex() + "]", statu);
                 if (j != skill.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
-            lt.addNode("status", status);
+            lt.addNode("buffs", status);
             lts.addNode("[" + skill.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

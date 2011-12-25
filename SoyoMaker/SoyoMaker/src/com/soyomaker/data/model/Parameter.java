@@ -13,7 +13,7 @@ public class Parameter {
     /**
      *
      */
-    public static final String[] types = {"力量", "智力", "敏捷", "灵巧", "体力", "运气", "命中"};
+    public static final String[] types = {"力量", "智力", "敏捷", "灵巧", "体力", "运气"};
     /**
      *
      */
@@ -21,7 +21,7 @@ public class Parameter {
     /**
      *
      */
-    public int type;//参数类型 0 力量 1 智力 2 敏捷 3 灵巧 4 体力 5 运气 6 命中
+    public int type;//参数类型 0 力量 1 智力 2 敏捷 3 灵巧 4 体力 5 运气
     /**
      *
      */

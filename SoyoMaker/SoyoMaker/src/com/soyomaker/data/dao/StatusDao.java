@@ -141,7 +141,7 @@ public class StatusDao extends Dao<Status> {
                 rc.addNode("paramName", statu.paras.get(j).name);
                 rc.addNode("paramRule", statu.paras.get(j).rule);
                 rc.addNode("paramValue", statu.paras.get(j).value);
-                pas.addNode(rc);
+                pas.addNode("[" + j + "]", rc);
                 if (j != statu.paras.size() - 1) {
                     pas.addNode("\n");
                 }
@@ -157,7 +157,7 @@ public class StatusDao extends Dao<Status> {
                 rc.addNode("conditionType", statu.conds.get(j).conditionType);
                 rc.addNode("conditionName", statu.conds.get(j).conditionName);
                 rc.addNode("param", statu.conds.get(j).para);
-                rcs.addNode(rc);
+                rcs.addNode("[" + statu.conds.get(j).conditionType + "]", rc);
                 if (j != statu.conds.size() - 1) {
                     rcs.addNode("\n");
                 }
@@ -172,7 +172,7 @@ public class StatusDao extends Dao<Status> {
                 LuaTable attr = new LuaTable();
                 attr.addNode("index", statu.attrs.get(j).id);
                 attr.addNode("value", statu.attrs.get(j).value);
-                attrs.addNode(attr);
+                attrs.addNode("[" + statu.attrs.get(j).id + "]", attr);
                 if (j != statu.attrs.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -187,18 +187,18 @@ public class StatusDao extends Dao<Status> {
                 LuaTable st = new LuaTable();
                 st.addNode("index", statu.status.get(j).getIndex());
                 st.addNode("value", statu.status.get(j).value);
-                sts.addNode(st);
+                sts.addNode("[" + statu.status.get(j).getIndex() + "]", st);
                 if (j != statu.status.size() - 1) {
                     sts.addNode("\n");
                 }
             }
-            lt.addNode("status", sts);
+            lt.addNode("buffs", sts);
             lts.addNode("[" + statu.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }
         }
-        LuaNode ln = new LuaNode("globalDictionary.statuses", lts);
+        LuaNode ln = new LuaNode("globalDictionary.buffs", lts);
         try {
             LuaFileUtil.writeToFile(ln, AppData.getInstance().getCurProject().getPath() + "/data/status.gat");
             return true;

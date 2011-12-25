@@ -94,6 +94,7 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             for (int j = 0; j < enemyTroop.enemys.size(); j++) {
                 ens.addNode(enemyTroop.enemys.get(j).getIndex());
             }
+            lt.addNode("enemys", ens);
             LuaTable evs = new LuaTable();
             if (!enemyTroop.events.isEmpty()) {
                 evs.addNode("\n");
@@ -109,14 +110,16 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
                         paras.addNode(enemyTroop.events.get(j).conditions.get(k).paras.get(m));
                     }
                     cond.addNode("parameters", paras);
-                    conds.addNode(cond);
+                    conds.addNode("[" + enemyTroop.events.get(j).conditions.get(k).conditionType + "]", cond);
                 }
                 ev.addNode("eventType", enemyTroop.events.get(j).eventType);
                 ev.addNode("scriptIndex", enemyTroop.events.get(j).scriptIndex);
-                evs.addNode(ev);
-                evs.addNode("\n");
+                evs.addNode("[" + enemyTroop.events.get(j).eventType + "]", ev);
+                if (j != enemyTroop.events.size() - 1) {
+                    evs.addNode("\n");
+                }
             }
-            lt.addNode("enemysIndex", ens);
+            lt.addNode("events", evs);
             lts.addNode("[" + enemyTroop.getIndex() + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

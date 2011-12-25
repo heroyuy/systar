@@ -198,23 +198,16 @@ public class DefaultMapLuaWriter implements IMapWriter {
         for (int i = 0; i < layerNums; i++) {
             if (map.getLayerArrayList().get(i) instanceof SpriteLayer) {
                 LuaTable sphs = new LuaTable();
-                sphs.addNode("\n");
                 for (int j = 0; j < map.getHeight(); j++) {
-                    LuaTable spws = new LuaTable();
                     for (int k = 0; k < map.getWidth(); k++) {
                         Npc npc = ((SpriteLayer) map.getLayerArrayList().get(i)).getNpcAt(k, j);
                         if (npc != null) {
-                            spws.addNode(npc.getIndex());
+                            sphs.addNode("\n");
+                            sphs.addNode("[" + (j * map.getWidth() + k) + "]", npc.getIndex());
                             INpcWriter npcWriter = new DefaultNpcLuaWriter();
                             npcWriter.writeNpc(npc, AppData.getInstance().getCurProject().getPath() + File.separatorChar
                                     + "data" + File.separatorChar + "npc" + File.separatorChar + "npc" + npc.getIndex() + ".gat");
-                        } else {
-                            spws.addNode(-1);
                         }
-                    }
-                    sphs.addNode(spws);
-                    if (j != map.getHeight() - 1) {
-                        sphs.addNode("\n");
                     }
                 }
                 lts.addNode("npcs", sphs);

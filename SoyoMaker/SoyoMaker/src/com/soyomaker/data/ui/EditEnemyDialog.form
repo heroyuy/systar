@@ -769,7 +769,7 @@
             <Component class="javax.swing.JButton" name="chooseEnemyBattleImgButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/soyomaker/resources/2.PNG"/>
+                  <Image iconType="3" name="/com/soyomaker/resources/menu_open.PNG"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
