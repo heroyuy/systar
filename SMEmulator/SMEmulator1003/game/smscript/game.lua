@@ -22,7 +22,7 @@ function globalGame:onStart()
   smLog:setDebug(true)
   smLog:info("game-start")
   --配置游戏
-  self.rootLayer=clsLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  self.rootLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.rootLayer.clipBounds=false
   --加载游戏数据
   globalDataLoader:init()

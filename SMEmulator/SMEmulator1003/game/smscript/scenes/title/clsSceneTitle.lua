@@ -25,29 +25,29 @@ function clsSceneTitle:onStart()
   smLog:info("标题场景启动")
   smAudioPlayer:play(globalGame.PATH..globalDictionary.config.titleMusic)
   --背景大图
-  local bgLayer=clsLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  local bgLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   bgLayer.backgroundImage=smImageFactory:createImage(globalGame.PATH..globalDictionary.config.titleBackground)
   --标题背景
-  local titleBg=clsLayer:new((smGameEngine:getWidth()-200)/2,smGameEngine:getHeight()-180,200,120)
-  titleBg.backgroundImage=globalSkin:createBg(200,120)
+  local titleBg=clsUILayer:new((smGameEngine:getWidth()-200)/2,smGameEngine:getHeight()-180,200,120)
+  titleBg.backgroundImage=smSkin:createBg(200,120)
   bgLayer:addChild(titleBg)
   --标题边框
-  local titleFrame=clsLayer:new(0,0,200,120)
-  titleFrame.backgroundImage=globalSkin:createFrame(200,120)
+  local titleFrame=clsUILayer:new(0,0,200,120)
+  titleFrame.backgroundImage=smSkin:createFrame(200,120)
   titleBg:addChild(titleFrame)
   --按钮
   local width=160
   local height=25
-  local backgroundImage=globalSkin:createBody(width,height)
-  local highlightImage=globalSkin:createSelectedBg(width,height)
+  local backgroundImage=smSkin:createBody(width,height)
+  local highlightImage=smSkin:createSelectedBg(width,height)
   local gap=5
   local boundGap=(120-3*height-2*gap)/2
   for i,v in ipairs(self.titles) do
-    local button=clsButton:new((200-width)/2,boundGap+(i-1)*(height+gap),width,height)
+    local button=clsUIButton:new((200-width)/2,boundGap+(i-1)*(height+gap),width,height)
     button.backgroundImage=backgroundImage
     button.highlightImage=highlightImage
     button.text=v
-    button.textColor=globalSkin:getTextColor(1,1)
+    button.textColor=smSkin:getTextColor(1,1)
     button.tag=i
     button.delegate=self
     titleBg:addChild(button)

@@ -6,7 +6,7 @@
 
 --类结构定义
 clsMapLayer={}
-setmetatable(clsMapLayer,clsLayer)
+setmetatable(clsMapLayer,clsUILayer)
 clsMapLayer.__index=clsMapLayer
 
 --重定向父类paintLayer(painter)方法
@@ -35,7 +35,7 @@ clsMapLayer.windowY=nil            --当前窗口在地图上的y坐标（单位
 
 --构造器
 function clsMapLayer:new(x,y,width,height)
-  local self = clsLayer:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsMapLayer)
   return self
 end
@@ -50,19 +50,19 @@ function clsMapLayer:paintLayer(painter)
   --绘图
   --背景
   painter:drawImage(self.bufferedBgImage,self.windowX-self.bufferCol*self.map.cellWidth,self.windowY-self.bufferRow*self.map.cellHeight,
-     self.width,self.height,0,0,globalUIConst.anchor.LT)
+     self.width,self.height,0,0,smUIConst.anchor.LT)
   --player、NPC
   painter:setColor("0xffabcdef")
   painter:fillRect(self.playerX-self.map.cellWidth/2-self.windowX,self.playerY-self.map.cellHeight/2-self.windowY,self.map.cellWidth,self.map.cellHeight)
   --前景
   painter:drawImage(self.bufferedFgImage,self.windowX-self.bufferCol*self.map.cellWidth,self.windowY-self.bufferRow*self.map.cellHeight,
-     self.width,self.height,0,0,globalUIConst.anchor.LT)
+     self.width,self.height,0,0,smUIConst.anchor.LT)
 end
 
 
 function clsMapLayer:onTouch(x,y,type)
   --test
-  if type==globalUIConst.touchEventType.DOWN then
+  if type==smUIConst.touchEventType.DOWN then
     if self.player.row<19 then
       self.player.row=self.player.row+1
     end
@@ -198,11 +198,11 @@ function clsMapLayer:refreshBuffer(rect,clearFlag)
           if layer.deepth<0 then
             --背景
             self.bufferedBgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
-               k*self.map.cellWidth,j*self.map.cellHeight,globalUIConst.anchor.LT)
+               k*self.map.cellWidth,j*self.map.cellHeight,smUIConst.anchor.LT)
           elseif layer.deepth>0 then
             --前景
             self.bufferedFgPainter:drawImage(globalGameData.map.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
-               k*self.map.cellWidth,j*self.map.cellHeight,globalUIConst.anchor.LT)
+               k*self.map.cellWidth,j*self.map.cellHeight,smUIConst.anchor.LT)
           end
         end
       end

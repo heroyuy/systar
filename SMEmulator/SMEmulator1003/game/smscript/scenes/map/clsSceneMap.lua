@@ -16,11 +16,9 @@ function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
 	local mapLayer=clsMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-	local enemySprite=clsSprite:new("game/image/battler/004-Fighter04.png")
+	local enemySprite=clsUISprite:new("game/image/battler/004-Fighter04.png")
 	globalGame.rootLayer:addChild(mapLayer)
 	globalGame.rootLayer:addChild(enemySprite)
-	enemySprite.x=(800-enemySprite.width)/2
-	enemySprite.x=(480-enemySprite.height)/2
 	return self
 end
 

@@ -46,7 +46,7 @@ function globalDataLoader:init()
   --(10)加载Animation信息
   self:loadAnimation()
   --(11)初始化皮肤
-  globalSkin:init(globalGame.PATH..globalDictionary.config.skin)
+  smSkin:init(globalGame.PATH..globalDictionary.config.skin)
 end
 
 --加载Config数据

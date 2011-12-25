@@ -5,30 +5,30 @@
 --]]
 
 --类结构定义
-clsLayer={}
-clsLayer.__index=clsLayer
+clsUILayer={}
+clsUILayer.__index=clsUILayer
 
 --字段
-clsLayer.x=0                               --x坐标
-clsLayer.y=0                               --y坐标
-clsLayer.width=0                           --宽度
-clsLayer.height=0                          --高度
-clsLayer.tag=0                             --标志（可选）
-clsLayer.arg=nil                           --参数（可选）
-clsLayer.backgroundColor=nil               --背景色
-clsLayer.backgroundImage = null;           --背景图
-clsLayer.visibility = true;                --是否可见
-clsLayer.enabled = true;                   --是否接收事件
-clsLayer.clipBounds=true;                  --是否裁剪区域
-clsLayer.delegate=nil                      --事件委托
-clsLayer.children=nil                      --子layer
-clsLayer.focusLayer=nil                    --当前事件焦点子layer
-clsLayer.bufferedMode=false                --是否开启缓冲 TODO 功能尚未实现
+clsUILayer.x=0                               --x坐标
+clsUILayer.y=0                               --y坐标
+clsUILayer.width=0                           --宽度
+clsUILayer.height=0                          --高度
+clsUILayer.tag=0                             --标志（可选）
+clsUILayer.arg=nil                           --参数（可选）
+clsUILayer.backgroundColor=nil               --背景色
+clsUILayer.backgroundImage = null;           --背景图
+clsUILayer.visibility = true;                --是否可见
+clsUILayer.enabled = true;                   --是否接收事件
+clsUILayer.clipBounds=true;                  --是否裁剪区域
+clsUILayer.delegate=nil                      --事件委托
+clsUILayer.children=nil                      --子layer
+clsUILayer.focusLayer=nil                    --当前事件焦点子layer
+clsUILayer.bufferedMode=false                --是否开启缓冲 TODO 功能尚未实现
 
 --构造器
-function clsLayer:new(x,y,width,height)
+function clsUILayer:new(x,y,width,height)
   local self = {}
-  setmetatable(self,clsLayer)
+  setmetatable(self,clsUILayer)
   self.x=x
   self.y=y
   self.width=width
@@ -38,17 +38,17 @@ function clsLayer:new(x,y,width,height)
 end
 
 --添加子Layer
-function clsLayer:addChild(layer)
+function clsUILayer:addChild(layer)
   self.children:add(layer)
 end
 
 --根据序号获取子layer
-function clsLayer:getChild(index)
+function clsUILayer:getChild(index)
   self.children:get(index)
 end
 
 --根据tag获取子layer
-function clsLayer:childWithTag(tag)
+function clsUILayer:childWithTag(tag)
   local child=nil;
   for _,v in ipairs(self.children) do
     if v.tag==tag then
@@ -60,22 +60,22 @@ end
 
 
 --移除子Layer
-function clsLayer:remove(index)
+function clsUILayer:remove(index)
   self.children:remove(index)
 end
 
 --移除子Layer
-function clsLayer:removeChild(layer)
+function clsUILayer:removeChild(layer)
   self.children:removeObject(layer)
 end
 
 --移除所有子Layer
-function clsLayer:removeAll()
+function clsUILayer:removeAll()
   self.children:removeAll()
 end
 
 --绘制Layer（lua层不应该调用此方法）
-function clsLayer:paint(painter)
+function clsUILayer:paint(painter)
   --绘制自身
   self:paintLayer(painter)
   --绘制子Layer
@@ -83,7 +83,7 @@ function clsLayer:paint(painter)
 end
 
 --绘制自身（lua层不应该调用此方法）
-function clsLayer:paintLayer(painter)
+function clsUILayer:paintLayer(painter)
   if self.backgroundColor then
     painter:setColor(self.backgroundColor);
     painter:fillRect(0, 0, self.width, self.height);
@@ -94,7 +94,7 @@ function clsLayer:paintLayer(painter)
 end
 
 --绘制子Layer（lua层不应该调用此方法）
-function clsLayer:paintChildren(painter)
+function clsUILayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
     --smLog:info(layer:toString())
     if layer.visibility then
@@ -120,15 +120,15 @@ function clsLayer:paintChildren(painter)
 end
 
 --处理触屏事件（lua层不应该调用此方法）
-function clsLayer:onTouch(x,y,type)
+function clsUILayer:onTouch(x,y,type)
   if self.delegate then
     self.delegate:onTouch(self,x,y,type)
   end
 end
 
 --事件分发（lua层不应该调用此方法）
-function clsLayer:dispatchEvent(x,y,type)
-  if type==globalUIConst.touchEventType.DOWN then
+function clsUILayer:dispatchEvent(x,y,type)
+  if type==smUIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
@@ -139,27 +139,27 @@ function clsLayer:dispatchEvent(x,y,type)
     --未找到焦点组件
     self:onTouch(x,y,type)
   end
-  if type==globalUIConst.touchEventType.UP then
+  if type==smUIConst.touchEventType.UP then
     --如果是UP事件，则清除焦点
     self.focusLayer = nil
   end
 end
 
 --通知更新界面。在缓冲模式下此方法用于通知Layer更新显示内容
-function clsLayer:notifyRefresh()
+function clsUILayer:notifyRefresh()
   --TODO 尚未实现
 end
 
 --toString
-function clsLayer:toString()
-  local str="clsLayer:["
+function clsUILayer:toString()
+  local str="clsUILayer:["
   str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
   str=str.."]"
   return str
 end
 
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
-function clsLayer:searchFocusLayer(x,y)
+function clsUILayer:searchFocusLayer(x,y)
   local focus = nil;
   --从上到下依次探查
   for i=self.children:size(),1,-1 do
