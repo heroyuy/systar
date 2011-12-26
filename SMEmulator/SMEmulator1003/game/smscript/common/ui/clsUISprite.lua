@@ -13,25 +13,28 @@ clsUISprite.__index=clsUISprite
 clsUISprite.paintLayerF=clsUISprite.paintLayer
 
 --字段
-clsUISprite.image=nil     --图像
+clsUISprite.image=nil              --图像
+clsUISprite.frameIndex=0           --当前帧index
+clsUISprite.colNum=1               --帧列数
+clsUISprite.rowNum=1               --帧行数
 
 --构造器
-function clsUISprite:new(image)
+function clsUISprite:new(image,frameWidth,frameHeight)
   if type(image)=="string" then
     image=smImageFactory:createImage(image)
   end
-  local self = clsUILayer:new(0,0,image:getWidth(),image:getHeight())
+  if frameWidth==nil then
+    frameWidth=image:getWidth()
+  end
+  if frameHeight==nil then
+    frameHeight=image:getHeight()
+  end
+  local self = clsUILayer:new(0,0,frameWidth,frameHeight)
   setmetatable(self,clsUISprite)
   self.image=image
+  self.colNum=image:getWidth()/frameWidth
+  self.rowNum=image:getHeight()/frameHeight
   return self
-end
-
---设置图片
-function clsUISprite:setImage(image)
-  if type(image)=="string" then
-    image=smImageFactory:createImage(image)
-  end
-  self.image=image
 end
 
 --绘制自身
@@ -40,7 +43,7 @@ function clsUISprite:paintLayer(painter)
   self:paintLayerF(painter)
   --绘制图片
   if self.image then
-    painter:drawImage(self.image,0,0,smUIConst.anchor.LT)
+    painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,smUIConst.anchor.LT)
   end
 end
 

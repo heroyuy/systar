@@ -57,6 +57,7 @@ function clsCharacter:update()
   --行走
   if self.curMoveDirection==nil and self.moveSequence:size()~=0 then
     self.curMoveDirection=self.moveSequence:pop()
+    self.face=self.curMoveDirection
   end
   if self.curMoveDirection then
     self:move()
@@ -86,3 +87,22 @@ function clsCharacter:move()
   end
 end
 
+--获取当前行走帧编号
+function clsCharacter:getCurFrameIndex()
+  local index=0
+  if self.face==0 then
+    --上
+    index=12
+  elseif self.face==1 then
+    --下
+    index=0
+  elseif self.face==2 then
+    --左
+    index=4
+  elseif self.face==3 then
+    --右
+    index=8
+  end
+  index=index+self.step
+  return index
+end

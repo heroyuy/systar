@@ -47,7 +47,10 @@ function clsSceneMap:update()
   self.mapBgLayer:trackViewport(viewport)
   self.mapFgLayer:trackViewport(viewport)
   local px,py=self:calculatePlayerLocation()
+  px=px-self.curPlayer.charImage:getWidth()/4/2
+  py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
+  self.playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
 end
 
 -- 退出
@@ -82,7 +85,8 @@ function clsSceneMap:changeMap(map)
   globalGame.rootLayer:addChild(self.mapBgLayer)
   --加载精灵层
   self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-  self.playerSprite=clsUISprite:new(self.curPlayer.headImage)
+  self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
+     self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
   local px,py=self:calculatePlayerLocation()
   self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
   self.spriteLayer:addChild(self.playerSprite)
@@ -137,10 +141,11 @@ function clsSceneMap:calculatePlayerLocation()
     py=py+self.curMap.cellHeight/4*self.curPlayer.step
   elseif self.curPlayer.face==2 then
     --左
-    py=py-self.curMap.cellWidth/4*self.curPlayer.step
+    px=px-self.curMap.cellWidth/4*self.curPlayer.step
   elseif self.curPlayer.face==3 then
     --右
-    py=py+self.curMap.cellWidth/4*self.curPlayer.step
+    px=px+self.curMap.cellWidth/4*self.curPlayer.step
   end
   return px,py
 end
+
