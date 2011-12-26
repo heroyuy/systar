@@ -15,20 +15,20 @@ clsTiledMapLayer.paintLayerF=clsTiledMapLayer.paintLayer
 --字段
 clsTiledMapLayer.bufferedImage=nil    --缓冲图
 clsTiledMapLayer.bufferedPainter=nil  --缓冲画笔
-clsTiledMapLayer.bufferBound=0          --缓冲边缘宽度（单位：单元格）
+clsTiledMapLayer.bufferBound=1        --缓冲边缘宽度（单位：单元格）
 
-clsTiledMapLayer.layers=nil             --贴图层数据
-clsTiledMapLayer.colNum=32              --贴图列数
-clsTiledMapLayer.rowNum=32              --贴图行数
-clsTiledMapLayer.cellWidth=32           --贴图单元格宽度
-clsTiledMapLayer.cellHeight=32          --贴图单元格高度
+clsTiledMapLayer.layers=nil           --贴图层数据
+clsTiledMapLayer.colNum=0             --贴图列数
+clsTiledMapLayer.rowNum=0             --贴图行数
+clsTiledMapLayer.cellWidth=32         --贴图单元格宽度
+clsTiledMapLayer.cellHeight=32        --贴图单元格高度
 
-clsTiledMapLayer.bufferRow=nil          --缓冲区起始行号（单位：单元格）
-clsTiledMapLayer.bufferCol=nil          --缓冲区起始列号（单位：单元格）
-clsTiledMapLayer.bufferColNum=nil       --缓冲区宽度（单位：单元格）
-clsTiledMapLayer.bufferRowNum=nil       --缓冲区高度（单位：单元格）
+clsTiledMapLayer.bufferRow=nil        --缓冲区起始行号（单位：单元格）
+clsTiledMapLayer.bufferCol=nil        --缓冲区起始列号（单位：单元格）
+clsTiledMapLayer.bufferColNum=nil     --缓冲区宽度（单位：单元格）
+clsTiledMapLayer.bufferRowNum=nil     --缓冲区高度（单位：单元格）
 
-clsTiledMapLayer.viewport=nil           --当前相机取景区域（视口）（单位：像素）
+clsTiledMapLayer.viewport=nil         --当前相机取景区域（视口）（单位：像素）
 
 --构造器
 function clsTiledMapLayer:new(x,y,width,height)
@@ -73,9 +73,7 @@ function clsTiledMapLayer:onTouch(x,y,type)
   --test
   if type==smUIConst.touchEventType.DOWN then
     local curPlayer=globalData.playerTroop:curDisplayPlayer()
-    if curPlayer.row>0 then
-      curPlayer.row=curPlayer.row-1
-    end
+    curPlayer.moveSequence:push(0)
   end
 end
 
@@ -139,15 +137,19 @@ function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
     for j=rect.row,rect.row+rect.rowNum-1 do
       for k=rect.col,rect.col+rect.colNum-1 do
         --smLog:info("j="..j.." k="..k)
-        local cell=layer[self.bufferRow+j+1][self.bufferCol+k+1]
-        local imageSetId=cell[1]
-        local tiledIndex=cell[2]
-        if imageSetId~=-1 then
-          local imgColNum=globalData.map.imageSets[imageSetId]:getWidth()/self.cellWidth
-          local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
-          local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
-          self.bufferedPainter:drawImage(globalData.map.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
-               k*self.cellWidth,j*self.cellHeight,smUIConst.anchor.LT)
+        local row=self.bufferRow+j+1
+        local col=self.bufferCol+k+1
+        if row>=1 and row<=self.rowNum and col>=1 and col<=self.colNum then
+          local cell=layer[row][col]
+          local imageSetId=cell[1]
+          local tiledIndex=cell[2]
+          if imageSetId~=-1 then
+            local imgColNum=globalData.map.imageSets[imageSetId]:getWidth()/self.cellWidth
+            local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
+            local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
+            self.bufferedPainter:drawImage(globalData.map.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
+                 k*self.cellWidth,j*self.cellHeight,smUIConst.anchor.LT)
+          end
         end
       end
     end

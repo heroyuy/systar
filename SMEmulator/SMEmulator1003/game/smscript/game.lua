@@ -18,7 +18,7 @@ function globalGame:onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(50)
+  smGameEngine:setRatedFps(20)
   smLog:setDebug(true)
   smLog:info("game-start")
   --配置游戏

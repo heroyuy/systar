@@ -26,7 +26,6 @@ clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 
 clsCharacter.step=0 --角色当前行走步数 取值范围[0,3]
-
 clsCharacter.level=0 --等级
 clsCharacter.maxHp=0 --MaxHP值
 clsCharacter.maxSp=0 --MaxSP值
@@ -41,19 +40,13 @@ clsCharacter.luck=0 --幸运
 clsCharacter.exp=0 --经验值
 clsCharacter.money=0 --金钱
 
+clsCharacter.moveSequence=nil --角色当前移动序列
+clsCharacter.curMoveDirection=nil --角色当前移动方向
 --构造器
 function clsCharacter:new()
 	local self = clsModel:new()
 	setmetatable(self,clsCharacter)
-	self.bag=clsBag:new()
-	self.equip={ --装备(nil表示没有,有则存放装备ID)
-         [1]=nil, --头盔			
-         [2]=nil, --饰品
-         [3]=nil, --武器
-         [4]=nil, --盾牌
-         [5]=nil, --铠甲
-         [6]=nil  --战靴
-    }
+	self.moveSequence=clsQueue:new()
 	return self
 end
 
@@ -61,11 +54,35 @@ end
 function clsCharacter:update()
   --调用父类的update方法
   self:updateF()
+  --行走
+  if self.curMoveDirection==nil and self.moveSequence:size()~=0 then
+    self.curMoveDirection=self.moveSequence:pop()
+  end
+  if self.curMoveDirection then
+    self:move()
+  end
   --TODO 其它更新
 end
 
---获取角色当前要显示的行走图
-function clsCharacter:getCurCharacterImage()
-  
+--行走
+function clsCharacter:move()
+  self.step=self.step+1
+  if self.step==4 then
+    if self.curMoveDirection==0 then
+      --上
+      self.row=self.row-1
+    elseif self.curMoveDirection==1 then
+      --下
+      self.row=self.row+1
+    elseif self.curMoveDirection==2 then
+      --左
+      self.col=self.col-1
+    elseif self.curMoveDirection==3 then
+      --右
+      self.col=self.col+1
+    end
+    self.curMoveDirection=nil
+    self.step=0
+  end
 end
 
