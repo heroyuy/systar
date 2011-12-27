@@ -20,15 +20,15 @@ function clsQueue:new()
 	return self
 end
 
---push方法
-function clsQueue:push(value)
+--offer方法
+function clsQueue:offer(value)
   local last = self.last + 1
   self.last = last
   self[last] = value
 end
 
---pop方法
-function clsQueue:pop()
+--poll方法
+function clsQueue:poll()
   local first = self.first
   if first > self.last then 
     return nil
@@ -55,24 +55,24 @@ end
 local debug=false
 if debug then
   local q1=clsQueue:new()
-  q1:push("a")
-  q1:push("b")
-  print(q1:pop())
+  q1:offer("a")
+  q1:offer("b")
+  print(q1:poll())
   print(q1:size())
-  print(q1:pop())
+  print(q1:poll())
   print("--------------------")
 
   local q2=clsQueue:new()
-  q2:push("a2")
-  print(q2:pop())
+  q2:offer("a2")
+  print(q2:poll())
   print(q2:size())
-  print(q2:pop())
+  print(q2:poll())
   print("--------------------")
 
-  q1:push("c")
-  q1:push({age=12})
+  q1:offer("c")
+  q1:offer({age=12})
   print(q1:size())
-  print(q1:pop())
-  local t=q1:pop()
+  print(q1:poll())
+  local t=q1:poll()
   print(t.age)
 end

@@ -73,7 +73,7 @@ function clsTiledMapLayer:onTouch(x,y,type)
   --test
   if type==smUIConst.touchEventType.DOWN then
     local curPlayer=globalData.playerTroop:curDisplayPlayer()
-    curPlayer.moveSequence:push(smRandom:nextInt(4))
+    curPlayer.moveSequence:offer(smRandom:nextInt(4))
   end
 end
 

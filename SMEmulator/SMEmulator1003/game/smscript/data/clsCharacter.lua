@@ -56,7 +56,7 @@ function clsCharacter:update()
   self:updateF()
   --行走
   if self.curMoveDirection==nil and self.moveSequence:size()~=0 then
-    self.curMoveDirection=self.moveSequence:pop()
+    self.curMoveDirection=self.moveSequence:poll()
     self.face=self.curMoveDirection
   end
   if self.curMoveDirection then

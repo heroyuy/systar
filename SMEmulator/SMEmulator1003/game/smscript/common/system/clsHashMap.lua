@@ -22,7 +22,7 @@ end
 
 -- has方法
 function clsHashMap:has(key)
-  return self:get(key)==nil
+  return self:get(key)~=nil
 end
 
 -- get方法
@@ -44,11 +44,16 @@ end
 
 --size方法
 function clsHashMap:size()
-  return table.getn(self)
+  local num=0
+  for _,_ in pairs(self) do
+    num=num+1
+  end
+  return num
+  --return table.getn(self)
 end
 
 --单元测试
-local debug=false
+local debug=true
 if debug then
   local hashMap=clsHashMap:new()
   hashMap:put(12,"good")
@@ -59,5 +64,7 @@ if debug then
   hashMap:put(t2,"t2!")
   print(hashMap:get(t1))
   hashMap:remove(t2)
+  print(hashMap:has(t1))
   print(hashMap:has(t2))
+  print(hashMap:size())
 end

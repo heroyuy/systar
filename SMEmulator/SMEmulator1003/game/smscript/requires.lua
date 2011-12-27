@@ -12,6 +12,8 @@ require("System")
 require("clsList")
 require("clsQueue")
 require("clsHashMap")
+require("clsStack")
+require("clsAStar")
 
 --common\ui
 require("smUIConst")
