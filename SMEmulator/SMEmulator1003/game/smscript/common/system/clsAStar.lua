@@ -87,7 +87,7 @@ function clsAStar:searchPath(startRow,startCol,endRow,endCol)
   self.openList:removeAll()
   self.closeList:removeAll()
   --所有node的 gValue,fValue归0，parentNode归null，计算hValue。
-  for _,node in pairs(self.nodeList) do
+  for k,node in pairs(self.nodeList) do
     node.gValue = 0
     node.fValue = 0
     node.hValue =(math.abs(endRow - node.row)) + (math.abs(endCol - node.col))
@@ -97,7 +97,7 @@ function clsAStar:searchPath(startRow,startCol,endRow,endCol)
   local startNode = self:getNode(startRow, startCol)
   self:openNode(startNode)
   local endNode = self:getNode(endRow, endCol)
-  while not self:isOpened(endNode) do
+  while not self:isOpen(endNode) do
     --如果终点已经被添加到open列表则搜索成功
     --获取open列表中的最优点，即fValue最小的点
     local optimalNode = self:getOptimalNode()
@@ -112,30 +112,70 @@ function clsAStar:searchPath(startRow,startCol,endRow,endCol)
   local tempPathStack = clsStack:new()
   local temp = endNode
   while temp and temp~=startNode do
-    tempPathStack.push(temp)
+    tempPathStack:push(temp)
     temp = temp.parentNode
   end
   local pathList = clsList:new()
   while tempPathStack:size() > 0 do
     pathList:add(tempPathStack:pop())
   end
-  local paths={}
+  local paths=clsList:new()
   for i=1,pathList:size() do
-    paths[i]={}
-    paths[i][0] = pathList:get(i).row
-    paths[i][1] = pathList:get(i).col
+    local path={}
+    path.row = pathList:get(i).row
+    path.col = pathList:get(i).col
+    paths:add(path)
   end
   return paths
+end
+
+--搜索从起点到终点的可通行路径
+function clsAStar:searchDirection(startRow,startCol,endRow,endCol)
+  local paths=self:searchPath(startRow, startCol, endRow, endCol)
+  local directions=clsQueue:new()
+  local sRow = 0
+  local sCol = 0
+  local eRow = 0
+  local eCol = 0
+  for i=1,paths:size() do
+    --确定相邻两点
+    if i==1 then
+      sRow = startRow
+      sCol = startCol
+    else
+      sRow = paths:get(i - 1).row
+      sCol = paths:get(i - 1).col
+    end
+    eRow = paths:get(i).row
+    eCol = paths:get(i).col
+    --转换为方向
+    local offsetRow = eRow - sRow
+    local offsetCol = eCol - sCol
+    local direction=-1
+    if offsetRow == -1 then
+      --上
+      direction = 0
+    elseif offsetRow == 0 then
+      --同一行，水平移动
+      if offsetCol == -1 then
+        --左
+        direction = 2
+      elseif offsetCol == 1 then
+        --右
+        direction = 3
+      end
+    elseif offsetRow == 1 then
+      --下
+      direction = 1
+    end
+    directions:offer(direction) 
+  end
+  return directions
 end
 
 --获取节点
 function clsAStar:getNode(row,col)
   return self.nodeList:get(self:getKey(row,col))
-end
-
---获取节点
-function clsAStar:getNode(key)
-  return self.nodeList:get(key)
 end
 
 --打开节点
@@ -156,7 +196,7 @@ function clsAStar:isOpen(node)
 end
 
 --检查节点是否关闭
-function clsAStar:isOpen(node)
+function clsAStar:isClose(node)
   return self.closeList:has(self:getKey(node.row,node.col))
 end
 
@@ -184,8 +224,8 @@ function clsAStar:getAccessibleNodeList(node)
   --右
   keyList:add(self:getKey(node.row,node.col + 1))
   for _,key in pairs(keyList) do
-    local temp=self:getNode(key)
-    if temp and (not self:isClosed(temp)) then
+    local temp=self.nodeList:get(key)
+    if temp and (not self:isClose(temp)) then
       --如果存在这个结点并且结点未关闭
       accessibleNodeList:add(temp)
     end
@@ -224,7 +264,7 @@ function clsAStar:getNearestNode(areaId,endRow,endCol)
     --下
     if endRow + range <= table.getn(self.mapData) then
       for  i = endCol - range, endCol + range do
-        if i >= 1 and i <= table.getn(mapData[endRow + range]) and self.mapData[endRow + range][i] == areaId then
+        if i >= 1 and i <= table.getn(self.mapData[endRow + range]) and self.mapData[endRow + range][i] == areaId then
           nearestNodes:add(self:getNode(endRow + range,i))
         end
       end
@@ -238,7 +278,7 @@ function clsAStar:getNearestNode(areaId,endRow,endCol)
       end
     end
     --右
-    if endCol + range <= table.getn(self.mapData[0]) then
+    if endCol + range <= table.getn(self.mapData[1]) then
       for i = endRow - range + 1, endRow + range - 1 do
         if i >= 1 and i <= table.getn(self.mapData) and self.mapData[i][endCol + range] == areaId then
           nearestNodes:add(self:getNode(i,endCol + range))
@@ -264,10 +304,22 @@ if debug then
   local mapData=
   {
     {-1,0,0,0},
-    {0,-1,-1,0},
-    {0,0,0,0},
-    {0,-1,-1,0}
+    {1,-1,-1,-1},
+    {1,1,1,1},
+    {1,-1,-1,1}
   }
   local aStar=clsAStar:new(mapData)
-  aStar:searchPath(1,2,4,1)
+  local paths=aStar:searchPath(4,1,2,4)
+  print("--------------------------")
+  for i=1,paths:size() do
+    local path=paths:get(i)
+    print("("..path.row..","..path.col..")")
+  end
+  print("--------------------------")
+  local directions=aStar:searchDirection(4,1,2,4)
+  while directions:size()>0 do
+    local direction=directions:poll()
+    print(direction)
+  end
+  print("--------------------------")
 end

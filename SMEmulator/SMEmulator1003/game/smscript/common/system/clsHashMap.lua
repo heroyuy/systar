@@ -37,8 +37,8 @@ end
 
 -- removeAll方法
 function clsHashMap:removeAll()
-  for i=1,self:size() do
-    table.remove(self)
+  for k,v in pairs(self) do
+    self[k]=nil
   end
 end
 
@@ -53,7 +53,7 @@ function clsHashMap:size()
 end
 
 --单元测试
-local debug=true
+local debug=false
 if debug then
   local hashMap=clsHashMap:new()
   hashMap:put(12,"good")
@@ -66,5 +66,7 @@ if debug then
   hashMap:remove(t2)
   print(hashMap:has(t1))
   print(hashMap:has(t2))
+  print(hashMap:size())
+  hashMap:removeAll()
   print(hashMap:size())
 end
