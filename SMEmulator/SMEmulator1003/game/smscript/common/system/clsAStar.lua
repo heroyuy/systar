@@ -299,7 +299,7 @@ function clsAStar:getNearestNode(areaId,endRow,endCol)
 end
 
 --单元测试
-local debug=true
+local debug=false
 if debug then
   local mapData=
   {
