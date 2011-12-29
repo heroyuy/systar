@@ -62,7 +62,7 @@ end
 --设置节点数据
 function clsAStar:setMapData(mapData)
   if mapData then
-    self.nodeList:removeAll()
+    self.nodeList:clear()
     self.mapData = mapData
     for i=1,table.getn(mapData) do
       for j=1,table.getn(mapData[i]) do
@@ -84,8 +84,8 @@ function clsAStar:searchPath(startRow,startCol,endRow,endCol)
     endCol = nearestNode.col
   end
   --清空open列表和colse列表
-  self.openList:removeAll()
-  self.closeList:removeAll()
+  self.openList:clear()
+  self.closeList:clear()
   --所有node的 gValue,fValue归0，parentNode归null，计算hValue。
   for k,node in pairs(self.nodeList) do
     node.gValue = 0
@@ -131,12 +131,14 @@ end
 
 --搜索从起点到终点的可通行路径
 function clsAStar:searchDirection(startRow,startCol,endRow,endCol)
+  local t=smGameEngine:getSystemMilliTime()
   local paths=self:searchPath(startRow, startCol, endRow, endCol)
   local directions=clsQueue:new()
   local sRow = 0
   local sCol = 0
   local eRow = 0
   local eCol = 0
+  local str=""
   for i=1,paths:size() do
     --确定相邻两点
     if i==1 then
@@ -168,8 +170,12 @@ function clsAStar:searchDirection(startRow,startCol,endRow,endCol)
       --下
       direction = 1
     end
+    str=str.." "..direction
     directions:offer(direction) 
   end
+  t=smGameEngine:getSystemMilliTime()-t
+  smLog:info("寻路耗时:"..t.."ms")
+  smLog:info("寻路结果:"..str)
   return directions
 end
 

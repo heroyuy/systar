@@ -16,6 +16,7 @@ clsSceneMap.characterList=nil  --精灵列表
 clsSceneMap.mapBgLayer=nil     --背景
 clsSceneMap.mapFgLayer=nil     --前景
 clsSceneMap.spriteLayer=nil    --精灵层
+clsSceneMap.aStar=nil    --A*寻路工具
 
 --test
 clsSceneMap.playerSprite=nil;
@@ -45,7 +46,9 @@ function clsSceneMap:update()
   --smLog:info("地图场景更新")
   local viewport=self:checkViewport()
   self.mapBgLayer:trackViewport(viewport)
-  self.mapFgLayer:trackViewport(viewport)
+  if self.mapFgLayer then
+    self.mapFgLayer:trackViewport(viewport)
+  end
   local px,py=self:calculatePlayerLocation()
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
@@ -61,8 +64,9 @@ end
 
 function clsSceneMap:changeMap(map)
   self.curMap=map
+  self.aStar=clsAStar:new(map.areas)
   --清除所有layer
-  globalGame.rootLayer:removeAll()
+  globalGame.rootLayer:clear()
   --加载地图图集
   for _,v in pairs(self.curMap.tilesets) do
     if globalData.map.imageSets[v.id]==nil then
@@ -78,6 +82,7 @@ function clsSceneMap:changeMap(map)
     end
   end
   self.mapBgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  self.mapBgLayer.delegate=self
   local viewport=self:checkViewport()
   local params={layers=bgLayers,colNum=self.curMap.colNum,rowNum=self.curMap.rowNum,
      cellWidth=self.curMap.cellWidth,cellHeight=self.curMap.cellHeight,viewport=viewport}
@@ -85,6 +90,7 @@ function clsSceneMap:changeMap(map)
   globalGame.rootLayer:addChild(self.mapBgLayer)
   --加载精灵层
   self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  self.spriteLayer.enabled=false
   self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
      self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
   local px,py=self:calculatePlayerLocation()
@@ -99,11 +105,49 @@ function clsSceneMap:changeMap(map)
       fgLayers:add(layer)
     end
   end
-  self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-  local params={layers=fgLayers,colNum=self.curMap.colNum,rowNum=self.curMap.rowNum,
-     cellWidth=self.curMap.cellWidth,cellHeight=self.curMap.cellHeight,viewport=viewport}
-  self.mapFgLayer:init(params)
-  globalGame.rootLayer:addChild(self.mapFgLayer)
+  if fgLayers:size()>0 then
+    self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+    self.mapFgLayer.enabled=false
+    local params={layers=fgLayers,colNum=self.curMap.colNum,rowNum=self.curMap.rowNum,
+       cellWidth=self.curMap.cellWidth,cellHeight=self.curMap.cellHeight,viewport=viewport}
+    self.mapFgLayer:init(params)
+    globalGame.rootLayer:addChild(self.mapFgLayer)
+  end
+end
+
+--地图点击
+function clsSceneMap:mapTapped(target,row,col)
+  smLog:info("地图被点击,逻辑坐标: row="..row.." col="..col)
+  --向player发送移动命令
+  --(1)清除原有的行走命令
+  self.curPlayer.moveSequence:clear()
+  --(2)获取寻路起点
+  local curRow=self.curPlayer.row
+  local curCol=self.curPlayer.col
+  --(3)起点修正
+  if self.curPlayer.step~=0 then
+    --player行走中
+    if self.curPlayer.face==0 then
+      --上
+      curRow=curRow-1
+    elseif self.curPlayer.face==1 then
+      --下
+      curRow=curRow+1
+    elseif self.curPlayer.face==2 then
+      --左
+      curCol=curCol-1
+    elseif self.curPlayer.face==3 then
+      --右
+      curCol=curCol+1
+    end
+  end
+  --(4)寻路
+  local directions=self.aStar:searchDirection(curRow+1,curCol+1,row,col)
+  --(5)发送行走命令(TODO 可优化)
+  while directions:size()>0 do
+    local direction=directions:poll()
+    self.curPlayer.moveSequence:offer(direction)
+  end
 end
 
 --计算viewport

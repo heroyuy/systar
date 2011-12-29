@@ -73,6 +73,7 @@ function clsUIButton:onTouch(x,y,type)
       self.delegate:buttonTapped(self)
     end
   end
+  return true  --Button对所有事件都完全处理，即Button是不可穿透的
 end
 
 function clsUIButton:toString()

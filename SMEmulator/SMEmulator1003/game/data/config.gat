@@ -44,7 +44,7 @@ saveSound="/audio/sound/",
 playersIndex={0},
 curMapIndex=0,
 row=12,
-col=16,
+col=20,
 face=0,
 attributes={
 {index=0,name="测试属性",desc="测试属性说明"},

@@ -35,8 +35,8 @@ function clsHashMap:remove(key)
   self[tostring(key)]=nil
 end
 
--- removeAll方法
-function clsHashMap:removeAll()
+-- clear方法
+function clsHashMap:clear()
   for k,v in pairs(self) do
     self[k]=nil
   end
@@ -67,6 +67,6 @@ if debug then
   print(hashMap:has(t1))
   print(hashMap:has(t2))
   print(hashMap:size())
-  hashMap:removeAll()
+  hashMap:clear()
   print(hashMap:size())
 end

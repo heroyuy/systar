@@ -52,8 +52,8 @@ function clsList:removeObject(obj)
   end
 end
 
---removeAll方法
-function clsList:removeAll()
+--clear方法
+function clsList:clear()
   for i=1,self:size() do
     table.remove(self)
   end
@@ -102,7 +102,7 @@ if debug then
   l1:removeObject(t)
   print(l1:get(3))  --table
   print(l1:size())  --3
-  l1:removeAll()
+  l1:clear()
   print(l1:size())  --0
   l1:add(1)
   l1:add("")

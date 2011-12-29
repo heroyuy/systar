@@ -40,6 +40,13 @@ function clsQueue:poll()
   end
 end
 
+--clear方法
+function clsQueue:clear()
+  while self:size()>0 do
+    self:poll()
+  end
+end
+
 --size方法
 function clsQueue:size()
   local first = self.first

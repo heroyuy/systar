@@ -18,7 +18,7 @@ function globalGame:onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(50)
+  smGameEngine:setRatedFps(20)
   smLog:setDebug(true)
   smLog:info("game-start")
   --配置游戏
@@ -45,6 +45,10 @@ function globalGame:update()
   if self.curScene then
     self.curScene:update()
   end
+  --FPS
+  if smGameEngine:getActualFps()<smGameEngine:getRatedFps() then
+    smLog:info("FPS警告:"..smGameEngine:getActualFps())
+  end
 end
 
 --绘制屏幕  lua层不应该调用
@@ -58,7 +62,7 @@ end
 function globalGame:onStop()
   if self.curScene then
     self.curScene:onStop()
-    self.rootLayer:removeAll()
+    self.rootLayer:clear()
   end
   smLog:info("game-stop")
 end
@@ -73,7 +77,7 @@ function globalGame:changeScene(index)
   --(1)原场景onStop
   if self.curScene then
     self.curScene:onStop()
-    self.rootLayer:removeAll()
+    self.rootLayer:clear()
   end
   --(2)切换场景
   self:createScene(index)

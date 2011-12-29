@@ -70,11 +70,11 @@ function clsTiledMapLayer:paintLayer(painter)
 end
 
 function clsTiledMapLayer:onTouch(x,y,type)
-  --test
-  if type==smUIConst.touchEventType.DOWN then
-    local curPlayer=globalData.playerTroop:curDisplayPlayer()
-    curPlayer.moveSequence:offer(smRandom:nextInt(4))
+  if self.delegate and type==smUIConst.touchEventType.DOWN then
+    smLog:info("地图被点击,物理坐标: x"..x.." y="..y)
+    self.delegate:mapTapped(self,math.floor((self.viewport.y+y)/self.cellHeight)+1,math.floor((self.viewport.x+x)/self.cellWidth)+1)
   end
+  return true   --为简化delegate的编写，此处永远返回true
 end
 
 --更新

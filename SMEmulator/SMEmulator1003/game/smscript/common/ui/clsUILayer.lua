@@ -70,8 +70,8 @@ function clsUILayer:removeChild(layer)
 end
 
 --移除所有子Layer
-function clsUILayer:removeAll()
-  self.children:removeAll()
+function clsUILayer:clear()
+  self.children:clear()
 end
 
 --绘制Layer（lua层不应该调用此方法）
@@ -122,27 +122,37 @@ end
 --处理触屏事件（lua层不应该调用此方法）
 function clsUILayer:onTouch(x,y,type)
   if self.delegate then
-    self.delegate:onTouch(self,x,y,type)
+    self.delegate:layerTapped(self,x,y,type)
+    return true   --为简化delegate的编写，此处永远返回true，即只要有delegate处理事件则认为事件处理完成
+  else
+    return false
   end
 end
 
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(x,y,type)
+  local status=false
   if type==smUIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
-  if self.focusLayer and self.focusLayer.enabled then
-    --找到焦点组件
-    self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
+  if self.focusLayer then
+    --找到焦点组件或者焦点被清除
+    status=self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
+    if not status then
+      --如果事件未完全处理
+      self.focusLayer = nil
+      status=self:onTouch(x,y,type)
+    end
   else
-    --未找到焦点组件
-    self:onTouch(x,y,type)
+    --未找到焦点组件或者焦点已清除
+    status=self:onTouch(x,y,type)
   end
   if type==smUIConst.touchEventType.UP then
     --如果是UP事件，则清除焦点
     self.focusLayer = nil
   end
+  return status
 end
 
 --通知更新界面。在缓冲模式下此方法用于通知Layer更新显示内容
