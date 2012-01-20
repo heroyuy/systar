@@ -128,6 +128,281 @@ public class TileLayer extends Layer {
             }
         }
     }
+    private static final int NONE = 0x00000000;
+    private static final int LEFT = 0x00000001;
+    private static final int RIGHT = 0x00000010;
+    private static final int TOP = 0x00000100;
+    private static final int BOTTOM = 0x00001000;
+    private static final int LEFT_TOP = 0x00010000;
+    private static final int RIGHT_TOP = 0x00100000;
+    private static final int LEFT_BOTTOM = 0x01000000;
+    private static final int RIGHT_BOTTOM = 0x10000000;
+
+    private void updateAutoTile(int row, int col) {
+        if (bounds.contains(col, row)) {
+            Tile t = tiles[row - bounds.y][col - bounds.x];
+            if (t != null && t.getTileSet() != null && t.getTileSet().isAutoTile()) {
+
+                int state = 0;
+                //左上
+                if (bounds.contains(col - 1, row - 1)) {
+                    Tile tt = tiles[row - bounds.y - 1][col - bounds.x - 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= LEFT_TOP;
+                    }
+                }
+                //上
+                if (bounds.contains(col, row - 1)) {
+                    Tile tt = tiles[row - bounds.y - 1][col - bounds.x];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= TOP;
+                    }
+                }
+                //左
+                if (bounds.contains(col - 1, row)) {
+                    Tile tt = tiles[row - bounds.y][col - bounds.x - 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= LEFT;
+                    }
+                }
+                //右
+                if (bounds.contains(col + 1, row)) {
+                    Tile tt = tiles[row - bounds.y][col - bounds.x + 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= RIGHT;
+                    }
+                }
+                //右下
+                if (bounds.contains(col + 1, row + 1)) {
+                    Tile tt = tiles[row - bounds.y + 1][col - bounds.x + 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= RIGHT_BOTTOM;
+                    }
+                }
+                //下
+                if (bounds.contains(col, row + 1)) {
+                    Tile tt = tiles[row - bounds.y + 1][col - bounds.x];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= BOTTOM;
+                    }
+                }
+                //左下
+                if (bounds.contains(col - 1, row + 1)) {
+                    Tile tt = tiles[row - bounds.y + 1][col - bounds.x - 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= LEFT_BOTTOM;
+                    }
+                }
+                //右上
+                if (bounds.contains(col + 1, row - 1)) {
+                    Tile tt = tiles[row - bounds.y - 1][col - bounds.x + 1];
+                    if (tt != null && tt.getTileSet() != null && tt.getTileSet().isAutoTile()) {
+                        state |= RIGHT_TOP;
+                    }
+                }
+//                System.out.println("col:" + col + " row:" + row + " state:" + Integer.toHexString(state));
+                if ((state & LEFT) == 0) {//如果左边没有，则左上和左下失去影响力
+                    if ((state & RIGHT) == 0) {//如果右边没有，则右上和右下失去影响力
+                        if ((state & TOP) == 0) {//如果上面没有，则右上和左上失去影响力
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                t.setAutoId(46);
+                            } else {
+                                t.setAutoId(42);
+                            }
+                        } else {
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                t.setAutoId(44);
+                            } else {
+                                t.setAutoId(32);
+                            }
+                        }
+                    } else {
+                        //左边没有，右边有
+                        if ((state & TOP) == 0) {//如果上面没有，则右上和左上失去影响力
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                t.setAutoId(43);
+                            } else {
+                                if ((state & RIGHT_BOTTOM) == 0) {
+                                    t.setAutoId(35);
+                                } else {
+                                    t.setAutoId(34);
+                                }
+                            }
+                        } else {
+                            //左边没有，右边有，上面有
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                if ((state & RIGHT_TOP) == 0) {
+                                    t.setAutoId(41);
+                                } else {
+                                    t.setAutoId(40);
+                                }
+                            } else {
+                                //左边没有，右边有，上面有，下面有
+                                if ((state & RIGHT_TOP) == 0) {
+                                    if ((state & RIGHT_BOTTOM) == 0) {
+                                        t.setAutoId(19);
+                                    } else {
+                                        t.setAutoId(17);
+                                    }
+                                } else {
+                                    if ((state & RIGHT_BOTTOM) == 0) {
+                                        t.setAutoId(18);
+                                    } else {
+                                        t.setAutoId(16);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    //左边有
+                    if ((state & RIGHT) == 0) {//如果右边没有，则右上和右下失去影响力
+                        if ((state & TOP) == 0) {//如果上面没有，则右上和左上失去影响力
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                t.setAutoId(45);
+                            } else {
+                                if ((state & LEFT_BOTTOM) == 0) {
+                                    t.setAutoId(37);
+                                } else {
+                                    t.setAutoId(36);
+                                }
+                            }
+                        } else {
+                            //左边有，右边没有，上面有
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                if ((state & LEFT_TOP) == 0) {
+                                    t.setAutoId(39);
+                                } else {
+                                    t.setAutoId(38);
+                                }
+                            } else {
+                                //左边有，右边没有，上面有，下面有
+                                if ((state & LEFT_TOP) == 0) {
+                                    if ((state & LEFT_BOTTOM) == 0) {
+                                        t.setAutoId(27);
+                                    } else {
+                                        t.setAutoId(26);
+                                    }
+                                } else {
+                                    if ((state & LEFT_BOTTOM) == 0) {
+                                        t.setAutoId(25);
+                                    } else {
+                                        t.setAutoId(24);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+//                        //左边有，右边有
+                        if ((state & TOP) == 0) {//如果上面没有，则右上和左上失去影响力
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                t.setAutoId(33);
+                            } else {
+                                //左边有，右边有，上面没有，下面有
+                                if ((state & LEFT_BOTTOM) == 0) {
+                                    if ((state & RIGHT_BOTTOM) == 0) {
+                                        t.setAutoId(23);
+                                    } else {
+                                        t.setAutoId(22);
+                                    }
+                                } else {
+                                    if ((state & RIGHT_BOTTOM) == 0) {
+                                        t.setAutoId(21);
+                                    } else {
+                                        t.setAutoId(20);
+                                    }
+                                }
+                            }
+                        } else {
+//                          //左边有，右边有，上面有
+                            if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
+                                if ((state & LEFT_TOP) == 0) {
+                                    if ((state & RIGHT_TOP) == 0) {
+                                        t.setAutoId(31);
+                                    } else {
+                                        t.setAutoId(29);
+                                    }
+                                } else {
+                                    if ((state & RIGHT_TOP) == 0) {
+                                        t.setAutoId(30);
+                                    } else {
+                                        t.setAutoId(28);
+                                    }
+                                }
+                            } else {
+                                //左边有，右边有，上面有，下面有
+                                if ((state & LEFT_TOP) == 0) {
+                                    if ((state & RIGHT_TOP) == 0) {
+                                        if ((state & LEFT_BOTTOM) == 0) {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(46);
+                                            } else {
+                                                t.setAutoId(11);
+                                            }
+                                        } else {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(7);
+                                            } else {
+                                                t.setAutoId(3);
+                                            }
+                                        }
+                                    } else {
+                                        //左边有，右边有，上面有，下面有，左上没有，右上有
+                                        if ((state & LEFT_BOTTOM) == 0) {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(13);
+                                            } else {
+                                                t.setAutoId(9);
+                                            }
+                                        } else {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(5);
+                                            } else {
+                                                t.setAutoId(1);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    //左边有，右边有，上面有，下面有，左上有
+                                    if ((state & RIGHT_TOP) == 0) {
+                                        if ((state & LEFT_BOTTOM) == 0) {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(14);
+                                            } else {
+                                                t.setAutoId(10);
+                                            }
+                                        } else {
+                                            //左边有，右边有，上面有，下面有，左上有，左下有，右上没有
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(6);
+                                            } else {
+                                                t.setAutoId(2);
+                                            }
+                                        }
+                                    } else {
+                                        //左边有，右边有，上面有，下面有，左上有，右上有
+                                        if ((state & LEFT_BOTTOM) == 0) {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(12);
+                                            } else {
+                                                t.setAutoId(8);
+                                            }
+                                        } else {
+                                            if ((state & RIGHT_BOTTOM) == 0) {
+                                                t.setAutoId(4);
+                                            } else {
+                                                t.setAutoId(0);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Sets the tile at the specified position. Does nothing if (tx, ty) falls
@@ -139,7 +414,26 @@ public class TileLayer extends Layer {
      */
     public void setTileAt(int tx, int ty, Tile ti) {
         if (bounds.contains(tx, ty) && isIsVisible()) {
-            tiles[ty - bounds.y][tx - bounds.x] = ti;
+            try {
+                if (ti != null) {
+                    tiles[ty - bounds.y][tx - bounds.x] = (Tile) ti.clone();
+                    if (ti.getTileSet() != null && ti.getTileSet().isAutoTile()) {
+                        updateAutoTile(ty, tx);
+                        updateAutoTile(ty - 1, tx - 1);
+                        updateAutoTile(ty - 1, tx);
+                        updateAutoTile(ty - 1, tx + 1);
+                        updateAutoTile(ty, tx - 1);
+                        updateAutoTile(ty, tx + 1);
+                        updateAutoTile(ty + 1, tx - 1);
+                        updateAutoTile(ty + 1, tx);
+                        updateAutoTile(ty + 1, tx + 1);
+                    }
+                } else {
+                    tiles[ty - bounds.y][tx - bounds.x] = null;
+                }
+            } catch (CloneNotSupportedException ex) {
+                ex.printStackTrace();
+            }
             fireLayerChanged();
         }
     }

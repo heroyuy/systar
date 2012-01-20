@@ -160,24 +160,24 @@ public class OrthoMapRender extends MapRender {
         }
     }
 
-    @Override
-    public void repaintRegion(Rectangle region) {
-        Dimension tsize = getTileSize();
-        if (tsize.width <= 0 || tsize.height <= 0) {
-            return;
-        }
-
-        // Calculate the visible corners of the region
-        int startX = region.x * tsize.width;
-        int startY = region.y * tsize.height;
-        int endX = (region.x + region.width) * tsize.width;
-        int endY = (region.y + region.height) * tsize.height;
-
-        Rectangle dirty =
-                new Rectangle(startX, startY, endX - startX, endY - startY);
-
-        repaint(dirty);
-    }
+//    @Override
+//    public void repaintRegion(Rectangle region) {
+//        Dimension tsize = getTileSize();
+//        if (tsize.width <= 0 || tsize.height <= 0) {
+//            return;
+//        }
+//
+//        // Calculate the visible corners of the region
+//        int startX = region.x * tsize.width;
+//        int startY = region.y * tsize.height;
+//        int endX = (region.x + region.width) * tsize.width;
+//        int endY = (region.y + region.height) * tsize.height;
+//
+//        Rectangle dirty =
+//                new Rectangle(startX, startY, endX - startX, endY - startY);
+//
+//        repaint(dirty);
+//    }
 
     public Point tileToScreenCoords(int x, int y) {
         Dimension tsize = getTileSize();

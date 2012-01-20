@@ -9,25 +9,43 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
  * @author Administrator
  */
-public class Tile {
+public class Tile implements Cloneable {
 
     private int tileImageId = -1;       //瓷砖图像序号
     private int id = -1;                //瓷砖序号
     private double zoom = 1.0;          //缩放比例
     private TileSet tileset;            //所属图集
     private boolean isCross = true;     //是否可通行 默认为true
+    private int autoId = 46;            //自动图元默认ID
 
     /**
      *
      */
     public Tile() {
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Tile clone = (Tile) super.clone();
+        // Create a new bounds object
+        clone.autoId = 46;
+        return clone;
+    }
+
+    /**
+     *
+     */
+    public int getAutoId() {
+        return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
     }
 
     /**
@@ -167,13 +185,30 @@ public class Tile {
      * @param zoom Zoom level to draw the tile
      */
     public void draw(Graphics g, int x, int y, double zoom) {
-        Image img = getScaledImage(zoom);
-        if (img != null) {
-            g.drawImage(img, x, y - img.getHeight(null), null);
-        } else {
-            // TODO: Allow drawing IDs when no image data exists as a
-            // config option
+        if (tileset == null) {
+            return;
+        }
+
+        if (!tileset.isAutoTile()) {
+            Image img = getScaledImage(getImage(), zoom);
+            if (img != null) {
+                g.drawImage(img, x, y - img.getHeight(null), null);
+            } else {
+                // TODO: Allow drawing IDs when no image data exists as a
+                // config option
 //            System.out.println("tile image null draw");
+            }
+        } else {
+
+            Image img = getScaledImage(tileset.getAutoTileImages()[getAutoId()], zoom);
+            if (img != null) {
+                g.drawImage(img, x, y - img.getHeight(null), null);
+            } else {
+//                Color c = g.getColor();
+//                g.setColor(Color.red);
+//                g.drawString("" + this.getAutoId(), x, y);
+//                g.setColor(c);
+            }
         }
     }
 
@@ -187,14 +222,14 @@ public class Tile {
      * @param zo
      * @return Image
      */
-    public Image getScaledImage(double zo) {
+    protected Image getScaledImage(Image imag, double zo) {
         Image scaledImage = null;
         if (zo == 1.0) {
-            return getImage();
+            return imag;
         } else if (zo == zoom && scaledImage != null) {
             return scaledImage;
         } else {
-            Image img = getImage();
+            Image img = imag;
 //            System.out.println(getWidth());
             if (img != null) {
                 scaledImage = img.getScaledInstance(

@@ -98,6 +98,7 @@ public class ChooseImageDialog extends javax.swing.JDialog {
         cancleButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("选择图片");
 
         jSplitPane1.setName("jSplitPane1"); // NOI18N
         jSplitPane1.setOneTouchExpandable(true);

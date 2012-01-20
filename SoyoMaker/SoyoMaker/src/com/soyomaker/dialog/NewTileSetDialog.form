@@ -47,6 +47,7 @@
                           <Component id="tilesetNameTextField" min="-2" pref="314" max="-2" attributes="1"/>
                       </Group>
                   </Group>
+                  <Component id="autoTileCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -66,7 +67,9 @@
                   <Component id="tilesetPathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="pathButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="autoTileCheckBox" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="8" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancleButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -125,6 +128,12 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pathButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="autoTileCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x81ea;&#x52a8;&#x56fe;&#x5143;"/>
+        <Property name="name" type="java.lang.String" value="autoTileCheckBox" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

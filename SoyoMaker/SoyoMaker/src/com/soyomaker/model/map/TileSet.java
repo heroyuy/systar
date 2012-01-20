@@ -32,6 +32,8 @@ public class TileSet {
     private Image tileSetImage;         //图集图像
     private String tilebmpFile;         //图集文件名
     private Map map;                    //所属地图
+    private boolean autoTile;           //自动图元
+    private BufferedImage[] autoTileImages;
     private final List<TilesetChangeListener> tilesetChangeListeners = new LinkedList();
     private int tilesPerRow;
     private Rectangle tileDimensions;
@@ -43,6 +45,22 @@ public class TileSet {
         tiles = new SloppyArray();
         images = new SloppyArray();
         tileDimensions = new Rectangle();
+    }
+
+    public BufferedImage[] getAutoTileImages() {
+        return autoTileImages;
+    }
+
+    public void setAutoTileImages(BufferedImage[] autoTileImages) {
+        this.autoTileImages = autoTileImages;
+    }
+
+    public boolean isAutoTile() {
+        return autoTile;
+    }
+
+    public void setAutoTile(boolean autoTile) {
+        this.autoTile = autoTile;
     }
 
     /**
@@ -147,7 +165,8 @@ public class TileSet {
                 + "\n          tileH:" + this.getTileHeight()
                 + "\n          width:" + this.getWidth()
                 + "\n          height:" + this.getHeight()
-                + "\n          id:" + this.getIndex();
+                + "\n          id:" + this.getIndex()
+                + "\n          autoTile:" + this.isAutoTile();
     }
 
     /**
@@ -190,6 +209,20 @@ public class TileSet {
         return gapless;
     }
 
+    private void setAutoTileImages(ArrayList<Image> bimages, int[] ids, int id) {
+        BufferedImage buffered = new BufferedImage(
+                map.getTileWidth(),
+                map.getTileHeight(),
+                BufferedImage.TYPE_INT_ARGB);
+        buffered.getGraphics().drawImage(bimages.get(ids[0]), 0, 0, null);
+        buffered.getGraphics().drawImage(bimages.get(ids[1]), map.getTileWidth() / 2, 0, null);
+        buffered.getGraphics().drawImage(bimages.get(ids[2]), 0, map.getTileHeight() / 2, null);
+        buffered.getGraphics().drawImage(bimages.get(ids[3]), map.getTileWidth() / 2, map.getTileHeight() / 2, null);
+        autoTileImages[id] = buffered;
+    }
+    private static final int[][] IDS = {{26, 27, 32, 33}, {4, 27, 32, 33}, {26, 5, 32, 33}, {4, 5, 32, 33}, {26, 27, 32, 11}, {4, 27, 32, 11}, {26, 5, 32, 11}, {4, 5, 32, 11}, {26, 27, 10, 33}, {4, 27, 10, 33}, {26, 5, 10, 33}, {4, 5, 10, 33}, {26, 27, 10, 11}, {4, 27, 10, 11}, {26, 5, 10, 11}, {4, 5, 10, 11}, {24, 25, 30, 31}, {24, 5, 30, 31}, {24, 25, 30, 11}, {24, 5, 30, 11}, {14, 15, 20, 21}, {14, 15, 20, 11}, {14, 15, 10, 21}, {14, 15, 10, 11}, {28, 29, 34, 35}, {28, 29, 10, 35}, {4, 29, 34, 35}, {4, 29, 10, 35}, {26, 27, 44, 45}, {4, 39, 44, 45}, {38, 5, 44, 45}, {4, 5, 44, 45}, {24, 29, 30, 35}, {14, 15, 44, 45}, {12, 13, 18, 19}, {12, 13, 18, 11}, {16, 17, 22, 23}, {16, 17, 10, 23}, {40, 41, 46, 47}, {4, 41, 46, 47}, {36, 37, 42, 43}, {36, 5, 42, 43}, {12, 17, 18, 23}, {12, 13, 42, 43}, {36, 41, 42, 47}, {16, 17, 46, 47}, {12, 17, 42, 47}, {12, 17, 42, 47}
+    };
+
     /**
      * Creates a tileset from a buffered image. Tiles are cut by the passed
      * cutter.
@@ -200,6 +233,21 @@ public class TileSet {
     private void importTileBitmap(BufferedImage tilebmp, TileCutter cutter) {
         assert tilebmp != null;
         assert cutter != null;
+        if (this.isAutoTile()) {
+            autoTileImages = new BufferedImage[48];
+            TileCutter tc = new TileCutter(map.getTileWidth() / 2, map.getTileHeight() / 2);
+            tc.setImage(tilebmp);
+            ArrayList<Image> bimages = new ArrayList<Image>();
+            Image tile = tc.getNextTile();
+            while (tile != null) {
+                bimages.add(tile);
+                tile = tc.getNextTile();
+            }
+            for (int i = 0; i < autoTileImages.length; i++) {
+                setAutoTileImages(bimages, IDS[i], i);
+            }
+        }
+
         tileSetImage = tilebmp;
         cutter.setImage(tilebmp);
         tileDimensions = new Rectangle(cutter.getTileDimensions());

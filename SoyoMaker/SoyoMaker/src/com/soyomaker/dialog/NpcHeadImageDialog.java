@@ -101,6 +101,7 @@ public class NpcHeadImageDialog extends javax.swing.JDialog {
         cancleButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Npc头像图");
 
         jSplitPane1.setName("jSplitPane1"); // NOI18N
 
@@ -112,7 +113,7 @@ public class NpcHeadImageDialog extends javax.swing.JDialog {
         imgPane.setLayout(imgPaneLayout);
         imgPaneLayout.setHorizontalGroup(
             imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
         imgPaneLayout.setVerticalGroup(
             imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

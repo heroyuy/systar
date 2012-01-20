@@ -50,6 +50,7 @@ public class DefaultSoftMapBinaryWriter implements IMapWriter {
 //            System.out.println("图集ID：" + map.getTileSets().get(i).getIndex());
             dos.writeUTF(map.getTileSets().get(i).getName());
 //            System.out.println("图集名称：" + map.getTileSets().get(i).getName());
+            dos.writeBoolean(map.getTileSets().get(i).isAutoTile());
             dos.writeUTF("\\image\\tileset\\" + map.getTileSets().get(i).getTilebmpFile());
 //            System.out.println("图集文件：" + map.getTileSets().get(i).getTilebmpFile());
         }

@@ -58,6 +58,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
         pathButton = new javax.swing.JButton();
+        autoTileCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(NewTileSetDialog.class);
@@ -98,6 +99,9 @@ public class NewTileSetDialog extends javax.swing.JDialog {
             }
         });
 
+        autoTileCheckBox.setText("自动图元");
+        autoTileCheckBox.setName("autoTileCheckBox"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,7 +123,8 @@ public class NewTileSetDialog extends javax.swing.JDialog {
                                 .addComponent(tilesetPathTextField)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(pathButton))
-                            .addComponent(tilesetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tilesetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(autoTileCheckBox, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -137,7 +142,9 @@ public class NewTileSetDialog extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(tilesetPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pathButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(autoTileCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(cancleButton))
@@ -149,47 +156,6 @@ public class NewTileSetDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-//        TileSet newTileset = new TileSet();
-//        String name, path;
-//        if (tilesetNameTextField.getText().equals("")) {
-//            name = "未命名";
-//        } else {
-//            name = tilesetNameTextField.getText();
-//        }
-//        if (tilesetPathTextField.getText().equals("")) {
-//            JOptionPane.showMessageDialog(this, "路径不能为空！");
-//            return;
-//        } else {
-//            path = tilesetPathTextField.getText();
-//        }
-////        compress(path);
-//        newTileset.setName(name);
-//        try {
-//            newTileset.importTileBitmap(path, new TileCutter(data.getCurrentMap().getTileWidth(), data.getCurrentMap().getTileHeight()));
-//        } catch (IOException ex) {
-////            Log.getLogger(this.getClass()).error("载入TileSet异常！", ex);
-//            Logger.getLogger(this.getClass().getName()).error("载入TileSet异常！ ", ex);
-//            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(),
-//                    "加载图集失败！", JOptionPane.WARNING_MESSAGE);
-//        }
-////        if (asynCrossCheckBox.isSelected()) {
-////            System.out.println("同步通行度设置");
-//        Pass pic = data.getMainFrame().tscd.initCrossFile(path.substring(path.lastIndexOf(File.separatorChar) + 1),
-//                new Rectangle(data.getCurrentMap().getTileWidth(), data.getCurrentMap().getTileHeight()));
-//        if (pic != null) {
-//            for (int i = 0; i < pic.collides.length; i++) {
-//                for (int j = 0; j < pic.collides[0].length; j++) {
-//                    newTileset.getTile(i + pic.collides.length * j).setCross(!pic.collides[i][j]);
-//                }
-//            }
-//        }
-////        }
-//        if (data.addTileSet(newTileset)) {
-////            System.out.println("加载图元" + newTileset.getName() + "成功!");
-//            AppData.getInstance().getLogger().v("加载图元" + newTileset.getName() + "成功!");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "添加图集失败！");
-//        }
         String[] names = tilesetNameTextField.getText().split("\\|");
         String[] paths = tilesetPathTextField.getText().split("\\|");
         for (int n = 0; n < paths.length; n++) {
@@ -207,6 +173,8 @@ public class NewTileSetDialog extends javax.swing.JDialog {
                 path = paths[n];
             }
             newTileset.setName(name);
+            newTileset.setAutoTile(autoTileCheckBox.isSelected());
+            newTileset.setMap(data.getCurrentMap());
             try {
                 newTileset.importTileBitmap(path, new TileCutter(data.getCurrentMap().getTileWidth(), data.getCurrentMap().getTileHeight()));
             } catch (IOException ex) {
@@ -294,6 +262,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox autoTileCheckBox;
     private javax.swing.JButton cancleButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
