@@ -31,7 +31,6 @@ require("clsPlayer")
 require("globalData")
 require("globalData_player")
 require("globalData_map")
-require("globalData_public")
 
 --scene
 require("clsScene")
