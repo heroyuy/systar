@@ -20,8 +20,9 @@ function globalData:newGame()
   smLog:info("newGame");
   --初始化PlayerTroop
   for _,v in ipairs(globalDictionary.config.playersIndex) do
+    smLog:info("new player")
     local player=clsPlayer:new()
-    local playerDict=globalDictionary.players[v+1]
+    local playerDict=globalDictionary.players[v]
     --直接取值字段值
     player.id=playerDict.index
     player.name=playerDict.name
@@ -58,6 +59,7 @@ function globalData:newGame()
     self.playerTroop.players[player.id]=player
   end
   self.playerTroop.curDisplayPlayerId=0 --TODO 此值应该读配置
+  self.updateSwitch=true
 end
 
 --加载游戏:从第index个存档初始化游戏
