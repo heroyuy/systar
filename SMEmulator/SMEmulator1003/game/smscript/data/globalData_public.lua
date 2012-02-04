@@ -54,7 +54,9 @@ end
 
 --更新游戏模型
 function globalData:update()
-  if self.playerTroop:curDisplayPlayer() then
-    self.playerTroop:curDisplayPlayer():update()
+  if self.updateSwitch then
+    if self.playerTroop:curDisplayPlayer() then
+      self.playerTroop:curDisplayPlayer():update()
+    end
   end
 end

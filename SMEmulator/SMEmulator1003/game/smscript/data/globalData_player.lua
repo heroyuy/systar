@@ -7,6 +7,7 @@ globalData.playerTroop.players={}  --Player列表
 globalData.playerTroop.curDisplayPlayerId=0   --当前显示的Player的ID
 
 function globalData.playerTroop:curDisplayPlayer()
+  print("curDisplayPlayerId:"..self.curDisplayPlayerId)
   return self.players[self.curDisplayPlayerId]
 end
 
