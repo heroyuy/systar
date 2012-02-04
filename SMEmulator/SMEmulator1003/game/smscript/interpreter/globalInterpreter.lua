@@ -8,10 +8,6 @@
 globalInterpreter={}
 
 ----------流程控制类----------
---结束脚本
-function globalInterpreter:exitScript()
-end
-
 --结束游戏
 function globalInterpreter:stopGame()
 end
@@ -21,7 +17,7 @@ function globalInterpreter:executeScript(scriptId)
 end
 
 --等待
-function globalInterpreter:sleep(seconds)
+function globalInterpreter:sleep(millisecond)
 end
 
 ----------游戏表现类----------
@@ -34,7 +30,7 @@ function globalInterpreter:forceMove(paths)
 end
 
 --显示倒计时
-function globalInterpreter:showTimer(seconds)
+function globalInterpreter:showTimer(millisecond)
 end
 
 --播放音乐
@@ -78,7 +74,7 @@ function globalInterpreter:exitFight()
 end
 
 --显示图片
-function globalInterpreter:showImage(name,x,y,seconds)
+function globalInterpreter:showImage(name,x,y,millisecond)
 end
 
 --移除图片
@@ -86,15 +82,15 @@ function globalInterpreter:removeImage(name)
 end
 
 --移动图片
-function globalInterpreter:moveImage(name,x,y,seconds)
+function globalInterpreter:moveImage(name,x,y,millisecond)
 end
 
 --旋转图片
-function globalInterpreter:rotateImage(name,type,degree,seconds)
+function globalInterpreter:rotateImage(name,type,degree,millisecond)
 end
 
 --更改图片色调
-function globalInterpreter:toneImage(name,a,r,g,b,seconds)
+function globalInterpreter:toneImage(name,a,r,g,b,millisecond)
 end
 
 --显示动画
@@ -102,7 +98,7 @@ function globalInterpreter:playAnimation(animationId,x,y)
 end
 
 --显示动画
-function globalInterpreter:playAnimationInFight(targetIndex,target)
+function globalInterpreter:playAnimationInFight(animationId,targetType,targetId)
 end
 
 --更换皮肤
@@ -110,11 +106,11 @@ function globalInterpreter:changeSkin(name)
 end
 
 --更改画面色调
-function globalInterpreter:toneScene(a,r,g,b,seconds)
+function globalInterpreter:toneScene(a,r,g,b,millisecond)
 end
 
 --画面震动
-function globalInterpreter:shakeScene(range,seconds,times)
+function globalInterpreter:shakeScene(range,millisecond,times)
 end
 
 --打开系统菜单
@@ -125,7 +121,7 @@ end
 function globalInterpreter:openRecordMenu()
 end
 
---回菜单
+--回主菜单
 function globalInterpreter:returnToMainMenu()
 end
 
@@ -135,27 +131,11 @@ function globalInterpreter:operateSwitch(switchId,value)
 end
 
 --变量操作
-function globalInterpreter:operateVariable(variableId,operateType,valueTyoe,value)
+function globalInterpreter:operateVariable(variableId,operateType,valueType,value)
 end
 
---属性操作
-function globalInterpreter:operateProperty(playerId,propertyType,operateType,valueTyoe,value)
-end
-
---HP操作
-function globalInterpreter:operatePlayerHP(playerId,operateType,valueTyoe,value)
-end
-
---SP操作
-function globalInterpreter:operatePlayerSP(playerId,operateType,valueTyoe,value)
-end
-
---等级操作
-function globalInterpreter:operatePlayerLevel(playerId,operateType,valueTyoe,value)
-end
-
---经验操作
-function globalInterpreter:operatePlayerExp(playerId,operateType,valueTyoe,value)
+--玩家属性操作
+function globalInterpreter:operatePlayerProperty(playerId,propertyType,operateType,valueType,value)
 end
 
 --名称操作
@@ -163,7 +143,7 @@ function globalInterpreter:operatePlayerName(playerId,name)
 end
 
 --技能操作
-function globalInterpreter:operatePlayerSkill(playerId,skillId,operateType)
+function globalInterpreter:operatePlayerSkill(playerId,skillId,value)
 end
 
 --装备操作  e.g  {12,1,-1,-1,-1,-1}   TODO 参数意义待定
@@ -175,23 +155,19 @@ function globalInterpreter:operatePlayerPattern(playerId,characterImageName)
 end
 
 --金钱操作
-function globalInterpreter:operateMoney(operateType,valueTyoe,value)
+function globalInterpreter:operateMoney(operateType,valueType,value)
 end
 
 --物品列表操作
-function globalInterpreter:operateItem(index,operateType,valueTyoe,value)
+function globalInterpreter:operateItem(index,operateType,valueType,value)
 end
 
 --装备列表操作
-function globalInterpreter:operateEquip(index,operateType,valueTyoe,value)
+function globalInterpreter:operateEquip(index,operateType,valueType,value)
 end
 
---敌人HP操作
-function globalInterpreter:operateEnemyHP(enemyId,operateType,valueTyoe,value)
-end
-
---敌人SP操作
-function globalInterpreter:operateEnemySP(enemyId,operateType,valueTyoe,value)
+--敌人属性操作
+function globalInterpreter:operateEnemyProperty(enemyId,propertyType,operateType,valueType,value)
 end
 
 --敌人模型操作
