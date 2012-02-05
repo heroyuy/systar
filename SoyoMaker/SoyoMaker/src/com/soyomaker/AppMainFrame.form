@@ -672,7 +672,7 @@
       <SubComponents>
         <Component class="com.soyomaker.widget.JScrollLabel" name="scrollLabel">
           <Properties>
-            <Property name="border" postCode="scrollLabel.setText(&quot;&#x6b22;&#x8fce;&#x4f7f;&#x7528;&#x624b;&#x6e38;&#x4e4b;&#x661f;&#x6e38;&#x620f;&#x7f16;&#x8f91;&#x5668;&#xff01;&quot;);"/>
+            <Property name="border" postCode="scrollLabel.setText(&quot;&#x6b22;&#x8fce;&#x4f7f;&#x7528;SoyoMaker&#x6e38;&#x620f;&#x7f16;&#x8f91;&#x5668;&#xff01;&#x8f6f;&#x4ef6;&#x5b98;&#x7f51; www.soyomaker.com&quot;);"/>
             <Property name="name" type="java.lang.String" value="scrollLabel" noResource="true"/>
           </Properties>
         </Component>

@@ -95,7 +95,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     protected MapRender(Map map) {
         this();
         cursorSelectionLayer.select(0, 0);
-        cursorSelectionLayer.setIsVisible(true);
+        cursorSelectionLayer.setVisible(true);
         setMap(map);
     }
 
@@ -295,7 +295,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
         while (li.hasNext()) {
             layer = (Layer) li.next();
             if (layer != null) {
-                if (layer.isIsVisible()) {
+                if (layer.isVisible()) {
                     g2d.setComposite(AlphaComposite.SrcOver);
                     if (layer instanceof TileLayer) {
                         paintTileLayer(g2d, (TileLayer) layer);
@@ -666,7 +666,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     //扫描边种子填充算法
 
     private void pour(TileLayer layer, int x, int y, Tile newTile, Tile oldTile) {
-        if (newTile == oldTile || !layer.isIsVisible()) {
+        if (newTile == oldTile || !layer.isVisible()) {
             return;
         }
 //        System.out.println("pour");

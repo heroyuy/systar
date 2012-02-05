@@ -84,7 +84,7 @@ public class CustomBrush extends AbBrush {
         while (itr.hasNext()) {
             Layer tl = (Layer) itr.next();
             Layer tm = (Layer) affectedMp.getLayer(layer++);
-            if (tm != null && tm.isIsVisible()) {
+            if (tm != null && tm.isVisible()) {
                 tl.setOffset(centerx, centery);
                 tl.mergeOnto(tm);
             }

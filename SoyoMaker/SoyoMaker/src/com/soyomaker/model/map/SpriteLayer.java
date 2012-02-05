@@ -76,7 +76,7 @@ public class SpriteLayer extends Layer {
      * @param npc
      */
     public void setNpcAt(int tx, int ty, Npc npc) {
-        if (bounds.contains(tx, ty) && isIsVisible()) {
+        if (bounds.contains(tx, ty) && isVisible()) {
             npcs[ty - bounds.y][tx - bounds.x] = npc;
             if (npc != null) {
                 npcs[ty - bounds.y][tx - bounds.x].setCol(tx);

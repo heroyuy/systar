@@ -78,7 +78,7 @@ public class CollideLayer extends Layer {
      * @param bool
      */
     public void setCollideAt(int tx, int ty, boolean bool) {
-        if (bounds.contains(tx, ty) && isIsVisible()) {
+        if (bounds.contains(tx, ty) && isVisible()) {
             collides[ty - bounds.y][tx - bounds.x] = bool;
             fireLayerChanged();
         }
@@ -115,7 +115,7 @@ public class CollideLayer extends Layer {
 
     @Override
     public void copyTo(Layer other) {
-        if (!other.isIsVisible()) {
+        if (!other.isVisible()) {
             return;
         }
 
@@ -133,7 +133,7 @@ public class CollideLayer extends Layer {
      */
     @Override
     public void copyFrom(Layer other) {
-        if (!isIsVisible()) {
+        if (!isVisible()) {
             return;
         }
 
@@ -147,7 +147,7 @@ public class CollideLayer extends Layer {
 
     @Override
     public void mergeOnto(Layer other) {
-        if (!other.isIsVisible()) {
+        if (!other.isVisible()) {
             return;
         }
         if (other instanceof CollideLayer) {

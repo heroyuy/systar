@@ -39,7 +39,7 @@ public class LayerTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return ((Layer) data.getCurrentMap().getLayerArrayList().get(rowIndex)).isIsVisible();
+                return ((Layer) data.getCurrentMap().getLayerArrayList().get(rowIndex)).isVisible();
             case 1:
                 return ((Layer) data.getCurrentMap().getLayerArrayList().get(rowIndex)).getName();
         }
@@ -56,7 +56,7 @@ public class LayerTableModel extends AbstractTableModel {
 
         switch (c) {
             case 0:
-                ((Layer) data.getCurrentMap().getLayerArrayList().get(r)).setIsVisible(!((Layer) data.getCurrentMap().getLayerArrayList().get(r)).isIsVisible());
+                ((Layer) data.getCurrentMap().getLayerArrayList().get(r)).setVisible(!((Layer) data.getCurrentMap().getLayerArrayList().get(r)).isVisible());
                 break;
             case 1:
                 ((Layer) data.getCurrentMap().getLayerArrayList().get(r)).setName((String) v);

@@ -159,25 +159,25 @@ public class OrthoMapRender extends MapRender {
             }
         }
     }
+    //向外扩大一个刷新，以支持自动图元对周围格子的影响
+    @Override
+    public void repaintRegion(Rectangle region) {
+        Dimension tsize = getTileSize();
+        if (tsize.width <= 0 || tsize.height <= 0) {
+            return;
+        }
 
-//    @Override
-//    public void repaintRegion(Rectangle region) {
-//        Dimension tsize = getTileSize();
-//        if (tsize.width <= 0 || tsize.height <= 0) {
-//            return;
-//        }
-//
-//        // Calculate the visible corners of the region
-//        int startX = region.x * tsize.width;
-//        int startY = region.y * tsize.height;
-//        int endX = (region.x + region.width) * tsize.width;
-//        int endY = (region.y + region.height) * tsize.height;
-//
-//        Rectangle dirty =
-//                new Rectangle(startX, startY, endX - startX, endY - startY);
-//
-//        repaint(dirty);
-//    }
+        // Calculate the visible corners of the region
+        int startX = Math.max((region.x - 1) * tsize.width, 0);
+        int startY = Math.max((region.y - 1) * tsize.height, 0);
+        int endX = (region.x + region.width + 1) * tsize.width;
+        int endY = (region.y + region.height + 1) * tsize.height;
+
+        Rectangle dirty =
+                new Rectangle(startX, startY, endX - startX, endY - startY);
+
+        repaint(dirty);
+    }
 
     public Point tileToScreenCoords(int x, int y) {
         Dimension tsize = getTileSize();

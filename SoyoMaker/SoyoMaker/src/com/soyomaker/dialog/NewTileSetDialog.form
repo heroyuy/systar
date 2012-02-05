@@ -24,32 +24,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="okButton" linkSize="2" min="-2" pref="81" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="cancleButton" linkSize="2" min="-2" pref="81" max="-2" attributes="1"/>
-                  </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="1" attributes="1">
-                              <Component id="tilesetPathTextField" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="tilesetPathTextField" min="-2" pref="247" max="-2" attributes="1"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="pathButton" min="-2" max="-2" attributes="1"/>
+                              <Component id="pathButton" pref="57" max="32767" attributes="1"/>
                           </Group>
-                          <Component id="tilesetNameTextField" min="-2" pref="314" max="-2" attributes="1"/>
+                          <Component id="tilesetNameTextField" alignment="0" pref="314" max="32767" attributes="1"/>
                       </Group>
                   </Group>
-                  <Component id="autoTileCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="okButton" linkSize="2" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="cancleButton" linkSize="2" min="-2" pref="81" max="-2" attributes="1"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,14 +67,14 @@
                   <Component id="tilesetPathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="pathButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="autoTileCheckBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="8" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -129,11 +129,59 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pathButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="autoTileCheckBox">
+    <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x81ea;&#x52a8;&#x56fe;&#x5143;"/>
-        <Property name="name" type="java.lang.String" value="autoTileCheckBox" noResource="true"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="&#x8bbe;&#x7f6e;"/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
       </Properties>
-    </Component>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="autoTileCheckBox" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jLabel3" pref="271" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="autoTileCheckBox" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="11"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt; &lt;body&gt; &#x6ce8;&#x610f;&#xff1a;&#x6682;&#x65f6;&#x53ea;&#x652f;&#x6301;RMXP&#x683c;&#x5f0f;&#x7684;&#x81ea;&#x52a8;&#x5143;&#x4ef6;&#xff0c;&#x9009;&#x4e2d;&#x8868;&#x793a;&#x6b64;&#x56fe;&#x96c6;&#x4e3a;&#x81ea;&#x52a8;&#x56fe;&#x96c6;&#xff0c;&#x975e;&#x81ea;&#x52a8;&#x56fe;&#x96c6;&#x8bf7;&#x52ff;&#x9009;&#x4e2d;! &lt;/body&gt; &lt;/html&gt;" noResource="true"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+            <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
+            <Property name="verticalTextPosition" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="autoTileCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x81ea;&#x52a8;&#x5143;&#x4ef6;"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="name" type="java.lang.String" value="autoTileCheckBox" noResource="true"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+            <Property name="verticalTextPosition" type="int" value="1"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

@@ -128,8 +128,8 @@ public class ConfigPanel extends javax.swing.JPanel {
             titleSceneBackgroundComboBox.addItem(DataManager.listTitleBackgroundName()[i]);
         }
         titleMusicComboBox.addItem("");
-        for (int i = 0; i < DataManager.listSoundName().length; i++) {
-            titleMusicComboBox.addItem(DataManager.listSoundName()[i]);
+        for (int i = 0; i < DataManager.listMusicName().length; i++) {
+            titleMusicComboBox.addItem(DataManager.listMusicName()[i]);
         }
         battleStartSoundComboBox.addItem("");
         for (int i = 0; i < DataManager.listSoundName().length; i++) {

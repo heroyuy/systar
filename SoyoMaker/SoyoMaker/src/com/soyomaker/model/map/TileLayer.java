@@ -85,7 +85,7 @@ public class TileLayer extends Layer {
      * @param other
      */
     public void copyFrom(Layer other) {
-        if (!isIsVisible()) {
+        if (!isVisible()) {
             return;
         }
         for (int y = bounds.y; y < bounds.y + bounds.height; y++) {
@@ -115,7 +115,7 @@ public class TileLayer extends Layer {
      * @throws Exception
      */
     public void removeTile(Tile tile) throws Exception {
-        if (!isIsVisible()) {
+        if (!isVisible()) {
             throw new Exception(
                     "图层不可视！");
         }
@@ -335,7 +335,7 @@ public class TileLayer extends Layer {
                                     if ((state & RIGHT_TOP) == 0) {
                                         if ((state & LEFT_BOTTOM) == 0) {
                                             if ((state & RIGHT_BOTTOM) == 0) {
-                                                t.setAutoId(46);
+                                                t.setAutoId(15);
                                             } else {
                                                 t.setAutoId(11);
                                             }
@@ -413,24 +413,22 @@ public class TileLayer extends Layer {
      * @param ti the tile object to place
      */
     public void setTileAt(int tx, int ty, Tile ti) {
-        if (bounds.contains(tx, ty) && isIsVisible()) {
+        if (bounds.contains(tx, ty) && isVisible()) {
             try {
                 if (ti != null) {
                     tiles[ty - bounds.y][tx - bounds.x] = (Tile) ti.clone();
-                    if (ti.getTileSet() != null && ti.getTileSet().isAutoTile()) {
-                        updateAutoTile(ty, tx);
-                        updateAutoTile(ty - 1, tx - 1);
-                        updateAutoTile(ty - 1, tx);
-                        updateAutoTile(ty - 1, tx + 1);
-                        updateAutoTile(ty, tx - 1);
-                        updateAutoTile(ty, tx + 1);
-                        updateAutoTile(ty + 1, tx - 1);
-                        updateAutoTile(ty + 1, tx);
-                        updateAutoTile(ty + 1, tx + 1);
-                    }
                 } else {
                     tiles[ty - bounds.y][tx - bounds.x] = null;
                 }
+                updateAutoTile(ty, tx);
+                updateAutoTile(ty - 1, tx - 1);
+                updateAutoTile(ty - 1, tx);
+                updateAutoTile(ty - 1, tx + 1);
+                updateAutoTile(ty, tx - 1);
+                updateAutoTile(ty, tx + 1);
+                updateAutoTile(ty + 1, tx - 1);
+                updateAutoTile(ty + 1, tx);
+                updateAutoTile(ty + 1, tx + 1);
             } catch (CloneNotSupportedException ex) {
                 ex.printStackTrace();
             }
@@ -482,7 +480,7 @@ public class TileLayer extends Layer {
      * @throws Exception
      */
     public void replaceTile(Tile find, Tile replace) throws Exception {
-        if (!isIsVisible()) {
+        if (!isVisible()) {
             throw new Exception(
                     "图层不可视！");
         }
@@ -536,7 +534,7 @@ public class TileLayer extends Layer {
      * @inheritDoc MapLayer#mergeOnto(MapLayer)
      */
     public void mergeOnto(Layer other) {
-        if (!other.isIsVisible()) {
+        if (!other.isVisible()) {
             return;
         }
         if (other instanceof TileLayer) {
@@ -586,7 +584,7 @@ public class TileLayer extends Layer {
      * @param other the layer to copy this layer to
      */
     public void copyTo(Layer other) {
-        if (!other.isIsVisible()) {
+        if (!other.isVisible()) {
             return;
         }
         for (int y = bounds.y; y < bounds.y + bounds.height; y++) {

@@ -333,7 +333,7 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
 
         stateBarPanel.setName("stateBarPanel"); // NOI18N
 
-        scrollLabel.setText("欢迎使用手游之星游戏编辑器！");
+        scrollLabel.setText("欢迎使用SoyoMaker游戏编辑器！软件官网 www.soyomaker.com");
         scrollLabel.setName("scrollLabel"); // NOI18N
 
         stateLabel.setName("stateLabel"); // NOI18N
@@ -692,7 +692,7 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
             .addGroup(layerPaneLayout.createSequentialGroup()
                 .addComponent(layerToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         );
 
         jScrollPane4.setViewportView(layerPane);

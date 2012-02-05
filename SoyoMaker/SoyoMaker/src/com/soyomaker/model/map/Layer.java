@@ -39,7 +39,7 @@ public abstract class Layer implements Cloneable {
     /**
      * 
      */
-    protected boolean isVisible = true;
+    protected boolean visible = true;
     /**
      * 
      */
@@ -235,16 +235,16 @@ public abstract class Layer implements Cloneable {
      *
      * @return
      */
-    public boolean isIsVisible() {
-        return isVisible;
+    public boolean isVisible() {
+        return visible;
     }
 
     /**
      *
      * @param isVisible
      */
-    public void setIsVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+    public void setVisible(boolean isVisible) {
+        this.visible = isVisible;
         fireVisibleChanged(isVisible);
     }
 

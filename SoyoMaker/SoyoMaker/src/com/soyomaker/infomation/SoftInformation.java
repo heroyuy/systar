@@ -17,7 +17,7 @@ public class SoftInformation {
     /**
      * 
      */
-    public static final String author = "Soyostar";//软件作者
+    public static final String author = "SM工作室";//软件作者
     /**
      * 
      */
@@ -29,9 +29,9 @@ public class SoftInformation {
     /**
      *
      */
-    public static final int lastVersion = 05;//尾版本号：尾版本号有2位，一般修改，增加此版本数
+    public static final int lastVersion = 07;//尾版本号：尾版本号有2位，一般修改，增加此版本数
     /**
      * 
      */
-    public static final int modifiedVersion = 20120112;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
+    public static final int modifiedVersion = 20120202;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
 }
