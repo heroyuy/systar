@@ -1,1 +1,6 @@
-globalDictionary.npcs[1]={index=1,mapIndex=0,row=0,col=1,states={{stateType=0,path="004-Fighter04.png",headImg=nil,face=2,moveType=0,speed=0,penetrable=false,scriptIndex=0}}}
+globalDictionary.npcs[1]={
+index=1,
+mapIndex=1,
+row=6,
+col=3,
+states={{stateType=0,path="",headImg=nil,face=0,moveType=0,speed=0,penetrable=false,scriptIndex=1}}}

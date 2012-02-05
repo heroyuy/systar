@@ -1269,7 +1269,7 @@ public class ScriptDialog extends javax.swing.JDialog {
 
     private void exitGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitGameButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "exit();");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "globalData.proxy:stopGame()");
     }//GEN-LAST:event_exitGameButtonActionPerformed
 
     /**

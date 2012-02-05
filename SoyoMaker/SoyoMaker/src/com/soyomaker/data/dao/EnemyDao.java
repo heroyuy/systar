@@ -138,7 +138,7 @@ public class EnemyDao extends Dao<Enemy> {
             enemy = enemys[i];
             LuaTable lt = new LuaTable();
             lt.addNode("\n");
-            lt.addNode("index", enemy.getIndex());
+            lt.addNode("index", enemy.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", enemy.name);
             lt.addNode("\n");
@@ -183,9 +183,9 @@ public class EnemyDao extends Dao<Enemy> {
                 } else {
                     trea.addNode("type", Treasure.TREASURE_EQUIP);
                 }
-                trea.addNode("index", enemy.treasures.get(j).getIndex());
+                trea.addNode("index", enemy.treasures.get(j).getIndex() + 1);
                 trea.addNode("rate", enemy.treasures.get(j).rate);
-                treas.addNode("[" + enemy.treasures.get(j).getIndex() + "]", trea);
+                treas.addNode("[" + (enemy.treasures.get(j).getIndex() + 1) + "]", trea);
                 if (j != enemy.treasures.size() - 1) {
                     treas.addNode("\n");
                 }
@@ -199,9 +199,9 @@ public class EnemyDao extends Dao<Enemy> {
             for (int j = 0; j < enemy.equips.size(); j++) {
                 LuaTable eq = new LuaTable();
                 eq.addNode("kind", enemy.equips.get(j).equipType);
-                eq.addNode("index", enemy.equips.get(j).getIndex());
+                eq.addNode("index", enemy.equips.get(j).getIndex() + 1);
                 eq.addNode("rate", enemy.equips.get(j).rate);
-                eqs.addNode("[" + enemy.equips.get(j).getIndex() + "]", eq);
+                eqs.addNode("[" + (enemy.equips.get(j).getIndex() + 1) + "]", eq);
                 if (j != enemy.equips.size() - 1) {
                     eqs.addNode("\n");
                 }
@@ -217,13 +217,13 @@ public class EnemyDao extends Dao<Enemy> {
                 LuaTable conds = new LuaTable();
                 for (int k = 0; k < enemy.actions.get(j).conds.size(); k++) {
                     LuaTable cond = new LuaTable();
-                    cond.addNode("conditionType", enemy.actions.get(j).conds.get(k).conditionType);
+                    cond.addNode("conditionType", enemy.actions.get(j).conds.get(k).conditionType + 1);
                     LuaTable paras = new LuaTable();
                     for (int m = 0; m < enemy.actions.get(j).conds.get(k).paras.size(); m++) {
                         paras.addNode(enemy.actions.get(j).conds.get(k).paras.get(m));
                     }
                     cond.addNode("parameters", paras);
-                    conds.addNode("[" + enemy.actions.get(j).conds.get(k).conditionType + "]", cond);
+                    conds.addNode("[" + (enemy.actions.get(j).conds.get(k).conditionType + 1) + "]", cond);
                 }
                 act.addNode("conditions", conds);
                 LuaTable pars = new LuaTable();
@@ -246,9 +246,9 @@ public class EnemyDao extends Dao<Enemy> {
             }
             for (int j = 0; j < enemy.attributes.size(); j++) {
                 LuaTable attr = new LuaTable();
-                attr.addNode("index", enemy.attributes.get(j).id);
+                attr.addNode("index", enemy.attributes.get(j).id + 1);
                 attr.addNode("value", enemy.attributes.get(j).value);
-                attrs.addNode("[" + enemy.attributes.get(j).id + "]", attr);
+                attrs.addNode("[" + (enemy.attributes.get(j).id + 1) + "]", attr);
                 if (j != enemy.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -261,15 +261,15 @@ public class EnemyDao extends Dao<Enemy> {
             }
             for (int j = 0; j < enemy.status.size(); j++) {
                 LuaTable statu = new LuaTable();
-                statu.addNode("index", enemy.status.get(j).getIndex());
+                statu.addNode("index", enemy.status.get(j).getIndex() + 1);
                 statu.addNode("value", enemy.status.get(j).value);
-                status.addNode("[" + enemy.status.get(j).getIndex() + "]", statu);
+                status.addNode("[" + (enemy.status.get(j).getIndex() + 1) + "]", statu);
                 if (j != enemy.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
             lt.addNode("buffs", status);
-            lts.addNode("[" + enemy.getIndex() + "]", lt);
+            lts.addNode("[" + (enemy.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

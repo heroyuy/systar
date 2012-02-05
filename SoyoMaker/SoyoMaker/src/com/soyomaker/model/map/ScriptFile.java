@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class ScriptFile {
 
-    private int ID = -1;        //脚本的id
-    private String contents = "";    //内容
-    private String func = "";   //类方法
+    private int ID = -1;                //脚本的id
+    private String contents = "";       //内容
+    private String func = "";           //类方法
 
     /**
      * 
@@ -34,16 +34,15 @@ public class ScriptFile {
     }
 
     //组合类文件内容
-
     /**
      * 
      * @return
      */
     public String link() {
-        contents = "package engine.script;\n"
-            + "public class Script" + ID + " extends Script{\n"
-            + "  public void execute(){\n" + func + "  }\n"
-            + "}";
+//        contents = "package engine.script;\n"
+//            + "public class Script" + ID + " extends Script{\n"
+//            + "  public void execute(){\n" + func + "  }\n"
+//            + "}";
         return contents;
     }
 

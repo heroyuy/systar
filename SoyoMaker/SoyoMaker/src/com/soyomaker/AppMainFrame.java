@@ -1472,7 +1472,7 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
 //                        + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
                 IMapWriter mapLuaWriter = new DefaultMapLuaWriter();
                 mapLuaWriter.writeMap(map, AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                        + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
+                        + "data" + File.separatorChar + "map" + File.separatorChar + "map" + (map.getIndex() + 1) + ".gat");
             }
         }
         iLogger.v("save maps finish!");

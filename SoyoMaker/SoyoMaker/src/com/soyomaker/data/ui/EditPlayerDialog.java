@@ -47,6 +47,7 @@ public class EditPlayerDialog extends javax.swing.JDialog {
         playerStartLevTextField.setText(player.startLev + "");
         playerMaxLevTextField.setText(player.maxLev + "");
         playerVocationComboBox.removeAllItems();
+        playerVocationComboBox.addItem("");
         for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.VOCATION); i++) {
             playerVocationComboBox.addItem((Vocation) AppData.getInstance().getCurProject().getDataManager().getModels(Model.VOCATION)[i]);
         }
@@ -775,7 +776,11 @@ public class EditPlayerDialog extends javax.swing.JDialog {
         player.intro = playerIntroTextArea.getText();
         player.startLev = Integer.parseInt(playerStartLevTextField.getText());
         player.maxLev = Integer.parseInt(playerMaxLevTextField.getText());
-        player.vocationIndex = playerVocationComboBox.getSelectedIndex();
+        if (playerVocationComboBox.getSelectedItem() == null||playerVocationComboBox.getSelectedItem().toString().equals("")) {
+            player.vocationIndex = -1;
+        } else {
+            player.vocationIndex = playerVocationComboBox.getSelectedIndex();
+        }
         dispose();
 }//GEN-LAST:event_okButtonActionPerformed
 

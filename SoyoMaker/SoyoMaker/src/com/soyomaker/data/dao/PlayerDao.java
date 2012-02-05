@@ -188,7 +188,7 @@ public class PlayerDao extends Dao<Player> {
             LuaTable lt = new LuaTable();
             player = players[i];
             lt.addNode("\n");
-            lt.addNode("index", player.getIndex());
+            lt.addNode("index", player.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", player.name);
             lt.addNode("\n");
@@ -212,7 +212,11 @@ public class PlayerDao extends Dao<Player> {
                 lt.addNode("battlerImg", "/image/battler/" + player.battleImg);
             }
             lt.addNode("\n");
-            lt.addNode("vocationIndex", player.vocationIndex);
+            if (player.vocationIndex == -1) {
+                lt.addNode("vocationIndex", -1);
+            } else {
+                lt.addNode("vocationIndex", player.vocationIndex + 1);
+            }
             lt.addNode("\n");
             lt.addNode("startLev", player.startLev);
             lt.addNode("\n");
@@ -271,7 +275,7 @@ public class PlayerDao extends Dao<Player> {
                 lucs.addNode(player.luckPower.a * j + player.luckPower.b * j * j + player.luckPower.c * j * j * j + player.luckPower.d);
             }
             lt.addNode("lucList", lucs);
-            lts.addNode("[" + player.getIndex() + "]", lt);
+            lts.addNode("[" + (player.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

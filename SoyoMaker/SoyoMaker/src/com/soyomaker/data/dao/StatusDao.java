@@ -111,7 +111,7 @@ public class StatusDao extends Dao<Status> {
             statu = status[i];
             LuaTable lt = new LuaTable();
             lt.addNode("\n");
-            lt.addNode("index", statu.getIndex());
+            lt.addNode("index", statu.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("type", statu.type);
             lt.addNode("\n");
@@ -125,7 +125,11 @@ public class StatusDao extends Dao<Status> {
                 lt.addNode("icon", "/image/icon/status/" + statu.icon);
             }
             lt.addNode("\n");
-            lt.addNode("aniIndex", statu.aniIndex);
+            if (statu.aniIndex == -1) {
+                lt.addNode("aniIndex", -1);
+            } else {
+                lt.addNode("aniIndex", statu.aniIndex);
+            }
             lt.addNode("\n");
             lt.addNode("lastType", statu.lastType);
             lt.addNode("\n");
@@ -137,11 +141,11 @@ public class StatusDao extends Dao<Status> {
             }
             for (int j = 0; j < statu.paras.size(); j++) {
                 LuaTable rc = new LuaTable();
-                rc.addNode("paramType", statu.paras.get(j).type);
+                rc.addNode("paramType", statu.paras.get(j).type + 1);
                 rc.addNode("paramName", statu.paras.get(j).name);
                 rc.addNode("paramRule", statu.paras.get(j).rule);
                 rc.addNode("paramValue", statu.paras.get(j).value);
-                pas.addNode("[" + j + "]", rc);
+                pas.addNode("[" + (statu.paras.get(j).type + 1) + "]", rc);
                 if (j != statu.paras.size() - 1) {
                     pas.addNode("\n");
                 }
@@ -154,10 +158,10 @@ public class StatusDao extends Dao<Status> {
             }
             for (int j = 0; j < statu.conds.size(); j++) {
                 LuaTable rc = new LuaTable();
-                rc.addNode("conditionType", statu.conds.get(j).conditionType);
+                rc.addNode("conditionType", statu.conds.get(j).conditionType + 1);
                 rc.addNode("conditionName", statu.conds.get(j).conditionName);
                 rc.addNode("param", statu.conds.get(j).para);
-                rcs.addNode("[" + statu.conds.get(j).conditionType + "]", rc);
+                rcs.addNode("[" + (statu.conds.get(j).conditionType + 1) + "]", rc);
                 if (j != statu.conds.size() - 1) {
                     rcs.addNode("\n");
                 }
@@ -170,9 +174,9 @@ public class StatusDao extends Dao<Status> {
             }
             for (int j = 0; j < statu.attrs.size(); j++) {
                 LuaTable attr = new LuaTable();
-                attr.addNode("index", statu.attrs.get(j).id);
+                attr.addNode("index", statu.attrs.get(j).id + 1);
                 attr.addNode("value", statu.attrs.get(j).value);
-                attrs.addNode("[" + statu.attrs.get(j).id + "]", attr);
+                attrs.addNode("[" + (statu.attrs.get(j).id + 1) + "]", attr);
                 if (j != statu.attrs.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -185,15 +189,15 @@ public class StatusDao extends Dao<Status> {
             }
             for (int j = 0; j < statu.status.size(); j++) {
                 LuaTable st = new LuaTable();
-                st.addNode("index", statu.status.get(j).getIndex());
+                st.addNode("index", statu.status.get(j).getIndex() + 1);
                 st.addNode("value", statu.status.get(j).value);
-                sts.addNode("[" + statu.status.get(j).getIndex() + "]", st);
+                sts.addNode("[" + (statu.status.get(j).getIndex() + 1) + "]", st);
                 if (j != statu.status.size() - 1) {
                     sts.addNode("\n");
                 }
             }
             lt.addNode("buffs", sts);
-            lts.addNode("[" + statu.getIndex() + "]", lt);
+            lts.addNode("[" + (statu.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

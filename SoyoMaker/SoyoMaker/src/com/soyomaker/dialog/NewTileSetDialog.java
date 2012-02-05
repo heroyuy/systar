@@ -11,6 +11,7 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
+import com.soyomaker.config.Configuration;
 import com.soyomaker.model.map.Pass;
 import com.soyomaker.model.map.TileSet;
 import com.soyomaker.util.TileCutter;
@@ -40,6 +41,13 @@ public class NewTileSetDialog extends javax.swing.JDialog {
     private void initialize() {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(okButton);
+        if (!Configuration.getIsAutoTile()) {
+            autoTileCheckBox.setEnabled(false);
+            autoTileLabel.setText("<html> <body> 此功能暂时关闭 </body> </html>");
+        } else {
+            autoTileCheckBox.setEnabled(true);
+            autoTileLabel.setText("<html> <body> 注意：暂时只支持RMXP格式的自动元件，选中表示此图集为自动图集，非自动图集请勿选中! </body> </html>");
+        }
     }
 
     /** This method is called from within the constructor to
@@ -59,7 +67,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
         cancleButton = new javax.swing.JButton();
         pathButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        autoTileLabel = new javax.swing.JLabel();
         autoTileCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -104,11 +112,11 @@ public class NewTileSetDialog extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("设置"));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("<html> <body> 注意：暂时只支持RMXP格式的自动元件，选中表示此图集为自动图集，非自动图集请勿选中! </body> </html>"); // NOI18N
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel3.setName("jLabel3"); // NOI18N
-        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        autoTileLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        autoTileLabel.setText("<html> <body> 注意：暂时只支持RMXP格式的自动元件，选中表示此图集为自动图集，非自动图集请勿选中! </body> </html>"); // NOI18N
+        autoTileLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        autoTileLabel.setName("autoTileLabel"); // NOI18N
+        autoTileLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         autoTileCheckBox.setText("自动元件");
         autoTileCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -123,7 +131,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(autoTileCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(autoTileLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,7 +139,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(autoTileCheckBox)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(autoTileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -296,10 +304,10 @@ public class NewTileSetDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox autoTileCheckBox;
+    private javax.swing.JLabel autoTileLabel;
     private javax.swing.JButton cancleButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton okButton;
     private javax.swing.JButton pathButton;

@@ -44,7 +44,7 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
             for (int j = 0; j < pic.getTiles().size(); j++) {
                 Clip t = pic.getTile(j);
                 LuaTable cl = new LuaTable();
-                cl.addNode("clipIndex", data.getCurProject().getClips().indexOf(t));
+                cl.addNode("clipIndex", data.getCurProject().getClips().indexOf(t) + 1);
                 cl.addNode("clipX", t.getSourcePoint().x);
                 cl.addNode("clipY", t.getSourcePoint().y);
                 cl.addNode("clipWidth", t.getW());
@@ -72,7 +72,7 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
             if (ani != null) {
                 LuaTable lt = new LuaTable();
                 lt.addNode("\n");
-                lt.addNode("index", ani.getIndex());
+                lt.addNode("index", ani.getIndex() + 1);
                 lt.addNode("\n");
                 lt.addNode("name", ani.getName());
                 lt.addNode("\n");
@@ -83,7 +83,7 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
                 for (int i = 0; i < ani.getFrames().size(); i++) {
                     Frame frame = ani.getFrame(i);
                     LuaTable fr = new LuaTable();
-                    fr.addNode("frameIndex", allFramsNum + i);
+                    fr.addNode("frameIndex", allFramsNum + i + 1);
                     fr.addNode("frameDuration", frame.getDelay());
                     fr.addNode("frameWidth", frame.getW());
                     fr.addNode("frameHeight", frame.getH());
@@ -95,7 +95,7 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
                     for (int j = 0; j < frame.getTiles().size(); j++) {
                         Clip t = frame.getTiles().get(j);
                         LuaTable cl = new LuaTable();
-                        cl.addNode("clipIndex", data.getCurProject().getClips().indexOf(t.getOriginal()));
+                        cl.addNode("clipIndex", data.getCurProject().getClips().indexOf(t.getOriginal()) + 1);
                         cl.addNode("frameClipX", t.getFramePoint().x);
                         cl.addNode("frameClipY", t.getFramePoint().y);
                         cl.addNode("transparency", t.getTransparency());
@@ -124,7 +124,7 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
                 for (int i = 0; i < ani.getActions().size(); i++) {
                     Action action = ani.getActions().get(i);
                     LuaTable ac = new LuaTable();
-                    ac.addNode("frameIndex", action.getFrameId());
+                    ac.addNode("frameIndex", action.getFrameId() + 1);
                     ac.addNode("sound", "/audio/sound/" + action.getMusicFile());
                     ac.addNode("type", action.getType());
                     ac.addNode("red", action.getRed());

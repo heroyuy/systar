@@ -19,10 +19,15 @@ public class DefaultNpcLuaWriter implements INpcWriter {
 
     public void writeNpc(Npc npc, String filename) throws Exception {
         LuaTable lts = new LuaTable();
-        lts.addNode("index", npc.getIndex());
-        lts.addNode("mapIndex", npc.getMapId());
+        lts.addNode("\n");
+        lts.addNode("index", npc.getIndex() + 1);
+        lts.addNode("\n");
+        lts.addNode("mapIndex", npc.getMapId() + 1);
+        lts.addNode("\n");
         lts.addNode("row", npc.getRow());
+        lts.addNode("\n");
         lts.addNode("col", npc.getCol());
+        lts.addNode("\n");
         int n = npc.getNpcStates().size();
         LuaTable sts = new LuaTable();
         for (int i = 0; i < n; i++) {
@@ -45,7 +50,7 @@ public class DefaultNpcLuaWriter implements INpcWriter {
             sts.addNode(st);
         }
         lts.addNode("states", sts);
-        LuaNode ln = new LuaNode("globalDictionary.npcs[" + npc.getIndex() + "]", lts);
+        LuaNode ln = new LuaNode("globalDictionary.npcs[" + (npc.getIndex() + 1) + "]", lts);
         LuaFileUtil.writeToFile(ln, filename);
     }
 }

@@ -181,7 +181,7 @@ public class ItemDao extends Dao<Item> {
             item = items[i];
             LuaTable lt = new LuaTable();
             lt.addNode("\n");
-            lt.addNode("index", item.getIndex());
+            lt.addNode("index", item.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", item.name);
             lt.addNode("\n");
@@ -199,9 +199,17 @@ public class ItemDao extends Dao<Item> {
             lt.addNode("\n");
             lt.addNode("lev", item.lev);
             lt.addNode("\n");
-            lt.addNode("useAniIndex", item.userAniIndex);
+            if (item.userAniIndex == -1) {
+                lt.addNode("useAniIndex", -1);
+            } else {
+                lt.addNode("useAniIndex", item.userAniIndex);
+            }
             lt.addNode("\n");
-            lt.addNode("targetAniIndex", item.targetAniIndex);
+            if (item.targetAniIndex == -1) {
+                lt.addNode("targetAniIndex", -1);
+            } else {
+                lt.addNode("targetAniIndex", item.targetAniIndex);
+            }
             lt.addNode("\n");
             lt.addNode("price", item.price);
             lt.addNode("\n");
@@ -221,10 +229,10 @@ public class ItemDao extends Dao<Item> {
             }
             for (int j = 0; j < item.effects.size(); j++) {
                 LuaTable ef = new LuaTable();
-                ef.addNode("index", item.effects.get(j).effectType);
+                ef.addNode("index", item.effects.get(j).effectType + 1);
                 ef.addNode("name", item.effects.get(j).effectName);
                 ef.addNode("value", item.effects.get(j).effectValue);
-                efs.addNode("[" + item.effects.get(j).effectType + "]", ef);
+                efs.addNode("[" + (item.effects.get(j).effectType + 1) + "]", ef);
                 if (j != item.effects.size() - 1) {
                     efs.addNode("\n");
                 }
@@ -237,10 +245,10 @@ public class ItemDao extends Dao<Item> {
             }
             for (int j = 0; j < item.costs.size(); j++) {
                 LuaTable co = new LuaTable();
-                co.addNode("index", item.costs.get(j).costType);
+                co.addNode("index", item.costs.get(j).costType + 1);
                 co.addNode("name", item.costs.get(j).costName);
                 co.addNode("value", item.costs.get(j).costValue);
-                cos.addNode("[" + item.costs.get(j).costType + "]", co);
+                cos.addNode("[" + (item.costs.get(j).costType + 1) + "]", co);
                 if (j != item.costs.size() - 1) {
                     cos.addNode("\n");
                 }
@@ -253,10 +261,10 @@ public class ItemDao extends Dao<Item> {
             }
             for (int j = 0; j < item.factors.size(); j++) {
                 LuaTable fa = new LuaTable();
-                fa.addNode("index", item.factors.get(j).factorType);
+                fa.addNode("index", item.factors.get(j).factorType + 1);
                 fa.addNode("name", item.factors.get(j).factorName);
                 fa.addNode("value", item.factors.get(j).factorValue);
-                fas.addNode("[" + item.factors.get(j).factorType + "]", fa);
+                fas.addNode("[" + (item.factors.get(j).factorType + 1) + "]", fa);
                 if (j != item.factors.size() - 1) {
                     fas.addNode("\n");
                 }
@@ -269,9 +277,9 @@ public class ItemDao extends Dao<Item> {
             }
             for (int j = 0; j < item.attributes.size(); j++) {
                 LuaTable attr = new LuaTable();
-                attr.addNode("index", item.attributes.get(j).id);
+                attr.addNode("index", item.attributes.get(j).id + 1);
                 attr.addNode("value", item.attributes.get(j).value);
-                attrs.addNode("[" + item.attributes.get(j).id + "]", attr);
+                attrs.addNode("[" + (item.attributes.get(j).id + 1) + "]", attr);
                 if (j != item.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -284,15 +292,15 @@ public class ItemDao extends Dao<Item> {
             }
             for (int j = 0; j < item.status.size(); j++) {
                 LuaTable statu = new LuaTable();
-                statu.addNode("index", item.status.get(j).getIndex());
+                statu.addNode("index", item.status.get(j).getIndex() + 1);
                 statu.addNode("value", item.status.get(j).value);
-                status.addNode("[" + item.status.get(j).getIndex() + "]", statu);
+                status.addNode("[" + (item.status.get(j).getIndex() + 1) + "]", statu);
                 if (j != item.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
             lt.addNode("buffs", status);
-            lts.addNode("[" + item.getIndex() + "]", lt);
+            lts.addNode("[" + (item.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

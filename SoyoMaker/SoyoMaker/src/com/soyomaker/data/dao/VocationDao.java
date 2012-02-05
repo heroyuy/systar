@@ -92,25 +92,25 @@ public class VocationDao extends Dao<Vocation> {
             vocation = vocations[i];
             LuaTable lt = new LuaTable();
             lt.addNode("\n");
-            lt.addNode("index", vocation.getIndex());
+            lt.addNode("index", vocation.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", vocation.name);
             lt.addNode("\n");
             LuaTable eqs = new LuaTable();
             for (int j = 0; j < vocation.equips.size(); j++) {
-                eqs.addNode(vocation.equips.get(j).getIndex());
+                eqs.addNode(vocation.equips.get(j).getIndex() + 1);
             }
             lt.addNode("equips", eqs);
             lt.addNode("\n");
             LuaTable its = new LuaTable();
             for (int j = 0; j < vocation.items.size(); j++) {
-                its.addNode(vocation.items.get(j).getIndex());
+                its.addNode(vocation.items.get(j).getIndex() + 1);
             }
             lt.addNode("items", its);
             lt.addNode("\n");
             LuaTable sks = new LuaTable();
             for (int j = 0; j < vocation.skills.size(); j++) {
-                sks.addNode(vocation.skills.get(j).getIndex());
+                sks.addNode(vocation.skills.get(j).getIndex() + 1);
             }
             lt.addNode("skills", sks);
             lt.addNode("\n");
@@ -120,9 +120,9 @@ public class VocationDao extends Dao<Vocation> {
             }
             for (int j = 0; j < vocation.attrs.size(); j++) {
                 LuaTable attr = new LuaTable();
-                attr.addNode("index", vocation.attrs.get(j).id);
+                attr.addNode("index", vocation.attrs.get(j).id + 1);
                 attr.addNode("value", vocation.attrs.get(j).value);
-                attrs.addNode("[" + vocation.attrs.get(j).id + "]", attr);
+                attrs.addNode("[" + (vocation.attrs.get(j).id + 1) + "]", attr);
                 if (j != vocation.attrs.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -135,15 +135,15 @@ public class VocationDao extends Dao<Vocation> {
             }
             for (int j = 0; j < vocation.status.size(); j++) {
                 LuaTable statu = new LuaTable();
-                statu.addNode("index", vocation.status.get(j).getIndex());
+                statu.addNode("index", vocation.status.get(j).getIndex() + 1);
                 statu.addNode("value", vocation.status.get(j).value);
-                status.addNode("[" + vocation.status.get(j).getIndex() + "]", statu);
+                status.addNode("[" + (vocation.status.get(j).getIndex() + 1) + "]", statu);
                 if (j != vocation.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
             lt.addNode("buffs", status);
-            lts.addNode("[" + vocation.getIndex() + "]", lt);
+            lts.addNode("[" + (vocation.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

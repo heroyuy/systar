@@ -23,8 +23,10 @@ public class Configuration {
     public static final int RECENT_FILE_COUNT = 8;
     private static final Preferences prefs = Preferences.userRoot().node("soyostar");
     private static final Preferences rightEraserPrefs = Preferences.userRoot().node("soyostar.eraser");
+    private static final Preferences autoTilePrefs = Preferences.userRoot().node("soyostar.autotile");
     private static final Preferences skinPrefs = Preferences.userRoot().node("soyostar.skin");
     private static final byte IS_RIGHT_ERASER = 0;
+    private static final byte IS_AUTO_TILE = 1;
 
     private Configuration() {
     }
@@ -43,6 +45,22 @@ public class Configuration {
      */
     public static void setSkin(String skin) {
         skinPrefs.put("SKIN", skin);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static boolean getIsAutoTile() {
+        return autoTilePrefs.getBoolean(IS_AUTO_TILE + "", false);
+    }
+
+    /**
+     *
+     * @param bool
+     */
+    public static void saveIsAutoTile(boolean bool) {
+        autoTilePrefs.putBoolean(IS_AUTO_TILE + "", bool);
     }
 
     /**

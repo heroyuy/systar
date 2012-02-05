@@ -86,13 +86,13 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             enemyTroop = enemyTroops[i];
             LuaTable lt = new LuaTable();
             lt.addNode("\n");
-            lt.addNode("index", enemyTroop.getIndex());
+            lt.addNode("index", enemyTroop.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", enemyTroop.name);
             lt.addNode("\n");
             LuaTable ens = new LuaTable();
             for (int j = 0; j < enemyTroop.enemys.size(); j++) {
-                ens.addNode(enemyTroop.enemys.get(j).getIndex());
+                ens.addNode(enemyTroop.enemys.get(j).getIndex() + 1);
             }
             lt.addNode("enemys", ens);
             LuaTable evs = new LuaTable();
@@ -104,23 +104,23 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
                 LuaTable conds = new LuaTable();
                 for (int k = 0; k < enemyTroop.events.get(j).conditions.size(); k++) {
                     LuaTable cond = new LuaTable();
-                    cond.addNode("conditionType", enemyTroop.events.get(j).conditions.get(k).conditionType);
+                    cond.addNode("conditionType", enemyTroop.events.get(j).conditions.get(k).conditionType + 1);
                     LuaTable paras = new LuaTable();
                     for (int m = 0; m < enemyTroop.events.get(j).conditions.get(k).paras.size(); m++) {
                         paras.addNode(enemyTroop.events.get(j).conditions.get(k).paras.get(m));
                     }
                     cond.addNode("parameters", paras);
-                    conds.addNode("[" + enemyTroop.events.get(j).conditions.get(k).conditionType + "]", cond);
+                    conds.addNode("[" + (enemyTroop.events.get(j).conditions.get(k).conditionType + 1) + "]", cond);
                 }
-                ev.addNode("eventType", enemyTroop.events.get(j).eventType);
+                ev.addNode("eventType", enemyTroop.events.get(j).eventType + 1);
                 ev.addNode("scriptIndex", enemyTroop.events.get(j).scriptIndex);
-                evs.addNode("[" + enemyTroop.events.get(j).eventType + "]", ev);
+                evs.addNode("[" + (enemyTroop.events.get(j).eventType + 1) + "]", ev);
                 if (j != enemyTroop.events.size() - 1) {
                     evs.addNode("\n");
                 }
             }
             lt.addNode("events", evs);
-            lts.addNode("[" + enemyTroop.getIndex() + "]", lt);
+            lts.addNode("[" + (enemyTroop.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }

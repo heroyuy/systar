@@ -214,9 +214,17 @@ public class ConfigDao extends Dao<Config> {
             lt.addNode("escapeSound", "/audio/sound/" + config.system.escapeSound);
         }
         lt.addNode("\n");
-        lt.addNode("startAniIndex", config.system.startAniIndex);
+        if (config.system.startAniIndex == -1) {
+            lt.addNode("startAniIndex", -1);
+        } else {
+            lt.addNode("startAniIndex", config.system.startAniIndex + 1);
+        }
         lt.addNode("\n");
-        lt.addNode("endAniIndex", config.system.endAniIndex);
+        if (config.system.endAniIndex == -1) {
+            lt.addNode("endAniIndex", -1);
+        } else {
+            lt.addNode("endAniIndex", config.system.endAniIndex + 1);
+        }
         lt.addNode("\n");
         if (config.system.selectedSound == null || config.system.selectedSound.equals("")) {
             lt.addNode("selectedSound", "nil");
@@ -268,11 +276,15 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         LuaTable ltId = new LuaTable();
         for (int i = 0; i < config.system.initPlayers.size(); i++) {
-            ltId.addNode(config.system.initPlayers.get(i).getIndex());
+            ltId.addNode(config.system.initPlayers.get(i).getIndex() + 1);
         }
         lt.addNode("playersIndex", ltId);
         lt.addNode("\n");
-        lt.addNode("curMapIndex", config.system.curMapIndex);
+        if (config.system.curMapIndex == -1) {
+            lt.addNode("curMapIndex", -1);
+        } else {
+            lt.addNode("curMapIndex", config.system.curMapIndex + 1);
+        }
         lt.addNode("\n");
         lt.addNode("row", config.system.row);
         lt.addNode("\n");
@@ -284,10 +296,10 @@ public class ConfigDao extends Dao<Config> {
         ltAttrs.addNode("\n");
         for (int i = 0; i < config.system.attributes.size(); i++) {
             LuaTable ltAttr = new LuaTable();
-            ltAttr.addNode("index", config.system.attributes.get(i).id);
+            ltAttr.addNode("index", config.system.attributes.get(i).id + 1);
             ltAttr.addNode("name", config.system.attributes.get(i).name);
             ltAttr.addNode("desc", config.system.attributes.get(i).description);
-            ltAttrs.addNode("[" + config.system.attributes.get(i).id + "]", ltAttr);
+            ltAttrs.addNode("[" + (config.system.attributes.get(i).id + 1) + "]", ltAttr);
             if (i != config.system.attributes.size() - 1) {
                 ltAttrs.addNode("\n");
             }

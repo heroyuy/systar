@@ -113,7 +113,7 @@ public class SkillDao extends Dao<Skill> {
             LuaTable lt = new LuaTable();
             skill = skills[i];
             lt.addNode("\n");
-            lt.addNode("index", skill.getIndex());
+            lt.addNode("index", skill.getIndex() + 1);
             lt.addNode("\n");
             lt.addNode("name", skill.name);
             lt.addNode("\n");
@@ -131,9 +131,17 @@ public class SkillDao extends Dao<Skill> {
             lt.addNode("\n");
             lt.addNode("lev", skill.lev);
             lt.addNode("\n");
-            lt.addNode("useAniIndex", skill.userAniIndex);
+            if (skill.userAniIndex == -1) {
+                lt.addNode("useAniIndex", -1);
+            } else {
+                lt.addNode("useAniIndex", skill.userAniIndex);
+            }
             lt.addNode("\n");
-            lt.addNode("targetAniIndex", skill.targetAniIndex);
+            if (skill.targetAniIndex == -1) {
+                lt.addNode("targetAniIndex", -1);
+            } else {
+                lt.addNode("targetAniIndex", skill.targetAniIndex);
+            }
             lt.addNode("\n");
             if (skill.menuUseSound == null || skill.menuUseSound.equals("")) {
                 lt.addNode("sound", "nil");
@@ -149,10 +157,10 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.effects.size(); j++) {
                 LuaTable ef = new LuaTable();
-                ef.addNode("index", skill.effects.get(j).effectType);
+                ef.addNode("index", skill.effects.get(j).effectType + 1);
                 ef.addNode("name", skill.effects.get(j).effectName);
                 ef.addNode("value", skill.effects.get(j).effectValue);
-                efs.addNode("[" + skill.effects.get(j).effectType + "]", ef);
+                efs.addNode("[" + (skill.effects.get(j).effectType + 1) + "]", ef);
                 if (j != skill.effects.size() - 1) {
                     efs.addNode("\n");
                 }
@@ -165,10 +173,10 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.costs.size(); j++) {
                 LuaTable co = new LuaTable();
-                co.addNode("index", skill.costs.get(j).costType);
+                co.addNode("index", skill.costs.get(j).costType + 1);
                 co.addNode("name", skill.costs.get(j).costName);
                 co.addNode("value", skill.costs.get(j).costValue);
-                cos.addNode("[" + skill.costs.get(j).costType + "]", co);
+                cos.addNode("[" + (skill.costs.get(j).costType + 1) + "]", co);
                 if (j != skill.costs.size() - 1) {
                     cos.addNode("\n");
                 }
@@ -181,10 +189,10 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.factors.size(); j++) {
                 LuaTable fa = new LuaTable();
-                fa.addNode("index", skill.factors.get(j).factorType);
+                fa.addNode("index", skill.factors.get(j).factorType + 1);
                 fa.addNode("name", skill.factors.get(j).factorName);
                 fa.addNode("value", skill.factors.get(j).factorValue);
-                fas.addNode("[" + skill.factors.get(j).factorType + "]", fa);
+                fas.addNode("[" + (skill.factors.get(j).factorType + 1) + "]", fa);
                 if (j != skill.factors.size() - 1) {
                     fas.addNode("\n");
                 }
@@ -197,9 +205,9 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.attributes.size(); j++) {
                 LuaTable attr = new LuaTable();
-                attr.addNode("index", skill.attributes.get(j).id);
+                attr.addNode("index", skill.attributes.get(j).id + 1);
                 attr.addNode("value", skill.attributes.get(j).value);
-                attrs.addNode("[" + skill.attributes.get(j).id + "]", attr);
+                attrs.addNode("[" + (skill.attributes.get(j).id + 1) + "]", attr);
                 if (j != skill.attributes.size() - 1) {
                     attrs.addNode("\n");
                 }
@@ -212,15 +220,15 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.status.size(); j++) {
                 LuaTable statu = new LuaTable();
-                statu.addNode("index", skill.status.get(j).getIndex());
+                statu.addNode("index", skill.status.get(j).getIndex() + 1);
                 statu.addNode("value", skill.status.get(j).value);
-                status.addNode("[" + skill.status.get(j).getIndex() + "]", statu);
+                status.addNode("[" + (skill.status.get(j).getIndex() + 1) + "]", statu);
                 if (j != skill.status.size() - 1) {
                     status.addNode("\n");
                 }
             }
             lt.addNode("buffs", status);
-            lts.addNode("[" + skill.getIndex() + "]", lt);
+            lts.addNode("[" + (skill.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
             }
