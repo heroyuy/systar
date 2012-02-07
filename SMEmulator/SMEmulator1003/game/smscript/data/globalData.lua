@@ -58,7 +58,7 @@ function globalData:newGame()
     player.face=globalDictionary.config.face
     self.playerTroop.players[player.id]=player
   end
-  self.playerTroop.curDisplayPlayerId=0 --TODO 此值应该读配置
+  self.playerTroop.curDisplayPlayerId=1 --TODO 此值应该读配置
   self.updateSwitch=true
 end
 

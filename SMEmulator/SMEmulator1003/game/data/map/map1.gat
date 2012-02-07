@@ -1,5 +1,5 @@
-globalDictionary.maps[0]={
-index=0,
+globalDictionary.maps[1]={
+index=1,
 name="test",
 musicName="/audio/music/my_love.mp3",
 battleBack="/image/battle/001-Grassland01.jpg",
@@ -9,7 +9,7 @@ colNum=30,
 cellWidth=32,
 cellHeight=32,
 tilesets={
-[0]={id=0,path="/image/tileset/001-Grassland01.png"}},
+[1]={id=1,path="/image/tileset/001-Grassland01.png"}},
 layers={{
 deepth=-2,
 {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}},
@@ -98,5 +98,5 @@ areas={
 {0,0,0,0,0,-1,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,0,0,0,0,0,-1,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}},
 npcs={
-[211]=2,
-[215]=1}}
+[211]=3,
+[215]=2}}
