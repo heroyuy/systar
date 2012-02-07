@@ -86,6 +86,8 @@ function clsSceneMap:changeMap(map)
   local viewport=self:checkViewport()
   local params={layers=bgLayers,colNum=self.curMap.colNum,rowNum=self.curMap.rowNum,
      cellWidth=self.curMap.cellWidth,cellHeight=self.curMap.cellHeight,viewport=viewport}
+  smLog:info("c:"..params.colNum.."r:"..params.rowNum.."w:"..params.cellWidth.."h:"..params.cellHeight)
+  smLog:info("x:"..params.viewport.x.."y:"..params.viewport.y.."w:"..params.viewport.width.."h"..params.viewport.height)
   self.mapBgLayer:init(params)
   globalGame.rootLayer:addChild(self.mapBgLayer)
   --加载精灵层
@@ -117,7 +119,7 @@ end
 
 --地图点击
 function clsSceneMap:mapTapped(target,row,col)
-  smLog:info("地图被点击,逻辑坐标: row="..row.." col="..col)
+  smLog:info("逻辑坐标: row="..row.." col="..col)
   --向player发送移动命令
   --(1)清除原有的行走命令
   self.curPlayer.moveSequence:clear()
