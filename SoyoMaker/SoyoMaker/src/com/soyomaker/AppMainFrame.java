@@ -10,7 +10,7 @@
  */
 package com.soyomaker;
 
-import com.soyomaker.config.Configuration;
+import com.soyomaker.config.Preference;
 import com.soyomaker.listener.ProjectChangedEvent;
 import com.soyomaker.model.animation.Animation;
 import com.soyomaker.model.animation.Picture;
@@ -1311,15 +1311,17 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
     private void openProject() {
         JFileChooser jf = new JFileChooser(new File("."));
         jf.setFileFilter(new Project.Filter());
-        jf.showOpenDialog(this);
-        final File file = jf.getSelectedFile();
-        if (file != null) {
-            try {
-                open(file.getParent());
-            } catch (Exception ex) {
+        int ret = jf.showOpenDialog(this);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            File file = jf.getSelectedFile();
+            if (file != null) {
+                try {
+                    open(file.getParent());
+                } catch (Exception ex) {
 //                ex.printStackTrace();
-                iLogger.e("项目打开失败！" + file.getPath() + " " + ex.toString());
-                Logger.getLogger(this.getClass().getName()).error("项目打开失败！" + file.getPath(), ex);
+                    iLogger.e("项目打开失败！" + file.getPath() + " " + ex.toString());
+                    Logger.getLogger(this.getClass().getName()).error("项目打开失败！" + file.getPath(), ex);
+                }
             }
         }
     }
@@ -2159,10 +2161,10 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
     public void updateRecent(String filename) {
         // If a filename is given, add it to the recent files
         if (filename != null) {
-            Configuration.addToRecentFiles(filename);
+            Preference.addToRecentFiles(filename);
         }
 
-        java.util.List<String> files = Configuration.getRecentFiles();
+        java.util.List<String> files = Preference.getRecentFiles();
         openRecentMenu.removeAll();
         if (!files.isEmpty()) {
             for (final String file : files) {
@@ -2195,7 +2197,7 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
 
             public void run() {
                 AppMainFrame thisClass = new AppMainFrame();
-                thisClass.setLAF(Configuration.getSkin());
+                thisClass.setLAF(Preference.getSkin());
                 thisClass.setVisible(true);
             }
         });

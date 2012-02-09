@@ -115,7 +115,7 @@ public class DefaultMapLuaWriter implements IMapWriter {
                             ls.addNode(-1);
                             ls.addNode(-1);
                         } else {
-                            ls.addNode(tile.getTileSet().getIndex());
+                            ls.addNode(tile.getTileSet().getIndex() + 1);
                             ls.addNode(tile.getIndex());
                             if (!tile.isCross()) {
                                 pass[m][k] = false;

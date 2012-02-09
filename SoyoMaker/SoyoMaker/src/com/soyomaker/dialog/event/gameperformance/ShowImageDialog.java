@@ -105,7 +105,7 @@ public class ShowImageDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setFrameCheckBox.setText("设定持续帧数");
+        setFrameCheckBox.setText("设定持续时间(ms)");
         setFrameCheckBox.setName("setFrameCheckBox"); // NOI18N
         setFrameCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +143,7 @@ public class ShowImageDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(setFrameCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(frameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                        .addComponent(frameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -189,15 +189,15 @@ public class ShowImageDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        if (imageComboBox.getSelectedIndex() != -1) {
-            if (setFrameCheckBox.isSelected()) {
-                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "showImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + "," + frameTextField.getText() + ");");
-            } else {
-                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "showImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + ");");
-            }
+//        if (imageComboBox.getSelectedIndex() != -1) {
+        if (setFrameCheckBox.isSelected()) {
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                    "globalData.proxy:showImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + "," + frameTextField.getText() + ")");
+        } else {
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                    "globalData.proxy:showImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + ",-1)");
         }
+//        }
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

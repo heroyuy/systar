@@ -111,7 +111,7 @@ public class PublicEventDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "runPublicScript(" + eventComboBox.getSelectedIndex() + ");");
+        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:executeScript(" + eventComboBox.getSelectedIndex() + ")");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

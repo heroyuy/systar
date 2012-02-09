@@ -104,7 +104,7 @@ public class StopMusicDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         if (musicComboBox.getSelectedIndex() != -1) {
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "stopMusic(" + musicComboBox.getSelectedItem() + ");");
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:stopMusic(" + musicComboBox.getSelectedItem() + ")");
         }
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed

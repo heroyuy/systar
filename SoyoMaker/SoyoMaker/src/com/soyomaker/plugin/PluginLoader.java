@@ -116,7 +116,7 @@ public class PluginLoader extends URLClassLoader {
             f.mkdir();//假如plugin File不存在，或者不是文件夹时，创建该文件夹
         }
         ArrayList<File> files = new ArrayList<File>();
-        FileUtil.listFile(f, files);//支持将插件放到各自的文件夹中 03.20
+        FileUtil.listFile(f, files, "jar");//支持将插件放到各自的文件夹中 03.20
         int n = files.size();
         for (int i = 0; i < n; i++) {
             try {

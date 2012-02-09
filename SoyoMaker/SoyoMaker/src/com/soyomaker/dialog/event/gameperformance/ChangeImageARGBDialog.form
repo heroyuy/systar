@@ -121,11 +121,9 @@
       <Properties>
         <Property name="majorTickSpacing" type="int" value="64"/>
         <Property name="maximum" type="int" value="255"/>
-        <Property name="minimum" type="int" value="-255"/>
         <Property name="minorTickSpacing" type="int" value="8"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
-        <Property name="value" type="int" value="0"/>
         <Property name="name" type="java.lang.String" value="jSlider2" noResource="true"/>
       </Properties>
     </Component>
@@ -133,11 +131,9 @@
       <Properties>
         <Property name="majorTickSpacing" type="int" value="64"/>
         <Property name="maximum" type="int" value="255"/>
-        <Property name="minimum" type="int" value="-255"/>
         <Property name="minorTickSpacing" type="int" value="8"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
-        <Property name="value" type="int" value="0"/>
         <Property name="name" type="java.lang.String" value="jSlider1" noResource="true"/>
       </Properties>
     </Component>
@@ -145,11 +141,9 @@
       <Properties>
         <Property name="majorTickSpacing" type="int" value="64"/>
         <Property name="maximum" type="int" value="255"/>
-        <Property name="minimum" type="int" value="-255"/>
         <Property name="minorTickSpacing" type="int" value="8"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
-        <Property name="value" type="int" value="0"/>
         <Property name="name" type="java.lang.String" value="jSlider3" noResource="true"/>
       </Properties>
     </Component>
@@ -169,11 +163,9 @@
       <Properties>
         <Property name="majorTickSpacing" type="int" value="64"/>
         <Property name="maximum" type="int" value="255"/>
-        <Property name="minimum" type="int" value="-255"/>
         <Property name="minorTickSpacing" type="int" value="8"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
-        <Property name="value" type="int" value="0"/>
         <Property name="name" type="java.lang.String" value="jSlider4" noResource="true"/>
       </Properties>
     </Component>
@@ -209,7 +201,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5e27;"/>
+        <Property name="text" type="java.lang.String" value="ms"/>
         <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
       </Properties>
     </Component>

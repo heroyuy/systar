@@ -11,6 +11,7 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
+import com.soyomaker.data.DataManager;
 import com.soyomaker.model.map.CollideLayer;
 import com.soyomaker.model.map.Map;
 import com.soyomaker.model.map.SpriteLayer;
@@ -40,28 +41,42 @@ public class NewMapDialog extends javax.swing.JDialog {
     }
 
     private void init() {
-        File musicDir = new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar + "audio" + File.separatorChar + "music");
-        if (!musicDir.exists()) {
-            musicDir.mkdirs();
-        }
-        File[] files = musicDir.listFiles();
+//        File musicDir = new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar + "audio" + File.separatorChar + "music");
+//        if (!musicDir.exists()) {
+//            musicDir.mkdirs();
+//        }
+//        File[] files = musicDir.listFiles();
+//        musicComboBox.addItem("");
+//        for (int i = 0, n = files.length; i < n; i++) {
+//            musicComboBox.addItem(files[i].getName());
+//        }
         musicComboBox.addItem("");
-        for (int i = 0, n = files.length; i < n; i++) {
-            musicComboBox.addItem(files[i].getName());
+        for (int i = 0; i < DataManager.listMusicName().length; i++) {
+            musicComboBox.addItem(DataManager.listMusicName()[i]);
         }
+
         battleMusicComboBox.addItem("");
-        for (int i = 0, n = files.length; i < n; i++) {
-            battleMusicComboBox.addItem(files[i].getName());
+        for (int i = 0; i < DataManager.listMusicName().length; i++) {
+            battleMusicComboBox.addItem(DataManager.listMusicName()[i]);
         }
-        File bgDir = new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar + "image" + File.separatorChar + "battle");
-        if (!bgDir.exists()) {
-            bgDir.mkdirs();
-        }
-        files = bgDir.listFiles();
+
         battleBackgroundComboBox.addItem("");
-        for (int i = 0, n = files.length; i < n; i++) {
-            battleBackgroundComboBox.addItem(files[i].getName());
+        for (int i = 0; i < DataManager.listBattleImageName().length; i++) {
+            battleBackgroundComboBox.addItem(DataManager.listBattleImageName()[i]);
         }
+//        battleMusicComboBox.addItem("");
+//        for (int i = 0, n = files.length; i < n; i++) {
+//            battleMusicComboBox.addItem(files[i].getName());
+//        }
+//        File bgDir = new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar + "image" + File.separatorChar + "battle");
+//        if (!bgDir.exists()) {
+//            bgDir.mkdirs();
+//        }
+//        files = bgDir.listFiles();
+//        battleBackgroundComboBox.addItem("");
+//        for (int i = 0, n = files.length; i < n; i++) {
+//            battleBackgroundComboBox.addItem(files[i].getName());
+//        }
     }
 
     private void initialize() {

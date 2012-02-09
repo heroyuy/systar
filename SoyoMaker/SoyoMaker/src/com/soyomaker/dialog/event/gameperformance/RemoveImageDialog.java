@@ -108,7 +108,7 @@ public class RemoveImageDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (imageComboBox.getSelectedIndex() != -1) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "removeImage(" + imageComboBox.getSelectedItem() + ");");
+                "globalData.proxy:removeImage(" + imageComboBox.getSelectedItem() + ")");
         }
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed

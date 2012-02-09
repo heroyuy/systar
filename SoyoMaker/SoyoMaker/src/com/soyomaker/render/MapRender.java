@@ -6,7 +6,7 @@ package com.soyomaker.render;
 
 import com.soyomaker.brush.AbBrush;
 import com.soyomaker.brush.CustomBrush;
-import com.soyomaker.config.Configuration;
+import com.soyomaker.config.Preference;
 import com.soyomaker.AppData;
 import com.soyomaker.dialog.EventManagerDialog;
 import com.soyomaker.model.map.CollideLayer;
@@ -465,7 +465,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                     break;
             }
         } else if (e.getButton() == MouseEvent.BUTTON3) {
-            if (Configuration.getIsRightEraser()) {
+            if (Preference.getIsRightEraser()) {
                 switch (data.currentPsType) {
                     case AppData.PS_PEN:
                     case AppData.PS_ERASER:
@@ -585,7 +585,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     public void mouse(MouseEvent e) {
         Point tile = screenToTileCoords(e.getX(), e.getY());
         if (mouseButton == MouseEvent.BUTTON3) {
-            if (Configuration.getIsRightEraser()) {
+            if (Preference.getIsRightEraser()) {
                 switch (data.currentPsType) {
                     case AppData.PS_PEN:
                     case AppData.PS_ERASER:

@@ -115,7 +115,7 @@ public class PlayMusicDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (musicComboBox.getSelectedIndex() != -1) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "playMusic(" + musicComboBox.getSelectedItem() + "," + loopCheckBox.isSelected() + ");");
+                "globalData.proxy:playerMusic(" + musicComboBox.getSelectedItem() + "," + loopCheckBox.isSelected() + ")");
         }
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed

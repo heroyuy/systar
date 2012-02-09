@@ -148,16 +148,16 @@ public class FaceDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         if (upRadioButton.isSelected()) {
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "changeFace(0);");
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:changeFace(0)");
         }
         if (downRadioButton.isSelected()) {
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "changeFace(1);");
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:changeFace(1)");
         }
         if (leftRadioButton.isSelected()) {
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "changeFace(2);");
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:changeFace(2)");
         }
         if (rightRadioButton.isSelected()) {
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "changeFace(3);");
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:changeFace(3)");
         }
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed

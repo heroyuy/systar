@@ -241,7 +241,11 @@ public class ResourceManagerDialog extends javax.swing.JDialog {
         if (ret == JFileChooser.APPROVE_OPTION) {
             try {
                 FileUtil.copyFile(ch.getSelectedFile(),
-                        new File(AppData.getInstance().getCurProject().getPath() + File.separator + dirList.get(dirNameList.getSelectedIndex()) + File.separator + ch.getSelectedFile().getName()));
+                        new File(AppData.getInstance().getCurProject().getPath()
+                        + File.separator
+                        + dirList.get(dirNameList.getSelectedIndex())
+                        + File.separator
+                        + ch.getSelectedFile().getName()));
                 refresh();
             } catch (IOException ex) {
                 AppData.getInstance().getLogger().e("复制文件失败！" + ch.getSelectedFile().getPath());

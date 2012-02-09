@@ -39,7 +39,7 @@ public class EquipTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == 0||col == 3) {
+        if (col == 0 || col == 3) {
             return false;
         }
         return true;
@@ -77,6 +77,7 @@ public class EquipTableModel extends AbstractTableModel {
         }
         this.fireTableCellUpdated(r, c);
     }
+    private ImageIcon[] equipIcons = DataManager.listEquipIconName();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Equip equip = (Equip) data.getModels(Model.EQUIP)[rowIndex];
@@ -89,7 +90,7 @@ public class EquipTableModel extends AbstractTableModel {
                 case 2:
                     return equip.intro;
                 case 3:
-                    ImageIcon[] equipIcons = DataManager.listEquipIconName();
+
                     for (int i = 0; i < equipIcons.length; i++) {
                         if (equipIcons[i].getDescription().equals(equip.icon)) {
                             return equipIcons[i];

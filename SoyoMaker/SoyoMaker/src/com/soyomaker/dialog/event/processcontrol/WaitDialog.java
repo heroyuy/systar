@@ -72,7 +72,7 @@ public class WaitDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("帧");
+        jLabel2.setText("ms");
         jLabel2.setName("jLabel2"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,7 +115,7 @@ public class WaitDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "forceWait(" + waitTextField.getText() + ");");
+        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:sleep(" + waitTextField.getText() + ")");
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

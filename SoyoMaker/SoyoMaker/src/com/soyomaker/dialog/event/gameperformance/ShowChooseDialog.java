@@ -149,57 +149,75 @@ public class ShowChooseDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        ArrayList v = new ArrayList();
-        if (!"".equals(fourChooseTextField.getText())) {
-            v.add(fourChooseTextField.getText());
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "}");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "if(选择项数组[选择项].equals(\"" + fourChooseTextField.getText() + "\")){");
-        }
-        if (!"".equals(threeChooseTextField.getText())) {
-            v.add(threeChooseTextField.getText());
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "}");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "if(选择项数组[选择项].equals(\"" + threeChooseTextField.getText() + "\")){");
-        }
-        if (!"".equals(twoChooseTextField.getText())) {
-            v.add(twoChooseTextField.getText());
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "}");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "if(选择项数组[选择项].equals(\"" + twoChooseTextField.getText() + "\")){");
-        }
-        if (!"".equals(oneChooseTextField.getText())) {
+        ArrayList<String> v = new ArrayList<String>();
+//        if (!"".equals(fourChooseTextField.getText())) {
+//            v.add(fourChooseTextField.getText());
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "}");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "if(选择项数组[选择项].equals(\"" + fourChooseTextField.getText() + "\")){");
+//        }
+//        if (!"".equals(threeChooseTextField.getText())) {
+//            v.add(threeChooseTextField.getText());
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "}");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "if(选择项数组[选择项].equals(\"" + threeChooseTextField.getText() + "\")){");
+//        }
+//        if (!"".equals(twoChooseTextField.getText())) {
+//            v.add(twoChooseTextField.getText());
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "}");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "if(选择项数组[选择项].equals(\"" + twoChooseTextField.getText() + "\")){");
+//        }
+//        if (!"".equals(oneChooseTextField.getText())) {
+//            v.add(oneChooseTextField.getText());
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "}");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "");
+//            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                "if(选择项数组[选择项].equals(\"" + oneChooseTextField.getText() + "\")){");
+//        }
+//        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//            "int 选择项 = showDialog(选择项数组);");
+
+        int n = 0;
+        if (!oneChooseTextField.getText().equals("")) {
+            n++;
             v.add(oneChooseTextField.getText());
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "}");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "");
-            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "if(选择项数组[选择项].equals(\"" + oneChooseTextField.getText() + "\")){");
         }
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "int 选择项 = showDialog(选择项数组);");
+        if (!twoChooseTextField.getText().equals("")) {
+            n++;
+            v.add(twoChooseTextField.getText());
+        }
+        if (!threeChooseTextField.getText().equals("")) {
+            n++;
+            v.add(threeChooseTextField.getText());
+        }
+        if (!fourChooseTextField.getText().equals("")) {
+            n++;
+            v.add(fourChooseTextField.getText());
+        }
         StringBuilder sb = new StringBuilder();
-        sb.append("String[] 选择项数组 ={");
-        for (int i = v.size() - 1; i >= 0; i--) {
+        sb.append("{");
+        for (int i = n - 1; i >= 0; i--) {
             if (i == 0) {
                 sb.append("\"").append(v.get(i)).append("\"");
             } else {
                 sb.append("\"").append(v.get(i)).append("\"").append(",");
             }
         }
-        sb.append("};");
+        sb.append("}");
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            sb.toString());
+                "globalData.proxy:showOptionDialog(" + sb.toString() + ")");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

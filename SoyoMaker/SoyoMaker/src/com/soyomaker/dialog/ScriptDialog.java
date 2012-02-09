@@ -55,7 +55,6 @@ import com.soyomaker.dialog.event.processcontrol.IfDialog;
 import com.soyomaker.dialog.event.processcontrol.PublicEventDialog;
 import com.soyomaker.dialog.event.processcontrol.WaitDialog;
 import com.soyomaker.widget.NpcStatePane;
-import javax.swing.JDialog;
 
 /**
  *
@@ -938,14 +937,14 @@ public class ScriptDialog extends javax.swing.JDialog {
 
     private void whileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whileButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "}");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "end");
         insertScriptData(npcPane.eventTable.getSelectedRow(), "");
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "while(true){");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "while true do");
     }//GEN-LAST:event_whileButtonActionPerformed
 
     private void exitScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitScriptButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "return;");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "do return end");
     }//GEN-LAST:event_exitScriptButtonActionPerformed
     /**
      * 
@@ -959,10 +958,10 @@ public class ScriptDialog extends javax.swing.JDialog {
         int n = 0;
         for (int i = 0; i < npcPane.eventTable.getSelectedRow(); i++) {
             String s = npcPane.eventTable.getValueAt(i, 0).toString();
-            if (s.trim().endsWith("{")) {
+            if (s.trim().endsWith("then") || s.trim().endsWith("do")) {
                 n += 1;
             }
-            if (s.trim().startsWith("}")) {
+            if (s.trim().startsWith("end")) {
                 n -= 1;
             }
         }
@@ -977,12 +976,12 @@ public class ScriptDialog extends javax.swing.JDialog {
     }
     private void breakButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "break;");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "do break end");
     }//GEN-LAST:event_breakButtonActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "continue;");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "--暂不支持");
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void mapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapButtonActionPerformed
@@ -1161,7 +1160,7 @@ public class ScriptDialog extends javax.swing.JDialog {
 
     private void endBattleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endBattleButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "exitBattle();");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "globalData.proxy:exitFight()");
     }//GEN-LAST:event_endBattleButtonActionPerformed
 
     private void showImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showImageButtonActionPerformed
@@ -1196,7 +1195,7 @@ public class ScriptDialog extends javax.swing.JDialog {
 
     private void systemMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemMenuButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "openSystemMenu();");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "globalData.proxy:openSystemMenu()");
     }//GEN-LAST:event_systemMenuButtonActionPerformed
 
     private void shakeScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shakeScreenButtonActionPerformed
@@ -1207,12 +1206,12 @@ public class ScriptDialog extends javax.swing.JDialog {
 
     private void gameSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSaveButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "openSaveMenu();");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "globalData.proxy:openRecordMenu()");
     }//GEN-LAST:event_gameSaveButtonActionPerformed
 
     private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButtonActionPerformed
         // TODO add your handling code here:
-        insertScriptData(npcPane.eventTable.getSelectedRow(), "openMainMenu();");
+        insertScriptData(npcPane.eventTable.getSelectedRow(), "globalData.proxy:returnToMainMenu()");
     }//GEN-LAST:event_mainMenuButtonActionPerformed
 
     private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed

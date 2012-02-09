@@ -39,7 +39,7 @@ public class SkillTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == 0||col == 3) {
+        if (col == 0 || col == 3) {
             return false;
         }
         return true;
@@ -81,6 +81,7 @@ public class SkillTableModel extends AbstractTableModel {
         }
         this.fireTableCellUpdated(r, c);
     }
+    private ImageIcon[] skillIcons = DataManager.listSkillIconName();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Skill skill = (Skill) data.getModels(Model.SKILL)[rowIndex];
@@ -93,7 +94,7 @@ public class SkillTableModel extends AbstractTableModel {
                 case 2:
                     return skill.intro;
                 case 3:
-                    ImageIcon[] skillIcons = DataManager.listSkillIconName();
+
                     for (int i = 0; i < skillIcons.length; i++) {
                         if (skillIcons[i].getDescription().equals(skill.icon)) {
                             return skillIcons[i];

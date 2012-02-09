@@ -5,6 +5,7 @@
 package com.soyomaker.data;
 
 import com.soyomaker.AppData;
+import com.soyomaker.config.Configuration;
 import com.soyomaker.data.dao.ConfigDao;
 import com.soyomaker.data.dao.Dao;
 import com.soyomaker.data.dao.EnemyDao;
@@ -27,7 +28,9 @@ import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
 import com.soyomaker.data.model.Status;
 import com.soyomaker.data.model.Vocation;
+import com.soyomaker.util.FileUtil;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -52,6 +55,10 @@ public class DataManager {
         Enemy.class,
         EnemyTroop.class
     };
+    private static String[] musicFilters;
+    private static String[] soundFilters;
+    private static String[] pictureFilers;
+    private static Configuration config;
     /**
      *
      */
@@ -61,6 +68,10 @@ public class DataManager {
      *
      */
     public DataManager() {
+        config = new Configuration("config" + File.separator + "filter.properties");
+        musicFilters = config.getValue("Music").split(",");
+        soundFilters = config.getValue("Sound").split(",");
+        pictureFilers = config.getValue("Picture").split(",");
         daos = new HashMap<Integer, Dao>();
 
         daos.put(Model.STATUS, new StatusDao());
@@ -83,7 +94,13 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
+//        String[] s = f.list();
         ImageIcon[] ii = new ImageIcon[s.length];
         for (int i = 0; i < s.length; i++) {
             ii[i] = new ImageIcon(AppData.getInstance().getCurProject().getPath() + File.separator + "image" + File.separator + "icon" + File.separator + "status" + File.separator
@@ -101,7 +118,13 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
+//        String[] s = f.list();
         ImageIcon[] ii = new ImageIcon[s.length];
         for (int i = 0; i < s.length; i++) {
             ii[i] = new ImageIcon(AppData.getInstance().getCurProject().getPath() + File.separator + "image" + File.separator + "icon" + File.separator + "equip" + File.separator
@@ -119,7 +142,13 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
+//        String[] s = f.list();
         ImageIcon[] ii = new ImageIcon[s.length];
         for (int i = 0; i < s.length; i++) {
             ii[i] = new ImageIcon(AppData.getInstance().getCurProject().getPath() + File.separator + "image" + File.separator + "icon" + File.separator + "skill" + File.separator
@@ -137,7 +166,13 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
+//        String[] s = f.list();
         ImageIcon[] ii = new ImageIcon[s.length];
         for (int i = 0; i < s.length; i++) {
             ii[i] = new ImageIcon(AppData.getInstance().getCurProject().getPath() + File.separator + "image" + File.separator + "icon" + File.separator + "item" + File.separator
@@ -155,7 +190,13 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
         return s;
     }
 
@@ -168,7 +209,12 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, soundFilters);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
         return s;
     }
 
@@ -181,7 +227,12 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, musicFilters);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
         return s;
     }
 
@@ -194,7 +245,30 @@ public class DataManager {
         if (!f.exists()) {
             f.mkdirs();
         }
-        String[] s = f.list();
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
+        return s;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static String[] listBattleImageName() {
+        File f = new File(AppData.getInstance().getCurProject().getPath() + File.separator + "image" + File.separator + "battle");
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        ArrayList<File> files = new ArrayList<File>();
+        FileUtil.listFile(f, files, pictureFilers);
+        String[] s = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            s[i] = files.get(i).getName();
+        }
         return s;
     }
 

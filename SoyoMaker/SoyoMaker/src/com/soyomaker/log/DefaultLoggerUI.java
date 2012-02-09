@@ -88,6 +88,15 @@ public class DefaultLoggerUI implements ILoggerUI {
         }
     }
 
+    public static String log(String str) {
+        StackTraceElement ste = Thread.currentThread().getStackTrace()[2];
+        String className = ste.getClassName();
+        String methodName = ste.getMethodName();
+        int lineNumber = ste.getLineNumber();
+        String ret = className + "." + methodName + "()." + lineNumber + " says:" + str;
+        return ret;
+    }
+
     /**
      *
      * @return

@@ -167,10 +167,10 @@ public class ShowAniDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (playCheckBox.isSelected()) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "playAnimation(" + aniNameComboBox.getSelectedIndex() + "," + xTextField.getText() + "," + yTextField.getText() + ",-1);");
+                "globalData.proxy:playAnimation(" + aniNameComboBox.getSelectedIndex() + "," + xTextField.getText() + "," + yTextField.getText() + ",-1);");
         } else {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "playAnimation(" + aniNameComboBox.getSelectedIndex() + "," + xTextField.getText() + "," + yTextField.getText() + "," + timeTextField.getText() + ");");
+                "globalData.proxy:playAnimation(" + aniNameComboBox.getSelectedIndex() + "," + xTextField.getText() + "," + yTextField.getText() + "," + timeTextField.getText() + ")");
         }
 
         dispose();

@@ -131,10 +131,10 @@ public class ShowInputDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (numRadioButton.isSelected()) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "showInputDialog(0);");
+                "globalData.proxy:showInputDialog(0)");
         } else {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "showInputDialog(1);");
+                "globalData.proxy:showInputDialog(1)");
         }
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed

@@ -180,7 +180,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5e27;"/>
+        <Property name="text" type="java.lang.String" value="ms"/>
         <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
       </Properties>
     </Component>

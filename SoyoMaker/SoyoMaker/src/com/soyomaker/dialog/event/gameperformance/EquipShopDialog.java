@@ -9,7 +9,9 @@
  * Created on 2011-5-14, 18:14:49
  */
 package com.soyomaker.dialog.event.gameperformance;
+
 import com.soyomaker.dialog.ScriptDialog;
+
 /**
  *
  * @author Administrator
@@ -22,10 +24,11 @@ public class EquipShopDialog extends javax.swing.JDialog {
      */
     public EquipShopDialog(ScriptDialog parent, boolean modal) {
         super(parent, modal);
+        sd = parent;
         initComponents();
         setLocationRelativeTo(null);
     }
-
+    private ScriptDialog sd;
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -37,10 +40,6 @@ public class EquipShopDialog extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         equipTable = new javax.swing.JTable();
-        jToolBar1 = new javax.swing.JToolBar();
-        addButton = new javax.swing.JButton();
-        removeButton = new javax.swing.JButton();
-        addAllButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
 
@@ -56,14 +55,14 @@ public class EquipShopDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "编号", "名称", "价格"
+                "有售", "编号", "名称", "价格"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,31 +75,6 @@ public class EquipShopDialog extends javax.swing.JDialog {
         });
         equipTable.setName("equipTable"); // NOI18N
         jScrollPane1.setViewportView(equipTable);
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-
-        addButton.setText("添加装备");
-        addButton.setFocusable(false);
-        addButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addButton.setName("addButton"); // NOI18N
-        addButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(addButton);
-
-        removeButton.setText("删除装备");
-        removeButton.setFocusable(false);
-        removeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeButton.setName("removeButton"); // NOI18N
-        removeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(removeButton);
-
-        addAllButton.setText("添加全部装备");
-        addAllButton.setFocusable(false);
-        addAllButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addAllButton.setName("addAllButton"); // NOI18N
-        addAllButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(addAllButton);
 
         cancleButton.setText("取消");
         cancleButton.setName("cancleButton"); // NOI18N
@@ -128,16 +102,13 @@ public class EquipShopDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(cancleButton)
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancleButton)
                     .addComponent(okButton))
@@ -149,6 +120,21 @@ public class EquipShopDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (int i = 0; i < equipTable.getRowCount(); i++) {
+            if (Boolean.parseBoolean(equipTable.getModel().getValueAt(i, 0).toString()) == true) {
+                if (i == equipTable.getRowCount() - 1) {
+                    sb.append(equipTable.getModel().getValueAt(i, 0));
+                } else {
+                    sb.append(equipTable.getModel().getValueAt(i, 0)).append(",");
+                }
+            }
+        }
+        sb.append("}");
+        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                "globalData.proxy:openEquipShop(" + sb.toString() + ")");
+        this.dispose();
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -176,13 +162,9 @@ public class EquipShopDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAllButton;
-    private javax.swing.JButton addButton;
     private javax.swing.JButton cancleButton;
     private javax.swing.JTable equipTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton okButton;
-    private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 }

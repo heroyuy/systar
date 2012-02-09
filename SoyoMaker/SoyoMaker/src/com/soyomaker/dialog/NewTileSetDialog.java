@@ -11,7 +11,7 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
-import com.soyomaker.config.Configuration;
+import com.soyomaker.config.Preference;
 import com.soyomaker.model.map.Pass;
 import com.soyomaker.model.map.TileSet;
 import com.soyomaker.util.TileCutter;
@@ -41,7 +41,7 @@ public class NewTileSetDialog extends javax.swing.JDialog {
     private void initialize() {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(okButton);
-        if (!Configuration.getIsAutoTile()) {
+        if (!Preference.getIsAutoTile()) {
             autoTileCheckBox.setEnabled(false);
             autoTileLabel.setText("<html> <body> 此功能暂时关闭 </body> </html>");
         } else {

@@ -1,156 +1,115 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2010-2011 Soyostar Software, Inc. All rights reserved.
  */
 package com.soyomaker.config;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
+/** */
 /**
+ * 读取properties文件
+ * @author Qinya
  *
- * @author Administrator
  */
 public class Configuration {
 
-    /**
-     * 
-     */
-    public static final int RECENT_FILE_COUNT = 8;
-    private static final Preferences prefs = Preferences.userRoot().node("soyostar");
-    private static final Preferences rightEraserPrefs = Preferences.userRoot().node("soyostar.eraser");
-    private static final Preferences autoTilePrefs = Preferences.userRoot().node("soyostar.autotile");
-    private static final Preferences skinPrefs = Preferences.userRoot().node("soyostar.skin");
-    private static final byte IS_RIGHT_ERASER = 0;
-    private static final byte IS_AUTO_TILE = 1;
+    private Properties propertie;
+    private FileInputStream inputFile;
+    private FileOutputStream outputFile;
 
-    private Configuration() {
+    /** */
+    /**
+     * 初始化Configuration类
+     */
+    public Configuration() {
+        propertie = new Properties();
     }
 
+    /** */
     /**
-     * 
-     * @return
+     * 初始化Configuration类
+     * @param filePath 要读取的配置文件的路径+名称
      */
-    public static String getSkin() {
-        return skinPrefs.get("SKIN", "org.pushingpixels.substance.api.skin.SubstanceMarinerLookAndFeel");
-    }
-
-    /**
-     * 
-     * @param skin
-     */
-    public static void setSkin(String skin) {
-        skinPrefs.put("SKIN", skin);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static boolean getIsAutoTile() {
-        return autoTilePrefs.getBoolean(IS_AUTO_TILE + "", false);
-    }
-
-    /**
-     *
-     * @param bool
-     */
-    public static void saveIsAutoTile(boolean bool) {
-        autoTilePrefs.putBoolean(IS_AUTO_TILE + "", bool);
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public static boolean getIsRightEraser() {
-        return rightEraserPrefs.getBoolean(IS_RIGHT_ERASER + "", false);
-    }
-
-    /**
-     * 
-     * @param bool
-     */
-    public static void saveIsRightEraser(boolean bool) {
-        rightEraserPrefs.putBoolean(IS_RIGHT_ERASER + "", bool);
-    }
-
-    /**
-     * Returns the node with the given path name relative from the root of
-     * Tiled configuration.
-     *
-     * @param pathName the path name relative from the root
-     * @return the requested preferences node
-     */
-    public static Preferences node(String pathName) {
-        return prefs.node(pathName);
-    }
-
-    /**
-     * Returns the root node for Tiled configuration.
-     *
-     * @return the root node for Tiled configuration
-     */
-    public static Preferences root() {
-        return prefs;
-    }
-
-    /**
-     * Returns the list of recently used files.
-     *
-     * @return the list of recently used files
-     */
-    public static List<String> getRecentFiles() {
-        List<String> recent = new ArrayList<String>(RECENT_FILE_COUNT);
-        Preferences recentNode = prefs.node("recent");
-        for (int i = 0; i < RECENT_FILE_COUNT; i++) {
-            String recentFile = recentNode.get("file" + i, "");
-            if (recentFile.length() > 0) {
-                if (new File(recentFile).exists() && new File(recentFile).isDirectory()) {
-                    recent.add(recentFile);
-                }
-            }
-        }
-        return recent;
-    }
-
-    /**
-     * Adds the given filename to the top of the recent file list. It also
-     * makes sure it does not occur further down the list.
-     *
-     * @param projectFile 
-     */
-    public static void addToRecentFiles(String projectFile) {
-        assert projectFile != null;
-        // Store the new recent file listing
-        Preferences recentNode = prefs.node("recent");
-        // Get the existing recent file list
-        List<String> recent = getRecentFiles();
-        // Remove all existing occurences of the file
-        Iterator iterator = recent.iterator();
-        while (iterator.hasNext()) {
-            String filename = (String) iterator.next();
-//            System.out.println(filename + ":" + projectFile);
-            if (filename.equals(projectFile)) {
-                iterator.remove();
-//                System.out.println("remove");
-            }
-        }
-//        System.out.println("size: " + recent.size());
+    public Configuration(String filePath) {
+        propertie = new Properties();
         try {
-            recentNode.clear();
-        } catch (BackingStoreException ex) {
-            ex.printStackTrace();
+            inputFile = new FileInputStream(filePath);
+            propertie.load(inputFile);
+            inputFile.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("读取属性文件--->失败！- 原因：文件路径错误或者文件不存在");
+//            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("装载文件--->失败!");
+//            ex.printStackTrace();
         }
-        // Add the given map file to the top
-        recent.add(0, projectFile);
-        for (int i = 0; i < RECENT_FILE_COUNT && i < recent.size(); i++) {
-            String recentFile = recent.get(i);
-            recentNode.put("file" + i, recentFile);
+    }//end ReadConfigInfo( )
+
+    /** */
+    /**
+     * 重载函数，得到key的值
+     * @param key 取得其值的键
+     * @return key的值
+     */
+    public String getValue(String key) {
+        if (propertie.containsKey(key)) {
+            String value = propertie.getProperty(key);//得到某一属性的值
+            return value;
+        } else {
+            return "";
         }
-    }
-}
+    }//end getValue( )
+
+    /** */
+    /**
+     * 重载函数，得到key的值
+     * @param fileName properties文件的路径+文件名
+     * @param key 取得其值的键
+     * @return key的值
+     * @throws Exception
+     */
+    @SuppressWarnings("empty-statement")
+    public String getValue(String fileName, String key) throws Exception {
+        String value = "";
+        inputFile = new FileInputStream(fileName);
+        propertie.load(inputFile);
+        inputFile.close();
+        if (propertie.containsKey(key)) {
+            value = propertie.getProperty(key);
+            return value;
+        } else {
+            return value;
+        }
+    }//end getValue( )
+
+    /** */
+    /**
+     * 清除properties文件中所有的key和其值
+     */
+    public void clear() {
+        propertie.clear();
+    }//end clear();
+
+    /** */
+    /**
+     * 改变或添加一个key的值，当key存在于properties文件中时该key的值被value所代替，
+     * 当key不存在时，该key的值是value
+     * @param key 要存入的键
+     * @param value 要存入的值
+     */
+    public void setValue(String key, String value) {
+        propertie.setProperty(key, value);
+        System.out.println(key + ":" + propertie.getProperty(key));
+    }//end setValue( )
+
+    /**
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+    }//end main()
+}//end class ReadConfigInfo

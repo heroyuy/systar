@@ -113,7 +113,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5355;&#x6b21;&#x9707;&#x52a8;&#x9700;&#x8981;&#x7684;&#x5e27;&#x6570;"/>
+        <Property name="text" type="java.lang.String" value="&#x5355;&#x6b21;&#x9707;&#x52a8;&#x9700;&#x8981;&#x7684;&#x65f6;&#x95f4;(ms)"/>
         <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
       </Properties>
     </Component>

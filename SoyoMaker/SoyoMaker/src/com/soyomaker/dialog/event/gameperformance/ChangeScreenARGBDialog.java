@@ -60,11 +60,9 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
 
         jSlider1.setMajorTickSpacing(64);
         jSlider1.setMaximum(255);
-        jSlider1.setMinimum(-255);
         jSlider1.setMinorTickSpacing(8);
         jSlider1.setPaintTicks(true);
         jSlider1.setSnapToTicks(true);
-        jSlider1.setValue(0);
         jSlider1.setName("jSlider1"); // NOI18N
 
         jLabel1.setText("透明度");
@@ -75,11 +73,9 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
 
         jSlider2.setMajorTickSpacing(64);
         jSlider2.setMaximum(255);
-        jSlider2.setMinimum(-255);
         jSlider2.setMinorTickSpacing(8);
         jSlider2.setPaintTicks(true);
         jSlider2.setSnapToTicks(true);
-        jSlider2.setValue(0);
         jSlider2.setName("jSlider2"); // NOI18N
 
         jLabel3.setText("绿");
@@ -87,11 +83,9 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
 
         jSlider3.setMajorTickSpacing(64);
         jSlider3.setMaximum(255);
-        jSlider3.setMinimum(-255);
         jSlider3.setMinorTickSpacing(8);
         jSlider3.setPaintTicks(true);
         jSlider3.setSnapToTicks(true);
-        jSlider3.setValue(0);
         jSlider3.setName("jSlider3"); // NOI18N
 
         jLabel4.setText("蓝");
@@ -99,11 +93,9 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
 
         jSlider4.setMajorTickSpacing(64);
         jSlider4.setMaximum(255);
-        jSlider4.setMinimum(-255);
         jSlider4.setMinorTickSpacing(8);
         jSlider4.setPaintTicks(true);
         jSlider4.setSnapToTicks(true);
-        jSlider4.setValue(0);
         jSlider4.setName("jSlider4"); // NOI18N
 
         okButton.setText("确定");
@@ -128,7 +120,7 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
         frameTextField.setText("20");
         frameTextField.setName("frameTextField"); // NOI18N
 
-        jLabel6.setText("帧");
+        jLabel6.setText("ms");
         jLabel6.setName("jLabel6"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,7 +194,7 @@ public class ChangeScreenARGBDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "changeWindowARGB(" + jSlider1.getValue() + "," + jSlider2.getValue() + "," + jSlider3.getValue() + "," + jSlider4.getValue() + "," + frameTextField.getText() + ");");
+            "globalData.proxy:toneScene(" + jSlider1.getValue() + "," + jSlider2.getValue() + "," + jSlider3.getValue() + "," + jSlider4.getValue() + "," + frameTextField.getText() + ");");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

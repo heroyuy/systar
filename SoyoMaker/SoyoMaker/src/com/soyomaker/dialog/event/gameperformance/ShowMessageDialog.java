@@ -135,7 +135,7 @@ public class ShowMessageDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "showDialog(\"" + nameTextField.getText() + "\",\"" + mesgTextArea.getText() + "\"," + posComboBox.getSelectedIndex() + ");");
+            "globalData.proxy:showDialog(\"" + nameTextField.getText() + "\",\"" + mesgTextArea.getText() + "\"," + posComboBox.getSelectedIndex() + ")");
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

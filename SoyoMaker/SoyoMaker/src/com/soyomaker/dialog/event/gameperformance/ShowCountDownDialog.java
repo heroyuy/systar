@@ -70,7 +70,7 @@ public class ShowCountDownDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("帧");
+        jLabel2.setText("ms");
         jLabel2.setName("jLabel2"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -113,7 +113,7 @@ public class ShowCountDownDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "showClock(" + secTextField.getText() + ");");
+            "globalData.proxy:showTimer(" + secTextField.getText() + ")");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

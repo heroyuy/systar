@@ -81,7 +81,7 @@ public class ScreenShockDialog extends javax.swing.JDialog {
         timeTextField.setText("5");
         timeTextField.setName("timeTextField"); // NOI18N
 
-        jLabel5.setText("单次震动需要的帧数");
+        jLabel5.setText("单次震动需要的时间(ms)");
         jLabel5.setName("jLabel5"); // NOI18N
 
         frameTextField.setText("2");
@@ -134,7 +134,7 @@ public class ScreenShockDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "shakeWindow(" + marginTextField.getText() + "," + frameTextField.getText() + "," + timeTextField.getText() + "," + ");");
+            "globalData.proxy:shakeScene(" + marginTextField.getText() + "," + frameTextField.getText() + "," + timeTextField.getText() + "," + ")");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

@@ -11,7 +11,7 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
-import com.soyomaker.config.Configuration;
+import com.soyomaker.config.Preference;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -28,7 +28,7 @@ public class PreferenceDialog extends javax.swing.JDialog {
     public PreferenceDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        rightEraserCheckBox.setSelected(Configuration.getIsRightEraser());
+        rightEraserCheckBox.setSelected(Preference.getIsRightEraser());
         this.setLocationRelativeTo(null);
     }
 
@@ -212,9 +212,9 @@ public class PreferenceDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        Configuration.saveIsRightEraser(rightEraserCheckBox.isSelected());
+        Preference.saveIsRightEraser(rightEraserCheckBox.isSelected());
         if (uiTable.getSelectedRow() != -1) {
-            Configuration.setSkin("org.pushingpixels.substance.api.skin.Substance" + uiTable.getModel().
+            Preference.setSkin("org.pushingpixels.substance.api.skin.Substance" + uiTable.getModel().
                     getValueAt(uiTable.getSelectedRow(), 1).toString() + "LookAndFeel");
         }
         this.setVisible(false);

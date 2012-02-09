@@ -24,9 +24,11 @@ public class ItemShopDialog extends javax.swing.JDialog {
      */
     public ItemShopDialog(ScriptDialog parent, boolean modal) {
         super(parent, modal);
+        sd = parent;
         initComponents();
         setLocationRelativeTo(null);
     }
+    private ScriptDialog sd;
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -39,10 +41,6 @@ public class ItemShopDialog extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         itemTable = new javax.swing.JTable();
-        jToolBar1 = new javax.swing.JToolBar();
-        addButton = new javax.swing.JButton();
-        removeButton = new javax.swing.JButton();
-        addAllButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
 
@@ -58,14 +56,14 @@ public class ItemShopDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "编号", "名称", "价格"
+                "有售", "编号", "名称", "价格"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -78,31 +76,6 @@ public class ItemShopDialog extends javax.swing.JDialog {
         });
         itemTable.setName("itemTable"); // NOI18N
         jScrollPane1.setViewportView(itemTable);
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-
-        addButton.setText("添加物品");
-        addButton.setFocusable(false);
-        addButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addButton.setName("addButton"); // NOI18N
-        addButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(addButton);
-
-        removeButton.setText("删除物品");
-        removeButton.setFocusable(false);
-        removeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeButton.setName("removeButton"); // NOI18N
-        removeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(removeButton);
-
-        addAllButton.setText("添加全部物品");
-        addAllButton.setFocusable(false);
-        addAllButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addAllButton.setName("addAllButton"); // NOI18N
-        addAllButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(addAllButton);
 
         okButton.setText("确定");
         okButton.setName("okButton"); // NOI18N
@@ -130,16 +103,13 @@ public class ItemShopDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(cancleButton)
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancleButton)
                     .addComponent(okButton))
@@ -151,6 +121,20 @@ public class ItemShopDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (int i = 0; i < itemTable.getRowCount(); i++) {
+            if (Boolean.parseBoolean(itemTable.getModel().getValueAt(i, 0).toString()) == true) {
+                if (i == itemTable.getRowCount() - 1) {
+                    sb.append(itemTable.getModel().getValueAt(i, 0));
+                } else {
+                    sb.append(itemTable.getModel().getValueAt(i, 0)).append(",");
+                }
+            }
+        }
+        sb.append("}");
+        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                "globalData.proxy:openItemShop(" + sb.toString() + ")");
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -178,13 +162,9 @@ public class ItemShopDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAllButton;
-    private javax.swing.JButton addButton;
     private javax.swing.JButton cancleButton;
     private javax.swing.JTable itemTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton okButton;
-    private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -214,40 +214,40 @@ public class IfDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "}");
+        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "end");
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "");
         if (switchRadioButton.isSelected()) {
             if (onComboBox.getSelectedIndex() == 0) {
-                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "if(" + "getSwitch(" + switchComboBox.getSelectedIndex() + ")" + "){");
+                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "if " + "getSwitch(" + switchComboBox.getSelectedIndex() + ")" + " then");
             } else {
-                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "if(" + "!getSwitch(" + switchComboBox.getSelectedIndex() + ")" + "){");
+                sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "if " + "!getSwitch(" + switchComboBox.getSelectedIndex() + ")" + " then");
             }
         }
         if (varRadioButton.isSelected()) {
             switch (varOperationTypeComboBox.getSelectedIndex()) {
                 case 0:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + "==" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + "==" + varTextField.getText() + " then");
                     break;
                 case 1:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + ">" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + ">" + varTextField.getText() + " then");
                     break;
                 case 2:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + "<" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + "<" + varTextField.getText() + " then");
                     break;
                 case 3:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + ">=" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + ">=" + varTextField.getText() + " then");
                     break;
                 case 4:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + "<=" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + "<=" + varTextField.getText() + " then");
                     break;
                 case 5:
                     sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                        "if(" + "getVar(" + varComboBox.getSelectedIndex() + ")" + "!=" + varTextField.getText() + "){");
+                            "if " + "getVar(" + varComboBox.getSelectedIndex() + ")" + "!=" + varTextField.getText() + " then");
                     break;
             }
         }

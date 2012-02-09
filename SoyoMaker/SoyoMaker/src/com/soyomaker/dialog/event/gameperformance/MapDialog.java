@@ -10,7 +10,9 @@
  */
 package com.soyomaker.dialog.event.gameperformance;
 
+import com.soyomaker.AppData;
 import com.soyomaker.dialog.ScriptDialog;
+import com.soyomaker.model.map.Map;
 
 /**
  *
@@ -27,6 +29,12 @@ public class MapDialog extends javax.swing.JDialog {
         sd = parent;
         initComponents();
         setLocationRelativeTo(null);
+        mapNameComboBox.removeAllItems();
+        java.util.Iterator it3 = AppData.getInstance().getCurProject().getMaps().entrySet().iterator();
+        while (it3.hasNext()) {
+            java.util.Map.Entry entry = (java.util.Map.Entry) it3.next();
+            mapNameComboBox.addItem(((Map) entry.getValue()));
+        }
     }
     private ScriptDialog sd;
 
@@ -159,23 +167,23 @@ public class MapDialog extends javax.swing.JDialog {
         switch (faceComboBox.getSelectedIndex()) {
             case 0:
                 sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "gotoMap(" + mapNameComboBox.getSelectedItem() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 4 + ");");
+                        "globalData.proxy:changeMap(" + ((Map)mapNameComboBox.getSelectedItem()).getIndex() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + -1 + ");");
                 break;
             case 1:
                 sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "gotoMap(" + mapNameComboBox.getSelectedItem() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 0 + ");");
+                        "globalData.proxy:changeMap(" + ((Map)mapNameComboBox.getSelectedItem()).getIndex() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 0 + ");");
                 break;
             case 2:
                 sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "gotoMap(" + mapNameComboBox.getSelectedItem() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 1 + ");");
+                        "globalData.proxy:changeMap(" + ((Map)mapNameComboBox.getSelectedItem()).getIndex() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 1 + ");");
                 break;
             case 3:
                 sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "gotoMap(" + mapNameComboBox.getSelectedItem() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 2 + ");");
+                        "globalData.proxy:changeMap(" + ((Map)mapNameComboBox.getSelectedItem()).getIndex() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 2 + ");");
                 break;
             case 4:
                 sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                    "gotoMap(" + mapNameComboBox.getSelectedItem() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 3 + ");");
+                        "globalData.proxy:changeMap(" + ((Map)mapNameComboBox.getSelectedItem()).getIndex() + "," + rowTextField.getText() + "," + colTextField.getText() + "," + 3 + ");");
                 break;
         }
         this.dispose();

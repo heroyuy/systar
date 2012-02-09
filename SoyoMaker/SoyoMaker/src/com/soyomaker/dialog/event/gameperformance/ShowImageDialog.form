@@ -29,7 +29,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="setFrameCheckBox" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="frameTextField" pref="148" max="32767" attributes="0"/>
+                      <Component id="frameTextField" pref="124" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -165,7 +165,7 @@
     </Container>
     <Component class="javax.swing.JCheckBox" name="setFrameCheckBox">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x8bbe;&#x5b9a;&#x6301;&#x7eed;&#x5e27;&#x6570;"/>
+        <Property name="text" type="java.lang.String" value="&#x8bbe;&#x5b9a;&#x6301;&#x7eed;&#x65f6;&#x95f4;(ms)"/>
         <Property name="name" type="java.lang.String" value="setFrameCheckBox" noResource="true"/>
       </Properties>
       <Events>

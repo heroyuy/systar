@@ -176,7 +176,7 @@ public class MoveDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        byte[] move = new byte[moveTable.getRowCount()];
+        int[] move = new int[moveTable.getRowCount()];
         for (int i = 0; i < moveTable.getRowCount(); i++) {
             if (moveTM.getValueAt(i, 0).equals("向上走")) {
                 move[i] = 0;
@@ -189,7 +189,7 @@ public class MoveDialog extends javax.swing.JDialog {
             }
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("byte 移动路线[] = {");
+        sb.append("{");
         for (int i = 0; i < move.length; i++) {
             if (i == move.length - 1) {
                 sb.append(move[i]);
@@ -197,11 +197,11 @@ public class MoveDialog extends javax.swing.JDialog {
                 sb.append(move[i]).append(",");
             }
         }
-        sb.append("};");
+        sb.append("}");
         sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "forceMove(-1," + "移动路线);");
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            sb.toString());
+                "globalData.proxy:forceMove(" + sb.toString() + ")");
+//        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+//                sb.toString());
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
     private String[] col = {"移动路线"};

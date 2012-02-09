@@ -112,8 +112,14 @@ public class BattleDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-            "enterBattle(" + enemyComboBox.getSelectedIndex() + "," + !deathCheckBox.isSelected() + ");");
+        if (deathCheckBox.isSelected()) {
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                    "globalData.proxy:startFight(" + enemyComboBox.getSelectedIndex() + ",1" + ");");
+        } else {
+            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
+                    "globalData.proxy:startFight(" + enemyComboBox.getSelectedIndex() + ",0" + ");");
+        }
+
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

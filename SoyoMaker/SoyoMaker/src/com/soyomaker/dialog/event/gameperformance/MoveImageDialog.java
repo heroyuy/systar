@@ -112,7 +112,7 @@ public class MoveImageDialog extends javax.swing.JDialog {
         timeTextField.setText("20");
         timeTextField.setName("timeTextField"); // NOI18N
 
-        jLabel5.setText("帧");
+        jLabel5.setText("ms");
         jLabel5.setName("jLabel5"); // NOI18N
 
         okButton.setText("确定");
@@ -183,7 +183,7 @@ public class MoveImageDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (imageComboBox.getSelectedIndex() != -1) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "moveImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + "," + timeTextField.getText() + ");");
+                "globalData.proxy:moveImage(" + imageComboBox.getSelectedItem() + "," + xTextField.getText() + "," + yTextField.getText() + "," + timeTextField.getText() + ")");
         }
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed

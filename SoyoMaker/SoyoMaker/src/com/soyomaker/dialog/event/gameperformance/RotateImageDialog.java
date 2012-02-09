@@ -96,7 +96,7 @@ public class RotateImageDialog extends javax.swing.JDialog {
         lastTextField.setText("20");
         lastTextField.setName("lastTextField"); // NOI18N
 
-        jLabel5.setText("帧");
+        jLabel5.setText("ms");
         jLabel5.setName("jLabel5"); // NOI18N
 
         jLabel6.setText("度");
@@ -173,7 +173,7 @@ public class RotateImageDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (imageComboBox.getSelectedIndex() != -1) {
             sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
-                "rotateImage(" + imageComboBox.getSelectedItem()
+                "globalData.proxy:rotateImage(" + imageComboBox.getSelectedItem()
                 + "," + rotateComboBox.getSelectedIndex() + "," + rotateTextField.getText() + "," + lastTextField.getText() + ")");
         }
         dispose();

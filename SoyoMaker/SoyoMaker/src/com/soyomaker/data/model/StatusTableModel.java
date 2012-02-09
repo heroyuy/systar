@@ -74,6 +74,7 @@ public class StatusTableModel extends AbstractTableModel {
         }
         this.fireTableCellUpdated(r, c);
     }
+    private ImageIcon[] statusIcons = DataManager.listStatusIconName();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Status status = (Status) data.getModels(Model.STATUS)[rowIndex];
@@ -86,7 +87,7 @@ public class StatusTableModel extends AbstractTableModel {
                 case 2:
                     return status.description;
                 case 3:
-                    ImageIcon[] statusIcons = DataManager.listStatusIconName();
+
                     for (int i = 0; i < statusIcons.length; i++) {
                         if (statusIcons[i].getDescription().equals(status.icon)) {
                             return statusIcons[i];

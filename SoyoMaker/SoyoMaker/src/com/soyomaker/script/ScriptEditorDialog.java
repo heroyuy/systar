@@ -3,6 +3,7 @@
  */
 package com.soyomaker.script;
 
+import com.soyomaker.config.Configuration;
 import com.soyomaker.AppData;
 import java.awt.Color;
 import java.awt.Font;

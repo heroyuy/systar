@@ -67,45 +67,6 @@ public class EditItemDialog extends javax.swing.JDialog {
             java.util.Map.Entry entry = (java.util.Map.Entry) it1.next();
             itemTargetAniComboBox.addItem(((Animation) entry.getValue()));
         }
-//        TableColumnModel tcm = costTable.getColumnModel();
-//        TableColumn iconC = tcm.getColumn(0);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(Cost.costs);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(Cost.costs);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
-
-//        TableColumnModel tcm1 = effectTable.getColumnModel();
-//        TableColumn iconC1 = tcm1.getColumn(0);
-//        JTabelComboBoxRender strI1 = new JTabelComboBoxRender(Effect.effects);
-//        JTableComboBoxEditor steI1 = new JTableComboBoxEditor(Effect.effects);
-//        iconC1.setCellRenderer(strI1);
-//        iconC1.setCellEditor(steI1);
-
-//        TableColumnModel tcm2 = factorTable.getColumnModel();
-//        TableColumn iconC2 = tcm2.getColumn(0);
-//        JTabelComboBoxRender strI2 = new JTabelComboBoxRender(Factor.factors);
-//        JTableComboBoxEditor steI2 = new JTableComboBoxEditor(Factor.factors);
-//        iconC2.setCellRenderer(strI2);
-//        iconC2.setCellEditor(steI2);
-
-//        TableColumnModel tcm3 = attributeTable.getColumnModel();
-//        TableColumn iconC3 = tcm3.getColumn(0);
-//        ArrayList<Attribute> attrs = ((Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0]).system.attributes;
-//        String[] ats = new String[attrs.size()];
-//        for (int i = 0; i < attrs.size(); i++) {
-//            ats[i] = attrs.get(i).name;
-//        }
-//        JTabelComboBoxRender strI3 = new JTabelComboBoxRender(ats);
-//        JTableComboBoxEditor steI3 = new JTableComboBoxEditor(ats);
-//        iconC3.setCellRenderer(strI3);
-//        iconC3.setCellEditor(steI3);
-//
-//        TableColumnModel tcm4 = statusTable.getColumnModel();
-//        TableColumn iconC4 = tcm4.getColumn(0);
-//        JTabelComboBoxRender strI4 = new JTabelComboBoxRender((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        JTableComboBoxEditor steI4 = new JTableComboBoxEditor((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        iconC4.setCellRenderer(strI4);
-//        iconC4.setCellEditor(steI4);
         setItem(item);
     }
     private ImageIcon[] itemIcons;
