@@ -16,10 +16,11 @@ clsSceneMap.characterList=nil  --精灵列表
 clsSceneMap.mapBgLayer=nil     --背景
 clsSceneMap.mapFgLayer=nil     --前景
 clsSceneMap.spriteLayer=nil    --精灵层
-clsSceneMap.aStar=nil    --A*寻路工具
+clsSceneMap.aStar=nil          --A*寻路工具
 
---test
-clsSceneMap.playerSprite=nil;
+--精灵
+clsSceneMap.playerSprite=nil;  --玩家
+clsSceneMap.npcSpriteList=nil;  --NPC列表
 
 --构造器
 function clsSceneMap:new()
@@ -72,6 +73,11 @@ function clsSceneMap:changeMap(map)
     if globalData.map.imageSets[v.id]==nil then
       globalData.map.imageSets[v.id]=smImageFactory:createImage(globalGame.PATH..v.path)
     end
+  end
+  --加载NPC列表
+  globalData.map.npcList={}
+  for k,v in pairs(self.curMap.npcs) do
+    
   end
   --加载背景
   local bgLayers=clsList:new()
