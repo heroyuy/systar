@@ -127,24 +127,48 @@ end
 function globalData.proxy:operateSwitch(switchId,value)
 end
 
+--获取开关值
+function globalData.proxy:getSwitch(switchId)
+end
+
 --变量操作
 function globalData.proxy:operateVariable(variableId,operateType,valueType,value)
+end
+
+--获取变量值
+function globalData.proxy:getVariable(variableId)
 end
 
 --玩家属性操作
 function globalData.proxy:operatePlayerProperty(playerId,propertyType,operateType,valueType,value)
 end
 
---名称操作
+--获取玩家属性
+function globalData.proxy:getPlayerProperty(playerId,propertyType)
+end
+
+--玩家名称操作
 function globalData.proxy:operatePlayerName(playerId,name)
+end
+
+--获取玩家名称
+function globalData.proxy:getPlayerName(playerId)
 end
 
 --技能操作
 function globalData.proxy:operatePlayerSkill(playerId,skillId,value)
 end
 
+--获取技能状态
+function globalData.proxy:getPlayerSkillStatus(playerId,skillId)
+end
+
 --装备操作  e.g  {12,1,-1,-1,-1,-1}   TODO 参数意义待定
 function globalData.proxy:operatePlayerEquip(playerId,equipIds)
+end
+
+--获取装备状态 
+function globalData.proxy:getPlayerEquipStatus(playerId,equipId)
 end
 
 --模型操作
@@ -155,16 +179,32 @@ end
 function globalData.proxy:operateMoney(operateType,valueType,value)
 end
 
+--获取金钱数量
+function globalData.proxy:getMoneyAmount()
+end
+
 --物品列表操作
-function globalData.proxy:operateItem(index,operateType,valueType,value)
+function globalData.proxy:operateItem(itemId,operateType,valueType,value)
+end
+
+--获取物品数量
+function globalData.proxy:getItemNum(itemId)
 end
 
 --装备列表操作
-function globalData.proxy:operateEquip(index,operateType,valueType,value)
+function globalData.proxy:operateEquip(equipId,operateType,valueType,value)
+end
+
+--获取装备数量
+function globalData.proxy:getEquipNum(equipId)
 end
 
 --敌人属性操作
 function globalData.proxy:operateEnemyProperty(enemyId,propertyType,operateType,valueType,value)
+end
+
+--获取敌人属性
+function globalData.proxy:getEnemyProperty(enemyId,propertyType)
 end
 
 --敌人模型操作
