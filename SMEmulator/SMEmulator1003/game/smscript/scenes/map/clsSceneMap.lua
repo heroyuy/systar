@@ -76,9 +76,7 @@ function clsSceneMap:changeMap(map)
   end
   --加载NPC列表
   globalData.map.npcList={}
-  for k,v in pairs(self.curMap.npcs) do
-    
-  end
+
   --加载背景
   local bgLayers=clsList:new()
   for i=1,table.getn(self.curMap.layers) do

@@ -38,12 +38,8 @@ end
 function globalData.proxy:stopMusic(name)
 end
 
---物品商店 e.g {10,2,5,0}
+--开启商店 e.g {10,2,5,0}
 function globalData.proxy:openItemShop(itemIds)
-end
-
---装备商店 e.g  {10,2,5,0}
-function globalData.proxy:openEquipShop(equipIds)
 end
 
 --显示对话
