@@ -598,6 +598,10 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                             ((CollideLayer) data.getCurrentLayer()).setCollideAt(tile.x, tile.y, false);
                             repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                         } else if (data.getCurrentLayer() instanceof SpriteLayer) {
+                            Npc npc = ((SpriteLayer) data.getCurrentLayer()).getNpcAt(tile.x, tile.y);
+                            if (npc != null) {
+                                AppData.getInstance().getCurProject().removeNpc(npc.getIndex());
+                            }
                             ((SpriteLayer) data.getCurrentLayer()).setNpcAt(tile.x, tile.y, null);
                             repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                         }
@@ -628,6 +632,10 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                         ((CollideLayer) data.getCurrentLayer()).setCollideAt(tile.x, tile.y, false);
                         repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                     } else if (data.getCurrentLayer() instanceof SpriteLayer) {
+                        Npc npc = ((SpriteLayer) data.getCurrentLayer()).getNpcAt(tile.x, tile.y);
+                        if (npc != null) {
+                            AppData.getInstance().getCurProject().removeNpc(npc.getIndex());
+                        }
                         ((SpriteLayer) data.getCurrentLayer()).setNpcAt(tile.x, tile.y, null);
                         repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                     }
