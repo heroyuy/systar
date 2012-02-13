@@ -161,7 +161,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="varOperationTypeComboBox" min="-2" pref="70" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="upVarTextField" pref="77" max="32767" attributes="1"/>
+                                  <Component id="varTextField" pref="77" max="32767" attributes="1"/>
                               </Group>
                               <Component id="varComboBox" pref="153" max="32767" attributes="1"/>
                           </Group>
@@ -199,7 +199,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="upVarTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="varTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="varOperationTypeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -236,6 +236,9 @@
             <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
             <Property name="name" type="java.lang.String" value="switchComboBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="switchComboBoxItemStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i =0;i&lt;100;i++){&#xa;    switchComboBox.addItem(i);&#xa;}"/>
           </AuxValues>
@@ -248,6 +251,9 @@
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="varComboBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="varComboBoxItemStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i =0;i&lt;100;i++){&#xa;    varComboBox.addItem(i);&#xa;}"/>
           </AuxValues>
@@ -258,11 +264,15 @@
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="upVarTextField">
+        <Component class="javax.swing.JTextField" name="varTextField">
           <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="upVarTextField" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="varTextField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="varTextFieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="varOperationTypeComboBox">
           <Properties>
@@ -270,8 +280,8 @@
               <StringArray count="6">
                 <StringItem index="0" value="&#x7b49;&#x4e8e;"/>
                 <StringItem index="1" value="&#x5927;&#x4e8e;"/>
-                <StringItem index="2" value="&#x5c0f;&#x4e8e;"/>
-                <StringItem index="3" value="&#x5927;&#x4e8e;&#x7b49;&#x4e8e;"/>
+                <StringItem index="2" value="&#x5927;&#x4e8e;&#x7b49;&#x4e8e;"/>
+                <StringItem index="3" value="&#x5c0f;&#x4e8e;"/>
                 <StringItem index="4" value="&#x5c0f;&#x4e8e;&#x7b49;&#x4e8e;"/>
                 <StringItem index="5" value="&#x4e0d;&#x7b49;&#x4e8e;"/>
               </StringArray>
@@ -279,6 +289,9 @@
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="varOperationTypeComboBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="varOperationTypeComboBoxItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -303,6 +316,9 @@
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="onComboBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="onComboBoxItemStateChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -630,6 +646,9 @@
             <Property name="text" type="java.lang.String" value="&#x5e76;&#x884c;"/>
             <Property name="name" type="java.lang.String" value="parallelRadioButton" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="parallelRadioButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="serialRadioButton">
           <Properties>
@@ -640,6 +659,9 @@
             <Property name="text" type="java.lang.String" value="&#x4e32;&#x884c;"/>
             <Property name="name" type="java.lang.String" value="serialRadioButton" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serialRadioButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

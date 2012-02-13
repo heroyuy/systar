@@ -4,9 +4,6 @@
  */
 package com.soyomaker.model.map;
 
-import java.io.File;
-import java.util.ArrayList;
-
 /**
  *
  * @author Administrator

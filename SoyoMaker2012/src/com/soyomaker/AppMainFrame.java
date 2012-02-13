@@ -39,8 +39,10 @@ import com.soyomaker.io.map.DefaultSoftMapBinaryWriter;
 import com.soyomaker.io.animation.IAnimationReader;
 import com.soyomaker.io.animation.IAnimationWriter;
 import com.soyomaker.io.map.DefaultMapLuaWriter;
+import com.soyomaker.io.map.DefaultNpcLuaWriter;
 import com.soyomaker.io.map.IMapReader;
 import com.soyomaker.io.map.IMapWriter;
+import com.soyomaker.io.map.INpcWriter;
 import com.soyomaker.listener.LayerChangeListener;
 import com.soyomaker.listener.LayerChangedEvent;
 import com.soyomaker.listener.MapChangeListener;
@@ -1425,8 +1427,8 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
         ArrayList<File> files = new ArrayList<File>();
         files.add(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
                 + "data" + File.separatorChar + "map"));
-        files.add(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                + "data" + File.separatorChar + "npc"));
+//        files.add(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+//                + "data" + File.separatorChar + "npc"));
         files.add(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
                 + "data" + File.separatorChar + "script"));
         files.add(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
@@ -1453,9 +1455,12 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
         //清除错误的软件地图数据文件
         clearErrorMapFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
                 + "softdata" + File.separatorChar + "map"));
+//        //清除错误的npc数据文件
+//        clearErrorNpcFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+//                + "data" + File.separatorChar + "npc"));
         //清除错误的npc数据文件
         clearErrorNpcFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                + "data" + File.separatorChar + "npc"));
+                + "softdata" + File.separatorChar + "npc"));
         //保存数据
         AppData.getInstance().getCurProject().getDataManager().save();
         iLogger.v("save maps start...");
@@ -1479,6 +1484,12 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
         }
         iLogger.v("save maps finish!");
 //        System.out.println("save maps finish!");
+        iLogger.v("save npcs start...");
+        //保存NPC表
+        INpcWriter npcWriter = new DefaultNpcLuaWriter();
+        npcWriter.writeNpc(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "data" + File.separatorChar + "npc.gat");
+        iLogger.v("save npcs finish!");
         iLogger.v("save animations start...");
 //        System.out.println("save animations start...");
         //保存动画
@@ -1501,7 +1512,7 @@ public class AppMainFrame extends javax.swing.JFrame implements MapChangeListene
             xmlw.write(doc);
             xmlw.close();
         } catch (IOException e) {
-            iLogger.e("map.xml写出失败！" + e);
+            iLogger.e("map.xml写出失败！" + e.toString());
             Logger.getLogger(this.getClass().getName()).error("map.xml写出失败！", e);
 //            e.printStackTrace();
             return false;

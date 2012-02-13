@@ -6,6 +6,7 @@ package com.soyomaker.io.map;
 
 import com.soyomaker.model.map.Npc;
 import com.soyomaker.model.map.NpcState;
+import com.soyomaker.model.map.NpcStateCondition;
 import com.soyomaker.model.map.ScriptFile;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -46,6 +47,29 @@ public class DefaultNpcBinaryWriter implements INpcWriter {
             dos.writeByte(state.getSpeed());
 //            System.out.println("npc移动速度：" + state.getSpeed());
             dos.writeBoolean(state.isCross());
+
+            NpcStateCondition sc = state.getSwitchCondition();
+            if (sc != null) {
+                dos.writeInt(sc.conditionType);
+                dos.writeInt(sc.paramList.length);
+                for (int m = 0; m < sc.paramList.length; m++) {
+                    dos.writeInt(sc.paramList[m]);
+                }
+            } else {
+                dos.writeInt(-1);
+            }
+
+            NpcStateCondition vc = state.getVarCondition();
+            if (vc != null) {
+                dos.writeInt(vc.conditionType);
+                dos.writeInt(vc.paramList.length);
+                for (int m = 0; m < vc.paramList.length; m++) {
+                    dos.writeInt(vc.paramList[m]);
+                }
+            } else {
+                dos.writeInt(-1);
+            }
+
             ScriptFile sFile = state.getScript();
             sFile.link();//脚本文件预处理
             dos.writeInt(sFile.getIndex());
@@ -56,5 +80,8 @@ public class DefaultNpcBinaryWriter implements INpcWriter {
         }
         dos.close();
         fos.close();
+    }
+
+    public void writeNpc(String filename) throws Exception {
     }
 }

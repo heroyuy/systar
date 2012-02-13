@@ -8,6 +8,7 @@ import com.soyomaker.AppData;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
@@ -119,6 +120,31 @@ public class NpcState implements Cloneable {
     private byte startType = 0;         //事件开始条件
     private String imgPath = "";        //行走图路径
     private String battlerPath = "";        //行走图路径
+    private BufferedImage moveImg;
+    private BufferedImage headImg;
+    private byte face = 0;              //初始面向
+    private byte move = 0;              //移动规则
+    private byte speed = 0;             //移动速度
+    private boolean cross = false;      //允许穿透
+    private ScriptFile script = new ScriptFile();
+    private NpcStateCondition switchCondition;
+    private NpcStateCondition varCondition;
+
+    public void setSwitchCondition(NpcStateCondition switchConditions) {
+        this.switchCondition = switchConditions;
+    }
+
+    public void setVarCondition(NpcStateCondition varConditions) {
+        this.varCondition = varConditions;
+    }
+
+    public NpcStateCondition getSwitchCondition() {
+        return switchCondition;
+    }
+
+    public NpcStateCondition getVarCondition() {
+        return varCondition;
+    }
 
     /**
      *
@@ -141,8 +167,6 @@ public class NpcState implements Cloneable {
                     + File.separatorChar + "image" + File.separatorChar + "battler" + File.separatorChar + this.battlerPath));
         }
     }
-    private BufferedImage moveImg;
-    private BufferedImage headImg;
 
     /**
      *
@@ -159,11 +183,6 @@ public class NpcState implements Cloneable {
     public void setHeadImg(BufferedImage headImg) {
         this.headImg = headImg;
     }
-    private byte face = 0;              //初始面向
-    private byte move = 0;              //移动规则
-    private byte speed = 0;             //移动速度
-    private boolean cross = false;      //允许穿透
-    private ScriptFile script = new ScriptFile();
 
     @Override
     public Object clone() throws CloneNotSupportedException {

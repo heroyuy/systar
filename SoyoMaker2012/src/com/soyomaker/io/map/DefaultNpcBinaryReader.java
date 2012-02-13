@@ -8,6 +8,7 @@ import com.soyomaker.model.map.Npc;
 import com.soyomaker.model.map.NpcState;
 import com.soyomaker.model.map.ScriptFile;
 import com.soyomaker.AppData;
+import com.soyomaker.model.map.NpcStateCondition;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +50,33 @@ public class DefaultNpcBinaryReader implements INpcReader {
             state.setSpeed(dis.readByte());
 //            System.out.println("npc移动速度：" + state.getSpeed());
             state.setCross(dis.readBoolean());
+
+            int temp3 = dis.readInt();
+            if (temp3 != -1) {
+                NpcStateCondition sc = new NpcStateCondition();
+                sc.conditionType = temp3;
+                sc.paramList = new int[dis.readInt()];
+                for (int m = 0; m < sc.paramList.length; m++) {
+                    sc.paramList[m] = dis.readInt();
+                }
+                state.setSwitchCondition(sc);
+            }else{
+                state.setSwitchCondition(null);
+            }
+
+            int temp4 = dis.readInt();
+            if (temp4 != -1) {
+                NpcStateCondition vc = new NpcStateCondition();
+                vc.conditionType = temp4;
+                vc.paramList = new int[dis.readInt()];
+                for (int m = 0; m < vc.paramList.length; m++) {
+                    vc.paramList[m] = dis.readInt();
+                }
+                state.setVarCondition(vc);
+            }else{
+                state.setVarCondition(null);
+            }
+
             int index = dis.readInt();
 //            IScriptReader scriptReader = new DefaultScriptBinaryReader();
 //            ScriptFile script = scriptReader.readScript(AppData.getInstance().getCurProject().getPath() + File.separatorChar

@@ -15,9 +15,14 @@ import com.soyomaker.dialog.NpcHeadImageDialog;
 import com.soyomaker.dialog.NpcMoveImageDialog;
 import com.soyomaker.dialog.ScriptDialog;
 import com.soyomaker.model.map.NpcState;
-import com.soyomaker.script.ScriptEditorDialog;
+import com.soyomaker.model.map.NpcStateCondition;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +39,6 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
     public NpcStatePane(EventManagerDialog emd) {
         this.emd = emd;
         initComponents();
-//        addScript();
     }
     private NpcState npcState = new NpcState();
     private String[] col = {"执行内容"};
@@ -56,13 +60,14 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
     public NpcState getNpcState() {
         return npcState;
     }
+    private boolean isInitOver = false;
 
     /**
      * 
      * @param state
      */
     public void setNpcState(NpcState state) {
-
+        isInitOver = false;
         npcState = state;
         typeComboBox.setSelectedIndex(state.getMove());
         speedComboBox.setSelectedIndex(state.getSpeed());
@@ -94,6 +99,32 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         String[] sss = {""};
         eventTM.addRow(sss);
         eventTable.getSelectionModel().setSelectionInterval(s.length, s.length);
+        if (state.getSwitchCondition() != null) {
+            switchCheckBox.setSelected(true);
+            switchComboBox.setEnabled(true);
+            onComboBox.setEnabled(true);
+            switchComboBox.setSelectedIndex(state.getSwitchCondition().paramList[0]);
+            onComboBox.setSelectedIndex(state.getSwitchCondition().paramList[1]);
+        } else {
+            switchCheckBox.setSelected(false);
+            switchComboBox.setEnabled(false);
+            onComboBox.setEnabled(false);
+        }
+        if (state.getVarCondition() != null) {
+            varCheckBox.setSelected(true);
+            varComboBox.setEnabled(true);
+            varOperationTypeComboBox.setEnabled(true);
+            varTextField.setEnabled(true);
+            varComboBox.setSelectedIndex(state.getVarCondition().paramList[0]);
+            varOperationTypeComboBox.setSelectedIndex(state.getVarCondition().paramList[1]);
+            varTextField.setText("" + state.getVarCondition().paramList[2]);
+        } else {
+            varCheckBox.setSelected(false);
+            varComboBox.setEnabled(false);
+            varOperationTypeComboBox.setEnabled(false);
+            varTextField.setEnabled(false);
+        }
+        isInitOver = true;
     }
     private EventManagerDialog emd;
 
@@ -119,7 +150,7 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         switchComboBox = new javax.swing.JComboBox();
         varComboBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        upVarTextField = new javax.swing.JTextField();
+        varTextField = new javax.swing.JTextField();
         varOperationTypeComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -312,22 +343,43 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         for(int i =0;i<100;i++){
             switchComboBox.addItem(i);
         }
+        switchComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                switchComboBoxItemStateChanged(evt);
+            }
+        });
 
         varComboBox.setEnabled(false);
         varComboBox.setName("varComboBox"); // NOI18N
         for(int i =0;i<100;i++){
             varComboBox.addItem(i);
         }
+        varComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                varComboBoxItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("值为");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        upVarTextField.setEnabled(false);
-        upVarTextField.setName("upVarTextField"); // NOI18N
+        varTextField.setText("0");
+        varTextField.setEnabled(false);
+        varTextField.setName("varTextField"); // NOI18N
+        varTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                varTextFieldKeyReleased(evt);
+            }
+        });
 
-        varOperationTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "等于", "大于", "小于", "大于等于", "小于等于", "不等于" }));
+        varOperationTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "等于", "大于", "大于等于", "小于", "小于等于", "不等于" }));
         varOperationTypeComboBox.setEnabled(false);
         varOperationTypeComboBox.setName("varOperationTypeComboBox"); // NOI18N
+        varOperationTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                varOperationTypeComboBoxItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("时");
         jLabel3.setName("jLabel3"); // NOI18N
@@ -338,6 +390,11 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         onComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ON", "OFF" }));
         onComboBox.setEnabled(false);
         onComboBox.setName("onComboBox"); // NOI18N
+        onComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                onComboBoxItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -357,7 +414,7 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(varOperationTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(upVarTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                                .addComponent(varTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
                             .addComponent(varComboBox, 0, 153, Short.MAX_VALUE))))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,7 +442,7 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(upVarTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(varTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(varOperationTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -568,11 +625,21 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         buttonGroup3.add(parallelRadioButton);
         parallelRadioButton.setText("并行");
         parallelRadioButton.setName("parallelRadioButton"); // NOI18N
+        parallelRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parallelRadioButtonActionPerformed(evt);
+            }
+        });
 
         buttonGroup3.add(serialRadioButton);
         serialRadioButton.setSelected(true);
         serialRadioButton.setText("串行");
         serialRadioButton.setName("serialRadioButton"); // NOI18N
+        serialRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serialRadioButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -729,30 +796,27 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void switchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchCheckBoxActionPerformed
-        // TODO add your handling code here:
+    private void saveSwitchCondition() {
         if (switchCheckBox.isSelected()) {
-            switchComboBox.setEnabled(true);
-            onComboBox.setEnabled(true);
+            NpcStateCondition nsc = new NpcStateCondition();
+            nsc.conditionType = NpcStateCondition.SWITCH;
+            nsc.paramList = new int[]{switchComboBox.getSelectedIndex(), onComboBox.getSelectedIndex()};
+            npcState.setSwitchCondition(nsc);
         } else {
-            switchComboBox.setEnabled(false);
-            onComboBox.setEnabled(false);
+            npcState.setSwitchCondition(null);
         }
-    }//GEN-LAST:event_switchCheckBoxActionPerformed
+    }
 
-    private void varCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varCheckBoxActionPerformed
-        // TODO add your handling code here:
+    private void saveVarCondition() {
         if (varCheckBox.isSelected()) {
-            varComboBox.setEnabled(true);
-            upVarTextField.setEnabled(true);
-            varOperationTypeComboBox.setEnabled(true);
+            NpcStateCondition nsc = new NpcStateCondition();
+            nsc.conditionType = NpcStateCondition.VAR;
+            nsc.paramList = new int[]{varComboBox.getSelectedIndex(), varOperationTypeComboBox.getSelectedIndex(), Integer.parseInt(varTextField.getText())};
+            npcState.setVarCondition(nsc);
         } else {
-            varComboBox.setEnabled(false);
-            upVarTextField.setEnabled(false);
-            varOperationTypeComboBox.setEnabled(false);
+            npcState.setVarCondition(null);
         }
-    }//GEN-LAST:event_varCheckBoxActionPerformed
-
+    }
     private void npcMoveImgPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_npcMoveImgPaneMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() >= 2) {
@@ -778,7 +842,6 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
 
     private void contactRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactRadioButtonActionPerformed
         // TODO add your handling code here:
-
         npcState.setStartType(NpcState.CONTACT);
 }//GEN-LAST:event_contactRadioButtonActionPerformed
 
@@ -786,11 +849,6 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
         // TODO add your handling code here:
         npcState.setStartType(NpcState.BUTTON);
 }//GEN-LAST:event_buttonRadioButtonActionPerformed
-
-    private void crossCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crossCheckBoxActionPerformed
-        // TODO add your handling code here:
-        npcState.setCross(crossCheckBox.isSelected());
-}//GEN-LAST:event_crossCheckBoxActionPerformed
 
     private void speedComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_speedComboBoxItemStateChanged
         // TODO add your handling code here:
@@ -862,6 +920,91 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
             cid.setVisible(true);
         }
     }//GEN-LAST:event_npcHeadImgPaneMouseClicked
+
+    private void serialRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serialRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serialRadioButtonActionPerformed
+
+    private void parallelRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parallelRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_parallelRadioButtonActionPerformed
+
+    private void crossCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crossCheckBoxActionPerformed
+        // TODO add your handling code here:
+        npcState.setCross(crossCheckBox.isSelected());
+    }//GEN-LAST:event_crossCheckBoxActionPerformed
+
+    private void switchComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_switchComboBoxItemStateChanged
+        // TODO add your handling code here:
+        if (isInitOver) {
+            saveSwitchCondition();
+        }
+
+    }//GEN-LAST:event_switchComboBoxItemStateChanged
+
+    private void onComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_onComboBoxItemStateChanged
+        // TODO add your handling code here:
+        if (isInitOver) {
+            saveSwitchCondition();
+        }
+
+    }//GEN-LAST:event_onComboBoxItemStateChanged
+
+    private void varComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_varComboBoxItemStateChanged
+        // TODO add your handling code here:
+        if (isInitOver) {
+            saveVarCondition();
+        }
+
+    }//GEN-LAST:event_varComboBoxItemStateChanged
+
+    private void varOperationTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_varOperationTypeComboBoxItemStateChanged
+        // TODO add your handling code here:
+        if (isInitOver) {
+            saveVarCondition();
+        }
+
+    }//GEN-LAST:event_varOperationTypeComboBoxItemStateChanged
+
+    private void switchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchCheckBoxActionPerformed
+        // TODO add your handling code here:
+        saveSwitchCondition();
+        if (switchCheckBox.isSelected()) {
+            switchComboBox.setEnabled(true);
+            onComboBox.setEnabled(true);
+        } else {
+            switchComboBox.setEnabled(false);
+            onComboBox.setEnabled(false);
+        }
+    }//GEN-LAST:event_switchCheckBoxActionPerformed
+
+    private void varCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varCheckBoxActionPerformed
+        // TODO add your handling code here:
+        saveVarCondition();
+        if (varCheckBox.isSelected()) {
+            varComboBox.setEnabled(true);
+            varOperationTypeComboBox.setEnabled(true);
+            varTextField.setEnabled(true);
+        } else {
+            varComboBox.setEnabled(false);
+            varOperationTypeComboBox.setEnabled(false);
+            varTextField.setEnabled(false);
+        }
+    }//GEN-LAST:event_varCheckBoxActionPerformed
+
+    private void varTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_varTextFieldKeyReleased
+        // TODO add your handling code here:
+        String str = varTextField.getText();
+        Matcher m = Pattern.compile("\\d*").matcher(str);
+        if (!m.matches()) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "请输入一个数字！");
+            str = str.substring(0, str.length() - 1);
+            varTextField.setText(str);
+        }
+        saveVarCondition();
+    }//GEN-LAST:event_varTextFieldKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addMenuItem;
     private javax.swing.JButton addScriptButton;
@@ -902,10 +1045,10 @@ public class NpcStatePane extends javax.swing.JPanel implements TableModelListen
     private javax.swing.JCheckBox switchCheckBox;
     private javax.swing.JComboBox switchComboBox;
     private javax.swing.JComboBox typeComboBox;
-    private javax.swing.JTextField upVarTextField;
     private javax.swing.JCheckBox varCheckBox;
     private javax.swing.JComboBox varComboBox;
     private javax.swing.JComboBox varOperationTypeComboBox;
+    private javax.swing.JTextField varTextField;
     // End of variables declaration//GEN-END:variables
 
     public void tableChanged(TableModelEvent e) {

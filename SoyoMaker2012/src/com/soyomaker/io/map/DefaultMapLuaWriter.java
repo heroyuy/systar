@@ -194,25 +194,25 @@ public class DefaultMapLuaWriter implements IMapWriter {
                 lts.addNode("areas", colhs);
             }
         }
-        lts.addNode("\n");
-        for (int i = 0; i < layerNums; i++) {
-            if (map.getLayerArrayList().get(i) instanceof SpriteLayer) {
-                LuaTable sphs = new LuaTable();
-                for (int j = 0; j < map.getHeight(); j++) {
-                    for (int k = 0; k < map.getWidth(); k++) {
-                        Npc npc = ((SpriteLayer) map.getLayerArrayList().get(i)).getNpcAt(k, j);
-                        if (npc != null) {
-                            sphs.addNode("\n");
-                            sphs.addNode("[" + (j * map.getWidth() + k) + "]", npc.getIndex() + 1);
-                            INpcWriter npcWriter = new DefaultNpcLuaWriter();
-                            npcWriter.writeNpc(npc, AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                                    + "data" + File.separatorChar + "npc" + File.separatorChar + "npc" + (npc.getIndex() + 1) + ".gat");
-                        }
-                    }
-                }
-                lts.addNode("npcs", sphs);
-            }
-        }
+//        lts.addNode("\n");
+//        for (int i = 0; i < layerNums; i++) {
+//            if (map.getLayerArrayList().get(i) instanceof SpriteLayer) {
+//                LuaTable sphs = new LuaTable();
+//                for (int j = 0; j < map.getHeight(); j++) {
+//                    for (int k = 0; k < map.getWidth(); k++) {
+//                        Npc npc = ((SpriteLayer) map.getLayerArrayList().get(i)).getNpcAt(k, j);
+//                        if (npc != null) {
+//                            sphs.addNode("\n");
+//                            sphs.addNode("[" + (j * map.getWidth() + k) + "]", npc.getIndex() + 1);
+//                            INpcWriter npcWriter = new DefaultNpcLuaWriter();
+//                            npcWriter.writeNpc(npc, AppData.getInstance().getCurProject().getPath() + File.separatorChar
+//                                    + "data" + File.separatorChar + "npc" + File.separatorChar + "npc" + (npc.getIndex() + 1) + ".gat");
+//                        }
+//                    }
+//                }
+//                lts.addNode("npcs", sphs);
+//            }
+//        }
         LuaNode ln = new LuaNode("globalDictionary.maps[" + (map.getIndex() + 1) + "]", lts);
         LuaFileUtil.writeToFile(ln, filename);
     }

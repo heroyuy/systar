@@ -31,32 +31,25 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="okButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="150" max="32767" attributes="0"/>
-                      <Component id="cancleButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="shieldComboBox" alignment="0" pref="198" max="32767" attributes="1"/>
-                          <Component id="jewelryComboBox" alignment="0" pref="198" max="32767" attributes="1"/>
-                          <Component id="bootsComboBox" alignment="0" pref="198" max="32767" attributes="1"/>
-                          <Component id="armourComboBox" alignment="0" pref="198" max="32767" attributes="1"/>
-                          <Component id="weaponComboBox" alignment="0" pref="198" max="32767" attributes="1"/>
-                          <Component id="helmComboBox" alignment="1" pref="198" max="32767" attributes="1"/>
-                          <Component id="playerComboBox" alignment="0" pref="198" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="helmCheckBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="shieldCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="weaponCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="armourCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="bootsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jewelryCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="okButton" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="cancleButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="playerComboBox" alignment="1" pref="159" max="32767" attributes="0"/>
+                  <Component id="helmComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
+                  <Component id="shieldComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
+                  <Component id="weaponComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
+                  <Component id="armourComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
+                  <Component id="bootsComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
+                  <Component id="jewelryComboBox" alignment="1" pref="159" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -66,46 +59,46 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="playerComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancleButton" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="playerComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="helmCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="helmComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="shieldCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="shieldComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="weaponCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="weaponComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="armourCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="armourComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="bootsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bootsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jewelryComboBox" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jewelryCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jewelryComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="okButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cancleButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -118,6 +111,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="helmComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -144,6 +138,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="shieldComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -152,6 +147,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="weaponComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -160,6 +156,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="armourComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -168,6 +165,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="bootsComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -176,43 +174,8 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jewelryComboBox" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5934;&#x76d4;"/>
-        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x76fe;&#x724c;"/>
-        <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x6b66;&#x5668;"/>
-        <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x94e0;&#x7532;"/>
-        <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x6218;&#x9774;"/>
-        <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x9970;&#x54c1;"/>
-        <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -228,6 +191,60 @@
         </Property>
         <Property name="name" type="java.lang.String" value="playerComboBox" noResource="true"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="helmCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x5934;&#x76d4;"/>
+        <Property name="name" type="java.lang.String" value="helmCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="helmCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="shieldCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x76fe;&#x724c;"/>
+        <Property name="name" type="java.lang.String" value="shieldCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="shieldCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="weaponCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x6b66;&#x5668;"/>
+        <Property name="name" type="java.lang.String" value="weaponCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="weaponCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="armourCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x94e0;&#x7532;"/>
+        <Property name="name" type="java.lang.String" value="armourCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="armourCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="bootsCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x6218;&#x9774;"/>
+        <Property name="name" type="java.lang.String" value="bootsCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="bootsCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jewelryCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x9970;&#x54c1;"/>
+        <Property name="name" type="java.lang.String" value="jewelryCheckBox" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jewelryCheckBoxStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

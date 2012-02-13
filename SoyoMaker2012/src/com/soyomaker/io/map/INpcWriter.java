@@ -11,12 +11,10 @@ import com.soyomaker.model.map.Npc;
  * @author Administrator
  */
 public interface INpcWriter {
-        /**
-     * Saves a map to a file.
-     *
-     * @param npc 
-     * @param filename the filename of the map file
-     * @throws Exception
-     */
+    //写在不同文件里
+
     public void writeNpc(Npc npc, String filename) throws Exception;
+    //写在一个文件里
+
+    public void writeNpc(String filename) throws Exception;
 }

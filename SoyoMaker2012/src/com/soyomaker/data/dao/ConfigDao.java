@@ -292,6 +292,18 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         lt.addNode("face", config.system.face);
         lt.addNode("\n");
+
+//        String str = "{[100]=0,[101]=1,[102]=2,[103]=3,[104]=4,[105]=5,[106]=6,[107]=7,[108]=8,[109]=9,[110]=10}";
+        //这里以后改为用配置文件配置，方便修改
+
+        LuaTable ltPrefixList = new LuaTable();
+        for (int i = 0; i <= 10; i++) {
+//            LuaTable ltPrefix = new LuaTable();
+            ltPrefixList.addNode("[" + (100 + i) + "]", i);
+        }
+        lt.addNode("idPrefixList", ltPrefixList);
+
+        lt.addNode("\n");
         LuaTable ltAttrs = new LuaTable();
         ltAttrs.addNode("\n");
         for (int i = 0; i < config.system.attributes.size(); i++) {
