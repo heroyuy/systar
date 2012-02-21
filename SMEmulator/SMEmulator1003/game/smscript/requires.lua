@@ -14,7 +14,7 @@ require("clsQueue")
 require("clsHashMap")
 require("clsStack")
 require("clsAStar")
-require("globalNotificationCenter")
+require("globalNotifier")
 
 --common\ui
 require("smUIConst")
