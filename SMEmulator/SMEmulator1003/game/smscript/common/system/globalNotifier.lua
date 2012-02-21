@@ -10,14 +10,14 @@ clsObserver.__index = clsObserver
 
 --字段定义
 clsObserver.target=nil
-clsObserver.callFunction=nil
+clsObserver.callback=nil
 
 --构造器
-function clsObserver:new(target,callFunction)
+function clsObserver:new(target,callback)
   local self = {}
   setmetatable(self,clsObserver)
   self.target=target
-  self.callFunction=callFunction
+  self.callback=callback
   return self
 end
 
@@ -36,12 +36,12 @@ globalNotifier={}
 globalNotifier.observerMap=clsHashMap:new()   --观察者map
 
 --添加观察者
-function globalNotifier:addObserver(name,target,callFunction)
+function globalNotifier:addObserver(name,target,callback)
   if not self.observerMap:has(name) then
     self.observerMap:put(name,clsList:new())
   end
   local list=self.observerMap:get(name)
-  list:add(clsObserver:new(target,callFunction))
+  list:add(clsObserver:new(target,callback))
 end
 
 --删除观察者
@@ -70,7 +70,7 @@ function globalNotifier:notify(name,arg)
     local size=list:size()
     for i=1,size do
       local observer=list:get(i)
-      observer.callFunction(observer.target,arg)
+      observer.callback(observer.target,arg)
     end
   end
 end
