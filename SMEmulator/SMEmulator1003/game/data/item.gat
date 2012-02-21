@@ -1,5 +1,5 @@
-globalDictionary.items={[1]={
-index=1,
+globalDictionary.items={[103000001]={
+index=103000001,
 name="药水",
 intro="恢复 500 点 HP。",
 icon="/image/icon/item/IconSet_63.png",
@@ -38,8 +38,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[2]={
-index=2,
+[103000002]={
+index=103000002,
 name="高效药水",
 intro="恢复 2500 点 HP。",
 icon="/image/icon/item/IconSet_63.png",
@@ -80,8 +80,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[3]={
-index=3,
+[103000003]={
+index=103000003,
 name="强力药水",
 intro="完全恢复 HP。",
 icon="/image/icon/item/IconSet_63.png",
@@ -122,8 +122,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[4]={
-index=4,
+[103000004]={
+index=103000004,
 name="魔法药水",
 intro="恢复 200 点 SP。",
 icon="/image/icon/item/IconSet_64.png",
@@ -164,8 +164,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[5]={
-index=5,
+[103000005]={
+index=103000005,
 name="复活药",
 intro="从不能战斗的状态复活。",
 icon="/image/icon/item/IconSet_65.png",
@@ -206,9 +206,9 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={
-[1]={index=1,value=-100}}},
-[6]={
-index=6,
+[107000001]={index=107000001,value=-100}}},
+[103000006]={
+index=103000006,
 name="解毒剂",
 intro="治疗毒状态。",
 icon="/image/icon/item/IconSet_65.png",
@@ -249,9 +249,9 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={
-[2]={index=2,value=-100}}},
-[7]={
-index=7,
+[107000002]={index=107000002,value=-100}}},
+[103000007]={
+index=103000007,
 name="万能伤药",
 intro="治疗除了不能战斗之外的所有异常状态。",
 icon="/image/icon/item/IconSet_65.png",
@@ -292,16 +292,16 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={
-[2]={index=2,value=-100},
-[3]={index=3,value=-100},
-[4]={index=4,value=-100},
-[5]={index=5,value=-100},
-[6]={index=6,value=-100},
-[7]={index=7,value=-100},
-[8]={index=8,value=-100},
-[9]={index=9,value=-100}}},
-[8]={
-index=8,
+[107000002]={index=107000002,value=-100},
+[107000003]={index=107000003,value=-100},
+[107000004]={index=107000004,value=-100},
+[107000005]={index=107000005,value=-100},
+[107000006]={index=107000006,value=-100},
+[107000007]={index=107000007,value=-100},
+[107000008]={index=107000008,value=-100},
+[107000009]={index=107000009,value=-100}}},
+[103000008]={
+index=103000008,
 name="圣灵药",
 intro="HP 与 MP 完全回复。",
 icon="/image/icon/item/IconSet_68.png",
@@ -342,16 +342,16 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={
-[2]={index=2,value=-100},
-[3]={index=3,value=-100},
-[4]={index=4,value=-100},
-[5]={index=5,value=-100},
-[6]={index=6,value=-100},
-[7]={index=7,value=-100},
-[8]={index=8,value=-100},
-[9]={index=9,value=-100}}},
-[9]={
-index=9,
+[107000002]={index=107000002,value=-100},
+[107000003]={index=107000003,value=-100},
+[107000004]={index=107000004,value=-100},
+[107000005]={index=107000005,value=-100},
+[107000006]={index=107000006,value=-100},
+[107000007]={index=107000007,value=-100},
+[107000008]={index=107000008,value=-100},
+[107000009]={index=107000009,value=-100}}},
+[103000009]={
+index=103000009,
 name="延寿药",
 intro="最大 HP 上升 50 点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -392,8 +392,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[10]={
-index=10,
+[103000010]={
+index=103000010,
 name="升灵药",
 intro="最大 MP 上升 10 点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -434,8 +434,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[11]={
-index=11,
+[103000011]={
+index=103000011,
 name="健体药",
 intro="攻击力上升 3 点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -476,8 +476,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[12]={
-index=12,
+[103000012]={
+index=103000012,
 name="益气药",
 intro="防御力上升 3 点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -518,8 +518,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[13]={
-index=13,
+[103000013]={
+index=103000013,
 name="提神药",
 intro="智力上升 5 点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -560,8 +560,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[14]={
-index=14,
+[103000014]={
+index=103000014,
 name="大力药",
 intro="力量增加5点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -602,8 +602,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[15]={
-index=15,
+[103000015]={
+index=103000015,
 name="快速药",
 intro="敏捷上升5点。",
 icon="/image/icon/item/IconSet_70.png",
@@ -644,8 +644,8 @@ factors={
 [5]={index=5,name="分散度",value=0}},
 attributes={},
 buffs={}},
-[16]={
-index=16,
+[103000016]={
+index=103000016,
 name="火焰卷轴",
 intro="给与敌单体火属性攻击。",
 icon="/image/icon/item/IconSet_147.png",
@@ -685,10 +685,10 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[33]={index=33,value=0}},
+[112000033]={index=112000033,value=0}},
 buffs={}},
-[18]={
-index=18,
+[103000018]={
+index=103000018,
 name="冰之卷轴",
 intro="给予敌单体冷属性的伤害。",
 icon="/image/icon/item/IconSet_147.png",
@@ -728,10 +728,10 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[34]={index=34,value=0}},
+[112000034]={index=112000034,value=0}},
 buffs={}},
-[17]={
-index=17,
+[103000017]={
+index=103000017,
 name="狱火之书",
 intro="给予敌全体炎属性的伤害。",
 icon="/image/icon/item/IconSet_147.png",
@@ -771,10 +771,10 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[33]={index=33,value=0}},
+[112000033]={index=112000033,value=0}},
 buffs={}},
-[20]={
-index=20,
+[103000020]={
+index=103000020,
 name="雷霆卷轴",
 intro="给予敌单体雷属性的伤害。",
 icon="/image/icon/item/IconSet_147.png",
@@ -814,10 +814,10 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[35]={index=35,value=0}},
+[112000035]={index=112000035,value=0}},
 buffs={}},
-[19]={
-index=19,
+[103000019]={
+index=103000019,
 name="暴雪之书",
 intro="给予敌全体冷属性的伤害。",
 icon="/image/icon/item/IconSet_147.png",
@@ -857,10 +857,10 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[34]={index=34,value=0}},
+[112000034]={index=112000034,value=0}},
 buffs={}},
-[21]={
-index=21,
+[103000021]={
+index=103000021,
 name="轰雷之书",
 intro="给予敌全体雷属性的伤害。",
 icon="/image/icon/item/IconSet_147.png",
@@ -900,5 +900,5 @@ factors={
 [4]={index=4,name="速度补正值",value=0},
 [5]={index=5,name="分散度",value=20}},
 attributes={
-[35]={index=35,value=0}},
+[112000035]={index=112000035,value=0}},
 buffs={}}}

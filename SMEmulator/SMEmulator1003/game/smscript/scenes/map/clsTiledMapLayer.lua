@@ -83,7 +83,7 @@ function clsTiledMapLayer:trackViewport(viewport)
   --根据窗口坐标和缓冲坐标判断是否需要更新缓冲
   if self.viewport.x<self.bufferCol*self.cellWidth then
     --缓冲左越界
-      smLog:info("--left--")
+      --smLog:info("--left--")
       --(1)复制可用区域
       self.bufferedImage:copyArea(0,0,(self.bufferColNum-1)*self.cellWidth,self.bufferRowNum*self.cellHeight,self.cellWidth,0)
       --(2)修正缓冲区坐标(左移)
@@ -93,7 +93,7 @@ function clsTiledMapLayer:trackViewport(viewport)
       self:refreshBuffer(refreshBufferRect,true)
   elseif self.viewport.x+self.width>(self.bufferCol+self.bufferColNum)*self.cellWidth then
     --缓冲右越界
-      smLog:info("--right--")
+      --smLog:info("--right--")
       --(1)复制可用区域
       self.bufferedImage:copyArea(self.cellWidth,0,(self.bufferColNum-1)*self.cellWidth,self.bufferRowNum*self.cellHeight,0,0)
       --(2)修正缓冲区坐标(右移)
@@ -103,7 +103,7 @@ function clsTiledMapLayer:trackViewport(viewport)
       self:refreshBuffer(refreshBufferRect,true)
   elseif self.viewport.y<self.bufferRow*self.cellHeight then
     --缓冲上越界
-      smLog:info("--up--")
+      --smLog:info("--up--")
       --(1)复制可用区域
       self.bufferedImage:copyArea(0,0,self.bufferColNum*self.cellWidth,(self.bufferRowNum-1)*self.cellHeight,0,self.cellHeight)
       --(2)修正缓冲区坐标(左移)
@@ -113,7 +113,7 @@ function clsTiledMapLayer:trackViewport(viewport)
       self:refreshBuffer(refreshBufferRect,true)
   elseif self.viewport.y+self.height>(self.bufferRow+self.bufferRowNum)*self.cellHeight then
     --缓冲下越界
-      smLog:info("--down--")
+      --smLog:info("--down--")
       --(1)复制可用区域
       self.bufferedImage:copyArea(0,self.cellHeight,self.bufferColNum*self.cellWidth,(self.bufferRowNum-1)*self.cellHeight,0,0)
       --(2)修正缓冲区坐标(下移)
