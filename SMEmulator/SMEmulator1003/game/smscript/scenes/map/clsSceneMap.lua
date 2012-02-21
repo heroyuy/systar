@@ -196,4 +196,3 @@ function clsSceneMap:calculatePlayerLocation()
   end
   return px,py
 end
-
