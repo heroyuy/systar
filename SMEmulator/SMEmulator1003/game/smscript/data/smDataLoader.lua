@@ -19,7 +19,7 @@ smDataLoader.enemyPath=".\\game\\data\\enemy.gat";
 smDataLoader.enemyTroopPath=".\\game\\data\\enemyTroop.gat";
 smDataLoader.statusPath=".\\game\\data\\status.gat";
 smDataLoader.mapPath=".\\game\\data\\map\\map{index}.gat";
-smDataLoader.npcPath=".\\game\\data\\npc{index}.gat";
+smDataLoader.npcPath=".\\game\\data\\npc.gat";
 smDataLoader.animationPath=".\\game\\data\\animation.gat";
 smDataLoader.configPath=".\\game\\data\\config.gat";
 
@@ -45,7 +45,9 @@ function smDataLoader:init()
   self:loadStatus()
   --(10)加载Animation信息
   self:loadAnimation()
-  --(11)初始化皮肤
+  --(11)加载NPC信息
+  self:loadNPC()
+  --(12)初始化皮肤
   smSkin:init(globalGame.PATH..globalDictionary.config.skin)
 end
 
@@ -108,12 +110,8 @@ function smDataLoader:loadMap(id)
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
 
-function smDataLoader:loadNPC(id)
-  local t=os.time()
-  local path=string.gsub(self.npcPath,"{index}",id)
-  dofile(path)
-  t=os.time()-t
-  smLog:info("加载NPC["..id.."]耗时:"..t.."ms")
+function smDataLoader:loadNPC()
+  dofile(self.npcPath)
 end
 
 function globalDictionary:getMap(id)
@@ -121,11 +119,4 @@ function globalDictionary:getMap(id)
     smDataLoader:loadMap(id)
   end
   return self.maps[id]
-end
-
-function globalDictionary:getNPC(id)
-  if self.npcs[id]==nil then
-    smDataLoader:loadNPC(id)
-  end
-  return self.npcs[id]
 end

@@ -90,8 +90,6 @@ function clsSceneMap:changeMap(map)
   local viewport=self:checkViewport()
   local params={layers=bgLayers,colNum=self.curMap.colNum,rowNum=self.curMap.rowNum,
      cellWidth=self.curMap.cellWidth,cellHeight=self.curMap.cellHeight,viewport=viewport}
-  smLog:info("c:"..params.colNum.."r:"..params.rowNum.."w:"..params.cellWidth.."h:"..params.cellHeight)
-  smLog:info("x:"..params.viewport.x.."y:"..params.viewport.y.."w:"..params.viewport.width.."h"..params.viewport.height)
   self.mapBgLayer:init(params)
   globalGame.rootLayer:addChild(self.mapBgLayer)
   --加载精灵层
