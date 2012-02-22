@@ -33,7 +33,6 @@ end
 -- 开始
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
-  smAudioPlayer:play("game/audio/music/my_love.mp3")
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
   local curMap=globalDictionary:getMap(self.curPlayer.mapId)
   if self.curMap~=curMap then

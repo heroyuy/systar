@@ -24,8 +24,9 @@ import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
 import com.soyomaker.emulator.utils.ColorFactory;
+import com.soyomaker.plugin.IPlugin;
 
-public class Emulator extends JDialog {
+public class Emulator extends JDialog implements IPlugin {
 
 	private static final long serialVersionUID = -8809949650600479176L;
 
@@ -33,13 +34,9 @@ public class Emulator extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			Emulator dialog = new Emulator();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Emulator dialog = new Emulator();
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
 	}
 
 	private GameEngine ge = GameEngine.getInstance();
@@ -252,5 +249,12 @@ public class Emulator extends JDialog {
 	void stopByEngine() {
 		menuItemStop.setEnabled(false);
 		menuItemRun.setEnabled(true);
+	}
+
+	@Override
+	public void start() {
+		Emulator dialog = new Emulator();
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
 	}
 }
