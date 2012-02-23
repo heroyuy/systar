@@ -17,7 +17,11 @@ function clsObserver:new(target,callback)
   local self = {}
   setmetatable(self,clsObserver)
   self.target=target
-  self.callback=callback
+  if type(callback)=="function" then
+    self.callback=callback
+  else
+    self.callback=target[callback]
+  end
   return self
 end
 
