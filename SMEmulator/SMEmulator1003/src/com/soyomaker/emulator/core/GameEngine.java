@@ -36,10 +36,7 @@ public class GameEngine implements Runnable {
 
 	private boolean showStatusBar = true;// 是否显示状态栏
 
-	// private String gamePath =
-	// "D:/WorkSpace/eclipse3.7.1/SMEmulator1003/game";
-
-	private String gamePath = "C:/Users/Administrator/Desktop/test";
+	private String gamePath = null;
 
 	private final String GAME_FILE = "/smscript/game.lua";
 
@@ -61,6 +58,9 @@ public class GameEngine implements Runnable {
 
 	private GameEngine() {
 		loadConfig();
+		// gamePath = AppData.getInstance().getCurProject().getPath();
+		gamePath = "C:/Users/Administrator/Desktop/test";
+		System.out.println(System.getProperty("java.class.path"));
 	}
 
 	/**
