@@ -37,6 +37,7 @@ public class Emulator extends JDialog implements IPlugin {
 		Emulator dialog = new Emulator();
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
+		dialog.startGame();
 	}
 
 	private GameEngine ge = GameEngine.getInstance();
@@ -48,7 +49,6 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private JProgressBar progressBar;
 	private JLabel labelLuaMemory;
-	private JMenuItem menuItemRun;
 	private JMenuItem menuItemStop;
 
 	/**
@@ -176,23 +176,10 @@ public class Emulator extends JDialog implements IPlugin {
 		JMenu mnNewMenu = new JMenu("菜单");
 		menuBar.add(mnNewMenu);
 
-		menuItemRun = new JMenuItem("运行");
-		menuItemRun.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				menuItemRun.setEnabled(false);
-				startGame();
-				menuItemStop.setEnabled(true);
-			}
-		});
-		mnNewMenu.add(menuItemRun);
-
 		menuItemStop = new JMenuItem("停止");
-		menuItemStop.setEnabled(false);
 		menuItemStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				menuItemStop.setEnabled(false);
 				stopGame();
-				menuItemRun.setEnabled(true);
 			}
 		});
 		mnNewMenu.add(menuItemStop);
@@ -201,7 +188,6 @@ public class Emulator extends JDialog implements IPlugin {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				stopGame();
-				System.exit(0);
 			}
 		});
 		pack();
@@ -224,10 +210,8 @@ public class Emulator extends JDialog implements IPlugin {
 	 */
 	private void stopGame() {
 		ge.stopByEmulator();
-		this.repaintGame();// 清屏
-		if (ge.isShowStatusBar()) {
-			labelLuaMemory.setText("0KB");
-		}
+		this.setVisible(false);
+		this.dispose();
 	}
 
 	private String convertMemoryInfo(float memory) {
@@ -247,8 +231,8 @@ public class Emulator extends JDialog implements IPlugin {
 	}
 
 	void stopByEngine() {
-		menuItemStop.setEnabled(false);
-		menuItemRun.setEnabled(true);
+		this.setVisible(false);
+		this.dispose();
 	}
 
 	@Override
@@ -256,5 +240,6 @@ public class Emulator extends JDialog implements IPlugin {
 		Emulator dialog = new Emulator();
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
+		dialog.startGame();
 	}
 }

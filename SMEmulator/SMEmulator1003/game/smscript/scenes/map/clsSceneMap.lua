@@ -70,7 +70,7 @@ function clsSceneMap:changeMap(map)
   --加载地图图集
   for _,v in pairs(self.curMap.tilesets) do
     if globalData.map.imageSets[v.id]==nil then
-      globalData.map.imageSets[v.id]=smImageFactory:createImage(globalGame.PATH..v.path)
+      globalData.map.imageSets[v.id]=smImageFactory:createImage(smGameEngine:getGamePath()..v.path)
     end
   end
   --加载NPC列表

@@ -36,9 +36,14 @@ public class GameEngine implements Runnable {
 
 	private boolean showStatusBar = true;// 是否显示状态栏
 
-	private String luaFilePath = null;
+	// private String gamePath =
+	// "D:/WorkSpace/eclipse3.7.1/SMEmulator1003/game";
 
-	private String globalGameName = null;
+	private String gamePath = "C:/Users/Administrator/Desktop/test";
+
+	private final String GAME_FILE = "/smscript/game.lua";
+
+	private String GAME_NAME = "globalGame";
 
 	private long time = 0;
 
@@ -58,8 +63,19 @@ public class GameEngine implements Runnable {
 		loadConfig();
 	}
 
+	/**
+	 * 垃圾收集：线程直接调用
+	 */
+	private void gc() {
+		luaAdapter.callLuaGC();
+	}
+
 	public int getActualFps() {
 		return actualFps;
+	}
+
+	public String getGamePath() {
+		return gamePath;
 	}
 
 	public int getHeight() {
@@ -103,9 +119,6 @@ public class GameEngine implements Runnable {
 					.getValue());
 			showStatusBar = Boolean.parseBoolean(emulatorXMLObject.getChild(3)
 					.getValue());
-			XMLObject gameXMLObject = emulatorXMLObject.getChild(4);
-			luaFilePath = gameXMLObject.getChild(0).getValue();
-			globalGameName = gameXMLObject.getChild(1).getValue();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -187,6 +200,10 @@ public class GameEngine implements Runnable {
 
 	}
 
+	public void setGamePath(String gamePath) {
+		this.gamePath = gamePath;
+	}
+
 	public void setRatedFps(int ratedFps) {
 		this.ratedFps = ratedFps;
 	}
@@ -196,13 +213,10 @@ public class GameEngine implements Runnable {
 	}
 
 	void startByEmulator() {
-		luaAdapter = LuaAdapter.newInstance(luaFilePath, globalGameName);
+		luaAdapter = LuaAdapter.newInstance(getGamePath() + GAME_FILE,
+				GAME_NAME);
 		running = true;
 		new Thread(this).start();
-	}
-
-	void stopByEmulator() {
-		running = false;
 	}
 
 	/**
@@ -213,19 +227,16 @@ public class GameEngine implements Runnable {
 		running = false;
 	}
 
+	void stopByEmulator() {
+		running = false;
+	}
+
 	/**
 	 * 更新游戏：线程直接调用
 	 */
 	private void updateGame() {
 		// 此处调用lua的update()方法
 		luaAdapter.update();
-	}
-
-	/**
-	 * 垃圾收集：线程直接调用
-	 */
-	private void gc() {
-		luaAdapter.callLuaGC();
 	}
 
 }

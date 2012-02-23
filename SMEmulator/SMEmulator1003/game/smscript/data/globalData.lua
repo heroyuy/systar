@@ -29,15 +29,15 @@ function globalData:newGame()
     player.desc=playerDict.intro
     player.headImageName=playerDict.headImg
     if player.headImageName then
-      player.headImage=smImageFactory:createImage(globalGame.PATH..player.headImageName)
+      player.headImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.headImageName)
     end
     player.charImageName=playerDict.charImg
     if player.charImageName then
-      player.charImage=smImageFactory:createImage(globalGame.PATH..player.charImageName)
+      player.charImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.charImageName)
     end
     player.battlerImageName=playerDict.battlerImg
     if player.battlerImageName then
-      player.battlerImage=smImageFactory:createImage(globalGame.PATH..player.battlerImageName)
+      player.battlerImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.battlerImageName)
     end
     player.vocationId=playerDict.vocationIndex
     player.level=playerDict.startLev

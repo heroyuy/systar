@@ -3,8 +3,6 @@ globalGame={}
 --标志常量：场景
 globalGame.SCENE_TITLE=0 --标题场景
 globalGame.SCENE_MAP=1   --地图场景
---标志常量：游戏路径
-globalGame.PATH="./game"
 
 --成员
 globalGame.curScene=nil
@@ -14,7 +12,7 @@ globalGame.rootLayer=nil
 --脚本启动  lua层不应该调用
 function globalGame:onStart()
   --导入需要的文件
-  package.path = package.path .. ";.\\game\\smscript\\?.lua"
+  package.path = package.path .. ";"..smGameEngine:getGamePath().."\\smscript\\?.lua"
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
