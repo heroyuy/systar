@@ -53,7 +53,6 @@ end
 
 --加载Config数据
 function smDataLoader:loadConfig()
-  smLog:info(self.configPath)
   dofile(self.configPath)
 end
 
