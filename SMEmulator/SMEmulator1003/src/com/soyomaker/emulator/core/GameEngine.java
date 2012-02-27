@@ -60,7 +60,6 @@ public class GameEngine implements Runnable {
 		loadConfig();
 		// gamePath = AppData.getInstance().getCurProject().getPath();
 		gamePath = "C:/Users/Administrator/Desktop/test";
-		System.out.println(System.getProperty("java.class.path"));
 	}
 
 	/**

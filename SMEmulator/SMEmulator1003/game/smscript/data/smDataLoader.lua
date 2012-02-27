@@ -10,18 +10,18 @@ smDataLoader={}
 globalDictionary={maps={},npcs={}}
 
 --定义文件路径
-smDataLoader.vocationPath=".\\game\\data\\vocation.gat";
-smDataLoader.playerPath=".\\game\\data\\player.gat";
-smDataLoader.skillPath=".\\game\\data\\skill.gat";
-smDataLoader.itemPath=".\\game\\data\\item.gat";
-smDataLoader.equipPath=".\\game\\data\\equip.gat";
-smDataLoader.enemyPath=".\\game\\data\\enemy.gat";
-smDataLoader.enemyTroopPath=".\\game\\data\\enemyTroop.gat";
-smDataLoader.statusPath=".\\game\\data\\status.gat";
-smDataLoader.mapPath=".\\game\\data\\map\\map{index}.gat";
-smDataLoader.npcPath=".\\game\\data\\npc.gat";
-smDataLoader.animationPath=".\\game\\data\\animation.gat";
-smDataLoader.configPath=".\\game\\data\\config.gat";
+smDataLoader.vocationPath=smGameEngine:getGamePath().."/data/vocation.gat";
+smDataLoader.playerPath=smGameEngine:getGamePath().."/data/player.gat";
+smDataLoader.skillPath=smGameEngine:getGamePath().."/data/skill.gat";
+smDataLoader.itemPath=smGameEngine:getGamePath().."/data/item.gat";
+smDataLoader.equipPath=smGameEngine:getGamePath().."/data/equip.gat";
+smDataLoader.enemyPath=smGameEngine:getGamePath().."/data/enemy.gat";
+smDataLoader.enemyTroopPath=smGameEngine:getGamePath().."/data/enemyTroop.gat";
+smDataLoader.statusPath=smGameEngine:getGamePath().."/data/status.gat";
+smDataLoader.mapPath=smGameEngine:getGamePath().."/data/map/map{index}.gat";
+smDataLoader.npcPath=smGameEngine:getGamePath().."/data/npc.gat";
+smDataLoader.animationPath=smGameEngine:getGamePath().."/data/animation.gat";
+smDataLoader.configPath=smGameEngine:getGamePath().."/data/config.gat";
 
 --初始化
 function smDataLoader:init()
@@ -53,6 +53,7 @@ end
 
 --加载Config数据
 function smDataLoader:loadConfig()
+  smLog:info(self.configPath)
   dofile(self.configPath)
 end
 

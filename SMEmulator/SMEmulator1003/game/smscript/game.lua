@@ -12,7 +12,7 @@ globalGame.rootLayer=nil
 --脚本启动  lua层不应该调用
 function globalGame:onStart()
   --导入需要的文件
-  package.path = package.path .. ";"..smGameEngine:getGamePath().."\\smscript\\?.lua"
+  package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/?.lua"
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
