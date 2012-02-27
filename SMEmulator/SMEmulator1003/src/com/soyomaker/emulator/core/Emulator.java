@@ -211,7 +211,6 @@ public class Emulator extends JDialog implements IPlugin {
 	private void stopGame() {
 		ge.stopByEmulator();
 		this.setVisible(false);
-		this.dispose();
 	}
 
 	private String convertMemoryInfo(float memory) {
@@ -232,14 +231,12 @@ public class Emulator extends JDialog implements IPlugin {
 
 	void stopByEngine() {
 		this.setVisible(false);
-		this.dispose();
 	}
 
 	@Override
 	public void start() {
-		Emulator dialog = new Emulator();
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setVisible(true);
-		dialog.startGame();
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setVisible(true);
+		this.startGame();
 	}
 }

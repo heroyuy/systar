@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <emulator>
-	<width>960</width>
-	<height>640</height>
+	<width>800</width>
+	<height>480</height>
 	<fps>20</fps>
 	<showStatusBar>true</showStatusBar>
 </emulator>

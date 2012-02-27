@@ -25,8 +25,7 @@ function clsSceneTitle:onStart()
   smLog:info("标题场景启动")
   --播放背景音乐
   if globalDictionary.config.titleMusic then
-    smLog:info(smGameEngine:getGamePath()..globalDictionary.config.titleMusic)
-    smAudioPlayer:play(smGameEngine:getGamePath()..globalDictionary.config.titleMusic)
+    --smAudioPlayer:play(smGameEngine:getGamePath()..globalDictionary.config.titleMusic)
   end
   --背景大图
   local bgLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())

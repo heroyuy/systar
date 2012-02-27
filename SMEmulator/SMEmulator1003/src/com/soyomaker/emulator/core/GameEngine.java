@@ -12,13 +12,13 @@ import com.soyostar.xml.XMLParser;
 
 public class GameEngine implements Runnable {
 
-	private static GameEngine instance = new GameEngine();
-
 	public static final int TOUCH_TYPE_DOWN = 0;
 
 	public static final int TOUCH_TYPE_MOVE = 1;
 
 	public static final int TOUCH_TYPE_UP = 2;
+
+	private static GameEngine instance = new GameEngine();
 
 	public static GameEngine getInstance() {
 		return instance;
