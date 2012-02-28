@@ -66,7 +66,7 @@ public class LuaAdapter {
 			luaState.pushObjectValue(ColorFactory.getInstance());
 			luaState.setGlobal("smColorFactory");
 			// 2、转换lua实现的接口
-			luaGlobalGame = luaState.getLuaObject("globalGame");
+			luaGlobalGame = luaState.getLuaObject(globalGame);
 			luaFunctionOnStart = luaGlobalGame.getField("onStart");
 			luaFunctionOnTouch = luaGlobalGame.getField("onTouch");
 			luaFunctionUpdate = luaGlobalGame.getField("update");
