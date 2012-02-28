@@ -30,14 +30,18 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private static final long serialVersionUID = -8809949650600479176L;
 
+	private boolean exitWhenStop = false;// 是否在结束游戏时退出程序（作为插件时不退出，作为独立程序时要退出）
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		Emulator dialog = new Emulator();
+		dialog.exitWhenStop = true;
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 		dialog.startGame();
+		System.out.println(System.getProperties());
 	}
 
 	private GameEngine ge = GameEngine.getInstance();
@@ -55,9 +59,27 @@ public class Emulator extends JDialog implements IPlugin {
 	 * Create the dialog.
 	 */
 	public Emulator() {
+		// 大小不可拖动改变
 		setResizable(false);
 		ge.emulator = this;
+		// 标题
 		setTitle("SoyoMakerEmulator");
+		// 菜单
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnNewMenu = new JMenu("菜单");
+		menuBar.add(mnNewMenu);
+
+		menuItemStop = new JMenuItem("停止");
+		menuItemStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopGame();
+			}
+		});
+		mnNewMenu.add(menuItemStop);
+
+		// 游戏区域
 		contentPanel = new JPanel() {
 
 			private static final long serialVersionUID = 7608812515686704871L;
@@ -85,6 +107,8 @@ public class Emulator extends JDialog implements IPlugin {
 			}
 
 		};
+
+		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				ge.keyX = e.getX();
@@ -112,6 +136,7 @@ public class Emulator extends JDialog implements IPlugin {
 		contentPanel.setPreferredSize(new Dimension(ge.getWidth(), ge
 				.getHeight()));
 
+		// 状态栏
 		if (ge.isShowStatusBar()) {
 
 			JPanel panel = new JPanel();
@@ -170,20 +195,7 @@ public class Emulator extends JDialog implements IPlugin {
 			timer.start();
 		}
 
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnNewMenu = new JMenu("菜单");
-		menuBar.add(mnNewMenu);
-
-		menuItemStop = new JMenuItem("停止");
-		menuItemStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				stopGame();
-			}
-		});
-		mnNewMenu.add(menuItemStop);
-
+		// 窗口事件监听
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -211,6 +223,9 @@ public class Emulator extends JDialog implements IPlugin {
 	private void stopGame() {
 		ge.stopByEmulator();
 		this.setVisible(false);
+		if (this.exitWhenStop) {
+			System.exit(0);
+		}
 	}
 
 	private String convertMemoryInfo(float memory) {

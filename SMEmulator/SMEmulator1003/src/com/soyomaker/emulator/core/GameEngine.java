@@ -111,7 +111,7 @@ public class GameEngine implements Runnable {
 	private void loadConfig() {
 		try {
 			XMLObject emulatorXMLObject = XMLParser.parse(new File(
-					"config/emulator.xml"));
+					"emulator/config/emulator.xml"));
 			width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
 			height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
 			ratedFps = Integer.parseInt(emulatorXMLObject.getChild(2)

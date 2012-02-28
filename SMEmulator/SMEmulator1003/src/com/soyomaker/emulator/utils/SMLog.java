@@ -20,7 +20,7 @@ public class SMLog {
 
 	public SMLog() {
 		BasicConfigurator.configure();// 自动快速地使用缺省Log4j环境。
-		PropertyConfigurator.configure("config/log4j.properties");// 读取使用Java的特性文件编写的配置文件。
+		PropertyConfigurator.configure("emulator/config/log4j.properties");// 读取使用Java的特性文件编写的配置文件。
 	}
 
 	public void err(Object msg) {
