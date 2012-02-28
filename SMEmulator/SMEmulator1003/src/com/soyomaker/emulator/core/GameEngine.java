@@ -1,15 +1,5 @@
 package com.soyomaker.emulator.core;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import com.soyostar.xml.XMLObject;
-import com.soyostar.xml.XMLParser;
-
 public class GameEngine implements Runnable {
 
 	public static final int TOUCH_TYPE_DOWN = 0;
@@ -24,17 +14,11 @@ public class GameEngine implements Runnable {
 		return instance;
 	}
 
-	private int width = 0;// 屏幕宽度
-
-	private int height = 0;// 屏幕高度
-
-	private int ratedFps = 0;// 额定fps
+	private int ratedFps = 20;// 额定fps
 
 	private int actualFps = 0;// 实际fps
 
 	private boolean showFps = false;// 是否显示FPS
-
-	private boolean showStatusBar = true;// 是否显示状态栏
 
 	private String gamePath = null;
 
@@ -57,9 +41,6 @@ public class GameEngine implements Runnable {
 	private LuaAdapter luaAdapter = null;
 
 	private GameEngine() {
-		loadConfig();
-		// gamePath = AppData.getInstance().getCurProject().getPath();
-		gamePath = "C:/Users/Administrator/Desktop/test";
 	}
 
 	/**
@@ -78,7 +59,7 @@ public class GameEngine implements Runnable {
 	}
 
 	public int getHeight() {
-		return height;
+		return emulator.getScreenHeight();
 	}
 
 	float getLuaMemory() {
@@ -94,37 +75,11 @@ public class GameEngine implements Runnable {
 	}
 
 	public int getWidth() {
-		return width;
+		return emulator.getScreenWidth();
 	}
 
 	public boolean isShowFps() {
 		return showFps;
-	}
-
-	public boolean isShowStatusBar() {
-		return showStatusBar;
-	}
-
-	/**
-	 * 辅助方法：加载配置文件
-	 */
-	private void loadConfig() {
-		try {
-			XMLObject emulatorXMLObject = XMLParser.parse(new File(
-					"emulator/config/emulator.xml"));
-			width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
-			height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
-			ratedFps = Integer.parseInt(emulatorXMLObject.getChild(2)
-					.getValue());
-			showStatusBar = Boolean.parseBoolean(emulatorXMLObject.getChild(3)
-					.getValue());
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -147,14 +102,6 @@ public class GameEngine implements Runnable {
 	void paintGame(Painter painter) {
 		// 此处调用lua的paint(painter)方法
 		luaAdapter.paint(painter);
-	}
-
-	void pauseByEmulator() {
-
-	}
-
-	void resumeByEmulator() {
-
 	}
 
 	@Override

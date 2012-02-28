@@ -8,6 +8,8 @@ public class SMLog {
 
 	private static Logger log = Logger.getLogger("SMScript");
 
+	public static String CONFIG_PATH = "plugin/emulator/config/log4j.properties";
+
 	private boolean debug;
 
 	public boolean isDebug() {
@@ -20,7 +22,7 @@ public class SMLog {
 
 	public SMLog() {
 		BasicConfigurator.configure();// 自动快速地使用缺省Log4j环境。
-		PropertyConfigurator.configure("emulator/config/log4j.properties");// 读取使用Java的特性文件编写的配置文件。
+		PropertyConfigurator.configure(CONFIG_PATH);// 读取使用Java的特性文件编写的配置文件。
 	}
 
 	public void err(Object msg) {
