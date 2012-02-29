@@ -86,6 +86,7 @@ public class Emulator extends JDialog implements IPlugin {
 	 * Create the dialog.
 	 */
 	public Emulator() {
+		// super(AppData.getInstance().getMainFrame(), true);
 		// 读取配置
 		loadConfig();
 		// 初始化
@@ -317,8 +318,9 @@ public class Emulator extends JDialog implements IPlugin {
 			ge.emulator = this;
 			ge.setGamePath(AppData.getInstance().getCurProject().getPath());
 			this.setType(TYPE_PLUGIN);
-			this.setVisible(true);
+			this.setModal(true);
 			this.startGame();
+			this.setVisible(true);
 		}
 	}
 
