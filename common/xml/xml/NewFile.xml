@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<people id="LS088" age="26" name="王xx">
+	<phoneList num="2">
+		<phone id="1" name="iphone" />
+		<phone id="2" name="lephone" />
+	</phoneList>
+</people>
