@@ -94,12 +94,21 @@ function clsSceneMap:changeMap(map)
   --加载精灵层
   self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.spriteLayer.enabled=false
-  self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
-     self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
-  local px,py=self:calculatePlayerLocation()
-  self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
-  self.spriteLayer:addChild(self.playerSprite)
-  globalGame.rootLayer:addChild(self.spriteLayer)
+    --玩家
+    self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
+       self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
+    local px,py=self:calculatePlayerLocation()
+    self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
+    self.spriteLayer:addChild(self.playerSprite)
+    globalGame.rootLayer:addChild(self.spriteLayer)
+    --NPC
+    globalData.map.npcList={}
+    for i=1,table.getn(globalDictionary.npcs) do
+      local npc=globalDictionary.npcs[i]
+      if npc.mapIndex==self.curMap.index then
+      
+      end
+    end
   --加载前景
   local fgLayers=clsList:new()
   for i=1,table.getn(self.curMap.layers) do
