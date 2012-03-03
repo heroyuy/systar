@@ -6,4 +6,4 @@
 
 globalData.map.imageSets={}  --地图图集
 
-globalData.map.npcList=nil   --NPC列表
+globalData.map.npcList=clsList:new()   --NPC列表

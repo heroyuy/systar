@@ -20,7 +20,7 @@ clsSceneMap.aStar=nil          --A*寻路工具
 
 --精灵
 clsSceneMap.playerSprite=nil;  --玩家
-clsSceneMap.npcSpriteList=nil;  --NPC列表
+clsSceneMap.npcSpriteList=clsList:new();  --NPC列表
 
 --构造器
 function clsSceneMap:new()
@@ -49,11 +49,18 @@ function clsSceneMap:update()
   if self.mapFgLayer then
     self.mapFgLayer:trackViewport(viewport)
   end
-  local px,py=self:calculatePlayerLocation()
+  local px,py=self:calculateCharacterLocation(self.curPlayer)
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
   self.playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
+  for i=1,table.getn(globalData.map.npcList) do
+    local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
+    nx=nx-self.curPlayer.charImage:getWidth()/4/2
+    ny=ny+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
+    self.npcSpriteList[i].x,self.npcSpriteList[i].y=nx-viewport.x,ny-viewport.y
+    self.npcSpriteList[i].frameIndex=globalData.map.npcList[i]:getCurFrameIndex()
+  end
 end
 
 -- 退出
@@ -74,8 +81,18 @@ function clsSceneMap:changeMap(map)
     end
   end
   --加载NPC列表
-  globalData.map.npcList={}
-
+  globalData.map.npcList:clear()
+  for i=1,table.getn(globalDictionary.npcs) do
+    local npcDict=globalDictionary.npcs[i]
+    if npcDict.mapIndex==self.curMap.index then
+      local npc=clsNPC:new()
+      npc.id=npcDict.index
+      npc.row=npcDict.row
+      npc.col=npcDict.col
+      npc.mapId=npcDict.mapIndex
+      globalData.map.npcList:add(npc)
+    end
+  end
   --加载背景
   local bgLayers=clsList:new()
   for i=1,table.getn(self.curMap.layers) do
@@ -97,18 +114,20 @@ function clsSceneMap:changeMap(map)
     --玩家
     self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
-    local px,py=self:calculatePlayerLocation()
+    local px,py=self:calculateCharacterLocation(self.curPlayer)
     self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
     self.spriteLayer:addChild(self.playerSprite)
-    globalGame.rootLayer:addChild(self.spriteLayer)
     --NPC
-    globalData.map.npcList={}
-    for i=1,table.getn(globalDictionary.npcs) do
-      local npc=globalDictionary.npcs[i]
-      if npc.mapIndex==self.curMap.index then
-      
-      end
+    self.npcSpriteList:clear()
+    for i=1,table.getn(globalData.map.npcList) do
+      local npcSprite=clsUISprite:new(self.curPlayer.charImage,
+       self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
+      local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
+      npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
+      self.npcSpriteList:add(npcSprite)
+      self.spriteLayer:addChild(npcSprite)
     end
+    globalGame.rootLayer:addChild(self.spriteLayer)
   --加载前景
   local fgLayers=clsList:new()
   for i=1,table.getn(self.curMap.layers) do
@@ -164,7 +183,7 @@ end
 
 --计算viewport
 function clsSceneMap:checkViewport()
-  local px,py=self:calculatePlayerLocation()
+  local px,py=self:calculateCharacterLocation(self.curPlayer)
   local width=smGameEngine:getWidth()
   local height=smGameEngine:getHeight()
   local vx=px-width/2
@@ -185,22 +204,22 @@ function clsSceneMap:checkViewport()
 end
 
 --计算player当前物理坐标(player所在单元格正中心坐标)
-function clsSceneMap:calculatePlayerLocation()
-  local px=self.curPlayer.col*self.curMap.cellWidth+self.curMap.cellWidth/2
-  local py=self.curPlayer.row*self.curMap.cellHeight+self.curMap.cellHeight/2
+function clsSceneMap:calculateCharacterLocation(character)
+  local px=character.col*self.curMap.cellWidth+self.curMap.cellWidth/2
+  local py=character.row*self.curMap.cellHeight+self.curMap.cellHeight/2
   --根据player当前面向和行走状态进行位置修正
-  if self.curPlayer.face==0 then
+  if character.face==0 then
     --上
-    py=py-self.curMap.cellHeight/4*self.curPlayer.step
-  elseif self.curPlayer.face==1 then
+    py=py-self.curMap.cellHeight/4*character.step
+  elseif character.face==1 then
     --下
-    py=py+self.curMap.cellHeight/4*self.curPlayer.step
-  elseif self.curPlayer.face==2 then
+    py=py+self.curMap.cellHeight/4*character.step
+  elseif character.face==2 then
     --左
-    px=px-self.curMap.cellWidth/4*self.curPlayer.step
-  elseif self.curPlayer.face==3 then
+    px=px-self.curMap.cellWidth/4*character.step
+  elseif character.face==3 then
     --右
-    px=px+self.curMap.cellWidth/4*self.curPlayer.step
+    px=px+self.curMap.cellWidth/4*character.step
   end
   return px,py
 end
