@@ -46,7 +46,7 @@ function clsUILayer:addChild(layer)
   self:sortChildren()
 end
 
---添加子Layer
+--子Layer排序
 function clsUILayer:sortChildren()
   table.sort(self.children,function(a,b) return a.z<b.z end)
 end
