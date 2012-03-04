@@ -11,6 +11,7 @@ clsUILayer.__index=clsUILayer
 --字段
 clsUILayer.x=0                               --x坐标
 clsUILayer.y=0                               --y坐标
+clsUILayer.z=0                               --z坐标
 clsUILayer.width=0                           --宽度
 clsUILayer.height=0                          --高度
 clsUILayer.tag=0                             --标志（可选）
@@ -21,6 +22,7 @@ clsUILayer.visibility = true;                --是否可见
 clsUILayer.enabled = true;                   --是否接收事件
 clsUILayer.clipBounds=true;                  --是否裁剪区域
 clsUILayer.delegate=nil                      --事件委托
+clsUILayer.parent=nil                        --父layer
 clsUILayer.children=nil                      --子layer
 clsUILayer.focusLayer=nil                    --当前事件焦点子layer
 clsUILayer.bufferedMode=false                --是否开启缓冲 TODO 功能尚未实现
@@ -40,11 +42,18 @@ end
 --添加子Layer
 function clsUILayer:addChild(layer)
   self.children:add(layer)
+  layer.parent=self
+  self:sortChildren()
+end
+
+--添加子Layer
+function clsUILayer:sortChildren()
+  table.sort(self.children,function(a,b) return a.z<b.z end)
 end
 
 --根据序号获取子layer
 function clsUILayer:getChild(index)
-  self.children:get(index)
+  return self.children:get(index)
 end
 
 --根据tag获取子layer
@@ -61,16 +70,21 @@ end
 
 --移除子Layer
 function clsUILayer:remove(index)
+  self:getChild(index).parent=nil
   self.children:remove(index)
 end
 
 --移除子Layer
 function clsUILayer:removeChild(layer)
+  layer.parent=nil
   self.children:removeObject(layer)
 end
 
 --移除所有子Layer
 function clsUILayer:clear()
+  for i=1,self.children:size() do
+    self:getChild(i).parent=nil
+  end
   self.children:clear()
 end
 

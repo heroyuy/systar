@@ -108,3 +108,22 @@ if debug then
   l1:add("")
   print(l1:size())  --2
 end
+
+if debug then
+local l=clsList:new()
+l:add({id=12})
+l:add({id=1})
+l:add({id=2})
+l:add({id=8})
+l:add({id=-1})
+for i=1,l:size() do
+  print(l:get(i).id)
+end
+print("----------------------")
+table.sort(l,function(a,b) return a.id<b.id end)
+
+for i=1,l:size() do
+  print(l:get(i).id)
+end
+end
+
