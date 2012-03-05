@@ -18,10 +18,6 @@ clsSceneMap.mapFgLayer=nil     --前景
 clsSceneMap.spriteLayer=nil    --精灵层
 clsSceneMap.aStar=nil          --A*寻路工具
 
---精灵
-clsSceneMap.playerSprite=nil;  --玩家
-clsSceneMap.npcSpriteList=clsList:new();  --NPC列表
-
 --构造器
 function clsSceneMap:new()
 	local self = clsScene:new()
@@ -49,17 +45,19 @@ function clsSceneMap:update()
   if self.mapFgLayer then
     self.mapFgLayer:trackViewport(viewport)
   end
+  local playerSprite=self.spriteLayer:childWithTag(self.curPlayer.id)
   local px,py=self:calculateCharacterLocation(self.curPlayer)
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
-  self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
-  self.playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
+  playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
+  playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
   for i=1,table.getn(globalData.map.npcList) do
+    local npcSprite=self.spriteLayer:childWithTag(globalData.map.npcList[i].id)
     local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
     nx=nx-self.curPlayer.charImage:getWidth()/4/2
     ny=ny+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
-    self.npcSpriteList[i].x,self.npcSpriteList[i].y=nx-viewport.x,ny-viewport.y
-    self.npcSpriteList[i].frameIndex=globalData.map.npcList[i]:getCurFrameIndex()
+    npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
+    npcSprite.frameIndex=globalData.map.npcList[i]:getCurFrameIndex()
   end
 end
 
@@ -112,19 +110,19 @@ function clsSceneMap:changeMap(map)
   self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.spriteLayer.enabled=false
     --玩家
-    self.playerSprite=clsUISprite:new(self.curPlayer.charImage,
+    local playerSprite=clsUISprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
+    playerSprite.tag=self.curPlayer.id
     local px,py=self:calculateCharacterLocation(self.curPlayer)
-    self.playerSprite.x,self.playerSprite.y=px-viewport.x,py-viewport.y
-    self.spriteLayer:addChild(self.playerSprite)
+    playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
+    self.spriteLayer:addChild(playerSprite)
     --NPC
-    self.npcSpriteList:clear()
     for i=1,table.getn(globalData.map.npcList) do
       local npcSprite=clsUISprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
+      npcSprite.tag=globalData.map.npcList[i].id
       local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
-      self.npcSpriteList:add(npcSprite)
       self.spriteLayer:addChild(npcSprite)
     end
     globalGame.rootLayer:addChild(self.spriteLayer)
