@@ -80,8 +80,7 @@ function globalData:newGame()
   end
   self.playerTroop.curDisplayPlayerId=globalDictionary.config.playersIndex[1] --TODO 此值应该读配置
   --初始化NPC信息表
-  
-  self.updateSwitch=true
+  self.npcs={}
 end
 
 --加载游戏:从第index个存档初始化游戏
