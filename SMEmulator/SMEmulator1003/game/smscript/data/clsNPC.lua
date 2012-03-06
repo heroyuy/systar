@@ -31,7 +31,16 @@ function clsNPC:update()
   --调用父类的update方法
   self:updateFF()
   --自动行走
-  
+  if self.moveType~=0 then
+    --NPC类型非固定
+    if self.curMoveDirection==nil then
+      --当前没有行走
+      if smRandom:nextInt(20/self.speedLevel)==0 then
+        --TODO  此处应该判断是否可以行走
+        self.moveSequence:offer(smRandom:nextInt(4))
+      end
+    end
+  end
   --TODO 其它更新
   
 end
