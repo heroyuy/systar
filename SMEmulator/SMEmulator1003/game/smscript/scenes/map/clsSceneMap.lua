@@ -32,6 +32,7 @@ function clsSceneMap:onStart()
   --注册接收通知
   globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
+  self.curPlayer.moveDelegate=self
   local curMap=globalDictionary:getMap(self.curPlayer.mapId)
   if self.curMap~=curMap then
     --切换地图
@@ -120,6 +121,7 @@ function clsSceneMap:changeMap(map)
     --NPC
     for k,v in pairs(self.curMap.npcs) do
       local npc=globalData:getNPC(v)
+      npc.moveDelegate=self
       local npcSprite=clsUISprite:new(npc.charImage,
         npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
       npcSprite.tag=npc.id
@@ -223,6 +225,23 @@ function clsSceneMap:calculateCharacterLocation(character)
     px=px+self.curMap.cellWidth/4*character.step
   end
   return px,py
+end
+
+--============character的moveDelegate============
+function clsSceneMap:checkCell(row,col)
+  --检查地图边界
+  if row<0 or row>self.curMap.rowNum-1 or col<0 or col>self.curMap.colNum-1 then
+    return false
+  end
+  --检查地图通行度
+  if self.curMap.areas[row+1][col+1]==-1 then
+    return false
+  end
+  --检查目标位置是否有其它不可穿透的character
+    --(1)、检查玩家位置
+    
+    --(2)、检查npc位置
+  return true
 end
 
 --============处理通知============

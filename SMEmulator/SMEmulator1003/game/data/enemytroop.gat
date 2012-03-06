@@ -1,4 +1,1 @@
-globalDictionary.enemytroops={[106000001]={
-index=106000001,
-name="阿尔萨斯,欧尔,巴布尔,香奈儿",
-enemys={105000001,105000002,105000003,105000004},events={}}}
+globalDictionary.enemytroops={}

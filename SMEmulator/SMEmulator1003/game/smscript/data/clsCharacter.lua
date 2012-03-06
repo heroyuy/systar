@@ -72,26 +72,13 @@ end
 function clsCharacter:move()
   --移动之前检查目标单元格是否可以移动
   if self.step==0 then
-    local row=self.row
-    local col=self.col
-    if self.curMoveDirection==0 then
-      --上
-      row=row-1
-    elseif self.curMoveDirection==1 then
-      --下
-      row=row+1
-    elseif self.curMoveDirection==2 then
-      --左
-      col=col-1
-    elseif self.curMoveDirection==3 then
-      --右
-      col=col+1
-    end
+    local row,col=self:getHoldingCell()
     if self.moveDelegate then
       if not self.moveDelegate:checkCell(row,col) then
         --目的地不可达(停止所有移动)
         self.curMoveDirection=nil
         self.moveSequence:clear()
+        return
       end
     end
   end
@@ -99,21 +86,11 @@ function clsCharacter:move()
   local rowChanged=false
   self.step=self.step+1
   if self.step==4 then
-    if self.curMoveDirection==0 then
-      --上
-      self.row=self.row-1
+    local row,col=self:getHoldingCell()
+    if row~=self.row then
       rowChanged=true
-    elseif self.curMoveDirection==1 then
-      --下
-      self.row=self.row+1
-      rowChanged=true
-    elseif self.curMoveDirection==2 then
-      --左
-      self.col=self.col-1
-    elseif self.curMoveDirection==3 then
-      --右
-      self.col=self.col+1
     end
+    self.row,self.col=row,col
     self.curMoveDirection=nil
     self.step=0
   end
@@ -138,4 +115,30 @@ function clsCharacter:getCurFrameIndex()
   end
   index=index+self.step
   return index
+end
+
+--获取character当前持有的单元格
+function clsCharacter:getHoldingCell()
+  if self.curMoveDirection then
+    --移动中
+    local row=self.row
+    local col=self.col
+    if self.curMoveDirection==0 then
+      --上
+      row=row-1
+    elseif self.curMoveDirection==1 then
+      --下
+      row=row+1
+    elseif self.curMoveDirection==2 then
+      --左
+      col=col-1
+    elseif self.curMoveDirection==3 then
+      --右
+      col=col+1
+    end
+    return row,col
+  else
+    --静止
+    return self.row,self.col
+  end 
 end

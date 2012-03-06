@@ -155,7 +155,7 @@ parameters={
 [1]={paramType=1,paramName="体力",paramRule=0,paramValue=0},
 [1]={paramType=1,paramName="灵巧",paramRule=0,paramValue=0},
 [1]={paramType=1,paramName="运气",paramRule=0,paramValue=0},
-[7]={paramType=7,paramName="",paramRule=0,paramValue=0}},
+[1]={paramType=1,paramName="",paramRule=0,paramValue=0}},
 conditions={
 [2]={conditionType=2,conditionName="受到伤害解除",param=30},
 [3]={conditionType=3,conditionName="回合解除",param=3}},
