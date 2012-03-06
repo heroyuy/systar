@@ -31,7 +31,8 @@ globalData.playerTroop={}      --玩家队伍
 globalData.map={}              --地图
 globalData.npcs=nil            --npc列表
 globalData.proxy={}            --外部代理
---字段:标识
+--字段
+globalData.imageSets={}        --地图图集
 globalData.updateSwitch=false  -- 模型更新开关
 
 --字段：私有

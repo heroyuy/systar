@@ -29,6 +29,8 @@ end
 -- 开始
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
+  --注册接收通知
+  globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
   local curMap=globalDictionary:getMap(self.curPlayer.mapId)
   if self.curMap~=curMap then
@@ -40,17 +42,23 @@ end
 -- 更新
 function clsSceneMap:update()
   --smLog:info("地图场景更新")
+  --TODO 此处画面更新存在问题，效率不高，需要改进
+  --计算新的窗口位置
   local viewport=self:checkViewport()
+  --背景移动
   self.mapBgLayer:trackViewport(viewport)
+  --前景移动
   if self.mapFgLayer then
     self.mapFgLayer:trackViewport(viewport)
   end
+  --player移动
   local playerSprite=self.spriteLayer:childWithTag(self.curPlayer.id)
   local px,py=self:calculateCharacterLocation(self.curPlayer)
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
   playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
+  --npc移动
   for k,v in pairs(self.curMap.npcs) do
     local npc=globalData:getNPC(v)
     local npcSprite=self.spriteLayer:childWithTag(npc.id)
@@ -75,8 +83,8 @@ function clsSceneMap:changeMap(map)
   globalGame.rootLayer:clear()
   --加载地图图集
   for _,v in pairs(self.curMap.tilesets) do
-    if globalData.map.imageSets[v.id]==nil then
-      globalData.map.imageSets[v.id]=smImageFactory:createImage(smGameEngine:getGamePath()..v.path)
+    if globalData.imageSets[v.id]==nil then
+      globalData.imageSets[v.id]=smImageFactory:createImage(smGameEngine:getGamePath()..v.path)
     end
   end
   --加载背景
@@ -101,6 +109,7 @@ function clsSceneMap:changeMap(map)
     local playerSprite=clsUISprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
     playerSprite.tag=self.curPlayer.id
+    playerSprite.z=self.curPlayer.row
     local px,py=self:calculateCharacterLocation(self.curPlayer)
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
     self.spriteLayer:addChild(playerSprite)
@@ -110,6 +119,7 @@ function clsSceneMap:changeMap(map)
       local npcSprite=clsUISprite:new(npc.charImage,
         npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
       npcSprite.tag=npc.id
+      npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
@@ -190,7 +200,7 @@ function clsSceneMap:checkViewport()
   return {x=vx,y=vy,width=width,height=height}
 end
 
---计算player当前物理坐标(player所在单元格正中心坐标)
+--计算characher当前物理坐标(characher所在单元格正中心坐标)
 function clsSceneMap:calculateCharacterLocation(character)
   local px=character.col*self.curMap.cellWidth+self.curMap.cellWidth/2
   local py=character.row*self.curMap.cellHeight+self.curMap.cellHeight/2
@@ -209,4 +219,14 @@ function clsSceneMap:calculateCharacterLocation(character)
     px=px+self.curMap.cellWidth/4*character.step
   end
   return px,py
+end
+
+--============处理通知============
+--character移动
+function clsSceneMap:characterMoved(param)
+  --如果character的行有变化需要修改对应sprite的z值
+  if param.rowChanged then
+    local sprite=self.spriteLayer:childWithTag(param.character.id)
+    sprite:changeZ(param.character.row)
+  end
 end

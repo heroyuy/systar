@@ -24,6 +24,7 @@ require("clsUIButton")
 require("clsUISprite")
 
 --data
+require("globalConst")
 require("smDataLoader")
 require("clsModel")
 require("clsBag")
@@ -32,7 +33,6 @@ require("clsPlayer")
 require("clsNPC")
 require("globalData")
 require("globalData_player")
-require("globalData_map")
 
 --scene
 require("clsScene")

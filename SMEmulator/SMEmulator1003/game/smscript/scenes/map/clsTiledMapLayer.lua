@@ -144,10 +144,10 @@ function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
           local imageSetId=cell[1]
           local tiledIndex=cell[2]
           if imageSetId~=-1 then
-            local imgColNum=globalData.map.imageSets[imageSetId]:getWidth()/self.cellWidth
+            local imgColNum=globalData.imageSets[imageSetId]:getWidth()/self.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
-            self.bufferedPainter:drawImage(globalData.map.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
+            self.bufferedPainter:drawImage(globalData.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
                  k*self.cellWidth,j*self.cellHeight,smUIConst.anchor.LT)
           end
         end

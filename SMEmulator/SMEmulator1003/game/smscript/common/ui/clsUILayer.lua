@@ -88,6 +88,12 @@ function clsUILayer:clear()
   self.children:clear()
 end
 
+--改变z值
+function clsUILayer:changeZ(z)
+  self.z=z
+  self.parent:sortChildren()
+end
+
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
   --绘制自身

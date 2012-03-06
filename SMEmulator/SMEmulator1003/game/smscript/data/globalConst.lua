@@ -7,7 +7,7 @@
 --初始化
 globalConst={}
 
---对象类型
+--============对象类型============
 globalConst.ObjectType={}
 globalConst.ObjectType.VOCATION=0           --职业
 globalConst.ObjectType.PLAYER=1             --玩家
@@ -20,3 +20,14 @@ globalConst.ObjectType.STATUS=7             --状态
 globalConst.ObjectType.MAP=8                --地图
 globalConst.ObjectType.NPC=9                --NPC
 globalConst.ObjectType.ANIMATION=10         --动画
+
+--============消息命令============
+globalConst.NotifyCMD={}
+--Character
+globalConst.NotifyCMD.Character={}
+  --[[
+    character移动，此通知的参数为{character=player/npc,rowChanged=true}
+            第一个参数是移动的目标 第二个标识移动后character的行号是否变化
+  --]]
+  globalConst.NotifyCMD.Character.MOVED="characterMoved"    --角色移动
+
