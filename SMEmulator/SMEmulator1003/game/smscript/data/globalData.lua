@@ -4,12 +4,32 @@
   date:2011/12/12
 --]]
 
+--[[
+   数据结构说明：
+   字典类型的数据在游戏过程中不会修改，不需要区分“新游戏”和“加载游戏”；非字典数据在游戏过程中会变化，游戏存档时
+需要保存，“新游戏”和“加载游戏”时也不一样。
+ 1、vocation      字典
+ 2、player        非字典
+ 3、skill         字典
+ 4、item          字典
+ 5、equip         字典
+ 6、enemy         非字典（但游戏存档时不需要保存，游戏设计时战斗中不应该有存档）
+ 7、enemytroop    字典
+ 8、status        字典
+ 9、map           字典
+ 10、npc          非字典
+ 11、animation    字典
+ 12、config       字典
+--]]
+
+
 --初始化
 globalData={}
 
 --字段：公共模块
 globalData.playerTroop={}      --玩家队伍
 globalData.map={}              --地图
+globalData.npcs=nil            --npc列表
 globalData.proxy={}            --外部代理
 --字段:标识
 globalData.updateSwitch=false  -- 模型更新开关
@@ -59,6 +79,8 @@ function globalData:newGame()
     self.playerTroop.players[player.id]=player
   end
   self.playerTroop.curDisplayPlayerId=globalDictionary.config.playersIndex[1] --TODO 此值应该读配置
+  --初始化NPC信息表
+  
   self.updateSwitch=true
 end
 
