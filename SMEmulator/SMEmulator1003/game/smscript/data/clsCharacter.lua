@@ -40,8 +40,11 @@ clsCharacter.luck=0 --幸运
 clsCharacter.exp=0 --经验值
 clsCharacter.money=0 --金钱
 
-clsCharacter.moveSequence=nil --角色当前移动序列
+clsCharacter.moveSequence=nil     --角色当前移动序列
 clsCharacter.curMoveDirection=nil --角色当前移动方向
+
+clsCharacter.moveDelegate=nil     --行走事件委托 需要方法 “checkCell(row,col)”以检查指定单元格是否可以行走 
+
 --构造器
 function clsCharacter:new()
 	local self = clsModel:new()
@@ -60,13 +63,39 @@ function clsCharacter:update()
     self.face=self.curMoveDirection
   end
   if self.curMoveDirection then
-    self:move()
+    self:move() 
   end
   --TODO 其它更新
 end
 
 --行走
 function clsCharacter:move()
+  --移动之前检查目标单元格是否可以移动
+  if self.step==0 then
+    local row=self.row
+    local col=self.col
+    if self.curMoveDirection==0 then
+      --上
+      row=row-1
+    elseif self.curMoveDirection==1 then
+      --下
+      row=row+1
+    elseif self.curMoveDirection==2 then
+      --左
+      col=col-1
+    elseif self.curMoveDirection==3 then
+      --右
+      col=col+1
+    end
+    if self.moveDelegate then
+      if not self.moveDelegate:checkCell(row,col) then
+        --目的地不可达(停止所有移动)
+        self.curMoveDirection=nil
+        self.moveSequence:clear()
+      end
+    end
+  end
+  --移动
   local rowChanged=false
   self.step=self.step+1
   if self.step==4 then

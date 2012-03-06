@@ -32,8 +32,8 @@ import org.xml.sax.SAXException;
 import com.soyomaker.AppData;
 import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.plugin.IPlugin;
-import com.soyostar.xml.XMLObject;
-import com.soyostar.xml.XMLParser;
+import com.soyomaker.xml.XMLObject;
+import com.soyomaker.xml.XMLParser;
 
 public class Emulator extends JDialog implements IPlugin {
 
