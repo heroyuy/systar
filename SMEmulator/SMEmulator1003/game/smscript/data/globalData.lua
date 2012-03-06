@@ -85,6 +85,8 @@ function globalData:newGame()
   self.playerTroop.curDisplayPlayerId=globalDictionary.config.playersIndex[1] --TODO 此值应该读配置
   --初始化NPC信息表
   self.npcs={}
+  --打开Model更新开关
+  self.updateSwitch=true
 end
 
 --加载游戏:从第index个存档初始化游戏
@@ -102,6 +104,7 @@ function globalData:getNPC(id)
     --指定id的NPC不存在
     local npc=clsNPC:new()
     local npcDict=nil
+    smLog:info("load npc:"..id)
     if self.gameType==-1 then
       --新游戏
       npcDict=globalDictionary.npcs[id]
@@ -115,7 +118,13 @@ function globalData:getNPC(id)
     npc.col=npcDict.col
     npc.name=npcDict.name
     npc.charImageName=npcDict.charImg
+    if npc.charImageName then
+      npc.charImage=smImageFactory:createImage(smGameEngine:getGamePath()..npc.charImageName)
+    end
     npc.headImageName=npcDict.headImg
+    if npc.headImageName then
+      npc.headImage=smImageFactory:createImage(smGameEngine:getGamePath()..npc.headImageName)
+    end
     npc.face=npcDict.face
     npc.moveType=npcDict.moveType
     npc.speedLevel=npcDict.speedLevel

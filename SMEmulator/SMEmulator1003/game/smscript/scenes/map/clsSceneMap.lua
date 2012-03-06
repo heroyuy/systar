@@ -51,13 +51,14 @@ function clsSceneMap:update()
   py=py+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
   playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
-  for i=1,table.getn(globalData.map.npcList) do
-    local npcSprite=self.spriteLayer:childWithTag(globalData.map.npcList[i].id)
-    local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
-    nx=nx-self.curPlayer.charImage:getWidth()/4/2
-    ny=ny+self.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
+  for k,v in pairs(self.curMap.npcs) do
+    local npc=globalData:getNPC(v)
+    local npcSprite=self.spriteLayer:childWithTag(npc.id)
+    local nx,ny=self:calculateCharacterLocation(npc)
+    nx=nx-npc.charImage:getWidth()/4/2
+    ny=ny+self.curMap.cellHeight/2-npc.charImage:getHeight()/4
     npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
-    npcSprite.frameIndex=globalData.map.npcList[i]:getCurFrameIndex()
+    npcSprite.frameIndex=npc:getCurFrameIndex()
   end
 end
 
@@ -76,19 +77,6 @@ function clsSceneMap:changeMap(map)
   for _,v in pairs(self.curMap.tilesets) do
     if globalData.map.imageSets[v.id]==nil then
       globalData.map.imageSets[v.id]=smImageFactory:createImage(smGameEngine:getGamePath()..v.path)
-    end
-  end
-  --加载NPC列表
-  globalData.map.npcList:clear()
-  for i=1,table.getn(globalDictionary.npcs) do
-    local npcDict=globalDictionary.npcs[i]
-    if npcDict.mapIndex==self.curMap.index then
-      local npc=clsNPC:new()
-      npc.id=npcDict.index
-      npc.row=npcDict.row
-      npc.col=npcDict.col
-      npc.mapId=npcDict.mapIndex
-      globalData.map.npcList:add(npc)
     end
   end
   --加载背景
@@ -117,11 +105,12 @@ function clsSceneMap:changeMap(map)
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
     self.spriteLayer:addChild(playerSprite)
     --NPC
-    for i=1,table.getn(globalData.map.npcList) do
-      local npcSprite=clsUISprite:new(self.curPlayer.charImage,
-       self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
-      npcSprite.tag=globalData.map.npcList[i].id
-      local nx,ny=self:calculateCharacterLocation(globalData.map.npcList[i])
+    for k,v in pairs(self.curMap.npcs) do
+      local npc=globalData:getNPC(v)
+      local npcSprite=clsUISprite:new(npc.charImage,
+        npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
+      npcSprite.tag=npc.id
+      local nx,ny=self:calculateCharacterLocation(npc)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
     end
