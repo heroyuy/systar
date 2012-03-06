@@ -27,9 +27,12 @@ function clsNPC:new()
 end
 
 --更新[NPC更新] 
-function clsCharacter:update()
+function clsNPC:update()
   --调用父类的update方法
   self:updateFF()
+  --自动行走
+  
   --TODO 其它更新
+  
 end
 

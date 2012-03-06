@@ -24,7 +24,7 @@ function clsPlayer:new()
 end
 
 --更新[Player更新] 
-function clsCharacter:update()
+function clsPlayer:update()
   --调用父类的update方法
   self:updateFF()
   --TODO 其它更新

@@ -105,7 +105,6 @@ function globalData:getNPC(id)
     --指定id的NPC不存在
     local npc=clsNPC:new()
     local npcDict=nil
-    smLog:info("load npc:"..id)
     if self.gameType==-1 then
       --新游戏
       npcDict=globalDictionary.npcs[id]

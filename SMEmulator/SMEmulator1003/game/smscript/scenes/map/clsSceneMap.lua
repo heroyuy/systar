@@ -41,7 +41,11 @@ end
 
 -- 更新
 function clsSceneMap:update()
-  --smLog:info("地图场景更新")
+  --更新当前地图上的NPC
+  for k,v in pairs(self.curMap.npcs) do
+    local npc=globalData:getNPC(v)
+    npc:update()
+  end
   --TODO 此处画面更新存在问题，效率不高，需要改进
   --计算新的窗口位置
   local viewport=self:checkViewport()
