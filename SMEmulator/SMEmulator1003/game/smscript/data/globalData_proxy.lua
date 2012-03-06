@@ -4,7 +4,7 @@
   date:2012/02/04
 --]]
 
-----------流程控制类----------
+--============流程控制类============
 --结束游戏
 function globalData.proxy:stopGame()
 end
@@ -17,7 +17,7 @@ end
 function globalData.proxy:sleep(millisecond)
 end
 
-----------游戏表现类----------
+--============游戏表现类============
 --切换地图
 function globalData.proxy:changeMap(mapId,row,col,face)
 end
@@ -118,7 +118,7 @@ end
 function globalData.proxy:returnToMainMenu()
 end
 
-----------数据处理类----------
+--============数据处理类============
 --开关操作
 function globalData.proxy:operateSwitch(switchId,value)
 end

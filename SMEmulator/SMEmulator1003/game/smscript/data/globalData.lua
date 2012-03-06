@@ -34,10 +34,14 @@ globalData.proxy={}            --外部代理
 --字段:标识
 globalData.updateSwitch=false  -- 模型更新开关
 
+--字段：私有
+globalData.gameType=-1         --游戏类型（-1 新游戏   0-n 游戏存档）
 
+--============游戏加载、保存============
 --新游戏：从字典中初始化游戏
 function globalData:newGame()
   smLog:info("newGame");
+  self.gameType=-1
   --初始化PlayerTroop
   for _,v in ipairs(globalDictionary.config.playersIndex) do
     smLog:info("new player")
@@ -87,6 +91,40 @@ end
 function globalData:loadGame(index)
 end
 
+--保存游戏:保存游戏到第index个存档
+function globalData:saveGame(index)
+end
+
+--============NPC相关操作============
+--获取指定id的NPC
+function globalData:getNPC(id)
+  if self.npcs[id]==nil then
+    --指定id的NPC不存在
+    local npc=clsNPC:new()
+    local npcDict=nil
+    if self.gameType==-1 then
+      --新游戏
+      npcDict=globalDictionary.npcs[id]
+    else
+      --加载存档
+      npcDict=nil  --TODO 从存档加载NPC信息
+    end
+    npc.id=npcDict.index
+    npc.mapId=npcDict.mapIndex
+    npc.row=npcDict.row
+    npc.col=npcDict.col
+    npc.name=npcDict.name
+    npc.charImageName=npcDict.charImg
+    npc.headImageName=npcDict.headImg
+    npc.face=npcDict.face
+    npc.moveType=npcDict.moveType
+    npc.speedLevel=npcDict.speedLevel
+    npc.penetrable=npcDict.penetrable
+    self.npcs[id]=npc
+  end
+  return self.npcs[id]
+end
+
 --更新游戏模型
 function globalData:update()
   if self.updateSwitch then
@@ -95,3 +133,4 @@ function globalData:update()
     end
   end
 end
+

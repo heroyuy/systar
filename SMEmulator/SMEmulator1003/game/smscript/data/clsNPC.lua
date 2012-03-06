@@ -14,7 +14,10 @@ clsNPC.__index = clsNPC
 clsNPC.updateFF=clsNPC.update
 
 --字段定义
-clsNPC.vocationId=0 --职业ID
+clsNPC.moveType=0            --移动规则                       0 固定	1 随机	2 接近
+clsNPC.speedLevel=1          --移动速度级别                1 慢	    2 中    	3 快
+clsNPC.penetrable=true       --是否可穿透
+clsNPC.penetrable=true       --是否可穿透    
 
 --构造器
 function clsNPC:new()
