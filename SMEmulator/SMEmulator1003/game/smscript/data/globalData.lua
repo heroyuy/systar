@@ -137,9 +137,19 @@ end
 
 --更新游戏模型
 function globalData:update()
-  if self.updateSwitch then
-    if self.playerTroop:curDisplayPlayer() then
-      self.playerTroop:curDisplayPlayer():update()
+  if not self.updateSwitch then
+    --如果更新开关未开启直接返回
+    return
+  end
+  --更新玩家
+  if self.playerTroop:curDisplayPlayer() then
+    self.playerTroop:curDisplayPlayer():update()
+  end
+  --更新当前地图上的NPC
+  if self.curMap then
+    for k,v in pairs(self.curMap.npcs) do
+      local npc=self:getNPC(v)
+      npc:update()
     end
   end
 end
