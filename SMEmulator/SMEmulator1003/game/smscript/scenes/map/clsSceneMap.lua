@@ -225,7 +225,7 @@ function clsSceneMap:calculateCharacterLocation(character)
 end
 
 --============character的moveDelegate============
-function clsSceneMap:checkCell(row,col)
+function clsSceneMap:checkCell(character,row,col)
   --检查地图边界
   if row<0 or row>globalData.curMap.rowNum-1 or col<0 or col>globalData.curMap.colNum-1 then
     return false
@@ -235,9 +235,21 @@ function clsSceneMap:checkCell(row,col)
     return false
   end
   --检查目标位置是否有其它不可穿透的character
+  local curRow=nil
+  local curCol=nil
     --(1)、检查玩家位置
-    
+    curRow,curCol=self.curPlayer:getHoldingCell()
+    if curRow==row and curCol==col and character~= self.curPlayer then
+      return false
+    end
     --(2)、检查npc位置
+    for k,v in pairs(globalData.curMap.npcs) do
+      local npc=globalData:getNPC(v)
+      curRow,curCol=npc:getHoldingCell()
+      if curRow==row and curCol==col and character~= npc then
+      return false
+      end
+    end  
   return true
 end
 

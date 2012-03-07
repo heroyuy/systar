@@ -43,7 +43,7 @@ clsCharacter.money=0 --金钱
 clsCharacter.moveSequence=nil     --角色当前移动序列
 clsCharacter.curMoveDirection=nil --角色当前移动方向
 
-clsCharacter.moveDelegate=nil     --行走事件委托 需要方法 “checkCell(row,col)”以检查指定单元格是否可以行走 
+clsCharacter.moveDelegate=nil     --行走事件委托 需要方法 “checkCell(character,row,col)”以检查指定单元格是否可以行走 
 
 --构造器
 function clsCharacter:new()
@@ -74,7 +74,7 @@ function clsCharacter:move()
   if self.step==0 then
     local row,col=self:getHoldingCell()
     if self.moveDelegate then
-      if not self.moveDelegate:checkCell(row,col) then
+      if not self.moveDelegate:checkCell(self,row,col) then
         --目的地不可达(停止所有移动)
         self.curMoveDirection=nil
         self.moveSequence:clear()
