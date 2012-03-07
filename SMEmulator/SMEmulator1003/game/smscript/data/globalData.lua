@@ -81,6 +81,7 @@ function globalData:newGame()
     player.row=globalDictionary.config.row
     player.col=globalDictionary.config.col
     player.face=globalDictionary.config.face
+    player.moveDelegate=self
     self.playerTroop.players[player.id]=player
   end
   self.playerTroop.curDisplayPlayerId=globalDictionary.config.playersIndex[1] --TODO 此值应该读配置
@@ -130,6 +131,7 @@ function globalData:getNPC(id)
     npc.moveType=npcDict.moveType
     npc.speedLevel=npcDict.speedLevel
     npc.penetrable=npcDict.penetrable
+    npc.moveDelegate=self
     self.npcs[id]=npc
   end
   return self.npcs[id]
@@ -153,4 +155,40 @@ function globalData:update()
     end
   end
 end
+
+--============character的moveDelegate============
+--检查目的地是否可达
+function globalData:checkCell(character,row,col)
+  --检查地图边界
+  if row<0 or row>self.curMap.rowNum-1 or col<0 or col>self.curMap.colNum-1 then
+    return false
+  end
+  --检查地图通行度
+  if self.curMap.areas[row+1][col+1]==-1 then
+    return false
+  end
+  --检查目标位置是否有其它不可穿透的character
+  local curRow=nil
+  local curCol=nil
+    --(1)、检查玩家位置
+    curRow,curCol=self.playerTroop:curDisplayPlayer():getHoldingCell()
+    if curRow==row and curCol==col and character~= self.playerTroop:curDisplayPlayer() then
+      return false
+    end
+    --(2)、检查npc位置
+    for k,v in pairs(self.curMap.npcs) do
+      local npc=self:getNPC(v)
+      curRow,curCol=npc:getHoldingCell()
+      if curRow==row and curCol==col and character~= npc then
+      return false
+      end
+    end  
+  return true
+end
+
+--获取当前玩家的位置
+function globalData:curPlayerLocation()
+  return self.playerTroop:curDisplayPlayer():getHoldingCell()
+end
+
 

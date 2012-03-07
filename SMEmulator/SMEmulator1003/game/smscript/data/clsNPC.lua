@@ -31,13 +31,33 @@ function clsNPC:update()
   --调用父类的update方法
   self:updateFF()
   --自动行走
-  if self.moveType~=0 then
-    --NPC类型非固定
-    if self.curMoveDirection==nil then
-      --当前没有行走
-      if smRandom:nextInt(20/self.speedLevel)==0 then
-        --TODO  此处应该判断是否可以行走
+  if self.curMoveDirection==nil then
+    --当前没有行走
+    if smRandom:nextInt(20/self.speedLevel)==0 then
+      if self.moveType ==1 then
+        --随机
         self.moveSequence:offer(smRandom:nextInt(4))
+      elseif self.moveType ==2 then
+      --靠近
+        if self.moveDelegate then
+          local row,col=self.moveDelegate:curPlayerLocation()
+          local offsetRow,offsetCol=row-self.row,col-self.col
+          if row<0 then
+            --上
+            self.moveSequence:offer(0)
+          elseif row>0 then
+            --下
+            self.moveSequence:offer(1)
+          else
+            if col<0 then
+              --左
+              self.moveSequence:offer(2)
+            elseif col>0 then
+              --右
+              self.moveSequence:offer(3)
+            end
+          end
+        end
       end
     end
   end

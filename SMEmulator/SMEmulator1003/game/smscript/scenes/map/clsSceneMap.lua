@@ -29,7 +29,6 @@ function clsSceneMap:onStart()
   --注册接收通知
   globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
-  self.curPlayer.moveDelegate=self
   local curMap=globalDictionary:getMap(self.curPlayer.mapId)
   if globalData.curMap~=curMap then
     --切换地图
@@ -39,7 +38,8 @@ end
 
 -- 更新
 function clsSceneMap:update()
-  --TODO 此处画面更新存在问题，效率不高，需要改进
+  --[[
+  --TODO 老版轮询式算法，即将废弃 @20120307
   --计算新的窗口位置
   local viewport=self:checkViewport()
   --背景移动
@@ -49,16 +49,13 @@ function clsSceneMap:update()
     self.mapFgLayer:trackViewport(viewport)
   end
   --player移动
-  
   local playerSprite=self.spriteLayer:childWithTag(self.curPlayer.id)
   local px,py=self:calculateCharacterLocation(self.curPlayer)
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+globalData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
   playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
-  
   --npc移动
-  --[[
   for k,v in pairs(globalData.curMap.npcs) do
     local npc=globalData:getNPC(v)
     local npcSprite=self.spriteLayer:childWithTag(npc.id)
@@ -68,7 +65,7 @@ function clsSceneMap:update()
     npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
     npcSprite.frameIndex=npc:getCurFrameIndex()
   end
-  --]]
+  -]]
 end
 
 -- 退出
@@ -77,6 +74,7 @@ function clsSceneMap:onStop()
   smAudioPlayer:stop()
 end
 
+--切换地图
 function clsSceneMap:changeMap(map)
   globalData.curMap=map
   self.aStar=clsAStar:new(map.areas)
@@ -119,7 +117,6 @@ function clsSceneMap:changeMap(map)
     --NPC
     for k,v in pairs(globalData.curMap.npcs) do
       local npc=globalData:getNPC(v)
-      npc.moveDelegate=self
       local npcSprite=clsUISprite:new(npc.charImage,
         npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
       npcSprite.tag=npc.id
@@ -149,7 +146,7 @@ function clsSceneMap:changeMap(map)
   end
 end
 
---地图点击
+--地图点击事件
 function clsSceneMap:mapTapped(target,row,col)
   smLog:info("逻辑坐标: row="..row.." col="..col)
   --向player发送移动命令
@@ -227,35 +224,6 @@ function clsSceneMap:calculateCharacterLocation(character)
   return px,py
 end
 
---============character的moveDelegate============
-function clsSceneMap:checkCell(character,row,col)
-  --检查地图边界
-  if row<0 or row>globalData.curMap.rowNum-1 or col<0 or col>globalData.curMap.colNum-1 then
-    return false
-  end
-  --检查地图通行度
-  if globalData.curMap.areas[row+1][col+1]==-1 then
-    return false
-  end
-  --检查目标位置是否有其它不可穿透的character
-  local curRow=nil
-  local curCol=nil
-    --(1)、检查玩家位置
-    curRow,curCol=self.curPlayer:getHoldingCell()
-    if curRow==row and curCol==col and character~= self.curPlayer then
-      return false
-    end
-    --(2)、检查npc位置
-    for k,v in pairs(globalData.curMap.npcs) do
-      local npc=globalData:getNPC(v)
-      curRow,curCol=npc:getHoldingCell()
-      if curRow==row and curCol==col and character~= npc then
-      return false
-      end
-    end  
-  return true
-end
-
 --============处理通知============
 --character移动
 function clsSceneMap:characterMoved(param)
@@ -264,23 +232,46 @@ function clsSceneMap:characterMoved(param)
     local sprite=self.spriteLayer:childWithTag(param.character.id)
     sprite:changeZ(param.character.row)
   end
-  
-  if param.character~=self.curPlayer then
-    local npcSprite=self.spriteLayer:childWithTag(param.character.id)
-    if param.direction==0 then
-      --上
-      npcSprite.y=npcSprite.y-globalData.curMap.cellHeight/4
-    elseif param.direction==1 then
-      --下
-      npcSprite.y=npcSprite.y+globalData.curMap.cellHeight/4
-    elseif param.direction==2 then
-      --左
-      npcSprite.x=npcSprite.x-globalData.curMap.cellWidth/4
-    elseif param.direction==3 then
-      --右
-      npcSprite.x=npcSprite.x+globalData.curMap.cellWidth/4
+  if param.character==self.curPlayer then
+    --玩家移动(检测viewport是否改变)
+    local viewport=self:checkViewport()
+    local offsetX=viewport.x-self.mapBgLayer.viewport.x
+    local offsetY=viewport.y-self.mapBgLayer.viewport.y
+    if offsetX~=0 or offsetY~=0 then
+      --viewport有变化
+      --背景移动
+      self.mapBgLayer:trackViewport(viewport)
+      --前景移动
+      if self.mapFgLayer then
+        self.mapFgLayer:trackViewport(viewport)
+      end
+      --修正character位置
+      if offsetX~=0 then
+        --地图水平滚动
+        for k,sprite in pairs(self.spriteLayer.children) do
+          sprite.x=sprite.x-offsetX
+        end
+      elseif offsetY~=0 then
+        --地图垂直滚动
+        for k,sprite in pairs(self.spriteLayer.children) do
+          sprite.y=sprite.y-offsetY
+        end
+      end
     end
-    npcSprite.frameIndex=param.character:getCurFrameIndex()
   end
-  
+  --character移动
+  local npcSprite=self.spriteLayer:childWithTag(param.character.id)   if param.direction==0 then
+    --上
+    npcSprite.y=npcSprite.y-globalData.curMap.cellHeight/4
+  elseif param.direction==1 then
+    --下
+    npcSprite.y=npcSprite.y+globalData.curMap.cellHeight/4
+  elseif param.direction==2 then
+    --左
+    npcSprite.x=npcSprite.x-globalData.curMap.cellWidth/4
+  elseif param.direction==3 then
+    --右
+    npcSprite.x=npcSprite.x+globalData.curMap.cellWidth/4
+  end
+  npcSprite.frameIndex=param.character:getCurFrameIndex()
 end
