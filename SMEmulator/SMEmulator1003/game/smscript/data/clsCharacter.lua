@@ -83,6 +83,7 @@ function clsCharacter:move()
     end
   end
   --移动
+  local direction=self.curMoveDirection
   local rowChanged=false
   self.step=self.step+1
   if self.step==4 then
@@ -94,7 +95,7 @@ function clsCharacter:move()
     self.curMoveDirection=nil
     self.step=0
   end
-  globalNotifier:notify(globalConst.NotifyCMD.Character.MOVED,{character=self,rowChanged=rowChanged})
+  globalNotifier:notify(globalConst.NotifyCMD.Character.MOVED,{character=self,direction=direction,rowChanged=rowChanged})
 end
 
 --获取当前行走帧编号

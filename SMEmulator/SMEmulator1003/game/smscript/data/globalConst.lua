@@ -26,8 +26,8 @@ globalConst.NotifyCMD={}
 --Character
 globalConst.NotifyCMD.Character={}
   --[[
-    character移动，此通知的参数为{character=player/npc,rowChanged=true}
-            第一个参数是移动的目标 第二个标识移动后character的行号是否变化
+    character移动，此通知的参数为{character=player/npc,direction,rowChanged=true}
+            第一个参数是移动的目标 第二个标识是移动的方向 第三个标识移动后character的行号是否变化
   --]]
   globalConst.NotifyCMD.Character.MOVED="characterMoved"    --角色移动
 

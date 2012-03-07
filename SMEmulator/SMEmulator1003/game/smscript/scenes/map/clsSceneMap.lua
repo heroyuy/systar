@@ -49,13 +49,16 @@ function clsSceneMap:update()
     self.mapFgLayer:trackViewport(viewport)
   end
   --player移动
+  
   local playerSprite=self.spriteLayer:childWithTag(self.curPlayer.id)
   local px,py=self:calculateCharacterLocation(self.curPlayer)
   px=px-self.curPlayer.charImage:getWidth()/4/2
   py=py+globalData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
   playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
   playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
+  
   --npc移动
+  --[[
   for k,v in pairs(globalData.curMap.npcs) do
     local npc=globalData:getNPC(v)
     local npcSprite=self.spriteLayer:childWithTag(npc.id)
@@ -65,6 +68,7 @@ function clsSceneMap:update()
     npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
     npcSprite.frameIndex=npc:getCurFrameIndex()
   end
+  --]]
 end
 
 -- 退出
@@ -108,6 +112,8 @@ function clsSceneMap:changeMap(map)
     playerSprite.tag=self.curPlayer.id
     playerSprite.z=self.curPlayer.row
     local px,py=self:calculateCharacterLocation(self.curPlayer)
+    px=px-self.curPlayer.charImage:getWidth()/4/2
+    py=py+globalData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
     self.spriteLayer:addChild(playerSprite)
     --NPC
@@ -119,6 +125,8 @@ function clsSceneMap:changeMap(map)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)
+      nx=nx-npc.charImage:getWidth()/4/2
+      ny=ny+globalData.curMap.cellHeight/2-npc.charImage:getHeight()/4
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
     end
@@ -198,7 +206,7 @@ function clsSceneMap:checkViewport()
   return {x=vx,y=vy,width=width,height=height}
 end
 
---计算characher当前物理坐标(characher所在单元格正中心坐标)
+--计算characher当前物理坐标(characher所在单元格正中心坐标+行走修正)
 function clsSceneMap:calculateCharacterLocation(character)
   local px=character.col*globalData.curMap.cellWidth+globalData.curMap.cellWidth/2
   local py=character.row*globalData.curMap.cellHeight+globalData.curMap.cellHeight/2
@@ -256,4 +264,23 @@ function clsSceneMap:characterMoved(param)
     local sprite=self.spriteLayer:childWithTag(param.character.id)
     sprite:changeZ(param.character.row)
   end
+  
+  if param.character~=self.curPlayer then
+    local npcSprite=self.spriteLayer:childWithTag(param.character.id)
+    if param.direction==0 then
+      --上
+      npcSprite.y=npcSprite.y-globalData.curMap.cellHeight/4
+    elseif param.direction==1 then
+      --下
+      npcSprite.y=npcSprite.y+globalData.curMap.cellHeight/4
+    elseif param.direction==2 then
+      --左
+      npcSprite.x=npcSprite.x-globalData.curMap.cellWidth/4
+    elseif param.direction==3 then
+      --右
+      npcSprite.x=npcSprite.x+globalData.curMap.cellWidth/4
+    end
+    npcSprite.frameIndex=param.character:getCurFrameIndex()
+  end
+  
 end
