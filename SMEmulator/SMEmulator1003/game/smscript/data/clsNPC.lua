@@ -42,17 +42,17 @@ function clsNPC:update()
         if self.moveDelegate then
           local row,col=self.moveDelegate:curPlayerLocation()
           local offsetRow,offsetCol=row-self.row,col-self.col
-          if row<0 then
+          if offsetRow<0 then
             --上
             self.moveSequence:offer(0)
-          elseif row>0 then
+          elseif offsetRow>0 then
             --下
             self.moveSequence:offer(1)
           else
-            if col<0 then
+            if offsetCol<0 then
               --左
               self.moveSequence:offer(2)
-            elseif col>0 then
+            elseif offsetCol>0 then
               --右
               self.moveSequence:offer(3)
             end
