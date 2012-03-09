@@ -255,6 +255,8 @@ public class Emulator extends JDialog implements IPlugin {
 		});
 		pack();
 
+		// 居中
+		setLocationRelativeTo(null);
 	}
 
 	public boolean isShowStatusBar() {
