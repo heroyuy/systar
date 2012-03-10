@@ -144,6 +144,11 @@ function clsSceneMap:changeMap(map)
     self.mapFgLayer:init(params)
     globalGame.rootLayer:addChild(self.mapFgLayer)
   end
+  --加载头像
+  local buttonHead=clsUIButton:new(0,0,64,64)
+  smLog:info("----------------------------->"..tostring(self.curPlayer.headImage))
+  buttonHead.backgroundImage=self.curPlayer.headImage
+  globalGame.rootLayer:addChild(buttonHead)
 end
 
 --地图点击事件
