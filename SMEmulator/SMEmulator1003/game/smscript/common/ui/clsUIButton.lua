@@ -69,9 +69,9 @@ function clsUIButton:onTouch(x,y,type)
     end
   elseif type==smUIConst.touchEventType.UP then
     if self.delegate and self.buttonState==clsUIButton.STATE_HIGHLIGHT then
-      self.buttonState=clsUIButton.STATE_NORMAL
       self.delegate:buttonTapped(self)
     end
+    self.buttonState=clsUIButton.STATE_NORMAL
   end
   return true  --Button对所有事件都完全处理，即Button是不可穿透的
 end
