@@ -39,12 +39,31 @@ function clsSceneMap:new()
     self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
     self.mapFgLayer.enabled=false
     globalGame.rootLayer:addChild(self.mapFgLayer)
-    --头像实例化
+    --头像层实例化
     self.layerHead=clsUILayer:new(0,0,64,80)
-    local buttonHead=clsUIButton:new(0,0,64,64)
-    buttonHead.tag=self.Tag.BUTTON_HEAD
-    self.layerHead:addChild(buttonHead)
-    globalGame.rootLayer:addChild(self.layerHead)
+      --头像按钮
+      local buttonHead=clsUIButton:new(0,0,64,64)
+      buttonHead.tag=self.Tag.BUTTON_HEAD
+      self.layerHead:addChild(buttonHead)
+      --HP背景
+      local layerHPbg=clsUILayer:new(0,64,64,8)
+      layerHPbg.backgroundColor=globalSkin:getTextColor(1,3)
+      self.layerHead:addChild(layerHPbg)
+      --HP
+      local layerHP=clsUILayer:new(0,64,48,8)
+      layerHP.backgroundColor=globalSkin:getTextColor(2,3)
+      layerHP.tag=self.Tag.BAR_HP
+      self.layerHead:addChild(layerHP)
+      --SP背景
+      local layerSPbg=clsUILayer:new(0,72,64,8)
+      layerSPbg.backgroundColor=globalSkin:getTextColor(1,2)
+      self.layerHead:addChild(layerSPbg)
+      --SP
+      local layerSP=clsUILayer:new(0,72,58,8)
+      layerSP.backgroundColor=globalSkin:getTextColor(2,2)
+      layerSP.tag=self.Tag.BAR_SP
+      self.layerHead:addChild(layerSP)
+      globalGame.rootLayer:addChild(self.layerHead)
 	return self
 end
 
