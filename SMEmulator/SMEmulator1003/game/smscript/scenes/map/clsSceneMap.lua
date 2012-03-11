@@ -38,34 +38,7 @@ end
 
 -- 更新
 function clsSceneMap:update()
-  --[[
-  --TODO 老版轮询式算法，即将废弃 @20120307
-  --计算新的窗口位置
-  local viewport=self:checkViewport()
-  --背景移动
-  self.mapBgLayer:trackViewport(viewport)
-  --前景移动
-  if self.mapFgLayer then
-    self.mapFgLayer:trackViewport(viewport)
-  end
-  --player移动
-  local playerSprite=self.spriteLayer:childWithTag(self.curPlayer.id)
-  local px,py=self:calculateCharacterLocation(self.curPlayer)
-  px=px-self.curPlayer.charImage:getWidth()/4/2
-  py=py+globalData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
-  playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
-  playerSprite.frameIndex=self.curPlayer:getCurFrameIndex()
-  --npc移动
-  for k,v in pairs(globalData.curMap.npcs) do
-    local npc=globalData:getNPC(v)
-    local npcSprite=self.spriteLayer:childWithTag(npc.id)
-    local nx,ny=self:calculateCharacterLocation(npc)
-    nx=nx-npc.charImage:getWidth()/4/2
-    ny=ny+globalData.curMap.cellHeight/2-npc.charImage:getHeight()/4
-    npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
-    npcSprite.frameIndex=npc:getCurFrameIndex()
-  end
-  -]]
+  
 end
 
 -- 退出
@@ -146,8 +119,8 @@ function clsSceneMap:changeMap(map)
   end
   --加载头像
   local buttonHead=clsUIButton:new(0,0,64,64)
-  smLog:info("----------------------------->"..tostring(self.curPlayer.headImage))
-  buttonHead.backgroundImage=self.curPlayer.headImage
+  buttonHead.normalImage=self.curPlayer.headImage
+  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
   globalGame.rootLayer:addChild(buttonHead)
 end
 
