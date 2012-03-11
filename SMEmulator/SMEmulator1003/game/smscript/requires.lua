@@ -17,8 +17,8 @@ require("clsAStar")
 require("globalNotifier")
 
 --common\ui
-require("smUIConst")
-require("smSkin")
+require("globalUIConst")
+require("globalSkin")
 require("clsUILayer")
 require("clsUIButton")
 require("clsUISprite")

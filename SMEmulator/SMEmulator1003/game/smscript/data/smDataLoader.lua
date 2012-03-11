@@ -48,7 +48,7 @@ function smDataLoader:init()
   --(11)加载NPC信息
   self:loadNPC()
   --(12)初始化皮肤
-  smSkin:init(smGameEngine:getGamePath()..globalDictionary.config.skin)
+  globalSkin:init(smGameEngine:getGamePath()..globalDictionary.config.skin)
 end
 
 --加载Config数据

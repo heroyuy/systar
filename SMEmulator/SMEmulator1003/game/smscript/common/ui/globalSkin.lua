@@ -1,14 +1,14 @@
-smSkin={}
+globalSkin={}
 
-smSkin.bg=nil
-smSkin.body=nil
-smSkin.frame={}
-smSkin.arrow={}
-smSkin.selectedBg={}
-smSkin.cursor={}
-smSkin.textColor={}
+globalSkin.bg=nil
+globalSkin.body=nil
+globalSkin.frame={}
+globalSkin.arrow={}
+globalSkin.selectedBg={}
+globalSkin.cursor={}
+globalSkin.textColor={}
 
-function smSkin:init(skinPath)
+function globalSkin:init(skinPath)
   local img=smImageFactory:createImage(skinPath)
   self.bg=img:clip(0,0,64,64)
   self.body=img:clip(0,64,64,64)
@@ -51,64 +51,64 @@ function smSkin:init(skinPath)
   
 end
 
-function smSkin:createBg(width,height)
+function globalSkin:createBg(width,height)
   return self.bg:scale(width,height)
 end
 
-function smSkin:createBody(width,height)
+function globalSkin:createBody(width,height)
   return self.body:scale(width,height)
 end
 
-function smSkin:createFrame(width,height)
+function globalSkin:createFrame(width,height)
   local img=smImageFactory:createImage(width,height)
   local painter=img:getPainter()
   --四个角
     --左上
-    painter:drawImage(self.frame[1],0,0,smUIConst.anchor.LT)
+    painter:drawImage(self.frame[1],0,0,globalUIConst.anchor.LT)
     --右上
-    painter:drawImage(self.frame[3],width,0,smUIConst.anchor.RT)
+    painter:drawImage(self.frame[3],width,0,globalUIConst.anchor.RT)
     --左下
-    painter:drawImage(self.frame[6],0,height,smUIConst.anchor.LB)
+    painter:drawImage(self.frame[6],0,height,globalUIConst.anchor.LB)
     --右下
-    painter:drawImage(self.frame[8],width,height,smUIConst.anchor.RB)
+    painter:drawImage(self.frame[8],width,height,globalUIConst.anchor.RB)
   --四条边
     --上
-    painter:drawImage(self.frame[2]:scale(width-2*16,16),16,0,smUIConst.anchor.LT)
+    painter:drawImage(self.frame[2]:scale(width-2*16,16),16,0,globalUIConst.anchor.LT)
     --左
-    painter:drawImage(self.frame[4]:scale(16,height-2*16),0,16,smUIConst.anchor.LT)
+    painter:drawImage(self.frame[4]:scale(16,height-2*16),0,16,globalUIConst.anchor.LT)
     --右
-    painter:drawImage(self.frame[5]:scale(16,height-2*16),width,16,smUIConst.anchor.RT)
+    painter:drawImage(self.frame[5]:scale(16,height-2*16),width,16,globalUIConst.anchor.RT)
     --下
-    painter:drawImage(self.frame[7]:scale(width-2*16,16),16,height,smUIConst.anchor.LB)
+    painter:drawImage(self.frame[7]:scale(width-2*16,16),16,height,globalUIConst.anchor.LB)
   return img
 end
 
-function smSkin:createSelectedBg(width,height)
+function globalSkin:createSelectedBg(width,height)
   local img=smImageFactory:createImage(width,height)
   local painter=img:getPainter()
   --四个角
     --左上
-    painter:drawImage(self.selectedBg[1],0,0,smUIConst.anchor.LT)
+    painter:drawImage(self.selectedBg[1],0,0,globalUIConst.anchor.LT)
     --右上
-    painter:drawImage(self.selectedBg[3],width,0,smUIConst.anchor.RT)
+    painter:drawImage(self.selectedBg[3],width,0,globalUIConst.anchor.RT)
     --左下
-    painter:drawImage(self.selectedBg[7],0,height,smUIConst.anchor.LB)
+    painter:drawImage(self.selectedBg[7],0,height,globalUIConst.anchor.LB)
     --右下
-    painter:drawImage(self.selectedBg[9],width,height,smUIConst.anchor.RB)
+    painter:drawImage(self.selectedBg[9],width,height,globalUIConst.anchor.RB)
   --四条边
     --上
-    painter:drawImage(self.selectedBg[2]:scale(width-2*8,8),8,0,smUIConst.anchor.LT)
+    painter:drawImage(self.selectedBg[2]:scale(width-2*8,8),8,0,globalUIConst.anchor.LT)
     --左
-    painter:drawImage(self.selectedBg[4]:scale(8,height-2*8),0,8,smUIConst.anchor.LT)
+    painter:drawImage(self.selectedBg[4]:scale(8,height-2*8),0,8,globalUIConst.anchor.LT)
     --右
-    painter:drawImage(self.selectedBg[6]:scale(8,height-2*8),width,8,smUIConst.anchor.RT)
+    painter:drawImage(self.selectedBg[6]:scale(8,height-2*8),width,8,globalUIConst.anchor.RT)
     --下
-    painter:drawImage(self.selectedBg[8]:scale(width-2*8,8),8,height,smUIConst.anchor.LB)
+    painter:drawImage(self.selectedBg[8]:scale(width-2*8,8),8,height,globalUIConst.anchor.LB)
   --中间
-    painter:drawImage(self.selectedBg[5]:scale(width-2*8,height-2*8),8,8,smUIConst.anchor.LT)
+    painter:drawImage(self.selectedBg[5]:scale(width-2*8,height-2*8),8,8,globalUIConst.anchor.LT)
   return img
 end
 
-function smSkin:getTextColor(i,j)
+function globalSkin:getTextColor(i,j)
   return self.textColor[i.."_"..j]
 end

@@ -43,7 +43,7 @@ function clsUISprite:paintLayer(painter)
   self:paintLayerF(painter)
   --绘制图片
   if self.image then
-    painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,smUIConst.anchor.LT)
+    painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,globalUIConst.anchor.LT)
   end
 end
 

@@ -152,7 +152,7 @@ end
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(x,y,type)
   local status=false
-  if type==smUIConst.touchEventType.DOWN then
+  if type==globalUIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
@@ -168,7 +168,7 @@ function clsUILayer:dispatchEvent(x,y,type)
     --未找到焦点组件或者焦点已清除
     status=self:onTouch(x,y,type)
   end
-  if type==smUIConst.touchEventType.UP then
+  if type==globalUIConst.touchEventType.UP then
     --如果是UP事件，则清除焦点
     self.focusLayer = nil
   end

@@ -66,11 +66,11 @@ function clsTiledMapLayer:paintLayer(painter)
   self:paintLayerF(painter)
   --绘图
   painter:drawImage(self.bufferedImage,self.viewport.x-self.bufferCol*self.cellWidth,self.viewport.y-self.bufferRow*self.cellHeight,
-     self.viewport.width,self.viewport.height,0,0,smUIConst.anchor.LT)
+     self.viewport.width,self.viewport.height,0,0,globalUIConst.anchor.LT)
 end
 
 function clsTiledMapLayer:onTouch(x,y,type)
-  if self.delegate and type==smUIConst.touchEventType.DOWN then
+  if self.delegate and type==globalUIConst.touchEventType.DOWN then
     smLog:info("地图被点击,物理坐标: x="..x.." y="..y)
     self.delegate:mapTapped(self,math.floor((self.viewport.y+y)/self.cellHeight)+1,math.floor((self.viewport.x+x)/self.cellWidth)+1)
   end
@@ -148,7 +148,7 @@ function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
             local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
             self.bufferedPainter:drawImage(globalData.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
-                 k*self.cellWidth,j*self.cellHeight,smUIConst.anchor.LT)
+                 k*self.cellWidth,j*self.cellHeight,globalUIConst.anchor.LT)
           end
         end
       end

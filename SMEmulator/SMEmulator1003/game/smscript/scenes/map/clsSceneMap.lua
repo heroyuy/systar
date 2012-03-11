@@ -9,17 +9,42 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
+--常量
+clsSceneMap.Tag={}
+clsSceneMap.Tag.BUTTON_HEAD=100  --头像按钮
+clsSceneMap.Tag.BAR_HP=101       --HP条
+clsSceneMap.Tag.BAR_SP=102       --SP条
+
 --字段
 clsSceneMap.curPlayer=nil      --当前player
 clsSceneMap.mapBgLayer=nil     --背景
 clsSceneMap.mapFgLayer=nil     --前景
 clsSceneMap.spriteLayer=nil    --精灵层
+clsSceneMap.layerHead=nil      --头像层
 clsSceneMap.aStar=nil          --A*寻路工具
 
 --构造器
 function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
+	--背景实例化
+	self.mapBgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+    self.mapBgLayer.delegate=self
+    globalGame.rootLayer:addChild(self.mapBgLayer)
+    --精灵层实例化
+    self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+    self.spriteLayer.enabled=false
+    globalGame.rootLayer:addChild(self.spriteLayer)
+    --前景实例化
+    self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+    self.mapFgLayer.enabled=false
+    globalGame.rootLayer:addChild(self.mapFgLayer)
+    --头像实例化
+    self.layerHead=clsUILayer:new(0,0,64,80)
+    local buttonHead=clsUIButton:new(0,0,64,64)
+    buttonHead.tag=self.Tag.BUTTON_HEAD
+    self.layerHead:addChild(buttonHead)
+    globalGame.rootLayer:addChild(self.layerHead)
 	return self
 end
 
@@ -34,6 +59,9 @@ function clsSceneMap:onStart()
     --切换地图
     self:changeMap(curMap)
   end
+  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
+  buttonHead.normalImage=self.curPlayer.headImage
+  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
 end
 
 -- 更新
@@ -51,8 +79,6 @@ end
 function clsSceneMap:changeMap(map)
   globalData.curMap=map
   self.aStar=clsAStar:new(map.areas)
-  --清除所有layer
-  globalGame.rootLayer:clear()
   --加载地图图集
   for _,v in pairs(globalData.curMap.tilesets) do
     if globalData.imageSets[v.id]==nil then
@@ -67,16 +93,12 @@ function clsSceneMap:changeMap(map)
       bgLayers:add(layer)
     end
   end
-  self.mapBgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-  self.mapBgLayer.delegate=self
   local viewport=self:checkViewport()
   local params={layers=bgLayers,colNum=globalData.curMap.colNum,rowNum=globalData.curMap.rowNum,
      cellWidth=globalData.curMap.cellWidth,cellHeight=globalData.curMap.cellHeight,viewport=viewport}
   self.mapBgLayer:init(params)
-  globalGame.rootLayer:addChild(self.mapBgLayer)
-  --加载精灵层
-  self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-  self.spriteLayer.enabled=false
+  --精灵层移除所有sprite
+  self.spriteLayer:clear()
     --玩家
     local playerSprite=clsUISprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
@@ -100,7 +122,6 @@ function clsSceneMap:changeMap(map)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
     end
-    globalGame.rootLayer:addChild(self.spriteLayer)
   --加载前景
   local fgLayers=clsList:new()
   for i=1,table.getn(globalData.curMap.layers) do
@@ -110,18 +131,13 @@ function clsSceneMap:changeMap(map)
     end
   end
   if fgLayers:size()>0 then
-    self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
-    self.mapFgLayer.enabled=false
+    self.mapFgLayer.visibility=true
     local params={layers=fgLayers,colNum=globalData.curMap.colNum,rowNum=globalData.curMap.rowNum,
        cellWidth=globalData.curMap.cellWidth,cellHeight=globalData.curMap.cellHeight,viewport=viewport}
     self.mapFgLayer:init(params)
-    globalGame.rootLayer:addChild(self.mapFgLayer)
+  else
+    self.mapFgLayer.visibility=false
   end
-  --加载头像
-  local buttonHead=clsUIButton:new(0,0,64,64)
-  buttonHead.normalImage=self.curPlayer.headImage
-  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
-  globalGame.rootLayer:addChild(buttonHead)
 end
 
 --地图点击事件
@@ -220,7 +236,7 @@ function clsSceneMap:characterMoved(param)
       --背景移动
       self.mapBgLayer:trackViewport(viewport)
       --前景移动
-      if self.mapFgLayer then
+      if self.mapFgLayer.visibility then
         self.mapFgLayer:trackViewport(viewport)
       end
       --修正character位置
