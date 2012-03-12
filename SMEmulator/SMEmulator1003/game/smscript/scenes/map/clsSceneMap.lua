@@ -9,11 +9,17 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
---常量
+--常量:tag
 clsSceneMap.Tag={}
 clsSceneMap.Tag.BUTTON_HEAD=100  --头像按钮
 clsSceneMap.Tag.BAR_HP=101       --HP条
 clsSceneMap.Tag.BAR_SP=102       --SP条
+
+--常量:param
+clsSceneMap.Param={}
+clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
+clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
+clsSceneMap.Param.BAR_HEIGHT=8   --HP、SP条高度
 
 --字段
 clsSceneMap.curPlayer=nil      --当前player
@@ -40,26 +46,26 @@ function clsSceneMap:new()
     self.mapFgLayer.enabled=false
     globalGame.rootLayer:addChild(self.mapFgLayer)
     --头像层实例化
-    self.layerHead=clsUILayer:new(0,0,64,80)
+    self.layerHead=clsUILayer:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT+2*self.Param.BAR_HEIGHT)
       --头像按钮
-      local buttonHead=clsUIButton:new(0,0,64,64)
+      local buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
       buttonHead.tag=self.Tag.BUTTON_HEAD
       self.layerHead:addChild(buttonHead)
       --HP背景
-      local layerHPbg=clsUILayer:new(0,64,64,8)
+      local layerHPbg=clsUILayer:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
       layerHPbg.backgroundColor=globalSkin:getTextColor(1,3)
       self.layerHead:addChild(layerHPbg)
       --HP
-      local layerHP=clsUILayer:new(0,64,48,8)
+      local layerHP=clsUILayer:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
       layerHP.backgroundColor=globalSkin:getTextColor(2,3)
       layerHP.tag=self.Tag.BAR_HP
       self.layerHead:addChild(layerHP)
       --SP背景
-      local layerSPbg=clsUILayer:new(0,72,64,8)
+      local layerSPbg=clsUILayer:new(0,self.Param.HEAD_HEIGHT+self.Param.BAR_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
       layerSPbg.backgroundColor=globalSkin:getTextColor(1,2)
       self.layerHead:addChild(layerSPbg)
       --SP
-      local layerSP=clsUILayer:new(0,72,58,8)
+      local layerSP=clsUILayer:new(0,self.Param.HEAD_HEIGHT+self.Param.BAR_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
       layerSP.backgroundColor=globalSkin:getTextColor(2,2)
       layerSP.tag=self.Tag.BAR_SP
       self.layerHead:addChild(layerSP)
@@ -73,19 +79,22 @@ function clsSceneMap:onStart()
   --注册接收通知
   globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
-  local curMap=globalDictionary:getMap(self.curPlayer.mapId)
-  if globalData.curMap~=curMap then
-    --切换地图
-    self:changeMap(curMap)
-  end
-  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
-  buttonHead.normalImage=self.curPlayer.headImage
-  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
+  local map=globalDictionary:getMap(self.curPlayer.mapId)
+  self:changeMap(map)
 end
 
 -- 更新
 function clsSceneMap:update()
-  
+  --此处不应该使用轮询机制，需要优化
+  self.curPlayer.hp=self.curPlayer.hp-1
+  self.curPlayer.sp=self.curPlayer.sp-2
+  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
+  buttonHead.normalImage=self.curPlayer.headImage
+  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
+  local layerHP=self.layerHead:childWithTag(self.Tag.BAR_HP)
+  layerHP.width=self.Param.HEAD_WIDTH*self.curPlayer.hp/self.curPlayer.maxHp
+  local layerSP=self.layerHead:childWithTag(self.Tag.BAR_SP)
+  layerSP.width=self.Param.HEAD_WIDTH*self.curPlayer.sp/self.curPlayer.maxSp
 end
 
 -- 退出

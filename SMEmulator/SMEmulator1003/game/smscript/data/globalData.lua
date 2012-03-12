@@ -68,6 +68,8 @@ function globalData:newGame()
     player.level=playerDict.startLev
     --查表获取字段值
     player.exp=playerDict.expList[player.level]
+    player.maxHp=playerDict.maxHpList[player.level]
+    player.maxSp=playerDict.maxSpList[player.level]
     player.hp=playerDict.maxHpList[player.level]
     player.sp=playerDict.maxSpList[player.level]
     player.str=playerDict.strList[player.level]
