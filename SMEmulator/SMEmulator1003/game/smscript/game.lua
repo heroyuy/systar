@@ -3,6 +3,7 @@ globalGame={}
 --标志常量：场景
 globalGame.SCENE_TITLE=0 --标题场景
 globalGame.SCENE_MAP=1   --地图场景
+globalGame.SCENE_STATUS=2   --状态场景
 
 --成员
 globalGame.curScene=nil
@@ -87,10 +88,12 @@ end
 
 --辅助方法:创建场景(非当前Chunk不应该调用)
 function globalGame:createScene(index)
- if index==self.SCENE_TITLE then
+  if index==self.SCENE_TITLE then
     self.curScene=clsSceneTitle:new()
- elseif index==self.SCENE_MAP then
+  elseif index==self.SCENE_MAP then
     self.curScene=clsSceneMap:new()
+  elseif index==self.SCENE_STATUS then
+    self.curScene=clsSceneStatus:new()
   end
 end 
 

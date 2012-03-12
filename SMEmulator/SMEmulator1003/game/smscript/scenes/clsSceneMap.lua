@@ -50,6 +50,7 @@ function clsSceneMap:new()
       --头像按钮
       local buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
       buttonHead.tag=self.Tag.BUTTON_HEAD
+      buttonHead.delegate=self
       self.layerHead:addChild(buttonHead)
       --HP背景
       local layerHPbg=clsUILayer:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
@@ -242,6 +243,13 @@ function clsSceneMap:calculateCharacterLocation(character)
     px=px+globalData.curMap.cellWidth/4*character.step
   end
   return px,py
+end
+
+function clsSceneMap:buttonTapped(target)
+  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
+  if target==buttonHead then
+    globalGame:changeScene(globalGame.SCENE_STATUS)
+  end
 end
 
 --============处理通知============

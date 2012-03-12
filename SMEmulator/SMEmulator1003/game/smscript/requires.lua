@@ -40,4 +40,6 @@ require("clsSceneTitle")
 require("clsTiledMapLayer")
 require("clsSceneMap")
 
+require("clsSceneStatus")
+
 
