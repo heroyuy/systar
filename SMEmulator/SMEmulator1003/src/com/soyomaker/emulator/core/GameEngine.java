@@ -1,6 +1,5 @@
 package com.soyomaker.emulator.core;
 
-import com.soyomaker.emulator.utils.ImageFactory;
 
 public class GameEngine implements Runnable {
 
