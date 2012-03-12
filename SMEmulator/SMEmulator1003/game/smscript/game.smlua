@@ -28,7 +28,7 @@ function globalGame:onStart()
   --初始化皮肤
   globalSkin:init(smGameEngine:getGamePath()..globalDictionary.config.skin)
   --切换到标题场景
-  self:changeScene(self.SCENE_TITLE) 
+  self:changeScene(self.SCENE_TITLE)
 end
 
 --触屏事件  lua层不应该调用

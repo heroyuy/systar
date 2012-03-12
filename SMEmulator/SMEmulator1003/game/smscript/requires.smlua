@@ -13,6 +13,7 @@ require("clsHashMap")
 require("clsStack")
 require("clsAStar")
 require("globalNotifier")
+require("globalThread")
 
 --common\ui
 require("globalUIConst")

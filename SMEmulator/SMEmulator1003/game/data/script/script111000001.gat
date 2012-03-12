@@ -1,1 +1,5 @@
+print("script-start in thread:"..globalThread.currentThread)
+print(smLog.info)
+smLog:info("test smLog")
+test:test(101)
 globalData.proxy:changeSkin("/image/skin/Window1.png")
