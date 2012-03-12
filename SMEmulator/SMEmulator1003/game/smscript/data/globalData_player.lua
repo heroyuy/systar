@@ -3,6 +3,9 @@
   author:wp_g4
   date:2011/12/18
 --]]
+
+globalData.playerTroop={}      --玩家队伍
+
 globalData.playerTroop.players={}  --Player列表
 globalData.playerTroop.curDisplayPlayerId=0   --当前显示的Player的ID
 

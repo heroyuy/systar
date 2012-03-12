@@ -25,6 +25,8 @@ function globalGame:onStart()
   self.rootLayer.clipBounds=false
   --加载游戏数据
   smDataLoader:init()
+  --初始化皮肤
+  globalSkin:init(smGameEngine:getGamePath()..globalDictionary.config.skin)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end

@@ -4,12 +4,42 @@
   date:2012/02/04
 --]]
 
+globalData.proxy={}            --外部代理
+
+--常量
+globalData.proxy.OperateType={}
+globalData.proxy.OperateType.ASSIGN=0
+globalData.proxy.OperateType.PLUS=1
+globalData.proxy.OperateType.MINUS=2
+globalData.proxy.OperateType.MULTIPLY=3
+globalData.proxy.OperateType.DIVIDE=4
+globalData.proxy.OperateType.MOD=5
+
+globalData.proxy.ValueType={}
+globalData.proxy.ValueType.CONST=0
+globalData.proxy.ValueType.VARIABLE=1
+globalData.proxy.ValueType.SWITCH=2
+
+globalData.proxy.PropertyType={}
+globalData.proxy.PropertyType.STR=0
+globalData.proxy.PropertyType.AGI=1
+globalData.proxy.PropertyType.INT=2
+globalData.proxy.PropertyType.VIT=3
+globalData.proxy.PropertyType.DEX=4
+globalData.proxy.PropertyType.LUCK=5
+globalData.proxy.PropertyType.MAXHP=6
+globalData.proxy.PropertyType.MAXSP=7
+globalData.proxy.PropertyType.HP=8
+globalData.proxy.PropertyType.SP=9
+globalData.proxy.PropertyType.LEVEL=10
+globalData.proxy.PropertyType.EXP=11
+
 --============流程控制类============
 --结束游戏
 function globalData.proxy:stopGame()
 end
 
---执行公共事件
+--执行脚本
 function globalData.proxy:executeScript(scriptId)
 end
 
@@ -96,6 +126,7 @@ end
 
 --更换皮肤
 function globalData.proxy:changeSkin(name)
+  globalSkin:init(smGameEngine:getGamePath()..name)
 end
 
 --更改画面色调

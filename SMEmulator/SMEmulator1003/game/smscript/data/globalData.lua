@@ -26,9 +26,6 @@
 --初始化
 globalData={}
 
---字段：公共模块
-globalData.playerTroop={}      --玩家队伍
-globalData.proxy={}            --外部代理
 --字段
 globalData.curMap=nil          --地图
 globalData.npcs=nil            --npc列表
