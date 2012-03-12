@@ -23,7 +23,7 @@ public class GameEngine implements Runnable {
 
 	private String gamePath = null;
 
-	private final String GAME_FILE = "/smscript/game.lua";
+	private final String GAME_FILE = "/smscript/game.smlua";
 
 	private String GAME_NAME = "globalGame";
 
