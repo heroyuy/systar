@@ -31,6 +31,7 @@ require("clsPlayer")
 require("clsNPC")
 require("globalData")
 require("globalData_player")
+require("globalData_proxy")
 
 --scene
 require("clsScene")
