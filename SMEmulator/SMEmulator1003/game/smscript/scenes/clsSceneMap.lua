@@ -86,8 +86,6 @@ end
 -- 更新
 function clsSceneMap:update()
   --此处不应该使用轮询机制，需要优化
-  self.curPlayer.hp=self.curPlayer.hp-1
-  self.curPlayer.sp=self.curPlayer.sp-2
   local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
   buttonHead.normalImage=self.curPlayer.headImage
   buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
