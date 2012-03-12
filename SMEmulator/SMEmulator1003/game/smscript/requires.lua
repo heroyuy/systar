@@ -4,8 +4,6 @@ package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/commo
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/common/ui/?.lua"
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/data/?.lua"
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/scenes/?.lua"
-package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/scenes/map/?.lua"
-package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/scenes/title/?.lua"
 
 --common\system
 require("System")
@@ -36,9 +34,10 @@ require("globalData_player")
 
 --scene
 require("clsScene")
---scene\map
+
+require("clsSceneTitle")
+
 require("clsTiledMapLayer")
 require("clsSceneMap")
---scene\title
-require("clsSceneTitle")
+
 
