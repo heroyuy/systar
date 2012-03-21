@@ -35,8 +35,7 @@ function globalThread:resume()
     return
   end
   self.currentThread=self.THREAD_SCRIPT
-  local res=coroutine.resume(self.coroutineThread)
-  smLog:info("res:"..tostring(res))
+  smLog:info(coroutine.resume(self.coroutineThread))
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]
@@ -51,22 +50,3 @@ function globalThread:pause()
   coroutine.yield()
 end
 
-function run()
-  for i=0,100 do
-    print("sub:"..i)
-    globalThread:pause()
-  end
-end
-
-function main()
-  local fun=loadfile("D:/WorkSpace/eclipse3.7.1/SMEmulator1003/game/data/script/script111000001.gat")
-  globalThread:start(fun)
-end
-
-test={}
-
-function test:test(num)
-  print("test.test("..num..") in thread:"..globalThread.currentThread)
-end
-
---main()

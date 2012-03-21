@@ -37,20 +37,17 @@ globalData.proxy.PropertyType.EXP=11
 --============流程控制类============
 --结束游戏
 function globalData.proxy:stopGame()
-end
 
+end
 function scriptFun()
-  print("script-start in thread:"..globalThread.currentThread)
   print(smLog.info)
-  --smLog:info("test smLog")
-  test:test(101)
-  --globalData.proxy:changeSkin("/image/skin/Window1.png")
 end
 
 --执行脚本
 function globalData.proxy:executeScript(scriptId)
   --local scriptPath=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
   --local scriptFun=loadfile(scriptPath)
+  print(smLog.info)
   if self.currentThread==self.THREAD_MAIN then
     --主线程
     globalThread:start(scriptFun)
@@ -143,8 +140,8 @@ end
 
 --更换皮肤
 function globalData.proxy:changeSkin(name)
-  smLog:info("changeSkin(\""..name.."\")")
-  globalSkin:init(smGameEngine:getGamePath()..name)
+  print("changeSkin(\""..name.."\")")
+  --globalSkin:init(smGameEngine:getGamePath()..name)
 end
 
 --更改画面色调
