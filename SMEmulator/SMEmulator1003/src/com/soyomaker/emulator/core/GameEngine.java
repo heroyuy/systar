@@ -1,6 +1,5 @@
 package com.soyomaker.emulator.core;
 
-
 public class GameEngine implements Runnable {
 
 	public static final int TOUCH_TYPE_DOWN = 0;
@@ -144,6 +143,29 @@ public class GameEngine implements Runnable {
 			// 此处调用lua的onStop()方法
 			luaAdapter.onStop();
 		}
+
+	}
+
+	/**
+	 * 运行脚本
+	 * 
+	 * @param scriptId
+	 */
+	public void runScript(int scriptId) {
+		luaAdapter.runScrpit(scriptId);
+	}
+
+	/**
+	 * 暂停脚本
+	 */
+	public void pauseScript() {
+
+	}
+
+	/**
+	 * 继续脚本
+	 */
+	public void resumeScript() {
 
 	}
 

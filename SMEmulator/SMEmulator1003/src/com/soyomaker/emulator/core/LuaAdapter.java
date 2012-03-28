@@ -156,4 +156,16 @@ public class LuaAdapter {
 		luaState.call(1, 0);
 	}
 
+	public void runScrpit(final int scriptId) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				luaState.LdoFile(GameEngine.getInstance().getGamePath()
+						+ "/data/script/script" + scriptId + ".gat");
+				System.out.println("script thread end");
+			}
+		}).start();
+	}
+
 }

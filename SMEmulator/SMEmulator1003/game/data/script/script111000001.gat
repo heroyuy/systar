@@ -1,1 +1,2 @@
 globalData.proxy:changeSkin("/image/skin/Window1.png")
+smGameEngine:setRatedFps(25)
