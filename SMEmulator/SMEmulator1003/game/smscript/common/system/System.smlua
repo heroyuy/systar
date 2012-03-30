@@ -1,4 +1,4 @@
---重定义print方法
+--------------print--------------
 do
   local oldPrint=print
   print=function(arg)
@@ -6,6 +6,22 @@ do
     io.flush()
   end
 end
+
+--==========smLog==========
+smLog={}
+
+function smLog:setDebug(debug)
+  smFunctionName="smLog:setDebug";
+  smFunctionArgument=debug;
+  smFunction()
+end
+
+function smLog:error(obj)
+  smFunctionName="smLog:error";
+  smFunctionArgument=obj;
+  smFunction()
+end
+
 
 --定义点与矩形位置判断方法
 isPointInRect=function(x,y,rectX,rectY,rectWidth,rectHeight)
