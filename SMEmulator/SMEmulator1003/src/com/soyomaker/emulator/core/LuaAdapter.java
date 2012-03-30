@@ -8,7 +8,6 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.utils.ColorFactory;
-import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 
 /**
@@ -54,9 +53,6 @@ public class LuaAdapter {
 			// --注册Random
 			luaState.pushObjectValue(new Random());
 			luaState.setGlobal("smRandom");
-			// --注册ImageFactory
-			luaState.pushObjectValue(ImageFactory.getInstance());
-			luaState.setGlobal("smImageFactory");
 			// --注册SMAudioPlayer
 			luaState.pushObjectValue(SMAudioPlayer.getInstance());
 			luaState.setGlobal("smAudioPlayer");
@@ -152,18 +148,6 @@ public class LuaAdapter {
 			e.printStackTrace();
 		}
 		luaState.call(1, 0);
-	}
-
-	public void runScrpit(final int scriptId) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				luaState.LdoFile(GameEngine.getInstance().getGamePath()
-						+ "/data/script/script" + scriptId + ".gat");
-				System.out.println("script thread end");
-			}
-		}).start();
 	}
 
 	public void setGamePath(String gamePath) {

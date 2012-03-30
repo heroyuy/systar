@@ -9,7 +9,7 @@ globalSkin.cursor={}
 globalSkin.textColor={}
 
 function globalSkin:init(skinPath)
-  local img=smImageFactory:createImage(skinPath)
+  local img=smImageFactory:createImageWithFile(skinPath)
   self.bg=img:clip(0,0,64,64)
   self.body=img:clip(0,64,64,64)
   

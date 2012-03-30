@@ -5,6 +5,7 @@ import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 
+import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMLog;
 
 public class SMFunction extends JavaFunction {
@@ -22,6 +23,8 @@ public class SMFunction extends JavaFunction {
 	public static final String SMGAMEENGINE_SETRATEDFPS = "smGameEngine:setRatedFps";
 	public static final String SMGAMEENGINE_SETSHOWFPS = "smGameEngine:setShowFps";
 	public static final String SMGAMEENGINE_STOP = "smGameEngine:stop";
+
+	public static final String SMIMAGEFACTORY_CREATEIMAGE = "smImageFactory:createImage";
 
 	public SMFunction(LuaState arg0) {
 		super(arg0);
@@ -68,6 +71,20 @@ public class SMFunction extends JavaFunction {
 			GameEngine.getInstance().setShowFps(lo.getBoolean());
 		} else if (name.equals(SMGAMEENGINE_STOP)) {
 			GameEngine.getInstance().stop();
+		}
+		// ===========smImageFactory===========
+		else if (name.equals(SMIMAGEFACTORY_CREATEIMAGE)) {
+			LuaObject lo = this.getArgument();
+			Image image = null;
+			if (lo.isTable()) {
+				int width = (int) lo.getField("width").getNumber();
+				int height = (int) lo.getField("height").getNumber();
+				System.out.println("image->w:" + width + " h:" + height);
+				image = ImageFactory.getInstance().createImage(width, height);
+			} else {
+				image = ImageFactory.getInstance().createImage(lo.getString());
+			}
+			this.setResult(image);
 		}
 		return 0;
 	}

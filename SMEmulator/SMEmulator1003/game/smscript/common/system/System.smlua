@@ -84,7 +84,22 @@ function smGameEngine:stop()
   smFunction()
 end
 
+--==========smImageFactory==========
+smImageFactory={}
 
+function smImageFactory:createImage(width,height)
+  smFunctionName="smImageFactory:createImage";
+  smFunctionArgument={width=width,height=height}
+  smFunction()
+  return smFunctionResult  
+end
+
+function smImageFactory:createImageWithFile(fileName)
+  smFunctionName="smImageFactory:createImage";
+  smFunctionArgument=fileName;
+  smFunction()
+  return smFunctionResult  
+end
 
 --定义点与矩形位置判断方法
 isPointInRect=function(x,y,rectX,rectY,rectWidth,rectHeight)

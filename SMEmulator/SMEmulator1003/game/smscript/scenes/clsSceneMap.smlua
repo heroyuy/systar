@@ -109,7 +109,7 @@ function clsSceneMap:changeMap(map)
   --加载地图图集
   for _,v in pairs(globalData.curMap.tilesets) do
     if globalData.imageSets[v.id]==nil then
-      globalData.imageSets[v.id]=smImageFactory:createImage(smGamePath..v.path)
+      globalData.imageSets[v.id]=smImageFactory:createImageWithFile(smGamePath..v.path)
     end
   end
   --加载背景

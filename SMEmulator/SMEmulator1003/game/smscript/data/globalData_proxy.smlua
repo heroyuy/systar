@@ -34,15 +34,24 @@ globalData.proxy.PropertyType.SP=9
 globalData.proxy.PropertyType.LEVEL=10
 globalData.proxy.PropertyType.EXP=11
 
+--开始脚本
+function globalData.proxy:runScript(scriptId)
+  local file=smGamePath.."/data/script/script"..scriptId..".gat"
+  smLog:info(file)
+  local scriptFunction=loadfile(file)
+  --scriptFunction=function() smLog:info("scriptFunction-run") end
+  globalThread:start(scriptFunction)
+end
+
 --============流程控制类============
 --结束游戏
 function globalData.proxy:stopGame()
 
 end
 
---执行脚本
+--执行公共脚本
 function globalData.proxy:executeScript(scriptId)
-  smGameEngine:runScript(scriptId)
+  
 end
 
 --等待
