@@ -10,8 +10,6 @@ import org.keplerproject.luajava.LuaStateFactory;
 import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
-import com.soyomaker.emulator.utils.SMFunction;
-import com.soyomaker.emulator.utils.SMLog;
 
 /**
  * Lua适配器，功能：<br>
@@ -166,6 +164,15 @@ public class LuaAdapter {
 				System.out.println("script thread end");
 			}
 		}).start();
+	}
+
+	public void setGamePath(String gamePath) {
+		try {
+			luaState.pushObjectValue(gamePath);
+			luaState.setGlobal("smGamePath");
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

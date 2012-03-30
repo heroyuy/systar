@@ -16,11 +16,74 @@ function smLog:setDebug(debug)
   smFunction()
 end
 
+function smLog:info(obj)
+  smFunctionName="smLog:info";
+  smFunctionArgument=obj;
+  smFunction()
+end
+
 function smLog:error(obj)
   smFunctionName="smLog:error";
   smFunctionArgument=obj;
   smFunction()
 end
+
+--==========smLog==========
+smGameEngine={}
+
+function smGameEngine:getActualFps()
+  smFunctionName="smGameEngine:getActualFps";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:getHeight()
+  smFunctionName="smGameEngine:getHeight";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:getRatedFps()
+  smFunctionName="smGameEngine:getRatedFps";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:getSystemMilliTime()
+  smFunctionName="smGameEngine:getSystemMilliTime";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:getWidth()
+  smFunctionName="smGameEngine:getWidth";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:isShowFps()
+  smFunctionName="smGameEngine:isShowFps";
+  smFunction()
+  return smFunctionResult  
+end
+
+function smGameEngine:setRatedFps(ratedFps)
+  smFunctionName="smGameEngine:setRatedFps";
+  smFunctionArgument=ratedFps;
+  smFunction()
+end
+
+function smGameEngine:setShowFps(showFps)
+  smFunctionName="smGameEngine:setShowFps";
+  smFunctionArgument=showFps;
+  smFunction()
+end
+
+function smGameEngine:stop()
+  smFunctionName="smGameEngine:stop";
+  smFunction()
+end
+
 
 
 --定义点与矩形位置判断方法

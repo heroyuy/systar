@@ -54,7 +54,7 @@ public class GameEngine implements Runnable {
 		return actualFps;
 	}
 
-	public String getGamePath() {
+	String getGamePath() {
 		return gamePath;
 	}
 
@@ -146,31 +146,11 @@ public class GameEngine implements Runnable {
 
 	}
 
-	/**
-	 * 运行脚本
-	 * 
-	 * @param scriptId
-	 */
-	public void runScript(int scriptId) {
-		luaAdapter.runScrpit(scriptId);
-	}
-
-	/**
-	 * 暂停脚本
-	 */
-	public void pauseScript() {
-
-	}
-
-	/**
-	 * 继续脚本
-	 */
-	public void resumeScript() {
-
-	}
-
-	public void setGamePath(String gamePath) {
+	void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
+		luaAdapter = LuaAdapter.newInstance(getGamePath() + GAME_FILE,
+				GAME_NAME);
+		luaAdapter.setGamePath(gamePath);
 	}
 
 	public void setRatedFps(int ratedFps) {
@@ -182,8 +162,6 @@ public class GameEngine implements Runnable {
 	}
 
 	void startByEmulator() {
-		luaAdapter = LuaAdapter.newInstance(getGamePath() + GAME_FILE,
-				GAME_NAME);
 		running = true;
 		new Thread(this).start();
 	}
