@@ -21,7 +21,7 @@ clsUISprite.rowNum=1               --帧行数
 --构造器
 function clsUISprite:new(image,frameWidth,frameHeight)
   if type(image)=="string" then
-    image=smImageFactory:createImageWithFile(image)
+    image=smImageFactory:createImage(image)
   end
   if frameWidth==nil then
     frameWidth=image:getWidth()

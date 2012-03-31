@@ -35,8 +35,7 @@ function globalThread:resume()
     return
   end
   self.currentThread=self.THREAD_SCRIPT
-  print(self.coroutineThread)
-  print(coroutine.resume(self.coroutineThread))
+  smLog:info(coroutine.resume(self.coroutineThread))
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]

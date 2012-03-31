@@ -1,5 +1,2 @@
-smLog:info(0)
 globalData.proxy:changeSkin("/image/skin/Window1.png")
-smLog:info(1)
 smGameEngine:setRatedFps(25)
-smLog:info(2)

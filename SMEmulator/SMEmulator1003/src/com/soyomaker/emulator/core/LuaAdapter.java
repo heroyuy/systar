@@ -8,7 +8,10 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.utils.ColorFactory;
+import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
+import com.soyomaker.emulator.utils.SMFunction;
+import com.soyomaker.emulator.utils.SMLog;
 
 /**
  * Lua适配器，功能：<br>
@@ -53,6 +56,9 @@ public class LuaAdapter {
 			// --注册Random
 			luaState.pushObjectValue(new Random());
 			luaState.setGlobal("smRandom");
+			// --注册ImageFactory
+			luaState.pushObjectValue(ImageFactory.getInstance());
+			luaState.setGlobal("smImageFactory");
 			// --注册SMAudioPlayer
 			luaState.pushObjectValue(SMAudioPlayer.getInstance());
 			luaState.setGlobal("smAudioPlayer");
@@ -150,13 +156,16 @@ public class LuaAdapter {
 		luaState.call(1, 0);
 	}
 
-	public void setGamePath(String gamePath) {
-		try {
-			luaState.pushObjectValue(gamePath);
-			luaState.setGlobal("smGamePath");
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
+	public void runScrpit(final int scriptId) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				luaState.LdoFile(GameEngine.getInstance().getGamePath()
+						+ "/data/script/script" + scriptId + ".gat");
+				System.out.println("script thread end");
+			}
+		}).start();
 	}
 
 }
