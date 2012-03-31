@@ -248,7 +248,8 @@ end
 function clsSceneMap:buttonTapped(target)
   local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
   if target==buttonHead then
-    globalGame:changeScene(globalGame.SCENE_STATUS)
+    globalData.proxy:runScript(111000001)
+    globalGame:changeScene(globalGame.SCENE_TITLE)
   end
 end
 

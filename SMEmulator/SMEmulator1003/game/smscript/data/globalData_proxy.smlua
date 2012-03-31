@@ -34,15 +34,22 @@ globalData.proxy.PropertyType.SP=9
 globalData.proxy.PropertyType.LEVEL=10
 globalData.proxy.PropertyType.EXP=11
 
+--运行脚本
+function globalData.proxy:runScript(scriptId)
+  local file=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
+  smLog:info(file)
+  local scriptFunction=loadfile(file)
+  globalThread:start(scriptFunction)
+end
 --============流程控制类============
 --结束游戏
 function globalData.proxy:stopGame()
 
 end
 
---执行脚本
+--执行公共脚本
 function globalData.proxy:executeScript(scriptId)
-  smGameEngine:runScript(scriptId)
+  
 end
 
 --等待
@@ -128,7 +135,12 @@ end
 
 --更换皮肤
 function globalData.proxy:changeSkin(name)
-  globalSkin:init(smGameEngine:getGamePath()..name)
+  if globalThread.currentThread==globalThread.THREAD_SCRIPT then
+    globalThread:runFunctionInMainThread(self,self.changeSkin,name)
+  else
+    globalSkin:init(smGameEngine:getGamePath()..name)
+    smLog:info("changeSkin-successful")
+  end
 end
 
 --更改画面色调

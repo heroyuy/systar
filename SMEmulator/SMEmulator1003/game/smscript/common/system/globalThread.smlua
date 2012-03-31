@@ -14,6 +14,10 @@ globalThread.THREAD_SCRIPT=1
 globalThread.coroutineThread=nil
 globalThread.currentThread=globalThread.THREAD_MAIN
 
+globalThread.target=nil
+globalThread.func=nil
+globalThread.arguments=nil
+
 --启动脚本线程 [此方法只能由主线程调用]
 function globalThread:start(run)
   --检查此方法是否被主线程调用
@@ -36,6 +40,14 @@ function globalThread:resume()
   end
   self.currentThread=self.THREAD_SCRIPT
   smLog:info(coroutine.resume(self.coroutineThread))
+  smLog:info("回到主线程")
+  if self.target and self.func then
+    self.func(self.target,unpack(self.arguments))
+    self.target=nil
+    self.func=nil
+    self.arguments=nil
+    self:resume()
+  end
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]
@@ -48,5 +60,12 @@ function globalThread:pause()
   end
   self.currentThread=self.THREAD_MAIN
   coroutine.yield()
+end
+
+function globalThread:runFunctionInMainThread(target,func,...)
+  self.target=target
+  self.func=func
+  self.arguments=arg
+  self:pause()
 end
 
