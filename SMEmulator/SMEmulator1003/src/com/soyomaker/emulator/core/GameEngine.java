@@ -147,15 +147,6 @@ public class GameEngine implements Runnable {
 	}
 
 	/**
-	 * 运行脚本
-	 * 
-	 * @param scriptId
-	 */
-	public void runScript(int scriptId) {
-		luaAdapter.runScrpit(scriptId);
-	}
-
-	/**
 	 * 暂停脚本
 	 */
 	public void pauseScript() {

@@ -10,7 +10,6 @@ import org.keplerproject.luajava.LuaStateFactory;
 import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
-import com.soyomaker.emulator.utils.SMFunction;
 import com.soyomaker.emulator.utils.SMLog;
 
 /**
@@ -48,11 +47,12 @@ public class LuaAdapter {
 			luaState.openLibs();
 			luaState.LdoFile(luaFilePath);
 			// 1、注册JAVA提供给lua的API
-			// 注册SMFunction
-			new SMFunction(luaState).register("smFunction");
 			// --注册GameEngine
 			luaState.pushObjectValue(GameEngine.getInstance());
 			luaState.setGlobal("smGameEngine");
+			// --注册SMLog
+			luaState.pushObjectValue(SMLog.getInstance());
+			luaState.setGlobal("smLog");
 			// --注册Random
 			luaState.pushObjectValue(new Random());
 			luaState.setGlobal("smRandom");
@@ -155,17 +155,4 @@ public class LuaAdapter {
 		}
 		luaState.call(1, 0);
 	}
-
-	public void runScrpit(final int scriptId) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				luaState.LdoFile(GameEngine.getInstance().getGamePath()
-						+ "/data/script/script" + scriptId + ".gat");
-				System.out.println("script thread end");
-			}
-		}).start();
-	}
-
 }
