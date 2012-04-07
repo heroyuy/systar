@@ -129,11 +129,7 @@ public class GameEngine implements Runnable {
 
 				if (t < 1000 * 1.0 / ratedFps) {
 					actualFps = ratedFps;
-					try {
-						Thread.sleep((long) (1000 * 1.0 / ratedFps - t));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					this.sleep((int) (1000 * 1.0 / ratedFps - t));
 				} else {
 					actualFps = (int) (1000 * 1.0 / t);
 				}
@@ -146,19 +142,6 @@ public class GameEngine implements Runnable {
 
 	}
 
-	/**
-	 * 暂停脚本
-	 */
-	public void pauseScript() {
-
-	}
-
-	/**
-	 * 继续脚本
-	 */
-	public void resumeScript() {
-
-	}
 
 	public void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
@@ -186,6 +169,14 @@ public class GameEngine implements Runnable {
 		emulator.stopByEngine();
 		running = false;
 	}
+	
+	public void sleep(int millis){
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 	void stopByEmulator() {
 		running = false;
@@ -199,4 +190,5 @@ public class GameEngine implements Runnable {
 		luaAdapter.update();
 	}
 
+	
 }

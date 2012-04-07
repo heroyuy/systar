@@ -1,2 +1,3 @@
 print("I'm script3")
+globalData.proxy:sleep(5000)
 print("script3 end")

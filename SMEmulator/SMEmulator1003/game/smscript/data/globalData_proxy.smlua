@@ -61,6 +61,10 @@ end
 
 --等待
 function globalData.proxy:sleep(millisecond)
+  local fun=function()
+    smGameEngine:sleep(millisecond)
+  end
+  globalThread:runFunctionInMainThread(fun)
 end
 
 --============游戏表现类============
