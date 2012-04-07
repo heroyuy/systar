@@ -1,0 +1,3 @@
+globalData.proxy:changeSkin("/image/skin/Window1.png")
+globalData.proxy:executeScript(111000003)
+print("script2 end")
