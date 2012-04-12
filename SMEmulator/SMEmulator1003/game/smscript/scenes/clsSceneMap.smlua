@@ -79,6 +79,8 @@ function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   --注册接收通知
   globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
+  globalNotifier:addObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
+  globalNotifier:addObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
   local map=globalDictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
@@ -100,6 +102,9 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
+  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.MOVED,self)
+  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self)
+  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self)
 end
 
 --切换地图
@@ -249,7 +254,6 @@ function clsSceneMap:buttonTapped(target)
   local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
   if target==buttonHead then
     globalData.proxy:runScript(111000001)
-    globalGame:changeScene(globalGame.SCENE_TITLE)
   end
 end
 
@@ -289,7 +293,8 @@ function clsSceneMap:characterMoved(param)
     end
   end
   --character移动
-  local npcSprite=self.spriteLayer:childWithTag(param.character.id)   if param.direction==0 then
+  local npcSprite=self.spriteLayer:childWithTag(param.character.id)   
+  if param.direction==0 then
     --上
     npcSprite.y=npcSprite.y-globalData.curMap.cellHeight/4
   elseif param.direction==1 then
@@ -303,4 +308,18 @@ function clsSceneMap:characterMoved(param)
     npcSprite.x=npcSprite.x+globalData.curMap.cellWidth/4
   end
   npcSprite.frameIndex=param.character:getCurFrameIndex()
+end
+
+--character面向改变
+function clsSceneMap:characterFaceChanged(param)
+  local npcSprite=self.spriteLayer:childWithTag(param.character.id)  
+  npcSprite.frameIndex=param.character:getCurFrameIndex()
+end
+
+--character地图改变
+function clsSceneMap:characterMapChanged(param)
+  if param.character==self.curPlayer then
+    local map=globalDictionary:getMap(self.curPlayer.mapId)
+    self:changeMap(map)
+  end
 end

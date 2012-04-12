@@ -1,3 +1,1 @@
-globalData.proxy:executeScript(111000002)
-globalData.proxy:stopGame()
-print("script-end")
+globalData.proxy:changeMap(108000001,10,10,3)

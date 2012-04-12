@@ -70,6 +70,10 @@ end
 --============游戏表现类============
 --切换地图
 function globalData.proxy:changeMap(mapId,row,col,face)
+  local fun=function()
+    globalData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
+  end
+  globalThread:runFunctionInMainThread(fun)
 end
 
 --强制移动   e.g  {0,0,1,2,3,3,1}
@@ -106,6 +110,7 @@ end
 
 --更改面向
 function globalData.proxy:changeFace(face)
+  globalData.playerTroop:curDisplayPlayer():changeFace(face)
 end
 
 --开启战斗
@@ -148,7 +153,6 @@ end
 function globalData.proxy:changeSkin(name)
   local fun=function()
     globalSkin:init(smGameEngine:getGamePath()..name)
-    smLog:info("changeSkin-successful")
   end
   globalThread:runFunctionInMainThread(fun)
 end
@@ -171,6 +175,10 @@ end
 
 --回主菜单
 function globalData.proxy:returnToMainMenu()
+  local fun=function()
+    globalGame:changeScene(globalGame.SCENE_TITLE)
+  end
+  globalThread:runFunctionInMainThread(fun)
 end
 
 --============数据处理类============

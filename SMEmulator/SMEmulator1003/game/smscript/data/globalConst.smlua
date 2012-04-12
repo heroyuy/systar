@@ -30,4 +30,12 @@ globalConst.NotifyCMD.Character={}
             第一个参数是移动的目标 第二个标识是移动的方向 第三个标识移动后character的行号是否变化
   --]]
   globalConst.NotifyCMD.Character.MOVED="characterMoved"    --角色移动
+  --[[
+    character面向改变，此通知的参数为{character=player/npc}
+  --]]
+  globalConst.NotifyCMD.Character.FACE_CHANGED="characterFaceChanged"    --角色面向改变
+  --[[
+    character所在地图改变，此通知的参数为{character=player/npc}
+  --]]
+  globalConst.NotifyCMD.Character.MAP_CHANGED="characterMapChanged"      --角色地图改变
 
