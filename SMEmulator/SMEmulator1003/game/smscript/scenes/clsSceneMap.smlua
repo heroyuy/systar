@@ -253,7 +253,7 @@ end
 function clsSceneMap:buttonTapped(target)
   local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
   if target==buttonHead then
-    globalData.proxy:runScript(111000001)
+    
   end
 end
 

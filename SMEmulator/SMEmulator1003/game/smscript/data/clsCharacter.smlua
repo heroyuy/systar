@@ -43,7 +43,9 @@ clsCharacter.money=0 --金钱
 clsCharacter.moveSequence=nil     --角色当前移动序列
 clsCharacter.curMoveDirection=nil --角色当前移动方向
 
-clsCharacter.moveDelegate=nil     --行走事件委托 需要方法 “checkCell(character,row,col)”以检查指定单元格是否可以行走 
+clsCharacter.moveDelegate=nil     --行走事件委托 需要方法：
+                                  --1、 “checkCellBeforeMove(character)”以检查指定单元格是否可以行走，是否有脚本要执行等
+                                  --2、 “checkCellAfterMove(character)”以检查是否有事件要执行等
 
 --构造器
 function clsCharacter:new()
@@ -72,9 +74,11 @@ end
 function clsCharacter:move()
   --移动之前检查目标单元格是否可以移动
   if self.step==0 then
+    --获取角色目的地
     local row,col=self:getHoldingCell()
     if self.moveDelegate then
-      if not self.moveDelegate:checkCell(self,row,col) then
+      --检查目的地是否可以移动
+      if not self.moveDelegate:checkCellBeforeMove(self) then
         --目的地不可达(停止所有移动)
         self.curMoveDirection=nil
         self.moveSequence:clear()
@@ -94,6 +98,14 @@ function clsCharacter:move()
     self.row,self.col=row,col
     self.curMoveDirection=nil
     self.step=0
+    --移动结束后检查角色所在地情况，以判断是否可以继续行走
+    if self.moveDelegate then
+      if not self.moveDelegate:checkCellAfterMove(self) then
+        --不能继续行走(停止所有移动)
+        self.moveSequence:clear()
+        return
+      end
+    end
   end
   globalNotifier:notify(globalConst.NotifyCMD.Character.MOVED,{character=self,direction=direction,rowChanged=rowChanged})
 end
