@@ -48,7 +48,7 @@ end
 
 --子Layer排序
 function clsUILayer:sortChildren()
-  table.sort(self.children,function(a,b) return a.z<b.z end)
+  table.sort(self.children,function(a,b) return a.z < b.z end)
 end
 
 --根据序号获取子layer
