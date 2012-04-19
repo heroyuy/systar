@@ -121,16 +121,13 @@ end
 --执行公共脚本
 function Interpreter:executeScript(scriptId)
   local file=smGamePath.."/data/script/script"..scriptId..".gat"
-  dofile(file)
+  local fun=loadfile(file)
+  fun()
 end
 
 --等待
 function Interpreter:sleep(millisecond)
   smLog:info("sleep:"..millisecond)
-  --local fun=function()
-  --  smGameEngine:sleep(millisecond)
-  --end
-  --ScriptThread:runFunctionInMainThread(fun)
 end
 
 --============游戏表现类============

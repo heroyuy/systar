@@ -1,1 +1,3 @@
+print("script1-start")
 Interpreter:doCommand(100000,111000002)
+print("script1-end")

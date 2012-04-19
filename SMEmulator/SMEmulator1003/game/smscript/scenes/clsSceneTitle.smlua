@@ -81,6 +81,7 @@ function clsSceneTitle:buttonTapped(target)
     globalGame:changeScene(globalGame.SCENE_MAP)
   elseif index==2 then
     --读取存档
+    Interpreter:runScript(111000001)
   elseif index==3 then
     --游戏设置
   end
