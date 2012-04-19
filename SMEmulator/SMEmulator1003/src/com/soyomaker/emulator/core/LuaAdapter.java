@@ -22,8 +22,10 @@ import com.soyomaker.emulator.utils.SMLog;
  */
 public class LuaAdapter {
 
-	public static LuaAdapter newInstance(String luaFilePath, String globalGame) {
-		return new LuaAdapter(luaFilePath, globalGame);
+	private static LuaAdapter instance = new LuaAdapter();
+
+	public static LuaAdapter getInstance() {
+		return instance;
 	}
 
 	private LuaState luaState = null;
@@ -40,7 +42,11 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnStop = null;
 
-	private LuaAdapter(String luaFilePath, String globalGame) {
+	private LuaAdapter() {
+
+	}
+
+	public void init(String luaFilePath, String globalGame) {
 		try {
 			// 设置LuaState
 			luaState = LuaStateFactory.newLuaState();
@@ -93,8 +99,7 @@ public class LuaAdapter {
 	 */
 	public void onTouch(int keyX, int keyY, int type) {
 		try {
-			luaFunctionOnTouch.call(new Object[] { luaGlobalGame, keyX, keyY,
-					type });
+			luaFunctionOnTouch.call(new Object[] { luaGlobalGame, keyX, keyY, type });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}

@@ -28,26 +28,19 @@ public class GameEngine implements Runnable {
 
 	private long time = 0;
 
-	Emulator emulator = null;
+	private Emulator emulator = null;
 
-	boolean running;// 运行标识
+	private boolean running;// 运行标识
 
-	int keyX = -1;// 事件的x坐标
+	private int keyX = -1;// 事件的x坐标
 
-	int keyY = -1;// 事件的y坐标
+	private int keyY = -1;// 事件的y坐标
 
-	int keyType = -1;// 事件的类型 : 0按下 1移动 2离开
+	private int keyType = -1;// 事件的类型 : 0按下 1移动 2离开
 
 	private LuaAdapter luaAdapter = null;
 
 	private GameEngine() {
-	}
-
-	/**
-	 * 垃圾收集：线程直接调用
-	 */
-	private void gc() {
-		luaAdapter.callLuaGC();
 	}
 
 	public int getActualFps() {
@@ -58,12 +51,12 @@ public class GameEngine implements Runnable {
 		return gamePath;
 	}
 
-	public int getHeight() {
-		return emulator.getScreenHeight();
+	public int getWidth() {
+		return emulator.getScreenWidth();
 	}
 
-	float getLuaMemory() {
-		return luaAdapter.getLuaMemory();
+	public int getHeight() {
+		return emulator.getScreenHeight();
 	}
 
 	public int getRatedFps() {
@@ -74,34 +67,28 @@ public class GameEngine implements Runnable {
 		return (int) (System.currentTimeMillis() - time);
 	}
 
-	public int getWidth() {
-		return emulator.getScreenWidth();
-	}
-
 	public boolean isShowFps() {
 		return showFps;
 	}
 
-	/**
-	 * 按键事件：线程直接调用
-	 */
-	private void onTouch() {
-		if (keyX == -1 || keyY == -1 || keyType == -1) {
-			return;
-		}
-		// 此处调用lua的onTouch(x,y,type)方法
-		luaAdapter.onTouch(keyX, keyY, keyType);
-		keyX = keyY = keyType = -1;
+	public void setRatedFps(int ratedFps) {
+		this.ratedFps = ratedFps;
 	}
 
-	/**
-	 * 绘图：线程间接调用
-	 * 
-	 * @param painter
-	 */
-	void paintGame(Painter painter) {
-		// 此处调用lua的paint(painter)方法
-		luaAdapter.paint(painter);
+	public void setShowFps(boolean showFps) {
+		this.showFps = showFps;
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void sleep(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -142,44 +129,61 @@ public class GameEngine implements Runnable {
 
 	}
 
+	/**
+	 * 按键事件：线程直接调用
+	 */
+	private void onTouch() {
+		if (keyX == -1 || keyY == -1 || keyType == -1) {
+			return;
+		}
+		// 此处调用lua的onTouch(x,y,type)方法
+		luaAdapter.onTouch(keyX, keyY, keyType);
+		keyX = keyY = keyType = -1;
+	}
 
-	public void setGamePath(String gamePath) {
+	/**
+	 * 绘图：线程间接调用
+	 * 
+	 * @param painter
+	 */
+	protected void paintGame(Painter painter) {
+		// 此处调用lua的paint(painter)方法
+		luaAdapter.paint(painter);
+	}
+
+	protected void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
 	}
 
-	public void setRatedFps(int ratedFps) {
-		this.ratedFps = ratedFps;
-	}
-
-	public void setShowFps(boolean showFps) {
-		this.showFps = showFps;
-	}
-
-	void startByEmulator() {
-		luaAdapter = LuaAdapter.newInstance(getGamePath() + GAME_FILE,
-				GAME_NAME);
+	protected void start() {
+		luaAdapter = LuaAdapter.getInstance();
+		luaAdapter.init(getGamePath() + GAME_FILE, GAME_NAME);
 		running = true;
 		new Thread(this).start();
 	}
 
-	/**
-	 * stopByLua 游戏内停止游戏
-	 */
-	public void stop() {
-		emulator.stopByEngine();
+	protected void stop() {
 		running = false;
-	}
-	
-	public void sleep(int millis){
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
-	void stopByEmulator() {
-		running = false;
+	protected float getLuaMemory() {
+		return luaAdapter.getLuaMemory();
+	}
+
+	protected void setEmulator(Emulator emulator) {
+		this.emulator = emulator;
+	}
+
+	protected void setKeyX(int keyX) {
+		this.keyX = keyX;
+	}
+
+	protected void setKeyY(int keyY) {
+		this.keyY = keyY;
+	}
+
+	protected void setKeyType(int keyType) {
+		this.keyType = keyType;
 	}
 
 	/**
@@ -190,5 +194,11 @@ public class GameEngine implements Runnable {
 		luaAdapter.update();
 	}
 
-	
+	/**
+	 * 垃圾收集：线程直接调用
+	 */
+	private void gc() {
+		luaAdapter.callLuaGC();
+	}
+
 }

@@ -54,7 +54,7 @@ public class Emulator extends JDialog implements IPlugin {
 		Emulator emulator = new Emulator();
 		emulator.setType(TYPE_SOFTWARE);
 		GameEngine ge = GameEngine.getInstance();
-		ge.emulator = emulator;
+		ge.setEmulator(emulator);
 		ge.setGamePath(DEFAULT_GAME_PATH);
 		emulator.setVisible(true);
 		emulator.startGame();
@@ -153,14 +153,13 @@ public class Emulator extends JDialog implements IPlugin {
 				painter.setColor(ColorFactory.getInstance().BLACK);
 				painter.fillRect(0, 0, getScreenWidth(), getScreenHeight());
 				// 绘制游戏
-				if (ge.running) {
+				if (ge.isRunning()) {
 					ge.paintGame(painter);
 					// 显示FPS
 					if (ge.isShowFps()) {
 						painter.setColor(ColorFactory.getInstance().WHITE);
 						painter.setTextSize(20);
-						painter.drawString("FPS:" + ge.getActualFps() + "", 20,
-								ge.getHeight() - 10, Painter.LB);
+						painter.drawString("FPS:" + ge.getActualFps() + "", 20, ge.getHeight() - 10, Painter.LB);
 					}
 				}
 			}
@@ -169,21 +168,21 @@ public class Emulator extends JDialog implements IPlugin {
 		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
-				ge.keyX = e.getX();
-				ge.keyY = e.getY();
-				ge.keyType = GameEngine.TOUCH_TYPE_MOVE;
+				ge.setKeyX(e.getX());
+				ge.setKeyY(e.getY());
+				ge.setKeyType(GameEngine.TOUCH_TYPE_MOVE);
 			}
 
 			public void mousePressed(MouseEvent e) {
-				ge.keyX = e.getX();
-				ge.keyY = e.getY();
-				ge.keyType = GameEngine.TOUCH_TYPE_DOWN;
+				ge.setKeyX(e.getX());
+				ge.setKeyY(e.getY());
+				ge.setKeyType(GameEngine.TOUCH_TYPE_DOWN);
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				ge.keyX = e.getX();
-				ge.keyY = e.getY();
-				ge.keyType = GameEngine.TOUCH_TYPE_UP;
+				ge.setKeyX(e.getX());
+				ge.setKeyY(e.getY());
+				ge.setKeyType(GameEngine.TOUCH_TYPE_UP);
 			}
 		};
 		contentPanel.addMouseListener(mouseAdapter);
@@ -191,14 +190,12 @@ public class Emulator extends JDialog implements IPlugin {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
-		contentPanel.setPreferredSize(new Dimension(getScreenWidth(),
-				getScreenHeight()));
+		contentPanel.setPreferredSize(new Dimension(getScreenWidth(), getScreenHeight()));
 
 		// 状态栏
 		if (isShowStatusBar()) {
 			JPanel panel = new JPanel();
-			panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
-					null, null));
+			panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 			panel.setPreferredSize(new Dimension(10, 20));
 			panel.setSize(new Dimension(0, 20));
 			getContentPane().add(panel, BorderLayout.SOUTH);
@@ -228,18 +225,16 @@ public class Emulator extends JDialog implements IPlugin {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// Lua
-					if (ge.running) {
-						labelLuaMemory.setText(convertMemoryInfo(ge
-								.getLuaMemory()));
+					if (ge.isRunning()) {
+						labelLuaMemory.setText(convertMemoryInfo(ge.getLuaMemory()));
 					}
 					// Java
 					long totalMemory = Runtime.getRuntime().totalMemory();
 					long freeMemory = Runtime.getRuntime().freeMemory();
 					progressBar.setMaximum((int) totalMemory);
 					progressBar.setValue((int) (totalMemory - freeMemory));
-					progressBar.setString(convertMemoryInfo(totalMemory
-							- freeMemory)
-							+ "/" + convertMemoryInfo(totalMemory));
+					progressBar.setString(convertMemoryInfo(totalMemory - freeMemory) + "/"
+							+ convertMemoryInfo(totalMemory));
 				}
 			});
 			timer.start();
@@ -268,14 +263,10 @@ public class Emulator extends JDialog implements IPlugin {
 	 */
 	private void loadConfig() {
 		try {
-			XMLObject emulatorXMLObject = XMLParser
-					.parse(new File(CONFIG_PATH));
-			int width = Integer.parseInt(emulatorXMLObject.getChild(0)
-					.getValue());
-			int height = Integer.parseInt(emulatorXMLObject.getChild(1)
-					.getValue());
-			boolean showStatusBar = Boolean.parseBoolean(emulatorXMLObject
-					.getChild(2).getValue());
+			XMLObject emulatorXMLObject = XMLParser.parse(new File(CONFIG_PATH));
+			int width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
+			int height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
+			boolean showStatusBar = Boolean.parseBoolean(emulatorXMLObject.getChild(2).getValue());
 			// 设置屏幕宽度
 			setScreenWidth(width);
 			// 设置屏幕高度
@@ -292,8 +283,8 @@ public class Emulator extends JDialog implements IPlugin {
 	}
 
 	void repaintGame() {
-		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(),
-				contentPanel.getWidth(), contentPanel.getHeight());
+		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(), contentPanel.getWidth(),
+				contentPanel.getHeight());
 	}
 
 	public void setScreenHeight(int screenHeight) {
@@ -317,7 +308,7 @@ public class Emulator extends JDialog implements IPlugin {
 		if (AppData.getInstance().getCurProject() == null) {
 			JOptionPane.showMessageDialog(this, "请先打开工程");
 		} else {
-			ge.emulator = this;
+			ge.setEmulator(this);
 			ge.setGamePath(AppData.getInstance().getCurProject().getPath());
 			this.setType(TYPE_PLUGIN);
 			this.setModal(true);
@@ -330,18 +321,14 @@ public class Emulator extends JDialog implements IPlugin {
 	 * 开始游戏,由模拟器调用
 	 */
 	private void startGame() {
-		ge.startByEmulator();
-	}
-
-	void stopByEngine() {
-		this.setVisible(false);
+		ge.start();
 	}
 
 	/**
 	 * 停止游戏,由模拟器调用
 	 */
 	private void stopGame() {
-		ge.stopByEmulator();
+		ge.stop();
 		this.setVisible(false);
 		if (type == TYPE_SOFTWARE) {
 			System.exit(0);
