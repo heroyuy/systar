@@ -4,6 +4,7 @@ package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/commo
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/common/ui/?.smlua"
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/data/?.smlua"
 package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/scenes/?.smlua"
+package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/script/?.smlua"
 
 --common\system
 require("System")
@@ -13,7 +14,6 @@ require("clsHashMap")
 require("clsStack")
 require("clsAStar")
 require("globalNotifier")
-require("globalThread") 
 
 --common\ui
 require("globalUIConst")
@@ -32,7 +32,6 @@ require("clsPlayer")
 require("clsNPC")
 require("globalData")
 require("globalData_player")
-require("globalData_proxy")
 
 --scene
 require("clsScene")
@@ -44,4 +43,7 @@ require("clsSceneMap")
 
 require("clsSceneStatus")
 
+--script
+require("ScriptThread")
+require("Interpreter")
 

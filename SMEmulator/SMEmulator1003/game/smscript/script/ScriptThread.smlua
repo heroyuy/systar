@@ -5,19 +5,19 @@
 --]]
 
 --结构定义
-globalThread = {}
+ScriptThread = {}
 
 --标识常量
-globalThread.THREAD_MAIN=0
-globalThread.THREAD_SCRIPT=1
+ScriptThread.THREAD_MAIN=0
+ScriptThread.THREAD_SCRIPT=1
 
-globalThread.coroutineThread=nil
-globalThread.currentThread=globalThread.THREAD_MAIN
+ScriptThread.coroutineThread=nil
+ScriptThread.currentThread=ScriptThread.THREAD_MAIN
 
-globalThread.fun=nil
+ScriptThread.fun=nil
 
 --启动脚本线程 [此方法只能由主线程调用]
-function globalThread:start(run)
+function ScriptThread:start(run)
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
     --TODO 如果不是主线程调用此方法则报错
@@ -29,7 +29,7 @@ function globalThread:start(run)
 end
 
 --继续脚本线程 [此方法只能由主线程调用]
-function globalThread:resume()
+function ScriptThread:resume()
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
     --TODO 如果不是主线程调用此方法则报错
@@ -47,7 +47,7 @@ function globalThread:resume()
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]
-function globalThread:pause()
+function ScriptThread:pause()
     --检查此方法是否被脚本线程调用
   if self.currentThread~=self.THREAD_SCRIPT then
     --TODO 如果不是脚本线程调用此方法则报错
@@ -58,7 +58,7 @@ function globalThread:pause()
   coroutine.yield()
 end
 
-function globalThread:runFunctionInMainThread(fun)
+function ScriptThread:runFunctionInMainThread(fun)
   if self.currentThread==self.THREAD_MAIN then
     --如果已在主线程
     fun()

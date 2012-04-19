@@ -1,0 +1,273 @@
+--[[
+  description:脚本解释器
+  author:wp_g4
+  date:2012/04/19
+--]]
+
+Interpreter={}
+
+--常量
+Interpreter.OperateType={}
+Interpreter.OperateType.ASSIGN=0
+Interpreter.OperateType.PLUS=1
+Interpreter.OperateType.MINUS=2
+Interpreter.OperateType.MULTIPLY=3
+Interpreter.OperateType.DIVIDE=4
+Interpreter.OperateType.MOD=5
+
+Interpreter.ValueType={}
+Interpreter.ValueType.CONST=0
+Interpreter.ValueType.VARIABLE=1
+Interpreter.ValueType.SWITCH=2
+
+Interpreter.PropertyType={}
+Interpreter.PropertyType.STR=0
+Interpreter.PropertyType.AGI=1
+Interpreter.PropertyType.INT=2
+Interpreter.PropertyType.VIT=3
+Interpreter.PropertyType.DEX=4
+Interpreter.PropertyType.LUCK=5
+Interpreter.PropertyType.MAXHP=6
+Interpreter.PropertyType.MAXSP=7
+Interpreter.PropertyType.HP=8
+Interpreter.PropertyType.SP=9
+Interpreter.PropertyType.LEVEL=10
+Interpreter.PropertyType.EXP=11
+
+--运行脚本
+function Interpreter:runScript(scriptId)
+  local file=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
+  smLog:info(file)
+  local scriptFunction=loadfile(file)
+  ScriptThread:start(scriptFunction)
+end
+--============流程控制类============
+--结束游戏
+function Interpreter:stopGame()
+  local fun=function()
+    globalGame:stop()
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--执行公共脚本
+function Interpreter:executeScript(scriptId)
+  local fun=function()
+    local file=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
+    dofile(file)
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--等待
+function Interpreter:sleep(millisecond)
+  local fun=function()
+    smGameEngine:sleep(millisecond)
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--============游戏表现类============
+--切换地图
+function Interpreter:changeMap(mapId,row,col,face)
+  local fun=function()
+    globalData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--强制移动   e.g  {0,0,1,2,3,3,1}
+function Interpreter:forceMove(paths)
+end
+
+--显示倒计时
+function Interpreter:showTimer(millisecond)
+end
+
+--播放音乐
+function Interpreter:playerMusic(name,loop)
+end
+
+--停止音乐
+function Interpreter:stopMusic(name)
+end
+
+--开启商店 e.g {10,2,5,0}
+function Interpreter:openItemShop(itemIds)
+end
+
+--显示对话
+function Interpreter:showDialog(name,content,position)
+end
+
+--显示输入框
+function Interpreter:showInputDialog(type)
+end
+
+--显示选项框 e.g  {"yes","no","cancel"}
+function Interpreter:showOptionDialog(options)
+end
+
+--更改面向
+function Interpreter:changeFace(face)
+  globalData.playerTroop:curDisplayPlayer():changeFace(face)
+end
+
+--开启战斗
+function Interpreter:startFight(enemyTroopId,type)
+end
+
+--结束战斗
+function Interpreter:exitFight()
+end
+
+--显示图片
+function Interpreter:showImage(name,x,y,millisecond)
+end
+
+--移除图片
+function Interpreter:removeImage(name)
+end
+
+--移动图片
+function Interpreter:moveImage(name,x,y,millisecond)
+end
+
+--旋转图片
+function Interpreter:rotateImage(name,type,degree,millisecond)
+end
+
+--更改图片色调
+function Interpreter:toneImage(name,a,r,g,b,millisecond)
+end
+
+--显示动画
+function Interpreter:playAnimation(animationId,x,y)
+end
+
+--显示动画
+function Interpreter:playAnimationInFight(animationId,targetType,targetId)
+end
+
+--更换皮肤
+function Interpreter:changeSkin(name)
+  local fun=function()
+    globalSkin:init(smGameEngine:getGamePath()..name)
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--更改画面色调
+function Interpreter:toneScene(a,r,g,b,millisecond)
+end
+
+--画面震动
+function Interpreter:shakeScene(range,millisecond,times)
+end
+
+--打开系统菜单
+function Interpreter:openSystemMenu()
+end
+
+--打开存档菜单
+function Interpreter:openRecordMenu()
+end
+
+--回主菜单
+function Interpreter:returnToMainMenu()
+  local fun=function()
+    globalGame:changeScene(globalGame.SCENE_TITLE)
+  end
+  ScriptThread:runFunctionInMainThread(fun)
+end
+
+--============数据处理类============
+--开关操作
+function Interpreter:operateSwitch(switchId,value)
+end
+
+--获取开关值
+function Interpreter:getSwitch(switchId)
+end
+
+--变量操作
+function Interpreter:operateVariable(variableId,operateType,valueType,value)
+end
+
+--获取变量值
+function Interpreter:getVariable(variableId)
+end
+
+--玩家属性操作
+function Interpreter:operatePlayerProperty(playerId,propertyType,operateType,valueType,value)
+end
+
+--获取玩家属性
+function Interpreter:getPlayerProperty(playerId,propertyType)
+end
+
+--玩家名称操作
+function Interpreter:operatePlayerName(playerId,name)
+end
+
+--获取玩家名称
+function Interpreter:getPlayerName(playerId)
+end
+
+--技能操作
+function Interpreter:operatePlayerSkill(playerId,skillId,value)
+end
+
+--获取技能状态
+function Interpreter:getPlayerSkillStatus(playerId,skillId)
+end
+
+--装备操作  e.g  {12,1,-1,-1,-1,-1}   TODO 参数意义待定
+function Interpreter:operatePlayerEquip(playerId,equipIds)
+end
+
+--获取装备状态 
+function Interpreter:getPlayerEquipStatus(playerId,equipId)
+end
+
+--模型操作
+function Interpreter:operatePlayerPattern(playerId,characterImageName)
+end
+
+--金钱操作
+function Interpreter:operateMoney(operateType,valueType,value)
+end
+
+--获取金钱数量
+function Interpreter:getMoneyAmount()
+end
+
+--物品列表操作
+function Interpreter:operateItem(itemId,operateType,valueType,value)
+end
+
+--获取物品数量
+function Interpreter:getItemNum(itemId)
+end
+
+--装备列表操作
+function Interpreter:operateEquip(equipId,operateType,valueType,value)
+end
+
+--获取装备数量
+function Interpreter:getEquipNum(equipId)
+end
+
+--敌人属性操作
+function Interpreter:operateEnemyProperty(enemyId,propertyType,operateType,valueType,value)
+end
+
+--获取敌人属性
+function Interpreter:getEnemyProperty(enemyId,propertyType)
+end
+
+--敌人模型操作
+function Interpreter:operateEnemyPattern(enemyId,characterImageName)
+end
+
+

@@ -10,7 +10,7 @@ setmetatable(clsSceneTitle,clsScene)
 clsSceneTitle.__index = clsSceneTitle
 
 --字段
-clsSceneTitle.titles={"新的游戏","读取存档","退出游戏"}
+clsSceneTitle.titles={"新的游戏","读取存档","游戏设置"}
 
 --构造器
 function clsSceneTitle:new()
@@ -82,8 +82,7 @@ function clsSceneTitle:buttonTapped(target)
   elseif index==2 then
     --读取存档
   elseif index==3 then
-    --退出游戏
-    globalGame:stop()
+    --游戏设置
   end
 end
 

@@ -1,0 +1,5 @@
+print("script1-start")
+for i=0,100000 do
+  print("processing")
+end
+print("script1-end")

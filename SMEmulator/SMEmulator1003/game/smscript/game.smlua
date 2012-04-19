@@ -17,7 +17,7 @@ function globalGame:onStart()
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
-  smGameEngine:setRatedFps(50)
+  smGameEngine:setRatedFps(20)
   smLog:setDebug(true)
   smLog:info("game-start")
   --配置游戏
@@ -66,11 +66,6 @@ function globalGame:onStop()
     self.rootLayer:clear()
   end
   smLog:info("game-stop")
-end
-
---退出  lua调用
-function globalGame:stop()
-  smGameEngine:stop()
 end
 
 --切换场景  lua调用
