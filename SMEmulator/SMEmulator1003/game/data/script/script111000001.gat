@@ -1,5 +1,2 @@
-print("script1-start")
-for i=0,100000 do
-  print("processing")
-end
-print("script1-end")
+Interpreter:doCommand(100000,111000002)
+Interpreter:doCommand(100001,5000)

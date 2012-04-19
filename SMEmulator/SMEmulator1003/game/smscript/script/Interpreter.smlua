@@ -34,37 +34,103 @@ Interpreter.PropertyType.SP=9
 Interpreter.PropertyType.LEVEL=10
 Interpreter.PropertyType.EXP=11
 
---运行脚本
+Interpreter.functionList={
+  [100000]="executeScript",
+  [100001]="sleep",
+  
+  [101000]="changeMap",
+  [101001]="forceMove",
+  [101002]="showTimer",
+  [101003]="playerMusic",
+  [101004]="stopMusic",
+  [101005]="openItemShop",
+  [101006]="showDialog",
+  [101007]="showInputDialog",
+  [101008]="showOptionDialog",
+  [101009]="changeFace",
+  [101010]="startFight",
+  [101011]="exitFight",
+  [101012]="showImage",
+  [101013]="removeImage",
+  [101014]="moveImage",
+  [101015]="rotateImage",
+  [101016]="toneImage",
+  [101017]="playAnimation",
+  [101018]="playAnimationInFight",
+  [101019]="changeSkin",
+  [101020]="toneScene",
+  [101021]="shakeScene",
+  [101022]="openSystemMenu",
+  [101023]="openRecordMenu",
+  [101024]="returnToMainMenu",
+  
+  [102000]="operateSwitch",
+  [102001]="getSwitch",
+  [102002]="operateVariable",
+  [102003]="getVariable",
+  [102004]="operatePlayerProperty",
+  [102005]="getPlayerProperty",
+  [102006]="operatePlayerName",
+  [102007]="getPlayerName",
+  [102008]="operatePlayerSkill",
+  [102009]="getPlayerSkillStatus",
+  [102010]="operatePlayerEquip",
+  [102011]="getPlayerEquipStatus",
+  [102012]="operatePlayerPattern",
+  [102013]="operateMoney",
+  [102014]="getMoneyAmount",
+  [102015]="operateItem",
+  [102016]="getItemNum",
+  [102017]="operateEquip",
+  [102018]="getEquipNum",
+  [102019]="operateEnemyProperty",
+  [102020]="getEnemyProperty",
+  [102021]="operateEnemyPattern"
+}
+
+--运行脚本,必需运行在主线程
 function Interpreter:runScript(scriptId)
-  local file=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
+  local file=smGamePath.."/data/script/script"..scriptId..".gat"
   smLog:info(file)
   local scriptFunction=loadfile(file)
+  --将脚本调入子线程运行
   ScriptThread:start(scriptFunction)
 end
---============流程控制类============
---结束游戏
-function Interpreter:stopGame()
+
+--解析命令,必需运行在子线程
+function Interpreter:doCommand(id,...)
   local fun=function()
-    globalGame:stop()
+    self:excuteCommand(id,unpack(arg))
   end
-  ScriptThread:runFunctionInMainThread(fun)
+  --executeScript运行在子线程，其它运行在主线程中
+  if id==100000 then
+    fun()
+  else
+    ScriptThread:runFunctionInMainThread(fun)
+  end
 end
 
+--执行命令,executeScript运行在子线程，其它运行在主线程中
+function Interpreter:excuteCommand(id,...)
+  local fun=Interpreter[Interpreter.functionList[id]]
+  fun(self,unpack(arg))
+end
+
+--注:以下方法中executeScript运行在子线程，其它均运行在主线程中
+--============流程控制类============
 --执行公共脚本
 function Interpreter:executeScript(scriptId)
-  local fun=function()
-    local file=smGameEngine:getGamePath().."/data/script/script"..scriptId..".gat"
-    dofile(file)
-  end
-  ScriptThread:runFunctionInMainThread(fun)
+  local file=smGamePath.."/data/script/script"..scriptId..".gat"
+  dofile(file)
 end
 
 --等待
 function Interpreter:sleep(millisecond)
-  local fun=function()
-    smGameEngine:sleep(millisecond)
-  end
-  ScriptThread:runFunctionInMainThread(fun)
+  smLog:info("sleep:"..millisecond)
+  --local fun=function()
+  --  smGameEngine:sleep(millisecond)
+  --end
+  --ScriptThread:runFunctionInMainThread(fun)
 end
 
 --============游戏表现类============
@@ -152,7 +218,7 @@ end
 --更换皮肤
 function Interpreter:changeSkin(name)
   local fun=function()
-    globalSkin:init(smGameEngine:getGamePath()..name)
+    globalSkin:init(smGamePath..name)
   end
   ScriptThread:runFunctionInMainThread(fun)
 end
@@ -269,5 +335,3 @@ end
 --敌人模型操作
 function Interpreter:operateEnemyPattern(enemyId,characterImageName)
 end
-
-

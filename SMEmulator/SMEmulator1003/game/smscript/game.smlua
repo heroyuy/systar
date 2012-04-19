@@ -13,7 +13,7 @@ globalGame.rootLayer=nil
 --脚本启动  lua层不应该调用
 function globalGame:onStart()
   --导入需要的文件
-  package.path = package.path .. ";"..smGameEngine:getGamePath().."/smscript/?.smlua"
+  package.path = package.path .. ";"..smGamePath.."/smscript/?.smlua"
   require("requires")
   --配置引擎
   smGameEngine:setShowFps(true)
@@ -26,7 +26,7 @@ function globalGame:onStart()
   --加载游戏数据
   smDataLoader:init()
   --初始化皮肤
-  globalSkin:init(smGameEngine:getGamePath()..globalDictionary.config.skin)
+  globalSkin:init(smGamePath..globalDictionary.config.skin)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end

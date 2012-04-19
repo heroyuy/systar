@@ -56,6 +56,9 @@ public class LuaAdapter {
 			// --注册GameEngine
 			luaState.pushObjectValue(GameEngine.getInstance());
 			luaState.setGlobal("smGameEngine");
+			// --注册GamePath
+			luaState.pushObjectValue(GameEngine.getInstance().getGamePath());
+			luaState.setGlobal("smGamePath");
 			// --注册SMLog
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");

@@ -51,15 +51,15 @@ function globalData:newGame()
     player.desc=playerDict.intro
     player.headImageName=playerDict.headImg
     if player.headImageName then
-      player.headImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.headImageName)
+      player.headImage=smImageFactory:createImage(smGamePath..player.headImageName)
     end
     player.charImageName=playerDict.charImg
     if player.charImageName then
-      player.charImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.charImageName)
+      player.charImage=smImageFactory:createImage(smGamePath..player.charImageName)
     end
     player.battlerImageName=playerDict.battlerImg
     if player.battlerImageName then
-      player.battlerImage=smImageFactory:createImage(smGameEngine:getGamePath()..player.battlerImageName)
+      player.battlerImage=smImageFactory:createImage(smGamePath..player.battlerImageName)
     end
     player.vocationId=playerDict.vocationIndex
     player.level=playerDict.startLev
@@ -120,11 +120,11 @@ function globalData:getNPC(id)
     npc.name=npcDict.name
     npc.charImageName=npcDict.charImg
     if npc.charImageName then
-      npc.charImage=smImageFactory:createImage(smGameEngine:getGamePath()..npc.charImageName)
+      npc.charImage=smImageFactory:createImage(smGamePath..npc.charImageName)
     end
     npc.headImageName=npcDict.headImg
     if npc.headImageName then
-      npc.headImage=smImageFactory:createImage(smGameEngine:getGamePath()..npc.headImageName)
+      npc.headImage=smImageFactory:createImage(smGamePath..npc.headImageName)
     end
     npc.face=npcDict.face
     npc.moveType=npcDict.moveType
