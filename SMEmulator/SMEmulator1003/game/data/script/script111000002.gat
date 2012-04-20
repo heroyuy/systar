@@ -1,3 +1,4 @@
 print("script2-start")
-Interpreter:doCommand(100001,5000)
+local r1,r2=Interpreter:doCommand(100001,5000)
+print("res:"..r1.." "..r2)
 print("script2-end")

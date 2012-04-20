@@ -29,7 +29,7 @@ function ScriptThread:start(run)
 end
 
 --继续脚本线程 [此方法只能由主线程调用]
-function ScriptThread:resume()
+function ScriptThread:resume(...)
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
     --TODO 如果不是主线程调用此方法则报错
@@ -37,17 +37,18 @@ function ScriptThread:resume()
     return
   end
   self.currentThread=self.THREAD_SCRIPT
-  smLog:info("协程运行结果"..tostring(coroutine.resume(self.coroutineThread)))
+  smLog:info("协程运行结果"..tostring(coroutine.resume(self.coroutineThread,unpack(arg))))
+  self.currentThread=self.THREAD_MAIN
   smLog:info("回到主线程")
   if self.fun then
-    self.fun()
+    local fun=self.fun
     self.fun=nil
-    self:resume()
+    self:resume(fun())  --将运行结果返回到上一次pause的地方
   end
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]
-function ScriptThread:pause()
+function ScriptThread:pause(...)
     --检查此方法是否被脚本线程调用
   if self.currentThread~=self.THREAD_SCRIPT then
     --TODO 如果不是脚本线程调用此方法则报错
@@ -55,17 +56,17 @@ function ScriptThread:pause()
     return
   end
   self.currentThread=self.THREAD_MAIN
-  coroutine.yield()
+  return coroutine.yield(unpack(arg))
 end
 
 function ScriptThread:runFunctionInMainThread(fun)
   if self.currentThread==self.THREAD_MAIN then
     --如果已在主线程
-    fun()
+    return fun()
   else
     --如果不在主线程
     self.fun=fun
-    self:pause()
+    return self:pause()
   end
 end
 

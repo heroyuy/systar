@@ -34,6 +34,7 @@ Interpreter.PropertyType.SP=9
 Interpreter.PropertyType.LEVEL=10
 Interpreter.PropertyType.EXP=11
 
+--方法列表
 Interpreter.functionList={
   [100000]="executeScript",
   [100001]="sleep",
@@ -88,6 +89,15 @@ Interpreter.functionList={
   [102021]="operateEnemyPattern"
 }
 
+--[[
+===============================================================
+注意事项:
+1.lua层编写者只能调用runScript(scriptId)方法，其它方法不应该调用
+2.一次只能运行一个脚本，也即上一次runScript未结束则不能进行新的runScript
+===============================================================
+--]]
+
+---------------------------------------------------------------
 --运行脚本,必需运行在主线程
 function Interpreter:runScript(scriptId)
   local file=smGamePath.."/data/script/script"..scriptId..".gat"
@@ -97,23 +107,24 @@ function Interpreter:runScript(scriptId)
   ScriptThread:start(scriptFunction)
 end
 
---解析命令,必需运行在子线程
+---------------------------------------------------------------
+--分析命令，由脚本自动调用
 function Interpreter:doCommand(id,...)
   local fun=function()
-    self:excuteCommand(id,unpack(arg))
+    return self:excuteCommand(id,unpack(arg))
   end
   --executeScript运行在子线程，其它运行在主线程中
   if id==100000 then
-    fun()
+    return fun()
   else
-    ScriptThread:runFunctionInMainThread(fun)
+    return ScriptThread:runFunctionInMainThread(fun)
   end
 end
 
 --执行命令,executeScript运行在子线程，其它运行在主线程中
 function Interpreter:excuteCommand(id,...)
   local fun=Interpreter[Interpreter.functionList[id]]
-  fun(self,unpack(arg))
+  return fun(self,unpack(arg))
 end
 
 --注:以下方法中executeScript运行在子线程，其它均运行在主线程中
@@ -128,6 +139,7 @@ end
 --等待
 function Interpreter:sleep(millisecond)
   smLog:info("sleep:"..millisecond)
+  return 2*millisecond,5*millisecond
 end
 
 --============游戏表现类============
