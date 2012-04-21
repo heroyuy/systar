@@ -2,5 +2,7 @@ print("script1-start")
 local items={"Yes","No","Confirm","Cancel"}
 local index=Interpreter:doCommand(101008,items)
 print("玩家选择了:"..items[index])
-local index=Interpreter:doCommand(101006,"大卫","来信砍!!","/image/battler/098-Monster12.png",0)
+Interpreter:doCommand(101006,"大卫","来信砍!!","/image/battler/098-Monster12.png",0)
+Interpreter:doCommand(101006,"大卫","来信砍!!","/image/battler/099-Monster13.png",1)
+Interpreter:doCommand(101006,"大卫","来信砍!!","/image/battler/097-Monster11.png",1)
 print("script1-end")
