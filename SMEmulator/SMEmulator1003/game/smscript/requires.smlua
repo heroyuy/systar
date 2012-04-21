@@ -13,7 +13,7 @@ require("clsQueue")
 require("clsHashMap")
 require("clsStack")
 require("clsAStar")
-require("globalNotifier")
+require("Notifier")
 
 --common\ui
 require("globalUIConst")

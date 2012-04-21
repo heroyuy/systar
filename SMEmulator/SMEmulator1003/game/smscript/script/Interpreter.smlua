@@ -139,16 +139,14 @@ end
 --等待
 function Interpreter:sleep(millisecond)
   smLog:info("sleep:"..millisecond)
+  smGameEngine:sleep(millisecond)
   return 2*millisecond,5*millisecond
 end
 
 --============游戏表现类============
 --切换地图
 function Interpreter:changeMap(mapId,row,col,face)
-  local fun=function()
-    globalData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
-  end
-  ScriptThread:runFunctionInMainThread(fun)
+  globalData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
 end
 
 --强制移动   e.g  {0,0,1,2,3,3,1}

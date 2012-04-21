@@ -82,9 +82,9 @@ end
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   --注册接收通知
-  globalNotifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
-  globalNotifier:addObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
-  globalNotifier:addObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
+  Notifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
+  Notifier:addObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
+  Notifier:addObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=globalData.playerTroop:curDisplayPlayer()
   local map=globalDictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
@@ -106,9 +106,9 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
-  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.MOVED,self)
-  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self)
-  globalNotifier:removeObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self)
+  Notifier:removeObserver(globalConst.NotifyCMD.Character.MOVED,self)
+  Notifier:removeObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self)
+  Notifier:removeObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self)
 end
 
 --切换地图

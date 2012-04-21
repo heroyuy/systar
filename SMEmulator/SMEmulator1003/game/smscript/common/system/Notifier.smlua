@@ -35,12 +35,12 @@ end
 --]]
 
 --初始化
-globalNotifier={}
+Notifier={}
 
-globalNotifier.observerMap=clsHashMap:new()   --观察者map
+Notifier.observerMap=clsHashMap:new()   --观察者map
 
 --添加观察者
-function globalNotifier:addObserver(name,target,callback)
+function Notifier:addObserver(name,target,callback)
   if not self.observerMap:has(name) then
     self.observerMap:put(name,clsList:new())
   end
@@ -49,7 +49,7 @@ function globalNotifier:addObserver(name,target,callback)
 end
 
 --删除观察者
-function globalNotifier:removeObserver(name,target)
+function Notifier:removeObserver(name,target)
   if self.observerMap:has(name) then
     local list=self.observerMap:get(name)
     local size=list:size()
@@ -68,7 +68,7 @@ function globalNotifier:removeObserver(name,target)
 end
 
 --发送通知
-function globalNotifier:notify(name,arg)
+function Notifier:notify(name,arg)
   if self.observerMap:has(name) then
     local list=self.observerMap:get(name)
     local size=list:size()
