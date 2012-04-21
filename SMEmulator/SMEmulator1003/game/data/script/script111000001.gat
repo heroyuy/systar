@@ -1,3 +1,5 @@
 print("script1-start")
-Interpreter:doCommand(101008,{"Yes","No","Confirm","Cancel"})
+local items={"Yes","No","Confirm","Cancel"}
+local index=Interpreter:doCommand(101008,items)
+print("玩家选择了:"..items[index])
 print("script1-end")

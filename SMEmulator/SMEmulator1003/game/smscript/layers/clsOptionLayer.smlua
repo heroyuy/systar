@@ -43,7 +43,11 @@ function clsOptionLayer:new(optionItems)
 end
 
 function clsOptionLayer:buttonTapped(target)
-  smLog:info("clsOptionLayer:buttonTapped")
+  local index=target.tag
+  globalGame.rootLayer:removeChild(self)
+  if self.delegate then
+    self.delegate:optionSelected(index)
+  end
 end
 
 

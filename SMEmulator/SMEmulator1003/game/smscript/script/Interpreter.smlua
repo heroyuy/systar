@@ -184,7 +184,13 @@ end
 
 --显示选项框 e.g  {"yes","no","cancel"}
 function Interpreter:showOptionDialog(options)
-  globalGame.rootLayer:addChild(clsOptionLayer:new(options))
+  local optionDialog=clsOptionLayer:new(options)
+  local delegate={}
+  function delegate:optionSelected(index)
+    Interpreter:endCurrentEvent(index)
+  end
+  optionDialog.delegate=delegate
+  globalGame.rootLayer:addChild(optionDialog)
   return false  --返回值为flase表示此方法不立即返回
 end
 
