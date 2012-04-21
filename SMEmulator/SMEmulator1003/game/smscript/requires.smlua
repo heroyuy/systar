@@ -21,6 +21,7 @@ require("Scheduler")
 require("UIConst")
 require("Skin")
 require("clsUILayer")
+require("clsUILabel")
 require("clsUIButton")
 require("clsUISprite")
 
