@@ -38,6 +38,7 @@ require("globalData_player")
 --layers
 require("clsTiledMapLayer")
 require("clsOptionLayer")
+require("clsDialogLayer")
 
 --scenes
 require("clsScene")

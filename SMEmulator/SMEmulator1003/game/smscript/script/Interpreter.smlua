@@ -175,7 +175,15 @@ function Interpreter:openItemShop(itemIds)
 end
 
 --显示对话
-function Interpreter:showDialog(name,content,position)
+function Interpreter:showDialog(name,content,bustPath,position)
+  local normalDialog=clsDialogLayer:new(name,content,bustPath,position)
+  local delegate={}
+  function delegate:dialogEnd()
+    Interpreter:endCurrentEvent()
+  end
+  normalDialog.delegate=delegate
+  globalGame.rootLayer:addChild(normalDialog)
+  return false  --返回值为flase表示此方法不立即返回
 end
 
 --显示输入框
@@ -237,10 +245,7 @@ end
 
 --更换皮肤
 function Interpreter:changeSkin(name)
-  local fun=function()
     Skin:init(smGamePath..name)
-  end
-  ScriptThread:runFunctionInMainThread(fun)
 end
 
 --更改画面色调

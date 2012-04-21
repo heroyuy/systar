@@ -1,0 +1,35 @@
+--[[
+  description:对话框。
+  author:wp_g4
+  date:2011/04/21
+--]]
+
+--类结构定义
+clsDialogLayer={}
+setmetatable(clsDialogLayer,clsUILayer)
+clsDialogLayer.__index=clsDialogLayer
+
+--构造器
+function clsDialogLayer:new(name,content,bustPath,position)
+  local self = clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  setmetatable(self,clsDialogLayer)
+  --背景
+  local gap=10
+  local cellWidth=self.width-2*gap
+  local cellHeight=30
+  local frameHeight=cellHeight*4+gap*5
+  local bgLayer=clsUILayer:new(0,self.height-frameHeight,self.width,frameHeight)
+  bgLayer.backgroundImage=Skin:createBg(self.width,frameHeight)
+  self:addChild(bgLayer)
+  --边框
+  local frameLayer=clsUILayer:new(0,0,self.width,frameHeight)
+  frameLayer.backgroundImage=Skin:createFrame(self.width,frameHeight)
+  bgLayer:addChild(frameLayer)
+  --头像
+  local bustImg=smImageFactory:createImage(smGamePath..bustPath)
+  local bustLayer=clsUILayer:new(0,self.height-bustImg:getHeight(),bustImg:getWidth(),bustImg:getHeight())
+  bustLayer.backgroundImage=bustImg
+  self:addChild(bustLayer)
+  self.z=100  --TODO修改clsLayer的排序算法
+  return self
+end
