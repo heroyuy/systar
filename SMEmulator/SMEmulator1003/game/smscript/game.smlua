@@ -29,11 +29,6 @@ function globalGame:onStart()
   Skin:init(smGamePath..globalDictionary.config.skin)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
-  Scheduler:scheduleTask(self,"doTask",1000,100)
-end
-
-function globalGame:doTask()
-  smLog:info("doTask:"..smGameEngine:getTime())
 end
 
 --触屏事件  lua层不应该调用
