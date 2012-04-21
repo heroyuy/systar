@@ -1,6 +1,6 @@
-globalDictionary.maps[108000002]={
-index=108000002,
-name="大地图",
+globalDictionary.maps[108000003]={
+index=108000003,
+name="城镇地图",
 musicName=nil,
 battleBack=nil,
 battleMusic=nil,
