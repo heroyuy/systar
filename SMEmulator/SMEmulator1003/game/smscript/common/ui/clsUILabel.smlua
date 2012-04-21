@@ -44,13 +44,13 @@ function clsUILabel:paintLayer(painter)
       --单行模式
       if self.alignment==clsUILabel.ALIGN_LEFT then
         --左对齐
-        painter:drawString(self.text, 0, 0, UIConst.anchor.LV)
+        painter:drawString(self.text, 0, self.height/2, UIConst.anchor.LV)
       elseif self.alignment==clsUILabel.ALIGN_LEFT then
         --居中
         painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
       else
         --右对齐
-        painter:drawString(self.text, self.width, self.height, UIConst.anchor.RV)
+        painter:drawString(self.text, self.width, self.height/2, UIConst.anchor.RV)
       end
     else
       --多行自动换行模式
