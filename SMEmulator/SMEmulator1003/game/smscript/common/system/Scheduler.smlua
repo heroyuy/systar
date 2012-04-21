@@ -78,6 +78,7 @@ function Scheduler:update()
     task.times=task.times-times
     --清除剩余次数为0的任务
     if task.times==0 then
+      --TODO
       --self.taskList:removeObject(task)
     end
   end

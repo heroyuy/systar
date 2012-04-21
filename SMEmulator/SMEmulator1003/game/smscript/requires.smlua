@@ -3,6 +3,7 @@ package.path = package.path .. ";"..smGamePath.."/smscript/common/?.smlua"
 package.path = package.path .. ";"..smGamePath.."/smscript/common/system/?.smlua"
 package.path = package.path .. ";"..smGamePath.."/smscript/common/ui/?.smlua"
 package.path = package.path .. ";"..smGamePath.."/smscript/data/?.smlua"
+package.path = package.path .. ";"..smGamePath.."/smscript/layers/?.smlua"
 package.path = package.path .. ";"..smGamePath.."/smscript/scenes/?.smlua"
 package.path = package.path .. ";"..smGamePath.."/smscript/script/?.smlua"
 
@@ -34,14 +35,14 @@ require("clsNPC")
 require("globalData")
 require("globalData_player")
 
---scene
-require("clsScene")
-
-require("clsSceneTitle")
-
+--layers
 require("clsTiledMapLayer")
-require("clsSceneMap")
+require("clsOptionLayer")
 
+--scenes
+require("clsScene")
+require("clsSceneTitle")
+require("clsSceneMap")
 require("clsSceneStatus")
 
 --script

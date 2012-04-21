@@ -145,7 +145,7 @@ end
 function Interpreter:sleep(millisecond)
   --millisecond毫秒后结束此事件，脚本继续运行
   Scheduler:scheduleTask(self,"endCurrentEvent",millisecond)
-  return false  --第一个返回值为flase表示此方法不立即返回
+  return false  --返回值为flase表示此方法不立即返回
 end
 
 --============游戏表现类============
@@ -184,6 +184,8 @@ end
 
 --显示选项框 e.g  {"yes","no","cancel"}
 function Interpreter:showOptionDialog(options)
+  globalGame.rootLayer:addChild(clsOptionLayer:new(options))
+  return false  --返回值为flase表示此方法不立即返回
 end
 
 --更改面向
