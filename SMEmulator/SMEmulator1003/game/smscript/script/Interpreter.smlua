@@ -107,6 +107,11 @@ function Interpreter:runScript(scriptId)
   ScriptThread:start(scriptFunction)
 end
 
+--结束当前正在执行的事件,比如对话框、选择框等。执行此方法后，主线程阻塞，脚本继续运行
+function Interpreter:endCurrentEvent(...)
+  ScriptThread:resume(unpack(arg))
+end
+
 ---------------------------------------------------------------
 --分析命令，由脚本自动调用
 function Interpreter:doCommand(id,...)
@@ -138,9 +143,9 @@ end
 
 --等待
 function Interpreter:sleep(millisecond)
-  smLog:info("sleep:"..millisecond)
-  smGameEngine:sleep(millisecond)
-  return 2*millisecond,5*millisecond
+  --millisecond毫秒后结束此事件，脚本继续运行
+  Scheduler:scheduleTask(self,"endCurrentEvent",millisecond)
+  return false  --第一个返回值为flase表示此方法不立即返回
 end
 
 --============游戏表现类============

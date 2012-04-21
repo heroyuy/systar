@@ -41,15 +41,25 @@ function ScriptThread:resume(...)
   self.currentThread=self.THREAD_MAIN
   smLog:info("回到主线程")
   if self.fun then
-    local fun=self.fun
+    --此方法将一个方法的多返回值封装成一个table返回
+    local function convert(...)
+      return arg
+    end
+    local res=convert(self.fun())
     self.fun=nil
-    self:resume(fun())  --将运行结果返回到上一次pause的地方
+    --取返回的第一个结果，此结果标明是否需要立即返回到脚本线程
+    local flag=res[1]
+    table.remove(res,1)
+    if flag then
+      --需要立即返回
+      self:resume(unpack(res))  --将运行结果返回到上一次pause的地方
+    end
   end
 end
 
 --暂停脚本线程 [此方法只能由脚本线程调用]
 function ScriptThread:pause(...)
-    --检查此方法是否被脚本线程调用
+  --检查此方法是否被脚本线程调用
   if self.currentThread~=self.THREAD_SCRIPT then
     --TODO 如果不是脚本线程调用此方法则报错
     print("pause出错")
@@ -59,14 +69,13 @@ function ScriptThread:pause(...)
   return coroutine.yield(unpack(arg))
 end
 
+--切换到主线程执行指定的方法 [此方法只能由脚本线程调用]
 function ScriptThread:runFunctionInMainThread(fun)
-  if self.currentThread==self.THREAD_MAIN then
-    --如果已在主线程
-    return fun()
-  else
-    --如果不在主线程
-    self.fun=fun
-    return self:pause()
+  --检查此方法是否被脚本线程调用
+  if self.currentThread~=self.THREAD_SCRIPT then
+    --TODO 如果不是脚本线程调用此方法则报错
+    print("runFunctionInMainThread出错")
   end
+  self.fun=fun
+  return self:pause()
 end
-
