@@ -34,17 +34,17 @@ function clsSceneTitle:onStart()
   end
   --标题背景
   local titleBg=clsUILayer:new((smGameEngine:getWidth()-200)/2,smGameEngine:getHeight()-180,200,120)
-  titleBg.backgroundImage=globalSkin:createBg(200,120)
+  titleBg.backgroundImage=Skin:createBg(200,120)
   bgLayer:addChild(titleBg)
   --标题边框
   local titleFrame=clsUILayer:new(0,0,200,120)
-  titleFrame.backgroundImage=globalSkin:createFrame(200,120)
+  titleFrame.backgroundImage=Skin:createFrame(200,120)
   titleBg:addChild(titleFrame)
   --按钮
   local width=160
   local height=25
-  local backgroundImage=globalSkin:createBody(width,height)
-  local highlightImage=globalSkin:createSelectedBg(width,height)
+  local backgroundImage=Skin:createBody(width,height)
+  local highlightImage=Skin:createSelectedBg(width,height)
   local gap=5
   local boundGap=(120-3*height-2*gap)/2
   for i,v in ipairs(self.titles) do
@@ -52,7 +52,7 @@ function clsSceneTitle:onStart()
     button.backgroundImage=backgroundImage
     button.highlightImage=highlightImage
     button.text=v
-    button.textColor=globalSkin:getTextColor(1,1)
+    button.textColor=Skin:getTextColor(1,1)
     button.tag=i
     button.delegate=self
     titleBg:addChild(button)

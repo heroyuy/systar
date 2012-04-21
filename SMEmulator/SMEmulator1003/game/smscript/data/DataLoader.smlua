@@ -4,27 +4,27 @@
   date:2011/12/8
 --]]
 
-smDataLoader={}
+DataLoader={}
 
 --初始化数据字典
 globalDictionary={maps={},npcs={}}
 
 --定义文件路径
-smDataLoader.vocationPath=smGamePath.."/data/vocation.gat";
-smDataLoader.playerPath=smGamePath.."/data/player.gat";
-smDataLoader.skillPath=smGamePath.."/data/skill.gat";
-smDataLoader.itemPath=smGamePath.."/data/item.gat";
-smDataLoader.equipPath=smGamePath.."/data/equip.gat";
-smDataLoader.enemyPath=smGamePath.."/data/enemy.gat";
-smDataLoader.enemyTroopPath=smGamePath.."/data/enemyTroop.gat";
-smDataLoader.statusPath=smGamePath.."/data/status.gat";
-smDataLoader.mapPath=smGamePath.."/data/map/map{index}.gat";
-smDataLoader.npcPath=smGamePath.."/data/npc.gat";
-smDataLoader.animationPath=smGamePath.."/data/animation.gat";
-smDataLoader.configPath=smGamePath.."/data/config.gat";
+DataLoader.vocationPath=smGamePath.."/data/vocation.gat";
+DataLoader.playerPath=smGamePath.."/data/player.gat";
+DataLoader.skillPath=smGamePath.."/data/skill.gat";
+DataLoader.itemPath=smGamePath.."/data/item.gat";
+DataLoader.equipPath=smGamePath.."/data/equip.gat";
+DataLoader.enemyPath=smGamePath.."/data/enemy.gat";
+DataLoader.enemyTroopPath=smGamePath.."/data/enemyTroop.gat";
+DataLoader.statusPath=smGamePath.."/data/status.gat";
+DataLoader.mapPath=smGamePath.."/data/map/map{index}.gat";
+DataLoader.npcPath=smGamePath.."/data/npc.gat";
+DataLoader.animationPath=smGamePath.."/data/animation.gat";
+DataLoader.configPath=smGamePath.."/data/config.gat";
 
 --初始化
-function smDataLoader:init()
+function DataLoader:init()
   --(1)加载Config信息
   self:loadConfig()
   --(2)加载Vocation信息
@@ -50,57 +50,57 @@ function smDataLoader:init()
 end
 
 --加载Config数据
-function smDataLoader:loadConfig()
+function DataLoader:loadConfig()
   dofile(self.configPath)
 end
 
 --加载Vocation数据
-function smDataLoader:loadVocation()
+function DataLoader:loadVocation()
   dofile(self.vocationPath)
 end
 
 --加载Player数据
-function smDataLoader:loadPlayer()
+function DataLoader:loadPlayer()
   dofile(self.playerPath)
 end
 
 --加载Skill数据
-function smDataLoader:loadSkill()
+function DataLoader:loadSkill()
   dofile(self.skillPath)
 end
 
 --加载Item数据
-function smDataLoader:loadItem()
+function DataLoader:loadItem()
   dofile(self.itemPath)
 end
 
 --加载Equip数据
-function smDataLoader:loadEquip()
+function DataLoader:loadEquip()
   dofile(self.equipPath)
 end
 
 --加载Enemy数据
-function smDataLoader:loadEnemy()
+function DataLoader:loadEnemy()
   dofile(self.enemyPath)
 end
 
 --加载EnemyTroop数据
-function smDataLoader:loadEnemyTroop()
+function DataLoader:loadEnemyTroop()
   dofile(self.enemyTroopPath)
 end
 
 --加载Status数据
-function smDataLoader:loadStatus()
+function DataLoader:loadStatus()
   dofile(self.statusPath)
 end
 
 --加载Animation数据
-function smDataLoader:loadAnimation()
+function DataLoader:loadAnimation()
   dofile(self.animationPath)
 end
 
 --加载Map数据
-function smDataLoader:loadMap(id)
+function DataLoader:loadMap(id)
   local t=os.time()
   local path=string.gsub(self.mapPath,"{index}",id)
   dofile(path)
@@ -108,13 +108,13 @@ function smDataLoader:loadMap(id)
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
 
-function smDataLoader:loadNPC()
+function DataLoader:loadNPC()
   dofile(self.npcPath)
 end
 
 function globalDictionary:getMap(id)
   if self.maps[id]==nil then
-    smDataLoader:loadMap(id)
+    DataLoader:loadMap(id)
   end
   return self.maps[id]
 end

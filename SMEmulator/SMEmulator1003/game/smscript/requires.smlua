@@ -14,17 +14,18 @@ require("clsHashMap")
 require("clsStack")
 require("clsAStar")
 require("Notifier")
+require("Scheduler")
 
 --common\ui
-require("globalUIConst")
-require("globalSkin")
+require("UIConst")
+require("Skin")
 require("clsUILayer")
 require("clsUIButton")
 require("clsUISprite")
 
 --data
 require("globalConst")
-require("smDataLoader")
+require("DataLoader")
 require("clsModel")
 require("clsBag")
 require("clsCharacter")

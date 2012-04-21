@@ -38,11 +38,11 @@ function clsUIButton:paintLayer(painter)
   --绘制图片
   if self.buttonState==clsUIButton.STATE_NORMAL then
     if self.normalImage then
-      painter:drawImage(self.normalImage,0,0,globalUIConst.anchor.LT)
+      painter:drawImage(self.normalImage,0,0,UIConst.anchor.LT)
     end
   elseif self.buttonState==clsUIButton.STATE_HIGHLIGHT then
     if self.highlightImage then
-      painter:drawImage(self.highlightImage,0,0,globalUIConst.anchor.LT)
+      painter:drawImage(self.highlightImage,0,0,UIConst.anchor.LT)
     end
   end
   --绘制文字
@@ -51,15 +51,15 @@ function clsUIButton:paintLayer(painter)
     painter:setTextSize(self.textSize)
   end
   if self.text then
-    painter:drawString(self.text, self.width/2, self.height/2, globalUIConst.anchor.HV)
+    painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
   end
 end
 
 --处理触屏事件（lua层不应该调用此方法）
 function clsUIButton:onTouch(x,y,type)
-  if type==globalUIConst.touchEventType.DOWN then
+  if type==UIConst.touchEventType.DOWN then
     self.buttonState=clsUIButton.STATE_HIGHLIGHT
-  elseif type==globalUIConst.touchEventType.MOVE then
+  elseif type==UIConst.touchEventType.MOVE then
     local offsetWidth=(self.highlightBoundTimes-1)*self.width
     local offsetHeight=(self.highlightBoundTimes-1)*self.height
     if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
@@ -67,7 +67,7 @@ function clsUIButton:onTouch(x,y,type)
     else
       self.buttonState=clsUIButton.STATE_NORMAL
     end
-  elseif type==globalUIConst.touchEventType.UP then
+  elseif type==UIConst.touchEventType.UP then
     if self.delegate and self.buttonState==clsUIButton.STATE_HIGHLIGHT then
       self.delegate:buttonTapped(self)
     end

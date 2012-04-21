@@ -63,7 +63,7 @@ public class GameEngine implements Runnable {
 		return ratedFps;
 	}
 
-	public int getSystemMilliTime() {
+	public int getTime() {
 		return (int) (System.currentTimeMillis() - time);
 	}
 

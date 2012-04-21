@@ -225,7 +225,7 @@ end
 --更换皮肤
 function Interpreter:changeSkin(name)
   local fun=function()
-    globalSkin:init(smGamePath..name)
+    Skin:init(smGamePath..name)
   end
   ScriptThread:runFunctionInMainThread(fun)
 end

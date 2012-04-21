@@ -24,11 +24,16 @@ function globalGame:onStart()
   self.rootLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
   self.rootLayer.clipBounds=false
   --加载游戏数据
-  smDataLoader:init()
+  DataLoader:init()
   --初始化皮肤
-  globalSkin:init(smGamePath..globalDictionary.config.skin)
+  Skin:init(smGamePath..globalDictionary.config.skin)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
+  Scheduler:scheduleTask(self,"doTask",1000,100)
+end
+
+function globalGame:doTask()
+  smLog:info("doTask:"..smGameEngine:getTime())
 end
 
 --触屏事件  lua层不应该调用
@@ -42,6 +47,8 @@ end
 function globalGame:update()
   --更新数据模型
   globalData:update()
+  --更新任务调度器
+  Scheduler:update()
   --更新场景
   if self.curScene then
     self.curScene:update()
