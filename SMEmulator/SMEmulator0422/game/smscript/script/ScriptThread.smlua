@@ -1,0 +1,81 @@
+--[[
+  description:脚本线程
+  author:wp_g4
+  date:2012/02/22
+--]]
+
+--结构定义
+ScriptThread = {}
+
+--标识常量
+ScriptThread.THREAD_MAIN=0
+ScriptThread.THREAD_SCRIPT=1
+
+ScriptThread.coroutineThread=nil
+ScriptThread.currentThread=ScriptThread.THREAD_MAIN
+
+ScriptThread.fun=nil
+
+--启动脚本线程 [此方法只能由主线程调用]
+function ScriptThread:start(run)
+  --检查此方法是否被主线程调用
+  if self.currentThread~=self.THREAD_MAIN then
+    --TODO 如果不是主线程调用此方法则报错
+    print("start出错")
+    return
+  end
+  self.coroutineThread=coroutine.create(run)
+  self:resume()
+end
+
+--继续脚本线程 [此方法只能由主线程调用]
+function ScriptThread:resume(...)
+  --检查此方法是否被主线程调用
+  if self.currentThread~=self.THREAD_MAIN then
+    --TODO 如果不是主线程调用此方法则报错
+    print("resume出错")
+    return
+  end
+  self.currentThread=self.THREAD_SCRIPT
+  smLog:info("协程运行结果"..tostring(coroutine.resume(self.coroutineThread,unpack(arg))))
+  self.currentThread=self.THREAD_MAIN
+  smLog:info("回到主线程")
+  if self.fun then
+    --此方法将一个方法的多返回值封装成一个table返回
+    local function convert(...)
+      return arg
+    end
+    local res=convert(self.fun())
+    self.fun=nil
+    --取返回的第一个结果，此结果标明是否需要立即返回到脚本线程
+    local flag=res[1]
+    table.remove(res,1)
+    if flag then
+      --需要立即返回
+      self:resume(unpack(res))  --将运行结果返回到上一次pause的地方
+    end
+  end
+end
+
+--暂停脚本线程 [此方法只能由脚本线程调用]
+function ScriptThread:pause(...)
+  --检查此方法是否被脚本线程调用
+  if self.currentThread~=self.THREAD_SCRIPT then
+    --TODO 如果不是脚本线程调用此方法则报错
+    print("pause出错")
+    return
+  end
+  self.currentThread=self.THREAD_MAIN
+  return coroutine.yield(unpack(arg))
+end
+
+--切换到主线程执行指定的方法 [此方法只能由脚本线程调用]
+function ScriptThread:runFunctionInMainThread(fun)
+  --检查此方法是否被脚本线程调用
+  if self.currentThread~=self.THREAD_SCRIPT then
+    --TODO 如果不是脚本线程调用此方法则报错
+    print("runFunctionInMainThread出错")
+  end
+  self.fun=fun
+  return self:pause()
+end
