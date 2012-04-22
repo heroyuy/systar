@@ -31,6 +31,8 @@ clsUILabel.maxLineNum=1							--多行模式下可以显示的最大行数
 clsUILabel.startLineIndex=1						--多行模式下当前显示的第一行的行号
 clsUILabel.cursorX=0							--光标X坐标
 clsUILabel.cursorY=0							--光标Y坐标
+clsUILabel.p=1
+clsUILabel.q=1
 
 --构造器
 function clsUILabel:new(x,y,width,height)
@@ -65,10 +67,13 @@ function clsUILabel:paintLayer(painter)
       --多行自动换行模式
       --(1)计算最大行数
       local textSize=painter:getTextSize()
-      self.maxLineNum=math.floor((self.height-2*self.gap)/(textSize+self.gap))
+      while self.maxLineNum*(textSize+self.gap)+self.gap<self.height do
+        self.maxLineNum=self.maxLineNum+1
+      end
       --(2)重置光标
       self.cursorX,self.cursorY=gap,gap
       --(3)开始绘制
+      local lineNum=1
       for i=self.startLineIndex,table.getn(self.textItemList) do
         local text=self.textItemList[i]
         if string.find(text,clsUILabel.REGEX) then
@@ -84,10 +89,18 @@ function clsUILabel:paintLayer(painter)
               self.cursorX=0
               self.cursorY=self.cursorY+textSize+self.gap
               p=q
+              lineNum=lineNum+1
             end
             --(b)绘制
-            painter:drawString(char, self.cursorX, self.cursorY, UIConst.anchor.LT)
-            self.cursorX=self.cursorX+painter:stringWidth(char)
+            if lineNum<=self.maxLineNum then
+              painter:drawString(char, self.cursorX, self.cursorY, UIConst.anchor.LT)
+              self.cursorX=self.cursorX+painter:stringWidth(char)
+            else
+              break
+            end
+          end
+          if lineNum>self.maxLineNum then
+            break
           end
         end
       end
@@ -97,17 +110,19 @@ end
 
 --解析功能字符串  <...>[...]
 function clsUILabel:parseString(text,painter)
-  print("parseString:"..text)
   local items=string.split(text,">%[")
   local len=smString:length(items[1])
   local funStr=smString:subString(items[1],2,len)
   len=smString:length(items[3])
   local argStr=smString:subString(items[3],1,len-1)
-  print("funStr:"..funStr)
-  print("argStr:"..argStr)
   if funStr=="c" then
     painter:setColor(argStr)
   elseif funStr=="n" then
+    local textSize=painter:getTextSize()
+    self.cursorX=0
+    for i=1,argStr do
+      self.cursorY=self.cursorY+textSize+self.gap
+    end
   end
 end
 
@@ -116,6 +131,7 @@ function clsUILabel:needDisplay()
   if not self.singleLine then
     --多行模式
     self.textItemList=string.split(self.text,clsUILabel.REGEX)
+    self.textItemList={"本站为了防止恶意注册，会对会员进行邮箱验证以打击发帖机械人。不验证不能够发帖，而验证之后还可以进行QQ绑定或者新浪微博绑定，这样就可以让大家不需要手动输入密码而进行登陆。一键登陆即可，而现在论坛暂时不支持新浪微博登陆。所以请大家进行邮箱验证和替换头像，共同努力将论坛发展好。谢谢 验证的过程是打开你的注册邮箱，找到soyomaker发给你的验证邮件，很容易的，只需一步就可以完成。"}
   end
 end
 

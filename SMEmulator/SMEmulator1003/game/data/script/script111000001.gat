@@ -5,7 +5,7 @@ print("玩家选择了:"..items[index])
 if index==1 then
   Interpreter:doCommand(101006,"石头人","hello boy!<c>[0xffabcdef]hello boy!<n>[1]hello boy!","/image/battler/098-Monster12.png",0)
 elseif index==2 then
-  Interpreter:doCommand(101006,"大卫","大哥<c>[0xffffffff]你好，<c>[0xff00ff00]我是谁你不知道吗<n>[1]<c>[0xffff0000]真的不知道？","/image/battler/003-Fighter03.png",0)
+  Interpreter:doCommand(101006,"大卫","大哥<c>[0xffffffff]你好，<c>[0xff00ff00]我是谁你不知道吗<n>[2]<c>[0xffff0000]真的不知道？","/image/battler/003-Fighter03.png",0)
 elseif index==3 then
   Interpreter:doCommand(101006,"红龙","大哥你好，<c>[0xffabcdef]我是谁你不知道吗<n>[1]真的不知道？","/image/battler/099-Monster13.png",1)
 else
