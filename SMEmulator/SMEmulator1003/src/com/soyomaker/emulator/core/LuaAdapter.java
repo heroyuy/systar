@@ -11,6 +11,7 @@ import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
+import com.soyomaker.emulator.utils.SMString;
 
 /**
  * Lua适配器，功能：<br>
@@ -74,6 +75,9 @@ public class LuaAdapter {
 			// --注册ColorFactory
 			luaState.pushObjectValue(ColorFactory.getInstance());
 			luaState.setGlobal("smColorFactory");
+			// --注册SMString
+			luaState.pushObjectValue(SMString.getInstance());
+			luaState.setGlobal("smString");
 			// 2、转换lua实现的接口
 			luaGlobalGame = luaState.getLuaObject(globalGame);
 			luaFunctionOnStart = luaGlobalGame.getField("onStart");
