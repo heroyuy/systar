@@ -44,6 +44,15 @@ function clsDialogLayer:new(name,content,bustPath,position)
   end
   bgLayer:addChild(nameLabel)
   --内容
+  local contentLabel=clsUILabel:new(4*gap,2*gap+(cellHeight+gap),self.width-6*gap-bustLayer.width,frameHeight-5*gap-cellHeight)
+  contentLabel.text=content
+  contentLabel.textColor=Skin:getTextColor(1,1)
+  contentLabel.singleLine=false
+  if position==0 then
+    contentLabel.x=4*gap+bustLayer.width
+  end
+  contentLabel:needDisplay()
+  bgLayer:addChild(contentLabel)
   self.z=100  --TODO修改clsLayer的排序算法
   return self
 end

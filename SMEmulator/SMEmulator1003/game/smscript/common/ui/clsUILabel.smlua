@@ -22,6 +22,9 @@ clsUILabel.textColor="0xffffffff"               --文字颜色
 clsUILabel.textSize=-1                          --文字大小
 clsUILabel.alignment=clsUILabel.ALIGN_LEFT		--对齐方式
 clsUILabel.singleLine=true						--是否是单行模式
+clsUILabel.gap=4								--间距
+clsUILabel.textList=clsList:new()				--多行文本数组
+
 
 --构造器
 function clsUILabel:new(x,y,width,height)
@@ -44,16 +47,44 @@ function clsUILabel:paintLayer(painter)
       --单行模式
       if self.alignment==clsUILabel.ALIGN_LEFT then
         --左对齐
-        painter:drawString(self.text, 0, self.height/2, UIConst.anchor.LV)
+        painter:drawString(self.text, self.gap, self.height/2, UIConst.anchor.LV)
       elseif self.alignment==clsUILabel.ALIGN_LEFT then
         --居中
         painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
       else
         --右对齐
-        painter:drawString(self.text, self.width, self.height/2, UIConst.anchor.RV)
+        painter:drawString(self.text, self.width-self.gap, self.height/2, UIConst.anchor.RV)
       end
     else
       --多行自动换行模式
+      for i,v in ipairs(self.textList) do
+        local text=v
+        local textSize=painter:getTextSize()
+        if self.alignment==clsUILabel.ALIGN_LEFT then
+          --左对齐
+          painter:drawString(text, self.gap, self.gap+(i-1)*(textSize+self.gap), UIConst.anchor.LT)
+        elseif self.alignment==clsUILabel.ALIGN_LEFT then
+          --居中
+          painter:drawString(text, self.width/2, self.gap+(i-1)*(textSize+self.gap), UIConst.anchor.HT)
+        else
+          --右对齐
+          painter:drawString(text, self.width-self.gap, self.gap+(i-1)*(textSize+self.gap), UIConst.anchor.RT)
+        end
+      end
     end
+  end
+end
+
+--重构数据，准备重绘
+function clsUILabel:needDisplay()
+  if not self.singleLine then
+    --多行模式
+    self.textList:clear()
+    --TODO
+    self.textList:add("你好")
+    self.textList:add("你是来送死的吗？")
+    self.textList:add("你是来送死的吗！？")
+    self.textList:add("你是来送死的！")
+    self.textList:add("亮兵器吧")
   end
 end
