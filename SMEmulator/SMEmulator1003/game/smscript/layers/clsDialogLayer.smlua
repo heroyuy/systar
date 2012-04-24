@@ -53,7 +53,6 @@ function clsDialogLayer:new(name,content,bustPath,position)
   end
   contentLabel:needDisplay()
   bgLayer:addChild(contentLabel)
-  self.z=100  --TODO修改clsLayer的排序算法
   return self
 end
 

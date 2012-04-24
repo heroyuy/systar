@@ -36,21 +36,17 @@ function clsSceneMap:new()
 	--背景实例化
 	self.mapBgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
     self.mapBgLayer.delegate=self
-    self.mapBgLayer.z=0
     globalGame.rootLayer:addChild(self.mapBgLayer)
     --精灵层实例化
     self.spriteLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
     self.spriteLayer.enabled=false
-    self.spriteLayer.z=1
     globalGame.rootLayer:addChild(self.spriteLayer)
     --前景实例化
     self.mapFgLayer=clsTiledMapLayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
     self.mapFgLayer.enabled=false
-    self.mapFgLayer.z=2
     globalGame.rootLayer:addChild(self.mapFgLayer)
     --头像层实例化
     self.layerHead=clsUILayer:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT+2*self.Param.BAR_HEIGHT)
-    self.layerHead.z=3
       --头像按钮
       local buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
       buttonHead.tag=self.Tag.BUTTON_HEAD
@@ -158,6 +154,7 @@ function clsSceneMap:changeMap(map)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
     end
+  self.spriteLayer:sortChildren()
   --加载前景
   local fgLayers=clsList:new()
   for i=1,table.getn(globalData.curMap.layers) do
@@ -267,7 +264,8 @@ function clsSceneMap:characterMoved(param)
   --如果character的行有变化需要修改对应sprite的z值
   if param.rowChanged then
     local sprite=self.spriteLayer:childWithTag(param.character.id)
-    sprite:changeZ(param.character.row)
+    sprite.z=param.character.row
+    self.spriteLayer:sortChildren()
   end
   if param.character==self.curPlayer then
     --玩家移动(检测viewport是否改变)

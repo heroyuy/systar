@@ -43,7 +43,6 @@ end
 function clsUILayer:addChild(layer)
   self.children:add(layer)
   layer.parent=self
-  self:sortChildren()
 end
 
 --子Layer排序
@@ -86,12 +85,6 @@ function clsUILayer:clear()
     self:getChild(i).parent=nil
   end
   self.children:clear()
-end
-
---改变z值
-function clsUILayer:changeZ(z)
-  self.z=z
-  self.parent:sortChildren()
 end
 
 --绘制Layer（lua层不应该调用此方法）
