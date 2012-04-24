@@ -28,11 +28,14 @@ clsUILabel.gap=4								--间距
 clsUILabel.textItemList={}						--多行文本数组
 
 clsUILabel.maxLineNum=1							--多行模式下可以显示的最大行数
-clsUILabel.startLineIndex=1						--多行模式下当前显示的第一行的行号
+clsUILabel.startItemIndex=1						--多行模式下当前显示的第一行的行号
+clsUILabel.endItemIndex=1						--多行模式下当前显示的最后一行的行号
 clsUILabel.cursorX=0							--光标X坐标
 clsUILabel.cursorY=0							--光标Y坐标
+clsUILabel.pStart=1								--字符起始位置
 clsUILabel.p=1
-clsUILabel.q=1
+clsUILabel.hasNextPage=false					--是否还有下一页
+
 
 --构造器
 function clsUILabel:new(x,y,width,height)
@@ -72,23 +75,26 @@ function clsUILabel:paintLayer(painter)
       end
       --(2)重置光标
       self.cursorX,self.cursorY=gap,gap
+      self.p=self.pStart
       --(3)开始绘制
       local lineNum=1
-      for i=self.startLineIndex,table.getn(self.textItemList) do
+      for i=self.startItemIndex,table.getn(self.textItemList) do
         local text=self.textItemList[i]
         if string.find(text,clsUILabel.REGEX) then
           --功能字符串
           self:parseString(text,painter)
         else
           --显示字符串
-          local p=1
-          for q=1,smString:length(text) do
+          if i~=self.startItemIndex then
+            self.p=1
+          end
+          for q=self.p,smString:length(text) do
             local char=smString:subString(text,q,q)
             --(a)检查是否需要换行
             if self.cursorX+painter:stringWidth(char)>self.width-2*self.gap then
               self.cursorX=0
               self.cursorY=self.cursorY+textSize+self.gap
-              p=q
+              self.p=q
               lineNum=lineNum+1
             end
             --(b)绘制
@@ -96,16 +102,29 @@ function clsUILabel:paintLayer(painter)
               painter:drawString(char, self.cursorX, self.cursorY, UIConst.anchor.LT)
               self.cursorX=self.cursorX+painter:stringWidth(char)
             else
+              self.endItemIndex=i
+              self.hasNextPage=true
               break
             end
           end
           if lineNum>self.maxLineNum then
+            self.endItemIndex=i
+            self.hasNextPage=true
             break
           end
         end
       end
     end
   end
+end
+
+function clsUILabel:nextPage()
+  print("clsUILabel:nextPage")
+  local hasNextPage=self.hasNextPage
+  self.hasNextPage=false
+  self.startItemIndex=self.endItemIndex
+  self.pStart=self.p
+  return hasNextPage
 end
 
 --解析功能字符串  <...>[...]
@@ -130,8 +149,10 @@ end
 function clsUILabel:needDisplay()
   if not self.singleLine then
     --多行模式
+    self.text="本站为了防止<c>[0xffff0000]恶意注册<c>[0xffffffff]，会对会员进行邮箱验证以打击发帖机械人。不验证不能够发帖，而验证之后还可以进行QQ绑定或者新浪微博绑定，这样就可以让大家不需要手动输入密码而进行登陆。一键登陆即可，而现在论坛暂时不支持新浪微博登陆。所以请大家进行邮箱验证和替换头像，共同努力将论坛发展好。谢谢 验证的过程是打开你的注册邮箱，找到soyomaker发给你的验证邮件，很容易的，只需一步就可以完成。"
     self.textItemList=string.split(self.text,clsUILabel.REGEX)
-    self.textItemList={"本站为了防止恶意注册，会对会员进行邮箱验证以打击发帖机械人。不验证不能够发帖，而验证之后还可以进行QQ绑定或者新浪微博绑定，这样就可以让大家不需要手动输入密码而进行登陆。一键登陆即可，而现在论坛暂时不支持新浪微博登陆。所以请大家进行邮箱验证和替换头像，共同努力将论坛发展好。谢谢 验证的过程是打开你的注册邮箱，找到soyomaker发给你的验证邮件，很容易的，只需一步就可以完成。"}
+    self.pStart=1
+    self.startItemIndex=1
   end
 end
 
