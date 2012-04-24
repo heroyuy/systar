@@ -39,6 +39,8 @@ public class GameEngine implements Runnable {
 	private int keyType = -1;// 事件的类型 : 0按下 1移动 2离开
 
 	private LuaAdapter luaAdapter = null;
+	
+	private String inputValue="";
 
 	private GameEngine() {
 	}
@@ -70,6 +72,10 @@ public class GameEngine implements Runnable {
 	public boolean isShowFps() {
 		return showFps;
 	}
+	
+	public String getInputValue() {
+		return inputValue;
+	}
 
 	public void setRatedFps(int ratedFps) {
 		this.ratedFps = ratedFps;
@@ -81,6 +87,10 @@ public class GameEngine implements Runnable {
 
 	public boolean isRunning() {
 		return running;
+	}
+	
+	public void showInputDialog(){
+		
 	}
 
 	public void sleep(int millis) {
@@ -164,6 +174,10 @@ public class GameEngine implements Runnable {
 
 	protected void stop() {
 		running = false;
+	}
+	
+	protected void setInputValue(String inputValue) {
+		this.inputValue = inputValue;
 	}
 
 	protected float getLuaMemory() {
