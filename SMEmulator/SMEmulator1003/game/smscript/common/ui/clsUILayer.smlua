@@ -25,7 +25,6 @@ clsUILayer.delegate=nil                      --事件委托
 clsUILayer.parent=nil                        --父layer
 clsUILayer.children=nil                      --子layer
 clsUILayer.focusLayer=nil                    --当前事件焦点子layer
-clsUILayer.bufferedMode=false                --是否开启缓冲 TODO 功能尚未实现
 
 --构造器
 function clsUILayer:new(x,y,width,height)
@@ -166,11 +165,6 @@ function clsUILayer:dispatchEvent(x,y,type)
     self.focusLayer = nil
   end
   return status
-end
-
---通知更新界面。在缓冲模式下此方法用于通知Layer更新显示内容
-function clsUILayer:notifyRefresh()
-  --TODO 尚未实现
 end
 
 --toString

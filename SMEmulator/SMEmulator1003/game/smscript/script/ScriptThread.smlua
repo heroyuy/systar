@@ -20,7 +20,7 @@ ScriptThread.fun=nil
 function ScriptThread:start(run)
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
-    --TODO 如果不是主线程调用此方法则报错
+    -- 如果不是主线程调用此方法则报错
     print("start出错")
     return
   end
@@ -32,7 +32,7 @@ end
 function ScriptThread:resume(...)
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
-    --TODO 如果不是主线程调用此方法则报错
+    -- 如果不是主线程调用此方法则报错
     print("resume出错")
     return
   end
@@ -61,7 +61,7 @@ end
 function ScriptThread:pause(...)
   --检查此方法是否被脚本线程调用
   if self.currentThread~=self.THREAD_SCRIPT then
-    --TODO 如果不是脚本线程调用此方法则报错
+    -- 如果不是脚本线程调用此方法则报错
     print("pause出错")
     return
   end
@@ -73,7 +73,7 @@ end
 function ScriptThread:runFunctionInMainThread(fun)
   --检查此方法是否被脚本线程调用
   if self.currentThread~=self.THREAD_SCRIPT then
-    --TODO 如果不是脚本线程调用此方法则报错
+    -- 如果不是脚本线程调用此方法则报错
     print("runFunctionInMainThread出错")
   end
   self.fun=fun
