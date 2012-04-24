@@ -282,9 +282,12 @@ public class Emulator extends JDialog implements IPlugin {
 		}
 	}
 
-	void repaintGame() {
+	protected void repaintGame() {
 		contentPanel.paintImmediately(contentPanel.getX(), contentPanel.getY(), contentPanel.getWidth(),
 				contentPanel.getHeight());
+	}
+	
+	protected void showInputDialog(){
 	}
 
 	public void setScreenHeight(int screenHeight) {
@@ -322,6 +325,7 @@ public class Emulator extends JDialog implements IPlugin {
 	 */
 	private void startGame() {
 		ge.start();
+		this.showInputDialog();
 	}
 
 	/**
