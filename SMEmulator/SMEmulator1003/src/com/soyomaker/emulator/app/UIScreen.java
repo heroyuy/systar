@@ -7,10 +7,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import com.soyomaker.emulator.app.InputDialog.InputListener;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.ColorFactory;
 
-public class UIScreen extends JPanel {
+public class UIScreen extends JPanel implements InputListener {
 
 	private static final long serialVersionUID = 7608812515686704871L;
 
@@ -22,19 +23,23 @@ public class UIScreen extends JPanel {
 
 	private IGame game = null;
 
+	private JPanel gamePanel = null;
+
+	private InputDialog inputDialog = null;
+
 	private UIScreen() {
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(Config.getInstance().getWidth(),
 				Config.getInstance().getHeight()));
-		//游戏渲染层
-		JPanel gamePanel = new JPanel() {
-			
+		// 游戏渲染层
+		gamePanel = new JPanel() {
+
 			private static final long serialVersionUID = 645901037817876536L;
 
 			private Graphics graphics = null;
 
 			private Painter painter = null;
-			
+
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (this.painter == null || this.graphics != g) {
@@ -51,31 +56,55 @@ public class UIScreen extends JPanel {
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 
 			public void mouseDragged(MouseEvent e) {
-				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
+				if (inputDialog.isVisible()) {
+					return;
+				}
+				game.onEvent(new Event(e.getX(), e.getY(),
+						Event.EVENT_TYPE_MOVE));
 			}
 
 			public void mousePressed(MouseEvent e) {
-				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
+				if (inputDialog.isVisible()) {
+					return;
+				}
+				game.onEvent(new Event(e.getX(), e.getY(),
+						Event.EVENT_TYPE_DOWN));
 			}
 
 			public void mouseReleased(MouseEvent e) {
+				if (inputDialog.isVisible()) {
+					return;
+				}
 				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_UP));
 			}
 		};
 		gamePanel.addMouseMotionListener(mouseAdapter);
 		gamePanel.addMouseListener(mouseAdapter);
-		gamePanel.setSize(new Dimension(Config.getInstance().getWidth(),
-				Config.getInstance().getHeight()));
+		gamePanel.setSize(new Dimension(Config.getInstance().getWidth(), Config
+				.getInstance().getHeight()));
 		gamePanel.setLocation(0, 0);
 		gamePanel.setLayout(null);
 		this.add(gamePanel);
-		//输入框
-		InputDialog inputDialog=new InputDialog(Config.getInstance().getWidth(), 100);
-		inputDialog.setLocation(0, gamePanel.getHeight()-inputDialog.getHeight());
+		
+		inputDialog = new InputDialog(Config.getInstance().getWidth(),
+				100);
+		inputDialog.setLocation(0,
+				gamePanel.getHeight() - inputDialog.getHeight());
+		inputDialog.setInputListener(this);
 		gamePanel.add(inputDialog);
 	}
-	
+
+	@Override
+	public void onInput(String value) {
+		this.showInputDialog(false);
+		this.game.onInput(value);
+	}
+
 	public void setGame(IGame game) {
 		this.game = game;
+	}
+
+	public void showInputDialog(boolean visible) {
+		inputDialog.setVisible(visible);
 	}
 }

@@ -33,21 +33,6 @@ public class Emulator extends JDialog implements IPlugin {
 		emulator.setVisible(true);
 	}
 
-	/**
-	 * 插件启动
-	 */
-	@Override
-	public void start() {
-		if (AppData.getInstance().getCurProject() == null) {
-			JOptionPane.showMessageDialog(this, "请先打开工程");
-		} else {
-			this.setType(TYPE_PLUGIN);
-			this.setModal(true);
-			this.startGame();
-			this.setVisible(true);
-		}
-	}
-
 	private int type = TYPE_SOFTWARE; // 模拟器的启动类型
 
 	private IGame game = null;
@@ -110,6 +95,21 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private void setType(int type) {
 		this.type = type;
+	}
+
+	/**
+	 * 插件启动
+	 */
+	@Override
+	public void start() {
+		if (AppData.getInstance().getCurProject() == null) {
+			JOptionPane.showMessageDialog(this, "请先打开工程");
+		} else {
+			this.setType(TYPE_PLUGIN);
+			this.setModal(true);
+			this.startGame();
+			this.setVisible(true);
+		}
 	}
 
 	/**

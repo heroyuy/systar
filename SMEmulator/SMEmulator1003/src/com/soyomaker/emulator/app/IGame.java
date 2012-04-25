@@ -11,13 +11,13 @@ import com.soyomaker.emulator.ui.Painter;
  */
 public interface IGame {
 
-	public void start();
-
-	public void stop();
-
 	public void onEvent(Event e);
 
-	public void onPaint(Painter painter);
-	
 	public void onInput(String value);
+
+	public void onPaint(Painter painter);
+
+	public void start();
+	
+	public void stop();
 }

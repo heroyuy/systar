@@ -20,16 +20,16 @@ public class Event {
 		this.type = type;
 	}
 
+	protected int getType() {
+		return type;
+	}
+
 	protected int getX() {
 		return x;
 	}
 
 	protected int getY() {
 		return y;
-	}
-
-	protected int getType() {
-		return type;
 	}
 	
 	public String toString(){
