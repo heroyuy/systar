@@ -37,7 +37,6 @@ public class InputDialog extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 
-		addMouseMotionListener(new MouseAdapter() {
-		});
+		addMouseMotionListener(new MouseAdapter(){});
 	}
 }
