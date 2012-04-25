@@ -65,7 +65,7 @@ public class Emulator extends JDialog implements IPlugin {
 	private void initGame() {
 		try {
 			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game").newInstance();
-			GamePanel.getInstance().setGame(game);
+			UIScreen.getInstance().setGame(game);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -94,7 +94,7 @@ public class Emulator extends JDialog implements IPlugin {
 		mnNewMenu.add(menuItemStop);
 		// 游戏区域
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		getContentPane().add(GamePanel.getInstance());
+		getContentPane().add(UIScreen.getInstance());
 		// 窗口事件监听
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
