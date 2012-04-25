@@ -23,12 +23,15 @@ public class Emulator extends JDialog implements IPlugin {
 
 	public static final int TYPE_PLUGIN = 1; // 插件
 
+	public static String DEFAULT_GAME_PATH = "./game";
+	
 	/**
 	 * 独立启动
 	 */
 	public static void main(String[] args) {
 		Emulator emulator = new Emulator();
 		emulator.setType(TYPE_SOFTWARE);
+		Config.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		emulator.startGame();
 		emulator.setVisible(true);
 	}
@@ -106,6 +109,7 @@ public class Emulator extends JDialog implements IPlugin {
 			JOptionPane.showMessageDialog(this, "请先打开工程");
 		} else {
 			this.setType(TYPE_PLUGIN);
+			Config.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
 			this.setModal(true);
 			this.startGame();
 			this.setVisible(true);

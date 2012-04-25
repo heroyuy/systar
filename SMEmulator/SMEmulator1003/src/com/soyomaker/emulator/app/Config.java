@@ -13,9 +13,7 @@ import com.soyomaker.xml.XMLParser;
 
 public class Config {
 
-	public static String CONFIG_PATH = "plugin/emulator/config/emulator.xml";
-
-	public static String DEFAULT_GAME_PATH = "./game";
+	private static String CONFIG_PATH = "plugin/emulator/config/emulator.xml";
 
 	private static Config instance = new Config();
 
@@ -28,6 +26,9 @@ public class Config {
 	private int height = 640;
 
 	private int fps = 20;
+	
+	private String gamePath=null;
+
 
 	private Config() {
 		try {
@@ -48,8 +49,8 @@ public class Config {
 		return fps;
 	}
 
-	public String getGamePath() {
-		return AppData.getInstance().getCurProject().getPath();
+	protected String getGamePath() {
+		return gamePath;
 	}
 
 	public int getHeight() {
@@ -62,6 +63,10 @@ public class Config {
 
 	public void setFps(int fps) {
 		this.fps = fps;
+	}
+
+	protected void setGamePath(String gamePath) {
+		this.gamePath = gamePath;
 	}
 
 }
