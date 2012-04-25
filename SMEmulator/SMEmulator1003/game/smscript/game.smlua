@@ -16,7 +16,7 @@ Game.inputDialogDelegate=nil		--输入框事件委托
 function Game:onStart()
   self.path=smGame:getPath()
   --导入需要的文件
-  package.path = package.path .. ";"..self:getPath().."/smscript/?.smlua"
+  package.path = package.path .. ";"..self.path.."/smscript/?.smlua"
   require("requires")
   --配置引擎
   smLog:setDebug(true)
@@ -27,7 +27,7 @@ function Game:onStart()
   --加载游戏数据
   DataLoader:init()
   --初始化皮肤
-  Skin:init(self:getPath()..globalDictionary.config.skin)
+  Skin:init(self.path..globalDictionary.config.skin)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end

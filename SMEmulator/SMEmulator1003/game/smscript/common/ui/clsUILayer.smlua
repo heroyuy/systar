@@ -42,11 +42,13 @@ end
 function clsUILayer:addChild(layer)
   self.children:add(layer)
   layer.parent=self
+  self:needDisplay()
 end
 
 --子Layer排序
 function clsUILayer:sortChildren()
   table.sort(self.children,function(a,b) return a.z < b.z end)
+  self:needDisplay()
 end
 
 --根据序号获取子layer
@@ -65,17 +67,18 @@ function clsUILayer:childWithTag(tag)
   return child
 end
 
-
 --移除子Layer
 function clsUILayer:remove(index)
   self:getChild(index).parent=nil
   self.children:remove(index)
+  self:needDisplay()
 end
 
 --移除子Layer
 function clsUILayer:removeChild(layer)
   layer.parent=nil
   self.children:removeObject(layer)
+  self:needDisplay()
 end
 
 --移除所有子Layer
@@ -84,6 +87,12 @@ function clsUILayer:clear()
     self:getChild(i).parent=nil
   end
   self.children:clear()
+  self:needDisplay()
+end
+
+--标记需要更新
+function clsUILayer:needDisplay()
+  Game:needDisplay()
 end
 
 --绘制Layer（lua层不应该调用此方法）
