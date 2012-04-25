@@ -14,8 +14,6 @@ public class Game implements IGame, Runnable {
 
 	private long time = 0;
 
-	private boolean needDisplay = true;
-
 	public int getHeight() {
 		return GameInfo.getInstance().getHeight();
 	}
@@ -30,10 +28,6 @@ public class Game implements IGame, Runnable {
 
 	public int getWidth() {
 		return GameInfo.getInstance().getWidth();
-	}
-
-	public boolean isNeedDisplay() {
-		return needDisplay;
 	}
 
 	public boolean isRunning() {
@@ -77,9 +71,7 @@ public class Game implements IGame, Runnable {
 				// 更新游戏
 				luaAdapter.update();
 				// 重绘界面
-				if (isNeedDisplay()) {
-					UIScreen.getInstance().requestRepaint();
-				}
+				UIScreen.getInstance().requestRepaint();
 				// 垃圾收集
 				luaAdapter.callLuaGC();
 				t = System.currentTimeMillis() - t;
@@ -94,10 +86,6 @@ public class Game implements IGame, Runnable {
 			// 此处调用lua的onStop()方法
 			luaAdapter.onStop();
 		}
-	}
-
-	public void setNeedDisplay(boolean needDisplay) {
-		this.needDisplay = needDisplay;
 	}
 
 	public void showInputDialog() {

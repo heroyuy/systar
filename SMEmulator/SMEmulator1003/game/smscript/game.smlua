@@ -94,11 +94,6 @@ function Game:getPath()
   return self.path
 end
 
---标记重绘
-function Game:needDisplay()
-  smGame:setNeedDisplay(true)
-end
-
 --显示输入框
 function Game:showInputDialog(inputDialogDelegate)
   self.inputDialogDelegate=inputDialogDelegate
