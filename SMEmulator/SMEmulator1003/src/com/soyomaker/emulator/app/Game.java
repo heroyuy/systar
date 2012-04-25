@@ -45,8 +45,7 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void onInput(String value) {
-		System.out.println("onInput:" + value);
-
+		luaAdapter.onInput(value);
 	}
 
 	@Override
@@ -101,6 +100,10 @@ public class Game implements IGame, Runnable {
 
 	public void setNeedDisplay(boolean needDisplay) {
 		this.needDisplay = needDisplay;
+	}
+
+	public void showInputDialog() {
+		UIScreen.getInstance().showInputDialog(true);
 	}
 
 	public void sleep(int millis) {

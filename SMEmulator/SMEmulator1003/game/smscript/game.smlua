@@ -11,6 +11,8 @@ Game.rootLayer=nil
 
 Game.path=nil						--游戏路径
 
+Game.inputDialogDelegate=nil		--输入框事件委托
+
 --脚本启动  lua层不应该调用
 function Game:onStart()
   self.path=smGame:getPath()
@@ -38,8 +40,15 @@ function Game:onTouch(x,y,type)
   end
 end
 
+--输入事件  lua层不应该调用
+function Game:onInput(value)
+  if self.inputDialogDelegate then
+    self.inputDialogDelegate:onInput(value)
+  end
+end
+
 --更新model  lua层不应该调用
-function Game:update()
+function Game:onUpdate()
   --更新数据模型
   globalData:update()
   --更新任务调度器
@@ -51,7 +60,7 @@ function Game:update()
 end
 
 --绘制屏幕  lua层不应该调用
-function Game:paint(painter)
+function Game:onPaint(painter)
   if self.rootLayer then
     self.rootLayer:paint(painter)
   end
@@ -81,9 +90,15 @@ function Game:getRunningTime()
   return smGame:getRunningTime()
 end
 
---
+--获取游戏路径
 function Game:getPath()
   return self.path
+end
+
+--
+function Game:showInputDialog(inputDialogDelegate)
+  self.inputDialogDelegate=inputDialogDelegate
+  smGame:showInputDialog()
 end
 
 --切换场景  lua调用

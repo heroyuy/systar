@@ -32,9 +32,11 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnTouch = null;
 
-	private LuaObject luaFunctionUpdate = null;
+	private LuaObject luaFunctionOnInput = null;
 
-	private LuaObject luaFunctionPaint = null;
+	private LuaObject luaFunctionOnUpdate = null;
+
+	private LuaObject luaFunctionOnPaint = null;
 
 	private LuaObject luaFunctionOnStop = null;
 
@@ -74,8 +76,9 @@ public class LuaAdapter {
 			luaGame = luaState.getLuaObject(GAME_NAME);
 			luaFunctionOnStart = luaGame.getField("onStart");
 			luaFunctionOnTouch = luaGame.getField("onTouch");
-			luaFunctionUpdate = luaGame.getField("update");
-			luaFunctionPaint = luaGame.getField("paint");
+			luaFunctionOnInput = luaGame.getField("onInput");
+			luaFunctionOnUpdate = luaGame.getField("onUpdate");
+			luaFunctionOnPaint = luaGame.getField("onPaint");
 			luaFunctionOnStop = luaGame.getField("onStop");
 		} catch (LuaException e) {
 			e.printStackTrace();
@@ -128,6 +131,17 @@ public class LuaAdapter {
 	}
 
 	/**
+	 * onInput方法的转换
+	 */
+	public void onInput(String value) {
+		try {
+			luaFunctionOnInput.call(new Object[] { luaGame, value });
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * onTouch方法的转换
 	 */
 	public void onTouch(int keyX, int keyY, int type) {
@@ -143,7 +157,7 @@ public class LuaAdapter {
 	 */
 	public void paint(Painter painter) {
 		try {
-			luaFunctionPaint.call(new Object[] { luaGame, painter });
+			luaFunctionOnPaint.call(new Object[] { luaGame, painter });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -154,7 +168,7 @@ public class LuaAdapter {
 	 */
 	public void update() {
 		try {
-			luaFunctionUpdate.call(new Object[] { luaGame });
+			luaFunctionOnUpdate.call(new Object[] { luaGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
