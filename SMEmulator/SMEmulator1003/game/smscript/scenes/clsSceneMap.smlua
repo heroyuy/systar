@@ -34,15 +34,15 @@ function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
 	--背景实例化
-	self.mapBgLayer=clsTiledMapLayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+	self.mapBgLayer=clsTiledMapLayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.mapBgLayer.delegate=self
     Game.rootLayer:addChild(self.mapBgLayer)
     --精灵层实例化
-    self.spriteLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+    self.spriteLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.spriteLayer.enabled=false
     Game.rootLayer:addChild(self.spriteLayer)
     --前景实例化
-    self.mapFgLayer=clsTiledMapLayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+    self.mapFgLayer=clsTiledMapLayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.mapFgLayer.enabled=false
     Game.rootLayer:addChild(self.mapFgLayer)
     --头像层实例化
@@ -211,8 +211,8 @@ end
 --计算viewport
 function clsSceneMap:checkViewport()
   local px,py=self:calculateCharacterLocation(self.curPlayer)
-  local width=smGame:getWidth()
-  local height=smGame:getHeight()
+  local width=Game:getWidth()
+  local height=Game:getHeight()
   local vx=px-width/2
   local vy=py-height/2
   if vx<0 then

@@ -11,7 +11,7 @@ clsOptionLayer.__index=clsOptionLayer
 
 --构造器
 function clsOptionLayer:new(optionItems)
-  local self = clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+  local self = clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
   setmetatable(self,clsOptionLayer)
   --背景
   local gap=6

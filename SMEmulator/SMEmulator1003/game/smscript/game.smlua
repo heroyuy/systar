@@ -21,7 +21,7 @@ function Game:onStart()
   smLog:setDebug(true)
   smLog:info("game-start")
   --配置游戏
-  self.rootLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+  self.rootLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
   self.rootLayer.clipBounds=false
   --加载游戏数据
   DataLoader:init()

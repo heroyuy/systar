@@ -13,7 +13,7 @@ clsDialogLayer.contentLabel=nil
 
 --构造器
 function clsDialogLayer:new(name,content,bustPath,position)
-  local self = clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+  local self = clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
   setmetatable(self,clsDialogLayer)
   --背景
   local gap=6
