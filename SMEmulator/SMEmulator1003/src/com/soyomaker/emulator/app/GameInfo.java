@@ -28,6 +28,8 @@ public class GameInfo {
 
 	private int actualFPS = 0;
 
+	private boolean showFPS = true;
+
 	private String gamePath = null;
 
 	private GameInfo() {
@@ -69,6 +71,10 @@ public class GameInfo {
 		return width;
 	}
 
+	public boolean isShowFPS() {
+		return showFPS;
+	}
+
 	public void setActualFPS(int actualFps) {
 		this.actualFPS = actualFps;
 	}
@@ -79,6 +85,10 @@ public class GameInfo {
 
 	public void setRatedFPS(int fps) {
 		this.ratedFPS = fps;
+	}
+
+	public void setShowFPS(boolean showFPS) {
+		this.showFPS = showFPS;
 	}
 
 }
