@@ -188,6 +188,12 @@ end
 
 --显示输入框
 function Interpreter:showInputDialog(type)
+  local delegate={}
+  function delegate:onInput(value)
+    Interpreter:endCurrentEvent(value)
+  end
+  Game:showInputDialog(delegate)
+  return false  --返回值为flase表示此方法不立即返回
 end
 
 --显示选项框 e.g  {"yes","no","cancel"}

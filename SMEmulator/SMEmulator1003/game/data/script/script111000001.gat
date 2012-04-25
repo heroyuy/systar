@@ -11,4 +11,6 @@ elseif index==3 then
 else
   Interpreter:doCommand(101006,"牛魔王","大哥你好，<c>[0xffabcdef]我是谁你不知道吗<n>[1]真的不知道？","/image/battler/097-Monster11.png",1)
 end
+local name=Interpreter:doCommand(101007)
+print("玩家输入了:"..name)
 print("script1-end")
