@@ -50,6 +50,7 @@ public class Game implements IGame, Runnable {
 	@Override
 	public void onPaint(Painter painter) {
 		luaAdapter.paint(painter);
+
 	}
 
 	@Override
@@ -67,8 +68,7 @@ public class Game implements IGame, Runnable {
 					inputValue = null;
 				}
 				if (event != null) {
-					luaAdapter.onTouch(event.getX(), event.getY(),
-							event.getType());
+					luaAdapter.onTouch(event.getX(), event.getY(), event.getType());
 					event = null;
 				}
 				if (!showInputDialog) {
@@ -76,6 +76,7 @@ public class Game implements IGame, Runnable {
 					luaAdapter.update();
 					// 重绘界面
 					UIScreen.getInstance().requestRepaint();
+
 				}
 				// 垃圾收集
 				luaAdapter.callLuaGC();
