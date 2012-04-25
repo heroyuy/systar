@@ -29,8 +29,8 @@ public class UIScreen extends JPanel implements InputListener {
 
 	private UIScreen() {
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(Config.getInstance().getWidth(),
-				Config.getInstance().getHeight()));
+		this.setPreferredSize(new Dimension(GameInfo.getInstance().getWidth(),
+				GameInfo.getInstance().getHeight()));
 		// 游戏渲染层
 		gamePanel = new JPanel() {
 
@@ -80,14 +80,13 @@ public class UIScreen extends JPanel implements InputListener {
 		};
 		gamePanel.addMouseMotionListener(mouseAdapter);
 		gamePanel.addMouseListener(mouseAdapter);
-		gamePanel.setSize(new Dimension(Config.getInstance().getWidth(), Config
-				.getInstance().getHeight()));
+		gamePanel.setSize(new Dimension(GameInfo.getInstance().getWidth(),
+				GameInfo.getInstance().getHeight()));
 		gamePanel.setLocation(0, 0);
 		gamePanel.setLayout(null);
 		this.add(gamePanel);
-		
-		inputDialog = new InputDialog(Config.getInstance().getWidth(),
-				100);
+
+		inputDialog = new InputDialog(GameInfo.getInstance().getWidth(), 100);
 		inputDialog.setLocation(0,
 				gamePanel.getHeight() - inputDialog.getHeight());
 		inputDialog.setInputListener(this);
@@ -98,6 +97,11 @@ public class UIScreen extends JPanel implements InputListener {
 	public void onInput(String value) {
 		this.showInputDialog(false);
 		this.game.onInput(value);
+	}
+
+	public void requestRepaint() {
+		gamePanel.paintImmediately(0, 0, gamePanel.getWidth(),
+				gamePanel.getHeight());
 	}
 
 	public void setGame(IGame game) {

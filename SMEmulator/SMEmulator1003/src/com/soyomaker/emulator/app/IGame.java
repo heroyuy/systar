@@ -18,6 +18,6 @@ public interface IGame {
 	public void onPaint(Painter painter);
 
 	public void start();
-	
+
 	public void stop();
 }

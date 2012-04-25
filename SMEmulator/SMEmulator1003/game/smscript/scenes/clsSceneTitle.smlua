@@ -28,12 +28,12 @@ function clsSceneTitle:onStart()
     smAudioPlayer:play(smGamePath..globalDictionary.config.titleMusic)
   end
   --背景大图 
-  local bgLayer=clsUILayer:new(0,0,smGameEngine:getWidth(),smGameEngine:getHeight())
+  local bgLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
   if globalDictionary.config.titleBackground then
     bgLayer.backgroundImage=smImageFactory:createImage(smGamePath..globalDictionary.config.titleBackground)
   end
   --标题背景
-  local titleBg=clsUILayer:new((smGameEngine:getWidth()-200)/2,smGameEngine:getHeight()-180,200,120)
+  local titleBg=clsUILayer:new((smGame:getWidth()-200)/2,smGame:getHeight()-180,200,120)
   titleBg.backgroundImage=Skin:createBg(200,120)
   bgLayer:addChild(titleBg)
   --标题边框

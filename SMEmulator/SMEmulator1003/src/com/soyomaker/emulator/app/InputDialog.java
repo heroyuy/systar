@@ -24,8 +24,8 @@ public class InputDialog extends JPanel {
 	 * Create the panel.
 	 */
 	public InputDialog(int width, int height) {
-//		width = 640;
-//		height = 100;
+		// width = 640;
+		// height = 100;
 		setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		setSize(new Dimension(width, height));
 		setLayout(null);
@@ -53,7 +53,7 @@ public class InputDialog extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 
-		MouseAdapter mouseAdapter=new MouseAdapter() {
+		MouseAdapter mouseAdapter = new MouseAdapter() {
 		};
 		addMouseMotionListener(mouseAdapter);
 		addMouseListener(mouseAdapter);

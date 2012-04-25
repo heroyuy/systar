@@ -20,19 +20,20 @@ public class Event {
 		this.type = type;
 	}
 
-	protected int getType() {
+	public int getType() {
 		return type;
 	}
 
-	protected int getX() {
+	public int getX() {
 		return x;
 	}
 
-	protected int getY() {
+	public int getY() {
 		return y;
 	}
-	
-	public String toString(){
-		return "Event{x="+getX()+" y="+getY()+" type="+getType()+"}";
+
+	public String toString() {
+		return "Event{x=" + getX() + " y=" + getY() + " type=" + getType()
+				+ "}";
 	}
 }

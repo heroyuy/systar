@@ -24,12 +24,6 @@ import com.soyomaker.emulator.utils.SMString;
  */
 public class LuaAdapter {
 
-	private static LuaAdapter instance = new LuaAdapter();
-
-	public static LuaAdapter getInstance() {
-		return instance;
-	}
-
 	private LuaState luaState = null;
 
 	private LuaObject luaGlobalGame = null;
@@ -44,22 +38,22 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnStop = null;
 
-	private LuaAdapter() {
+	private static String MAIN_FILE = "/smscript/game.smlua";
 
-	}
+	private static String GAME_NAME = "globalGame";
 
-	public void init(String luaFilePath, String globalGame) {
+	public LuaAdapter(IGame game) {
 		try {
 			// 设置LuaState
 			luaState = LuaStateFactory.newLuaState();
 			luaState.openLibs();
-			luaState.LdoFile(luaFilePath);
+			luaState.LdoFile(MAIN_FILE);
 			// 1、注册JAVA提供给lua的API
 			// --注册GameEngine
-			luaState.pushObjectValue(GameEngine.getInstance());
-			luaState.setGlobal("smGameEngine");
+			luaState.pushObjectValue(game);
+			luaState.setGlobal("smGame");
 			// --注册GamePath
-			luaState.pushObjectValue(GameEngine.getInstance().getGamePath());
+			luaState.pushObjectValue(GameInfo.getInstance().getGamePath());
 			luaState.setGlobal("smGamePath");
 			// --注册SMLog
 			luaState.pushObjectValue(SMLog.getInstance());
@@ -80,7 +74,7 @@ public class LuaAdapter {
 			luaState.pushObjectValue(SMString.getInstance());
 			luaState.setGlobal("smString");
 			// 2、转换lua实现的接口
-			luaGlobalGame = luaState.getLuaObject(globalGame);
+			luaGlobalGame = luaState.getLuaObject(GAME_NAME);
 			luaFunctionOnStart = luaGlobalGame.getField("onStart");
 			luaFunctionOnTouch = luaGlobalGame.getField("onTouch");
 			luaFunctionUpdate = luaGlobalGame.getField("update");
@@ -89,6 +83,29 @@ public class LuaAdapter {
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void callLuaGC() {
+		luaState.getGlobal("collectgarbage");
+		try {
+			luaState.pushObjectValue("collect");
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(1, 0);
+	}
+
+	public float getLuaMemory() {
+		luaState.getGlobal("collectgarbage");
+		try {
+			luaState.pushObjectValue("count");
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+		luaState.call(1, 1);
+		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
+		LuaObject lobj = luaState.getLuaObject("result");
+		return (float) (lobj.getNumber() * 1024);
 	}
 
 	/**
@@ -103,22 +120,23 @@ public class LuaAdapter {
 	}
 
 	/**
-	 * onTouch方法的转换
+	 * onStop方法的转换
 	 */
-	public void onTouch(int keyX, int keyY, int type) {
+	public void onStop() {
 		try {
-			luaFunctionOnTouch.call(new Object[] { luaGlobalGame, keyX, keyY, type });
+			luaFunctionOnStop.call(new Object[] { luaGlobalGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * update方法的转换
+	 * onTouch方法的转换
 	 */
-	public void update() {
+	public void onTouch(int keyX, int keyY, int type) {
 		try {
-			luaFunctionUpdate.call(new Object[] { luaGlobalGame });
+			luaFunctionOnTouch.call(new Object[] { luaGlobalGame, keyX, keyY,
+					type });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -136,36 +154,13 @@ public class LuaAdapter {
 	}
 
 	/**
-	 * onStop方法的转换
+	 * update方法的转换
 	 */
-	public void onStop() {
+	public void update() {
 		try {
-			luaFunctionOnStop.call(new Object[] { luaGlobalGame });
+			luaFunctionUpdate.call(new Object[] { luaGlobalGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public float getLuaMemory() {
-		luaState.getGlobal("collectgarbage");
-		try {
-			luaState.pushObjectValue("count");
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-		luaState.call(1, 1);
-		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
-		LuaObject lobj = luaState.getLuaObject("result");
-		return (float) (lobj.getNumber() * 1024);
-	}
-
-	public void callLuaGC() {
-		luaState.getGlobal("collectgarbage");
-		try {
-			luaState.pushObjectValue("collect");
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-		luaState.call(1, 0);
 	}
 }

@@ -61,7 +61,7 @@ function Scheduler:update()
     local task=v
     --smLog:info(task:toStrnig())
     --计算上一次加入或者执行任务距离现在的时间间隔
-    local currentTime=smGameEngine:getTime()
+    local currentTime=smGame:getTime()
     local interval=currentTime-task.timestamp
     --计算任务应该执行的次数
     times=math.floor(interval/task.interval)
@@ -86,6 +86,6 @@ end
 
 function Scheduler:scheduleTask(target,callback,interval,times)
   local task=clsTask:new(target,callback,interval,times)
-  task.timestamp=smGameEngine:getTime()
+  task.timestamp=smGame:getTime()
   self.taskList:add(task)
 end
