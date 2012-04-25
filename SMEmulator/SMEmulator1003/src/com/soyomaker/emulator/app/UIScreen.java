@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 import com.soyomaker.emulator.app.InputDialog.InputListener;
-import com.soyomaker.emulator.ui.Color;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.ColorFactory;
 
@@ -52,10 +51,11 @@ public class UIScreen extends JPanel implements InputListener {
 				// 绘制游戏
 				game.onPaint(this.painter);
 				// FPS
-				GameInfo gameInfo=GameInfo.getInstance();
+				GameInfo gameInfo = GameInfo.getInstance();
 				if (gameInfo.isShowFPS()) {
 					painter.setColor(ColorFactory.getInstance().WHITE);
-					painter.drawString("FPS:"+gameInfo.getActualFps(), 10, gameInfo.getHeight()-10, Painter.LB);
+					painter.drawString("FPS:" + gameInfo.getActualFps(), 10,
+							gameInfo.getHeight() - 10, Painter.LB);
 				}
 			}
 		};
