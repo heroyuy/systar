@@ -16,11 +16,10 @@ function globalGame:onStart()
   package.path = package.path .. ";"..smGamePath.."/smscript/?.smlua"
   require("requires")
   --配置引擎
-  smGame:setShowFps(true)
-  smGame:setRatedFps(20)
   smLog:setDebug(true)
-  smLog:ismGameart")
-  --配smGamerootLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
+  smLog:info("game-start")
+  --配置游戏
+  self.rootLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
   self.rootLayer.clipBounds=false
   --加载游戏数据
   DataLoader:init()
@@ -46,10 +45,6 @@ function globalGame:update()
   --更新场景
   if self.curScene then
     self.curScene:update()
-  end
-  --FPS
-  if smGame:getActualFps()<smGame:getRatedFps() then
-    smLog:info("FPS警告:"..smGame:getActualFps())
   end
 end
 

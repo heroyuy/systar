@@ -89,6 +89,7 @@ public class UIScreen extends JPanel implements InputListener {
 		inputDialog = new InputDialog(GameInfo.getInstance().getWidth(), 100);
 		inputDialog.setLocation(0,
 				gamePanel.getHeight() - inputDialog.getHeight());
+		inputDialog.setVisible(false);
 		inputDialog.setInputListener(this);
 		gamePanel.add(inputDialog);
 	}

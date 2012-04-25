@@ -47,7 +47,7 @@ public class LuaAdapter {
 			// 设置LuaState
 			luaState = LuaStateFactory.newLuaState();
 			luaState.openLibs();
-			luaState.LdoFile(MAIN_FILE);
+			luaState.LdoFile(GameInfo.getInstance().getGamePath()+MAIN_FILE);
 			// 1、注册JAVA提供给lua的API
 			// --注册GameEngine
 			luaState.pushObjectValue(game);

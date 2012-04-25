@@ -12,7 +12,7 @@ public class Game implements IGame, Runnable {
 
 	private long time = 0;
 
-	private boolean needDisplay = false;
+	private boolean needDisplay = true;
 
 	public int getHeight() {
 		return GameInfo.getInstance().getHeight();
@@ -47,8 +47,7 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void onPaint(Painter painter) {
-		System.out.println("onPaint:" + painter);
-
+		luaAdapter.paint(painter);
 	}
 
 	@Override
@@ -117,7 +116,6 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void stop() {
-		System.out.println("stop");
 		running = false;
 	}
 
