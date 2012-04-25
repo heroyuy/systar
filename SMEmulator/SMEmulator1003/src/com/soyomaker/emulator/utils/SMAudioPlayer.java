@@ -14,35 +14,6 @@ public class SMAudioPlayer {
 		return instance;
 	}
 
-	private SMAudioPlayer() {
-
-	}
-
-	private SimplePlayer player = new SimplePlayer();
-
-	public void play(String path) {
-		stop();
-		player.open(new File(path));
-		player.setLoop(false);
-		player.play();
-	}
-
-	public void pause() {
-		player.pause();
-	}
-
-	public void resume() {
-
-	}
-
-	public void replay() {
-		player.resume();
-	}
-
-	public void stop() {
-		player.stop();
-	}
-
 	public static void main(String[] args) {
 		final SMAudioPlayer smap = SMAudioPlayer.getInstance();
 		smap.play("game/audio/music/my_love.mp3");
@@ -55,6 +26,35 @@ public class SMAudioPlayer {
 				smap.stop();
 			}
 		}, 5000);
+	}
+
+	private SimplePlayer player = new SimplePlayer();
+
+	private SMAudioPlayer() {
+
+	}
+
+	public void pause() {
+		player.pause();
+	}
+
+	public void play(String path) {
+		stop();
+		player.open(new File(path));
+		player.setLoop(false);
+		player.play();
+	}
+
+	public void replay() {
+		player.resume();
+	}
+
+	public void resume() {
+
+	}
+
+	public void stop() {
+		player.stop();
 	}
 
 }

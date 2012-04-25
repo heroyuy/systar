@@ -23,10 +23,6 @@ public class SMLog {
 		PropertyConfigurator.configure(CONFIG_PATH);// 读取使用Java的特性文件编写的配置文件。
 	}
 
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 	public void error(Object msg) {
 		if (debug) {
 			log.error(msg);
@@ -37,6 +33,10 @@ public class SMLog {
 		if (debug) {
 			log.info(msg);
 		}
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 }

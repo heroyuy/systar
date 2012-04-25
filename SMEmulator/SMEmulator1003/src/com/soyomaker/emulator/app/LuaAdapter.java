@@ -109,6 +109,17 @@ public class LuaAdapter {
 	}
 
 	/**
+	 * onInput方法的转换
+	 */
+	public void onInput(String value) {
+		try {
+			luaFunctionOnInput.call(new Object[] { luaGame, value });
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * onStart方法的转换
 	 */
 	public void onStart() {
@@ -125,17 +136,6 @@ public class LuaAdapter {
 	public void onStop() {
 		try {
 			luaFunctionOnStop.call(new Object[] { luaGame });
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * onInput方法的转换
-	 */
-	public void onInput(String value) {
-		try {
-			luaFunctionOnInput.call(new Object[] { luaGame, value });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}

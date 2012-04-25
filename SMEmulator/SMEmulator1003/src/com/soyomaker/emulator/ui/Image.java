@@ -38,6 +38,20 @@ public class Image {
 	/* ----------------------------- 构造 ----------------------------- */
 
 	/**
+	 * 根据指定的Image对象创建一个新的Image对象
+	 * 
+	 * @param image
+	 *            源Image对象
+	 * 
+	 */
+	public Image(Image image) {
+		content = new BufferedImage(image.getWidth(), image.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		painter = new Painter(content.getGraphics());
+		painter.drawImage(image, 0, 0, Painter.LT);
+	}
+
+	/**
 	 * 创建指定大小的图片
 	 * 
 	 * @param width
@@ -72,54 +86,24 @@ public class Image {
 		}
 	}
 
-	/**
-	 * 根据指定的Image对象创建一个新的Image对象
-	 * 
-	 * @param image
-	 *            源Image对象
-	 * 
-	 */
-	public Image(Image image) {
-		content = new BufferedImage(image.getWidth(), image.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		painter = new Painter(content.getGraphics());
-		painter.drawImage(image, 0, 0, Painter.LT);
-	}
-
 	/* ----------------------------- 获取属性 ----------------------------- */
 
 	/**
-	 * 返回 Image 的宽度。
+	 * 半透明处理
 	 * 
-	 * @return 宽度。
+	 * @param alpha
+	 *            alpha值
+	 * @return 半透明处理后的图像
 	 */
-	public int getWidth() {
-		return content.getWidth();
+	public Image alpha(float alpha) {
+		Image image = new Image(this.getWidth(), this.getHeight());
+		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
+		float[] scales = { 1.0f, 1.0f, 1.0f, alpha };
+		float[] offsets = new float[4];
+		RescaleOp rop = new RescaleOp(scales, offsets, null);
+		g2d.drawImage(this.content, rop, 0, 0);
+		return image;
 	}
-
-	/**
-	 * 返回 Image 的高度。
-	 * 
-	 * @return 高度。
-	 */
-	public int getHeight() {
-		return content.getHeight();
-	}
-
-	/**
-	 * 获取用于绘制图像的图形上下文
-	 * 
-	 * @return 绘制图像的图形上下文（画笔）
-	 */
-	public Painter getPainter() {
-		return painter;
-	}
-
-	public Color getRGB(int x, int y) {
-		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
-	}
-
-	/* ----------------------------- 图像处理 ----------------------------- */
 
 	/**
 	 * 清除图像
@@ -136,6 +120,25 @@ public class Image {
 	public void clear(int x, int y, int width, int height) {
 		int[] rgbs = new int[width * height];
 		content.setRGB(x, y, width, height, rgbs, 0, width);
+	}
+
+	/**
+	 * 裁剪图像
+	 * 
+	 * @param x
+	 *            指定矩形区域左上角的 x 坐标
+	 * @param y
+	 *            指定矩形区域左上角的 y 坐标
+	 * @param width
+	 *            指定矩形区域的宽度
+	 * @param height
+	 *            指定矩形区域的高度
+	 * @return 裁剪后的图像
+	 */
+	public Image clip(int x, int y, int width, int height) {
+		Image res = new Image(width, height);
+		res.getPainter().drawImage(this, x, y, width, height, 0, 0, Painter.LT);
+		return res;
 	}
 
 	/**
@@ -159,24 +162,7 @@ public class Image {
 		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
 	}
 
-	/**
-	 * 裁剪图像
-	 * 
-	 * @param x
-	 *            指定矩形区域左上角的 x 坐标
-	 * @param y
-	 *            指定矩形区域左上角的 y 坐标
-	 * @param width
-	 *            指定矩形区域的宽度
-	 * @param height
-	 *            指定矩形区域的高度
-	 * @return 裁剪后的图像
-	 */
-	public Image clip(int x, int y, int width, int height) {
-		Image res = new Image(width, height);
-		res.getPainter().drawImage(this, x, y, width, height, 0, 0, Painter.LT);
-		return res;
-	}
+	/* ----------------------------- 图像处理 ----------------------------- */
 
 	/**
 	 * 翻转图像
@@ -202,6 +188,28 @@ public class Image {
 			throw new IllegalArgumentException("翻转类型只能是0（水平翻转）或者1（垂直翻转）");
 		}
 		return res;
+	}
+
+	BufferedImage getContent() {
+		return content;
+	}
+
+	/**
+	 * 返回 Image 的高度。
+	 * 
+	 * @return 高度。
+	 */
+	public int getHeight() {
+		return content.getHeight();
+	}
+
+	/**
+	 * 获取用于绘制图像的图形上下文
+	 * 
+	 * @return 绘制图像的图形上下文（画笔）
+	 */
+	public Painter getPainter() {
+		return painter;
 	}
 
 	//
@@ -240,6 +248,19 @@ public class Image {
 	// }
 	// return image;
 	// }
+
+	public Color getRGB(int x, int y) {
+		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
+	}
+
+	/**
+	 * 返回 Image 的宽度。
+	 * 
+	 * @return 宽度。
+	 */
+	public int getWidth() {
+		return content.getWidth();
+	}
 
 	/**
 	 * 旋转图片
@@ -308,22 +329,7 @@ public class Image {
 		return image;
 	}
 
-	/**
-	 * 半透明处理
-	 * 
-	 * @param alpha
-	 *            alpha值
-	 * @return 半透明处理后的图像
-	 */
-	public Image alpha(float alpha) {
-		Image image = new Image(this.getWidth(), this.getHeight());
-		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
-		float[] scales = { 1.0f, 1.0f, 1.0f, alpha };
-		float[] offsets = new float[4];
-		RescaleOp rop = new RescaleOp(scales, offsets, null);
-		g2d.drawImage(this.content, rop, 0, 0);
-		return image;
-	}
+	/* ----------------------------- 辅助方法 ----------------------------- */
 
 	/**
 	 * 变色处理
@@ -357,11 +363,5 @@ public class Image {
 		RescaleOp rop = new RescaleOp(scales, offsets, null);
 		g2d.drawImage(this.content, rop, 0, 0);
 		return image;
-	}
-
-	/* ----------------------------- 辅助方法 ----------------------------- */
-
-	BufferedImage getContent() {
-		return content;
 	}
 }

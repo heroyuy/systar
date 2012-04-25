@@ -12,12 +12,12 @@ public class SMString {
 
 	}
 
-	public String subString(String str, int startIndex, int endIndex) {
-		return str.substring(startIndex - 1, endIndex);
-	}
-
 	public int length(String str) {
 		return str.length();
+	}
+
+	public String subString(String str, int startIndex, int endIndex) {
+		return str.substring(startIndex - 1, endIndex);
 	}
 
 }

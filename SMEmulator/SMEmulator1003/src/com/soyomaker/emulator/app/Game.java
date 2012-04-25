@@ -10,6 +10,8 @@ public class Game implements IGame, Runnable {
 
 	private Event event = null;
 
+	private String inputValue = null;
+
 	private long time = 0;
 
 	private boolean needDisplay = true;
@@ -45,7 +47,7 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void onInput(String value) {
-		luaAdapter.onInput(value);
+		this.inputValue = value;
 	}
 
 	@Override
@@ -59,13 +61,14 @@ public class Game implements IGame, Runnable {
 		// 此处调用lua的onstart()方法
 		luaAdapter.onStart();
 		while (running) {
-
 			long t = 0;
-
 			while (running) {
-
 				t = System.currentTimeMillis();
 				// 处理事件
+				if (inputValue != null) {
+					luaAdapter.onInput(inputValue);
+					inputValue = null;
+				}
 				if (event != null) {
 					luaAdapter.onTouch(event.getX(), event.getY(),
 							event.getType());
@@ -73,26 +76,21 @@ public class Game implements IGame, Runnable {
 				}
 				// 更新游戏
 				luaAdapter.update();
-
 				// 重绘界面
 				if (isNeedDisplay()) {
 					UIScreen.getInstance().requestRepaint();
 				}
-
 				// 垃圾收集
 				luaAdapter.callLuaGC();
-
 				t = System.currentTimeMillis() - t;
 				GameInfo gameInfo = GameInfo.getInstance();
-				if (t < 1000 * 1.0 / gameInfo.getRatedFps()) {
-					gameInfo.setActualFps(gameInfo.getRatedFps());
-					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFps() - t));
+				if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
+					gameInfo.setActualFPS(gameInfo.getRatedFPS());
+					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
 				} else {
-					gameInfo.setActualFps((int) (1000 * 1.0 / t));
+					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
 				}
-
 			}
-
 			// 此处调用lua的onStop()方法
 			luaAdapter.onStop();
 		}

@@ -24,9 +24,9 @@ public class GameInfo {
 
 	private int height = 640;
 
-	private int ratedFps = 20;
+	private int ratedFPS = 20;
 
-	private int actualFps = 0;
+	private int actualFPS = 0;
 
 	private String gamePath = null;
 
@@ -38,7 +38,7 @@ public class GameInfo {
 					.getValue());
 			this.height = Integer.parseInt(emulatorXMLObject.getChild(1)
 					.getValue());
-			this.ratedFps = Integer.parseInt(emulatorXMLObject.getChild(2)
+			this.ratedFPS = Integer.parseInt(emulatorXMLObject.getChild(2)
 					.getValue());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class GameInfo {
 	}
 
 	public int getActualFps() {
-		return actualFps;
+		return actualFPS;
 	}
 
 	public String getGamePath() {
@@ -61,24 +61,24 @@ public class GameInfo {
 		return height;
 	}
 
-	public int getRatedFps() {
-		return ratedFps;
+	public int getRatedFPS() {
+		return ratedFPS;
 	}
 
 	public int getWidth() {
 		return width;
 	}
 
-	public void setActualFps(int actualFps) {
-		this.actualFps = actualFps;
+	public void setActualFPS(int actualFps) {
+		this.actualFPS = actualFps;
 	}
 
 	public void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
 	}
 
-	public void setRatedFps(int fps) {
-		this.ratedFps = fps;
+	public void setRatedFPS(int fps) {
+		this.ratedFPS = fps;
 	}
 
 }
