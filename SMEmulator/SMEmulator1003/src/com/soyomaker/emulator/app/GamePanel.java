@@ -14,31 +14,47 @@ public class GamePanel extends JPanel {
 
 	private static final long serialVersionUID = 7608812515686704871L;
 
+	private static GamePanel instance = new GamePanel();
+
+	public static GamePanel getInstance() {
+		return instance;
+	}
+
 	private Graphics g = null;
 
 	private Painter painter = null;
 
 	private IGame game = null;
 
-	public GamePanel(IGame game) {
-		this.game = game;
+	private GamePanel() {
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(Config.getInstance().getWidth(), Config.getInstance().getHeight()));
+		this.setPreferredSize(new Dimension(Config.getInstance().getWidth(),
+				Config.getInstance().getHeight()));
 		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
+
 			public void mouseDragged(MouseEvent e) {
-				dealEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
+				dealEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
 			}
 
 			public void mousePressed(MouseEvent e) {
-				dealEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
+				dealEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				dealEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_UP));
 			}
 		};
+		this.addMouseMotionListener(mouseAdapter);
 		this.addMouseListener(mouseAdapter);
+	}
+
+	private void dealEvent(Event e) {
+		game.onEvent(e);
+	}
+
+	public IGame getGame() {
+		return game;
 	}
 
 	public void paint(Graphics g) {
@@ -53,7 +69,7 @@ public class GamePanel extends JPanel {
 		game.onPaint(painter);
 	}
 
-	private void dealEvent(Event e) {
-		game.onEvent(e);
+	public void setGame(IGame game) {
+		this.game = game;
 	}
 }

@@ -31,4 +31,8 @@ public class Event {
 	protected int getType() {
 		return type;
 	}
+	
+	public String toString(){
+		return "Event{x="+getX()+" y="+getY()+" type="+getType()+"}";
+	}
 }

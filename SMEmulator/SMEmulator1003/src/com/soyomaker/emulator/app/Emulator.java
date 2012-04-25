@@ -19,12 +19,6 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private static final long serialVersionUID = -8809949650600479176L;
 
-	private static Emulator defaultEmulator = null;
-
-	public static Emulator getDefaultEmulator() {
-		return defaultEmulator;
-	}
-
 	public static final int TYPE_SOFTWARE = 0; // 独立程序
 
 	public static final int TYPE_PLUGIN = 1; // 插件
@@ -58,8 +52,6 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private IGame game = null;
 
-	private GamePanel gamePanel = null;
-
 	/**
 	 * Create the dialog.
 	 */
@@ -73,6 +65,7 @@ public class Emulator extends JDialog implements IPlugin {
 	private void initGame() {
 		try {
 			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game").newInstance();
+			GamePanel.getInstance().setGame(game);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -100,9 +93,8 @@ public class Emulator extends JDialog implements IPlugin {
 		});
 		mnNewMenu.add(menuItemStop);
 		// 游戏区域
-		gamePanel = new GamePanel(game);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		getContentPane().add(gamePanel);
+		getContentPane().add(GamePanel.getInstance());
 		// 窗口事件监听
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
@@ -116,20 +108,6 @@ public class Emulator extends JDialog implements IPlugin {
 		setLocationRelativeTo(null);
 	}
 
-	/**
-	 * 重绘游戏界面
-	 */
-	public void repaintGame() {
-		gamePanel.paintImmediately(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
-	}
-
-	/**
-	 * 显示输入框
-	 */
-	public void showInputDialog() {
-
-	}
-
 	private void setType(int type) {
 		this.type = type;
 	}
@@ -138,7 +116,6 @@ public class Emulator extends JDialog implements IPlugin {
 	 * 启动游戏
 	 */
 	private void startGame() {
-		defaultEmulator = this;
 		game.start();
 	}
 

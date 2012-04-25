@@ -15,9 +15,9 @@ public interface IGame {
 
 	public void stop();
 
-	public void runLoop();
-
 	public void onEvent(Event e);
 
 	public void onPaint(Painter painter);
+	
+	public void onInput(String value);
 }

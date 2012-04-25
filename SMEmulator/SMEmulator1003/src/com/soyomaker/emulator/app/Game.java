@@ -6,31 +6,30 @@ public class Game implements IGame {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
+		System.out.println("start");
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void runLoop() {
-		// TODO Auto-generated method stub
+		System.out.println("stop");
 
 	}
 
 	@Override
 	public void onEvent(Event e) {
-		// TODO Auto-generated method stub
+		System.out.println("onEvent"+e);
 
 	}
 
 	@Override
 	public void onPaint(Painter painter) {
-		// TODO Auto-generated method stub
+		System.out.println("onPaint:"+painter);
+
+	}
+
+	@Override
+	public void onInput(String value) {
+		System.out.println("onInput:"+value);
 
 	}
 
