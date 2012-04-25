@@ -119,7 +119,6 @@ function clsUILabel:paintLayer(painter)
 end
 
 function clsUILabel:nextPage()
-  print("clsUILabel:nextPage")
   local hasNextPage=self.hasNextPage
   self.hasNextPage=false
   self.startItemIndex=self.endItemIndex
