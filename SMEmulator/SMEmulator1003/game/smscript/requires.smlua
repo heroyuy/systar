@@ -1,11 +1,11 @@
 -- 设定路径
-package.path = package.path .. ";"..smGamePath.."/smscript/common/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/common/system/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/common/ui/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/data/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/layers/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/scenes/?.smlua"
-package.path = package.path .. ";"..smGamePath.."/smscript/script/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/common/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/common/system/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/common/ui/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/data/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/layers/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/scenes/?.smlua"
+package.path = package.path .. ";"..Game:getPath().."/smscript/script/?.smlua"
 
 --common\system
 require("System")

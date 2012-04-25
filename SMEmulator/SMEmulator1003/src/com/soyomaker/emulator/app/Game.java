@@ -18,6 +18,10 @@ public class Game implements IGame, Runnable {
 		return GameInfo.getInstance().getHeight();
 	}
 
+	public String getPath() {
+		return GameInfo.getInstance().getGamePath();
+	}
+
 	public int getRunningTime() {
 		return (int) (System.currentTimeMillis() - time);
 	}

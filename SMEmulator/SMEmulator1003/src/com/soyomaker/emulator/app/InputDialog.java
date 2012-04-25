@@ -1,14 +1,15 @@
 package com.soyomaker.emulator.app;
 
-import javax.swing.JPanel;
 import java.awt.Dimension;
-import javax.swing.border.BevelBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 public class InputDialog extends JPanel {
 

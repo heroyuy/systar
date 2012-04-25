@@ -36,15 +36,15 @@ function clsSceneMap:new()
 	--背景实例化
 	self.mapBgLayer=clsTiledMapLayer:new(0,0,smGame:getWidth(),smGame:getHeight())
     self.mapBgLayer.delegate=self
-    globalGame.rootLayer:addChild(self.mapBgLayer)
+    Game.rootLayer:addChild(self.mapBgLayer)
     --精灵层实例化
     self.spriteLayer=clsUILayer:new(0,0,smGame:getWidth(),smGame:getHeight())
     self.spriteLayer.enabled=false
-    globalGame.rootLayer:addChild(self.spriteLayer)
+    Game.rootLayer:addChild(self.spriteLayer)
     --前景实例化
     self.mapFgLayer=clsTiledMapLayer:new(0,0,smGame:getWidth(),smGame:getHeight())
     self.mapFgLayer.enabled=false
-    globalGame.rootLayer:addChild(self.mapFgLayer)
+    Game.rootLayer:addChild(self.mapFgLayer)
     --头像层实例化
     self.layerHead=clsUILayer:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT+2*self.Param.BAR_HEIGHT)
       --头像按钮
@@ -70,7 +70,7 @@ function clsSceneMap:new()
       layerSP.backgroundColor=Skin:getTextColor(2,2)
       layerSP.tag=self.Tag.BAR_SP
       self.layerHead:addChild(layerSP)
-      globalGame.rootLayer:addChild(self.layerHead)
+      Game.rootLayer:addChild(self.layerHead)
 	return self
 end
 
@@ -114,7 +114,7 @@ function clsSceneMap:changeMap(map)
   --加载地图图集
   for _,v in pairs(globalData.curMap.tilesets) do
     if globalData.imageSets[v.id]==nil then
-      globalData.imageSets[v.id]=smImageFactory:createImage(smGamePath..v.path)
+      globalData.imageSets[v.id]=smImageFactory:createImage(Game:getPath()..v.path)
     end
   end
   --加载背景

@@ -29,7 +29,7 @@ function clsDialogLayer:new(name,content,bustPath,position)
   frameLayer.backgroundImage=Skin:createFrame(self.width,frameHeight)
   bgLayer:addChild(frameLayer)
   --头像
-  local bustImg=smImageFactory:createImage(smGamePath..bustPath)
+  local bustImg=smImageFactory:createImage(Game:getPath()..bustPath)
   local bustLayer=clsUILayer:new(0,self.height-bustImg:getHeight(),bustImg:getWidth(),bustImg:getHeight())
   bustLayer.backgroundImage=bustImg
   bustLayer.enabled=false
@@ -61,7 +61,7 @@ end
 function clsDialogLayer:onTouch(x,y,type)
   if self.delegate and type==UIConst.touchEventType.DOWN then
     if not self.contentLabel:nextPage() then
-      globalGame.rootLayer:removeChild(self)
+      Game.rootLayer:removeChild(self)
       self.delegate:dialogEnd()
     end
   end
