@@ -95,9 +95,9 @@ function Game:getPath()
 end
 
 --显示输入框
-function Game:showInputDialog(inputDialogDelegate)
+function Game:showInputDialog(tip,inputDialogDelegate)
   self.inputDialogDelegate=inputDialogDelegate
-  smGame:showInputDialog()
+  smGame:showInputDialog(tip)
 end
 
 --切换场景  lua调用

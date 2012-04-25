@@ -103,7 +103,7 @@ public class UIScreen extends JPanel implements InputListener {
 
 	@Override
 	public void onInput(String value) {
-		this.showInputDialog(false);
+		inputDialog.setVisible(false);
 		this.game.onInput(value);
 	}
 
@@ -116,7 +116,9 @@ public class UIScreen extends JPanel implements InputListener {
 		this.game = game;
 	}
 
-	public void showInputDialog(boolean visible) {
-		inputDialog.setVisible(visible);
+	public void showInputDialog(String tip) {
+		inputDialog.setTip(tip);
+		inputDialog.setContent("");
+		inputDialog.setVisible(true);
 	}
 }

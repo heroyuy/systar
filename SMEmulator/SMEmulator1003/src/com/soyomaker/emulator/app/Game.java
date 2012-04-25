@@ -11,8 +11,8 @@ public class Game implements IGame, Runnable {
 	private Event event = null;
 
 	private String inputValue = null;
-	
-	private boolean showInputDialog=false;
+
+	private boolean showInputDialog = false;
 
 	private long time = 0;
 
@@ -44,7 +44,7 @@ public class Game implements IGame, Runnable {
 	@Override
 	public void onInput(String value) {
 		this.inputValue = value;
-		showInputDialog=false;
+		showInputDialog = false;
 	}
 
 	@Override
@@ -93,10 +93,10 @@ public class Game implements IGame, Runnable {
 		}
 	}
 
-	public void showInputDialog() {
-		showInputDialog=true;
+	public void showInputDialog(String tip) {
+		showInputDialog = true;
 		UIScreen.getInstance().requestRepaint();
-		UIScreen.getInstance().showInputDialog(true);
+		UIScreen.getInstance().showInputDialog(tip);
 	}
 
 	public void sleep(int millis) {

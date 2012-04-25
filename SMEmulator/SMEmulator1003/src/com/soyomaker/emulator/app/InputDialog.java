@@ -45,8 +45,7 @@ public class InputDialog extends JPanel {
 		add(confirmButton);
 
 		tipLabel = new JLabel("请输入内容：");
-		tipLabel.setBounds(10, 10, 530 + width - 640,
-				32 + (height - 100) / 2);
+		tipLabel.setBounds(10, 10, 530 + width - 640, 32 + (height - 100) / 2);
 		add(tipLabel);
 
 		contentField = new JTextField();
@@ -61,15 +60,15 @@ public class InputDialog extends JPanel {
 		addMouseListener(mouseAdapter);
 	}
 
-	public void setContent(String content){
+	public void setContent(String content) {
 		contentField.setText(content);
 	}
-	
+
 	public void setInputListener(InputListener inputListener) {
 		this.inputListener = inputListener;
 	}
-	
-	public void setTip(String tip){
+
+	public void setTip(String tip) {
 		tipLabel.setText(tip);
 	}
 }

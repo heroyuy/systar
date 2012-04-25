@@ -187,12 +187,12 @@ function Interpreter:showDialog(name,content,bustPath,position)
 end
 
 --显示输入框
-function Interpreter:showInputDialog(type)
+function Interpreter:showInputDialog(tip)
   local delegate={}
   function delegate:onInput(value)
     Interpreter:endCurrentEvent(value)
   end
-  Game:showInputDialog(delegate)
+  Game:showInputDialog(tip,delegate)
   return false  --返回值为flase表示此方法不立即返回
 end
 
