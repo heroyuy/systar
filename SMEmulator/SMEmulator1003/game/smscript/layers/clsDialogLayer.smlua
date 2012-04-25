@@ -65,5 +65,4 @@ function clsDialogLayer:onTouch(x,y,type)
       self.delegate:dialogEnd()
     end
   end
-  return true   --为简化delegate的编写，此处永远返回true
 end

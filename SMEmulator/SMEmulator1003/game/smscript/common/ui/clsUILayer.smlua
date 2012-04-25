@@ -135,36 +135,26 @@ end
 function clsUILayer:onTouch(x,y,type)
   if self.delegate then
     self.delegate:layerTapped(self,x,y,type)
-    return true   --为简化delegate的编写，此处永远返回true，即只要有delegate处理事件则认为事件处理完成
-  else
-    return false
   end
 end
 
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(x,y,type)
-  local status=false
   if type==UIConst.touchEventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
   if self.focusLayer then
-    --找到焦点组件或者焦点被清除
-    status=self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
-    if not status then
-      --如果事件未完全处理
-      self.focusLayer = nil
-      status=self:onTouch(x,y,type)
-    end
+    --找到焦点组件
+    self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
   else
-    --未找到焦点组件或者焦点已清除
-    status=self:onTouch(x,y,type)
+    --未找到焦点组件
+    self:onTouch(x,y,type)
   end
   if type==UIConst.touchEventType.UP then
     --如果是UP事件，则清除焦点
     self.focusLayer = nil
   end
-  return status
 end
 
 --toString

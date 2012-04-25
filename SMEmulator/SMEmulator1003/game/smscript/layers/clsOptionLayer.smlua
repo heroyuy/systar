@@ -41,8 +41,9 @@ function clsOptionLayer:new(optionItems)
   return self
 end
 
+--处理触屏事件（lua层不应该调用此方法）
 function clsUILayer:onTouch(x,y,type)
-  return true
+  
 end
 
 function clsOptionLayer:buttonTapped(target)
