@@ -22,7 +22,6 @@ public class SMAudioPlayer {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				smap.stop();
 			}
 		}, 5000);
