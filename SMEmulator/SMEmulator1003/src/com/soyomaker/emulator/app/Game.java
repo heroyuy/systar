@@ -1,6 +1,7 @@
 package com.soyomaker.emulator.app;
 
 import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.utils.SMLog;
 
 public class Game implements IGame, Runnable {
 
@@ -11,8 +12,6 @@ public class Game implements IGame, Runnable {
 	private Event event = null;
 
 	private String inputValue = null;
-
-	private boolean showInputDialog = false;
 
 	private long time = 0;
 
@@ -44,7 +43,6 @@ public class Game implements IGame, Runnable {
 	@Override
 	public void onInput(String value) {
 		this.inputValue = value;
-		showInputDialog = false;
 	}
 
 	@Override
@@ -71,13 +69,12 @@ public class Game implements IGame, Runnable {
 					luaAdapter.onTouch(event.getX(), event.getY(), event.getType());
 					event = null;
 				}
-				if (!showInputDialog) {
-					// 更新游戏
-					luaAdapter.update();
-					// 重绘界面
-					UIScreen.getInstance().requestRepaint();
-
-				}
+				// if (!showInputDialog) {
+				// 更新游戏
+				luaAdapter.update();
+				// 重绘界面
+				UIScreen.getInstance().requestRepaint();
+				// }
 				// 垃圾收集
 				luaAdapter.callLuaGC();
 				t = System.currentTimeMillis() - t;
@@ -87,6 +84,9 @@ public class Game implements IGame, Runnable {
 					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
 				} else {
 					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
+					if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
+						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
+					}
 				}
 			}
 			// 此处调用lua的onStop()方法
@@ -95,8 +95,6 @@ public class Game implements IGame, Runnable {
 	}
 
 	public void showInputDialog(String tip) {
-		showInputDialog = true;
-		UIScreen.getInstance().requestRepaint();
 		UIScreen.getInstance().showInputDialog(tip);
 	}
 
