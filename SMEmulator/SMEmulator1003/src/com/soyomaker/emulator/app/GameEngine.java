@@ -1,4 +1,6 @@
-package com.soyomaker.emulator.core;
+package com.soyomaker.emulator.app;
+
+import com.soyomaker.emulator.ui.Painter;
 
 public class GameEngine implements Runnable {
 
@@ -67,10 +69,6 @@ public class GameEngine implements Runnable {
 
 	public int getTime() {
 		return (int) (System.currentTimeMillis() - time);
-	}
-
-	public boolean isShowFps() {
-		return showFps;
 	}
 	
 	public String getInputValue() {

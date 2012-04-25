@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.core;
+package com.soyomaker.emulator.ui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

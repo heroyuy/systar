@@ -1,6 +1,6 @@
 package com.soyomaker.emulator.utils;
 
-import com.soyomaker.emulator.core.Image;
+import com.soyomaker.emulator.ui.Image;
 
 public class ImageFactory {
 

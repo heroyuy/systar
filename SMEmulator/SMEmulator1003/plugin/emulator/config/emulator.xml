@@ -2,5 +2,5 @@
 <emulator>
 	<width>960</width>
 	<height>640</height>
-	<showStatusBar>true</showStatusBar>
+	<fps>20</fps>
 </emulator>

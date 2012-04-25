@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.core;
+package com.soyomaker.emulator.ui;
 
 import java.awt.AlphaComposite;
 import java.awt.Composite;
@@ -63,10 +63,9 @@ public class Painter {
 	 * @param graphics
 	 *            图形上下文
 	 */
-	Painter(Graphics graphics) {
+	public Painter(Graphics graphics) {
 		this.graphics = graphics;
-		((Graphics2D) this.graphics).setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
+		((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		point = new Point(0, 0);
 		setTextSize(16);
@@ -95,8 +94,7 @@ public class Painter {
 	 *            区域
 	 */
 	public void clipRect(Rect rect) {
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -230,14 +228,13 @@ public class Painter {
 	 * @param anchor
 	 *            锚点
 	 */
-	public void drawImage(Image img, int srcx, int srcy, int width, int height,
-			int x, int y, int anchor) {
+	public void drawImage(Image img, int srcx, int srcy, int width, int height, int x, int y, int anchor) {
 		if (img == null) {
 			return;
 		}
 		int[] xy = convert(x, y, width, height, anchor);
-		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1]
-				+ height, srcx, srcy, srcx + width, srcy + height, null);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1] + height, srcx, srcy, srcx + width,
+				srcy + height, null);
 	}
 
 	/**
@@ -320,8 +317,7 @@ public class Painter {
 	 */
 	public void drawString(String str, int x, int y, int anchor) {
 		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
-		graphics.drawString(str, xy[0], xy[1]
-				- graphics.getFontMetrics().getDescent() + getTextSize());
+		graphics.drawString(str, xy[0], xy[1] - graphics.getFontMetrics().getDescent() + getTextSize());
 	}
 
 	/**
@@ -381,8 +377,7 @@ public class Painter {
 	 *            裁剪区
 	 */
 	public void forceClip(Rect clip) {
-		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(),
-				clip.getHeight());
+		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
 	}
 
 	/**
@@ -401,8 +396,7 @@ public class Painter {
 	 */
 	public Rect getClip() {
 		Rectangle rectangle = graphics.getClipBounds();
-		return new Rect(rectangle.x, rectangle.y, rectangle.width,
-				rectangle.height);
+		return new Rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	/**
@@ -411,8 +405,7 @@ public class Painter {
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return ColorFactory.getInstance()
-				.parseInt(graphics.getColor().getRGB());
+		return ColorFactory.getInstance().parseInt(graphics.getColor().getRGB());
 	}
 
 	/**
@@ -422,15 +415,6 @@ public class Painter {
 	 */
 	public Rect getCurClip() {
 		return curClip;
-	}
-
-	/**
-	 * 获取图形上下文
-	 * 
-	 * @return 图形上下文
-	 */
-	Graphics getGraphics() {
-		return graphics;
 	}
 
 	/**
@@ -498,8 +482,7 @@ public class Painter {
 		if (curClip != null) {
 			forceClip(curClip);
 		}
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -532,16 +515,6 @@ public class Painter {
 	 */
 	public void setCurClip(Rect curClip) {
 		this.curClip = curClip;
-	}
-
-	/**
-	 * 设置图形上下文
-	 * 
-	 * @param graphics
-	 *            图形上下文
-	 */
-	void setGraphics(Graphics graphics) {
-		this.graphics = graphics;
 	}
 
 	/**

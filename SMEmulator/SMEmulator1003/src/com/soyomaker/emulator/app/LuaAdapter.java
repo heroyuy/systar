@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.core;
+package com.soyomaker.emulator.app;
 
 import java.util.Random;
 
@@ -7,6 +7,7 @@ import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
+import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
