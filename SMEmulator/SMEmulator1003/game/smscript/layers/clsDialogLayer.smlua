@@ -21,13 +21,9 @@ function clsDialogLayer:new(name,content,bustPath,position)
   local cellHeight=30
   local frameHeight=cellHeight*4+gap*7
   local bgLayer=clsUILayer:new(0,self.height-frameHeight,self.width,frameHeight)
-  bgLayer.backgroundImage=Skin:createBg(self.width,frameHeight)
+  bgLayer.backgroundImage=Skin:createBgWithFrame(self.width,frameHeight)
   bgLayer.enabled=false
   self:addChild(bgLayer)
-  --边框
-  local frameLayer=clsUILayer:new(0,0,self.width,frameHeight)
-  frameLayer.backgroundImage=Skin:createFrame(self.width,frameHeight)
-  bgLayer:addChild(frameLayer)
   --头像
   local bustImg=smImageFactory:createImage(Game.path..bustPath)
   local bustLayer=clsUILayer:new(0,self.height-bustImg:getHeight(),bustImg:getWidth(),bustImg:getHeight())

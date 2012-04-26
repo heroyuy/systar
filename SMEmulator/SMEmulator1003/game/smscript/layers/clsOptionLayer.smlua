@@ -19,12 +19,8 @@ function clsOptionLayer:new(optionItems)
   local cellHeight=30
   local frameHeight=cellHeight*4+gap*7
   local bgLayer=clsUILayer:new(0,self.height-frameHeight,self.width,frameHeight)
-  bgLayer.backgroundImage=Skin:createBg(self.width,frameHeight)
+  bgLayer.backgroundImage=Skin:createBgWithFrame(self.width,frameHeight)
   self:addChild(bgLayer)
-  --边框
-  local frameLayer=clsUILayer:new(0,0,self.width,frameHeight)
-  frameLayer.backgroundImage=Skin:createFrame(self.width,frameHeight)
-  bgLayer:addChild(frameLayer)
   --选项
   local backgroundImage=Skin:createBody(cellWidth,cellHeight)
   local highlightImage=Skin:createSelectedBg(cellWidth,cellHeight)

@@ -83,6 +83,16 @@ function Skin:createFrame(width,height)
   return img
 end
 
+function Skin:createBgWithFrame(width,height)
+  local img=smImageFactory:createImage(width,height)
+  local painter=img:getPainter()
+  local bg=self:createBg(width-8,height-8)
+  local frame=self:createFrame(width,height)
+  painter:drawImage(bg,4,4,UIConst.anchor.LT)
+  painter:drawImage(frame,0,0,UIConst.anchor.LT)
+  return img
+end
+
 function Skin:createSelectedBg(width,height)
   local img=smImageFactory:createImage(width,height)
   local painter=img:getPainter()

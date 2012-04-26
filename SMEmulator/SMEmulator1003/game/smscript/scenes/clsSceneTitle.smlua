@@ -32,14 +32,10 @@ function clsSceneTitle:onStart()
   if globalDictionary.config.titleBackground then
     bgLayer.backgroundImage=smImageFactory:createImage(Game.path..globalDictionary.config.titleBackground)
   end
-  --标题背景
-  local titleBg=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)
-  titleBg.backgroundImage=Skin:createBg(200,120)
-  bgLayer:addChild(titleBg)
-  --标题边框
-  local titleFrame=clsUILayer:new(0,0,200,120)
-  titleFrame.backgroundImage=Skin:createFrame(200,120)
-  titleBg:addChild(titleFrame)
+  --标题背景边框
+  local titleBgFrame=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)
+  titleBgFrame.backgroundImage=Skin:createBgWithFrame(200,120)
+  bgLayer:addChild(titleBgFrame)
   --按钮
   local width=160
   local height=25
@@ -55,7 +51,7 @@ function clsSceneTitle:onStart()
     button.textColor=Skin:getTextColor(1,1)
     button.tag=i
     button.delegate=self
-    titleBg:addChild(button)
+    titleBgFrame:addChild(button)
   end
   Game.rootLayer:addChild(bgLayer)
 end
