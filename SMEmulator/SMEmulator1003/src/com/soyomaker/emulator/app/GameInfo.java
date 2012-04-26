@@ -42,6 +42,8 @@ public class GameInfo {
 					.getValue());
 			this.ratedFPS = Integer.parseInt(emulatorXMLObject.getChild(2)
 					.getValue());
+			this.showFPS=Boolean.parseBoolean(emulatorXMLObject.getChild(3)
+					.getValue());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
