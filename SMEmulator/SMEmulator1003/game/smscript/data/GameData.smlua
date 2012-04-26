@@ -24,20 +24,20 @@
 
 
 --初始化
-globalData={}
+GameData={}
 
 --字段
-globalData.curMap=nil          --地图
-globalData.npcs=nil            --npc列表
-globalData.imageSets={}        --地图图集
-globalData.updateSwitch=false  -- 模型更新开关
+GameData.curMap=nil          --地图
+GameData.npcs=nil            --npc列表
+GameData.imageSets={}        --地图图集
+GameData.updateSwitch=false  -- 模型更新开关
 
 --字段：私有
-globalData.gameType=-1         --游戏类型（-1 新游戏   0-n 游戏存档）
+GameData.gameType=-1         --游戏类型（-1 新游戏   0-n 游戏存档）
 
 --============游戏加载、保存============
 --新游戏：从字典中初始化游戏
-function globalData:newGame()
+function GameData:newGame()
   smLog:info("newGame");
   self.gameType=-1
   --初始化PlayerTroop
@@ -91,16 +91,16 @@ function globalData:newGame()
 end
 
 --加载游戏:从第index个存档初始化游戏
-function globalData:loadGame(index)
+function GameData:loadGame(index)
 end
 
 --保存游戏:保存游戏到第index个存档
-function globalData:saveGame(index)
+function GameData:saveGame(index)
 end
 
 --============NPC相关操作============
 --获取指定id的NPC
-function globalData:getNPC(id)
+function GameData:getNPC(id)
   if self.npcs[id]==nil then
     --指定id的NPC不存在
     local npc=clsNPC:new()
@@ -137,7 +137,7 @@ function globalData:getNPC(id)
 end
 
 --更新游戏模型
-function globalData:update()
+function GameData:update()
   if not self.updateSwitch then
     --如果更新开关未开启直接返回
     return
@@ -157,7 +157,7 @@ end
 
 --============character的moveDelegate============
 --检查目的地是否可达
-function globalData:checkCellBeforeMove(character)
+function GameData:checkCellBeforeMove(character)
   local cRow,cCol=character:getHoldingCell()
   --检查地图边界
   if cRow<0 or cRow>self.curMap.rowNum-1 or cCol<0 or cCol>self.curMap.colNum-1 then
@@ -202,7 +202,7 @@ function globalData:checkCellBeforeMove(character)
 end
 
 --检查是否可以继续行走
-function globalData:checkCellAfterMove(character)
+function GameData:checkCellAfterMove(character)
   local player=self.playerTroop:curDisplayPlayer()
   local pRow,pCol=player:getHoldingCell()
   local cRow,cCol=character:getHoldingCell()
@@ -229,7 +229,7 @@ function globalData:checkCellAfterMove(character)
 end
 
 --获取当前玩家的位置
-function globalData:curPlayerLocation()
+function GameData:curPlayerLocation()
   return self.playerTroop:curDisplayPlayer():getHoldingCell()
 end
 

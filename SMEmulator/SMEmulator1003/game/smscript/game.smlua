@@ -49,7 +49,7 @@ end
 --更新model  lua层不应该调用
 function Game:onUpdate()
   --更新数据模型
-  globalData:update()
+  GameData:update()
   --更新任务调度器
   Scheduler:update()
   --更新场景

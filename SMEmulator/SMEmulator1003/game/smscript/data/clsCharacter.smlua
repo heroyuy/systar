@@ -107,7 +107,7 @@ function clsCharacter:move()
       end
     end
   end
-  Notifier:notify(globalConst.NotifyCMD.Character.MOVED,{character=self,direction=direction,rowChanged=rowChanged})
+  Notifier:notify(Const.NotifyCMD.Character.MOVED,{character=self,direction=direction,rowChanged=rowChanged})
 end
 
 --获取当前行走帧编号
@@ -132,7 +132,7 @@ end
 
 function clsCharacter:changeFace(face)
   self.face=face
-  Notifier:notify(globalConst.NotifyCMD.Character.FACE_CHANGED,{character=self})
+  Notifier:notify(Const.NotifyCMD.Character.FACE_CHANGED,{character=self})
 end
 
 function clsCharacter:changeMap(mapId,row,col,face)
@@ -142,7 +142,7 @@ function clsCharacter:changeMap(mapId,row,col,face)
   self.face=face
   self.curMoveDirection=nil
   self.moveSequence:clear()
-  Notifier:notify(globalConst.NotifyCMD.Character.MAP_CHANGED,{character=self})
+  Notifier:notify(Const.NotifyCMD.Character.MAP_CHANGED,{character=self})
 end
 
 --获取character当前持有的单元格

@@ -78,10 +78,10 @@ end
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   --注册接收通知
-  Notifier:addObserver(globalConst.NotifyCMD.Character.MOVED,self,self.characterMoved)
-  Notifier:addObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
-  Notifier:addObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
-  self.curPlayer=globalData.playerTroop:curDisplayPlayer()
+  Notifier:addObserver(Const.NotifyCMD.Character.MOVED,self,self.characterMoved)
+  Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
+  Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
+  self.curPlayer=GameData.playerTroop:curDisplayPlayer()
   local map=globalDictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
 end
@@ -102,32 +102,32 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
-  Notifier:removeObserver(globalConst.NotifyCMD.Character.MOVED,self)
-  Notifier:removeObserver(globalConst.NotifyCMD.Character.FACE_CHANGED,self)
-  Notifier:removeObserver(globalConst.NotifyCMD.Character.MAP_CHANGED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Character.MOVED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Character.MAP_CHANGED,self)
 end
 
 --切换地图
 function clsSceneMap:changeMap(map)
-  globalData.curMap=map
+  GameData.curMap=map
   self.aStar=clsAStar:new(map.areas)
   --加载地图图集
-  for _,v in pairs(globalData.curMap.tilesets) do
-    if globalData.imageSets[v.id]==nil then
-      globalData.imageSets[v.id]=smImageFactory:createImage(Game.path..v.path)
+  for _,v in pairs(GameData.curMap.tilesets) do
+    if GameData.imageSets[v.id]==nil then
+      GameData.imageSets[v.id]=smImageFactory:createImage(Game.path..v.path)
     end
   end
   --加载背景
   local bgLayers=clsList:new()
-  for i=1,table.getn(globalData.curMap.layers) do
-    local layer=globalData.curMap.layers[i]
+  for i=1,table.getn(GameData.curMap.layers) do
+    local layer=GameData.curMap.layers[i]
     if layer.deepth<0 then
       bgLayers:add(layer)
     end
   end
   local viewport=self:checkViewport()
-  local params={layers=bgLayers,colNum=globalData.curMap.colNum,rowNum=globalData.curMap.rowNum,
-     cellWidth=globalData.curMap.cellWidth,cellHeight=globalData.curMap.cellHeight,viewport=viewport}
+  local params={layers=bgLayers,colNum=GameData.curMap.colNum,rowNum=GameData.curMap.rowNum,
+     cellWidth=GameData.curMap.cellWidth,cellHeight=GameData.curMap.cellHeight,viewport=viewport}
   self.mapBgLayer:init(params)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
@@ -138,35 +138,35 @@ function clsSceneMap:changeMap(map)
     playerSprite.z=self.curPlayer.row
     local px,py=self:calculateCharacterLocation(self.curPlayer)
     px=px-self.curPlayer.charImage:getWidth()/4/2
-    py=py+globalData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
+    py=py+GameData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
     self.spriteLayer:addChild(playerSprite)
     --NPC
-    for k,v in pairs(globalData.curMap.npcs) do
-      local npc=globalData:getNPC(v)
+    for k,v in pairs(GameData.curMap.npcs) do
+      local npc=GameData:getNPC(v)
       local npcSprite=clsUISprite:new(npc.charImage,
         npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)
       nx=nx-npc.charImage:getWidth()/4/2
-      ny=ny+globalData.curMap.cellHeight/2-npc.charImage:getHeight()/4
+      ny=ny+GameData.curMap.cellHeight/2-npc.charImage:getHeight()/4
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       self.spriteLayer:addChild(npcSprite)
     end
   self.spriteLayer:sortChildren()
   --加载前景
   local fgLayers=clsList:new()
-  for i=1,table.getn(globalData.curMap.layers) do
-    local layer=globalData.curMap.layers[i]
+  for i=1,table.getn(GameData.curMap.layers) do
+    local layer=GameData.curMap.layers[i]
     if layer.deepth>0 then
       fgLayers:add(layer)
     end
   end
   if fgLayers:size()>0 then
     self.mapFgLayer.visibility=true
-    local params={layers=fgLayers,colNum=globalData.curMap.colNum,rowNum=globalData.curMap.rowNum,
-       cellWidth=globalData.curMap.cellWidth,cellHeight=globalData.curMap.cellHeight,viewport=viewport}
+    local params={layers=fgLayers,colNum=GameData.curMap.colNum,rowNum=GameData.curMap.rowNum,
+       cellWidth=GameData.curMap.cellWidth,cellHeight=GameData.curMap.cellHeight,viewport=viewport}
     self.mapFgLayer:init(params)
   else
     self.mapFgLayer.visibility=false
@@ -218,35 +218,35 @@ function clsSceneMap:checkViewport()
   if vx<0 then
     vx=0
   end
-  if vx>globalData.curMap.colNum*globalData.curMap.cellWidth-width then
-    vx=globalData.curMap.colNum*globalData.curMap.cellWidth-width
+  if vx>GameData.curMap.colNum*GameData.curMap.cellWidth-width then
+    vx=GameData.curMap.colNum*GameData.curMap.cellWidth-width
   end
   if vy<0 then
     vy=0
   end
-  if vy>globalData.curMap.rowNum*globalData.curMap.cellHeight-height then
-    vy=globalData.curMap.rowNum*globalData.curMap.cellHeight-height
+  if vy>GameData.curMap.rowNum*GameData.curMap.cellHeight-height then
+    vy=GameData.curMap.rowNum*GameData.curMap.cellHeight-height
   end
   return {x=vx,y=vy,width=width,height=height}
 end
 
 --计算characher当前物理坐标(characher所在单元格正中心坐标+行走修正)
 function clsSceneMap:calculateCharacterLocation(character)
-  local px=character.col*globalData.curMap.cellWidth+globalData.curMap.cellWidth/2
-  local py=character.row*globalData.curMap.cellHeight+globalData.curMap.cellHeight/2
+  local px=character.col*GameData.curMap.cellWidth+GameData.curMap.cellWidth/2
+  local py=character.row*GameData.curMap.cellHeight+GameData.curMap.cellHeight/2
   --根据player当前面向和行走状态进行位置修正
   if character.face==0 then
     --上
-    py=py-globalData.curMap.cellHeight/4*character.step
+    py=py-GameData.curMap.cellHeight/4*character.step
   elseif character.face==1 then
     --下
-    py=py+globalData.curMap.cellHeight/4*character.step
+    py=py+GameData.curMap.cellHeight/4*character.step
   elseif character.face==2 then
     --左
-    px=px-globalData.curMap.cellWidth/4*character.step
+    px=px-GameData.curMap.cellWidth/4*character.step
   elseif character.face==3 then
     --右
-    px=px+globalData.curMap.cellWidth/4*character.step
+    px=px+GameData.curMap.cellWidth/4*character.step
   end
   return px,py
 end
@@ -298,16 +298,16 @@ function clsSceneMap:characterMoved(param)
   local npcSprite=self.spriteLayer:childWithTag(param.character.id)   
   if param.direction==0 then
     --上
-    npcSprite.y=npcSprite.y-globalData.curMap.cellHeight/4
+    npcSprite.y=npcSprite.y-GameData.curMap.cellHeight/4
   elseif param.direction==1 then
     --下
-    npcSprite.y=npcSprite.y+globalData.curMap.cellHeight/4
+    npcSprite.y=npcSprite.y+GameData.curMap.cellHeight/4
   elseif param.direction==2 then
     --左
-    npcSprite.x=npcSprite.x-globalData.curMap.cellWidth/4
+    npcSprite.x=npcSprite.x-GameData.curMap.cellWidth/4
   elseif param.direction==3 then
     --右
-    npcSprite.x=npcSprite.x+globalData.curMap.cellWidth/4
+    npcSprite.x=npcSprite.x+GameData.curMap.cellWidth/4
   end
   npcSprite.frameIndex=param.character:getCurFrameIndex()
 end

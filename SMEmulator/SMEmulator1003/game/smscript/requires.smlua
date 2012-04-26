@@ -26,15 +26,15 @@ require("clsUIButton")
 require("clsUISprite")
 
 --data
-require("globalConst")
+require("Const")
 require("DataLoader")
 require("clsModel")
 require("clsBag")
 require("clsCharacter")
 require("clsPlayer")
 require("clsNPC")
-require("globalData")
-require("globalData_player")
+require("GameData")
+require("GameData_player")
 
 --layers
 require("clsTiledMapLayer")

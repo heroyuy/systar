@@ -151,7 +151,7 @@ end
 --============游戏表现类============
 --切换地图
 function Interpreter:changeMap(mapId,row,col,face)
-  globalData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
+  GameData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
 end
 
 --强制移动   e.g  {0,0,1,2,3,3,1}
@@ -210,7 +210,7 @@ end
 
 --更改面向
 function Interpreter:changeFace(face)
-  globalData.playerTroop:curDisplayPlayer():changeFace(face)
+  GameData.playerTroop:curDisplayPlayer():changeFace(face)
 end
 
 --开启战斗
