@@ -1,6 +1,7 @@
 package com.soyomaker.emulator.app;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -10,6 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+
+import com.soyomaker.emulator.ui.Image;
+import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.utils.ImageFactory;
 
 public class InputDialog extends JPanel {
 
@@ -58,6 +63,14 @@ public class InputDialog extends JPanel {
 		};
 		addMouseMotionListener(mouseAdapter);
 		addMouseListener(mouseAdapter);
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Painter p=new Painter(g);
+		String inputImage=GameInfo.getInstance().getGamePath()+"/image/input/input.png";
+		Image img=ImageFactory.getInstance().createImage(inputImage);
+		p.drawImage(img, 0, 0, Painter.LT);
 	}
 
 	public void setContent(String content) {

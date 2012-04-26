@@ -1,4 +1,5 @@
 print("script1-start")
+--[[
 local items={"石头人","大卫","红龙","牛魔王"}
 local index=Interpreter:doCommand(101008,items)
 print("玩家选择了:"..items[index])
@@ -11,6 +12,7 @@ elseif index==3 then
 else
   Interpreter:doCommand(101006,"牛魔王","大哥你好，<c>[0xffabcdef]我是谁你不知道吗<n>[1]真的不知道？","/image/battler/097-Monster11.png",1)
 end
+--]]
 local name=Interpreter:doCommand(101007,"请输入您的姓名：")
 print("玩家输入了:"..name)
 print("script1-end")
