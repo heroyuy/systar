@@ -148,7 +148,6 @@ end
 function clsUILabel:needDisplay()
   if not self.singleLine then
     --多行模式
-    self.text="本站为了防止<c>[0xffff0000]恶意注册<c>[0xffffffff]，会对会员进行邮箱验证以打击发帖机械人。不验证不能够发帖，而验证之后还可以进行QQ绑定或者新浪微博绑定，这样就可以让大家不需要手动输入密码而进行登陆。一键登陆即可，而现在论坛暂时不支持新浪微博登陆。所以请大家进行邮箱验证和替换头像，共同努力将论坛发展好。谢谢 验证的过程是打开你的注册邮箱，找到soyomaker发给你的验证邮件，很容易的，只需一步就可以完成。"
     self.textItemList=string.split(self.text,clsUILabel.REGEX)
     self.pStart=1
     self.startItemIndex=1

@@ -114,6 +114,7 @@ function clsSceneMap:changeMap(map)
   --加载地图图集
   for _,v in pairs(GameData.curMap.tilesets) do
     if GameData.imageSets[v.id]==nil then
+      smLog:info("加载图集:"..v.id)
       GameData.imageSets[v.id]=smImageFactory:createImage(Game.path..v.path)
     end
   end
