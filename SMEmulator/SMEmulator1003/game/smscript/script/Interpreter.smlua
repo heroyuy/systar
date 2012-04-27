@@ -101,7 +101,6 @@ Interpreter.functionList={
 --运行脚本,必需运行在主线程
 function Interpreter:runScript(scriptId)
   local file=Game.path.."/data/script/script"..scriptId..".gat"
-  smLog:info(file)
   local scriptFunction=loadfile(file)
   --将脚本调入子线程运行
   ScriptThread:start(scriptFunction)
@@ -152,6 +151,7 @@ end
 --切换地图
 function Interpreter:changeMap(mapId,row,col,face)
   GameData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
+  return true
 end
 
 --强制移动   e.g  {0,0,1,2,3,3,1}
