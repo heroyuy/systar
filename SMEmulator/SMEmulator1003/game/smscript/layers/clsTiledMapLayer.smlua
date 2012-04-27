@@ -143,7 +143,6 @@ function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
           local imageSetId=cell[1]
           local tiledIndex=cell[2]
           if imageSetId~=-1 then
-            smLog:info("imageSetId:"..imageSetId)
             local imgColNum=GameData.imageSets[imageSetId]:getWidth()/self.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
