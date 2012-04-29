@@ -44,7 +44,7 @@ end
 
 function clsOptionLayer:buttonTapped(target)
   local index=target.tag
-  Game.rootLayer:removeChild(self)
+  GameLayer:removeChildFromScene(self)
   if self.delegate then
     self.delegate:optionSelected(index)
   end

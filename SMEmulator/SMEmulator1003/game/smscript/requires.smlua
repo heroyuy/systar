@@ -51,3 +51,4 @@ require("clsSceneStatus")
 require("ScriptThread")
 require("Interpreter")
 
+require("GameLayer")

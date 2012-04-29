@@ -182,7 +182,7 @@ function Interpreter:showDialog(name,content,bustPath,position)
     Interpreter:endCurrentEvent()
   end
   normalDialog.delegate=delegate
-  Game.rootLayer:addChild(normalDialog)
+  GameLayer:addChildToScene(normalDialog)
   return false  --返回值为flase表示此方法不立即返回
 end
 
@@ -204,7 +204,7 @@ function Interpreter:showOptionDialog(options)
     Interpreter:endCurrentEvent(index)
   end
   optionDialog.delegate=delegate
-  Game.rootLayer:addChild(optionDialog)
+  GameLayer:addChildToScene(optionDialog)
   return false  --返回值为flase表示此方法不立即返回
 end
 

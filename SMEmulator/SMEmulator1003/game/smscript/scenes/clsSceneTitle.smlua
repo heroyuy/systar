@@ -53,7 +53,7 @@ function clsSceneTitle:onStart()
     button.delegate=self
     titleBgFrame:addChild(button)
   end
-  Game.rootLayer:addChild(bgLayer)
+  GameLayer:addChildToScene(bgLayer)
 end
 
 

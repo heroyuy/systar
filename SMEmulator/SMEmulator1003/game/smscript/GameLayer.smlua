@@ -1,0 +1,61 @@
+--[[
+  description:游戏层管理器。从下至上依次是：场景渲染层、动画层、弹出对话层
+  author:wp_g4
+  date:2012/04/29
+--]]
+
+--结构定义
+GameLayer={}
+
+--字段
+GameLayer.rootLayer=nil				--根层 。不可以直接在这一层上添加元素
+GameLayer.sceneLayer=nil			--场景渲染层。场景的所有元素应加在这一层上
+GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事件
+GameLayer.dialogLayer=nil			--对话层。仅用于显示各种对话框
+
+function GameLayer:init()
+  --根层
+  self.rootLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  self.rootLayer.clipBounds=false
+  --场景层
+  self.sceneLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  self.sceneLayer.clipBounds=false
+  --动画层
+  self.animationLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  self.animationLayer.clipBounds=false
+  self.animationLayer.enabled=false			--永不接收事件
+  self.animationLayer.visibility=false		--需要时显示
+  self.dialogLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  self.dialogLayer.enabled=false			--需要时接收事件
+  self.dialogLayer.visibility=false			--需要时显示
+  
+  self.rootLayer:addChild(self.sceneLayer)
+  self.rootLayer:addChild(self.animationLayer)
+  self.rootLayer:addChild(self.dialogLayer)
+end
+
+function GameLayer:dispatchEvent(x,y,type)
+  self.rootLayer:dispatchEvent(x,y,type)
+end
+
+function GameLayer:paint(painter)
+  self.rootLayer:paint(painter)
+end
+
+function GameLayer:clear()
+  self.sceneLayer:clear()
+  self.animationLayer:clear()
+  self.animationLayer.visibility=false		--需要时显示
+  self.dialogLayer:clear()
+  self.dialogLayer.enabled=false			--需要时接收事件
+  self.dialogLayer.visibility=false			--需要时显示
+end
+
+function GameLayer:addChildToScene(layer)
+  self.sceneLayer:addChild(layer)
+end
+
+function GameLayer:removeChildFromScene(layer)
+  self.sceneLayer:removeChild(layer)
+end
+
