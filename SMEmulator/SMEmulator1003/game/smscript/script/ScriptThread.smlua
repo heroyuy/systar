@@ -21,7 +21,12 @@ function ScriptThread:start(run)
   --检查此方法是否被主线程调用
   if self.currentThread~=self.THREAD_MAIN then
     -- 如果不是主线程调用此方法则报错
-    print("start出错")
+    print("start出错（请在主线程中运行脚本）")
+    return
+  end
+  --检查当前是否有脚本在运行
+  if self.coroutineThread~=nil and coroutine.status(self.coroutineThread)~="dead" then
+    -- 如果有脚本在运行则忽略本次执行
     return
   end
   self.coroutineThread=coroutine.create(run)
