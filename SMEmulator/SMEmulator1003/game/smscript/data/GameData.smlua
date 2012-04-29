@@ -178,6 +178,7 @@ function GameData:checkCellBeforeMove(character)
         local nRow,nCol=npc:getHoldingCell()
         if pRow==nRow and pCol==nCol and not npc.penetrable then
           smLog:info("玩家撞到NPC")
+          self:checkScript(npc)
           return false
         end
       end
@@ -186,6 +187,7 @@ function GameData:checkCellBeforeMove(character)
       --NPC撞到玩家，条件：player在不可穿透的NPC的目标格子中
       if not character.penetrable and cRow==pRow and cCol==pCol then
         smLog:info("NPC撞到玩家")
+        self:checkScript(character)
         return false
       end
       --NPC撞到NPC，条件:有一个不可穿透的NPC在当前移动中的不可穿透NPC的目标格子中
@@ -214,6 +216,7 @@ function GameData:checkCellAfterMove(character)
       local nRow,nCol=npc:getHoldingCell()
       if nRow==pRow and nCol==pCol and npc.penetrable then
         smLog:info("玩家踩到NPC")
+        self:checkScript(npc)
         return true
       end
     end
@@ -222,10 +225,18 @@ function GameData:checkCellAfterMove(character)
     --NPC走到player脚下，条件：当前移动中的NPC可穿透并且player也在当前位置
     if cRow==pRow and cCol==pCol and character.penetrable then
       smLog:info("NPC走到玩家脚下")
+      self:checkScript(character)
       return true
     end
   end
   return true
+end
+
+--NPC和玩家接触(碰撞、重叠)后检查脚本
+function GameData:checkScript(npc)
+  local id=npc.id
+  local scriptId=globalDictionary.npcs[id].scriptIndex
+  Interpreter:runScript(scriptId)
 end
 
 --获取当前玩家的位置
