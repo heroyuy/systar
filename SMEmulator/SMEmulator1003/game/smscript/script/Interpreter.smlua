@@ -211,6 +211,7 @@ end
 --更改面向
 function Interpreter:changeFace(face)
   GameData.playerTroop:curDisplayPlayer():changeFace(face)
+  return true
 end
 
 --开启战斗
@@ -251,7 +252,8 @@ end
 
 --更换皮肤
 function Interpreter:changeSkin(name)
-    Skin:init(Game.path..name)
+  Skin:init(Game.path..name)
+  return true
 end
 
 --更改画面色调
@@ -272,10 +274,7 @@ end
 
 --回主菜单
 function Interpreter:returnToMainMenu()
-  local fun=function()
-    Game:changeScene(Game.SCENE_TITLE)
-  end
-  ScriptThread:runFunctionInMainThread(fun)
+  Game:changeScene(Game.SCENE_TITLE)
 end
 
 --============数据处理类============

@@ -11,4 +11,4 @@ if mapId==108000004 then
   Interpreter:doCommand(101006,"赵云","<c>[0xffffffff]主公让我去<c>[0xffff0000]孔明<c>[0xffffffff]先生那里领任务,我得赶快去。","/image/battler/_root_2_3_0.png",1)
 end
 --]]
-Interpreter:doCommand(101006,"吕布","谁敢与我决一死战？","/image/battler/_root_2_3_0.png",1)
+Interpreter:doCommand(101006,"吕布2","谁敢与我决一死战？","/image/battler/_root_2_3_0.png",1)
