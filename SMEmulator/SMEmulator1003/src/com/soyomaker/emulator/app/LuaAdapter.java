@@ -40,7 +40,7 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnStop = null;
 
-	private static String MAIN_FILE = "/smscript/game.smlua";
+	private static String MAIN_FILE = "/smscript/Game.smlua";
 
 	private static String GAME_NAME = "Game";
 
