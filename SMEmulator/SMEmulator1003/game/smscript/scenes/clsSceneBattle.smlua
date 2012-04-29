@@ -1,0 +1,36 @@
+--[[
+  description:战斗场景
+  author:wp_g4
+  date:2012/03/12
+--]]
+
+--结构定义
+clsSceneBattle = {}
+setmetatable(clsSceneBattle,clsScene)
+clsSceneBattle.__index = clsSceneBattle
+
+--构造器
+function clsSceneBattle:new()
+	local self = {}
+	self = clsScene:new()
+	setmetatable(self,clsSceneBattle)
+	return self
+end
+
+-- 开始
+function clsSceneBattle:onStart()
+  smLog:info("状态场景启动")
+end
+
+
+-- 更新
+function clsSceneBattle:update()
+  --smLog:info("状态场景更新")
+end
+
+
+-- 退出
+function clsSceneBattle:onStop()
+  smLog:info("状态场景退出")
+end
+
