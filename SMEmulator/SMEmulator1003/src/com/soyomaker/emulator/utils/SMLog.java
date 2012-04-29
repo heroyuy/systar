@@ -6,7 +6,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class SMLog {
 
-	private static Logger log = Logger.getLogger("SMScript");
+	private static Logger log = Logger.getLogger("SMLog");
 
 	private static String CONFIG_PATH = "plugin/emulator/config/log4j.properties";
 
