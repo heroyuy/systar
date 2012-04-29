@@ -20,7 +20,8 @@ function Game:onStart()
   --配置引擎
   smLog:setDebug(true)
   smLog:info("game-start")
-  --初始化游戏层
+  --初始化游戏
+  Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,self,self.scriptEnd)
   GameLayer:init()
   --加载游戏数据
   DataLoader:init()
@@ -113,4 +114,14 @@ function Game:createScene(index)
   elseif index==self.SCENE_STATUS then
     self.curScene=clsSceneStatus:new()
   end
-end 
+end
+
+----------接收通知------------
+--Const.NotifyCMD.System.SCRIPT_END
+function Game:scriptEnd()
+  --解锁playerTroop
+  GameData.playerTroop:unlock()
+  --解锁NPC
+  GameData.curLockedNPC.locked=false
+  GameData.curLockedNPC=nil
+end

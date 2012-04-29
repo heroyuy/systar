@@ -23,6 +23,13 @@ Const.ObjectType.ANIMATION=10         --动画
 
 --============消息命令============
 Const.NotifyCMD={}
+--System
+Const.NotifyCMD.System={}
+  --[[
+             脚本执行结束
+  --]]
+  Const.NotifyCMD.System.SCRIPT_END="scriptEnd"
+
 --Character
 Const.NotifyCMD.Character={}
   --[[

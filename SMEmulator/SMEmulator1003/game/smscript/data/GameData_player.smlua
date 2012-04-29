@@ -13,3 +13,17 @@ function GameData.playerTroop:curDisplayPlayer()
   return self.players[self.curDisplayPlayerId]
 end
 
+--锁定所有player（锁定后player将不再更新数据，也不接收普通行走命令）
+function GameData.playerTroop:lock()
+  for _,v in pairs(self.players) do
+    v.locked=true
+  end
+end
+
+--解锁所有player
+function GameData.playerTroop:unlock()
+  for _,v in pairs(self.players) do
+    v.locked=false
+  end
+end
+

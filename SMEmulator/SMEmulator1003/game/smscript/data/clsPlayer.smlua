@@ -14,7 +14,7 @@ clsPlayer.__index = clsPlayer
 clsPlayer.updateFF=clsPlayer.update
 
 --字段定义
-clsPlayer.vocationId=0 --职业ID
+clsPlayer.vocationId=0 					--职业ID
 
 --构造器
 function clsPlayer:new()

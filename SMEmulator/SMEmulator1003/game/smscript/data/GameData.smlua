@@ -27,13 +27,14 @@
 GameData={}
 
 --字段
-GameData.curMap=nil          --地图
-GameData.npcs=nil            --npc列表
-GameData.imageSets={}        --地图图集
-GameData.updateSwitch=false  -- 模型更新开关
+GameData.curMap=nil          				--当前地图
+GameData.npcs=nil            				--当前地图上的npc列表
+GameData.imageSets={}        				--地图图集
+GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的脚本时，NPC即进入锁定状态）
+GameData.updateSwitch=false  				-- 模型更新开关
 
 --字段：私有
-GameData.gameType=-1         --游戏类型（-1 新游戏   0-n 游戏存档）
+GameData.gameType=-1         				--游戏类型（-1 新游戏   0-n 游戏存档）
 
 --============游戏加载、保存============
 --新游戏：从字典中初始化游戏
@@ -234,8 +235,17 @@ end
 
 --NPC和玩家接触(碰撞、重叠)后检查脚本
 function GameData:checkScript(npc)
+  if self.curLockedNPC then
+    --当前有脚本在执行则直接返回
+    return
+  end
   local id=npc.id
   local scriptId=globalDictionary.npcs[id].scriptIndex
+  --锁定playerTroop
+  self.playerTroop:lock()
+  --锁定当前NPC
+  npc.locked=true
+  self.curLockedNPC=npc  
   Interpreter:runScript(scriptId)
 end
 
