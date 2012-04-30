@@ -2,10 +2,10 @@
 UIConst = {}
 
 --触屏事件
-UIConst.touchEventType = {}
-UIConst.touchEventType.DOWN = 0 --按下
-UIConst.touchEventType.MOVE = 1 --移动
-UIConst.touchEventType.UP = 2   --离开
+UIConst.eventType = {}
+UIConst.eventType.DOWN = 0 --按下
+UIConst.eventType.MOVE = 1 --移动
+UIConst.eventType.UP = 2   --离开
 
 --锚点
 UIConst.anchor = {}

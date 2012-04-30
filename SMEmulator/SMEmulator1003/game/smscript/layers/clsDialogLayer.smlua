@@ -55,7 +55,7 @@ function clsDialogLayer:new(name,content,bustPath,position)
 end
 
 function clsDialogLayer:onTouch(x,y,type)
-  if self.delegate and type==UIConst.touchEventType.DOWN then
+  if self.delegate and type==UIConst.eventType.DOWN then
     if not self.contentLabel:nextPage() then
       GameLayer:removeChildFromScene(self)
       self.delegate:dialogEnd()

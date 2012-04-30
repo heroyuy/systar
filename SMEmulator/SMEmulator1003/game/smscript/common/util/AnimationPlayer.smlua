@@ -1,0 +1,43 @@
+--[[
+  description:动画
+  author:wp_g4
+  date:2012/04/29
+--]]
+
+--结构定义
+clsAnimation={}
+clsAnimation.__index = clsAnimation
+
+--字段定义
+clsAnimation.id=nil					--动画ID
+clsAnimation.x=nil					--动画坐标
+clsAnimation.y=nil					--动画坐标
+clsAnimation.startTime=nil			--动画开始播放的时间
+
+-- 构造
+function clsAnimation:new(id)
+  local self={}
+  setmetatable(self,clsAnimation)
+  self.id=id
+  return self
+end
+
+--[[
+  description:动画播放器
+  author:wp_g4
+  date:2012/04/29
+--]]
+
+AnimationPlayer={}
+
+AnimationPlayer.animationList={}
+
+function AnimationPlayer:play(animationId,x,y)
+  self.animationList[animationId]=clsAnimation:new(animationId)
+end
+
+function AnimationPlayer:stop(animationId)
+  self.animationList[animationId]=nil
+end
+
+
