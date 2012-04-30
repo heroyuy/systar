@@ -1,4 +1,4 @@
-globalDictionary.players={[101000001]={
+Dictionary.players={[101000001]={
 index=101000001,
 name="姜维",
 intro="蜀国大将",

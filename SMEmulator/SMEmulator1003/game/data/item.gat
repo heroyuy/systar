@@ -1,4 +1,4 @@
-globalDictionary.items={[103000001]={
+Dictionary.items={[103000001]={
 index=103000001,
 name="药水",
 intro="恢复 500 点 HP。",

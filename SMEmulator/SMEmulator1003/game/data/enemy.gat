@@ -1,4 +1,4 @@
-globalDictionary.enemys={[105000001]={
+Dictionary.enemys={[105000001]={
 index=105000001,
 name="阿尔萨斯",
 intro="",

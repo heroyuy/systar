@@ -82,7 +82,7 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=GameData.playerTroop:curDisplayPlayer()
-  local map=globalDictionary:getMap(self.curPlayer.mapId)
+  local map=Dictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
 end
 
@@ -321,7 +321,7 @@ end
 --character地图改变
 function clsSceneMap:characterMapChanged(param)
   if param.character==self.curPlayer then
-    local map=globalDictionary:getMap(self.curPlayer.mapId)
+    local map=Dictionary:getMap(self.curPlayer.mapId)
     self:changeMap(map)
   end
 end

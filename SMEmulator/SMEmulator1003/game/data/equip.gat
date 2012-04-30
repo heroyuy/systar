@@ -1,4 +1,4 @@
-globalDictionary.equips={[104000001]={
+Dictionary.equips={[104000001]={
 index=104000001,
 name="木棍",
 intro="纯木制造的棍棒。",

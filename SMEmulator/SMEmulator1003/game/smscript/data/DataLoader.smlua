@@ -7,7 +7,7 @@
 DataLoader={}
 
 --初始化数据字典
-globalDictionary={maps={},npcs={}}
+Dictionary={maps={},npcs={}}
 
 --定义文件路径
 DataLoader.vocationPath=Game.path.."/data/vocation.gat";
@@ -112,7 +112,7 @@ function DataLoader:loadNPC()
   dofile(self.npcPath)
 end
 
-function globalDictionary:getMap(id)
+function Dictionary:getMap(id)
   if self.maps[id]==nil then
     DataLoader:loadMap(id)
   end

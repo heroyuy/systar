@@ -24,13 +24,13 @@ end
 function clsSceneTitle:onStart()
   smLog:info("标题场景启动")
   --播放背景音乐
-  if globalDictionary.config.titleMusic then
-    smAudioPlayer:play(Game.path..globalDictionary.config.titleMusic)
+  if Dictionary.config.titleMusic then
+    smAudioPlayer:play(Game.path..Dictionary.config.titleMusic)
   end
   --背景大图 
   local bgLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
-  if globalDictionary.config.titleBackground then
-    bgLayer.backgroundImage=smImageFactory:createImage(Game.path..globalDictionary.config.titleBackground)
+  if Dictionary.config.titleBackground then
+    bgLayer.backgroundImage=smImageFactory:createImage(Game.path..Dictionary.config.titleBackground)
   end
   --标题背景边框
   local titleBgFrame=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)

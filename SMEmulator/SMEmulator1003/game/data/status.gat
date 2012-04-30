@@ -1,4 +1,4 @@
-globalDictionary.buffs={[107000001]={
+Dictionary.buffs={[107000001]={
 index=107000001,
 type=0,
 name="战斗不能",

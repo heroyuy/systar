@@ -1,4 +1,4 @@
-globalDictionary.skills={[102000001]={
+Dictionary.skills={[102000001]={
 index=102000001,
 name="奋斗",
 intro="步兵战法。",
