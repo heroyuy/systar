@@ -41,11 +41,14 @@ function AnimationPlayer:atachToLayer(layer)
     self:paintLayerF(painter)
     --渲染动画
     for _,animation in pairs(AnimationPlayer.animationList) do
+      local frameIndex=nil;
       if animation.startTime==nil then
-        --动画未开始，则开始播放动画
+        --动画未开始，则播放第一帧
         animation.startTime=Game:getTime()
+        frameIndex=1
       else
-        --动画已开始
+        --动画已开始,判断应该播放的帧
+        
       end
     end
   end

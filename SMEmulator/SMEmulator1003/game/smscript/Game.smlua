@@ -80,8 +80,8 @@ function Game:getHeight()
 end
 
 --获取游戏运行时间
-function Game:getRunningTime()
-  return smGame:getRunningTime()
+function Game:getTime()
+  return smGame:getTime()
 end
 
 --显示输入框

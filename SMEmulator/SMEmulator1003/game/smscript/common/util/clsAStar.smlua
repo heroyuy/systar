@@ -131,7 +131,7 @@ end
 
 --搜索从起点到终点的可通行路径
 function clsAStar:searchDirection(startRow,startCol,endRow,endCol)
-  local t=Game:getRunningTime()
+  local t=Game:getTime()
   local paths=self:searchPath(startRow, startCol, endRow, endCol)
   local directions=clsQueue:new()
   local sRow = 0
@@ -173,7 +173,7 @@ function clsAStar:searchDirection(startRow,startCol,endRow,endCol)
     str=str.." "..direction
     directions:offer(direction) 
   end
-  t=Game:getRunningTime()-t
+  t=Game:getTime()-t
   smLog:info("寻路耗时:"..t.."ms")
   smLog:info("寻路结果:"..str)
   return directions

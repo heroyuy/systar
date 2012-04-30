@@ -23,7 +23,7 @@ public class Game implements IGame, Runnable {
 		return GameInfo.getInstance().getGamePath();
 	}
 
-	public int getRunningTime() {
+	public int getTime() {
 		return (int) (System.currentTimeMillis() - time);
 	}
 
