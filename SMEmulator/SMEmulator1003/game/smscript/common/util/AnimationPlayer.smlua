@@ -32,12 +32,34 @@ AnimationPlayer={}
 
 AnimationPlayer.animationList={}
 
+--绑定供渲染的层
+function AnimationPlayer:atachToLayer(layer)
+  --重定向paintLayer方法
+  layer.paintLayerF=layer.paintLayer
+  function layer:paintLayer(painter)
+    --调用原paintLayer方法
+    self:paintLayerF(painter)
+    --渲染动画
+    for _,animation in pairs(AnimationPlayer.animationList) do
+      if animation.startTime==nil then
+        --动画未开始，则开始播放动画
+        animation.startTime=Game:getTime()
+      else
+        --动画已开始
+      end
+    end
+  end
+end
+
+--播放动画
 function AnimationPlayer:play(animationId,x,y)
   self.animationList[animationId]=clsAnimation:new(animationId)
 end
 
+--停止动画
 function AnimationPlayer:stop(animationId)
   self.animationList[animationId]=nil
 end
+
 
 

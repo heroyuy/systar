@@ -532,7 +532,7 @@ public class Painter {
 	 *            绘制文字的尺寸
 	 */
 	public void setTextSize(int size) {
-		graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, size));
+		graphics.setFont(new Font("黑体", Font.PLAIN, size));
 	}
 
 	/**
