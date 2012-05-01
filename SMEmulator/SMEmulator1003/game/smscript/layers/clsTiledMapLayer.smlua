@@ -17,6 +17,7 @@ clsTiledMapLayer.bufferedImage=nil    --缓冲图
 clsTiledMapLayer.bufferedPainter=nil  --缓冲画笔
 clsTiledMapLayer.bufferBound=1        --缓冲边缘宽度（单位：单元格）
 
+clsTiledMapLayer.imageSets=nil		  --图集
 clsTiledMapLayer.layers=nil           --贴图层数据
 clsTiledMapLayer.colNum=0             --贴图列数
 clsTiledMapLayer.rowNum=0             --贴图行数
@@ -38,8 +39,9 @@ function clsTiledMapLayer:new(x,y,width,height)
 end
 
 --设置帖图数据
---参数为 {layers={...},colNum=10,rowNum=10,cellWidth=32,cellHeight=32,viewport={...}}
+--参数为 {imageSets=imageSets,layers={...},colNum=10,rowNum=10,cellWidth=32,cellHeight=32,viewport={...}}
 function clsTiledMapLayer:init(params)
+  self.imageSets=params.imageSets
   self.layers=params.layers
   self.colNum=params.colNum
   self.rowNum=params.rowNum
@@ -143,10 +145,10 @@ function clsTiledMapLayer:refreshBuffer(rect,clearFlag)
           local imageSetId=cell[1]
           local tiledIndex=cell[2]
           if imageSetId~=-1 then
-            local imgColNum=GameData.imageSets[imageSetId]:getWidth()/self.cellWidth
+            local imgColNum=self.imageSets[imageSetId]:getWidth()/self.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.cellWidth
-            self.bufferedPainter:drawImage(GameData.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
+            self.bufferedPainter:drawImage(self.imageSets[imageSetId],imgsx,imgsy,self.cellWidth,self.cellHeight,
                  k*self.cellWidth,j*self.cellHeight,UIConst.anchor.LT)
           end
         end

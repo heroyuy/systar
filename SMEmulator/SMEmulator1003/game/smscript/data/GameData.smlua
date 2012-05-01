@@ -28,9 +28,9 @@ GameData={}
 
 --字段
 GameData.curMap=nil          				--当前地图
-GameData.npcs=nil            				--当前地图上的npc列表
-GameData.imageSets={}        				--地图图集
+GameData.npcs=nil            				--当前npc列表
 GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的脚本时，NPC即进入锁定状态）
+
 GameData.updateSwitch=false  				-- 模型更新开关
 
 --字段：私有
