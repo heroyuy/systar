@@ -1,3 +1,2 @@
-Interpreter:doCommand(101019,"/image/skin/Window1.png")
-Interpreter:doCommand(101006,"吕布","谁敢与我决一死战？","/image/battler/_root_2_3_0.png",1)
-Interpreter:doCommand(101009,2)
+Interpreter:doCommand(101008,{"是","否"})
+Interpreter:doCommand(101006,"大哥","你好啊","/image/battler/098-Monster12.png",0)
