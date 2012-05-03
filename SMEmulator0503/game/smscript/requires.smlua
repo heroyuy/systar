@@ -1,0 +1,57 @@
+-- 设定路径
+package.path = package.path .. ";"..Game.path.."/smscript/common/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/common/system/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/common/ui/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/common/util/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/data/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/layers/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/scenes/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/script/?.smlua"
+
+--common\system
+require("system")
+require("clsList")
+require("clsQueue")
+require("clsHashMap")
+require("clsStack")
+
+--common\ui
+require("UIConst")
+require("Skin")
+require("clsUILayer")
+require("clsUILabel")
+require("clsUIButton")
+require("clsUISprite")
+
+--common\util
+require("clsAStar")
+require("Notifier")
+require("Scheduler")
+require("AnimationPlayer")
+
+--data
+require("Const")
+require("DataLoader")
+require("clsModel")
+require("clsCharacter")
+require("clsPlayer")
+require("clsNPC")
+require("GameData")
+require("GameData_player")
+
+--layers
+require("clsTiledMapLayer")
+require("clsOptionLayer")
+require("clsDialogLayer")
+
+--scenes
+require("clsScene")
+require("clsSceneTitle")
+require("clsSceneMap")
+require("clsSceneStatus")
+
+--script
+require("ScriptThread")
+require("Interpreter")
+
+require("GameLayer")
