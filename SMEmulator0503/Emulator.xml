@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Plugin>
-	<Plugin-ExpandPoint>4</Plugin-ExpandPoint>
-	<Plugin-MainClass>com.soyomaker.emulator.core.Emulator</Plugin-MainClass>
-	<Plugin-Name>游戏模拟器</Plugin-Name>
-	<Plugin-Author>Soyomaker</Plugin-Author>
-	<Plugin-Description>SoyoMaker官方游戏模拟器</Plugin-Description>
-	<Plugin-Version>0.1</Plugin-Version>
-</Plugin>
