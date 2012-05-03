@@ -1,0 +1,53 @@
+--[[
+  description:选项框。
+  author:wp_g4
+  date:2011/04/21
+--]]
+
+--类结构定义
+clsOptionLayer={}
+setmetatable(clsOptionLayer,clsUILayer)
+clsOptionLayer.__index=clsOptionLayer
+
+--构造器
+function clsOptionLayer:new(optionItems)
+  local self = clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  setmetatable(self,clsOptionLayer)
+  --背景
+  local gap=6
+  local cellWidth=self.width-4*gap
+  local cellHeight=30
+  local frameHeight=cellHeight*4+gap*7
+  local bgLayer=clsUILayer:new(0,self.height-frameHeight,self.width,frameHeight)
+  bgLayer.backgroundImage=Skin:createBgWithFrame(self.width,frameHeight)
+  self:addChild(bgLayer)
+  --选项
+  local backgroundImage=Skin:createBody(cellWidth,cellHeight)
+  local highlightImage=Skin:createSelectedBg(cellWidth,cellHeight)
+  for i,v in ipairs(optionItems) do
+    local button=clsUIButton:new(2*gap,2*gap+(i-1)*(cellHeight+gap),cellWidth,cellHeight)
+    button.backgroundImage=backgroundImage
+    button.highlightImage=highlightImage
+    button.text=v
+    button.textColor=Skin:getTextColor(1,1)
+    button.tag=i
+    button.delegate=self
+    bgLayer:addChild(button)
+  end
+  return self
+end
+
+--处理触屏事件（lua层不应该调用此方法）
+function clsUILayer:onTouch(x,y,type)
+  
+end
+
+function clsOptionLayer:buttonTapped(target)
+  local index=target.tag
+  GameLayer:removeChildFromScene(self)
+  if self.delegate then
+    self.delegate:optionSelected(index)
+  end
+end
+
+
