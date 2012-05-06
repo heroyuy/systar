@@ -64,12 +64,13 @@ public class InputDialog extends JPanel {
 		addMouseMotionListener(mouseAdapter);
 		addMouseListener(mouseAdapter);
 	}
-	
-	public void paintComponent(Graphics g){
+
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Painter p=new Painter(g);
-		String inputImage=GameInfo.getInstance().getGamePath()+"/image/input/input.png";
-		Image img=ImageFactory.getInstance().createImage(inputImage);
+		Painter p = new Painter(g);
+		String inputImage = GameInfo.getInstance().getGamePath()
+				+ "/image/input/input.png";
+		Image img = ImageFactory.getInstance().createImage(inputImage);
 		p.drawImage(img, 0, 0, Painter.LT);
 	}
 

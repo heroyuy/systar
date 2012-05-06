@@ -30,22 +30,22 @@ function clsSceneTitle:onStart()
   --背景大图 
   local bgLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
   if Dictionary.config.titleBackground then
-    bgLayer.backgroundImage=smImageFactory:createImage(Game.path..Dictionary.config.titleBackground)
+    bgLayer.image=smImageFactory:createImage(Game.path..Dictionary.config.titleBackground)
   end
   --标题背景边框
   local titleBgFrame=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)
-  titleBgFrame.backgroundImage=Skin:createBgWithFrame(200,120)
+  titleBgFrame.image=Skin:createBgWithFrame(200,120)
   bgLayer:addChild(titleBgFrame)
   --按钮
   local width=160
   local height=25
-  local backgroundImage=Skin:createBody(width,height)
+  local image=Skin:createBody(width,height)
   local highlightImage=Skin:createSelectedBg(width,height)
   local gap=5
   local boundGap=(120-3*height-2*gap)/2
   for i,v in ipairs(self.titles) do
     local button=clsUIButton:new((200-width)/2,boundGap+(i-1)*(height+gap),width,height)
-    button.backgroundImage=backgroundImage
+    button.image=image
     button.highlightImage=highlightImage
     button.text=v
     button.textColor=Skin:getTextColor(1,1)

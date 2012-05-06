@@ -9,22 +9,23 @@ clsUILayer={}
 clsUILayer.__index=clsUILayer
 
 --字段
-clsUILayer.x=0                               --x坐标
-clsUILayer.y=0                               --y坐标
-clsUILayer.z=0                               --z坐标
-clsUILayer.width=0                           --宽度
-clsUILayer.height=0                          --高度
-clsUILayer.tag=0                             --标志（可选）
-clsUILayer.arg=nil                           --参数（可选）
-clsUILayer.backgroundColor=nil               --背景色
-clsUILayer.backgroundImage = null;           --背景图
-clsUILayer.visibility = true;                --是否可见
-clsUILayer.enabled = true;                   --是否接收事件
-clsUILayer.clipBounds=true;                  --是否裁剪区域
-clsUILayer.delegate=nil                      --事件委托
-clsUILayer.parent=nil                        --父layer
-clsUILayer.children=nil                      --子layer
-clsUILayer.focusLayer=nil                    --当前事件焦点子layer
+clsUILayer.x=0                           	--x坐标
+clsUILayer.y=0                        		--y坐标
+clsUILayer.z=0                           	--z坐标
+clsUILayer.width=0                      	--宽度
+clsUILayer.height=0                       	--高度
+clsUILayer.tag=0                       		--标志（可选）
+clsUILayer.color=nil               			--背景色
+clsUILayer.image = null;           			--图像
+
+clsUILayer.visibility = true;             	--是否可见
+clsUILayer.enabled = true;                 	--是否接收事件
+clsUILayer.clipBounds=true;              	--是否裁剪区域
+clsUILayer.delegate=nil                    	--事件委托
+
+clsUILayer.parent=nil                   	--父layer
+clsUILayer.children=nil                   	--子layer
+clsUILayer.focusLayer=nil               	--当前事件焦点子layer
 
 --构造器
 function clsUILayer:new(x,y,width,height)
@@ -95,19 +96,18 @@ end
 
 --绘制自身（lua层不应该调用此方法）
 function clsUILayer:paintLayer(painter)
-  if self.backgroundColor then
-    painter:setColor(self.backgroundColor);
+  if self.color then
+    painter:setColor(self.color);
     painter:fillRect(0, 0, self.width, self.height);
   end
-  if self.backgroundImage then
-    painter:drawImage(self.backgroundImage, 0, 0, 0);
+  if self.image then
+    painter:drawImage(self.image, 0, 0, 0);
   end
 end
 
 --绘制子Layer（lua层不应该调用此方法）
 function clsUILayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
-    --smLog:info(layer:toString())
     if layer.visibility then
       --设置坐标系
       painter:setBasePoint(layer.x,layer.y)
@@ -130,13 +130,6 @@ function clsUILayer:paintChildren(painter)
       
 end
 
---处理触屏事件（lua层不应该调用此方法）
-function clsUILayer:onTouch(x,y,type)
-  if self.delegate then
-    self.delegate:layerTapped(self,x,y,type)
-  end
-end
-
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(x,y,type)
   if type==UIConst.eventType.DOWN then
@@ -153,6 +146,22 @@ function clsUILayer:dispatchEvent(x,y,type)
   if type==UIConst.eventType.UP then
     --如果是UP事件，则清除焦点
     self.focusLayer = nil
+  end
+end
+
+--处理触屏事件（lua层不应该调用此方法）
+function clsUILayer:onTouch(x,y,type)
+  if self.delegate then
+    self.delegate:layerTapped(self,x,y,type)
+  end
+end  
+
+--通知更新
+function clsUILayer:refresh()
+  if self.parent then
+    self.parent:refresh()
+  else
+    Game:refresh()
   end
 end
 

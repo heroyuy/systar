@@ -69,6 +69,11 @@ function Game:onStop()
   smLog:info("game-stop")
 end
 
+--内存警报 lua层不应该调用
+function Game:onLowMemory()
+  --TODO内存警报
+end
+
 --获取屏幕宽度
 function Game:getWidth()
   return smGame:getWidth()
@@ -88,6 +93,11 @@ end
 function Game:showInputDialog(tip,inputDialogDelegate)
   self.inputDialogDelegate=inputDialogDelegate
   smGame:showInputDialog(tip)
+end
+
+--刷新
+function Game:refresh()
+  return smGame:refresh()
 end
 
 --切换场景  lua调用

@@ -15,6 +15,8 @@ public interface IGame {
 
 	public void onInput(String value);
 
+	public void onLowMemory();
+
 	public void onPaint(Painter painter);
 
 	public void start();

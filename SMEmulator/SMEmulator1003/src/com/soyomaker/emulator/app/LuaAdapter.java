@@ -40,6 +40,8 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnStop = null;
 
+	private LuaObject luaFunctionOnLowMemory = null;
+
 	private static String MAIN_FILE = "/smscript/Game.smlua";
 
 	private static String GAME_NAME = "Game";
@@ -80,6 +82,7 @@ public class LuaAdapter {
 			luaFunctionOnUpdate = luaGame.getField("onUpdate");
 			luaFunctionOnPaint = luaGame.getField("onPaint");
 			luaFunctionOnStop = luaGame.getField("onStop");
+			luaFunctionOnLowMemory = luaGame.getField("onLowMemory");
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -114,6 +117,17 @@ public class LuaAdapter {
 	public void onInput(String value) {
 		try {
 			luaFunctionOnInput.call(new Object[] { luaGame, value });
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * onLowMemory方法的转换
+	 */
+	public void onLowMemory() {
+		try {
+			luaFunctionOnLowMemory.call(new Object[] { luaGame });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
