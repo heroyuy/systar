@@ -25,7 +25,7 @@ function clsDialogLayer:new(name,content,bustPath,position)
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustImg=smImageFactory:createImage(Game.path..bustPath)
+  local bustImg=Image:getImage(bustPath)
   local bustLayer=clsUILayer:new(0,self.height-bustImg:getHeight(),bustImg:getWidth(),bustImg:getHeight())
   bustLayer.image=bustImg
   bustLayer.enabled=false

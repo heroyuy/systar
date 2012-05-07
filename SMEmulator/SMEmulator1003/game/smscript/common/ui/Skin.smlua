@@ -9,7 +9,7 @@ Skin.cursor={}
 Skin.textColor={}
 
 function Skin:init(skinPath)
-  local img=smImageFactory:createImage(skinPath)
+  local img=Image:getImage(skinPath)
   self.bg=img:clip(0,0,64,64)
   self.body=img:clip(0,64,64,64)
   
@@ -60,7 +60,7 @@ function Skin:createBody(width,height)
 end
 
 function Skin:createFrame(width,height)
-  local img=smImageFactory:createImage(width,height)
+  local img=Image:createImage(width,height)
   local painter=img:getPainter()
   --四个角
     --左上
@@ -84,7 +84,7 @@ function Skin:createFrame(width,height)
 end
 
 function Skin:createBgWithFrame(width,height)
-  local img=smImageFactory:createImage(width,height)
+  local img=Image:createImage(width,height)
   local painter=img:getPainter()
   local bg=self:createBg(width-8,height-8)
   local frame=self:createFrame(width,height)
@@ -94,7 +94,7 @@ function Skin:createBgWithFrame(width,height)
 end
 
 function Skin:createSelectedBg(width,height)
-  local img=smImageFactory:createImage(width,height)
+  local img=Image:createImage(width,height)
   local painter=img:getPainter()
   --四个角
     --左上

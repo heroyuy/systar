@@ -252,7 +252,7 @@ end
 
 --更换皮肤
 function Interpreter:changeSkin(name)
-  Skin:init(Game.path..name)
+  Skin:init(name)
   return true
 end
 

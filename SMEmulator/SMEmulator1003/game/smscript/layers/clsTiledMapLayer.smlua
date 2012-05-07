@@ -52,7 +52,7 @@ function clsTiledMapLayer:init(params)
   self.bufferColNum=(math.ceil(self.width/self.cellWidth)+self.bufferBound)
   self.bufferRowNum=(math.ceil(self.height/self.cellHeight)+self.bufferBound)
   --创建缓冲
-  self.bufferedImage=smImageFactory:createImage(self.bufferColNum*self.cellWidth,self.bufferRowNum*self.cellHeight)
+  self.bufferedImage=Image:createImage(self.bufferColNum*self.cellWidth,self.bufferRowNum*self.cellHeight)
   self.bufferedPainter=self.bufferedImage:getPainter()
   --根据当前视口计算缓冲区起始行、列号
   self.bufferCol=math.floor(self.viewport.x/self.cellWidth)

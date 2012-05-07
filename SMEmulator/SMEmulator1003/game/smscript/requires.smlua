@@ -17,6 +17,7 @@ require("clsStack")
 
 --common\ui
 require("UIConst")
+require("Image")
 require("Skin")
 require("clsUILayer")
 require("clsUILabel")

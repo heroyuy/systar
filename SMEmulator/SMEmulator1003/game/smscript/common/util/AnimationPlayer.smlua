@@ -90,7 +90,7 @@ function AnimationPlayer:play(id,x,y)
     if self.imageSets[imageId]==nil then
       --加载动画图集
       local path=Dictionary.animationRes.imagesets[imageId].path
-      self.imageSets[imageId]=smImageFactory:createImage(Game.path..path)
+      self.imageSets[imageId]=Image:getImage(path)
     end
   end
 end
