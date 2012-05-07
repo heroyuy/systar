@@ -33,7 +33,6 @@ end
 AnimationPlayer={}
 
 AnimationPlayer.animationList={}					--动画列表
-AnimationPlayer.imageSets={}        				--图集
 AnimationPlayer.layer=nil
 
 --绑定供渲染的层
@@ -71,7 +70,8 @@ function AnimationPlayer:atachToLayer(layer)
           local x,y=animation.x+clip.x,animation.y+clip.y
           local clipDict=Dictionary.animationRes.clips[index]
           --绘制
-          painter:drawImage(AnimationPlayer.imageSets[clipDict.imageId],clipDict.x,clipDict.y,clipDict.width,clipDict.height,x,y,UIConst.anchor.HV)
+          local path=Dictionary.animationRes.imagesets[clipDict.imageId].path
+          painter:drawImage(Image:getImage(path),clipDict.x,clipDict.y,clipDict.width,clipDict.height,x,y,UIConst.anchor.HV)
         end
       else
         --未找到合适的帧，说明动画已经结束
@@ -84,20 +84,19 @@ end
 --播放动画
 function AnimationPlayer:play(id,x,y)
   self.animationList[id]=clsAnimation:new(id,x,y)
-  --加载图集
+  --预加载图集
   local imageIds=Dictionary.animations[id].imageIds
   for _,imageId in ipairs(imageIds) do
-    if self.imageSets[imageId]==nil then
-      --加载动画图集
-      local path=Dictionary.animationRes.imagesets[imageId].path
-      self.imageSets[imageId]=Image:getImage(path)
-    end
+    --加载动画图集
+    local path=Dictionary.animationRes.imagesets[imageId].path
+    Image:loadImage(path)
   end
 end
 
 --停止动画
 function AnimationPlayer:stop(animationId)
   self.animationList[animationId]=nil
+  --释放相应图集
 end
 
 

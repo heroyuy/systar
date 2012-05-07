@@ -36,6 +36,14 @@ function Image:createImage(width,height)
   return smImageFactory:createImage(width,height)
 end
 
+function Image:loadImage(file)
+  local node=self.nodes[file]
+  if node==nil then
+    node=ImageNode:new(file)
+    self.nodes[file]=node
+  end
+end
+
 function Image:getImage(file)
   local node=self.nodes[file]
   if node==nil then
