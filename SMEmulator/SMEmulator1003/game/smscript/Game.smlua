@@ -71,7 +71,7 @@ end
 
 --内存警报 lua层不应该调用
 function Game:onLowMemory()
-  --TODO内存警报
+  Image:clean()
 end
 
 --获取屏幕宽度
