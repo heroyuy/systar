@@ -40,7 +40,7 @@ end
 --绘制自身
 function clsUISprite:paintLayer(painter)
   --调用父类的paintLayer方法
-  self:paintLayerF(painter)
+  --self:paintLayerF(painter)
   --绘制图片
   if self.image then
     painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,UIConst.anchor.LT)
