@@ -129,11 +129,14 @@ function clsTiledLayer:refreshBuffer(rect,clearFlag)
           local imageSetId=cell[1]
           local tiledIndex=cell[2]
           if imageSetId~=-1 then
-            local imgColNum=self.imageSets[imageSetId]:getWidth()/self.map.cellWidth
+            local path=self.map.tilesets[imageSetId].path
+            local image=Image:getImage(path)
+            local imgColNum=image:getWidth()/self.map.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.map.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.map.cellWidth
-            self.bufferedPainter:drawImage(self.imageSets[imageSetId],imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
+            self.bufferedPainter:drawImage(image,imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
                  k*self.map.cellWidth,j*self.map.cellHeight,UIConst.anchor.LT)
+            Image:releaseImage(path)
           end
         end
       end
