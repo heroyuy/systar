@@ -1,0 +1,161 @@
+--[[
+  description:动作
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+--结构定义
+clsAction={}
+clsAction.__index = clsAction
+
+--字段定义
+clsAction.target=nil			--动作的目标
+clsAction.dead=false			--动作是否结束
+
+-- 构造
+function clsAction:new()
+  local self={}
+  setmetatable(self,clsAction)
+  return self
+end
+
+--设置目标
+function clsAction:setTarget(target)
+  self.target=target
+end
+
+--更新
+function clsAction:update()
+  --根据具体action更新target的属性
+end
+
+--==================================================
+--[[
+  description:移动动作
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+--结构定义
+clsMoveAction={}
+setmetatable(clsMoveAction,clsAction)
+clsMoveAction.__index = clsMoveAction
+
+--字段定义
+clsMoveAction.TYPE_LINEAR=0			--移动类型：线性
+
+clsMoveAction.startX=nil			--移动起点的X坐标
+clsMoveAction.startY=nil			--移动起点的Y坐标
+clsMoveAction.endX=nil				--移动终点的X坐标
+clsMoveAction.endY=nil				--移动终点的Y坐标
+clsMoveAction.time=nil				--移动的时间
+clsMoveAction.type=nil  			--暂时用不到
+
+clsMoveAction.startTime=nil
+
+-- 构造
+function clsMoveAction:new(endX,endY,time,type)
+  local self={}
+  setmetatable(self,clsMoveAction)
+  self.endX=endX
+  self.endY=endY
+  self.time=time
+  if type==nil then
+    self.type=clsMoveAction.TYPE_LINEAR
+  else
+    self.type=type
+  end
+  return self
+end
+
+--设置目标
+function clsMoveAction:setTarget(target)
+  self.target=target
+  self.startX=target.x
+  self.startY=target.y
+end
+
+--更新
+function clsMoveAction:update()
+  --更新target的坐标
+  if self.startTime==nil then
+    --尚未开始移动
+    self.startTime=Game:getTime()
+  end
+  --根据当前时间和移动类型计算当前target的坐标
+  if self.type==clsMoveAction.TYPE_LINEAR then
+    --线性移动
+    local vx=(self.endX-self.startX)/self.time		--X方向速度
+    local vy=(self.endY-self.startY)/self.time		--Y方向速度
+    smLog:info("vx="..vx.." vy="..vy)
+    local x=self.startX+(Game:getTime()-self.startTime)*vx
+    local y=self.startY+(Game:getTime()-self.startTime)*vy
+    if vx>=0 then
+      --X方向正向移动
+      if x>=self.endX then
+        self.target.x=self.endX
+      else
+        self.target.x=x
+      end
+    else
+      --X方向负向移动
+      if x<=self.endX then
+        self.target.x=self.endX
+      else
+        self.target.x=x
+      end
+    end
+    if vy>=0 then
+      --Y方向正向移动
+      if y>=self.endY then
+        self.target.y=self.endY
+      else
+        self.target.y=y
+      end
+    else
+      --Y方向负向移动
+      if y<=self.endY then
+        self.target.y=self.endY
+      else
+        self.target.y=y
+      end
+    end
+  else
+    --未知的移动类型
+    smLog:info("未知的移动类型")
+    self.dead=true
+    return
+  end
+  if self.target.x==self.endX and self.target.y==self.endY then
+    self.dead=true
+    smLog:info("移动结束")
+  end
+end
+
+--==================================================
+--[[
+  description:动作播放器
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+ActionPlayer={}
+
+ActionPlayer.actionList={}					--动作列表
+
+--播放动作
+function ActionPlayer:run(action)
+  self.actionList[tostring(action)]=action
+  action.dead=false
+end
+
+--更新
+function ActionPlayer:update()
+  for k,action in pairs(self.actionList) do
+    action:update()
+    if action.dead then
+      self.actionList[k]=nil
+      smLog:info("移除动作")
+    end
+  end
+end

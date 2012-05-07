@@ -154,7 +154,13 @@ function clsUILayer:onTouch(x,y,type)
   if self.delegate then
     self.delegate:layerTapped(self,x,y,type)
   end
-end  
+end
+
+--运行动作
+function clsUILayer:runAction(action)
+  action:setTarget(self)
+  ActionPlayer:run(action)
+end
 
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsUILayer:searchFocusLayer(x,y)

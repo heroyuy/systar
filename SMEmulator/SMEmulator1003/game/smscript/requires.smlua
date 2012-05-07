@@ -29,6 +29,7 @@ require("clsAStar")
 require("Notifier")
 require("Scheduler")
 require("AnimationPlayer")
+require("ActionPlayer")
 
 --data
 require("Const")

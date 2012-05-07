@@ -33,6 +33,8 @@ function clsTask:new(target,callback,interval,times)
   end
   if times==nil then
     self.times=1
+  elseif times<0 then
+    self.times=99999999
   else
     self.times=times
   end

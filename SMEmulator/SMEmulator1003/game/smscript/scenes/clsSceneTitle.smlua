@@ -12,6 +12,8 @@ clsSceneTitle.__index = clsSceneTitle
 --字段
 clsSceneTitle.titles={"新的游戏","读取存档","游戏设置"}
 
+clsSceneTitle.titleBgFrame=nil
+
 --构造器
 function clsSceneTitle:new()
 	local self = {}
@@ -36,6 +38,7 @@ function clsSceneTitle:onStart()
   local titleBgFrame=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)
   titleBgFrame.image=Skin:createBgWithFrame(200,120)
   bgLayer:addChild(titleBgFrame)
+  self.titleBgFrame=titleBgFrame
   --按钮
   local width=160
   local height=25
@@ -80,6 +83,8 @@ function clsSceneTitle:buttonTapped(target)
     AnimationPlayer:play(1,100,100)
   elseif index==3 then
     --游戏设置
+    local move=clsMoveAction:new(800,100,2000)
+    self.titleBgFrame:runAction(move)
   end
 end
 
