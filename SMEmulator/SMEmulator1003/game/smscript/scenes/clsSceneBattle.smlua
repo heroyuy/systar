@@ -1,7 +1,7 @@
 --[[
   description:战斗场景
   author:wp_g4
-  date:2012/03/12
+  date:2012/05/01
 --]]
 
 --结构定义
@@ -19,18 +19,18 @@ end
 
 -- 开始
 function clsSceneBattle:onStart()
-  smLog:info("状态场景启动")
+  smLog:info("战斗场景启动")
 end
 
 
 -- 更新
 function clsSceneBattle:update()
-  --smLog:info("状态场景更新")
+  --smLog:info("战斗场景更新")
 end
 
 
 -- 退出
 function clsSceneBattle:onStop()
-  smLog:info("状态场景退出")
+  smLog:info("战斗场景退出")
 end
 

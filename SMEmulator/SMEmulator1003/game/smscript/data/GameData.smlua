@@ -108,7 +108,6 @@ function GameData:getNPC(id)
     local npcDict=nil
     if self.gameType==-1 then
       --新游戏
-      smLog:info("getNPC:"..id)
       npcDict=Dictionary.npcs[id]
     else
       --加载存档

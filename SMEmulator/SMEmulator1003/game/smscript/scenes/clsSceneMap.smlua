@@ -109,6 +109,7 @@ end
 
 --切换地图
 function clsSceneMap:changeMap(map)
+  local t0=Game:getTime()
   GameData.curMap=map
   self.aStar=clsAStar:new(map.areas)
   --预加载地图图集
