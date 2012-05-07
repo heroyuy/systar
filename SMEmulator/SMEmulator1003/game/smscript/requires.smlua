@@ -42,6 +42,7 @@ require("GameData_player")
 
 --layers
 require("clsTiledMapLayer")
+require("clsTiledLayer")
 require("clsOptionLayer")
 require("clsDialogLayer")
 

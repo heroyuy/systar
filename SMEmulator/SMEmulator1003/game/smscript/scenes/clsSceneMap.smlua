@@ -22,7 +22,6 @@ clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
 clsSceneMap.Param.BAR_HEIGHT=8   --HP、SP条高度
 
 --字段
-clsSceneMap.imageSets={}       --地图图集
 clsSceneMap.curPlayer=nil      --当前player
 clsSceneMap.mapBgLayer=nil     --背景
 clsSceneMap.mapFgLayer=nil     --前景
@@ -35,7 +34,7 @@ function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
 	--背景实例化
-	self.mapBgLayer=clsTiledMapLayer:new(0,0,Game:getWidth(),Game:getHeight())
+	self.mapBgLayer=clsTiledLayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.mapBgLayer.delegate=self
     GameLayer:addChildToScene(self.mapBgLayer)
     --精灵层实例化
@@ -43,7 +42,7 @@ function clsSceneMap:new()
     self.spriteLayer.enabled=false
     GameLayer:addChildToScene(self.spriteLayer)
     --前景实例化
-    self.mapFgLayer=clsTiledMapLayer:new(0,0,Game:getWidth(),Game:getHeight())
+    self.mapFgLayer=clsTiledLayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.mapFgLayer.enabled=false
     GameLayer:addChildToScene(self.mapFgLayer)
     --头像层实例化
@@ -112,11 +111,9 @@ end
 function clsSceneMap:changeMap(map)
   GameData.curMap=map
   self.aStar=clsAStar:new(map.areas)
-  --加载地图图集
+  --预加载地图图集
   for _,v in pairs(GameData.curMap.tilesets) do
-    if self.imageSets[v.id]==nil then
-      self.imageSets[v.id]=Image:getImage(v.path)
-    end
+    Image:loadImage(v.path)
   end
   --加载背景
   local bgLayers=clsList:new()
@@ -127,9 +124,7 @@ function clsSceneMap:changeMap(map)
     end
   end
   local viewport=self:checkViewport()
-  local params={imageSets=self.imageSets,layers=bgLayers,colNum=GameData.curMap.colNum,rowNum=GameData.curMap.rowNum,
-     cellWidth=GameData.curMap.cellWidth,cellHeight=GameData.curMap.cellHeight,viewport=viewport}
-  self.mapBgLayer:init(params)
+  self.mapBgLayer:init(map.index,bgLayers,viewport)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
     --玩家
@@ -166,9 +161,7 @@ function clsSceneMap:changeMap(map)
   end
   if fgLayers:size()>0 then
     self.mapFgLayer.visibility=true
-    local params={imageSets=self.imageSets,layers=fgLayers,colNum=GameData.curMap.colNum,rowNum=GameData.curMap.rowNum,
-       cellWidth=GameData.curMap.cellWidth,cellHeight=GameData.curMap.cellHeight,viewport=viewport}
-    self.mapFgLayer:init(params)
+    self.mapFgLayer:init(map.index,fgLayers,viewport)
   else
     self.mapFgLayer.visibility=false
   end
