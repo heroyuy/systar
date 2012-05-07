@@ -143,12 +143,3 @@ function clsTiledLayer:refreshBuffer(rect,clearFlag)
     end
   end
 end
-
-function clsTiledLayer:toString()
-  local str="clsTiledLayer:["
-  str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
-  str=str.."]"
-  return str
-end
-
-

@@ -74,10 +74,3 @@ function clsUIButton:onTouch(x,y,type)
     self.buttonState=clsUIButton.STATE_NORMAL
   end
 end
-
-function clsUIButton:toString()
-  local str="clsUIButton:["
-  str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
-  str=str.."]"
-  return str
-end

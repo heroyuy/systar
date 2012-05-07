@@ -46,10 +46,3 @@ function clsUISprite:paintLayer(painter)
     painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,UIConst.anchor.LT)
   end
 end
-
-function clsUISprite:toString()
-  local str="clsUISprite:["
-  str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
-  str=str.."]"
-  return str
-end

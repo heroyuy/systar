@@ -165,14 +165,6 @@ function clsUILayer:refresh()
   end
 end
 
---toString
-function clsUILayer:toString()
-  local str="clsUILayer:["
-  str=str.."x="..self.x.." y="..self.y.." w="..self.width.." h="..self.height
-  str=str.."]"
-  return str
-end
-
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsUILayer:searchFocusLayer(x,y)
   local focus = nil;
