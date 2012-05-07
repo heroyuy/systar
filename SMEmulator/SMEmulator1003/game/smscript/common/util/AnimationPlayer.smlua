@@ -33,16 +33,16 @@ end
 AnimationPlayer={}
 
 AnimationPlayer.animationList={}					--动画列表
-AnimationPlayer.layer=nil
 
 --绑定供渲染的层
 function AnimationPlayer:atachToLayer(layer)
   --重定向paintLayer方法
-  self.layer=layer
   layer.paintLayerF=layer.paintLayer
   function layer:paintLayer(painter)
     --调用原paintLayer方法
     self:paintLayerF(painter)
+    if table.getn(AnimationPlayer.animationList)>0 then
+    end
     --渲染动画
     local curTime=Game:getTime()
     for _,animation in pairs(AnimationPlayer.animationList) do

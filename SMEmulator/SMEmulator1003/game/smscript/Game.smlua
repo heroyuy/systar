@@ -95,11 +95,6 @@ function Game:showInputDialog(tip,inputDialogDelegate)
   smGame:showInputDialog(tip)
 end
 
---刷新
-function Game:refresh()
-  return smGame:refresh()
-end
-
 --切换场景  lua调用
 function Game:changeScene(index)
   --(1)原场景onStop

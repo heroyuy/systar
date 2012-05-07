@@ -156,15 +156,6 @@ function clsUILayer:onTouch(x,y,type)
   end
 end  
 
---通知更新
-function clsUILayer:refresh()
-  if self.parent then
-    self.parent:refresh()
-  else
-    Game:refresh()
-  end
-end
-
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsUILayer:searchFocusLayer(x,y)
   local focus = nil;
