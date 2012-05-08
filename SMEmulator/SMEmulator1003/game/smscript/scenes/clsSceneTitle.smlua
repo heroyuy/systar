@@ -83,7 +83,7 @@ function clsSceneTitle:buttonTapped(target)
     AnimationPlayer:play(1,100,100)
   elseif index==3 then
     --游戏设置
-    local move=clsMoveAction:new(800,100,2000)
+    local move=clsMoveAction:new(0,0,5000,clsMoveAction.TYPE_DECELERATE)
     self.titleBgFrame:runAction(move)
   end
 end

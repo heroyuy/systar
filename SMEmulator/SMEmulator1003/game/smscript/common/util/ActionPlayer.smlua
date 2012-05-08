@@ -43,6 +43,8 @@ clsMoveAction.__index = clsMoveAction
 
 --字段定义
 clsMoveAction.TYPE_LINEAR=0			--移动类型：线性
+clsMoveAction.TYPE_ACCELERATE=1		--移动类型：加速
+clsMoveAction.TYPE_DECELERATE=2		--移动类型：减速
 
 clsMoveAction.startX=nil			--移动起点的X坐标
 clsMoveAction.startY=nil			--移动起点的Y坐标
@@ -75,6 +77,44 @@ function clsMoveAction:setTarget(target)
   self.startY=target.y
 end
 
+--修改坐标
+function clsMoveAction:modifyLocation(x,y)
+  if self.endX-self.startX>=0 then
+    --X方向正向移动
+    if x>=self.endX then
+      self.target.x=self.endX
+    else
+      self.target.x=x
+    end
+  else
+    --X方向负向移动
+    if x<=self.endX then
+      self.target.x=self.endX
+    else
+      self.target.x=x
+    end
+  end
+  if self.endY-self.startY>=0 then
+    --Y方向正向移动
+    if y>=self.endY then
+      self.target.y=self.endY
+    else
+      self.target.y=y
+    end
+  else
+    --Y方向负向移动
+    if y<=self.endY then
+      self.target.y=self.endY
+    else
+      self.target.y=y
+    end
+  end
+  if self.target.x==self.endX and self.target.y==self.endY then
+    self.dead=true
+    smLog:info("移动结束")
+  end
+end
+
 --更新
 function clsMoveAction:update()
   --更新target的坐标
@@ -84,51 +124,38 @@ function clsMoveAction:update()
   end
   --根据当前时间和移动类型计算当前target的坐标
   if self.type==clsMoveAction.TYPE_LINEAR then
-    --线性移动
+    --(1) 线性移动
     local vx=(self.endX-self.startX)/self.time		--X方向速度
     local vy=(self.endY-self.startY)/self.time		--Y方向速度
-    smLog:info("vx="..vx.." vy="..vy)
-    local x=self.startX+(Game:getTime()-self.startTime)*vx
-    local y=self.startY+(Game:getTime()-self.startTime)*vy
-    if vx>=0 then
-      --X方向正向移动
-      if x>=self.endX then
-        self.target.x=self.endX
-      else
-        self.target.x=x
-      end
-    else
-      --X方向负向移动
-      if x<=self.endX then
-        self.target.x=self.endX
-      else
-        self.target.x=x
-      end
-    end
-    if vy>=0 then
-      --Y方向正向移动
-      if y>=self.endY then
-        self.target.y=self.endY
-      else
-        self.target.y=y
-      end
-    else
-      --Y方向负向移动
-      if y<=self.endY then
-        self.target.y=self.endY
-      else
-        self.target.y=y
-      end
-    end
+    local delta=Game:getTime()-self.startTime
+    local x=self.startX+delta*vx
+    local y=self.startY+delta*vy
+    self:modifyLocation(x,y)
+  elseif self.type==clsMoveAction.TYPE_ACCELERATE then
+    --(2) 加速运动
+    local vx=(self.endX-self.startX)/self.time		--X方向速度
+    local vy=(self.endY-self.startY)/self.time		--Y方向速度
+    local ax=2*vx/self.time							--X方向加速度(终点速度是起点速度的3倍)
+    local ay=2*vy/self.time							--Y方向加速度
+    local delta=Game:getTime()-self.startTime
+    local x=self.startX+vx*delta+delta*delta*ax/2
+    local y=self.startY+vy*delta+delta*delta*ay/2
+    self:modifyLocation(x,y)
+  elseif self.type==clsMoveAction.TYPE_DECELERATE then
+    --(3) 减速运动
+    local vx=(self.endX-self.startX)/self.time		--X方向速度
+    local vy=(self.endY-self.startY)/self.time		--Y方向速度
+    local ax=-2*vx/self.time						--X方向加速度(终点速度是起点速度的3倍)
+    local ay=-2*vy/self.time						--Y方向加速度(终点速度是起点速度的3倍)
+    local delta=Game:getTime()-self.startTime
+    local x=self.startX+3*vx*delta+delta*delta*ax/2
+    local y=self.startY+3*vy*delta+delta*delta*ay/2
+    self:modifyLocation(x,y)
   else
     --未知的移动类型
     smLog:info("未知的移动类型")
     self.dead=true
     return
-  end
-  if self.target.x==self.endX and self.target.y==self.endY then
-    self.dead=true
-    smLog:info("移动结束")
   end
 end
 
