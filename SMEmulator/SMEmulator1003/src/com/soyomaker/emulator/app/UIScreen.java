@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.soyomaker.emulator.app.InputDialog.InputListener;
 import com.soyomaker.emulator.ui.Painter;
@@ -29,8 +31,7 @@ public class UIScreen extends JPanel implements InputListener {
 
 	private UIScreen() {
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(GameInfo.getInstance().getWidth(),
-				GameInfo.getInstance().getHeight()));
+		this.setPreferredSize(new Dimension(GameInfo.getInstance().getWidth(), GameInfo.getInstance().getHeight()));
 		// 游戏渲染层
 		gamePanel = new JPanel() {
 
@@ -54,8 +55,7 @@ public class UIScreen extends JPanel implements InputListener {
 				GameInfo gameInfo = GameInfo.getInstance();
 				if (gameInfo.isShowFPS()) {
 					painter.setColor(ColorFactory.getInstance().WHITE);
-					painter.drawString("FPS:" + gameInfo.getActualFps(), 10,
-							gameInfo.getHeight() - 10, Painter.LB);
+					painter.drawString("FPS:" + gameInfo.getActualFps(), 10, gameInfo.getHeight() - 10, Painter.LB);
 				}
 			}
 		};
@@ -66,16 +66,14 @@ public class UIScreen extends JPanel implements InputListener {
 				if (inputDialog.isVisible()) {
 					return;
 				}
-				game.onEvent(new Event(e.getX(), e.getY(),
-						Event.EVENT_TYPE_MOVE));
+				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
 			}
 
 			public void mousePressed(MouseEvent e) {
 				if (inputDialog.isVisible()) {
 					return;
 				}
-				game.onEvent(new Event(e.getX(), e.getY(),
-						Event.EVENT_TYPE_DOWN));
+				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
 			}
 
 			public void mouseReleased(MouseEvent e) {
@@ -87,15 +85,13 @@ public class UIScreen extends JPanel implements InputListener {
 		};
 		gamePanel.addMouseMotionListener(mouseAdapter);
 		gamePanel.addMouseListener(mouseAdapter);
-		gamePanel.setSize(new Dimension(GameInfo.getInstance().getWidth(),
-				GameInfo.getInstance().getHeight()));
+		gamePanel.setSize(new Dimension(GameInfo.getInstance().getWidth(), GameInfo.getInstance().getHeight()));
 		gamePanel.setLocation(0, 0);
 		gamePanel.setLayout(null);
 		this.add(gamePanel);
 
 		inputDialog = new InputDialog(GameInfo.getInstance().getWidth(), 100);
-		inputDialog.setLocation(0,
-				gamePanel.getHeight() - inputDialog.getHeight());
+		inputDialog.setLocation(0, gamePanel.getHeight() - inputDialog.getHeight());
 		inputDialog.setVisible(false);
 		inputDialog.setInputListener(this);
 		gamePanel.add(inputDialog);
@@ -108,7 +104,21 @@ public class UIScreen extends JPanel implements InputListener {
 	}
 
 	public void requestRepaint() {
-		gamePanel.repaint();
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+
+				@Override
+				public void run() {
+					// gamePanel.repaint();
+					gamePanel.paintImmediately(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
+				}
+			});
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void setGame(IGame game) {

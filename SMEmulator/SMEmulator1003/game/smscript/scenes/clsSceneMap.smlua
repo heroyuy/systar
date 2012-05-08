@@ -45,6 +45,11 @@ function clsSceneMap:new()
     self.mapFgLayer=clsTiledLayer:new(0,0,Game:getWidth(),Game:getHeight())
     self.mapFgLayer.enabled=false
     GameLayer:addChildToScene(self.mapFgLayer)
+    --天气效果
+    local weatherLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+    weatherLayer.enabled=false
+    weatherLayer.image=Image:getImage("/image/picture/mask.png")
+    GameLayer:addChildToScene(weatherLayer)
     --头像层实例化
     self.layerHead=clsUILayer:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT+2*self.Param.BAR_HEIGHT)
       --头像按钮
