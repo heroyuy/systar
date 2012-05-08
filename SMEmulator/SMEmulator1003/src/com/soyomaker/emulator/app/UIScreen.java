@@ -2,6 +2,7 @@ package com.soyomaker.emulator.app;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -44,7 +45,7 @@ public class UIScreen extends JPanel implements InputListener {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (this.painter == null || this.graphics != g) {
-					this.painter = new Painter(g);
+					this.painter = new Painter((Graphics2D)g);
 				}
 				// 清屏
 				this.painter.setColor(ColorFactory.getInstance().BLACK);
