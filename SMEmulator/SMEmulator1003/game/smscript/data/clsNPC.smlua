@@ -33,10 +33,10 @@ function clsNPC:update()
   if not self.locked then
     if self.curMoveDirection==nil then
       --当前没有行走
-      if smRandom:nextInt(20/self.speedLevel)==0 then
+      if math.random(0,20/self.speedLevel-1)==0 then
         if self.moveType ==1 then
           --随机
-          self.moveSequence:offer(smRandom:nextInt(4))
+          self.moveSequence:offer(math.random(0,3))
       elseif self.moveType ==2 then
         --靠近
           if self.moveDelegate then

@@ -59,9 +59,6 @@ public class LuaAdapter {
 			// --注册SMLog
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
-			// --注册Random
-			luaState.pushObjectValue(new Random());
-			luaState.setGlobal("smRandom");
 			// --注册ImageFactory
 			luaState.pushObjectValue(ImageFactory.getInstance());
 			luaState.setGlobal("smImageFactory");

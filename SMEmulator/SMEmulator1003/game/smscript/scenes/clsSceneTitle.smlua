@@ -13,6 +13,7 @@ clsSceneTitle.__index = clsSceneTitle
 clsSceneTitle.titles={"新的游戏","读取存档","游戏设置"}
 
 clsSceneTitle.titleBgFrame=nil
+clsSceneTitle.bgLayer=nil
 
 --构造器
 function clsSceneTitle:new()
@@ -31,6 +32,7 @@ function clsSceneTitle:onStart()
   end
   --背景大图 
   local bgLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  self.bgLayer=bgLayer
   if Dictionary.config.titleBackground then
     bgLayer.image=Image:getImage(Dictionary.config.titleBackground)
   end
@@ -83,8 +85,11 @@ function clsSceneTitle:buttonTapped(target)
     AnimationPlayer:play(1,100,100)
   elseif index==3 then
     --游戏设置
-    local move=clsMoveAction:new(0,0,5000,clsMoveAction.TYPE_DECELERATE)
-    self.titleBgFrame:runAction(move)
+    --local move=clsMoveAction:new(0,0,5000,clsMoveAction.TYPE_DECELERATE)
+    --self.titleBgFrame:runAction(move)
+    local shake=clsShakeAction:new(10,20,100,clsShakeAction.TYPE_DISORDER)
+    self.titleBgFrame:runAction(shake)
+    --self.bgLayer:runAction(shake)
   end
 end
 
