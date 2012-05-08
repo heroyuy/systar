@@ -1,5 +1,6 @@
 package com.soyomaker.emulator.app;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -45,11 +46,8 @@ public class UIScreen extends JPanel implements InputListener {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (this.painter == null || this.graphics != g) {
-					this.painter = new Painter((Graphics2D)g);
+					this.painter = new Painter((Graphics2D) g);
 				}
-				// 清屏
-				this.painter.setColor(ColorFactory.getInstance().BLACK);
-				this.painter.fillRect(0, 0, getWidth(), getHeight());
 				// 绘制游戏
 				game.onPaint(this.painter);
 				// FPS
@@ -60,6 +58,7 @@ public class UIScreen extends JPanel implements InputListener {
 				}
 			}
 		};
+		gamePanel.setBackground(Color.black);
 		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 
@@ -111,7 +110,7 @@ public class UIScreen extends JPanel implements InputListener {
 				@Override
 				public void run() {
 					// gamePanel.repaint();
-					gamePanel.paintImmediately(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
+					gamePanel.repaint();
 				}
 			});
 		} catch (InterruptedException e) {
