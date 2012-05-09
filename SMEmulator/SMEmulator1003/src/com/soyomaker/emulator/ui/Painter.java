@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 
 import com.soyomaker.emulator.utils.ColorFactory;
 
@@ -64,8 +65,7 @@ public class Painter {
 	 */
 	public Painter(Graphics2D graphics) {
 		this.graphics = graphics;
-		((Graphics2D) this.graphics).setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
+		((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		point = new Point(0, 0);
 		setTextSize(16);
@@ -94,8 +94,7 @@ public class Painter {
 	 *            区域
 	 */
 	public void clipRect(Rect rect) {
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -229,14 +228,13 @@ public class Painter {
 	 * @param anchor
 	 *            锚点
 	 */
-	public void drawImage(Image img, int srcx, int srcy, int width, int height,
-			int x, int y, int anchor) {
+	public void drawImage(Image img, int srcx, int srcy, int width, int height, int x, int y, int anchor) {
 		if (img == null) {
 			return;
 		}
 		int[] xy = convert(x, y, width, height, anchor);
-		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1]
-				+ height, srcx, srcy, srcx + width, srcy + height, null);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1] + height, srcx, srcy, srcx + width,
+				srcy + height, null);
 	}
 
 	/**
@@ -319,8 +317,7 @@ public class Painter {
 	 */
 	public void drawString(String str, int x, int y, int anchor) {
 		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
-		graphics.drawString(str, xy[0], xy[1]
-				- graphics.getFontMetrics().getDescent() + getTextSize());
+		graphics.drawString(str, xy[0], xy[1] - graphics.getFontMetrics().getDescent() + getTextSize());
 	}
 
 	/**
@@ -380,8 +377,7 @@ public class Painter {
 	 *            裁剪区
 	 */
 	public void forceClip(Rect clip) {
-		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(),
-				clip.getHeight());
+		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
 	}
 
 	/**
@@ -390,8 +386,7 @@ public class Painter {
 	 * @return 画笔的alpha值
 	 */
 	public float getAlpha() {
-		AlphaComposite alphacomposite = (AlphaComposite) graphics
-				.getComposite();
+		AlphaComposite alphacomposite = (AlphaComposite) graphics.getComposite();
 		float alpha = 1.0f;
 		if (alphacomposite != null) {
 			alpha = alphacomposite.getAlpha();
@@ -415,8 +410,7 @@ public class Painter {
 	 */
 	public Rect getClip() {
 		Rectangle rectangle = graphics.getClipBounds();
-		return new Rect(rectangle.x, rectangle.y, rectangle.width,
-				rectangle.height);
+		return new Rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	/**
@@ -425,8 +419,7 @@ public class Painter {
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return ColorFactory.getInstance()
-				.parseInt(graphics.getColor().getRGB());
+		return ColorFactory.getInstance().parseInt(graphics.getColor().getRGB());
 	}
 
 	/**
@@ -454,8 +447,7 @@ public class Painter {
 	 *            画笔的alpha值
 	 */
 	public void setAlpha(float alpha) {
-		AlphaComposite alphacomposite = AlphaComposite.getInstance(3,
-				(float) alpha);
+		AlphaComposite alphacomposite = AlphaComposite.getInstance(3, (float) alpha);
 		graphics.setComposite(alphacomposite);
 	}
 
@@ -515,8 +507,7 @@ public class Painter {
 		if (curClip != null) {
 			forceClip(curClip);
 		}
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -573,12 +564,35 @@ public class Painter {
 	}
 
 	/**
+	 * 平移
+	 * 
+	 * @param tx
+	 *            沿 x 轴平移的距离
+	 * @param ty
+	 *            沿 y 轴平移的距离
+	 */
+	public void translate(double tx, double ty) {
+		graphics.translate(tx, ty);
+	}
+
+	/**
 	 * 缩放
 	 * 
 	 * @param scale
 	 *            缩放系数
 	 */
-	public void scale(double scale) {
+	/**
+	 * 缩放
+	 * 
+	 * @param scale
+	 *            缩放系数
+	 * @param x
+	 *            缩放原点的 x 坐标
+	 * @param y
+	 *            缩放原点的 y 坐标
+	 */
+	public void scale(double scale, double x, double y) {
+		graphics.translate((1 - scale) * x, (1 - scale) * y);
 		graphics.scale(scale, scale);
 	}
 
@@ -596,6 +610,14 @@ public class Painter {
 		graphics.rotate(theta, x, y);
 	}
 
+	public AffineTransform getTransform() {
+		return graphics.getTransform();
+	}
+
+	public void setTransform(AffineTransform affineTransform) {
+		graphics.setTransform(affineTransform);
+	}
+
 	/**
 	 * 错切
 	 * 
@@ -604,5 +626,11 @@ public class Painter {
 	 */
 	public void shear(double shear) {
 		graphics.shear(shear, shear);
+	}
+
+	public void test() {
+		AffineTransform aff = new AffineTransform(-0.9, 0, 0, 1, 960, 0);
+		graphics.transform(aff);
+
 	}
 }

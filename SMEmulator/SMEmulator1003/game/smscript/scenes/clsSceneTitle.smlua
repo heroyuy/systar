@@ -33,7 +33,6 @@ function clsSceneTitle:onStart()
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --背景大图 
   local bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  self.bgLayer=bgLayer
   if Dictionary.config.titleBackground then
     bgLayer.image=Image:getImage(Dictionary.config.titleBackground)
   end
@@ -92,8 +91,11 @@ function clsSceneTitle:buttonTapped(target)
     --local shake=clsShakeAction:new(10,20,100,clsShakeAction.TYPE_DISORDER)
     --self.titleBgFrame:runAction(shake)
     --self.bgLayer:runAction(shake)
-    local fade=clsFadeAction:new(0.2,5000,clsFadeAction.TYPE_ACCELERATE)
-    self.bgLayer:runAction(fade)
+    --local fade=clsFadeAction:new(0.2,5000,clsFadeAction.TYPE_ACCELERATE)
+    --self.bgLayer:runAction(fade)
+    local rotate=clsRotateAction:new(40*math.pi,20000,clsRotateAction.TYPE_LINEAR)
+    self.bgLayer:runAction(rotate)
+    
   end
 end
 

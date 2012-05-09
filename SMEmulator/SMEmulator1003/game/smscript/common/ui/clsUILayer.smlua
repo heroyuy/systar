@@ -92,6 +92,7 @@ end
 
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
+  local affineTransform=painter:getTransform()
   --(+1)处理alpha
   if self.alpha~=1 then
     local alpha=painter:getAlpha()
@@ -99,7 +100,7 @@ function clsUILayer:paint(painter)
   end
   --(+2)处理scale
   if self.scale~=1 then
-    painter:scale(self.scale)
+    painter:scale(self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
   --(+3)处理rotate
   if self.rotate~=0 then
@@ -109,19 +110,8 @@ function clsUILayer:paint(painter)
   self:paintLayer(painter)
   --绘制子Layer
   self:paintChildren(painter)
-  --(-1)还原alpha
-  if self.alpha~=1 then
-    local alpha=painter:getAlpha()
-    painter:setAlpha(alpha/self.alpha)
-  end
-  --(-2)还原scale
-  if self.scale~=1 then
-    painter:scale(1/self.scale)
-  end
-  --(-3)处理rotate
-  if self.rotate~=0 then
-    painter:rotate(-self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
-  end
+  --还原特效变换
+  painter:setTransform(affineTransform)
 end
 
 --绘制自身（lua层不应该调用此方法）
