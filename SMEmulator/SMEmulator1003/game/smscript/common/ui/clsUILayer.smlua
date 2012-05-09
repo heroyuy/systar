@@ -14,9 +14,13 @@ clsUILayer.y=0                        		--y坐标
 clsUILayer.z=0                           	--z坐标
 clsUILayer.width=0                      	--宽度
 clsUILayer.height=0                       	--高度
+clsUILayer.anchor={0.5,0.5}					--锚点
+
 clsUILayer.color=nil               			--背景色
-clsUILayer.alpha=1.0               			--透明度
 clsUILayer.image = null;           			--图像
+clsUILayer.alpha=1.0               			--透明度
+clsUILayer.scale=1.0						--缩放比
+clsUILayer.rotate=0.0						--旋转角
 
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
@@ -108,13 +112,14 @@ end
 --绘制子Layer（lua层不应该调用此方法）
 function clsUILayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
-    if layer.visibility then
+    if layer.visibility and layer.alpha~=0 then
       --设置坐标系
-      painter:setBasePoint(layer.x,layer.y)
+      local x,y=self.x-self.anchor[1]*self.width,self.y-self.anchor[2]*self.height
+      painter:setBasePoint(x,y)
       --绘制子Layer
       layer:paint(painter)
       --还原坐标系
-      painter:setBasePoint(-layer.x,-layer.y)
+      painter:setBasePoint(-x,-y)
     end
   end
       
@@ -158,7 +163,7 @@ function clsUILayer:searchFocusLayer(x,y)
   --从上到下依次探查
   for i=self.children:size(),1,-1 do
     local layer=self.children:get(i)
-    if layer.visibility and layer.enabled then
+    if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
       if x >= layer.x and x <= layer.x + layer.width and y >= layer.y and y <= layer.y + layer.height then
         --命中
