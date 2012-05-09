@@ -33,16 +33,17 @@ clsSceneMap.aStar=nil          --A*寻路工具
 function clsSceneMap:new()
 	local self = clsScene:new()
 	setmetatable(self,clsSceneMap)
+	local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
 	--背景实例化
-	self.mapBgLayer=clsTiledLayer:new(0,0,Game:getWidth(),Game:getHeight())
+	self.mapBgLayer=clsTiledLayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.mapBgLayer.delegate=self
     GameLayer:addChildToScene(self.mapBgLayer)
     --精灵层实例化
-    self.spriteLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+    self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.spriteLayer.enabled=false
     GameLayer:addChildToScene(self.spriteLayer)
     --前景实例化
-    self.mapFgLayer=clsTiledLayer:new(0,0,Game:getWidth(),Game:getHeight())
+    self.mapFgLayer=clsTiledLayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.mapFgLayer.enabled=false
     GameLayer:addChildToScene(self.mapFgLayer)
     --天气效果

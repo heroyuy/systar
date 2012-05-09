@@ -123,7 +123,7 @@ function clsUILayer:paintLayer(painter)
     painter:fillRect(0, 0, self.width, self.height);
   end
   if self.image then
-    painter:drawImage(self.image, 0, 0, 0);
+    painter:drawImage(self.image, 0, 0, 0)
   end
 end
 
