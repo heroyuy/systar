@@ -8,6 +8,7 @@ import org.keplerproject.luajava.LuaStateFactory;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.ColorFactory;
 import com.soyomaker.emulator.utils.ImageFactory;
+import com.soyomaker.emulator.utils.SMAnchorFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
 import com.soyomaker.emulator.utils.SMString;
@@ -60,6 +61,9 @@ public class LuaAdapter {
 			// --注册ImageFactory
 			luaState.pushObjectValue(ImageFactory.getInstance());
 			luaState.setGlobal("smImageFactory");
+			// --注册SMAnchorFactory
+			luaState.pushObjectValue(SMAnchorFactory.getInstance());
+			luaState.setGlobal("smAnchorFactory");
 			// --注册SMAudioPlayer
 			luaState.pushObjectValue(SMAudioPlayer.getInstance());
 			luaState.setGlobal("smAudioPlayer");
