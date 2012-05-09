@@ -1,0 +1,367 @@
+--[[
+  description:脚本解释器
+  author:wp_g4
+  date:2012/04/19
+--]]
+
+Interpreter={}
+
+--常量
+Interpreter.OperateType={}
+Interpreter.OperateType.ASSIGN=0
+Interpreter.OperateType.PLUS=1
+Interpreter.OperateType.MINUS=2
+Interpreter.OperateType.MULTIPLY=3
+Interpreter.OperateType.DIVIDE=4
+Interpreter.OperateType.MOD=5
+
+Interpreter.ValueType={}
+Interpreter.ValueType.CONST=0
+Interpreter.ValueType.VARIABLE=1
+Interpreter.ValueType.SWITCH=2
+
+Interpreter.PropertyType={}
+Interpreter.PropertyType.STR=0
+Interpreter.PropertyType.AGI=1
+Interpreter.PropertyType.INT=2
+Interpreter.PropertyType.VIT=3
+Interpreter.PropertyType.DEX=4
+Interpreter.PropertyType.LUCK=5
+Interpreter.PropertyType.MAXHP=6
+Interpreter.PropertyType.MAXSP=7
+Interpreter.PropertyType.HP=8
+Interpreter.PropertyType.SP=9
+Interpreter.PropertyType.LEVEL=10
+Interpreter.PropertyType.EXP=11
+
+--方法列表
+Interpreter.functionList={
+  [100000]="executeScript",
+  [100001]="sleep",
+  
+  [101000]="changeMap",
+  [101001]="forceMove",
+  [101002]="showTimer",
+  [101003]="playerMusic",
+  [101004]="stopMusic",
+  [101005]="openItemShop",
+  [101006]="showDialog",
+  [101007]="showInputDialog",
+  [101008]="showOptionDialog",
+  [101009]="changeFace",
+  [101010]="startFight",
+  [101011]="exitFight",
+  [101012]="showImage",
+  [101013]="removeImage",
+  [101014]="moveImage",
+  [101015]="rotateImage",
+  [101016]="toneImage",
+  [101017]="playAnimation",
+  [101018]="playAnimationInFight",
+  [101019]="changeSkin",
+  [101020]="toneScene",
+  [101021]="shakeScene",
+  [101022]="openSystemMenu",
+  [101023]="openRecordMenu",
+  [101024]="returnToMainMenu",
+  
+  [102000]="operateSwitch",
+  [102001]="getSwitch",
+  [102002]="operateVariable",
+  [102003]="getVariable",
+  [102004]="operatePlayerProperty",
+  [102005]="getPlayerProperty",
+  [102006]="operatePlayerName",
+  [102007]="getPlayerName",
+  [102008]="operatePlayerSkill",
+  [102009]="getPlayerSkillStatus",
+  [102010]="operatePlayerEquip",
+  [102011]="getPlayerEquipStatus",
+  [102012]="operatePlayerPattern",
+  [102013]="operateMoney",
+  [102014]="getMoneyAmount",
+  [102015]="operateItem",
+  [102016]="getItemNum",
+  [102017]="operateEquip",
+  [102018]="getEquipNum",
+  [102019]="operateEnemyProperty",
+  [102020]="getEnemyProperty",
+  [102021]="operateEnemyPattern"
+}
+
+--[[
+===============================================================
+注意事项:
+1.lua层编写者只能调用runScript(scriptId)方法，其它方法不应该调用
+2.一次只能运行一个脚本，也即上一次runScript未结束则不能进行新的runScript
+===============================================================
+--]]
+
+---------------------------------------------------------------
+--运行脚本,必需运行在主线程
+function Interpreter:runScript(scriptId)
+  local file=Game.path.."/data/script/script"..scriptId..".gat"
+  local scriptFunction=loadfile(file)
+  --将脚本调入子线程运行
+  ScriptThread:start(scriptFunction)
+end
+
+--结束当前正在执行的事件,比如对话框、选择框等。执行此方法后，主线程阻塞，脚本继续运行
+function Interpreter:endCurrentEvent(...)
+  ScriptThread:resume(unpack(arg))
+end
+
+---------------------------------------------------------------
+--分析命令，由脚本自动调用
+function Interpreter:doCommand(id,...)
+  local fun=function()
+    return self:excuteCommand(id,unpack(arg))
+  end
+  --executeScript运行在子线程，其它运行在主线程中
+  if id==100000 then
+    return fun()
+  else
+    return ScriptThread:runFunctionInMainThread(fun)
+  end
+end
+
+--执行命令,executeScript运行在子线程，其它运行在主线程中
+function Interpreter:excuteCommand(id,...)
+  local fun=Interpreter[Interpreter.functionList[id]]
+  return fun(self,unpack(arg))
+end
+
+--注:以下方法中executeScript运行在子线程，其它均运行在主线程中
+--============流程控制类============
+--执行公共脚本
+function Interpreter:executeScript(scriptId)
+  local file=Game.path.."/data/script/script"..scriptId..".gat"
+  local fun=loadfile(file)
+  fun()
+end
+
+--等待
+function Interpreter:sleep(millisecond)
+  --millisecond毫秒后结束此事件，脚本继续运行
+  Scheduler:scheduleTask(self,"endCurrentEvent",millisecond)
+  return false  --返回值为flase表示此方法不立即返回
+end
+
+--============游戏表现类============
+--切换地图
+function Interpreter:changeMap(mapId,row,col,face)
+  GameData.playerTroop:curDisplayPlayer():changeMap(mapId,row,col,face)
+  return true
+end
+
+--强制移动   e.g  {0,0,1,2,3,3,1}
+function Interpreter:forceMove(paths)
+end
+
+--显示倒计时
+function Interpreter:showTimer(millisecond)
+end
+
+--播放音乐
+function Interpreter:playerMusic(name,loop)
+end
+
+--停止音乐
+function Interpreter:stopMusic(name)
+end
+
+--开启商店 e.g {10,2,5,0}
+function Interpreter:openItemShop(itemIds)
+end
+
+--显示对话
+function Interpreter:showDialog(name,content,bustPath,position)
+  local normalDialog=clsDialogLayer:new(name,content,bustPath,position)
+  local delegate={}
+  function delegate:dialogEnd()
+    Interpreter:endCurrentEvent()
+  end
+  normalDialog.delegate=delegate
+  GameLayer:addChildToScene(normalDialog)
+  return false  --返回值为flase表示此方法不立即返回
+end
+
+--显示输入框
+function Interpreter:showInputDialog(tip)
+  local delegate={}
+  function delegate:onInput(value)
+    Interpreter:endCurrentEvent(value)
+  end
+  Game:showInputDialog(tip,delegate)
+  return false  --返回值为flase表示此方法不立即返回
+end
+
+--显示选项框 e.g  {"yes","no","cancel"}
+function Interpreter:showOptionDialog(options)
+  local optionDialog=clsOptionLayer:new(options)
+  local delegate={}
+  function delegate:optionSelected(index)
+    Interpreter:endCurrentEvent(index)
+  end
+  optionDialog.delegate=delegate
+  GameLayer:addChildToScene(optionDialog)
+  return false  --返回值为flase表示此方法不立即返回
+end
+
+--更改面向
+function Interpreter:changeFace(face)
+  GameData.playerTroop:curDisplayPlayer():changeFace(face)
+  return true
+end
+
+--开启战斗
+function Interpreter:startFight(enemyTroopId,type)
+end
+
+--结束战斗
+function Interpreter:exitFight()
+end
+
+--显示图片
+function Interpreter:showImage(name,x,y,millisecond)
+end
+
+--移除图片
+function Interpreter:removeImage(name)
+end
+
+--移动图片
+function Interpreter:moveImage(name,x,y,millisecond)
+end
+
+--旋转图片
+function Interpreter:rotateImage(name,type,degree,millisecond)
+end
+
+--更改图片色调
+function Interpreter:toneImage(name,a,r,g,b,millisecond)
+end
+
+--显示动画
+function Interpreter:playAnimation(animationId,x,y)
+end
+
+--显示动画
+function Interpreter:playAnimationInFight(animationId,targetType,targetId)
+end
+
+--更换皮肤
+function Interpreter:changeSkin(name)
+  Skin:init(name)
+  return true
+end
+
+--更改画面色调
+function Interpreter:toneScene(a,r,g,b,millisecond)
+end
+
+--画面震动
+function Interpreter:shakeScene(range,millisecond,times)
+end
+
+--打开系统菜单
+function Interpreter:openSystemMenu()
+end
+
+--打开存档菜单
+function Interpreter:openRecordMenu()
+end
+
+--回主菜单
+function Interpreter:returnToMainMenu()
+  Game:changeScene(Game.SCENE_TITLE)
+end
+
+--============数据处理类============
+--开关操作
+function Interpreter:operateSwitch(switchId,value)
+end
+
+--获取开关值
+function Interpreter:getSwitch(switchId)
+end
+
+--变量操作
+function Interpreter:operateVariable(variableId,operateType,valueType,value)
+end
+
+--获取变量值
+function Interpreter:getVariable(variableId)
+end
+
+--玩家属性操作
+function Interpreter:operatePlayerProperty(playerId,propertyType,operateType,valueType,value)
+end
+
+--获取玩家属性
+function Interpreter:getPlayerProperty(playerId,propertyType)
+end
+
+--玩家名称操作
+function Interpreter:operatePlayerName(playerId,name)
+end
+
+--获取玩家名称
+function Interpreter:getPlayerName(playerId)
+end
+
+--技能操作
+function Interpreter:operatePlayerSkill(playerId,skillId,value)
+end
+
+--获取技能状态
+function Interpreter:getPlayerSkillStatus(playerId,skillId)
+end
+
+--装备操作  e.g  {12,1,-1,-1,-1,-1}   TODO 参数意义待定
+function Interpreter:operatePlayerEquip(playerId,equipIds)
+end
+
+--获取装备状态 
+function Interpreter:getPlayerEquipStatus(playerId,equipId)
+end
+
+--模型操作
+function Interpreter:operatePlayerPattern(playerId,characterImageName)
+end
+
+--金钱操作
+function Interpreter:operateMoney(operateType,valueType,value)
+end
+
+--获取金钱数量
+function Interpreter:getMoneyAmount()
+end
+
+--物品列表操作
+function Interpreter:operateItem(itemId,operateType,valueType,value)
+end
+
+--获取物品数量
+function Interpreter:getItemNum(itemId)
+end
+
+--装备列表操作
+function Interpreter:operateEquip(equipId,operateType,valueType,value)
+end
+
+--获取装备数量
+function Interpreter:getEquipNum(equipId)
+end
+
+--敌人属性操作
+function Interpreter:operateEnemyProperty(enemyId,propertyType,operateType,valueType,value)
+end
+
+--获取敌人属性
+function Interpreter:getEnemyProperty(enemyId,propertyType)
+end
+
+--敌人模型操作
+function Interpreter:operateEnemyPattern(enemyId,characterImageName)
+end
