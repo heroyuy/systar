@@ -114,6 +114,7 @@ function clsUILayer:paintChildren(painter)
       painter:setBasePoint(layer.x,layer.y)
       --设置裁剪区
       local clip=nil;
+      layer.clipBounds=false
       if layer.clipBounds then
         clip=painter:getClip()
         painter:clipRect(0,0,layer.width,layer.height)

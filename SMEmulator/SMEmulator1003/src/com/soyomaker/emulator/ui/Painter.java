@@ -572,4 +572,12 @@ public class Painter {
 		return graphics.getFontMetrics().stringWidth(str);
 	}
 
+	public void rotate(double theta) {
+		graphics.rotate(theta);
+	}
+
+	public void rotate(double theta, double x, double y) {
+		graphics.rotate(theta, x, y);
+	}
+
 }
