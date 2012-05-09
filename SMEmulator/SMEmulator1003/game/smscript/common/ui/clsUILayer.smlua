@@ -114,7 +114,8 @@ function clsUILayer:paintChildren(painter)
   for _,layer in ipairs(self.children) do
     if layer.visibility and layer.alpha~=0 then
       --设置坐标系
-      local x,y=self.x-self.anchor[1]*self.width,self.y-self.anchor[2]*self.height
+      local x,y=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
+      smLog:info("x="..x.." y="..y)
       painter:setBasePoint(x,y)
       --绘制子Layer
       layer:paint(painter)
@@ -133,7 +134,8 @@ function clsUILayer:dispatchEvent(x,y,type)
   end
   if self.focusLayer then
     --找到焦点组件
-    self.focusLayer:dispatchEvent(x-self.focusLayer.x,y-self.focusLayer.y,type)
+    local lx,ly=self.focusLayer.x-self.focusLayer.anchor[1]*self.focusLayer.width,self.focusLayer.y-self.focusLayer.anchor[2]*self.focusLayer.height
+    self.focusLayer:dispatchEvent(x-lx,y-ly,type)
   else
     --未找到焦点组件
     self:onTouch(x,y,type)
@@ -165,7 +167,8 @@ function clsUILayer:searchFocusLayer(x,y)
     local layer=self.children:get(i)
     if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
-      if x >= layer.x and x <= layer.x + layer.width and y >= layer.y and y <= layer.y + layer.height then
+      local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
+      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height then
         --命中
         focus = layer;
         break;

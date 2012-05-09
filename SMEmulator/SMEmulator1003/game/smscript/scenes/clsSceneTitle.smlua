@@ -30,14 +30,15 @@ function clsSceneTitle:onStart()
   if Dictionary.config.titleMusic then
     smAudioPlayer:play(Game.path..Dictionary.config.titleMusic)
   end
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --背景大图 
-  local bgLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
+  local bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   self.bgLayer=bgLayer
   if Dictionary.config.titleBackground then
     bgLayer.image=Image:getImage(Dictionary.config.titleBackground)
   end
   --标题背景边框
-  local titleBgFrame=clsUILayer:new((Game:getWidth()-200)/2,Game:getHeight()-180,200,120)
+  local titleBgFrame=clsUILayer:new(screenWidth/2,screenHeight-120,200,120)
   titleBgFrame.image=Skin:createBgWithFrame(200,120)
   bgLayer:addChild(titleBgFrame)
   self.titleBgFrame=titleBgFrame
@@ -50,6 +51,7 @@ function clsSceneTitle:onStart()
   local boundGap=(120-3*height-2*gap)/2
   for i,v in ipairs(self.titles) do
     local button=clsUIButton:new((200-width)/2,boundGap+(i-1)*(height+gap),width,height)
+    button.anchor={0,0}
     button.image=image
     button.highlightImage=highlightImage
     button.text=v
