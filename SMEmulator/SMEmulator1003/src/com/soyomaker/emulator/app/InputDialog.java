@@ -55,7 +55,8 @@ public class InputDialog extends JPanel {
 		add(tipLabel);
 
 		contentField = new JTextField();
-		contentField.setBounds(10, 50 + (height - 100) / 2, 530 + width - 640, 40 + (height - 100) / 2);
+		contentField.setBounds(10, 50 + (height - 100) / 2, 530 + width - 640,
+				40 + (height - 100) / 2);
 		add(contentField);
 		contentField.setColumns(10);
 
@@ -68,7 +69,8 @@ public class InputDialog extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Painter p = new Painter((Graphics2D) g);
-		String inputImage = GameInfo.getInstance().getGamePath() + "/image/input/input.png";
+		String inputImage = GameInfo.getInstance().getGamePath()
+				+ "/image/input/input.png";
 		Image img = ImageFactory.getInstance().createImage(inputImage);
 		p.drawImage(img, 0, 0, Painter.LT);
 	}
