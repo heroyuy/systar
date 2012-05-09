@@ -45,7 +45,8 @@ public class Image {
 	 * 
 	 */
 	public Image(Image image) {
-		content = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		content = new BufferedImage(image.getWidth(), image.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
 		painter = new Painter((Graphics2D) content.getGraphics());
 		painter.drawImage(image, 0, 0, Painter.LT);
 	}
@@ -75,7 +76,8 @@ public class Image {
 			painter = new Painter((Graphics2D) content.getGraphics());
 			if (content.getColorModel() instanceof IndexColorModel) {
 				BufferedImage temp = content;
-				content = new BufferedImage(temp.getWidth(), temp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				content = new BufferedImage(temp.getWidth(), temp.getHeight(),
+						BufferedImage.TYPE_INT_ARGB);
 				content.getGraphics().drawImage(temp, 0, 0, null);
 				painter = new Painter((Graphics2D) content.getGraphics());
 			}
@@ -94,19 +96,12 @@ public class Image {
 	 * @return 半透明处理后的图像
 	 */
 	public Image alpha(float alpha) {
-		long t0 = System.currentTimeMillis();
 		Image image = new Image(this.getWidth(), this.getHeight());
-		System.out.println("t1=" + (System.currentTimeMillis() - t0));
 		Graphics2D g2d = (Graphics2D) image.content.getGraphics();
-		System.out.println("t2=" + (System.currentTimeMillis() - t0));
 		float[] scales = { 1.0f, 1.0f, 1.0f, alpha };
-		System.out.println("t3=" + (System.currentTimeMillis() - t0));
 		float[] offsets = new float[4];
-		System.out.println("t4=" + (System.currentTimeMillis() - t0));
 		RescaleOp rop = new RescaleOp(scales, offsets, null);
-		System.out.println("t5=" + (System.currentTimeMillis() - t0));
 		g2d.drawImage(this.content, rop, 0, 0);
-		System.out.println("t6=" + (System.currentTimeMillis() - t0));
 		return image;
 	}
 
@@ -162,7 +157,8 @@ public class Image {
 	 * @param y
 	 *            指定点y坐标
 	 */
-	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight, int x, int y) {
+	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight,
+			int x, int y) {
 		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
 	}
 
@@ -286,8 +282,10 @@ public class Image {
 		}
 		double radian = Math.toRadians(angle);
 		// 计算旋转后的图片的宽高
-		int w = (int) (Math.abs(this.getWidth() * Math.cos(radian)) + Math.abs(this.getHeight() * Math.sin(radian)));
-		int h = (int) (Math.abs(this.getWidth() * Math.sin(radian)) + Math.abs(this.getHeight() * Math.cos(radian)));
+		int w = (int) (Math.abs(this.getWidth() * Math.cos(radian)) + Math
+				.abs(this.getHeight() * Math.sin(radian)));
+		int h = (int) (Math.abs(this.getWidth() * Math.sin(radian)) + Math
+				.abs(this.getHeight() * Math.cos(radian)));
 		// 计算偏移量
 		int tx = 0, ty = 0;
 		if (angle > 0 && angle <= 90) {
@@ -295,12 +293,13 @@ public class Image {
 			tx = (int) (this.getHeight() * Math.sin(radian));
 			ty = 0;
 		} else if (angle > 90 && angle <= 180) {
-			tx = (int) (this.getHeight() * Math.cos(radian - Math.PI / 2) + this.getWidth()
-					* Math.sin(radian - Math.PI / 2));
+			tx = (int) (this.getHeight() * Math.cos(radian - Math.PI / 2) + this
+					.getWidth() * Math.sin(radian - Math.PI / 2));
 			ty = (int) (this.getHeight() * Math.sin(radian - Math.PI / 2));
 		} else if (angle > 180 && angle <= 270) {
 			tx = (int) (this.getWidth() * Math.cos(radian - Math.PI));
-			ty = (int) (this.getWidth() * Math.sin(radian - Math.PI) + this.getHeight() * Math.cos(radian - Math.PI));
+			ty = (int) (this.getWidth() * Math.sin(radian - Math.PI) + this
+					.getHeight() * Math.cos(radian - Math.PI));
 		} else if (angle > 270 && angle < 360) {
 			tx = 0;
 			ty = (int) (this.getWidth() * Math.cos(radian - Math.PI * 3 / 2));
