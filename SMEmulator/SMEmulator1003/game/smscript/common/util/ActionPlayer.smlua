@@ -296,3 +296,106 @@ function clsShakeAction:update()
     self.lastShakeTime=curTime
   end
 end
+
+--==================================================
+--[[
+  description:淡入淡出动作
+  author:wp_g4
+  date:2012/05/09
+--]]
+
+--结构定义
+clsFadeAction={}
+setmetatable(clsFadeAction,clsAction)
+clsFadeAction.__index = clsFadeAction
+
+--字段定义
+clsFadeAction.TYPE_LINEAR=0			--淡入淡出类型：线性
+clsFadeAction.TYPE_ACCELERATE=1		--淡入淡出类型：加速
+clsFadeAction.TYPE_DECELERATE=2		--淡入淡出类型：减速
+
+clsFadeAction.startAlpha=nil		--淡入淡出起点的alpha坐标
+clsFadeAction.endAlpha=nil			--淡入淡出终点的alpha坐标
+clsFadeAction.time=nil				--淡入淡出的时间
+clsFadeAction.type=nil  			--淡入淡出的类型
+
+clsFadeAction.startTime=nil
+
+-- 构造
+function clsFadeAction:new(endAlpha,time,type)
+  local self={}
+  setmetatable(self,clsFadeAction)
+  self.endAlpha=endAlpha
+  self.time=time
+  if type==nil then
+    self.type=clsFadeAction.TYPE_LINEAR
+  else
+    self.type=type
+  end
+  return self
+end
+
+--设置目标
+function clsFadeAction:setTarget(target)
+  self.target=target
+  self.startAlpha=target.alpha
+end
+
+--修改坐标
+function clsFadeAction:modifyAlpha(alpha)
+  if self.endAlpha-self.startAlpha>=0 then
+    --淡入
+    if alpha>=self.endAlpha then
+      self.target.alpha=self.endAlpha
+    else
+      self.target.alpha=alpha
+    end
+  else
+    --淡出
+    if alpha<=self.endAlpha then
+      self.target.alpha=self.endAlpha
+    else
+      self.target.alpha=alpha
+    end
+  end
+  if self.target.alpha==self.endAlpha then
+    self.dead=true
+    smLog:info("淡入淡出结束")
+  end
+end
+
+--更新
+function clsFadeAction:update()
+  --更新target的坐标
+  if self.startTime==nil then
+    --尚未开始淡入淡出
+    self.startTime=Game:getTime()
+  end
+  --根据当前时间和淡入淡出类型计算当前target的坐标
+  if self.type==clsFadeAction.TYPE_LINEAR then
+    --(1) 线性淡入淡出
+    local v=(self.endAlpha-self.startAlpha)/self.time		--速度
+    local delta=Game:getTime()-self.startTime
+    local alpha=self.startAlpha+delta*v
+    self:modifyAlpha(alpha)
+  elseif self.type==clsFadeAction.TYPE_ACCELERATE then
+    --(2) 加速运动
+    local v=(self.endAlpha-self.startAlpha)/self.time		--速度
+    local a=2*v/self.time									--加速度(终点速度是起点速度的3倍)
+    local delta=Game:getTime()-self.startTime
+    local alpha=self.startAlpha+v*delta+delta*delta*a/2
+    self:modifyAlpha(alpha)
+  elseif self.type==clsFadeAction.TYPE_DECELERATE then
+    --(3) 减速运动
+    local v=(self.endAlpha-self.startAlpha)/self.time		--速度
+    local a=-2*v/self.time									--加速度(终点速度是起点速度的3倍)
+    local delta=Game:getTime()-self.startTime
+    local alpha=self.startAlpha+3*v*delta+delta*delta*a/2
+    self:modifyAlpha(alpha)
+  else
+    --未知的淡入淡出类型
+    smLog:info("未知的淡入淡出类型")
+    self.dead=true
+    return
+  end
+end
