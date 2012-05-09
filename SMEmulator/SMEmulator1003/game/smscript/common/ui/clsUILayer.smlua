@@ -97,6 +97,10 @@ function clsUILayer:paint(painter)
     local alpha=painter:getAlpha()
     painter:setAlpha(alpha*self.alpha)
   end
+  --(+2)处理scale
+  if self.scale~=1 then
+    painter:scale(self.scale)
+  end
   --绘制自身
   self:paintLayer(painter)
   --绘制子Layer
@@ -105,6 +109,10 @@ function clsUILayer:paint(painter)
   if self.alpha~=1 then
     local alpha=painter:getAlpha()
     painter:setAlpha(alpha/self.alpha)
+  end
+  --(-2)还原scale
+  if self.scale~=1 then
+    painter:scale(1/self.scale)
   end
 end
 
