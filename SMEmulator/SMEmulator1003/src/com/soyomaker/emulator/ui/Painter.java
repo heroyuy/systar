@@ -18,19 +18,19 @@ public class Painter {
 	/**
 	 * 锚点：水平左对齐，竖向顶对齐
 	 */
-	public static final Anchor LT = new Anchor(0, 0);
+	public static final Anchor LT = new Anchor(0.0f, 0.0f);
 	/**
 	 * 锚点：水平左对齐，竖向居中对齐
 	 */
-	public static final Anchor LV = new Anchor(0, 0.5f);
+	public static final Anchor LV = new Anchor(0.0f, 0.5f);
 	/**
 	 * 锚点：水平左对齐，竖向底对齐
 	 */
-	public static final Anchor LB = new Anchor(0, 1);
+	public static final Anchor LB = new Anchor(0.0f, 1.0f);
 	/**
 	 * 锚点：水平居中对齐，竖向顶对齐
 	 */
-	public static final Anchor HT = new Anchor(0.5f, 0);
+	public static final Anchor HT = new Anchor(0.5f, 0.0f);
 	/**
 	 * 锚点：水平居中对齐，竖向居中对齐
 	 */
@@ -38,19 +38,19 @@ public class Painter {
 	/**
 	 * 锚点：水平居中对齐，竖向底对齐
 	 */
-	public static final Anchor HB = new Anchor(0.5f, 1);
+	public static final Anchor HB = new Anchor(0.5f, 1.0f);
 	/**
 	 * 锚点：水平右对齐，竖向顶对齐
 	 */
-	public static final Anchor RT = new Anchor(1, 0);
+	public static final Anchor RT = new Anchor(1.0f, 0.0f);
 	/**
 	 * 锚点：水平右对齐，竖向居中对齐
 	 */
-	public static final Anchor RV = new Anchor(1, 0.5f);
+	public static final Anchor RV = new Anchor(1.0f, 0.5f);
 	/**
 	 * 锚点：水平右对齐，竖向底对齐
 	 */
-	public static final Anchor RB = new Anchor(1, 1);
+	public static final Anchor RB = new Anchor(1.0f, 1.0f);
 
 	private Graphics2D graphics = null;// 图形上下文
 	private Point point = null;// 原点
