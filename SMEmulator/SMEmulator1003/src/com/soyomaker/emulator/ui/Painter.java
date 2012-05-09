@@ -18,39 +18,39 @@ public class Painter {
 	/**
 	 * 锚点：水平左对齐，竖向顶对齐
 	 */
-	public static final Anchor LT = new Anchor(0.0f, 0.0f);
+	public static final int LT = 0;
 	/**
 	 * 锚点：水平左对齐，竖向居中对齐
 	 */
-	public static final Anchor LV = new Anchor(0.0f, 0.5f);
+	public static final int LV = 1;
 	/**
 	 * 锚点：水平左对齐，竖向底对齐
 	 */
-	public static final Anchor LB = new Anchor(0.0f, 1.0f);
+	public static final int LB = 2;
 	/**
 	 * 锚点：水平居中对齐，竖向顶对齐
 	 */
-	public static final Anchor HT = new Anchor(0.5f, 0.0f);
+	public static final int HT = 3;
 	/**
 	 * 锚点：水平居中对齐，竖向居中对齐
 	 */
-	public static final Anchor HV = new Anchor(0.5f, 0.5f);
+	public static final int HV = 4;
 	/**
 	 * 锚点：水平居中对齐，竖向底对齐
 	 */
-	public static final Anchor HB = new Anchor(0.5f, 1.0f);
+	public static final int HB = 5;
 	/**
 	 * 锚点：水平右对齐，竖向顶对齐
 	 */
-	public static final Anchor RT = new Anchor(1.0f, 0.0f);
+	public static final int RT = 6;
 	/**
 	 * 锚点：水平右对齐，竖向居中对齐
 	 */
-	public static final Anchor RV = new Anchor(1.0f, 0.5f);
+	public static final int RV = 7;
 	/**
 	 * 锚点：水平右对齐，竖向底对齐
 	 */
-	public static final Anchor RB = new Anchor(1.0f, 1.0f);
+	public static final int RB = 8;
 
 	private Graphics2D graphics = null;// 图形上下文
 	private Point point = null;// 原点
@@ -113,10 +113,57 @@ public class Painter {
 	 *            锚点
 	 * @return 新的坐标
 	 */
-	private Point convert(int x, int y, int width, int height, Anchor anchor) {
-		float offsetX = width * anchor.getH();
-		float offsetY = height * anchor.getV();
-		return new Point((int) (x - offsetX), (int) (y - offsetY));
+	private int[] convert(int x, int y, int width, int height, int anchor) {
+		int[] xy = { 0, 0 };
+		switch (anchor) {
+		case Painter.LT: {
+			xy[0] = x;
+			xy[1] = y;
+		}
+			break;
+		case Painter.LV: {
+			xy[0] = x;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.LB: {
+			xy[0] = x;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.HT: {
+			xy[0] = x - width / 2;
+			xy[1] = y;
+		}
+			break;
+		case Painter.HV: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.HB: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.RT: {
+
+			xy[0] = x - width;
+			xy[1] = y;
+		}
+			break;
+		case Painter.RV: {
+			xy[0] = x - width;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.RB: {
+			xy[0] = x - width;
+			xy[1] = y - height;
+		}
+			break;
+		}
+		return xy;
 	}
 
 	/**
@@ -154,13 +201,12 @@ public class Painter {
 	 * @param anchor
 	 *            锚点
 	 */
-	public void drawImage(Image img, int x, int y, Anchor anchor) {
+	public void drawImage(Image img, int x, int y, int anchor) {
 		if (img == null) {
 			return;
 		}
-		Point location = convert(x, y, img.getWidth(), img.getHeight(), anchor);
-		graphics.drawImage(img.getContent(), location.getX(), location.getY(),
-				null);
+		int[] xy = convert(x, y, img.getWidth(), img.getHeight(), anchor);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], null);
 	}
 
 	/**
@@ -184,14 +230,13 @@ public class Painter {
 	 *            锚点
 	 */
 	public void drawImage(Image img, int srcx, int srcy, int width, int height,
-			int x, int y, Anchor anchor) {
+			int x, int y, int anchor) {
 		if (img == null) {
 			return;
 		}
-		Point location = convert(x, y, img.getWidth(), img.getHeight(), anchor);
-		graphics.drawImage(img.getContent(), location.getX(), location.getY(),
-				location.getX() + width, location.getY() + height, srcx, srcy,
-				srcx + width, srcy + height, null);
+		int[] xy = convert(x, y, width, height, anchor);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1]
+				+ height, srcx, srcy, srcx + width, srcy + height, null);
 	}
 
 	/**
@@ -272,9 +317,9 @@ public class Painter {
 	 * @param anchor
 	 *            锚点
 	 */
-	public void drawString(String str, int x, int y, Anchor anchor) {
-		Point location = convert(x, y, stringWidth(str), getTextSize(), anchor);
-		graphics.drawString(str, location.getX(), location.getY()
+	public void drawString(String str, int x, int y, int anchor) {
+		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
+		graphics.drawString(str, xy[0], xy[1]
 				- graphics.getFontMetrics().getDescent() + getTextSize());
 	}
 
