@@ -3,6 +3,7 @@ package.path = package.path .. ";"..Game.path.."/smscript/common/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/system/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/ui/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/util/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/common/action/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/data/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/layers/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/scenes/?.smlua"
@@ -29,7 +30,12 @@ require("clsAStar")
 require("Notifier")
 require("Scheduler")
 require("AnimationPlayer")
+
+--common\action
 require("ActionPlayer")
+require("clsFadeAction")
+require("clsMoveAction")
+require("clsShakeAction")
 
 --data
 require("Const")

@@ -1,0 +1,59 @@
+--[[
+  description:动作
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+--结构定义
+clsAction={}
+clsAction.__index = clsAction
+
+--字段定义
+clsAction.target=nil			--动作的目标
+clsAction.dead=false			--动作是否结束
+
+-- 构造
+function clsAction:new()
+  local self={}
+  setmetatable(self,clsAction)
+  return self
+end
+
+--设置目标
+function clsAction:setTarget(target)
+  self.target=target
+end
+
+--更新
+function clsAction:update()
+  --根据具体action更新target的属性
+end
+
+--==================================================
+--[[
+  description:动作播放器
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+ActionPlayer={}
+
+ActionPlayer.actionList={}					--动作列表
+
+--播放动作
+function ActionPlayer:run(action)
+  self.actionList[tostring(action)]=action
+  action.dead=false
+end
+
+--更新
+function ActionPlayer:update()
+  for k,action in pairs(self.actionList) do
+    if action.dead then
+      self.actionList[k]=nil
+      smLog:info("移除动作")
+    else
+      action:update()
+    end
+  end
+end

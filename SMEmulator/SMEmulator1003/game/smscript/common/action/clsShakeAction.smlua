@@ -1,0 +1,107 @@
+--[[
+  description:震动动作
+  author:wp_g4
+  date:2012/05/08
+--]]
+
+--结构定义
+clsShakeAction={}
+setmetatable(clsShakeAction,clsAction)
+clsShakeAction.__index = clsShakeAction
+
+--字段定义
+clsShakeAction.TYPE_HORIZONTAL=0	--水平震动
+clsShakeAction.TYPE_VERTICAL=1		--竖向震动
+clsShakeAction.TYPE_DISORDER=2		--混乱震动
+
+clsShakeAction.startX=nil			--震动起点的X坐标
+clsShakeAction.startY=nil			--震动起点的Y坐标
+
+clsShakeAction.range=nil			--震动幅度
+clsShakeAction.period=nil  			--震动周期
+clsShakeAction.times=nil			--震动次数
+clsShakeAction.type=nil  			--震动类型
+
+clsShakeAction.lastShakeTime=nil	--上次震动时间
+clsShakeAction.shakeDirection=1		--震动方向（1为正向 -1为负向）
+
+clsShakeAction.startTime=nil
+
+-- 构造
+function clsShakeAction:new(range,period,times,type)
+  local self={}
+  setmetatable(self,clsShakeAction)
+  self.range=range
+  self.period=period
+  if times<0 then
+    self.times=99999999
+  else
+    self.times=times
+  end
+  if type==nil then
+    self.type=clsShakeAction.TYPE_HORIZONTAL
+  else
+    self.type=type
+  end
+  return self
+end
+
+--设置目标
+function clsShakeAction:setTarget(target)
+  self.target=target
+  self.startX=target.x
+  self.startY=target.y
+end
+
+--修改坐标
+function clsShakeAction:modifyLocation()
+  --根据震动类型改变target坐标
+  if self.type==clsShakeAction.TYPE_HORIZONTAL then
+    --水平震动
+    self.target.x=self.target.x+self.shakeDirection*self.range
+    if self.target.x==self.startX+self.range then
+      self.shakeDirection=-1
+    elseif self.target.x==self.startX-self.range then
+      self.shakeDirection=1
+    end
+  elseif self.type==clsShakeAction.TYPE_VERTICAL then
+    --竖向震动
+    self.target.y=self.target.y+self.shakeDirection*self.range
+    if self.target.y==self.startY+self.range then
+      self.shakeDirection=-1
+    elseif self.target.y==self.startY-self.range then
+      self.shakeDirection=1
+    end
+  elseif self.type==clsShakeAction.TYPE_DISORDER then
+    --混乱震动
+    local detalX=math.random(-self.range,self.range)
+    local detalY=math.random(-self.range,self.range)
+    self.target.x,self.target.y=self.startX+detalX,self.startY+detalY
+  else
+    --未知的震动类型
+    smLog:info("未知的震动类型")
+    self.dead=true
+  end
+end
+
+--更新
+function clsShakeAction:update()
+  if self.times<=0 then
+    self.dead=true
+    smLog:info("震动结束")
+    --还原target坐标
+    self.target.x,self.target.y=self.startX,self.startY
+    return
+  end
+  local curTime=Game:getTime()
+  --动作尚未执行则将self.lastShakeTime设置为-self.period以保证立即执行
+  if self.lastShakeTime==nil then
+    self.lastShakeTime=-self.period
+  end
+  local delta=curTime-self.lastShakeTime
+  if delta>=self.period then
+    self:modifyLocation()
+    self.times=self.times-1
+    self.lastShakeTime=curTime
+  end
+end
