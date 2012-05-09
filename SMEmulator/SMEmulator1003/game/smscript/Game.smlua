@@ -28,7 +28,7 @@ function Game:onStart()
   --初始化皮肤
   Skin:init(Dictionary.config.skin)
   --定制任务
-  Scheduler:scheduleTask(ActionPlayer,"update",20,-1)  --TODO此处应该是 [1000/额定FPS] 或者 Scheduler支持每帧更新
+  Scheduler:scheduleTask(ActionPlayer,"update",40,-1)  --TODO此处应该是 [1000/额定FPS] 或者 Scheduler支持每帧更新
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end

@@ -36,6 +36,7 @@ require("ActionPlayer")
 require("clsFadeAction")
 require("clsMoveAction")
 require("clsRotateAction")
+require("clsScaleAction")
 require("clsShakeAction")
 
 --data

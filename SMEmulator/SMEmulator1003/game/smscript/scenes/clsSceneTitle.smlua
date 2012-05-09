@@ -36,6 +36,7 @@ function clsSceneTitle:onStart()
   if Dictionary.config.titleBackground then
     bgLayer.image=Image:getImage(Dictionary.config.titleBackground)
   end
+  self.bgLayer=bgLayer
   --标题背景边框
   local titleBgFrame=clsUILayer:new(screenWidth/2,screenHeight-120,200,120)
   titleBgFrame.image=Skin:createBgWithFrame(200,120)
@@ -93,9 +94,10 @@ function clsSceneTitle:buttonTapped(target)
     --self.bgLayer:runAction(shake)
     --local fade=clsFadeAction:new(0.2,5000,clsFadeAction.TYPE_ACCELERATE)
     --self.bgLayer:runAction(fade)
-    local rotate=clsRotateAction:new(40*math.pi,20000,clsRotateAction.TYPE_LINEAR)
+    local rotate=clsRotateAction:new(-10*math.pi,4000,clsRotateAction.TYPE_LINEAR)
     self.bgLayer:runAction(rotate)
-    
+    local scale=clsScaleAction:new(0.1,4000,clsScaleAction.TYPE_LINEAR)
+    self.bgLayer:runAction(scale) 
   end
 end
 
