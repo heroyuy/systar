@@ -581,4 +581,28 @@ public class Painter {
 	public void scale(double scale) {
 		graphics.scale(scale, scale);
 	}
+
+	/**
+	 * 旋转
+	 * 
+	 * @param theta
+	 *            旋转的角度，以弧度为单位
+	 * @param x
+	 *            旋转原点的 x 坐标
+	 * @param y
+	 *            旋转原点的 y 坐标
+	 */
+	public void rotate(double theta, double x, double y) {
+		graphics.rotate(theta, x, y);
+	}
+
+	/**
+	 * 错切
+	 * 
+	 * @param shear
+	 *            错切率
+	 */
+	public void shear(double shear) {
+		graphics.shear(shear, shear);
+	}
 }
