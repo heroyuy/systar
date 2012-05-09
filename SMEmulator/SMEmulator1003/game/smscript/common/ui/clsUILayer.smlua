@@ -92,10 +92,20 @@ end
 
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
+  --(+1)处理alpha
+  if self.alpha~=1 then
+    local alpha=painter:getAlpha()
+    painter:setAlpha(alpha*self.alpha)
+  end
   --绘制自身
   self:paintLayer(painter)
   --绘制子Layer
   self:paintChildren(painter)
+  --(-1)还原alpha
+  if self.alpha~=1 then
+    local alpha=painter:getAlpha()
+    painter:setAlpha(alpha/self.alpha)
+  end
 end
 
 --绘制自身（lua层不应该调用此方法）
@@ -115,7 +125,6 @@ function clsUILayer:paintChildren(painter)
     if layer.visibility and layer.alpha~=0 then
       --设置坐标系
       local x,y=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
-      smLog:info("x="..x.." y="..y)
       painter:setBasePoint(x,y)
       --绘制子Layer
       layer:paint(painter)
