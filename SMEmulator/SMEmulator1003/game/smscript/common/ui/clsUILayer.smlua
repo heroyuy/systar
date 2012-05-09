@@ -21,7 +21,6 @@ clsUILayer.image = null;           			--图像
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
 clsUILayer.enabled = true;                 	--是否接收事件
-clsUILayer.clipBounds=true;              	--是否裁剪区域
 clsUILayer.delegate=nil                    	--事件委托
 
 clsUILayer.parent=nil                   	--父layer
@@ -112,19 +111,8 @@ function clsUILayer:paintChildren(painter)
     if layer.visibility then
       --设置坐标系
       painter:setBasePoint(layer.x,layer.y)
-      --设置裁剪区
-      local clip=nil;
-      layer.clipBounds=false
-      if layer.clipBounds then
-        clip=painter:getClip()
-        painter:clipRect(0,0,layer.width,layer.height)
-      end
       --绘制子Layer
       layer:paint(painter)
-      --还原裁剪区
-      if layer.clipBounds then
-        painter:forceClip(clip)
-      end
       --还原坐标系
       painter:setBasePoint(-layer.x,-layer.y)
     end
