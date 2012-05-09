@@ -24,8 +24,8 @@ function GameLayer:init()
   AnimationPlayer:atachToLayer(self.animationLayer)
   --事件层
   self.eventLayer=clsUILayer:new(0,0,Game:getWidth(),Game:getHeight())
-  self.eventLayer.enabled=false				--需要时接收事件
-  self.eventLayer.visibility=false			--需要时显示
+  self.eventLayer.enabled=false					--需要时接收事件
+  self.eventLayer.visibility=false				--需要时显示
   
   self.rootLayer:addChild(self.sceneLayer)
   self.rootLayer:addChild(self.animationLayer)
@@ -44,8 +44,8 @@ function GameLayer:clear()
   self.sceneLayer:clear()
   self.animationLayer:clear()
   self.eventLayer:clear()
-  self.eventLayer.enabled=false				--需要时接收事件
-  self.eventLayer.visibility=false			--需要时显示
+  self.eventLayer.enabled=false					--需要时接收事件
+  self.eventLayer.visibility=false				--需要时显示
 end
 
 function GameLayer:addChildToScene(layer)
