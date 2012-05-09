@@ -1,7 +1,5 @@
 package com.soyomaker.emulator.app;
 
-import java.util.Random;
-
 import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
