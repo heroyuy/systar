@@ -412,7 +412,7 @@ public class Painter {
 		AffineTransform aty = new AffineTransform(1, 0, Math.sin(thetaY), Math.cos(thetaY), -Math.sin(thetaY) * y,
 				(1 - Math.cos(thetaY)) * y);
 		graphics.transform(aty);
-		double a = 0.25f;
+		double a = 0.25f;// 椭圆短半轴是长半轴的0.25倍
 		double cosx2 = Math.pow(Math.cos(thetaX), 2);
 		double sinx2 = Math.pow(Math.sin(thetaX), 2);
 		double lx = a / Math.sqrt(a * a * cosx2 + sinx2);
