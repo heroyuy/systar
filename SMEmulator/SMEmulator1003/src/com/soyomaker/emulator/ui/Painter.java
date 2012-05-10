@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.awt.image.RescaleOp;
 
 import com.soyomaker.emulator.utils.ColorFactory;
 
@@ -235,9 +236,29 @@ public class Painter {
 		if (img == null) {
 			return;
 		}
-		int[] xy = convert(x, y, width, height, anchor);
-		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1]
-				+ height, srcx, srcy, srcx + width, srcy + height, null);
+		this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y, anchor);
+	}
+
+	/**
+	 * 绘制图片
+	 * 
+	 * @param img
+	 *            要绘制的图片
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
+	 * @param rop
+	 *            RescaleOp对象
+	 */
+	public void drawImage(Image img, int x, int y, int anchor, RescaleOp rop) {
+		if (img == null) {
+			return;
+		}
+		int[] xy = convert(x, y, img.getWidth(), img.getHeight(), anchor);
+		graphics.drawImage(img.getContent(), rop, xy[0], xy[1]);
 	}
 
 	/**
@@ -375,6 +396,26 @@ public class Painter {
 	}
 
 	/**
+	 * 翻转
+	 * 
+	 * @param thetaX
+	 *            x向翻转角度
+	 * @param thetaY
+	 *            y向翻转角度
+	 * @param x
+	 *            基准点x坐标
+	 * @param y
+	 *            基准点y坐标
+	 */
+	public void flip(double thetaX, double thetaY, double x, double y) {
+//		 double cosX = Math.cos(thetaX);
+//		 double cosY = Math.cos(thetaY);
+//		 graphics.translate((1 - cosX) * x, (1 - cosY) * y);
+//		 graphics.scale(cosX, cosY);
+		graphics.shear(0, 5*Math.PI);
+	}
+
+	/**
 	 * 强制裁剪
 	 * 
 	 * @param clip
@@ -428,6 +469,15 @@ public class Painter {
 	public Color getColor() {
 		return ColorFactory.getInstance()
 				.parseInt(graphics.getColor().getRGB());
+	}
+
+	/**
+	 * 返回 上下文中的当前 Composite
+	 * 
+	 * @return 当前 Composite
+	 */
+	public Composite getComposite() {
+		return graphics.getComposite();
 	}
 
 	/**
@@ -582,6 +632,16 @@ public class Painter {
 	}
 
 	/**
+	 * 为 上下文设置 Composite。
+	 * 
+	 * @param composite
+	 *            用于呈现的 Composite 对象
+	 */
+	public void setComposite(Composite composite) {
+		graphics.setComposite(composite);
+	}
+
+	/**
 	 * 设置当前裁剪区
 	 * 
 	 * @param curClip
@@ -617,6 +677,70 @@ public class Painter {
 	}
 
 	/**
+	 * 变色
+	 * 
+	 * @param s
+	 *            缩放系数
+	 * @return RescaleOp对象
+	 */
+	public RescaleOp tint(float s) {
+		return tint(s, s, s, 0, 0, 0);
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param s
+	 *            缩放系数
+	 * @param t
+	 *            偏移量
+	 * @return RescaleOp对象
+	 */
+	public RescaleOp tint(float s, float t) {
+		return tint(s, s, s, t, t, t);
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param sr
+	 *            red分量缩放系数
+	 * @param sg
+	 *            green分量缩放系数
+	 * @param sb
+	 *            blue分量缩放系数
+	 * @return RescaleOp对象
+	 */
+	public RescaleOp tint(float sr, float sg, float sb) {
+		return tint(sr, sg, sb, 0, 0, 0);
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param sr
+	 *            red分量缩放系数
+	 * @param sg
+	 *            green分量缩放系数
+	 * @param sb
+	 *            blue分量缩放系数
+	 * @param tr
+	 *            red分量偏移值
+	 * @param tg
+	 *            green分量偏移值
+	 * @param tb
+	 *            blue分量偏移值
+	 * @return RescaleOp对象
+	 */
+	public RescaleOp tint(float sr, float sg, float sb, float tr, float tg,
+			float tb) {
+		float[] scales = new float[] { sr, sg, sb, 1.0f };
+		float[] offsets = new float[] { tr, tg, tb, 1.0f };
+		RescaleOp rop = new RescaleOp(scales, offsets, null);
+		return rop;
+	}
+
+	/**
 	 * 平移
 	 * 
 	 * @param tx
@@ -626,22 +750,6 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		graphics.translate(tx, ty);
-	}
-
-	public void tint(float s) {
-
-	}
-
-	public void tint(float s, float t) {
-
-	}
-
-	public void tint(float sr, float sg, float sb) {
-
-	}
-
-	public void tint(float sr, float sg, float sb, float tr, float tg, float tb) {
-
 	}
 
 }

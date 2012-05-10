@@ -35,7 +35,9 @@ public class Image {
 
 	private Painter painter = null;
 
-	/* ----------------------------- 构造 ----------------------------- */
+	private Image() {
+
+	}
 
 	/**
 	 * 根据指定的Image对象创建一个新的Image对象
@@ -71,7 +73,6 @@ public class Image {
 	 *            文件名
 	 */
 	public Image(String fileName) {
-		long t = System.currentTimeMillis();
 		try {
 			content = ImageIO.read(new File(fileName));
 			painter = new Painter((Graphics2D) content.getGraphics());
@@ -86,10 +87,7 @@ public class Image {
 		} catch (IOException ex) {
 			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		System.out.println("loadImage:" + (System.currentTimeMillis() - t));
 	}
-
-	/* ----------------------------- 获取属性 ----------------------------- */
 
 	/**
 	 * 半透明处理
@@ -164,8 +162,6 @@ public class Image {
 			int x, int y) {
 		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
 	}
-
-	/* ----------------------------- 图像处理 ----------------------------- */
 
 	/**
 	 * 翻转图像
@@ -332,7 +328,12 @@ public class Image {
 		return image;
 	}
 
-	/* ----------------------------- 辅助方法 ----------------------------- */
+	public Image getSubImage(int x, int y, int w, int h) {
+		Image res = new Image();
+		res.content = this.content.getSubimage(x, y, w, h);
+		res.painter = new Painter((Graphics2D) res.content.getGraphics());
+		return res;
+	}
 
 	/**
 	 * 变色处理

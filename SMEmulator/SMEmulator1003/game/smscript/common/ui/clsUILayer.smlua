@@ -21,6 +21,7 @@ clsUILayer.image = null;           			--图像
 clsUILayer.alpha=1.0               			--透明度
 clsUILayer.scale=1.0						--缩放比
 clsUILayer.rotate=0.0						--旋转角
+clsUILayer.flip={0,0}						--翻转角{x,y}
 
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
@@ -93,24 +94,30 @@ end
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
   local affineTransform=painter:getTransform()
-  --(+1)处理alpha
+  local composite=painter:getComposite()
+  --(1)处理alpha
   if self.alpha~=1 then
     local alpha=painter:getAlpha()
     painter:setAlpha(alpha*self.alpha)
   end
-  --(+2)处理scale
+  --(2)处理scale
   if self.scale~=1 then
     painter:scale(self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
-  --(+3)处理rotate
+  --(3)处理rotate
   if self.rotate~=0 then
     painter:rotate(self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
+  --(4)处理翻转
+  if self.flip[1]~=0 or self.flip[2]~=0 then
+    painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
   --绘制自身
   self:paintLayer(painter)
   --绘制子Layer
   self:paintChildren(painter)
   --还原特效变换
+  painter:setComposite(composite)
   painter:setTransform(affineTransform)
 end
 
