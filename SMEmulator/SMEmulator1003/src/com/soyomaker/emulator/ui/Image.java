@@ -71,10 +71,12 @@ public class Image {
 	 *            文件名
 	 */
 	public Image(String fileName) {
+		long t = System.currentTimeMillis();
 		try {
 			content = ImageIO.read(new File(fileName));
 			painter = new Painter((Graphics2D) content.getGraphics());
-			if (content.getColorModel() instanceof IndexColorModel) {
+			if (content.getColorModel() instanceof IndexColorModel
+					|| content.getType() != BufferedImage.TYPE_INT_ARGB) {
 				BufferedImage temp = content;
 				content = new BufferedImage(temp.getWidth(), temp.getHeight(),
 						BufferedImage.TYPE_INT_ARGB);
@@ -84,6 +86,7 @@ public class Image {
 		} catch (IOException ex) {
 			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		System.out.println("loadImage:" + (System.currentTimeMillis() - t));
 	}
 
 	/* ----------------------------- 获取属性 ----------------------------- */
