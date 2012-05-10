@@ -1,0 +1,128 @@
+--[[
+  description:翻转动作
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+--结构定义
+clsFlipAction={}
+setmetatable(clsFlipAction,clsAction)
+clsFlipAction.__index = clsFlipAction
+
+--字段定义
+clsFlipAction.TYPE_LINEAR=0				--翻转类型：线性
+clsFlipAction.TYPE_ACCELERATE=1			--翻转类型：加速
+clsFlipAction.TYPE_DECELERATE=2			--翻转类型：减速
+
+clsFlipAction.startFlipX=nil			--翻转起点的X坐标
+clsFlipAction.startFlipY=nil			--翻转起点的Y坐标
+clsFlipAction.endFlipX=nil				--翻转终点的X坐标
+clsFlipAction.endFlipY=nil				--翻转终点的Y坐标
+clsFlipAction.time=nil					--翻转的时间
+clsFlipAction.type=nil  				--翻转的类型
+
+clsFlipAction.startTime=nil
+
+-- 构造
+function clsFlipAction:new(flip,time,type)
+  local self={}
+  setmetatable(self,clsFlipAction)
+  self.endFlipX=flip[1]
+  self.endFlipY=flip[2]
+  self.time=time
+  if type==nil then
+    self.type=clsFlipAction.TYPE_LINEAR
+  else
+    self.type=type
+  end
+  return self
+end
+
+--设置目标
+function clsFlipAction:setTarget(target)
+  self.target=target
+  self.startFlipX=target.flip[1]
+  self.startFlipY=target.flip[2]
+end
+
+--修改坐标
+function clsFlipAction:modifyLocation(x,y)
+  if self.endFlipX-self.startFlipX>=0 then
+    --X方向正向翻转
+    if x>=self.endFlipX then
+      self.target.flip[1]=self.endFlipX
+    else
+      self.target.flip[1]=x
+    end
+  else
+    --X方向负向翻转
+    if x<=self.endFlipX then
+      self.target.flip[1]=self.endFlipX
+    else
+      self.target.flip[1]=x
+    end
+  end
+  if self.endFlipY-self.startFlipY>=0 then
+    --Y方向正向翻转
+    if y>=self.endFlipY then
+      self.target.flip[2]=self.endFlipY
+    else
+      self.target.flip[2]=y
+    end
+  else
+    --Y方向负向翻转
+    if y<=self.endFlipY then
+      self.target.flip[2]=self.endFlipY
+    else
+      self.target.flip[2]=y
+    end
+  end
+  if self.target.flip[1]==self.endFlipX and self.target.flip[2]==self.endFlipY then
+    self.dead=true
+    smLog:info("翻转结束")
+  end
+end
+
+--更新
+function clsFlipAction:update()
+  --更新target的坐标
+  if self.startTime==nil then
+    --尚未开始翻转
+    self.startTime=Game:getTime()
+  end
+  --根据当前时间和翻转类型计算当前target的坐标
+  if self.type==clsFlipAction.TYPE_LINEAR then
+    --(1) 线性翻转
+    local vx=(self.endFlipX-self.startFlipX)/self.time		--X方向速度
+    local vy=(self.endFlipY-self.startFlipY)/self.time		--Y方向速度
+    local delta=Game:getTime()-self.startTime
+    local x=self.startFlipX+delta*vx
+    local y=self.startFlipY+delta*vy
+    self:modifyLocation(x,y)
+  elseif self.type==clsFlipAction.TYPE_ACCELERATE then
+    --(2) 加速运动
+    local vx=(self.endFlipX-self.startFlipX)/self.time		--X方向速度
+    local vy=(self.endFlipY-self.startFlipY)/self.time		--Y方向速度
+    local ax=2*vx/self.time							--X方向加速度(终点速度是起点速度的3倍)
+    local ay=2*vy/self.time							--Y方向加速度
+    local delta=Game:getTime()-self.startTime
+    local x=self.startFlipX+vx*delta+delta*delta*ax/2
+    local y=self.startFlipY+vy*delta+delta*delta*ay/2
+    self:modifyLocation(x,y)
+  elseif self.type==clsFlipAction.TYPE_DECELERATE then
+    --(3) 减速运动
+    local vx=(self.endFlipX-self.startFlipX)/self.time		--X方向速度
+    local vy=(self.endFlipY-self.startFlipY)/self.time		--Y方向速度
+    local ax=-2*vx/self.time						--X方向加速度(终点速度是起点速度的3倍)
+    local ay=-2*vy/self.time						--Y方向加速度(终点速度是起点速度的3倍)
+    local delta=Game:getTime()-self.startTime
+    local x=self.startFlipX+3*vx*delta+delta*delta*ax/2
+    local y=self.startFlipY+3*vy*delta+delta*delta*ay/2
+    self:modifyLocation(x,y)
+  else
+    --未知的翻转类型
+    smLog:info("未知的翻转类型")
+    self.dead=true
+    return
+  end
+end

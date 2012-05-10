@@ -38,11 +38,11 @@ function clsSceneTitle:onStart()
   end
   self.bgLayer=bgLayer
   --标题背景边框
-  local titleBgFrame=clsUILayer:new(screenWidth/2,screenHeight-120,200,120)
+  local titleBgFrame=clsUILayer:new(screenWidth/2+100,screenHeight-60,200,120)
   titleBgFrame.image=Skin:createBgWithFrame(200,120)
   bgLayer:addChild(titleBgFrame)
   self.titleBgFrame=titleBgFrame
-  titleBgFrame.flip={2*math.pi/3,0}
+  titleBgFrame.anchor={1,1}
   --按钮
   local width=160
   local height=25
@@ -95,10 +95,12 @@ function clsSceneTitle:buttonTapped(target)
     --self.bgLayer:runAction(shake)
     --local fade=clsAlphaAction:new(0.2,5000,clsAlphaAction.TYPE_ACCELERATE)
     --self.bgLayer:runAction(fade)
-    local rotate=clsRotateAction:new(-10*math.pi,4000,clsRotateAction.TYPE_LINEAR)
-    self.bgLayer:runAction(rotate)
-    local scale=clsScaleAction:new(0.1,4000,clsScaleAction.TYPE_LINEAR)
-    self.bgLayer:runAction(scale) 
+    --local rotate=clsRotateAction:new(-10*math.pi,4000,clsRotateAction.TYPE_LINEAR)
+    --self.bgLayer:runAction(rotate)
+    --local scale=clsScaleAction:new(0.1,4000,clsScaleAction.TYPE_LINEAR)
+    --self.bgLayer:runAction(scale) 
+    local flip=clsFlipAction:new({8*math.pi,8*math.pi},8000,clsFlipAction.TYPE_LINEAR)
+    self.bgLayer:runAction(flip) 
   end
 end
 
