@@ -33,7 +33,7 @@ require("AnimationPlayer")
 
 --common\action
 require("ActionPlayer")
-require("clsFadeAction")
+require("clsAlphaAction")
 require("clsMoveAction")
 require("clsRotateAction")
 require("clsScaleAction")
