@@ -39,6 +39,48 @@ end
 
 --==================================================
 --[[
+  description:动作工厂
+  author:wp_g4
+  date:2012/05/11
+--]]
+
+require("clsPropertyAction")
+require("clsShakeAction")
+
+Action={}
+
+--淡入淡出动作
+function Action:newFadeAction(alpha,time,type)
+  return clsPropertyAction:new(alpha,time,type,"alpha")
+end
+
+--翻转动作
+function Action:newFlipAction(flip,time,type)
+  return clsPropertyAction:new(flip[1],time,type,"flip",1),clsPropertyAction:new(flip[2],time,type,"flip",2)
+end
+
+--移动动作
+function Action:newMoveAction(location,time,type)
+  return clsPropertyAction:new(location[1],time,type,"x"),clsPropertyAction:new(location[2],time,type,"y")
+end
+
+--旋转动作
+function Action:newRotateAction(rotate,time,type)
+  return clsPropertyAction:new(rotate,time,type,"rotate")
+end
+
+--缩放动作
+function Action:newScaleAction(scale,time,type)
+  return clsPropertyAction:new(scale,time,type,"scale")
+end
+
+--震动动作
+function Action:newShakeAction(range,interval,times,type)
+  return clsShakeAction:new(range,interval,times,type)
+end
+
+--==================================================
+--[[
   description:动作播放器
   author:wp_g4
   date:2012/05/07

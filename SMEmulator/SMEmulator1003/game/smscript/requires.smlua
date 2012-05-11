@@ -32,14 +32,7 @@ require("Scheduler")
 require("AnimationPlayer")
 
 --common\action
-require("ActionPlayer")
-require("clsPropertyAction")
-require("clsAlphaAction")
-require("clsFlipAction")
-require("clsMoveAction")
-require("clsRotateAction")
-require("clsScaleAction")
-require("clsShakeAction")
+require("Action")
 
 --data
 require("Const")

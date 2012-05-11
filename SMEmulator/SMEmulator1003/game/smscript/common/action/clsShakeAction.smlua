@@ -10,11 +10,15 @@ setmetatable(clsShakeAction,clsAction)
 clsShakeAction.__index = clsShakeAction
 
 --字段定义
+clsShakeAction.TYPE_HORIZONTAL=0	--类型：水平
+clsShakeAction.TYPE_VERTICAL=1		--类型：垂直
+clsShakeAction.TYPE_DISORDER=2		--类型：混乱
+
 clsShakeAction.startX=nil			--震动起点的X坐标
 clsShakeAction.startY=nil			--震动起点的Y坐标
 
 clsShakeAction.range=nil			--震动幅度
-clsShakeAction.period=nil  			--震动周期
+clsShakeAction.interval=nil  		--震动周期
 clsShakeAction.times=nil			--震动次数
 clsShakeAction.type=nil  			--震动类型
 
@@ -24,11 +28,11 @@ clsShakeAction.shakeDirection=1		--震动方向（1为正向 -1为负向）
 clsShakeAction.startTime=nil
 
 -- 构造
-function clsShakeAction:new(range,period,times,type)
+function clsShakeAction:new(range,interval,times,type)
   local self={}
   setmetatable(self,clsShakeAction)
   self.range=range
-  self.period=period
+  self.interval=interval
   if times<0 then
     self.times=99999999
   else
@@ -86,12 +90,12 @@ function clsShakeAction:update()
     return
   end
   local curTime=Game:getTime()
-  --动作尚未执行则将self.lastShakeTime设置为-self.period以保证立即执行
+  --动作尚未执行则将self.lastShakeTime设置为-self.interval以保证立即执行
   if self.lastShakeTime==nil then
-    self.lastShakeTime=-self.period
+    self.lastShakeTime=-self.interval
   end
   local delta=curTime-self.lastShakeTime
-  if delta>=self.period then
+  if delta>=self.interval then
     self:modifyLocation()
     self.times=self.times-1
     self.lastShakeTime=curTime
