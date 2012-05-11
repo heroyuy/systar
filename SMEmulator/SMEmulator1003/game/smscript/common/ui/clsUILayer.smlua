@@ -107,11 +107,11 @@ function clsUILayer:paint(painter)
     painter:scale(self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
   --(3)处理rotate
-  if self.rotate~=0 then
+  if math.mod(self.rotate,360)~=0 then
     painter:rotate(self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
-  --(4)处理翻转
-  if self.flip[1]~=0 or self.flip[2]~=0 then
+  --(4)处理flip
+  if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
     painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
   --绘制自身
@@ -152,6 +152,7 @@ end
 
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(x,y,type)
+  --TODO 事件应该根据特效做处理
   if type==UIConst.eventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
