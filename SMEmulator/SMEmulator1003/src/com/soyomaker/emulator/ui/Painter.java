@@ -66,8 +66,7 @@ public class Painter {
 	 */
 	public Painter(Graphics2D graphics) {
 		this.graphics = graphics;
-		((Graphics2D) this.graphics).setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
+		((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		point = new Point(0, 0);
 		setTextSize(16);
@@ -96,8 +95,7 @@ public class Painter {
 	 *            区域
 	 */
 	public void clipRect(Rect rect) {
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -204,11 +202,7 @@ public class Painter {
 	 *            锚点
 	 */
 	public void drawImage(Image img, int x, int y, int anchor) {
-		if (img == null) {
-			return;
-		}
-		int[] xy = convert(x, y, img.getWidth(), img.getHeight(), anchor);
-		graphics.drawImage(img.getContent(), xy[0], xy[1], null);
+		this.drawImage(img, x, y, anchor, null);
 	}
 
 	/**
@@ -231,12 +225,40 @@ public class Painter {
 	 * @param anchor
 	 *            锚点
 	 */
-	public void drawImage(Image img, int srcx, int srcy, int width, int height,
-			int x, int y, int anchor) {
+	public void drawImage(Image img, int srcx, int srcy, int width, int height, int x, int y, int anchor) {
 		if (img == null) {
 			return;
 		}
-		this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y, anchor);
+		this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y, anchor, null);
+	}
+
+	/**
+	 * 绘制图片的指定区域
+	 * 
+	 * @param img
+	 *            要绘制的图片
+	 * @param srcx
+	 *            指定区域的x坐标
+	 * @param srcy
+	 *            指定区域的y坐标
+	 * @param width
+	 *            指定区域的宽度
+	 * @param height
+	 *            指定区域的高度
+	 * @param x
+	 *            绘制位置的 x 坐标
+	 * @param y
+	 *            绘制位置的 y 坐标
+	 * @param anchor
+	 *            锚点
+	 * @param rop
+	 *            RescaleOp对象
+	 */
+	public void drawImage(Image img, int srcx, int srcy, int width, int height, int x, int y, int anchor, RescaleOp rop) {
+		if (img == null) {
+			return;
+		}
+		this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y, anchor, rop);
 	}
 
 	/**
@@ -341,8 +363,7 @@ public class Painter {
 	 */
 	public void drawString(String str, int x, int y, int anchor) {
 		int[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
-		graphics.drawString(str, xy[0], xy[1]
-				- graphics.getFontMetrics().getDescent() + getTextSize());
+		graphics.drawString(str, xy[0], xy[1] - graphics.getFontMetrics().getDescent() + getTextSize());
 	}
 
 	/**
@@ -412,14 +433,12 @@ public class Painter {
 		thetaX = Math.toRadians(thetaX);
 		thetaY = Math.toRadians(thetaY);
 		// x方向
-		AffineTransform atx = new AffineTransform(Math.cos(thetaX),
-				Math.sin(thetaX), 0, 1, (1 - Math.cos(thetaX)) * x,
+		AffineTransform atx = new AffineTransform(Math.cos(thetaX), Math.sin(thetaX), 0, 1, (1 - Math.cos(thetaX)) * x,
 				-Math.sin(thetaX) * x);
 		graphics.transform(atx);
 		// y方向
-		AffineTransform aty = new AffineTransform(1, 0, Math.sin(thetaY),
-				Math.cos(thetaY), -Math.sin(thetaY) * y, (1 - Math.cos(thetaY))
-						* y);
+		AffineTransform aty = new AffineTransform(1, 0, Math.sin(thetaY), Math.cos(thetaY), -Math.sin(thetaY) * y,
+				(1 - Math.cos(thetaY)) * y);
 		graphics.transform(aty);
 		double a = 0.25f;// 椭圆短半轴是长半轴的0.25倍
 		double cosx2 = Math.pow(Math.cos(thetaX), 2);
@@ -439,8 +458,7 @@ public class Painter {
 	 *            裁剪区
 	 */
 	public void forceClip(Rect clip) {
-		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(),
-				clip.getHeight());
+		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
 	}
 
 	/**
@@ -449,8 +467,7 @@ public class Painter {
 	 * @return 画笔的alpha值
 	 */
 	public float getAlpha() {
-		AlphaComposite alphacomposite = (AlphaComposite) graphics
-				.getComposite();
+		AlphaComposite alphacomposite = (AlphaComposite) graphics.getComposite();
 		float alpha = 1.0f;
 		if (alphacomposite != null) {
 			alpha = alphacomposite.getAlpha();
@@ -474,8 +491,7 @@ public class Painter {
 	 */
 	public Rect getClip() {
 		Rectangle rectangle = graphics.getClipBounds();
-		return new Rect(rectangle.x, rectangle.y, rectangle.width,
-				rectangle.height);
+		return new Rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	/**
@@ -484,8 +500,7 @@ public class Painter {
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return ColorFactory.getInstance()
-				.parseInt(graphics.getColor().getRGB());
+		return ColorFactory.getInstance().parseInt(graphics.getColor().getRGB());
 	}
 
 	/**
@@ -563,8 +578,7 @@ public class Painter {
 	 *            画笔的alpha值
 	 */
 	public void setAlpha(float alpha) {
-		AlphaComposite alphacomposite = AlphaComposite.getInstance(3,
-				(float) alpha);
+		AlphaComposite alphacomposite = AlphaComposite.getInstance(3, (float) alpha);
 		graphics.setComposite(alphacomposite);
 	}
 
@@ -624,8 +638,7 @@ public class Painter {
 		if (curClip != null) {
 			forceClip(curClip);
 		}
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight());
+		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -751,8 +764,7 @@ public class Painter {
 	 *            blue分量偏移值
 	 * @return RescaleOp对象
 	 */
-	public RescaleOp tint(float sr, float sg, float sb, float tr, float tg,
-			float tb) {
+	public RescaleOp tint(float sr, float sg, float sb, float tr, float tg, float tb) {
 		float[] scales = new float[] { sr, sg, sb, 1.0f };
 		float[] offsets = new float[] { tr, tg, tb, 1.0f };
 		RescaleOp rop = new RescaleOp(scales, offsets, null);

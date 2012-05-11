@@ -33,7 +33,6 @@ public class Event {
 	}
 
 	public String toString() {
-		return "Event{x=" + getX() + " y=" + getY() + " type=" + getType()
-				+ "}";
+		return "Event{x=" + getX() + " y=" + getY() + " type=" + getType() + "}";
 	}
 }

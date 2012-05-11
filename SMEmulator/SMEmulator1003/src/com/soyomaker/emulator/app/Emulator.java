@@ -54,8 +54,7 @@ public class Emulator extends JDialog implements IPlugin {
 
 	private void initGame() {
 		try {
-			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game")
-					.newInstance();
+			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game").newInstance();
 			UIScreen.getInstance().setGame(game);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -120,8 +119,7 @@ public class Emulator extends JDialog implements IPlugin {
 			JOptionPane.showMessageDialog(this, "请先打开工程");
 		} else {
 			this.setType(TYPE_PLUGIN);
-			GameInfo.getInstance().setGamePath(
-					AppData.getInstance().getCurProject().getPath());
+			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
 			this.setModal(true);
 			this.startGame();
 			this.setVisible(true);

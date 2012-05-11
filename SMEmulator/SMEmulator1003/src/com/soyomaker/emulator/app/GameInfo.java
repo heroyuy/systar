@@ -34,16 +34,11 @@ public class GameInfo {
 
 	private GameInfo() {
 		try {
-			XMLObject emulatorXMLObject = XMLParser
-					.parse(new File(CONFIG_PATH));
-			this.width = Integer.parseInt(emulatorXMLObject.getChild(0)
-					.getValue());
-			this.height = Integer.parseInt(emulatorXMLObject.getChild(1)
-					.getValue());
-			this.ratedFPS = Integer.parseInt(emulatorXMLObject.getChild(2)
-					.getValue());
-			this.showFPS = Boolean.parseBoolean(emulatorXMLObject.getChild(3)
-					.getValue());
+			XMLObject emulatorXMLObject = XMLParser.parse(new File(CONFIG_PATH));
+			this.width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
+			this.height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
+			this.ratedFPS = Integer.parseInt(emulatorXMLObject.getChild(2).getValue());
+			this.showFPS = Boolean.parseBoolean(emulatorXMLObject.getChild(3).getValue());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

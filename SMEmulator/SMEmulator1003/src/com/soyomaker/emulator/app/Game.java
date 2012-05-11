@@ -71,8 +71,7 @@ public class Game implements IGame, Runnable {
 					inputValue = null;
 				}
 				if (event != null) {
-					luaAdapter.onTouch(event.getX(), event.getY(),
-							event.getType());
+					luaAdapter.onTouch(event.getX(), event.getY(), event.getType());
 					event = null;
 				}
 				// 更新游戏
@@ -89,8 +88,7 @@ public class Game implements IGame, Runnable {
 				} else {
 					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
 					if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
-						SMLog.getInstance().info(
-								"FPS警告:" + gameInfo.getActualFps());
+						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
 					}
 				}
 			}
