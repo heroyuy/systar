@@ -10,10 +10,12 @@ setmetatable(clsPropertyAction,clsAction)
 clsPropertyAction.__index = clsPropertyAction
 
 --字段定义
+clsPropertyAction.propertyTable=nil			--参数 属性所属的table 大多数情况此值等于target 这取决于构造中的可变参数
 clsPropertyAction.propertyKey=nil			--参数 属性的key string或number
 clsPropertyAction.value=nil					--参数 值
 clsPropertyAction.time=nil					--参数 时间
 clsPropertyAction.type=nil  				--参数 类型
+clsPropertyAction.arg=nil					--参数中的可变参数列表
 
 clsPropertyAction.startValue=nil			--属性值起点
 clsPropertyAction.endValue=nil				--属性值终点
@@ -22,13 +24,13 @@ clsPropertyAction.v0=nil					--动作开始时速度
 clsPropertyAction.a=nil						--动作加速度
 
 -- 构造
-function clsPropertyAction:new(propertyKey,value,time,type)
+function clsPropertyAction:new(value,time,type,...)
   local self={}
   setmetatable(self,clsPropertyAction)
-  self.propertyKey=propertyKey
   self.value=value
   self.time=time
   self.type=type
+  self.arg=arg
   return self
 end
 
@@ -40,8 +42,18 @@ function clsPropertyAction:setTarget(target)
     self.dead=true
   end
   self.target=target
+  --从可变参数中分离出propertyTable和propertyKey
+  local n=table.getn(self.arg)
+  --<1>最后一个是propertyKey
+  self.propertyKey=self.arg[n]
+  table.remove(self.arg)
+  --<2>循环以确定propertyTable
+  self.propertyTable=self.target
+  for i,v in ipairs(self.arg) do
+    self.propertyTable=self.propertyTable[v]
+  end
   --(1)起始值
-  self.startValue=target[self.propertyKey]
+  self.startValue=self.propertyTable[self.propertyKey]
   --(2)终点值
   if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_ACCELERATE_TO 
        or self.type==clsAction.TYPE_DECELERATE_TO then
@@ -68,7 +80,7 @@ end
 
 --更新
 function clsPropertyAction:update()
-  --更新target的坐标
+  --更新的属性
   if self.t0==nil then
     --尚未开始属性
     self.t0=Game:getTime()
@@ -76,23 +88,22 @@ function clsPropertyAction:update()
   local delta=Game:getTime()-self.t0
   local value=self.startValue+self.v0*delta+1/2*self.a*delta*delta
   local v=self.v0+self.a*delta
-  smLog:info("v:"..v)
   if self.endValue-self.startValue>=0 then
     --增加
     if value>=self.endValue then
-      self.target[self.propertyKey]=self.endValue
+      self.propertyTable[self.propertyKey]=self.endValue
     else
-      self.target[self.propertyKey]=value
+      self.propertyTable[self.propertyKey]=value
     end
   else
     --减少
     if value<=self.endValue then
-      self.target[self.propertyKey]=self.endValue
+      self.propertyTable[self.propertyKey]=self.endValue
     else
-      self.target[self.propertyKey]=value
+      self.propertyTable[self.propertyKey]=value
     end
   end
-  if self.target[self.propertyKey]==self.endValue then
+  if self.propertyTable[self.propertyKey]==self.endValue then
     self.dead=true
     smLog:info("动作结束")
   end
