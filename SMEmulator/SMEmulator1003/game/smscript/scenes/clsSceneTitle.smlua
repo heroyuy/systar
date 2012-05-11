@@ -42,6 +42,7 @@ function clsSceneTitle:onStart()
   titleBgFrame.image=Skin:createBgWithFrame(200,120)
   bgLayer:addChild(titleBgFrame)
   self.titleBgFrame=titleBgFrame
+  titleBgFrame.tint={1,2,1,0,0,0}
   --按钮
   local width=160
   local height=25
