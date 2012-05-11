@@ -10,10 +10,6 @@ setmetatable(clsAlphaAction,clsAction)
 clsAlphaAction.__index = clsAlphaAction
 
 --字段定义
-clsAlphaAction.TYPE_LINEAR=0			--透明度类型：线性
-clsAlphaAction.TYPE_ACCELERATE=1		--透明度类型：加速
-clsAlphaAction.TYPE_DECELERATE=2		--透明度类型：减速
-
 clsAlphaAction.startAlpha=nil			--透明度起点的alpha坐标
 clsAlphaAction.endAlpha=nil				--透明度终点的alpha坐标
 clsAlphaAction.time=nil					--透明度的时间

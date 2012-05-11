@@ -10,10 +10,6 @@ setmetatable(clsScaleAction,clsAction)
 clsScaleAction.__index = clsScaleAction
 
 --字段定义
-clsScaleAction.TYPE_LINEAR=0			--缩放类型：线性
-clsScaleAction.TYPE_ACCELERATE=1		--缩放类型：加速
-clsScaleAction.TYPE_DECELERATE=2		--缩放类型：减速
-
 clsScaleAction.startScale=nil			--缩放起点的scale坐标
 clsScaleAction.endScale=nil				--缩放终点的scale坐标
 clsScaleAction.time=nil					--缩放的时间

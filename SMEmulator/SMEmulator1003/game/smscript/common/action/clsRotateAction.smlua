@@ -10,10 +10,6 @@ setmetatable(clsRotateAction,clsAction)
 clsRotateAction.__index = clsRotateAction
 
 --字段定义
-clsRotateAction.TYPE_LINEAR=0			--旋转类型：线性
-clsRotateAction.TYPE_ACCELERATE=1		--旋转类型：加速
-clsRotateAction.TYPE_DECELERATE=2		--旋转类型：减速
-
 clsRotateAction.startRotate=nil			--旋转起点的rotate坐标
 clsRotateAction.endRotate=nil			--旋转终点的rotate坐标
 clsRotateAction.time=nil				--旋转的时间

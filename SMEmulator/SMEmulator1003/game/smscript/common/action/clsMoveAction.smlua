@@ -10,10 +10,6 @@ setmetatable(clsMoveAction,clsAction)
 clsMoveAction.__index = clsMoveAction
 
 --字段定义
-clsMoveAction.TYPE_LINEAR=0			--移动类型：线性
-clsMoveAction.TYPE_ACCELERATE=1		--移动类型：加速
-clsMoveAction.TYPE_DECELERATE=2		--移动类型：减速
-
 clsMoveAction.startX=nil			--移动起点的X坐标
 clsMoveAction.startY=nil			--移动起点的Y坐标
 clsMoveAction.endX=nil				--移动终点的X坐标

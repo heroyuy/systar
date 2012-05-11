@@ -10,10 +10,6 @@ setmetatable(clsFlipAction,clsAction)
 clsFlipAction.__index = clsFlipAction
 
 --字段定义
-clsFlipAction.TYPE_LINEAR=0				--翻转类型：线性
-clsFlipAction.TYPE_ACCELERATE=1			--翻转类型：加速
-clsFlipAction.TYPE_DECELERATE=2			--翻转类型：减速
-
 clsFlipAction.startFlipX=nil			--翻转起点的X坐标
 clsFlipAction.startFlipY=nil			--翻转起点的Y坐标
 clsFlipAction.endFlipX=nil				--翻转终点的X坐标

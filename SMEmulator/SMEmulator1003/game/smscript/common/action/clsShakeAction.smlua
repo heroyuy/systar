@@ -10,10 +10,6 @@ setmetatable(clsShakeAction,clsAction)
 clsShakeAction.__index = clsShakeAction
 
 --字段定义
-clsShakeAction.TYPE_HORIZONTAL=0	--水平震动
-clsShakeAction.TYPE_VERTICAL=1		--竖向震动
-clsShakeAction.TYPE_DISORDER=2		--混乱震动
-
 clsShakeAction.startX=nil			--震动起点的X坐标
 clsShakeAction.startY=nil			--震动起点的Y坐标
 
