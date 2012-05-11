@@ -51,7 +51,6 @@ function clsPropertyAction:setTarget(target)
     --BY
     self.endValue=self.startValue+self.value
   end
-  smLog:info("startValue="..self.startValue.." endValue="..self.endValue.." time="..self.time.." type="..self.type)
   --(3)初始速度
   if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_LINEAR_BY then
     --线性
@@ -61,11 +60,10 @@ function clsPropertyAction:setTarget(target)
     self.v0=(self.endValue-self.startValue)/(3*self.time/2)
   else
     --减速
-    self.v0=(self.endValue-self.startValue)/(2*self.time/3)
+    self.v0=(self.endValue-self.startValue)/(2*self.time/3)  --注意，系数必需大于0.5
   end
   --(4)加速度
   self.a=2*(self.endValue-self.startValue-self.v0*self.time)/(self.time*self.time)
-  smLog:info("v0="..self.v0.." a="..self.a)
 end
 
 --更新
@@ -79,7 +77,6 @@ function clsPropertyAction:update()
   local value=self.startValue+self.v0*delta+1/2*self.a*delta*delta
   local v=self.v0+self.a*delta
   smLog:info("v:"..v)
-  smLog:info("modifyValue["..self.propertyKey.."]:"..value)
   if self.endValue-self.startValue>=0 then
     --增加
     if value>=self.endValue then
