@@ -23,11 +23,7 @@ function clsRotateAction:new(endRotate,time,type)
   setmetatable(self,clsRotateAction)
   self.endRotate=endRotate
   self.time=time
-  if type==nil then
-    self.type=clsRotateAction.TYPE_LINEAR
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 

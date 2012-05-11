@@ -34,11 +34,7 @@ function clsShakeAction:new(range,period,times,type)
   else
     self.times=times
   end
-  if type==nil then
-    self.type=clsShakeAction.TYPE_HORIZONTAL
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 

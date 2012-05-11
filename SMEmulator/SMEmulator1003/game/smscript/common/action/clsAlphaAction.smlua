@@ -23,11 +23,7 @@ function clsAlphaAction:new(endAlpha,time,type)
   setmetatable(self,clsAlphaAction)
   self.endAlpha=endAlpha
   self.time=time
-  if type==nil then
-    self.type=clsAlphaAction.TYPE_LINEAR
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 

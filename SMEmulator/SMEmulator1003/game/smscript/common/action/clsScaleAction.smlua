@@ -23,11 +23,7 @@ function clsScaleAction:new(endScale,time,type)
   setmetatable(self,clsScaleAction)
   self.endScale=endScale
   self.time=time
-  if type==nil then
-    self.type=clsScaleAction.TYPE_LINEAR
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 
@@ -68,20 +64,20 @@ function clsScaleAction:update()
     self.startTime=Game:getTime()
   end
   --根据当前时间和缩放类型计算当前target的坐标
-  if self.type==clsScaleAction.TYPE_LINEAR then
+  if self.type==clsScaleAction.TYPE_LINEAR_TO then
     --(1) 线性缩放
     local v=(self.endScale-self.startScale)/self.time		--速度
     local delta=Game:getTime()-self.startTime
     local scale=self.startScale+delta*v
     self:modifyScale(scale)
-  elseif self.type==clsScaleAction.TYPE_ACCELERATE then
+  elseif self.type==clsScaleAction.TYPE_ACCELERATE_TO then
     --(2) 加速运动
     local v=(self.endScale-self.startScale)/self.time		--速度
     local a=2*v/self.time									--加速度(终点速度是起点速度的3倍)
     local delta=Game:getTime()-self.startTime
     local scale=self.startScale+v*delta+delta*delta*a/2
     self:modifyScale(scale)
-  elseif self.type==clsScaleAction.TYPE_DECELERATE then
+  elseif self.type==clsScaleAction.TYPE_DECELERATE_TO then
     --(3) 减速运动
     local v=(self.endScale-self.startScale)/self.time		--速度
     local a=-2*v/self.time									--加速度(终点速度是起点速度的3倍)

@@ -96,10 +96,14 @@ function clsSceneTitle:buttonTapped(target)
     --self.bgLayer:runAction(fade)
     --local rotate=clsRotateAction:new(-5*360,4000,clsRotateAction.TYPE_LINEAR)
     --self.bgLayer:runAction(rotate)
-    --local scale=clsScaleAction:new(0.1,4000,clsScaleAction.TYPE_LINEAR)
-    --self.bgLayer:runAction(scale) 
-    local flip=clsFlipAction:new({2*360,0},4000,clsFlipAction.TYPE_LINEAR)
-    self.titleBgFrame:runAction(flip) 
+    --local scale=clsScaleAction:new(0.1,4000,clsScaleAction.TYPE_LINEAR_TO)
+    local scale=clsPropertyAction:new("x",100,4000,clsAction.TYPE_ACCELERATE_TO)
+    self.titleBgFrame:runAction(scale) 
+    local scale2=clsPropertyAction:new("y",120,4000,clsAction.TYPE_ACCELERATE_TO)
+    self.titleBgFrame:runAction(scale2) 
+    smLog:info("action-start")
+    --local flip=clsFlipAction:new({2*360,0},4000,clsFlipAction.TYPE_LINEAR)
+    --self.titleBgFrame:runAction(flip) 
   end
 end
 

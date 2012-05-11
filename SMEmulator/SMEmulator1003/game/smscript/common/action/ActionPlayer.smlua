@@ -9,9 +9,13 @@ clsAction={}
 clsAction.__index = clsAction
 
 --字段定义
-clsAction.TYPE_LINEAR=0			--透明度类型：线性
-clsAction.TYPE_ACCELERATE=1		--透明度类型：加速
-clsAction.TYPE_DECELERATE=2		--透明度类型：减速
+clsAction.TYPE_LINEAR_TO=0			--类型：线性、直到
+clsAction.TYPE_LINEAR_BY=1			--类型：线性、追加
+clsAction.TYPE_ACCELERATE_TO=2		--类型：加速、直到
+clsAction.TYPE_ACCELERATE_BY=3		--类型：加速、追加
+clsAction.TYPE_DECELERATE_TO=4		--类型：减速、直到
+clsAction.TYPE_DECELERATE_BY=5		--类型：减速、追加
+clsAction.TYPE_MAX=6				--类型编号最大值
 
 clsAction.target=nil			--动作的目标
 clsAction.dead=false			--动作是否结束

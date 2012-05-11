@@ -26,11 +26,7 @@ function clsMoveAction:new(endX,endY,time,type)
   self.endX=endX
   self.endY=endY
   self.time=time
-  if type==nil then
-    self.type=clsMoveAction.TYPE_LINEAR
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 

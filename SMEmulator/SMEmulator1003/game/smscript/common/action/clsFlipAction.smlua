@@ -26,11 +26,7 @@ function clsFlipAction:new(flip,time,type)
   self.endFlipX=flip[1]
   self.endFlipY=flip[2]
   self.time=time
-  if type==nil then
-    self.type=clsFlipAction.TYPE_LINEAR
-  else
-    self.type=type
-  end
+  self.type=type
   return self
 end
 
