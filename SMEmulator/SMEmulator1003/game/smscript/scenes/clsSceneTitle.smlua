@@ -89,9 +89,9 @@ function clsSceneTitle:buttonTapped(target)
     --游戏设置
     --local f=Action:newFadeAction(0.2,16000,clsAction.TYPE_LINEAR_TO)
     --self.titleBgFrame:runAction(f) 
-    local fx,fy=Action:newFlipAction({360,360},16000,clsAction.TYPE_LINEAR_TO)
-    self.titleBgFrame:runAction(fx) 
-    self.titleBgFrame:runAction(fy)
+    --local fx,fy=Action:newFlipAction({360,360},16000,clsAction.TYPE_LINEAR_TO)
+    --self.titleBgFrame:runAction(fx) 
+    --self.titleBgFrame:runAction(fy)
     --local mx,my=Action:newMoveAction({30,60},4000,clsAction.TYPE_LINEAR_TO)
     --self.titleBgFrame:runAction(mx) 
     --self.titleBgFrame:runAction(my) 
@@ -101,6 +101,8 @@ function clsSceneTitle:buttonTapped(target)
     --self.titleBgFrame:runAction(s)
     --local sh=Action:newShakeAction(5,20,1000,clsShakeAction.TYPE_DISORDER)
     --self.titleBgFrame:runAction(sh)
+    local tint=clsPropertyAction:new(2,4000,clsAction.TYPE_LINEAR_TO,"tint",1)
+    self.titleBgFrame:runAction(tint)
   end
 end
 

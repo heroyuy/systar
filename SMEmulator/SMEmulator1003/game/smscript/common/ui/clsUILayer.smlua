@@ -22,6 +22,7 @@ clsUILayer.alpha=1.0               			--透明度
 clsUILayer.scale=1.0						--缩放比
 clsUILayer.rotate=0.0						--旋转角
 clsUILayer.flip=nil							--翻转角{x,y}
+clsUILayer.tint=nil							--调色参数{sr,sg,sb,tr,tg,tb}
 
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
@@ -43,6 +44,7 @@ function clsUILayer:new(x,y,width,height)
   self.children=clsList:new()
   self.anchor={0.5,0.5}
   self.flip={0,0}
+  self.tint={1,1,1,0,0,0}
   return self
 end
 
@@ -125,13 +127,28 @@ end
 
 --绘制自身（lua层不应该调用此方法）
 function clsUILayer:paintLayer(painter)
-  if self.color then
-    painter:setColor(self.color);
-    painter:fillRect(0, 0, self.width, self.height);
+  if self.tint[1]==1 and self.tint[2]==1 and self.tint[3]==1 
+       and self.tint[4]==0 and self.tint[5]==0 and self.tint[6]==0 then
+    --不需要调色
+      if self.color then
+        painter:setColor(self.color);
+        painter:fillRect(0, 0, self.width, self.height);
+      end
+      if self.image then
+        painter:drawImage(self.image, 0, 0, 0)
+      end
+  else
+    --需要调色
+      if self.color then
+        painter:setColor(self.color);
+        painter:fillRect(0, 0, self.width, self.height);
+      end
+      if self.image then
+        local rop=painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
+        painter:drawImage(self.image, 0, 0, 0,rop)
+      end
   end
-  if self.image then
-    painter:drawImage(self.image, 0, 0, 0)
-  end
+
 end
 
 --绘制子Layer（lua层不应该调用此方法）
