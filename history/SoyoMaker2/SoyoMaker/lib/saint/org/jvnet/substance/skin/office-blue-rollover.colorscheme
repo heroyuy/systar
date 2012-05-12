@@ -1,0 +1,4 @@
+name=Office Blue Rollover
+extends=office-rollover.colorscheme
+kind=Light
+colorForeground=#15428B

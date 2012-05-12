@@ -1,0 +1,4 @@
+name=Office Blue Pressed
+extends=office-pressed.colorscheme
+kind=Light
+colorForeground=#15428B

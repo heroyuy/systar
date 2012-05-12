@@ -1,0 +1,4 @@
+name=Office Silver Selected
+extends=office-selected.colorscheme
+kind=Light
+colorForeground=#4C535C

@@ -1,0 +1,124 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.soyostar.io;
+
+import com.soyostar.model.map.CollideLayer;
+import com.soyostar.model.map.Layer;
+import com.soyostar.model.map.Map;
+import com.soyostar.model.map.Npc;
+import com.soyostar.model.map.SpriteLayer;
+import com.soyostar.model.map.TileLayer;
+import com.soyostar.proxy.SoftProxy;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+import org.dom4j.Attribute;
+import org.dom4j.VisitorSupport;
+import org.dom4j.io.SAXReader;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ *
+ * @author Administrator
+ */
+public class DefaultSoftMapWriter implements IMapWriter {
+
+    public void writeMap(Map map, String filename) throws Exception {
+        FileOutputStream fos = null;
+        DataOutputStream dos = null;
+
+        fos = new FileOutputStream(filename);
+        dos = new DataOutputStream(fos);
+
+        System.out.println("地图序号：" + map.getIndex());
+        dos.writeInt(map.getIndex());
+
+        System.out.println("地图名称：" + map.getName());
+        dos.writeUTF(map.getName());
+
+//        System.out.println("音乐名称：" + map.getMusicName());
+        dos.writeUTF(map.getMusicName());
+
+        dos.writeInt(map.getHeight());
+//        System.out.println("地图高度：" + map.getHeight());
+        dos.writeInt(map.getWidth());
+//        System.out.println("地图宽度：" + map.getWidth());
+        dos.writeInt(map.getTileWidth());
+//        System.out.println("瓷砖宽度：" + map.getTileWidth());
+        dos.writeInt(map.getTileHeight());
+//        System.out.println("瓷砖高度：" + map.getTileHeight());
+        int tilesetNums = map.getTileSets().size();
+        System.out.println("图集总数：" + tilesetNums);
+        dos.writeInt(tilesetNums);
+        for (int i = 0; i < tilesetNums; i++) {
+            dos.writeInt(map.getTileSets().get(i).getIndex());
+//            System.out.println("图集ID：" + map.getTileSets().get(i).getIndex());
+            dos.writeUTF(map.getTileSets().get(i).getName());
+//            System.out.println("图集名称：" + map.getTileSets().get(i).getName());
+            dos.writeUTF("\\image\\tileset\\" + map.getTileSets().get(i).getTilebmpFile());
+//            System.out.println("图集文件：" + map.getTileSets().get(i).getTilebmpFile());
+        }
+        int layerNums = map.getLayerArrayList().size();
+        System.out.println("图层总数：" + layerNums);
+        dos.writeInt(layerNums);
+        for (int i = 0; i < layerNums; i++) {
+//            System.out.println("Layer " + i);
+            if (map.getLayerArrayList().get(i) instanceof TileLayer) {
+                dos.writeByte(Layer.TILELAYER);
+                dos.writeUTF(map.getLayerArrayList().get(i).getName());
+//                System.out.println("TileLayer");
+                dos.writeInt(i);
+                for (int j = 0; j < map.getHeight(); j++) {
+                    for (int k = 0; k < map.getWidth(); k++) {
+                        if (((TileLayer) map.getLayerArrayList().get(i)).getTileAt(k, j) == null) {
+                            dos.writeInt(-1);
+                            continue;
+                        }
+                        dos.writeInt(((TileLayer) map.getLayerArrayList().get(i)).getTileAt(k, j).getTileSet().getIndex());
+                        dos.writeInt(((TileLayer) map.getLayerArrayList().get(i)).getTileAt(k, j).getIndex());
+                    }
+                }
+            } else if (map.getLayerArrayList().get(i) instanceof CollideLayer) {
+                dos.writeByte(Layer.COLLIDELAYER);
+                dos.writeUTF(map.getLayerArrayList().get(i).getName());
+//                System.out.println("CollideLayer");
+                dos.writeInt(i);
+                for (int j = 0; j < map.getHeight(); j++) {
+                    for (int k = 0; k < map.getWidth(); k++) {
+                        dos.writeBoolean(((CollideLayer) map.getLayerArrayList().get(i)).getCollideAt(k, j));
+                    }
+                }
+            } else if (map.getLayerArrayList().get(i) instanceof SpriteLayer) {
+                dos.writeByte(Layer.SPRITELAYER);
+                dos.writeUTF(map.getLayerArrayList().get(i).getName());
+//                System.out.println("SpriteLayer");
+                for (int j = 0; j < map.getHeight(); j++) {
+                    for (int k = 0; k < map.getWidth(); k++) {
+                        Npc npc = ((SpriteLayer) map.getLayerArrayList().get(i)).getNpcAt(k, j);
+                        if (npc != null) {
+                            dos.writeInt(npc.getIndex());
+                            INpcWriter npcWriter = new DefaultNpcWriter();
+                            npcWriter.writeNpc(npc, SoftProxy.getInstance().getCurProject().getPath() + File.separatorChar
+                                + "data" + File.separatorChar + "npc" + File.separatorChar + "npc" + npc.getIndex() + ".gat");
+                        } else {
+                            dos.writeInt(-1);
+                        }
+                    }
+                }
+            }
+        }
+        dos.close();
+        fos.close();
+    }
+}
