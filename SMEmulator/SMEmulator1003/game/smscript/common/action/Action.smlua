@@ -46,6 +46,7 @@ end
 
 require("clsPropertyAction")
 require("clsShakeAction")
+require("clsMultipleAction")
 
 Action={}
 
@@ -56,12 +57,21 @@ end
 
 --翻转动作
 function Action:newFlipAction(flip,time,type)
-  return clsPropertyAction:new(flip[1],time,type,"flip",1),clsPropertyAction:new(flip[2],time,type,"flip",2)
+  local res={}
+  for i=1,2 do
+    table.insert(res,clsPropertyAction:new(flip[i],time,type,"flip",i))
+  end
+  return clsMultipleAction:new(unpack(res))
 end
 
 --移动动作
 function Action:newMoveAction(location,time,type)
-  return clsPropertyAction:new(location[1],time,type,"x"),clsPropertyAction:new(location[2],time,type,"y")
+  local str={"x","y"}
+  local res={}
+  for i=1,2 do
+    table.insert(res,clsPropertyAction:new(location[i],time,type,str[i]))
+  end
+  return clsMultipleAction:new(unpack(res))
 end
 
 --旋转动作
@@ -72,6 +82,15 @@ end
 --缩放动作
 function Action:newScaleAction(scale,time,type)
   return clsPropertyAction:new(scale,time,type,"scale")
+end
+
+--变色动作
+function Action:newTintAction(tint,time,type)
+  local res={}
+  for i=1,6 do
+    table.insert(res,clsPropertyAction:new(tint[i],time,type,"tint",i))
+  end
+  return clsMultipleAction:new(unpack(res))
 end
 
 --震动动作
