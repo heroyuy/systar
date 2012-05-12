@@ -1737,10 +1737,25 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                         Integer key = (Integer) it.next();
                         Map map = AppData.getInstance().getCurProject().getMaps().get(key);
                         if (map != null) {
-                            AppMainFrame.this.gGrassPane.setText("正在保存地图:" + map);
+                            //AppMainFrame.this.gGrassPane.setText("正在保存地图:" + map);
                             IMapWriter softMapWriter = new DefaultMapLuaWriter();
                             softMapWriter.writeMap(map, AppData.getInstance().getCurProject().getPath() + File.separatorChar
                                     + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
+                        }
+                    }
+                    //保存NPC表
+                    INpcWriter npcWriter = new DefaultNpcLuaWriter();
+                    npcWriter.writeNpc(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                            + "data" + File.separatorChar + "npc.gat");
+                    //保存Script
+                    Iterator it2 = AppData.getInstance().getCurProject().getScripts().keySet().iterator();
+                    while (it2.hasNext()) {
+                        Integer key = (Integer) it2.next();
+                        Script script = AppData.getInstance().getCurProject().getScripts().get(key);
+                        if (script != null) {
+                            IScriptWriter scriptWriter = new DefaultScriptLuaWriter();
+                            scriptWriter.writeScript(script, AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                                    + "data" + File.separatorChar + "script" + File.separatorChar + "script" + (Configuration.Prefix.SCRIPT_MASK + script.getIndex() + 1) + ".gat");
                         }
                     }
                     logPrinter.v("保存引擎地图成功！");
@@ -1789,70 +1804,6 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
             }
         };
         executor.execute(task3);
-//
-//
-//
-//        Runnable task = new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                AppMainFrame.this.setCursor(waitCursor);
-//                AppMainFrame.this.gGrassPane.start();
-//                AppMainFrame.this.gGrassPane.setText("正在保存游戏数据...");
-//                try {
-//                    createGameDir();
-//                    //保存数据
-//                    AppData.getInstance().getCurProject().getDataManager().save();
-//                    logPrinter.v("save game maps start...");
-//                    //保存地图
-//                    Iterator it = AppData.getInstance().getCurProject().getMaps().keySet().iterator();
-//                    while (it.hasNext()) {
-//                        Integer key = (Integer) it.next();
-//                        Map map = AppData.getInstance().getCurProject().getMaps().get(key);
-//                        if (map != null) {
-//                            IMapWriter mapLuaWriter = new DefaultMapLuaWriter();
-//                            mapLuaWriter.writeMap(map, AppData.getInstance().getCurProject().getPath() + File.separatorChar
-//                                    + "data" + File.separatorChar + "map" + File.separatorChar + "map" + (Configuration.Prefix.MAP_MASK + map.getIndex() + 1) + ".gat");
-//                        }
-//                    }
-//                    logPrinter.v("save game maps finish!");
-//                    logPrinter.v("save game npcs start...");
-//                    //保存NPC表
-//                    INpcWriter npcWriter = new DefaultNpcLuaWriter();
-//                    npcWriter.writeNpc(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-//                            + "data" + File.separatorChar + "npc.gat");
-//                    logPrinter.v("save game npcs finish!");
-//                    logPrinter.v("save game scripts start...");
-//                    //保存Script
-//                    Iterator it2 = AppData.getInstance().getCurProject().getScripts().keySet().iterator();
-//                    while (it2.hasNext()) {
-//                        Integer key = (Integer) it2.next();
-//                        Script script = AppData.getInstance().getCurProject().getScripts().get(key);
-//                        if (script != null) {
-//                            IScriptWriter scriptWriter = new DefaultScriptLuaWriter();
-//                            scriptWriter.writeScript(script, AppData.getInstance().getCurProject().getPath() + File.separatorChar
-//                                    + "data" + File.separatorChar + "script" + File.separatorChar + "script" + (Configuration.Prefix.SCRIPT_MASK + script.getIndex() + 1) + ".gat");
-//                        }
-//                    }
-//                    logPrinter.v("save game scripts finish!");
-//                    logPrinter.v("save game animations start...");
-//                    //保存动画
-//                    IAnimationWriter aniWriter = new DefaultAnimationLuaWriter();
-//                    aniWriter.writeAnimation(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-//                            + "data" + File.separatorChar + "animation.gat");
-//                    logPrinter.v("save game animations finish!");
-//                    Notifier.getInstance().notifyEvent(EventIdConst.GAME_BUILD_SUCCESSFUL);
-//                    AppMainFrame.this.gGrassPane.setText("游戏数据保存成功");
-//                } catch (Exception ee) {
-//                    Notifier.getInstance().notifyEvent(EventIdConst.GAME_BUILD_FAILURE);
-//                    AppMainFrame.this.gGrassPane.setText("游戏数据保存失败");
-//                    ee.printStackTrace();
-//                }
-//                AppMainFrame.this.gGrassPane.stop();
-//                AppMainFrame.this.setCursor(normalCursor);
-//            }
-//        };
-//        executor.execute(task);
     }
     private long saveUseTime = 0;
 

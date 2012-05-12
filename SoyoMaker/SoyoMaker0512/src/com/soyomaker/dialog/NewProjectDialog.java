@@ -11,9 +11,10 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
-import com.soyomaker.project.Project;
-import java.io.File;
 import com.soyomaker.infomation.SoftInformation;
+import com.soyomaker.project.Project;
+import com.soyomaker.util.StringUtil;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,7 +37,6 @@ public class NewProjectDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(okButton);
     }
-    
     private Project project = null;
 
     /**
@@ -116,7 +116,7 @@ public class NewProjectDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(projectNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
+                        .addComponent(projectNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -124,7 +124,7 @@ public class NewProjectDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                        .addComponent(pathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pathButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -158,9 +158,21 @@ public class NewProjectDialog extends javax.swing.JDialog {
                     "项目名不能为空！");
             return;
         }
+        if (StringUtil.chechChinese(projectNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "项目名不能包含中文，请重新输入！");
+            projectNameTextField.setText("");
+            return;
+        }
         if (pathTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
                     "项目路径不能为空！");
+            return;
+        }
+        if (StringUtil.chechChinese(pathTextField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "项目路径不能包含中文，请重新输入！");
+            pathTextField.setText("");
             return;
         }
         File f = new java.io.File(pathTextField.getText() + File.separatorChar + projectNameTextField.getText());// 根据输入的路径新建一个文件
@@ -186,7 +198,13 @@ public class NewProjectDialog extends javax.swing.JDialog {
         projectFileChooser.showOpenDialog(this);// 显示“打开”文件对话框
         java.io.File file = projectFileChooser.getSelectedFile();
         if (file != null) {
-            pathTextField.setText(file.getPath());
+            if (!StringUtil.chechChinese(file.getPath())) {
+                pathTextField.setText(file.getPath());
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "项目路径不能包含中文，请重新输入！");
+                pathTextField.setText("");
+            }
         }
     }//GEN-LAST:event_pathButtonActionPerformed
     private AppData data = AppData.getInstance();

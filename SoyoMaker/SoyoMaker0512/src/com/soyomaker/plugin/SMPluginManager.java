@@ -93,6 +93,9 @@ public class SMPluginManager {
      * @throws DocumentException
      */
     public void readPluginDir(File file) throws IOException, ClassNotFoundException, DocumentException {
+        if (!file.exists()) {
+            file.mkdirs();
+        }
         pluginManager.readPluginDir(file);
         for (int i = 0; i < pluginManager.getPluginNum(); i++) {
             Plugin p = pluginManager.getPlugins().get(i);
