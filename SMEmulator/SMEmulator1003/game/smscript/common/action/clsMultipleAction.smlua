@@ -1,5 +1,5 @@
 --[[
-  description:复合动作(复合动作是一系列动作的集合，主这些动作同时开始，只有所有动作都结束，复合动作才结束)
+  description:复合动作(复合动作是一系列动作的集合，这些动作同时开始，只有所有动作都结束，复合动作才结束)
   author:wp_g4
   date:2012/05/12
 --]]
@@ -14,18 +14,18 @@ clsMultipleAction.actionList=nil				--复合动作的动作列表
 
 -- 构造
 function clsMultipleAction:new(...)
-  local self={}
+  local self=clsAction:new()
   setmetatable(self,clsMultipleAction)
   self.actionList=arg
   return self
 end
 
 --设置目标
-function clsMultipleAction:setTarget(target)
-  self.target=target
+function clsMultipleAction:reset()
   for i,v in ipairs(self.actionList) do
-    v:setTarget(target)
+    v:setTarget(self.target)
   end
+  self.dead=false
 end
 
 --更新
@@ -41,6 +41,7 @@ function clsMultipleAction:update()
   end
   self.dead=dead
   if self.dead then
+    smLog:info("复合动作结束")
     return
   end
   --(2)更新

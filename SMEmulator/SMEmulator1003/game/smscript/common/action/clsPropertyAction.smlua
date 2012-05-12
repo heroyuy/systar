@@ -25,7 +25,7 @@ clsPropertyAction.a=nil						--动作加速度
 
 -- 构造
 function clsPropertyAction:new(value,time,type,...)
-  local self={}
+  local self=clsAction:new()
   setmetatable(self,clsPropertyAction)
   self.value=value
   self.time=time
@@ -35,47 +35,50 @@ function clsPropertyAction:new(value,time,type,...)
 end
 
 --设置目标
-function clsPropertyAction:setTarget(target)
+function clsPropertyAction:reset()
   if self.type<0 or self.type>=clsAction.TYPE_MAX then
     --未知的属性类型
     smLog:info("未知的属性类型")
     self.dead=true
-  end
-  self.target=target
-  --从可变参数中分离出propertyTable和propertyKey
-  local n=table.getn(self.arg)
-  --<1>最后一个是propertyKey
-  self.propertyKey=self.arg[n]
-  table.remove(self.arg)
-  --<2>循环以确定propertyTable
-  self.propertyTable=self.target
-  for i,v in ipairs(self.arg) do
-    self.propertyTable=self.propertyTable[v]
-  end
-  --(1)起始值
-  self.startValue=self.propertyTable[self.propertyKey]
-  --(2)终点值
-  if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_ACCELERATE_TO 
-       or self.type==clsAction.TYPE_DECELERATE_TO then
-    --TO
-    self.endValue=self.value
   else
-    --BY
-    self.endValue=self.startValue+self.value
+    --从可变参数中分离出propertyTable和propertyKey
+    local n=table.getn(self.arg)
+    --<1>最后一个是propertyKey
+    self.propertyKey=self.arg[n]
+    --<2>循环以确定propertyTable
+    self.propertyTable=self.target
+    for i,v in ipairs(self.arg) do
+      if i<n then
+        self.propertyTable=self.propertyTable[v]
+      end
+    end
+    --(1)起始值
+    self.startValue=self.propertyTable[self.propertyKey]
+    --(2)终点值
+    if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_ACCELERATE_TO 
+         or self.type==clsAction.TYPE_DECELERATE_TO then
+      --TO
+      self.endValue=self.value
+    else
+      --BY
+      self.endValue=self.startValue+self.value
+    end
+    --(3)初始速度
+    if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_LINEAR_BY then
+      --线性
+      self.v0=(self.endValue-self.startValue)/self.time
+    elseif self.type==clsAction.TYPE_ACCELERATE_TO or self.type==clsAction.TYPE_ACCELERATE_BY then
+      --加速
+      self.v0=(self.endValue-self.startValue)/(3*self.time/2)
+    else
+      --减速
+      self.v0=(self.endValue-self.startValue)/(2*self.time/3)  --注意，系数必需大于0.5
+    end
+    --(4)加速度
+    self.a=2*(self.endValue-self.startValue-self.v0*self.time)/(self.time*self.time)
+    self.t0=nil
+    self.dead=false
   end
-  --(3)初始速度
-  if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_LINEAR_BY then
-    --线性
-    self.v0=(self.endValue-self.startValue)/self.time
-  elseif self.type==clsAction.TYPE_ACCELERATE_TO or self.type==clsAction.TYPE_ACCELERATE_BY then
-    --加速
-    self.v0=(self.endValue-self.startValue)/(3*self.time/2)
-  else
-    --减速
-    self.v0=(self.endValue-self.startValue)/(2*self.time/3)  --注意，系数必需大于0.5
-  end
-  --(4)加速度
-  self.a=2*(self.endValue-self.startValue-self.v0*self.time)/(self.time*self.time)
 end
 
 --更新

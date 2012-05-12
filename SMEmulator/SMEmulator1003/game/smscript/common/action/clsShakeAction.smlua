@@ -22,31 +22,32 @@ clsShakeAction.interval=nil  		--震动周期
 clsShakeAction.times=nil			--震动次数
 clsShakeAction.type=nil  			--震动类型
 
+clsShakeAction.remnantTimes=nil		--剩余震动次数
 clsShakeAction.lastShakeTime=nil	--上次震动时间
 clsShakeAction.shakeDirection=1		--震动方向（1为正向 -1为负向）
 
-clsShakeAction.startTime=nil
-
 -- 构造
 function clsShakeAction:new(range,interval,times,type)
-  local self={}
+  local self=clsAction:new()
   setmetatable(self,clsShakeAction)
   self.range=range
   self.interval=interval
-  if times<0 then
-    self.times=99999999
-  else
-    self.times=times
-  end
+  self.times=times
   self.type=type
   return self
 end
 
 --设置目标
-function clsShakeAction:setTarget(target)
-  self.target=target
-  self.startX=target.x
-  self.startY=target.y
+function clsShakeAction:reset()
+  self.startX=self.target.x
+  self.startY=self.target.y
+  if self.times<0 then
+    self.remnantTimes=99999999
+  else
+    self.remnantTimes=self.times
+  end
+  self.lastShakeTime=nil
+  self.dead=false
 end
 
 --修改坐标
@@ -82,7 +83,7 @@ end
 
 --更新
 function clsShakeAction:update()
-  if self.times<=0 then
+  if self.remnantTimes<=0 then
     self.dead=true
     smLog:info("震动结束")
     --还原target坐标
@@ -97,7 +98,7 @@ function clsShakeAction:update()
   local delta=curTime-self.lastShakeTime
   if delta>=self.interval then
     self:modifyLocation()
-    self.times=self.times-1
+    self.remnantTimes=self.remnantTimes-1
     self.lastShakeTime=curTime
   end
 end

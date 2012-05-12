@@ -30,11 +30,17 @@ end
 --设置目标
 function clsAction:setTarget(target)
   self.target=target
+  self:reset()
+end
+
+--重置动作
+function clsAction:reset()
+  --根据参数重置动作:子类实现
 end
 
 --更新
 function clsAction:update()
-  --根据具体action更新target的属性
+  --根据具体action更新target的属性:子类实现
 end
 
 --==================================================
@@ -47,6 +53,7 @@ end
 require("clsPropertyAction")
 require("clsShakeAction")
 require("clsMultipleAction")
+require("clsSequenceAction")
 
 Action={}
 
@@ -61,7 +68,7 @@ function Action:newFlipAction(flip,time,type)
   for i=1,2 do
     table.insert(res,clsPropertyAction:new(flip[i],time,type,"flip",i))
   end
-  return clsMultipleAction:new(unpack(res))
+  return Action:newMultipleAction(unpack(res))
 end
 
 --移动动作
@@ -71,7 +78,7 @@ function Action:newMoveAction(location,time,type)
   for i=1,2 do
     table.insert(res,clsPropertyAction:new(location[i],time,type,str[i]))
   end
-  return clsMultipleAction:new(unpack(res))
+  return Action:newMultipleAction(unpack(res))
 end
 
 --旋转动作
@@ -90,12 +97,28 @@ function Action:newTintAction(tint,time,type)
   for i=1,6 do
     table.insert(res,clsPropertyAction:new(tint[i],time,type,"tint",i))
   end
-  return clsMultipleAction:new(unpack(res))
+  return Action:newMultipleAction(unpack(res))
+end
+
+--明暗动作
+function Action:newShadeAction(shade,time,type)
+  tint={shade,shade,shade,0,0,0}
+  return Action:newTintAction(tint,time,type)
 end
 
 --震动动作
 function Action:newShakeAction(range,interval,times,type)
   return clsShakeAction:new(range,interval,times,type)
+end
+
+--复合动作
+function Action:newMultipleAction(...)
+  return clsMultipleAction:new(unpack(arg))
+end
+
+--序列动作
+function Action:newSequenceAction(times,...)
+  return clsSequenceAction:new(times,unpack(arg))
 end
 
 --==================================================
