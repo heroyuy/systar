@@ -60,6 +60,11 @@ public class NewMapDialog extends javax.swing.JDialog {
         getRootPane().setDefaultButton(okButton);
         init();
     }
+    private Map map = null;
+
+    public Map getMap() {
+        return map;
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -305,7 +310,7 @@ public class NewMapDialog extends javax.swing.JDialog {
         String musicName = (String) musicComboBox.getSelectedItem() == null ? "" : (String) musicComboBox.getSelectedItem();
         String battleMusicName = (String) battleMusicComboBox.getSelectedItem() == null ? "" : (String) battleMusicComboBox.getSelectedItem();
         String battleBackgroundName = (String) battleBackgroundComboBox.getSelectedItem() == null ? "" : (String) battleBackgroundComboBox.getSelectedItem();
-        Map map = new Map();
+        map = new Map();
         map.setName(mapName);
         map.setMusicName(musicName);
         map.setBattleBackground(battleBackgroundName);
@@ -315,40 +320,6 @@ public class NewMapDialog extends javax.swing.JDialog {
         map.setTileWidth(tileW);
         map.setTileHeight(tileH);
         map.setMapType(mapTypeString);
-        map.addMapChangeListener(data.getMainFrame());
-        MapRenderFactory.createMapRender(map).addRenderListener(data.getMainFrame());
-//        PreviewRenderFactory.createPreviewRender(map);//新建地图时，暂时不创建PreviewRender对象，在需要时在创建，节省内存
-        //图层数至少为一层
-        TileLayer tLayer = new TileLayer(map, mapW, mapH);
-        tLayer.addLayerChangeListener(data.getMainFrame());
-        tLayer.setName("瓷砖层0");
-        SpriteLayer sLayer = new SpriteLayer(map, mapW, mapH);
-        sLayer.addLayerChangeListener(data.getMainFrame());
-        sLayer.setName("精灵层");
-        CollideLayer cLayer = new CollideLayer(map, mapW, mapH);
-        cLayer.addLayerChangeListener(data.getMainFrame());
-        cLayer.setName("碰撞层");
-        map.addLayer(tLayer);
-        map.setCollideLayer(cLayer);
-        map.addLayer(cLayer);
-        map.setSpriteLayer(sLayer);
-        map.addLayer(sLayer);
-
-        AppData.getInstance().getCurProject().addMap(map);
-
-        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(map);
-        //将新节点插入到指定位置
-        if (data.getMainFrame().mapTree.getSelectNode() == null) {
-            ((DefaultMutableTreeNode) data.getMainFrame().mapTree.getModel().getRoot()).add(newNode);
-            ((DefaultTreeModel) data.getMainFrame().mapTree.getModel()).reload((DefaultMutableTreeNode) data.getMainFrame().mapTree.getModel().getRoot());
-        } else {
-            data.getMainFrame().mapTree.getSelectNode().add(newNode);
-            ((DefaultTreeModel) data.getMainFrame().mapTree.getModel()).reload(data.getMainFrame().mapTree.getSelectNode());
-        }
-        data.getMainFrame().mapTree.expandPath(data.getMainFrame().mapTree.getSelectionPath());
-        data.getMainFrame().mapTree.setSelectionPath(new TreePath(((DefaultTreeModel) data.getMainFrame().mapTree.getModel()).getPathToRoot(newNode)));
-        //设置维持当前的选择路径
-        data.getMainFrame().mapTree.setExpandsSelectedPaths(true);
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

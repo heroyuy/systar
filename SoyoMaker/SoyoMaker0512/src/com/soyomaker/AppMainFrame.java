@@ -1364,7 +1364,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
 
             newUseTime = System.currentTimeMillis();
             if (AppData.getInstance().getCurProject() != null) {
-                data.getMainFrame().closeProject();
+                closeProject();
             }
             AppData.getInstance().setCurProject(project);
             updateRecent(project.getPath());
@@ -1375,6 +1375,36 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
             } catch (IOException ex) {
                 logPrinter.e("复制默认资源文件出错！" + ex.toString());
             }
+            Runnable task4 = new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        AppMainFrame.this.gGrassPane.setText("开始复制默认资源文件...");
+                        logPrinter.v("开始复制默认资源文件...");
+                        FileUtil.copyDirectiory("res/audio", project.getPath() + "/audio");
+                        FileUtil.copyDirectiory("res/image", project.getPath() + "/image");
+                        FileUtil.copyDirectiory("res/data", project.getPath() + "/data");
+                        Map map = new Map();
+                        map.setName("默认地图");
+                        map.setMusicName("");
+                        map.setBattleBackground("");
+                        map.setBattleMusicName("");
+                        map.setWidth(30);
+                        map.setHeight(20);
+                        map.setTileWidth(32);
+                        map.setTileHeight(32);
+                        map.setMapType("正视角地图");
+                        addNewMap(map);
+                        logPrinter.v("复制默认资源文件成功！");
+                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_NEW_COPY_RES_SUCCESSFUL);
+                    } catch (IOException ex) {
+                        logPrinter.e("复制默认资源文件出错！" + ex.toString());
+                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_NEW_COPY_RES_FAILURE);
+                    }
+                }
+            };
+            executor.execute(task4);
             Runnable task3 = new Runnable() {
 
                 @Override
@@ -1383,20 +1413,15 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                         ProjectManager.create();
                     } catch (IOException ex) {
                         logPrinter.e("项目文件生成异常！" + ex.toString());
-//                            JOptionPane.showMessageDialog(AppMainFrame.this, "项目文件生成异常！" + ex.toString(), "警告", JOptionPane.WARNING_MESSAGE);//弹出提示
+//                        JOptionPane.showMessageDialog(AppMainFrame.this, "项目文件生成异常！" + ex.toString(), "警告", JOptionPane.WARNING_MESSAGE);//弹出提示
                     }
                     try {
-                        AppMainFrame.this.gGrassPane.setText("开始复制默认资源文件...");
-                        logPrinter.v("开始复制默认资源文件...");
-                        FileUtil.copyDirectiory("res/image", project.getPath() + "/image");
-                        FileUtil.copyDirectiory("res/audio", project.getPath() + "/audio");
-                        FileUtil.copyDirectiory("res/data", project.getPath() + "/data");
+                        AppMainFrame.this.gGrassPane.setText("开始复制默认脚本文件...");
+                        logPrinter.v("开始复制默认脚本文件...");
                         FileUtil.copyDirectiory("res/smscript", project.getPath() + "/smscript");
-                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_NEW_COPY_RES_SUCCESSFUL);
-                        logPrinter.v("复制默认资源文件成功！");
+                        logPrinter.v("复制默认脚本文件成功！");
                     } catch (IOException ex) {
-                        logPrinter.e("复制默认资源文件出错！" + ex.toString());
-                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_NEW_COPY_RES_FAILURE);
+                        logPrinter.e("复制默认脚本文件出错！" + ex.toString());
                     }
                 }
             };
@@ -2065,6 +2090,46 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         }
         NewMapDialog nmd = new NewMapDialog(this, true);
         nmd.setVisible(true);
+        if (nmd.getMap() != null) {
+            addNewMap(nmd.getMap());
+        }
+    }
+
+    private void addNewMap(Map map) {
+        map.addMapChangeListener(this);
+        MapRenderFactory.createMapRender(map).addRenderListener(this);
+//        PreviewRenderFactory.createPreviewRender(map);//新建地图时，暂时不创建PreviewRender对象，在需要时在创建，节省内存
+        //图层数至少为一层
+        TileLayer tLayer = new TileLayer(map, map.getWidth(), map.getHeight());
+        tLayer.addLayerChangeListener(data.getMainFrame());
+        tLayer.setName("瓷砖层0");
+        SpriteLayer sLayer = new SpriteLayer(map, map.getWidth(), map.getHeight());
+        sLayer.addLayerChangeListener(data.getMainFrame());
+        sLayer.setName("精灵层");
+        CollideLayer cLayer = new CollideLayer(map, map.getWidth(), map.getHeight());
+        cLayer.addLayerChangeListener(data.getMainFrame());
+        cLayer.setName("碰撞层");
+        map.addLayer(tLayer);
+        map.setCollideLayer(cLayer);
+        map.addLayer(cLayer);
+        map.setSpriteLayer(sLayer);
+        map.addLayer(sLayer);
+
+        AppData.getInstance().getCurProject().addMap(map);
+
+        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(map);
+        //将新节点插入到指定位置
+        if (mapTree.getSelectNode() == null) {
+            ((DefaultMutableTreeNode) mapTree.getModel().getRoot()).add(newNode);
+            ((DefaultTreeModel) mapTree.getModel()).reload((DefaultMutableTreeNode) mapTree.getModel().getRoot());
+        } else {
+            mapTree.getSelectNode().add(newNode);
+            ((DefaultTreeModel) mapTree.getModel()).reload(mapTree.getSelectNode());
+        }
+        mapTree.expandPath(mapTree.getSelectionPath());
+        mapTree.setSelectionPath(new TreePath(((DefaultTreeModel) mapTree.getModel()).getPathToRoot(newNode)));
+        //设置维持当前的选择路径
+        mapTree.setExpandsSelectedPaths(true);
     }
     private void editMapMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMapMenuItemActionPerformed
         // TODO add your handling code here:
