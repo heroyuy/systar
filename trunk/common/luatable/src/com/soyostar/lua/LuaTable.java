@@ -21,6 +21,16 @@ public class LuaTable {
 	 * @param node
 	 *            结点
 	 */
+	public void addNode(LuaNode node) {
+		nodeList.add(node);
+	}
+
+	/**
+	 * 添加结点
+	 * 
+	 * @param node
+	 *            结点
+	 */
 	public void addNode(byte node) {
 		nodeList.add(new LuaNode(node));
 	}
