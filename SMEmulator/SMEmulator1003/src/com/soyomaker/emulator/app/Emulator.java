@@ -15,9 +15,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import com.soyomaker.AppData;
+import com.soyomaker.observer.Event;
+import com.soyomaker.observer.EventIdConst;
+import com.soyomaker.observer.Notifier;
+import com.soyomaker.observer.Observer;
 import com.soyomaker.plugin.IPlugin;
 
-public class Emulator extends JDialog implements IPlugin {
+public class Emulator extends JDialog implements IPlugin, Observer {
 
 	private static final long serialVersionUID = -8809949650600479176L;
 
@@ -35,7 +39,6 @@ public class Emulator extends JDialog implements IPlugin {
 		emulator.setType(TYPE_SOFTWARE);
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		emulator.startGame();
-		emulator.setVisible(true);
 	}
 
 	private int type = TYPE_SOFTWARE; // 模拟器的启动类型
@@ -113,16 +116,15 @@ public class Emulator extends JDialog implements IPlugin {
 	/**
 	 * 插件启动
 	 */
-	@Override
 	public void start() {
 		if (AppData.getInstance().getCurProject() == null) {
 			JOptionPane.showMessageDialog(this, "请先打开工程");
 		} else {
-			this.setType(TYPE_PLUGIN);
-			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
-			this.setModal(true);
-			this.startGame();
-			this.setVisible(true);
+			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_SUCCESSFUL);
+			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_FAILURE);
+			// TODO save
+			AppData.getInstance().buildGame();
+
 		}
 	}
 
@@ -131,6 +133,7 @@ public class Emulator extends JDialog implements IPlugin {
 	 */
 	private void startGame() {
 		game.start();
+		this.setVisible(true);
 	}
 
 	/**
@@ -141,6 +144,18 @@ public class Emulator extends JDialog implements IPlugin {
 		this.setVisible(false);
 		if (type == TYPE_SOFTWARE) {
 			System.exit(0);
+		}
+	}
+
+	@Override
+	public void handleEvent(Event e) {
+		if (e.getCommand().equals(EventIdConst.GAME_BUILD_SUCCESSFUL)) {
+			this.setType(TYPE_PLUGIN);
+			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
+			this.setModal(true);
+			this.startGame();
+		} else {
+			System.out.println("游戏生成失败");
 		}
 	}
 
