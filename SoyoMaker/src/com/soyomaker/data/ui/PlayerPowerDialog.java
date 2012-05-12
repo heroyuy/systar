@@ -1,0 +1,490 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * PlayerExpDialog.java
+ *
+ * Created on 2011-10-12, 20:36:07
+ */
+package com.soyomaker.data.ui;
+
+import com.soyomaker.data.model.Player;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Administrator
+ */
+public class PlayerPowerDialog extends javax.swing.JDialog {
+
+    /** Creates new form PlayerExpDialog
+     * @param parent
+     * @param modal
+     * @param type
+     * @param player
+     */
+    public PlayerPowerDialog(javax.swing.JDialog parent, boolean modal, Player player, int type) {
+        super(parent, modal);
+        this.player = player;
+        this.type = type;
+        initComponents();
+        setLocationRelativeTo(null);
+        label.setText("公式：" + Player.types[type] + " = a * lev + b * lev * lev + c * lev * lev * lev + d");
+        switch (type) {
+            case Player.MAXHP:
+                aSlider.setValue(player.maxHpPower.a);
+                bSlider.setValue(player.maxHpPower.b);
+                cSlider.setValue(player.maxHpPower.c);
+                dSlider.setValue(player.maxHpPower.d);
+                break;
+            case Player.MAXSP:
+                aSlider.setValue(player.maxSpPower.a);
+                bSlider.setValue(player.maxSpPower.b);
+                cSlider.setValue(player.maxSpPower.c);
+                dSlider.setValue(player.maxSpPower.d);
+                break;
+            case Player.STRE:
+                aSlider.setValue(player.strePower.a);
+                bSlider.setValue(player.strePower.b);
+                cSlider.setValue(player.strePower.c);
+                dSlider.setValue(player.strePower.d);
+                break;
+            case Player.INTE:
+                aSlider.setValue(player.intePower.a);
+                bSlider.setValue(player.intePower.b);
+                cSlider.setValue(player.intePower.c);
+                dSlider.setValue(player.intePower.d);
+                break;
+            case Player.AGIL:
+                aSlider.setValue(player.agilPower.a);
+                bSlider.setValue(player.agilPower.b);
+                cSlider.setValue(player.agilPower.c);
+                dSlider.setValue(player.agilPower.d);
+                break;
+            case Player.DEX:
+                aSlider.setValue(player.dexPower.a);
+                bSlider.setValue(player.dexPower.b);
+                cSlider.setValue(player.dexPower.c);
+                dSlider.setValue(player.dexPower.d);
+                break;
+            case Player.BODY:
+                aSlider.setValue(player.bodyPower.a);
+                bSlider.setValue(player.bodyPower.b);
+                cSlider.setValue(player.bodyPower.c);
+                dSlider.setValue(player.bodyPower.d);
+                break;
+            case Player.LUCK:
+                aSlider.setValue(player.luckPower.a);
+                bSlider.setValue(player.luckPower.b);
+                cSlider.setValue(player.luckPower.c);
+                dSlider.setValue(player.luckPower.d);
+                break;
+            case Player.EXP:
+                aSlider.setValue(player.expPower.a);
+                bSlider.setValue(player.expPower.b);
+                cSlider.setValue(player.expPower.c);
+                dSlider.setValue(player.expPower.d);
+                break;
+        }
+        for (int i = 0; i < player.maxLev; i++) {
+            powers.add(aSlider.getValue() * i + bSlider.getValue() * i * i + cSlider.getValue() * i * i * i + dSlider.getValue());
+        }
+    }
+    private Player player;
+    /**
+     *
+     */
+    public ArrayList<Integer> powers = new ArrayList<Integer>();
+    private int type;
+
+    private void paintPower(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, powerPanel.getWidth(), powerPanel.getHeight());
+        float dw = powerPanel.getWidth() / 5.0f;
+        for (int j = 0; j < player.maxLev / 5; j++) {
+            for (int i = 0; i < 5; i++) {
+                g.setColor(Color.BLACK);
+                g.drawString("L" + (i + j * 5 + 1) + ":", (int) (i * dw), 12 + j * 12);
+                g.setColor(new Color(0x698b22));
+                g.drawString("  " + powers.get(i + j * 5), (int) (i * dw) + 24, 12 + j * 12);
+            }
+        }
+        if (player.maxLev % 5 != 0) {
+            for (int i = 0; i < player.maxLev % 5; i++) {
+                g.setColor(Color.BLACK);
+                g.drawString("L" + (player.maxLev / 5 * 5 + i + 1) + ":", (int) (i * dw), 12 + player.maxLev / 5 * 12);
+                g.setColor(new Color(0x698b22));
+                g.drawString("  " + powers.get((player.maxLev / 5 * 5 + i)), (int) (i * dw) + 24, 12 + player.maxLev / 5 * 12);
+            }
+        }
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        label = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        aSlider = new javax.swing.JSlider();
+        jLabel3 = new javax.swing.JLabel();
+        bSlider = new javax.swing.JSlider();
+        jLabel4 = new javax.swing.JLabel();
+        cSlider = new javax.swing.JSlider();
+        jLabel5 = new javax.swing.JLabel();
+        dSlider = new javax.swing.JSlider();
+        okButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        powerPanel = new javax.swing.JPanel(){
+            public void paint(Graphics g){
+                paintPower(g);
+            }
+            public Dimension getPreferredSize() {
+                if (player.maxLev % 5 != 0) {
+                    return new Dimension(400,(int)(12+player.maxLev*12.0/5.0));
+                }
+                return new Dimension(400,(int)(player.maxLev*12.0/5.0));
+            }
+        }
+        ;
+        jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlayerPowerDialog.class);
+        setTitle(resourceMap.getString("title")); // NOI18N
+        setResizable(false);
+
+        label.setText("公式：power = a * lev + b * lev * lev + c * lev * lev * lev + d");
+        label.setName("label"); // NOI18N
+
+        jLabel2.setText("a = ");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        aSlider.setMajorTickSpacing(50);
+        aSlider.setMaximum(999);
+        aSlider.setMinorTickSpacing(25);
+        aSlider.setPaintTicks(true);
+        aSlider.setValue(10);
+        aSlider.setName("aSlider"); // NOI18N
+        aSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                aSliderStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("b = ");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        bSlider.setMajorTickSpacing(50);
+        bSlider.setMaximum(999);
+        bSlider.setMinorTickSpacing(25);
+        bSlider.setPaintTicks(true);
+        bSlider.setValue(10);
+        bSlider.setName("bSlider"); // NOI18N
+        bSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                bSliderStateChanged(evt);
+            }
+        });
+
+        jLabel4.setText("c = ");
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        cSlider.setMajorTickSpacing(50);
+        cSlider.setMaximum(999);
+        cSlider.setMinorTickSpacing(25);
+        cSlider.setPaintTicks(true);
+        cSlider.setValue(10);
+        cSlider.setName("cSlider"); // NOI18N
+        cSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cSliderStateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("d = ");
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        dSlider.setMajorTickSpacing(50);
+        dSlider.setMaximum(999);
+        dSlider.setMinorTickSpacing(25);
+        dSlider.setPaintTicks(true);
+        dSlider.setValue(10);
+        dSlider.setName("dSlider"); // NOI18N
+        dSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                dSliderStateChanged(evt);
+            }
+        });
+
+        okButton.setText("确定");
+        okButton.setName("okButton"); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        closeButton.setText("关闭");
+        closeButton.setName("closeButton"); // NOI18N
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        powerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        powerPanel.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
+        powerPanel.setName("powerPanel"); // NOI18N
+
+        javax.swing.GroupLayout powerPanelLayout = new javax.swing.GroupLayout(powerPanel);
+        powerPanel.setLayout(powerPanelLayout);
+        powerPanelLayout.setHorizontalGroup(
+            powerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 502, Short.MAX_VALUE)
+        );
+        powerPanelLayout.setVerticalGroup(
+            powerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 238, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(powerPanel);
+
+        jLabel1.setText("50");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel6.setText("50");
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        jLabel7.setText("50");
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        jLabel8.setText("50");
+        jLabel8.setName("jLabel8"); // NOI18N
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                    .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                            .addComponent(cSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                            .addComponent(bSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                            .addComponent(aSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(okButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(closeButton)))
+                .addContainerGap())
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8});
+
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(aSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel3))
+                            .addComponent(bSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel4))
+                            .addComponent(cSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel5))))
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeButton)
+                    .addComponent(okButton))
+                .addContainerGap())
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8});
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void aSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_aSliderStateChanged
+        // TODO add your handling code here:
+        jLabel1.setText(aSlider.getValue() + "");
+        powers.clear();
+        for (int i = 0; i < player.maxLev; i++) {
+            powers.add(aSlider.getValue() * i + bSlider.getValue() * i * i + cSlider.getValue() * i * i * i + dSlider.getValue());
+        }
+        powerPanel.updateUI();
+    }//GEN-LAST:event_aSliderStateChanged
+
+    private void bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bSliderStateChanged
+        // TODO add your handling code here:
+        jLabel6.setText(bSlider.getValue() + "");
+        powers.clear();
+        for (int i = 0; i < player.maxLev; i++) {
+            powers.add(aSlider.getValue() * i + bSlider.getValue() * i * i + cSlider.getValue() * i * i * i + dSlider.getValue());
+        }
+        powerPanel.updateUI();
+    }//GEN-LAST:event_bSliderStateChanged
+
+    private void cSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cSliderStateChanged
+        // TODO add your handling code here:
+        jLabel7.setText(cSlider.getValue() + "");
+        powers.clear();
+        for (int i = 0; i < player.maxLev; i++) {
+            powers.add(aSlider.getValue() * i + bSlider.getValue() * i * i + cSlider.getValue() * i * i * i + dSlider.getValue());
+        }
+        powerPanel.updateUI();
+    }//GEN-LAST:event_cSliderStateChanged
+
+    private void dSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dSliderStateChanged
+        // TODO add your handling code here:
+        jLabel8.setText(dSlider.getValue() + "");
+        powers.clear();
+        for (int i = 0; i < player.maxLev; i++) {
+            powers.add(aSlider.getValue() * i + bSlider.getValue() * i * i + cSlider.getValue() * i * i * i + dSlider.getValue());
+        }
+        powerPanel.updateUI();
+    }//GEN-LAST:event_dSliderStateChanged
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // TODO add your handling code here:
+        switch (type) {
+            case Player.MAXHP:
+                player.maxHpPower.a = aSlider.getValue();
+                player.maxHpPower.b = bSlider.getValue();
+                player.maxHpPower.c = cSlider.getValue();
+                player.maxHpPower.d = dSlider.getValue();
+                break;
+            case Player.MAXSP:
+                player.maxSpPower.a = aSlider.getValue();
+                player.maxSpPower.b = bSlider.getValue();
+                player.maxSpPower.c = cSlider.getValue();
+                player.maxSpPower.d = dSlider.getValue();
+                break;
+            case Player.STRE:
+                player.strePower.a = aSlider.getValue();
+                player.strePower.b = bSlider.getValue();
+                player.strePower.c = cSlider.getValue();
+                player.strePower.d = dSlider.getValue();
+                break;
+            case Player.INTE:
+                player.intePower.a = aSlider.getValue();
+                player.intePower.b = bSlider.getValue();
+                player.intePower.c = cSlider.getValue();
+                player.intePower.d = dSlider.getValue();
+                break;
+            case Player.AGIL:
+                player.agilPower.a = aSlider.getValue();
+                player.agilPower.b = bSlider.getValue();
+                player.agilPower.c = cSlider.getValue();
+                player.agilPower.d = dSlider.getValue();
+                break;
+            case Player.DEX:
+                player.dexPower.a = aSlider.getValue();
+                player.dexPower.b = bSlider.getValue();
+                player.dexPower.c = cSlider.getValue();
+                player.dexPower.d = dSlider.getValue();
+                break;
+            case Player.BODY:
+                player.bodyPower.a = aSlider.getValue();
+                player.bodyPower.b = bSlider.getValue();
+                player.bodyPower.c = cSlider.getValue();
+                player.bodyPower.d = dSlider.getValue();
+                break;
+            case Player.LUCK:
+                player.luckPower.a = aSlider.getValue();
+                player.luckPower.b = bSlider.getValue();
+                player.luckPower.c = cSlider.getValue();
+                player.luckPower.d = dSlider.getValue();
+                break;
+            case Player.EXP:
+                player.expPower.a = aSlider.getValue();
+                player.expPower.b = bSlider.getValue();
+                player.expPower.c = cSlider.getValue();
+                player.expPower.d = dSlider.getValue();
+                break;
+        }
+        if (aSlider.getValue() == 0 && bSlider.getValue() == 0 && cSlider.getValue() == 0) {
+            JOptionPane.showMessageDialog(this, Player.types[type] + "成长不能为0！", "警告",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSlider aSlider;
+    private javax.swing.JSlider bSlider;
+    private javax.swing.JSlider cSlider;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JSlider dSlider;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label;
+    private javax.swing.JButton okButton;
+    private javax.swing.JPanel powerPanel;
+    // End of variables declaration//GEN-END:variables
+}
