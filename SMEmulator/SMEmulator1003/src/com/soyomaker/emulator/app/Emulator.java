@@ -122,7 +122,6 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 		} else {
 			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_SUCCESSFUL);
 			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_FAILURE);
-			// TODO save
 			AppData.getInstance().buildGame();
 
 		}
