@@ -142,9 +142,8 @@ function clsSceneMap:changeMap(map)
     playerSprite.tag=self.curPlayer.id
     playerSprite.z=self.curPlayer.row
     local px,py=self:calculateCharacterLocation(self.curPlayer)
-    px=px-self.curPlayer.charImage:getWidth()/4/2
-    py=py+GameData.curMap.cellHeight/2-self.curPlayer.charImage:getHeight()/4
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
+    playerSprite:refresh()
     self.spriteLayer:addChild(playerSprite)
     --NPC
     for k,v in pairs(GameData.curMap.npcs) do
@@ -154,9 +153,9 @@ function clsSceneMap:changeMap(map)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)
-      nx=nx-npc.charImage:getWidth()/4/2
-      ny=ny+GameData.curMap.cellHeight/2-npc.charImage:getHeight()/4
+      smLog:info("nx="..nx.." ny="..ny)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
+      npcSprite:refresh()
       self.spriteLayer:addChild(npcSprite)
     end
   self.spriteLayer:sortChildren()
@@ -233,10 +232,10 @@ function clsSceneMap:checkViewport()
   return {x=vx,y=vy,width=width,height=height}
 end
 
---计算characher当前物理坐标(characher所在单元格正中心坐标+行走修正)
+--计算characher当前物理坐标(characher双脚中间坐标+行走修正)
 function clsSceneMap:calculateCharacterLocation(character)
   local px=character.col*GameData.curMap.cellWidth+GameData.curMap.cellWidth/2
-  local py=character.row*GameData.curMap.cellHeight+GameData.curMap.cellHeight/2
+  local py=character.row*GameData.curMap.cellHeight+GameData.curMap.cellHeight
   --根据player当前面向和行走状态进行位置修正
   if character.face==0 then
     --上
@@ -298,27 +297,29 @@ function clsSceneMap:characterMoved(param)
     end
   end
   --character移动
-  local npcSprite=self.spriteLayer:childWithTag(param.character.id)   
+  local sprite=self.spriteLayer:childWithTag(param.character.id)   
   if param.direction==0 then
     --上
-    npcSprite.y=npcSprite.y-GameData.curMap.cellHeight/4
+    sprite.y=sprite.y-GameData.curMap.cellHeight/4
   elseif param.direction==1 then
     --下
-    npcSprite.y=npcSprite.y+GameData.curMap.cellHeight/4
+    sprite.y=sprite.y+GameData.curMap.cellHeight/4
   elseif param.direction==2 then
     --左
-    npcSprite.x=npcSprite.x-GameData.curMap.cellWidth/4
+    sprite.x=sprite.x-GameData.curMap.cellWidth/4
   elseif param.direction==3 then
     --右
-    npcSprite.x=npcSprite.x+GameData.curMap.cellWidth/4
+    sprite.x=sprite.x+GameData.curMap.cellWidth/4
   end
-  npcSprite.frameIndex=param.character:getCurFrameIndex()
+  sprite.frameIndex=param.character:getCurFrameIndex()
+  sprite:refresh()
 end
 
 --character面向改变
 function clsSceneMap:characterFaceChanged(param)
-  local npcSprite=self.spriteLayer:childWithTag(param.character.id)  
-  npcSprite.frameIndex=param.character:getCurFrameIndex()
+  local sprite=self.spriteLayer:childWithTag(param.character.id)  
+  sprite.frameIndex=param.character:getCurFrameIndex()
+  sprite:refresh()
 end
 
 --character地图改变
