@@ -13,36 +13,26 @@ clsUISprite.__index=clsUISprite
 clsUISprite.paintLayerF=clsUISprite.paintLayer
 
 --字段
-clsUISprite.image=nil              --图像
-clsUISprite.frameIndex=0           --当前帧index
-clsUISprite.colNum=1               --帧列数
-clsUISprite.rowNum=1               --帧行数
+clsUISprite.spriteImage=nil    				--图像
+clsUISprite.frameIndex=0           			--当前帧index
+clsUISprite.colNum=1               			--帧列数
+clsUISprite.rowNum=1            			--帧行数
 
 --构造器
-function clsUISprite:new(image,frameWidth,frameHeight)
-  if type(image)=="string" then
-    image=Image:getImage(image)
-  end
-  if frameWidth==nil then
-    frameWidth=image:getWidth()
-  end
-  if frameHeight==nil then
-    frameHeight=image:getHeight()
-  end
-  local self = clsUILayer:new(0,0,frameWidth,frameHeight)
+function clsUISprite:new(spriteImage,frameWidth,frameHeight)
+  local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
   setmetatable(self,clsUISprite)
-  self.image=image
-  self.colNum=image:getWidth()/frameWidth
-  self.rowNum=image:getHeight()/frameHeight
+  self.anchor={0.5,1}
+  if type(spriteImage)=="string" then
+    spriteImage=spriteImage:getspriteImage(spriteImage)
+  end
+  self.spriteImage=spriteImage
+  self.colNum=spriteImage:getWidth()/frameWidth
+  self.rowNum=spriteImage:getHeight()/frameHeight
   return self
 end
 
---绘制自身
-function clsUISprite:paintLayer(painter)
-  --调用父类的paintLayer方法
-  --self:paintLayerF(painter)
-  --绘制图片
-  if self.image then
-    painter:drawImage(self.image,self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height,0,0,UIConst.anchor.LT)
-  end
+--更新Sprite
+function clsUISprite:refresh()
+  self.image=self.spriteImage:getSubImage(self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height)
 end

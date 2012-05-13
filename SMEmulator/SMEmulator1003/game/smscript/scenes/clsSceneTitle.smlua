@@ -52,12 +52,14 @@ function clsSceneTitle:onStart()
   for i,v in ipairs(self.titles) do
     local button=clsUIButton:new((200-width)/2,boundGap+(i-1)*(height+gap),width,height)
     button.anchor={0,0}
-    button.image=image
+    button.normalImage=image
     button.highlightImage=highlightImage
     button.text=v
     button.textColor=Skin:getTextColor(1,1)
+    button.textSize=16
     button.tag=i
     button.delegate=self
+    button:refresh()
     titleBgFrame:addChild(button)
   end
   GameLayer:addChildToScene(bgLayer)

@@ -210,6 +210,10 @@ function clsUILayer:onTouch(event)
   end
 end
 
+--更新层
+function clsUILayer:refresh()
+end
+
 --运行动作
 function clsUILayer:runAction(action)
   action:setTarget(self)
