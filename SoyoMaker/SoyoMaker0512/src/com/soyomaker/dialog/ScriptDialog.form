@@ -24,20 +24,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="scriptTabbedPane" alignment="0" min="-2" pref="448" max="-2" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
-              <Component id="cancleButton" min="-2" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="scriptTabbedPane" alignment="1" pref="354" max="32767" attributes="0"/>
+                  <Component id="cancleButton" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="scriptTabbedPane" pref="447" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="scriptTabbedPane" pref="446" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="cancleButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,8 +57,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="&#x6d41;&#x7a0b;&#x63a7;&#x5236;">
-                <Property name="tabTitle" type="java.lang.String" value="&#x6d41;&#x7a0b;&#x63a7;&#x5236;"/>
+              <JTabbedPaneConstraints tabName="  1  ">
+                <Property name="tabTitle" type="java.lang.String" value="  1  "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -80,108 +84,351 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" max="-2" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="breakButton" linkSize="19" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                              <Component id="ifButton" linkSize="19" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="whileButton" linkSize="19" alignment="1" min="-2" pref="129" max="-2" attributes="2"/>
-                              <Component id="publicEventButton" linkSize="19" min="-2" pref="129" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="exitScriptButton" linkSize="19" min="-2" pref="129" max="-2" attributes="1"/>
-                              <Component id="waitButton" linkSize="19" alignment="1" pref="129" max="32767" attributes="1"/>
-                          </Group>
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jPanel7" linkSize="22" min="-2" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel10" linkSize="22" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jPanel8" linkSize="22" min="-2" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel11" linkSize="22" min="-2" max="-2" attributes="1"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" max="-2" attributes="0">
-                                  <Component id="waitButton" linkSize="20" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                  <Component id="exitScriptButton" linkSize="20" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" max="-2" attributes="0">
-                                  <Group type="103" groupAlignment="3" max="-2" attributes="0">
-                                      <Component id="ifButton" linkSize="20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="whileButton" linkSize="20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" max="-2" attributes="0">
-                                      <Component id="breakButton" linkSize="20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="publicEventButton" linkSize="20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jPanel10" alignment="0" min="-2" max="-2" attributes="1"/>
+                              <Component id="jPanel7" alignment="0" min="-2" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace min="-2" pref="344" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jPanel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="32" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="breakButton">
+                <Container class="javax.swing.JPanel" name="jPanel7">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x8df3;&#x51fa;&#x5faa;&#x73af;"/>
-                    <Property name="name" type="java.lang.String" value="breakButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x6d88;&#x606f;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel7" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="ifButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="showChooseButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="showInputButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="showMessageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="3"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="showChooseButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="showInputButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="showMessageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="showChooseButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x9009;&#x9879;&#x6846;"/>
+                        <Property name="name" type="java.lang.String" value="showChooseButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showChooseButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="showInputButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x8f93;&#x5165;&#x6846;"/>
+                        <Property name="name" type="java.lang.String" value="showInputButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showInputButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="showMessageButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x5bf9;&#x8bdd;&#x6846;"/>
+                        <Property name="name" type="java.lang.String" value="showMessageButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showMessageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel8">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x6761;&#x4ef6;&#x5206;&#x652f;"/>
-                    <Property name="name" type="java.lang.String" value="ifButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x6e38;&#x620f;&#x8fdb;&#x7a0b;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel8" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ifButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="whileButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="switchButton" linkSize="9" min="-2" pref="127" max="-2" attributes="1"/>
+                                  <Component id="varButton" linkSize="9" alignment="0" min="-2" pref="128" max="-2" attributes="0"/>
+                                  <Component id="showCountDownButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="3"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="switchButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="varButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="showCountDownButton" linkSize="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="switchButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5f00;&#x5173;&#x64cd;&#x4f5c;"/>
+                        <Property name="name" type="java.lang.String" value="switchButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="varButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x53d8;&#x91cf;&#x64cd;&#x4f5c;"/>
+                        <Property name="name" type="java.lang.String" value="varButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="varButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="showCountDownButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x8ba1;&#x65f6;&#x5668;&#x64cd;&#x4f5c;"/>
+                        <Property name="name" type="java.lang.String" value="showCountDownButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showCountDownButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel10">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5faa;&#x73af;&#x7ed3;&#x6784;"/>
-                    <Property name="name" type="java.lang.String" value="whileButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x961f;&#x4f0d;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel10" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="whileButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="exitScriptButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="moneyButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="1"/>
+                                  <Component id="equipButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="itemButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="itemButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="moneyButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="equipButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="itemButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x7269;&#x54c1;"/>
+                        <Property name="name" type="java.lang.String" value="itemButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="moneyButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x91d1;&#x94b1;"/>
+                        <Property name="name" type="java.lang.String" value="moneyButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moneyButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="equipButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x88c5;&#x5907;"/>
+                        <Property name="name" type="java.lang.String" value="equipButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="equipButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel11">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x7ed3;&#x675f;&#x811a;&#x672c;"/>
-                    <Property name="name" type="java.lang.String" value="exitScriptButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x89d2;&#x8272;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel11" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitScriptButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="publicEventButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x516c;&#x5171;&#x4e8b;&#x4ef6;"/>
-                    <Property name="name" type="java.lang.String" value="publicEventButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publicEventButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="waitButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5f3a;&#x5236;&#x7b49;&#x5f85;"/>
-                    <Property name="name" type="java.lang.String" value="waitButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="waitButtonActionPerformed"/>
-                  </Events>
-                </Component>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="skillButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="changeNameButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="changeEquipButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="changeModalButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="faceButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="powButton" linkSize="9" alignment="0" min="-2" pref="129" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="powButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="skillButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeNameButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeEquipButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeModalButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="faceButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="changeEquipButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5207;&#x6362;&#x88c5;&#x5907;"/>
+                        <Property name="name" type="java.lang.String" value="changeEquipButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeEquipButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="changeModalButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x89d2;&#x8272;&#x53d8;&#x8eab;"/>
+                        <Property name="name" type="java.lang.String" value="changeModalButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeModalButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="changeNameButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;&#x89d2;&#x8272;&#x540d;&#x79f0;"/>
+                        <Property name="name" type="java.lang.String" value="changeNameButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeNameButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="powButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x5c5e;&#x6027;"/>
+                        <Property name="name" type="java.lang.String" value="powButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="powButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="skillButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x6280;&#x80fd;"/>
+                        <Property name="name" type="java.lang.String" value="skillButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="skillButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="faceButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x6539;&#x53d8;&#x9762;&#x5411;"/>
+                        <Property name="name" type="java.lang.String" value="faceButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="faceButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -192,8 +439,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="&#x6e38;&#x620f;&#x8868;&#x73b0;">
-                <Property name="tabTitle" type="java.lang.String" value="&#x6e38;&#x620f;&#x8868;&#x73b0;"/>
+              <JTabbedPaneConstraints tabName="  2  ">
+                <Property name="tabTitle" type="java.lang.String" value="  2  "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -206,7 +453,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel5" alignment="0" pref="417" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -219,56 +466,19 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="changeImageARGBButton" linkSize="15" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="removeImageButton" linkSize="15" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="battleButton" linkSize="15" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="faceButton" linkSize="15" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="playMusicButton" linkSize="15" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="mapButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="changeScreenColorButton" linkSize="15" max="32767" attributes="1"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="gameSaveButton" linkSize="15" max="32767" attributes="1"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="openShopButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                      <Component id="moveImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                      <Component id="rotateImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                      <Component id="changeSkinButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                      <Component id="systemMenuButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                      <Component id="endBattleButton" linkSize="15" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                                      <Component id="moveButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="stopMusicButton" linkSize="15" max="32767" attributes="1"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="showChooseButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="1"/>
-                              <Component id="showInputButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="1"/>
-                              <Component id="showAniButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="1"/>
-                              <Component id="showMessageButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="3"/>
-                              <Component id="showImageButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="1"/>
-                              <Component id="showCountDownButton" linkSize="15" alignment="1" pref="129" max="32767" attributes="3"/>
-                              <Component id="shakeScreenButton" linkSize="15" pref="129" max="32767" attributes="1"/>
-                              <Component id="mainMenuButton" linkSize="15" pref="129" max="32767" attributes="1"/>
+                              <Component id="jPanel12" linkSize="24" alignment="0" min="-2" max="-2" attributes="1"/>
+                              <Component id="jPanel13" linkSize="24" alignment="0" min="-2" max="-2" attributes="1"/>
+                              <Component id="jPanel14" linkSize="24" alignment="0" min="-2" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jPanel16" linkSize="24" min="-2" max="-2" attributes="1"/>
+                              <Component id="jPanel17" linkSize="24" min="-2" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -277,290 +487,339 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="endBattleButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="changeScreenColorButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="123" pref="123" max="123" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="1">
-                                      <Component id="showCountDownButton" linkSize="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace pref="59" max="32767" attributes="0"/>
-                                      <Component id="showChooseButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="showInputButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="showAniButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="showMessageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="showImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="moveButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="openShopButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="shakeScreenButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                      <Component id="moveImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="rotateImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="59" pref="59" max="59" attributes="0"/>
-                                      <Component id="changeSkinButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="systemMenuButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="gameSaveButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="mainMenuButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="mapButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="playMusicButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="faceButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="stopMusicButton" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="battleButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="removeImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                  <Component id="changeImageARGBButton" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                                  <Component id="jPanel12" min="-2" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel14" min="-2" max="-2" attributes="1"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="mapButton">
+                <Container class="javax.swing.JPanel" name="jPanel12">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5207;&#x6362;&#x5730;&#x56fe;"/>
-                    <Property name="name" type="java.lang.String" value="mapButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x79fb;&#x52a8;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel12" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mapButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="moveButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="mapButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="moveButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="mapButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="moveButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="mapButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5207;&#x6362;&#x5730;&#x56fe;"/>
+                        <Property name="name" type="java.lang.String" value="mapButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mapButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="moveButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x8bbe;&#x7f6e;&#x79fb;&#x52a8;"/>
+                        <Property name="name" type="java.lang.String" value="moveButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel13">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x8bbe;&#x7f6e;&#x79fb;&#x52a8;"/>
-                    <Property name="name" type="java.lang.String" value="moveButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x52a8;&#x753b;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel13" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showMessageButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="showAniButton" linkSize="15" pref="129" max="32767" attributes="1"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="showAniButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="showAniButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x52a8;&#x753b;"/>
+                        <Property name="name" type="java.lang.String" value="showAniButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showAniButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel14">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x5bf9;&#x8bdd;&#x6846;"/>
-                    <Property name="name" type="java.lang.String" value="showMessageButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x753b;&#x9762;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel14" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showMessageButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="playMusicButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="changeScreenColorButton" linkSize="15" pref="129" max="32767" attributes="1"/>
+                                  <Component id="shakeScreenButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="changeSkinButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="changeScreenColorButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="shakeScreenButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeSkinButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="shakeScreenButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x753b;&#x9762;&#x9707;&#x52a8;"/>
+                        <Property name="name" type="java.lang.String" value="shakeScreenButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="shakeScreenButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="changeScreenColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x66f4;&#x6539;&#x753b;&#x9762;&#x8272;&#x8c03;"/>
+                        <Property name="name" type="java.lang.String" value="changeScreenColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeScreenColorButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="changeSkinButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x66f4;&#x6362;&#x76ae;&#x80a4;"/>
+                        <Property name="name" type="java.lang.String" value="changeSkinButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeSkinButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel16">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x64ad;&#x653e;&#x97f3;&#x4e50;"/>
-                    <Property name="name" type="java.lang.String" value="playMusicButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x56fe;&#x7247;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel16" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playMusicButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="openShopButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="showImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="rotateImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="removeImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="changeImageARGBButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="moveImageButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="showImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="rotateImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeImageARGBButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="removeImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="moveImageButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="changeImageARGBButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x66f4;&#x6539;&#x56fe;&#x7247;&#x8272;&#x8c03;"/>
+                        <Property name="name" type="java.lang.String" value="changeImageARGBButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeImageARGBButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="showImageButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x56fe;&#x7247;"/>
+                        <Property name="name" type="java.lang.String" value="showImageButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showImageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="removeImageButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x79fb;&#x9664;&#x56fe;&#x7247;"/>
+                        <Property name="name" type="java.lang.String" value="removeImageButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeImageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="rotateImageButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x65cb;&#x8f6c;&#x56fe;&#x7247;"/>
+                        <Property name="name" type="java.lang.String" value="rotateImageButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rotateImageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="moveImageButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x79fb;&#x52a8;&#x56fe;&#x7247;"/>
+                        <Property name="name" type="java.lang.String" value="moveImageButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveImageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel17">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5f00;&#x542f;&#x5546;&#x5e97;"/>
-                    <Property name="name" type="java.lang.String" value="openShopButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x97f3;&#x4e50;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel17" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openShopButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="battleButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5f00;&#x542f;&#x6218;&#x6597;"/>
-                    <Property name="name" type="java.lang.String" value="battleButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="battleButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="faceButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x6539;&#x53d8;&#x9762;&#x5411;"/>
-                    <Property name="name" type="java.lang.String" value="faceButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="faceButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showChooseButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x9009;&#x9879;&#x6846;"/>
-                    <Property name="name" type="java.lang.String" value="showChooseButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showChooseButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showInputButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x8f93;&#x5165;&#x6846;"/>
-                    <Property name="name" type="java.lang.String" value="showInputButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showInputButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showImageButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x56fe;&#x7247;"/>
-                    <Property name="name" type="java.lang.String" value="showImageButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showImageButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showCountDownButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x5012;&#x8ba1;&#x65f6;"/>
-                    <Property name="name" type="java.lang.String" value="showCountDownButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showCountDownButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="showAniButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x663e;&#x793a;&#x52a8;&#x753b;"/>
-                    <Property name="name" type="java.lang.String" value="showAniButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showAniButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="stopMusicButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x505c;&#x6b62;&#x97f3;&#x4e50;"/>
-                    <Property name="name" type="java.lang.String" value="stopMusicButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopMusicButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="moveImageButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x79fb;&#x52a8;&#x56fe;&#x7247;"/>
-                    <Property name="name" type="java.lang.String" value="moveImageButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveImageButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="rotateImageButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x65cb;&#x8f6c;&#x56fe;&#x7247;"/>
-                    <Property name="name" type="java.lang.String" value="rotateImageButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rotateImageButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeImageARGBButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x66f4;&#x6539;&#x56fe;&#x7247;&#x8272;&#x8c03;"/>
-                    <Property name="name" type="java.lang.String" value="changeImageARGBButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeImageARGBButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeSkinButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x66f4;&#x6362;&#x76ae;&#x80a4;"/>
-                    <Property name="name" type="java.lang.String" value="changeSkinButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeSkinButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="removeImageButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x79fb;&#x9664;&#x56fe;&#x7247;"/>
-                    <Property name="name" type="java.lang.String" value="removeImageButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeImageButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="shakeScreenButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x753b;&#x9762;&#x9707;&#x52a8;"/>
-                    <Property name="name" type="java.lang.String" value="shakeScreenButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="shakeScreenButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeScreenColorButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x66f4;&#x6539;&#x753b;&#x9762;&#x8272;&#x8c03;"/>
-                    <Property name="name" type="java.lang.String" value="changeScreenColorButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeScreenColorButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="systemMenuButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x6253;&#x5f00;&#x7cfb;&#x7edf;&#x83dc;&#x5355;"/>
-                    <Property name="name" type="java.lang.String" value="systemMenuButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="systemMenuButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="gameSaveButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x6253;&#x5f00;&#x5b58;&#x6863;&#x83dc;&#x5355;"/>
-                    <Property name="name" type="java.lang.String" value="gameSaveButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gameSaveButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="mainMenuButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x56de;&#x4e3b;&#x83dc;&#x5355;"/>
-                    <Property name="name" type="java.lang.String" value="mainMenuButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mainMenuButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="endBattleButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x7ed3;&#x675f;&#x6218;&#x6597;"/>
-                    <Property name="name" type="java.lang.String" value="endBattleButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="endBattleButtonActionPerformed"/>
-                  </Events>
-                </Component>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="playMusicButton" linkSize="15" pref="129" max="32767" attributes="1"/>
+                                  <Component id="stopMusicButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="playMusicButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="stopMusicButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="stopMusicButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x505c;&#x6b62;&#x97f3;&#x4e50;"/>
+                        <Property name="name" type="java.lang.String" value="stopMusicButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopMusicButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="playMusicButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x64ad;&#x653e;&#x97f3;&#x4e50;"/>
+                        <Property name="name" type="java.lang.String" value="playMusicButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playMusicButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -571,8 +830,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="&#x6570;&#x636e;&#x5904;&#x7406;">
-                <Property name="tabTitle" type="java.lang.String" value="&#x6570;&#x636e;&#x5904;&#x7406;"/>
+              <JTabbedPaneConstraints tabName="  3  ">
+                <Property name="tabTitle" type="java.lang.String" value="  3  "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -585,7 +844,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel6" alignment="0" pref="417" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -601,38 +860,15 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="powButton" linkSize="9" min="-2" pref="129" max="-2" attributes="1"/>
-                                      <Component id="skillButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="moneyButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="1"/>
-                                      <Component id="itemButton" linkSize="9" alignment="0" pref="129" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="varButton" linkSize="9" min="-2" pref="128" max="-2" attributes="0"/>
-                                      <Component id="switchButton" linkSize="9" alignment="0" min="-2" pref="127" max="-2" attributes="1"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="changeEnemyPowerButton" linkSize="9" pref="129" max="32767" attributes="1"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="changeNameButton" linkSize="9" min="-2" pref="129" max="-2" attributes="1"/>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Component id="equipButton" linkSize="9" pref="129" max="32767" attributes="1"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="changeEquipButton" linkSize="9" min="-2" pref="128" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="changeModalButton" linkSize="9" min="-2" max="-2" attributes="1"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="enemyTransButton" linkSize="9" min="-2" pref="129" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jPanel18" min="-2" max="-2" attributes="1"/>
+                              <Component id="jPanel15" alignment="0" min="-2" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel9" linkSize="22" min="-2" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -640,152 +876,335 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="powButton" linkSize="21" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                  <Component id="skillButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="switchButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="itemButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="moneyButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="varButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="102" alignment="0" attributes="1">
+                                  <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="equipButton" linkSize="21" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="changeEnemyPowerButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="changeNameButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="changeEquipButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="changeModalButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enemyTransButton" linkSize="21" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="262" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="powButton">
+                <Container class="javax.swing.JPanel" name="jPanel18">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x5c5e;&#x6027;"/>
-                    <Property name="name" type="java.lang.String" value="powButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x573a;&#x666f;&#x63a7;&#x5236;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel18" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="powButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="skillButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="battleButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="openShopButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="endBattleButton" linkSize="15" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
+                                  <Component id="gameSaveButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                                  <Component id="systemMenuButton" linkSize="15" alignment="0" min="-2" pref="129" max="-2" attributes="1"/>
+                                  <Component id="mainMenuButton" linkSize="15" alignment="0" pref="129" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="battleButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="openShopButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="endBattleButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="gameSaveButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="systemMenuButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="mainMenuButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="battleButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5f00;&#x542f;&#x6218;&#x6597;"/>
+                        <Property name="name" type="java.lang.String" value="battleButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="battleButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="openShopButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5f00;&#x542f;&#x5546;&#x5e97;"/>
+                        <Property name="name" type="java.lang.String" value="openShopButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openShopButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="endBattleButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x7ed3;&#x675f;&#x6218;&#x6597;"/>
+                        <Property name="name" type="java.lang.String" value="endBattleButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="endBattleButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="gameSaveButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x6253;&#x5f00;&#x5b58;&#x6863;&#x83dc;&#x5355;"/>
+                        <Property name="name" type="java.lang.String" value="gameSaveButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gameSaveButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="systemMenuButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x6253;&#x5f00;&#x7cfb;&#x7edf;&#x83dc;&#x5355;"/>
+                        <Property name="name" type="java.lang.String" value="systemMenuButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="systemMenuButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="mainMenuButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x56de;&#x4e3b;&#x83dc;&#x5355;"/>
+                        <Property name="name" type="java.lang.String" value="mainMenuButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mainMenuButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel19">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x6280;&#x80fd;"/>
-                    <Property name="name" type="java.lang.String" value="skillButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x6218;&#x6597;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel19" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="skillButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="equipButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="enemyTransButton" linkSize="9" min="-2" pref="129" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                      <Component id="changeEnemyPowerButton" linkSize="9" pref="129" max="32767" attributes="1"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="enemyTransButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="changeEnemyPowerButton" linkSize="21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="enemyTransButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x654c;&#x4eba;&#x53d8;&#x8eab;"/>
+                        <Property name="name" type="java.lang.String" value="enemyTransButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enemyTransButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="changeEnemyPowerButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x654c;&#x4eba;&#x5c5e;&#x6027;"/>
+                        <Property name="name" type="java.lang.String" value="changeEnemyPowerButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeEnemyPowerButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel9">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x88c5;&#x5907;"/>
-                    <Property name="name" type="java.lang.String" value="equipButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x6d41;&#x7a0b;&#x63a7;&#x5236;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel9" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="equipButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="itemButton">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="ifButton" linkSize="19" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
+                                  <Component id="whileButton" linkSize="19" alignment="0" min="-2" pref="129" max="-2" attributes="2"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="breakButton" linkSize="19" min="-2" pref="129" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="exitScriptButton" linkSize="19" min="-2" pref="129" max="-2" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="publicEventButton" linkSize="19" min="-2" pref="129" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="ifButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="whileButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="breakButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="exitScriptButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="publicEventButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="ifButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x6761;&#x4ef6;&#x5206;&#x652f;"/>
+                        <Property name="name" type="java.lang.String" value="ifButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ifButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="whileButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5faa;&#x73af;"/>
+                        <Property name="name" type="java.lang.String" value="whileButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="whileButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="breakButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x4e2d;&#x65ad;&#x5faa;&#x73af;"/>
+                        <Property name="name" type="java.lang.String" value="breakButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="exitScriptButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x4e2d;&#x65ad;&#x4e8b;&#x4ef6;&#x5904;&#x7406;"/>
+                        <Property name="name" type="java.lang.String" value="exitScriptButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitScriptButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="publicEventButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x516c;&#x5171;&#x4e8b;&#x4ef6;"/>
+                        <Property name="name" type="java.lang.String" value="publicEventButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publicEventButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel15">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x7269;&#x54c1;"/>
-                    <Property name="name" type="java.lang.String" value="itemButton" noResource="true"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="&#x7b49;&#x5f85;"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel15" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="moneyButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x91d1;&#x94b1;"/>
-                    <Property name="name" type="java.lang.String" value="moneyButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moneyButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="varButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x53d8;&#x91cf;&#x64cd;&#x4f5c;"/>
-                    <Property name="name" type="java.lang.String" value="varButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="varButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="switchButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5f00;&#x5173;&#x64cd;&#x4f5c;"/>
-                    <Property name="name" type="java.lang.String" value="switchButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeEquipButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x5207;&#x6362;&#x88c5;&#x5907;"/>
-                    <Property name="name" type="java.lang.String" value="changeEquipButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeEquipButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeModalButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x89d2;&#x8272;&#x53d8;&#x8eab;"/>
-                    <Property name="name" type="java.lang.String" value="changeModalButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeModalButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeNameButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;&#x89d2;&#x8272;&#x540d;&#x79f0;"/>
-                    <Property name="name" type="java.lang.String" value="changeNameButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeNameButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="changeEnemyPowerButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x589e;&#x51cf;&#x654c;&#x4eba;&#x5c5e;&#x6027;"/>
-                    <Property name="name" type="java.lang.String" value="changeEnemyPowerButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeEnemyPowerButtonActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="enemyTransButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x654c;&#x4eba;&#x53d8;&#x8eab;"/>
-                    <Property name="name" type="java.lang.String" value="enemyTransButton" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enemyTransButtonActionPerformed"/>
-                  </Events>
-                </Component>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="waitButton" linkSize="19" pref="129" max="32767" attributes="1"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="waitButton" linkSize="20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="waitButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x5f3a;&#x5236;&#x7b49;&#x5f85;"/>
+                        <Property name="name" type="java.lang.String" value="waitButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="waitButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>

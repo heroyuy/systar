@@ -189,31 +189,31 @@ public class Command implements Cloneable {
     /**
      *
      */
-    public static final int OPERATE_ITEM_LIST = 102014;//物品列表操作
+    public static final int OPERATE_ITEM_LIST = 102015;//物品列表操作
     /**
      *
      */
-    public static final int GET_ITEM_NUMBER = 102015;//获取物品数量
+    public static final int GET_ITEM_NUMBER = 102016;//获取物品数量
     /**
      *
      */
-    public static final int OPERATE_EQUIP_LIST = 102016;//装备列表操作
+    public static final int OPERATE_EQUIP_LIST = 102017;//装备列表操作
     /**
      *
      */
-    public static final int GET_EQUIP_NUMBER = 102017;//获取装备数量
+    public static final int GET_EQUIP_NUMBER = 102018;//获取装备数量
     /**
      *
      */
-    public static final int OPERATE_ENEMY_POWER = 102018;//敌人属性操作
+    public static final int OPERATE_ENEMY_POWER = 102019;//敌人属性操作
     /**
      *
      */
-    public static final int GET_ENEMY_POWER = 102019;//获取敌人属性
+    public static final int GET_ENEMY_POWER = 102020;//获取敌人属性
     /**
      *
      */
-    public static final int CHANGE_ENEMY_MODEL = 102020;//改变敌人模型
+    public static final int CHANGE_ENEMY_MODEL = 102021;//改变敌人模型
     //*************************************数据处理类*结束
     //*************************************辅助命令类*开始
     /**
@@ -412,22 +412,249 @@ public class Command implements Cloneable {
         }
         return sb.toString();
     }
+    private static final String[] CHANGE_FACE_STRING = {"上", "下", "左", "右"};
+    private static final String[] CHANGE_MAP_FACE_STRING = {"保持不变", "上", "下", "左", "右"};
+    private static final String[] POWER_TYPE_STRING = {"力量", "敏捷", "智力", "体力", "灵巧", "幸运", "MaxHp", "MaxSp", "HP", "SP", "等级", "经验值"};
+    private static final String[] OPERATE_TYPE_STRING = {"等于", "加", "减", "乘", "除", "模"};
+    private static final String[] VALUE_TYPE_STRING = {"常量", "变量", "开关"};
+    private static final String[] ROTATE_DIRECTION_STRING = {"顺时针", "逆时针"};
+    private static final String[] BATTLE_TYPE_STRING = {"死亡模式", "非死亡模式"};
+    private static final String[] MESSAGE_POSITION_STRING = {"左", "右"};
+    private static final String[] TARGET_TYPE_STRING = {"玩家", "敌人", "NPC"};
 
     @Override
     public String toString() {
-        if (scriptId == INVALID) {
-            return "空操作";//不显示
-        }
         StringBuilder sb = new StringBuilder();
         sb.append(COMMAND_MAP.get(scriptId));
         if (!parameters.isEmpty()) {
-            sb.append(": ");
+            sb.append(" | ");
         }
-        for (int i = 0; i < parameters.size(); i++) {
-            sb.append(parameters.get(i));
-            if (i != parameters.size() - 1) {
-                sb.append(",");
-            }
+        switch (scriptId) {
+            case BREAK:
+                break;
+            case CHANGE_ENEMY_MODEL:
+                sb.append("敌人ID：").append(parameters.get(0));
+                sb.append(" 新行走图：").append(parameters.get(1));
+                break;
+            case CHANGE_FACE:
+                sb.append("面向：").append(CHANGE_FACE_STRING[Integer.parseInt(parameters.get(0))]);
+                break;
+            case CHANGE_IMAGE_COLOR:
+                sb.append("图片名称：").append(parameters.get(0));
+                sb.append(" alpha：").append(parameters.get(1));
+                sb.append(" red：").append(parameters.get(2));
+                sb.append(" green：").append(parameters.get(3));
+                sb.append(" blue：").append(parameters.get(4));
+                sb.append(" 时间：").append(parameters.get(5)).append("ms");
+                break;
+            case CHANGE_MAP:
+                sb.append("地图ID：").append(parameters.get(0));
+                sb.append(" 行号：").append(parameters.get(1));
+                sb.append(" 列号：").append(parameters.get(2));
+                sb.append(" 面向：").append(CHANGE_MAP_FACE_STRING[Integer.parseInt(parameters.get(0))]);
+                break;
+            case CHANGE_PLAYER_NAME:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 新名称：").append(parameters.get(1));
+                break;
+            case CHANGE_SCREEN_COLOR:
+                sb.append("alpha：").append(parameters.get(0));
+                sb.append(" red：").append(parameters.get(1));
+                sb.append(" green：").append(parameters.get(2));
+                sb.append(" blue：").append(parameters.get(3));
+                sb.append(" 时间：").append(parameters.get(4)).append("ms");
+                break;
+            case CHANGE_SKIN:
+                sb.append("新皮肤：").append(parameters.get(0));
+                break;
+            case CHNAGE_PLAYER_MODEL:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 新行走图：").append(parameters.get(1));
+                break;
+            case EXIT_SCRIPT:
+                break;
+            case GET_ENEMY_POWER:
+                sb.append("敌人ID：").append(parameters.get(0));
+                sb.append(" 属性类型：").append(POWER_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                break;
+            case GET_EQUIP_NUMBER:
+                sb.append("装备ID：").append(parameters.get(0));
+                break;
+            case GET_EQUIP_STATE:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 装备ID：").append(parameters.get(1));
+                break;
+            case GET_ITEM_NUMBER:
+                sb.append("物品ID：").append(parameters.get(0));
+                break;
+            case GET_MONEY_NUMBER:
+                break;
+            case GET_PLAYER_NAME:
+                sb.append("玩家ID：").append(parameters.get(0));
+                break;
+            case GET_POWER_STATE:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 属性类型：").append(POWER_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                break;
+            case GET_SKILL_STATE:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 技能ID：").append(parameters.get(1));
+                break;
+            case GET_SWITCH_STATE:
+                sb.append("开关ID：").append(parameters.get(0));
+                break;
+            case GET_VAR_STATE:
+                sb.append("变量ID：").append(parameters.get(0));
+                break;
+            case IF:
+                break;
+            case INVALID:
+                break;
+            case MOVE:
+                sb.append("目的地行号：").append(parameters.get(0));
+                sb.append(" 目的地列号：").append(parameters.get(1));
+                break;
+            case MOVE_IMAGE:
+                sb.append("图片名称：").append(parameters.get(0));
+                sb.append(" x坐标：").append(parameters.get(1));
+                sb.append(" y坐标：").append(parameters.get(2));
+                sb.append(" 时间：").append(parameters.get(3)).append("ms");
+                break;
+            case OPEN_MAIN_MENU:
+                break;
+            case OPEN_RECORD_MENU:
+                break;
+            case OPEN_SHOP:
+                sb.append("出售列表：").append(parameters.get(0));
+                break;
+            case OPEN_SYSTEM_MENU:
+                break;
+            case OPERATE_ENEMY_POWER:
+                sb.append("敌人ID：").append(parameters.get(0));
+                sb.append(" 属性类型：").append(POWER_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(2))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(3))]);
+                sb.append(" 值：").append(parameters.get(4));
+                break;
+            case OPERATE_EQUIP:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 装备列表：").append(parameters.get(1));
+                break;
+            case OPERATE_EQUIP_LIST:
+                sb.append("装备ID：").append(parameters.get(0));
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(2))]);
+                sb.append(" 值：").append(parameters.get(3));
+                break;
+            case OPERATE_ITEM_LIST:
+                sb.append("物品ID：").append(parameters.get(0));
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(2))]);
+                sb.append(" 值：").append(parameters.get(3));
+                break;
+            case OPERATE_MONEY:
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(0))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 值：").append(parameters.get(2));
+                break;
+            case OPERATE_POWER:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 属性类型：").append(POWER_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(2))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(3))]);
+                sb.append(" 值：").append(parameters.get(4));
+                break;
+            case OPERATE_SKILL:
+                sb.append("玩家ID：").append(parameters.get(0));
+                sb.append(" 技能ID：").append(parameters.get(1));
+                sb.append(" 值：").append(parameters.get(2).equals("true") ? "领悟" : "遗忘");
+                break;
+            case OPERATE_SWITCH:
+                sb.append("开关ID：").append(parameters.get(0));
+                sb.append(" 开关值：").append(parameters.get(1));
+                break;
+            case OPERATE_VAR:
+                sb.append("变量ID：").append(parameters.get(0));
+                sb.append(" 操作类型：").append(OPERATE_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 值类型：").append(VALUE_TYPE_STRING[Integer.parseInt(parameters.get(2))]);
+                sb.append(" 值：").append(parameters.get(3));
+                break;
+            case PLAY_MUSIC:
+                sb.append("音乐名称：").append(parameters.get(0));
+                sb.append(" 是否循环：").append(parameters.get(1));
+                break;
+            case PUBLIC_EVENT:
+                sb.append("脚本ID：").append(parameters.get(0));
+                break;
+            case REMOVE_IMAGE:
+                sb.append("图片名称：").append(parameters.get(0));
+                break;
+            case ROTATE_IMAGE:
+                sb.append("图片名称：").append(parameters.get(0));
+                sb.append(" 旋转方向：").append(ROTATE_DIRECTION_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 旋转度数：").append(parameters.get(2));
+                sb.append(" 时间：").append(parameters.get(3)).append("ms");
+                break;
+            case SCREEN_SHOCK:
+                sb.append("震动幅度：").append(parameters.get(0));
+                sb.append(" 震动时间：").append(parameters.get(1)).append("ms");
+                sb.append(" 震动次数：").append(parameters.get(2));
+                break;
+            case SHOW_ANIMATION_BY_LOCATION:
+                sb.append("动画ID：").append(parameters.get(0));
+                sb.append(" x坐标：").append(parameters.get(1));
+                sb.append(" y坐标：").append(parameters.get(2));
+                sb.append(" 播放次数：").append(parameters.get(3));
+                break;
+            case SHOW_ANIMATION_BY_TARGET:
+                sb.append("动画ID：").append(parameters.get(0));
+                sb.append(" 目标类型：").append(TARGET_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                sb.append(" 目标ID：").append(parameters.get(2));
+                sb.append(" 播放次数：").append(parameters.get(3));
+                break;
+            case SHOW_CHOOSE:
+                sb.append("选项列表：").append(parameters.get(0));
+                break;
+            case SHOW_COUNT_DOWN:
+                sb.append("倒计时：").append(parameters.get(0)).append("ms");
+                break;
+            case SHOW_IMAGE:
+                sb.append("图片名称：").append(parameters.get(0));
+                sb.append(" x坐标：").append(parameters.get(1));
+                sb.append(" y坐标：").append(parameters.get(2));
+                sb.append(" 显示时间：").append(MESSAGE_POSITION_STRING[Integer.parseInt(parameters.get(1))]).append("ms");
+                break;
+            case SHOW_INPUT:
+                sb.append("输入框提醒文本：").append(parameters.get(0));
+                break;
+            case SHOW_MESSAGE:
+                sb.append("姓名：").append(parameters.get(0));
+                sb.append(" 内容：").append(parameters.get(1));
+                sb.append(" 半身像文件：").append(parameters.get(2));
+                sb.append(" 半身像位置：").append(MESSAGE_POSITION_STRING[Integer.parseInt(parameters.get(3))]);
+                break;
+            case START_BATTLE:
+                sb.append("敌人队伍ID：").append(parameters.get(0));
+                sb.append(" 战斗类型：").append(BATTLE_TYPE_STRING[Integer.parseInt(parameters.get(1))]);
+                break;
+            case STOP_BATTLE:
+                break;
+            case STOP_MUSIC:
+                sb.append("音乐名称：").append(parameters.get(0));
+                break;
+            case WAIT:
+                sb.append("等待时间：").append(parameters.get(0)).append("ms");
+                break;
+            case WHILE:
+                break;
+            default:
+                for (int i = 0; i < parameters.size(); i++) {
+                    sb.append(parameters.get(i));
+                    if (i != parameters.size() - 1) {
+                        sb.append(",");
+                    }
+                }
+                break;
         }
         return sb.toString();
     }

@@ -25,6 +25,7 @@ public class EditAnimationDialog extends javax.swing.JDialog {
     public EditAnimationDialog(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
     private String newName;
 

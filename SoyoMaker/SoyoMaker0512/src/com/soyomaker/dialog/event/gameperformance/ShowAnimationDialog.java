@@ -18,6 +18,7 @@ import com.soyomaker.dialog.AbCommandDialog;
 import com.soyomaker.dialog.ScriptDialog;
 import com.soyomaker.model.animation.Animation;
 import com.soyomaker.model.map.Command;
+import com.soyomaker.model.map.CommandFactory;
 import com.soyomaker.model.map.Npc;
 import java.util.Iterator;
 
@@ -304,27 +305,31 @@ public class ShowAnimationDialog extends AbCommandDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         if (aniNameComboBox.getSelectedIndex() != -1) {
-            mCommand.addParameter("" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex());
+
             if (enemyRadioButton.isSelected()) {
-                mCommand.setScriptId(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand = CommandFactory.createCommand(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand.addParameter("" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex());
                 mCommand.addParameter("" + 1);
                 mCommand.addParameter("" + ((Enemy) enemyComboBox.getSelectedItem()).getIndex());
 //                    sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
 //                            "globalData.proxy:playAnimationInFight(" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex() + ",1," + ((Enemy) enemyComboBox.getSelectedItem()).getIndex() + ",-1)");
             } else if (playerRadioButton.isSelected()) {
-                mCommand.setScriptId(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand = CommandFactory.createCommand(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand.addParameter("" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex());
                 mCommand.addParameter("" + 0);
                 mCommand.addParameter("" + ((Player) playerComboBox.getSelectedItem()).getIndex());
 //                    sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
 //                            "globalData.proxy:playAnimationInFight(" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex() + ",0," + ((Player) playerComboBox.getSelectedItem()).getIndex() + ",-1)");
             } else if (npcRadioButton.isSelected()) {
-                mCommand.setScriptId(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand = CommandFactory.createCommand(Command.SHOW_ANIMATION_BY_TARGET);
+                mCommand.addParameter("" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex());
                 mCommand.addParameter("" + 2);
                 mCommand.addParameter("" + ((Npc) npcComboBox.getSelectedItem()).getIndex());
 //                    sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
 //                            "globalData.proxy:playAnimationInFight(" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex() + ",2," + ((Npc) npcComboBox.getSelectedItem()).getIndex() + ",-1)");
             } else {
-                mCommand.setScriptId(Command.SHOW_ANIMATION_BY_LOCATION);
+                mCommand = CommandFactory.createCommand(Command.SHOW_ANIMATION_BY_LOCATION);
+                mCommand.addParameter("" + ((Animation) aniNameComboBox.getSelectedItem()).getIndex());
                 mCommand.addParameter(xTextField.getText());
                 mCommand.addParameter(yTextField.getText());
 //                    sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
@@ -374,7 +379,6 @@ public class ShowAnimationDialog extends AbCommandDialog {
         xTextField.setEnabled(xyRadioButton.isSelected());
         yTextField.setEnabled(xyRadioButton.isSelected());
     }//GEN-LAST:event_xyRadioButtonStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox aniNameComboBox;
     private javax.swing.ButtonGroup buttonGroup1;

@@ -288,10 +288,12 @@ public class VarDialog extends AbCommandDialog {
         }
         mCommand.addParameter("" + type);
         if (constRadioButton.isSelected()) {
+            mCommand.addParameter("0");
             mCommand.addParameter(constTextField.getText());
 //            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
 //                    "globalData.proxy:operateVariable(" + varComboBox.getSelectedIndex() + "," + type + ",0," + constTextField.getText() + ")");
         } else {
+            mCommand.addParameter("1");
             mCommand.addParameter("Interpreter:doCommand(" + Command.GET_VAR_STATE + "," + varComboBox.getSelectedIndex() + ")");
 //            sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(),
 //                    "globalData.proxy:operateVariable(" + varComboBox.getSelectedIndex() + "," + type + ",1,globalData.proxy:getVariable(" + var2ComboBox.getSelectedIndex() + "))");

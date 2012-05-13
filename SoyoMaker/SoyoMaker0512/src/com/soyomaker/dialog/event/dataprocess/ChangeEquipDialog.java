@@ -337,6 +337,7 @@ public class ChangeEquipDialog extends AbCommandDialog {
         }
         sb.append("}");
         mCommand = CommandFactory.createCommand(mTypeId);
+        mCommand.addParameter("" + ((Player) playerComboBox.getSelectedItem()).getIndex());
         mCommand.addParameter(sb.toString());
         System.out.println(mCommand);
 //        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:operatePlayerEquip(" + sb.toString() + ")");
