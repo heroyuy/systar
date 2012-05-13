@@ -11,18 +11,18 @@ import java.util.EventObject;
  *
  * @author Administrator
  */
-public class ProjectChangedEvent extends EventObject {
+public class ProjectMapChangedEvent extends EventObject {
 
     /**
-     * 
+     *
      * @param pro
      */
-    public ProjectChangedEvent(Project pro) {
+    public ProjectMapChangedEvent(Project pro) {
         super(pro);
     }
 
     /**
-     * 
+     *
      * @return
      */
     public Project getProject() {

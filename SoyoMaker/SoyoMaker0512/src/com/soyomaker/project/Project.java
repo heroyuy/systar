@@ -5,8 +5,10 @@
 package com.soyomaker.project;
 
 import com.soyomaker.data.DataManager;
-import com.soyomaker.listener.ProjectChangeListener;
-import com.soyomaker.listener.ProjectChangedEvent;
+import com.soyomaker.listener.ProjectAnimationChangeListener;
+import com.soyomaker.listener.ProjectAnimationChangedEvent;
+import com.soyomaker.listener.ProjectMapChangeListener;
+import com.soyomaker.listener.ProjectMapChangedEvent;
 import com.soyomaker.model.animation.Animation;
 import com.soyomaker.model.animation.Clip;
 import com.soyomaker.model.animation.Picture;
@@ -37,7 +39,8 @@ public class Project {
     private String createTime = "";//创建项目的时间
     private String lastSaveSoftVersion = "";//保存项目的软件版本
     private String lastSaveTime = "";//保存项目的时间
-    private final List projectChangeListeners = new LinkedList();
+    private final List projectMapChangeListeners = new LinkedList();
+    private final List projectAnimationChangeListeners = new LinkedList();
     //FIXME应该加入一个MapManager类来管理map,npc和scriptfile
     private HashMap<Integer, Map> maps = new HashMap<Integer, Map>();
     private HashMap<Integer, Npc> npcs = new HashMap<Integer, Npc>();
@@ -615,36 +618,35 @@ public class Project {
         }
         return max;
     }
-
     /**
-     * 
+     *
      * @param listener
      */
-    public void addProjectChangeListener(ProjectChangeListener listener) {
-        projectChangeListeners.add(listener);
+    public void addProjectMapChangeListener(ProjectMapChangeListener listener) {
+        projectMapChangeListeners.add(listener);
     }
 
     /**
      * Removes a change listener.
      * @param listener the listener to remove
      */
-    public void removeProjectChangeListener(ProjectChangeListener listener) {
-        projectChangeListeners.remove(listener);
+    public void removeProjectMapChangeListener(ProjectMapChangeListener listener) {
+        projectMapChangeListeners.remove(listener);
+    }
+    /**
+     * 
+     * @param listener
+     */
+    public void addProjectAnimationChangeListener(ProjectAnimationChangeListener listener) {
+        projectAnimationChangeListeners.add(listener);
     }
 
     /**
-     * Notifies all registered map change listeners about a change.
+     * Removes a change listener.
+     * @param listener the listener to remove
      */
-    protected void fireProjectChanged() {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
-
-        while (iterator.hasNext()) {
-            if (event == null) {
-                event = new ProjectChangedEvent(this);
-            }
-            ((ProjectChangeListener) iterator.next()).projectChanged(event);
-        }
+    public void removeProjectAnimationChangeListener(ProjectAnimationChangeListener listener) {
+        projectAnimationChangeListeners.remove(listener);
     }
 
     /**
@@ -652,14 +654,14 @@ public class Project {
      * @param map 
      */
     protected void fireMapAdded(Map map) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).mapAdded(event, map);
+            ((ProjectMapChangeListener) iterator.next()).mapAdded(event, map);
         }
     }
 
@@ -668,14 +670,14 @@ public class Project {
      * @param index
      */
     protected void firePictureRemoved(int index) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectAnimationChangeListeners.iterator();
+        ProjectAnimationChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectAnimationChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).pictureRemoved(event, index);
+            ((ProjectAnimationChangeListener) iterator.next()).pictureRemoved(event, index);
         }
     }
 
@@ -684,14 +686,14 @@ public class Project {
      * @param pic
      */
     protected void firePictureAdded(Picture pic) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectAnimationChangeListeners.iterator();
+        ProjectAnimationChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectAnimationChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).pictureAdded(event, pic);
+            ((ProjectAnimationChangeListener) iterator.next()).pictureAdded(event, pic);
         }
     }
 
@@ -700,14 +702,14 @@ public class Project {
      * @param index 
      */
     protected void fireAnimationRemoved(int index) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectAnimationChangeListeners.iterator();
+        ProjectAnimationChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectAnimationChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).animationRemoved(event, index);
+            ((ProjectAnimationChangeListener) iterator.next()).animationRemoved(event, index);
         }
     }
 
@@ -716,14 +718,14 @@ public class Project {
      * @param ani
      */
     protected void fireAnimationAdded(Animation ani) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectAnimationChangeListeners.iterator();
+        ProjectAnimationChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectAnimationChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).animationAdded(event, ani);
+            ((ProjectAnimationChangeListener) iterator.next()).animationAdded(event, ani);
         }
     }
 
@@ -732,14 +734,14 @@ public class Project {
      * @param index 
      */
     protected void fireMapRemoved(int index) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).mapRemoved(event, index);
+            ((ProjectMapChangeListener) iterator.next()).mapRemoved(event, index);
         }
     }
 
@@ -748,14 +750,14 @@ public class Project {
      * @param npc
      */
     protected void fireNpcAdded(Npc npc) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).npcAdded(event, npc);
+            ((ProjectMapChangeListener) iterator.next()).npcAdded(event, npc);
         }
     }
 
@@ -764,14 +766,14 @@ public class Project {
      * @param file 
      */
     protected void fireScriptAdded(Script file) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).scriptAdded(event, file);
+            ((ProjectMapChangeListener) iterator.next()).scriptAdded(event, file);
         }
     }
 
@@ -780,14 +782,14 @@ public class Project {
      * @param index 
      */
     protected void fireNpcRemoved(int index) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).npcRemoved(event, index);
+            ((ProjectMapChangeListener) iterator.next()).npcRemoved(event, index);
         }
     }
 
@@ -796,14 +798,14 @@ public class Project {
      * @param index 
      */
     protected void fireScriptRemoved(int index) {
-        Iterator iterator = projectChangeListeners.iterator();
-        ProjectChangedEvent event = null;
+        Iterator iterator = projectMapChangeListeners.iterator();
+        ProjectMapChangedEvent event = null;
 
         while (iterator.hasNext()) {
             if (event == null) {
-                event = new ProjectChangedEvent(this);
+                event = new ProjectMapChangedEvent(this);
             }
-            ((ProjectChangeListener) iterator.next()).scriptRemoved(event, index);
+            ((ProjectMapChangeListener) iterator.next()).scriptRemoved(event, index);
         }
     }
 
@@ -821,7 +823,6 @@ public class Project {
      */
     public void setCreateSoftVersion(String softVersion) {
         this.createSoftVersion = softVersion;
-        fireProjectChanged();
     }
 
     /**
@@ -838,7 +839,6 @@ public class Project {
      */
     public void setName(String name) {
         this.name = name;
-        fireProjectChanged();
     }
 
     /**
@@ -855,7 +855,6 @@ public class Project {
      */
     public void setPath(String path) {
         this.path = path;
-        fireProjectChanged();
     }
 
     /**

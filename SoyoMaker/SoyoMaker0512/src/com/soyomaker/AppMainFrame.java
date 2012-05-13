@@ -12,10 +12,8 @@ package com.soyomaker;
 
 import com.soyomaker.config.Configuration;
 import com.soyomaker.config.Preference;
-import com.soyomaker.listener.ProjectChangedEvent;
 import com.soyomaker.log.ILogDisplayer;
 import com.soyomaker.model.animation.Animation;
-import com.soyomaker.model.animation.Picture;
 import com.soyomaker.model.map.Npc;
 import com.soyomaker.model.map.Script;
 import com.soyomaker.dialog.AboutDialog;
@@ -50,7 +48,8 @@ import com.soyomaker.listener.LayerChangeListener;
 import com.soyomaker.listener.LayerChangedEvent;
 import com.soyomaker.listener.MapChangeListener;
 import com.soyomaker.listener.MapChangedEvent;
-import com.soyomaker.listener.ProjectChangeListener;
+import com.soyomaker.listener.ProjectMapChangeListener;
+import com.soyomaker.listener.ProjectMapChangedEvent;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.log.LogPrinterListener;
@@ -132,7 +131,7 @@ import org.dom4j.io.XMLWriter;
  *
  * @author Administrator
  */
-public class AppMainFrame extends javax.swing.JFrame implements RenderListener, MapChangeListener, LayerChangeListener, ProjectChangeListener, DropTargetListener, LogPrinterListener, Observer {
+public class AppMainFrame extends javax.swing.JFrame implements RenderListener, MapChangeListener, LayerChangeListener, ProjectMapChangeListener, DropTargetListener, LogPrinterListener, Observer {
 
     /** Creates new form MainFrame */
     public AppMainFrame() {
@@ -1357,7 +1356,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         final Project project = npd.getProject();
 
         if (project != null) {
-            project.addProjectChangeListener(this);
+            project.addProjectMapChangeListener(this);
             AppMainFrame.this.setCursor(waitCursor);
             AppMainFrame.this.gGrassPane.start();
             AppMainFrame.this.gGrassPane.setText("正在新建项目...");
@@ -1497,7 +1496,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         closeProject();
         final Project project = new Project();
         AppData.getInstance().setCurProject(project);
-        project.addProjectChangeListener(AppMainFrame.this);
+        project.addProjectMapChangeListener(AppMainFrame.this);
         project.setPath(path);
         updateRecent(project.getPath());
         try {
@@ -1526,6 +1525,15 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     IAnimationReader aniReader = new DefaultSoftAnimationBinaryReader();
                     try {
                         aniReader.readAnimation(project.getPath() + File.separator + "softdata" + File.separator + "animation.gat");
+                        File f = new File(project.getPath() + File.separator + "softdata" + File.separator + "animation.xml");
+                        if (f.exists()) {
+                            SAXReader reader = new SAXReader();
+                            InputStream ifile = new FileInputStream(f);
+                            InputStreamReader ir = new InputStreamReader(ifile, "UTF-8");
+                            Document doc = reader.read(ir);
+                            Element root = doc.getRootElement();
+                            loadAllAnimation(root, (DefaultMutableTreeNode) sped.animationTree.getModel().getRoot());
+                        }
                         logPrinter.v("导入动画数据成功！");
                         Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_LOAD_SUCCESSFUL);
                     } catch (Exception ex) {
@@ -1595,6 +1603,40 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         }
     }
 
+    private void loadAllAnimation(final Element root, final DefaultMutableTreeNode node) throws Exception {
+        List childList = root.elements();
+        for (int i = 0; i < childList.size(); i++) {
+            //子节点的操作
+            Element it = (Element) childList.get(i);
+            List attrList = it.attributes();
+            DefaultMutableTreeNode newNode = null;
+            for (int j = 0; j < attrList.size(); j++) {
+                //属性的取得
+                Attribute item = (Attribute) attrList.get(j);
+                if (item.getName().equals("ID")) {
+                    Animation ani = AppData.getInstance().getCurProject().getAnimation(Integer.parseInt(item.getValue()));
+                    newNode = new DefaultMutableTreeNode(ani);
+                    final DefaultMutableTreeNode nodeTemp = newNode;
+                    node.add(newNode);
+                    //必须用SwingUtilities.invokeAndWait使刷新在主线程完成，不然会抛异常
+                    SwingUtilities.invokeAndWait(new Runnable() {
+
+                        public void run() {
+                            ((DefaultTreeModel) sped.animationTree.getModel()).reload(node);
+                            sped.animationTree.expandPath(sped.animationTree.getSelectionPath());
+                            sped.animationTree.setSelectionPath(new TreePath(((DefaultTreeModel) sped.animationTree.getModel()).getPathToRoot(nodeTemp)));
+                            //设置维持当前的选择路径
+                            sped.animationTree.setExpandsSelectedPaths(true);
+                        }
+                    });
+                }
+            }
+            if (it.elements().size() > 0) {
+                loadAllAnimation(it, newNode);
+            }
+        }
+    }
+
     private void loadAllMap(final Element root, final DefaultMutableTreeNode node) throws Exception {
         List childList = root.elements();
         for (int i = 0; i < childList.size(); i++) {
@@ -1612,7 +1654,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     AppMainFrame.this.gGrassPane.setText("正在打开地图：" + map);
                     map.addMapChangeListener(this);
                     MapRenderFactory.createMapRender(map).addRenderListener(this);
-//                  PreviewRenderFactory.createPreviewRender(map);
+//                  PreviewRenderFactory.createPreviewRender(ani);
                     AppData.getInstance().getCurProject().addMap(map, map.getIndex());
 
                     newNode = new DefaultMutableTreeNode(map);
@@ -1762,7 +1804,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                         Integer key = (Integer) it.next();
                         Map map = AppData.getInstance().getCurProject().getMaps().get(key);
                         if (map != null) {
-                            //AppMainFrame.this.gGrassPane.setText("正在保存地图:" + map);
+                            //AppMainFrame.this.gGrassPane.setText("正在保存地图:" + ani);
                             IMapWriter softMapWriter = new DefaultMapLuaWriter();
                             softMapWriter.writeMap(map, AppData.getInstance().getCurProject().getPath() + File.separatorChar
                                     + "data" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
@@ -1851,18 +1893,35 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                 } catch (IOException ex) {
                     logPrinter.e("项目文件更新失败！" + ex.toString());
                 }
-                Document doc = DocumentHelper.createDocument();
-                Element project = doc.addElement(AppData.getInstance().getCurProject().getName());
-                saveAllChildrenMap(project, (DefaultMutableTreeNode) mapTree.getModel().getRoot());
-                try {
-                    OutputFormat format = OutputFormat.createPrettyPrint();
-                    format.setEncoding("UTF-8");
-                    XMLWriter xmlw = new XMLWriter(new FileOutputStream(AppData.getInstance().getCurProject().getPath() + File.separator + "softdata" + File.separator + "map.xml"), format);
-                    xmlw.write(doc);
-                    xmlw.close();
-                    logPrinter.v("map.xml写出成功！");
-                } catch (IOException e) {
-                    logPrinter.e("map.xml写出失败！" + e.toString());
+                {
+                    Document doc = DocumentHelper.createDocument();
+                    Element project = doc.addElement(AppData.getInstance().getCurProject().getName());
+                    saveAllChildrenMap(project, (DefaultMutableTreeNode) mapTree.getModel().getRoot());
+                    try {
+                        OutputFormat format = OutputFormat.createPrettyPrint();
+                        format.setEncoding("UTF-8");
+                        XMLWriter xmlw = new XMLWriter(new FileOutputStream(AppData.getInstance().getCurProject().getPath() + File.separator + "softdata" + File.separator + "map.xml"), format);
+                        xmlw.write(doc);
+                        xmlw.close();
+                        logPrinter.v("map.xml写出成功！");
+                    } catch (IOException e) {
+                        logPrinter.e("map.xml写出失败！" + e.toString());
+                    }
+                }
+                {
+                    Document doc = DocumentHelper.createDocument();
+                    Element project = doc.addElement(AppData.getInstance().getCurProject().getName());
+                    saveAllChildrenAnimation(project, (DefaultMutableTreeNode) sped.animationTree.getModel().getRoot());
+                    try {
+                        OutputFormat format = OutputFormat.createPrettyPrint();
+                        format.setEncoding("UTF-8");
+                        XMLWriter xmlw = new XMLWriter(new FileOutputStream(AppData.getInstance().getCurProject().getPath() + File.separator + "softdata" + File.separator + "animation.xml"), format);
+                        xmlw.write(doc);
+                        xmlw.close();
+                        logPrinter.v("animation.xml写出成功！");
+                    } catch (IOException e) {
+                        logPrinter.e("animation.xml写出失败！" + e.toString());
+                    }
                 }
             }
         };
@@ -1959,6 +2018,35 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
             }
             if (dmt.getChildCount() > 0) {
                 saveAllChildrenMap(elem, dmt);
+            }
+        }
+    }
+
+    private void saveAllChildrenAnimation(Element em, DefaultMutableTreeNode tn) {
+        for (int i = 0, n = tn.getChildCount(); i < n; i++) {
+            DefaultMutableTreeNode dmt = (DefaultMutableTreeNode) tn.getChildAt(i);
+            Animation ani = (Animation) dmt.getUserObject();
+            Element elem = em.addElement("Animation");
+            Attribute attribute = elem.attribute("ID");
+            if (attribute == null) {
+                elem.addAttribute("ID", "" + ani.getIndex());
+            } else {
+                attribute.setValue("" + ani.getIndex());
+                List list = new ArrayList();
+                list.add(attribute);
+                elem.setAttributes(list);
+            }
+            Attribute name = elem.attribute("Name");
+            if (name == null) {
+                elem.addAttribute("Name", ani.getName());
+            } else {
+                name.setValue(ani.getName());
+                List list = new ArrayList();
+                list.add(name);
+                elem.setAttributes(list);
+            }
+            if (dmt.getChildCount() > 0) {
+                saveAllChildrenAnimation(elem, dmt);
             }
         }
     }
@@ -2098,7 +2186,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
     private void addNewMap(Map map) {
         map.addMapChangeListener(this);
         MapRenderFactory.createMapRender(map).addRenderListener(this);
-//        PreviewRenderFactory.createPreviewRender(map);//新建地图时，暂时不创建PreviewRender对象，在需要时在创建，节省内存
+//        PreviewRenderFactory.createPreviewRender(ani);//新建地图时，暂时不创建PreviewRender对象，在需要时在创建，节省内存
         //图层数至少为一层
         TileLayer tLayer = new TileLayer(map, map.getWidth(), map.getHeight());
         tLayer.addLayerChangeListener(data.getMainFrame());
@@ -2349,7 +2437,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         if (AppData.getInstance().getCurProject() == null) {
             return;
         }
-        AppData.getInstance().getCurProject().removeProjectChangeListener(this);
+        AppData.getInstance().getCurProject().removeProjectMapChangeListener(this);
         AppData.getInstance().getCurProject().setPath("");
         AppData.getInstance().getCurProject().setName("");
         AppData.getInstance().getCurProject().removeAllMap();
@@ -2642,7 +2730,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                 }
                 map.addMapChangeListener(this);
                 MapRenderFactory.createMapRender(map).addRenderListener(this);
-//                  PreviewRenderFactory.createPreviewRender(map);
+//                  PreviewRenderFactory.createPreviewRender(ani);
                 AppData.getInstance().getCurProject().addMap(map);
 
                 DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(map);
@@ -3043,15 +3131,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
      * 
      * @param e
      */
-    public void projectChanged(ProjectChangedEvent e) {
-    }
-
-    /**
-     * 
-     * @param e
-     * @param map
-     */
-    public void mapAdded(ProjectChangedEvent e, Map map) {
+    public void mapAdded(ProjectMapChangedEvent e, Map map) {
     }
 
     /**
@@ -3059,31 +3139,19 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
      * @param e
      * @param index
      */
-    public void mapRemoved(ProjectChangedEvent e, int index) {
+    public void mapRemoved(ProjectMapChangedEvent e, int index) {
     }
 
-    public void npcAdded(ProjectChangedEvent e, Npc npc) {
+    public void npcAdded(ProjectMapChangedEvent e, Npc npc) {
     }
 
-    public void npcRemoved(ProjectChangedEvent e, int index) {
+    public void npcRemoved(ProjectMapChangedEvent e, int index) {
     }
 
-    public void scriptAdded(ProjectChangedEvent e, Script npc) {
+    public void scriptAdded(ProjectMapChangedEvent e, Script npc) {
     }
 
-    public void scriptRemoved(ProjectChangedEvent e, int index) {
-    }
-
-    public void animationAdded(ProjectChangedEvent e, Animation ani) {
-    }
-
-    public void animationRemoved(ProjectChangedEvent e, int index) {
-    }
-
-    public void pictureAdded(ProjectChangedEvent e, Picture pic) {
-    }
-
-    public void pictureRemoved(ProjectChangedEvent e, int index) {
+    public void scriptRemoved(ProjectMapChangedEvent e, int index) {
     }
 
     public void dragEnter(DropTargetDragEvent dtde) {

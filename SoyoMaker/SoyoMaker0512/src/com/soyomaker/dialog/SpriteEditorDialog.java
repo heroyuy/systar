@@ -10,18 +10,14 @@
  */
 package com.soyomaker.dialog;
 
-import com.soyomaker.listener.ProjectChangeListener;
-import com.soyomaker.listener.ProjectChangedEvent;
-import com.soyomaker.tablemodel.AnimationTableModel;
 import com.soyomaker.tablemodel.FrameTableModel;
 import com.soyomaker.model.animation.Animation;
 import com.soyomaker.model.animation.Frame;
 import com.soyomaker.model.animation.Picture;
-import com.soyomaker.model.map.Map;
-import com.soyomaker.model.map.Npc;
-import com.soyomaker.model.map.Script;
 import com.soyomaker.AppData;
 import com.soyomaker.listener.FrameListener;
+import com.soyomaker.listener.ProjectAnimationChangeListener;
+import com.soyomaker.listener.ProjectAnimationChangedEvent;
 import com.soyomaker.model.animation.Clip;
 import com.soyomaker.util.ImagePreviewer;
 import com.soyomaker.util.TileCutter;
@@ -41,19 +37,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  *
  * @author Administrator
  */
-public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectChangeListener, FrameListener {
+public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAnimationChangeListener, FrameListener {
 
     /** Creates new form SpriteEditorDialog
      * @param parent 
@@ -63,7 +63,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         super(parent, modal);
         initComponents();
         initialize();
-        AppData.getInstance().getCurProject().addProjectChangeListener(this);
+        AppData.getInstance().getCurProject().addProjectAnimationChangeListener(this);
         handleFramePane.addFrameListener(this);
         JScrollPane scrollPane = new JScrollPane(aspp,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -87,7 +87,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
      *
      */
     public void removeProjectChangeListener() {
-        AppData.getInstance().getCurProject().removeProjectChangeListener(this);
+        AppData.getInstance().getCurProject().removeProjectAnimationChangeListener(this);
     }
 
     /** This method is called from within the constructor to
@@ -121,8 +121,9 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         jToolBar2 = new javax.swing.JToolBar();
         newAniButton = new javax.swing.JButton();
         removeAniButton = new javax.swing.JButton();
+        renameAniButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        aniTable = new javax.swing.JTable();
+        animationTree = new javax.swing.JTree();
         jPanel11 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         addFrameButton = new javax.swing.JButton();
@@ -356,38 +357,51 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         });
         jToolBar2.add(removeAniButton);
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        atm = new AnimationTableModel();
-        aniTable.setModel(atm);
-        aniTable.setName("aniTable"); // NOI18N
-        aniTable.setRowHeight(20);
-        aniTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        DefaultTableCellRenderer aniRender = new DefaultTableCellRenderer();
-        aniRender.setHorizontalAlignment(SwingConstants.CENTER);
-        for(int i = 0;i < aniTable.getColumnCount();i++) {
-            aniTable.getColumn(aniTable.getModel().getColumnName(i)) .setCellRenderer(aniRender);
-        }
-        aniTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                aniTableMouseClicked(evt);
+        renameAniButton.setText("重命名动画");
+        renameAniButton.setFocusable(false);
+        renameAniButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        renameAniButton.setName("renameAniButton"); // NOI18N
+        renameAniButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        renameAniButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameAniButtonActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(aniTable);
+        jToolBar2.add(renameAniButton);
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        animationTree.setEditable(true);
+        animationTree.setName("animationTree"); // NOI18N
+        animationTree.setModel(dtm);
+        animationTree.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
+            public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
+                animationTreeTreeCollapsed(evt);
+            }
+            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
+                animationTreeTreeExpanded(evt);
+            }
+        });
+        animationTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                animationTreeValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(animationTree);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
         );
 
         jSplitPane7.setTopComponent(jPanel4);
@@ -481,15 +495,15 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
         );
 
         jSplitPane7.setRightComponent(jPanel11);
@@ -706,7 +720,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         handleFramePane.setLayout(handleFramePaneLayout);
         handleFramePaneLayout.setHorizontalGroup(
             handleFramePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 627, Short.MAX_VALUE)
+            .addGap(0, 625, Short.MAX_VALUE)
         );
         handleFramePaneLayout.setVerticalGroup(
             handleFramePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,11 +774,6 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         loopCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         loopCheckBox.setName("loopCheckBox"); // NOI18N
         loopCheckBox.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        loopCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loopCheckBoxActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -787,10 +796,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(alphaSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                             .addComponent(zoomSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(jToolBar7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -833,7 +842,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane6)
+            .addComponent(jSplitPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
         );
 
         spriteTabbedPane.addTab("动画编辑窗口", jPanel1);
@@ -954,46 +963,62 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
     private void newAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAniButtonActionPerformed
         // TODO add your handling code here:
         Animation ani = new Animation();
-        ani.setName("双击设置动画名称");
+        ani.setName("新动画");
         AppData.getInstance().getCurProject().addAnimation(ani);
         Frame frame = new Frame();
         frame.setName("双击设置帧名称");
         ani.addFrame(frame);
         handleFramePane.setCurFrame(frame);
+
+        AppData.getInstance().setCurrentAnimationIndex(ani.getIndex());
+        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(ani);
+        //将新节点插入到指定位置
+        if (selectNode == null) {
+            ((DefaultMutableTreeNode) dtm.getRoot()).add(newNode);
+            dtm.reload((DefaultMutableTreeNode) dtm.getRoot());
+        } else {
+            selectNode.add(newNode);
+            dtm.reload(selectNode);
+        }
+        animationTree.expandPath(tp);
+        animationTree.setSelectionPath(new TreePath(dtm.getPathToRoot(newNode)));
+        //设置维持当前的选择路径
+        animationTree.setExpandsSelectedPaths(true);
+        frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
+                ani.getFrames().size() - 1);
+        frameTable.updateUI();
+        if (ani.getFrames().size() > 0) {
+            handleFramePane.setCurFrame(ani.getFrame(ani.getFrames().size() - 1));
+        }
     }//GEN-LAST:event_newAniButtonActionPerformed
 
     private void removeAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAniButtonActionPerformed
         // TODO add your handling code here:
-        if (aniTable.getSelectedRow() < 0 || aniTable.getSelectedRow() > AppData.getInstance().getCurProject().getAnimationCounts() - 1) {
-            return;
+        if (selectNode != null && selectNode.getParent() != null) {
+            int id = JOptionPane.showConfirmDialog(this, "你确定要删除该动画吗？", "删除动画", JOptionPane.OK_CANCEL_OPTION);
+            if ((id == JOptionPane.OK_OPTION) && (selectNode.getUserObject() instanceof Animation)) {
+                dtm.removeNodeFromParent(selectNode);
+                removeAllChildrenAnimation(selectNode);
+                AppData.getInstance().getCurProject().removeAnimation(((Animation) selectNode.getUserObject()).getIndex());
+                AppData.getInstance().setCurrentAnimationIndex(-1);
+//                System.out.println("size:" + AppData.getInstance().getCurProject().getAnimationCounts());
+                animationTree.getSelectionModel().setSelectionPath(new TreePath(dtm.getRoot()));
+                handleFramePane.setCurFrame(null);
+                frameTable.getSelectionModel().clearSelection();
+                frameTable.updateUI();
+            }
         }
-        int id = JOptionPane.showConfirmDialog(this, "你确定要删除该动画吗？", "删除动画", JOptionPane.OK_CANCEL_OPTION);
-        if (id == JOptionPane.OK_OPTION) {
-            AppData.getInstance().getCurProject().removeAnimation(Integer.parseInt(atm.getValueAt(aniTable.getSelectedRow(), 0).toString()));
-            AppData.getInstance().setCurrentAnimationIndex(-1);
-            atm.updateData();
-            aniTable.getSelectionModel().clearSelection();
-            aniTable.updateUI();
-            handleFramePane.setCurFrame(null);
-            frameTable.getSelectionModel().clearSelection();
-            frameTable.updateUI();
-        }
-
     }//GEN-LAST:event_removeAniButtonActionPerformed
-    private AppData data = AppData.getInstance();
-    private void aniTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aniTableMouseClicked
-        // TODO add your handling code here:
-        AppData.getInstance().setCurrentAnimationIndex(Integer.parseInt(atm.getValueAt(aniTable.getSelectedRow(), 0).toString()));
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
-        handleFramePane.setCurFrame(ani.getFrame(0));
-        if (ani.getFrames().size() > 0) {
-            frameTable.getSelectionModel().setSelectionInterval(0, 0);
-        } else {
-            frameTable.getSelectionModel().clearSelection();
+    private void removeAllChildrenAnimation(DefaultMutableTreeNode tn) {
+        for (int i = 0, n = tn.getChildCount(); i < n; i++) {
+            DefaultMutableTreeNode dmt = (DefaultMutableTreeNode) tn.getChildAt(i);
+            if (dmt.getChildCount() > 0) {
+                removeAllChildrenAnimation(dmt);
+            }
+            AppData.getInstance().getCurProject().removeAnimation(((Animation) dmt.getUserObject()).getIndex());
         }
-        frameTable.updateUI();
-    }//GEN-LAST:event_aniTableMouseClicked
-
+    }
+    private AppData data = AppData.getInstance();
     private void playAnimationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAnimationButtonActionPerformed
         // TODO add your handling code here:
         handleFramePane.playOrPause(loopCheckBox.isSelected());
@@ -1003,10 +1028,6 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
             playAnimationButton.setText("播放");
         }
     }//GEN-LAST:event_playAnimationButtonActionPerformed
-
-    private void loopCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopCheckBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loopCheckBoxActionPerformed
 
     private void leftRotate90ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftRotate90ButtonActionPerformed
         // TODO add your handling code here:
@@ -1160,7 +1181,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
 
     private void downFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0 || data.getCurrentAnimationIndex() > data.getCurProject().getAnimationCounts() - 1) {
+        if (data.getCurrentAnimationIndex() < 0) {
             return;
         }
         Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
@@ -1177,7 +1198,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
 
     private void upFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0 || data.getCurrentAnimationIndex() > data.getCurProject().getAnimationCounts() - 1) {
+        if (data.getCurrentAnimationIndex() < 0) {
             return;
         }
         Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
@@ -1193,7 +1214,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
 
     private void cloneFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cloneFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0 || data.getCurrentAnimationIndex() > data.getCurProject().getAnimationCounts() - 1) {
+        if (data.getCurrentAnimationIndex() < 0) {
             return;
         }
         Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
@@ -1214,7 +1235,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
 
     private void removeFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0 || data.getCurrentAnimationIndex() > data.getCurProject().getAnimationCounts() - 1) {
+        if (data.getCurrentAnimationIndex() < 0) {
             return;
         }
         Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
@@ -1233,7 +1254,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
 
     private void addFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0 || data.getCurrentAnimationIndex() > data.getCurProject().getAnimationCounts() - 1) {
+        if (data.getCurrentAnimationIndex() < 0) {
             return;
         }
         Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
@@ -1321,15 +1342,63 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
             handlePictureScrollPane.setViewportView(handlePicturePanes.get(pic));
         }
     }//GEN-LAST:event_autoCutButtonActionPerformed
+    private TreePath tp;
+    private DefaultMutableTreeNode selectNode = null;
+    //创建根节点
+    private DefaultMutableTreeNode dmtnRoot = new DefaultMutableTreeNode("动画");
+    //创建树的数据模型
+    private DefaultTreeModel dtm = new DefaultTreeModel(dmtnRoot);
+
+    private void animationTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_animationTreeValueChanged
+        // TODO add your handling code here:
+        tp = evt.getNewLeadSelectionPath();
+        if (tp != null) {
+            //记录选中的节点
+            selectNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+            Object so = selectNode.getUserObject();
+            if ((so instanceof Animation) && (so != null)) {
+                Animation ani = (Animation) so;
+                AppData.getInstance().setCurrentAnimationIndex(ani.getIndex());
+                handleFramePane.setCurFrame(ani.getFrame(0));
+                if (ani.getFrames().size() > 0) {
+                    frameTable.getSelectionModel().setSelectionInterval(0, 0);
+                } else {
+                    frameTable.getSelectionModel().clearSelection();
+                }
+                frameTable.updateUI();
+            }
+        }
+    }//GEN-LAST:event_animationTreeValueChanged
+
+    private void animationTreeTreeCollapsed(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_animationTreeTreeCollapsed
+        // TODO add your handling code here:
+        tp = evt.getPath();
+    }//GEN-LAST:event_animationTreeTreeCollapsed
+
+    private void animationTreeTreeExpanded(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_animationTreeTreeExpanded
+        // TODO add your handling code here:
+        tp = evt.getPath();
+    }//GEN-LAST:event_animationTreeTreeExpanded
+
+    private void renameAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameAniButtonActionPerformed
+        // TODO add your handling code here:
+        if (selectNode != null && selectNode.getUserObject() instanceof Animation) {
+            EditAnimationDialog ead = new EditAnimationDialog(this, true);
+            ead.setVisible(true);
+            if (ead.getNewName() != null) {
+                ((Animation) selectNode.getUserObject()).setName(ead.getNewName());
+                animationTree.updateUI();
+            }
+        }
+    }//GEN-LAST:event_renameAniButtonActionPerformed
     private AutoCutDialog autoCutDialog;
-    private AnimationTableModel atm;
     private FrameTableModel ftm;
     private ChoosePicturePane picturePane;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFrameButton;
     private javax.swing.JButton addImageButton;
     private javax.swing.JSlider alphaSlider;
-    private javax.swing.JTable aniTable;
+    public javax.swing.JTree animationTree;
     private javax.swing.JButton autoCutButton;
     private javax.swing.JLabel bottomLabel;
     private javax.swing.JButton cloneFrameButton;
@@ -1377,6 +1446,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
     private javax.swing.JButton removeAniButton;
     private javax.swing.JButton removeFrameButton;
     private javax.swing.JButton removeImageButton;
+    private javax.swing.JButton renameAniButton;
     private javax.swing.JButton rightAlignButton;
     private javax.swing.JButton rightRotate90Button;
     public javax.swing.JScrollPane showPictureScrollPane;
@@ -1390,25 +1460,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
     private javax.swing.JSlider zoomSlider;
     // End of variables declaration//GEN-END:variables
 
-    public void projectChanged(ProjectChangedEvent e) {
+    public void animationAdded(ProjectAnimationChangedEvent e, final Animation ani) {
     }
 
-    public void animationAdded(ProjectChangedEvent e, final Animation ani) {
-
-        AppData.getInstance().setCurrentAnimationIndex(AppData.getInstance().getCurProject().getAnimationCounts() - 1);
-        atm.updateData();
-        aniTable.getSelectionModel().setSelectionInterval(AppData.getInstance().getCurProject().getAnimationCounts() - 1,
-                AppData.getInstance().getCurProject().getAnimationCounts() - 1);
-        aniTable.updateUI();
-        frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
-                ani.getFrames().size() - 1);
-        frameTable.updateUI();
-        if (ani.getFrames().size() > 0) {
-            handleFramePane.setCurFrame(ani.getFrame(ani.getFrames().size() - 1));
-        }
-    }
-
-    public void pictureAdded(ProjectChangedEvent e, final Picture pic) {
+    public void pictureAdded(ProjectAnimationChangedEvent e, final Picture pic) {
 
         ShowPicturePane spp = new ShowPicturePane(SpriteEditorDialog.this, pic);
         JScrollPane paletteScrollPane = new JScrollPane(spp,
@@ -1427,34 +1482,16 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectCh
         handlePictureScrollPane.setViewportView(hpp);
     }
 
-    public void mapAdded(ProjectChangedEvent e, Map map) {
+    public void animationRemoved(ProjectAnimationChangedEvent e, int index) {
     }
 
-    public void npcAdded(ProjectChangedEvent e, Npc npc) {
-    }
-
-    public void scriptAdded(ProjectChangedEvent e, Script npc) {
-    }
-
-    public void animationRemoved(ProjectChangedEvent e, int index) {
-    }
-
-    public void pictureRemoved(ProjectChangedEvent e, int index) {
+    public void pictureRemoved(ProjectAnimationChangedEvent e, int index) {
         //tabbedPane.remove(showPictureScrollPanes.get(picturePane.getSelectedPicture()));
         handlePicturePanes.remove(picturePane.getSelectedPicture());
         aspp.removePanel(showPictureScrollPanes.get(picturePane.getSelectedPicture()));
         showPictureScrollPanes.remove(picturePane.getSelectedPicture());
         picturePane.setSelectedIndex(-1);
         handlePictureScrollPane.setViewportView(null);
-    }
-
-    public void mapRemoved(ProjectChangedEvent e, int index) {
-    }
-
-    public void npcRemoved(ProjectChangedEvent e, int index) {
-    }
-
-    public void scriptRemoved(ProjectChangedEvent e, int index) {
     }
 
     private void enableClip(boolean enable) {

@@ -29,11 +29,11 @@ public class SoftInformation {
     /**
      *
      */
-    public static final int lastVersion = 4;//尾版本号：尾版本号有2位，一般修改，增加此版本数
+    public static final int lastVersion = 5;//尾版本号：尾版本号有2位，一般修改，增加此版本数
     /**
      * 
      */
-    public static final int modifiedVersion = 20120512;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
+    public static final int modifiedVersion = 20120513;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
     /**
      *
      */

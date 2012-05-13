@@ -11,7 +11,6 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
-import com.soyomaker.project.Project;
 import java.io.File;
 import javax.swing.JOptionPane;
 

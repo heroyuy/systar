@@ -62,6 +62,10 @@ public class NewMapDialog extends javax.swing.JDialog {
     }
     private Map map = null;
 
+    /**
+     *
+     * @return
+     */
     public Map getMap() {
         return map;
     }
