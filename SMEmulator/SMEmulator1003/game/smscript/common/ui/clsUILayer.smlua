@@ -179,7 +179,11 @@ end
 
 --事件分发（lua层不应该调用此方法）
 function clsUILayer:dispatchEvent(event)
-  --TODO 事件应该根据特效做处理
+  --TODO 事件应该根据特效做处理，目前只处理的缩放，其它有待加强
+  --(1)处理scale
+  if self.scale~=1 then
+    event:scale(1/self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
   local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件

@@ -1,5 +1,8 @@
 package com.soyomaker.emulator.app;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
 public class Event {
 
 	public static final int EVENT_TYPE_DOWN = 0;
@@ -37,10 +40,12 @@ public class Event {
 	}
 
 	public void scale(double scale, double x, double y) {
-		this.x = this.x + (1 - scale) * x;
-		this.y = this.y + (1 - scale) * y;
-		this.x = this.x * scale;
-		this.y = this.y * scale;
+		AffineTransform at = new AffineTransform();
+		at.translate((1 - scale) * x, (1 - scale) * y);
+		at.scale(scale, scale);
+		Point2D p = at.transform(new Point2D.Double(this.getX(), this.getY()), null);
+		this.x = p.getX();
+		this.y = p.getY();
 	}
 
 	public String toString() {

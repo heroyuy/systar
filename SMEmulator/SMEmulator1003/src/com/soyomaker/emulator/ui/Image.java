@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import com.soyomaker.emulator.utils.ColorFactory;
 
 /**
- * 图形图像
+ * 图形图像 TODO 图片处理算法需要重写
  * 
  * @author wp_g4
  */
