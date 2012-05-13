@@ -32,8 +32,8 @@ function Game:onStart()
 end
 
 --触屏事件  lua层不应该调用
-function Game:onTouch(x,y,type)
-  GameLayer:dispatchEvent(x,y,type)
+function Game:onTouch(event)
+  GameLayer:dispatchEvent(event)
 end
 
 --输入事件  lua层不应该调用

@@ -100,8 +100,8 @@ function clsSceneTitle:buttonTapped(target)
     --local r=Action:newRotateAction(30,4000,clsAction.TYPE_LINEAR_TO)
     --self.titleBgFrame:runAction(r)
     --[scale]
-    --local s=Action:newScaleAction(1.2,4000,clsAction.TYPE_LINEAR_TO)
-    --self.titleBgFrame:runAction(s)
+    local s=Action:newScaleAction(0.5,4000,clsAction.TYPE_LINEAR_TO)
+    self.titleBgFrame:runAction(s)
     --[shake]
     --local sh=Action:newShakeAction(5,20,1000,clsShakeAction.TYPE_DISORDER)
     --self.titleBgFrame:runAction(sh)
@@ -112,12 +112,12 @@ function clsSceneTitle:buttonTapped(target)
     --local shade=Action:newShadeAction(0.2,4000,clsAction.TYPE_LINEAR_TO)
     --self.titleBgFrame:runAction(shade)
     --[sequence]
-    local m=Action:newMoveAction({-30,-60},2000,clsAction.TYPE_LINEAR_BY)
-    local f=Action:newFlipAction({360,0},2000,clsAction.TYPE_LINEAR_BY)
-    local s=Action:newSequenceAction(2,m,f)
-    local shade=Action:newShadeAction(-0.4,2000,clsAction.TYPE_LINEAR_BY)
-    local s2=Action:newSequenceAction(2,s,shade)
-    self.titleBgFrame:runAction(s2)
+    --local m=Action:newMoveAction({-30,-60},2000,clsAction.TYPE_LINEAR_BY)
+    --local f=Action:newFlipAction({360,0},2000,clsAction.TYPE_LINEAR_BY)
+    --local s=Action:newSequenceAction(2,m,f)
+    --local shade=Action:newShadeAction(-0.4,2000,clsAction.TYPE_LINEAR_BY)
+    --local s2=Action:newSequenceAction(2,s,shade)
+    --self.titleBgFrame:runAction(s2)
   end
 end
 

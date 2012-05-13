@@ -33,8 +33,8 @@ function GameLayer:init()
   self.rootLayer:addChild(self.eventLayer)
 end
 
-function GameLayer:dispatchEvent(x,y,type)
-  self.rootLayer:dispatchEvent(x,y,type)
+function GameLayer:dispatchEvent(event)
+  self.rootLayer:dispatchEvent(event)
 end
 
 function GameLayer:paint(painter)

@@ -71,7 +71,7 @@ public class Game implements IGame, Runnable {
 					inputValue = null;
 				}
 				if (event != null) {
-					luaAdapter.onTouch(event.getX(), event.getY(), event.getType());
+					luaAdapter.onTouch(event);
 					event = null;
 				}
 				// 更新游戏

@@ -56,7 +56,8 @@ function clsUIButton:paintLayer(painter)
 end
 
 --处理触屏事件（lua层不应该调用此方法）
-function clsUIButton:onTouch(x,y,type)
+function clsUIButton:onTouch(event)
+  local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     self.buttonState=clsUIButton.STATE_HIGHLIGHT
   elseif type==UIConst.eventType.MOVE then

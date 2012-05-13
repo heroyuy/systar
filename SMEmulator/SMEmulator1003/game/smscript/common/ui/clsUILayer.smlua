@@ -178,8 +178,9 @@ function clsUILayer:paintChildren(painter)
 end
 
 --事件分发（lua层不应该调用此方法）
-function clsUILayer:dispatchEvent(x,y,type)
+function clsUILayer:dispatchEvent(event)
   --TODO 事件应该根据特效做处理
+  local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
@@ -187,10 +188,10 @@ function clsUILayer:dispatchEvent(x,y,type)
   if self.focusLayer then
     --找到焦点组件
     local lx,ly=self.focusLayer.x-self.focusLayer.anchor[1]*self.focusLayer.width,self.focusLayer.y-self.focusLayer.anchor[2]*self.focusLayer.height
-    self.focusLayer:dispatchEvent(x-lx,y-ly,type)
+    self.focusLayer:dispatchEvent(event:relativeEvent(-lx,-ly))
   else
     --未找到焦点组件
-    self:onTouch(x,y,type)
+    self:onTouch(event)
   end
   if type==UIConst.eventType.UP then
     --如果是UP事件，则清除焦点
@@ -199,9 +200,9 @@ function clsUILayer:dispatchEvent(x,y,type)
 end
 
 --处理触屏事件（lua层不应该调用此方法）
-function clsUILayer:onTouch(x,y,type)
+function clsUILayer:onTouch(event)
   if self.delegate then
-    self.delegate:layerTapped(self,x,y,type)
+    self.delegate:layerTapped(self,event)
   end
 end
 

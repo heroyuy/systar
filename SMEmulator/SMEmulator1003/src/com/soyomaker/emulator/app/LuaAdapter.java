@@ -153,9 +153,9 @@ public class LuaAdapter {
 	/**
 	 * onTouch方法的转换
 	 */
-	public void onTouch(int keyX, int keyY, int type) {
+	public void onTouch(Event event) {
 		try {
-			luaFunctionOnTouch.call(new Object[] { luaGame, keyX, keyY, type });
+			luaFunctionOnTouch.call(new Object[] { luaGame, event });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
