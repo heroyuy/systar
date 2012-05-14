@@ -17,7 +17,7 @@ clsUILabel.ALIGN_RIGHT=2                        --右对齐
 
 clsUILabel.text=nil                             --标签文字
 clsUILabel.textColor="0xffffffff"               --文字颜色
-clsUILabel.textSize=12                          --文字大小
+clsUILabel.textSize=-1                          --文字大小
 clsUILabel.alignment=clsUILabel.ALIGN_CENTER	--对齐方式
 
 --构造器
@@ -36,9 +36,7 @@ function clsUILayer:refresh()
   self.image=Image:createImage(self.width,self.height)
   local painter=self.image:getPainter()
   painter:setColor(self.textColor)
-  if self.textSize<=0 then
-    painter:setTextSize(12)
-  else
+  if self.textSize>0 then
     painter:setTextSize(self.textSize)
   end
   if self.alignment==clsUILabel.ALIGN_LEFT then

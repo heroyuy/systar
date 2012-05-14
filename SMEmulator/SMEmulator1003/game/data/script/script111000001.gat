@@ -1,2 +1,2 @@
-Interpreter:doCommand(101008,{"是","否"})
-Interpreter:doCommand(101006,"大哥","你好啊","/image/battler/098-Monster12.png",0)
+Interpreter:doCommand(101008,{"是","否","大哥你好","干掉它"})
+Interpreter:doCommand(101006,"大哥","<c>[0xff000000]抢劫犯被绑游街引热议，游街示众引围观被质疑践踏<c>[0xffff0000]尊严<c>[0xff000000]。近日，洛南抢劫案的抢劫犯被绑游街引发了网友热议，不少网友称打击犯罪是应该的，但是出于人道主义不应该将抢劫犯捆绑起来游街，况且还引起这么多人围观。网友纷纷质疑抢劫犯被绑游街不妥。","/image/battler/098-Monster12.png",0)

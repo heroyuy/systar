@@ -56,7 +56,6 @@ function clsSceneTitle:onStart()
     button.highlightImage=highlightImage
     button.text=v
     button.textColor=Skin:getTextColor(1,1)
-    button.textSize=16
     button.tag=i
     button.delegate=self
     button:refresh()
