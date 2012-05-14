@@ -220,11 +220,12 @@ public class IfDialog extends AbCommandDialog {
         mCommand = CommandFactory.createCommand(mTypeId);
         if (switchRadioButton.isSelected()) {
             mCommand.addParameter("0");
-            mCommand.addParameter("Interpreter:doCommand(102001," + switchComboBox.getSelectedIndex() + ")");
+            mCommand.addParameter("" + switchComboBox.getSelectedIndex());
             mCommand.addParameter(onComboBox.getSelectedItem().toString().equals("ON") ? "true" : "false");
         } else {
             mCommand.addParameter("1");
-            mCommand.addParameter("Interpreter:doCommand(102003," + varComboBox.getSelectedIndex() + ")");
+//            mCommand.addParameter("Interpreter:doCommand(102003," + varComboBox.getSelectedIndex() + ")");
+            mCommand.addParameter("" + varComboBox.getSelectedIndex());
             switch (varOperationTypeComboBox.getSelectedIndex()) {
                 case 0:
                     mCommand.addParameter("==");

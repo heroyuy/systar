@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -51,8 +49,11 @@ public class ConfigDao extends Dao<Config> {
     @Override
     public void load() throws FileNotFoundException, IOException {
         printer.v("config load");
-        loadBin();//xml读取未完成时加上，完成后删除
-//        loadXML();
+        if (new File(AppData.getInstance().getCurProject().getPath() + "/softdata/config.xml").exists()) {
+            loadXML();
+        } else {
+            loadBin();
+        }
     }
 
     private void loadBin() throws FileNotFoundException, IOException {

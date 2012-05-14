@@ -395,9 +395,9 @@ public class Command implements Cloneable {
                 break;
             case IF:
                 if (Integer.parseInt(parameters.get(0)) == 0) {
-                    sb.append("if ").append(parameters.get(1)).append("==").append(parameters.get(2)).append(" then");
+                    sb.append("if ").append("Interpreter:doCommand(102001,").append(parameters.get(1)).append(")").append("==").append(parameters.get(2)).append(" then");
                 } else {
-                    sb.append("if ").append(parameters.get(1)).append(parameters.get(2)).append(parameters.get(3)).append(" then");
+                    sb.append("if ").append("Interpreter:doCommand(102003,").append(parameters.get(1)).append(")").append(parameters.get(2)).append(parameters.get(3)).append(" then");
                 }
                 break;
             default:
@@ -507,6 +507,10 @@ public class Command implements Cloneable {
                 sb.append("变量ID：").append(parameters.get(0));
                 break;
             case IF:
+//                if (parameters.get(0).equals("0")) {
+//                }
+//                if (parameters.get(0).equals("1")) {
+//                }
                 break;
             case INVALID:
                 break;

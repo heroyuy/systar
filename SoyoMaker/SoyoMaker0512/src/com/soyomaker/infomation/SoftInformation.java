@@ -33,7 +33,7 @@ public class SoftInformation {
     /**
      * 
      */
-    public static final int modifiedVersion = 20120513;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
+    public static final int modifiedVersion = 20120514;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
     /**
      *
      */
