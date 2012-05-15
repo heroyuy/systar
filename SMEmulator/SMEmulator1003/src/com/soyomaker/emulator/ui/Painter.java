@@ -229,7 +229,11 @@ public class Painter {
 		if (img == null) {
 			return;
 		}
-		this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y, anchor, null);
+		int[] xy = convert(x, y, width, height, anchor);
+		graphics.drawImage(img.getContent(), xy[0], xy[1], xy[0] + width, xy[1] + height, srcx, srcy, srcx + width,
+				srcy + height, null);
+		// this.drawImage(img.getSubImage(srcx, srcy, width, height), x, y,
+		// anchor, null);
 	}
 
 	/**
