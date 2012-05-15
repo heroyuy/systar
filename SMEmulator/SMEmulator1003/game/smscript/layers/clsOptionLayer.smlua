@@ -1,5 +1,5 @@
 --[[
-  description:选项框。  TODO 重做
+  description:选项框。
   author:wp_g4
   date:2011/04/21
 --]]
@@ -14,6 +14,7 @@ function clsOptionLayer:new(optionItems)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsOptionLayer)
+  self.callback="optionSelected"
   --背景
   local gap=6
   local cellWidth=self.width-4*gap
@@ -48,9 +49,7 @@ end
 function clsOptionLayer:buttonTapped(target)
   local index=target.tag
   GameLayer:removeChildFromScene(self)
-  if self.delegate then
-    self.delegate:optionSelected(index)
-  end
+  callFunction(self.delegate,self.callback,index)
 end
 
 

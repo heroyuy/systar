@@ -7,6 +7,17 @@ do
   end
 end
 
+--------------callback--------------
+function callFunction(target,callback,...)
+  if target then
+    if type(callback)=="string" then
+      target[callback](target,unpack(arg))
+    else
+      callback(target,unpack(arg))
+    end
+  end
+end
+
 --------------split--------------
 string.split=function(s,regex)
   local items={}

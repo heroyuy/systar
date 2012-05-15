@@ -13,6 +13,10 @@ GameLayer.sceneLayer=nil			--场景渲染层。场景的所有元素应加在这
 GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事件
 GameLayer.eventLayer=nil			--事件层。仅用于显示对话框等
 
+GameLayer.inputDelegate=nil			--输入框事件委托
+GameLayer.inputCallback=nil			--输入框回调方法
+
+--初始化
 function GameLayer:init()
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --根层
@@ -33,14 +37,22 @@ function GameLayer:init()
   self.rootLayer:addChild(self.eventLayer)
 end
 
+--分发事件
 function GameLayer:dispatchEvent(event)
   self.rootLayer:dispatchEvent(event)
 end
 
+--绘制层
 function GameLayer:paint(painter)
   self.rootLayer:paint(painter)
 end
 
+--输入事件
+function GameLayer:onInput(value)
+  callFunction(self.inputDelegate,self.inputCallback,value)
+end
+
+--清理层
 function GameLayer:clear()
   self.sceneLayer:clear()
   self.animationLayer:clear()
@@ -49,11 +61,58 @@ function GameLayer:clear()
   self.eventLayer.visibility=false				--需要时显示
 end
 
+--向场景上添加元件
 function GameLayer:addChildToScene(layer)
   self.sceneLayer:addChild(layer)
 end
 
+--从场景上移除元件
 function GameLayer:removeChildFromScene(layer)
   self.sceneLayer:removeChild(layer)
 end
 
+--显示普通对话框
+function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
+  local eventLayer=self.eventLayer
+  local delegate={}
+  function delegate:dialogEnd()
+    eventLayer:clear()
+    eventLayer.enabled=false
+    eventLayer.visibility=false
+    callFunction(target,callback)
+  end
+  local normalDialog=clsDialogLayer:new(name,content,bustPath,position)
+  normalDialog.delegate=delegate
+  normalDialog.callback=delegate.dialogEnd
+  eventLayer.enabled=true
+  eventLayer.visibility=true
+  eventLayer:addChild(normalDialog)
+end
+
+--显示输入框
+function GameLayer:showInputDialog(tip,target,callback)
+  if callback==nil then
+    callback="onInput"
+  end
+  self.inputDelegate=target
+  self.inputCallback=callback
+  Game:showInputDialog(tip)
+end
+
+--显示选项对话框
+function GameLayer:showOptionDialog(options,target,callback)
+  local eventLayer=self.eventLayer
+  local delegate={}
+  function delegate:onSelected(index)
+    eventLayer:clear()
+    eventLayer.enabled=false
+    eventLayer.visibility=false
+    callFunction(target,callback,index)
+  end
+  local optionDialog=clsOptionLayer:new(options)
+  optionDialog.delegate=delegate
+  optionDialog.callback=delegate.onSelected
+  eventLayer.enabled=true
+  eventLayer.visibility=true
+  eventLayer:addChild(optionDialog)
+end

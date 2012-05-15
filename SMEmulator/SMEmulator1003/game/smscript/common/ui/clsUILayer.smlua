@@ -29,6 +29,7 @@ clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
 clsUILayer.enabled = true;                 	--是否接收事件
 clsUILayer.delegate=nil                    	--事件委托
+clsUILayer.callback="layerTapped"			--回调方法
 
 clsUILayer.parent=nil                   	--父layer
 clsUILayer.children=nil                   	--子layer
@@ -205,9 +206,7 @@ end
 
 --处理触屏事件（lua层不应该调用此方法）
 function clsUILayer:onTouch(event)
-  if self.delegate then
-    self.delegate:layerTapped(self,event)
-  end
+  callFunction(self.delegate,self.callback,self.event)
 end
 
 --更新层

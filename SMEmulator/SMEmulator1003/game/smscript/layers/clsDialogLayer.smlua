@@ -1,5 +1,5 @@
 --[[
-  description:对话框。  TODO 重做
+  description:对话框。
   author:wp_g4
   date:2011/04/21
 --]]
@@ -16,6 +16,7 @@ function clsDialogLayer:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsDialogLayer)
+  self.callback="dialogEnd"
   --背景
   local gap=6
   local cellWidth=self.width-4*gap
@@ -60,11 +61,11 @@ function clsDialogLayer:new(name,content,bustPath,position)
 end
 
 function clsDialogLayer:onTouch(event)
-  local x,y,type=event:getX(),event:getY(),event:getType()
-  if self.delegate and type==UIConst.eventType.DOWN then
+  local type=event:getType()
+  if type==UIConst.eventType.DOWN then
     if not self.contentLabel:nextPage() then
       GameLayer:removeChildFromScene(self)
-      self.delegate:dialogEnd()
+      callFunction(self.delegate,self.callback)
     end
   end
 end

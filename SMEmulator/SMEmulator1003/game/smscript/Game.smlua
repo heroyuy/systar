@@ -9,7 +9,6 @@ Game.SCENE_STATUS=2   --状态场景
 Game.curScene=nil
 
 Game.path=nil						--游戏路径
-Game.inputDialogDelegate=nil		--输入框事件委托
 
 --脚本启动  lua层不应该调用
 function Game:onStart()
@@ -38,9 +37,7 @@ end
 
 --输入事件  lua层不应该调用
 function Game:onInput(value)
-  if self.inputDialogDelegate then
-    self.inputDialogDelegate:onInput(value)
-  end
+  GameLayer:onInput(value)
 end
 
 --更新model  lua层不应该调用
@@ -92,8 +89,7 @@ function Game:getTime()
 end
 
 --显示输入框
-function Game:showInputDialog(tip,inputDialogDelegate)
-  self.inputDialogDelegate=inputDialogDelegate
+function Game:showInputDialog(tip)
   smGame:showInputDialog(tip)
 end
 

@@ -27,6 +27,7 @@ clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
 function clsUIButton:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUIButton)
+  self.callback="buttonTapped"
   return self
 end
 
@@ -61,8 +62,8 @@ function clsUIButton:onTouch(event)
       self.image=self.normalImage
     end
   elseif type==UIConst.eventType.UP then
-    if self.delegate and self.buttonState==clsUIButton.STATE_HIGHLIGHT then
-      self.delegate:buttonTapped(self)
+    if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      callFunction(self.delegate,self.callback,self)
     end
     self.buttonState=clsUIButton.STATE_NORMAL
     self.image=self.normalImage
