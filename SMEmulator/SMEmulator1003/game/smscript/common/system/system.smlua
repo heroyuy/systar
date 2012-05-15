@@ -9,7 +9,7 @@ end
 
 --------------callback--------------
 function callFunction(target,callback,...)
-  if target then
+  if target and callback then
     if type(callback)=="string" then
       target[callback](target,unpack(arg))
     else
