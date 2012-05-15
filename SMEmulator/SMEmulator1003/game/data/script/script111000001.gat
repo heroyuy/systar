@@ -1,4 +1,0 @@
-local options={"新闻1","新闻2","新闻3","新闻4"}
-local index=Interpreter:doCommand(101008,options)
-local content=Interpreter:doCommand(101007,"请输入新闻内容:")
-Interpreter:doCommand(101006,options[index],content,"/image/battler/098-Monster12.png",0)
