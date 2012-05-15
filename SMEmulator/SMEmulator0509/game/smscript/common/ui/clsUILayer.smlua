@@ -16,7 +16,7 @@ clsUILayer.width=0                      	--宽度
 clsUILayer.height=0                       	--高度
 clsUILayer.color=nil               			--背景色
 clsUILayer.alpha=1.0               			--透明度
-clsUILayer.image = null;           			--图像
+clsUILayer.image = nil           			--图像
 
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true;             	--是否可见
