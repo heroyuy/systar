@@ -11,9 +11,10 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
-import com.soyomaker.log.Log;
 import com.soyomaker.model.map.TileSet;
 import com.soyomaker.tablemodel.TileSetTableModel;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -52,6 +53,7 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
         tileSetTable = new javax.swing.JTable();
         removeButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
+        refreshAllTileSetsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(TileSetManagerDialog.class);
@@ -68,7 +70,7 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
         }
         jScrollPane1.setViewportView(tileSetTable);
 
-        removeButton.setText("删除");
+        removeButton.setText("删除选中图集");
         removeButton.setName("removeButton"); // NOI18N
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +86,14 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
             }
         });
 
+        refreshAllTileSetsButton.setText("刷新全部图集");
+        refreshAllTileSetsButton.setName("refreshAllTileSetsButton"); // NOI18N
+        refreshAllTileSetsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshAllTileSetsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,10 +101,12 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(refreshAllTileSetsButton)
+                        .addGap(18, 18, 18)
                         .addComponent(removeButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                         .addComponent(closeButton)))
                 .addContainerGap())
         );
@@ -102,11 +114,12 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(closeButton)
-                    .addComponent(removeButton))
+                    .addComponent(removeButton)
+                    .addComponent(refreshAllTileSetsButton))
                 .addContainerGap())
         );
 
@@ -134,9 +147,21 @@ public class TileSetManagerDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    private void refreshAllTileSetsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAllTileSetsButtonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<TileSet> tilesets = data.getCurrentMap().getTileSets();
+        for (TileSet tileset : tilesets) {
+            try {
+                tileset.checkUpdate();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_refreshAllTileSetsButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refreshAllTileSetsButton;
     private javax.swing.JButton removeButton;
     private javax.swing.JTable tileSetTable;
     // End of variables declaration//GEN-END:variables

@@ -67,6 +67,7 @@ public class DefaultSoftMapBinaryReader implements IMapReader {
             is.setAutoTile(dis.readBoolean());
 //            System.out.println("图集名称：" + is.getName());
             String path = dis.readUTF();
+            is.setTilebmpFile(new File(AppData.getInstance().getCurProject().getPath() + path));
 //            System.out.println("图集文件：" + AppData.getInstance().getCurProject().getPath() + path);
             is.importTileBitmap(new File(AppData.getInstance().getCurProject().getPath() + path),
                     new TileCutter(map.getTileWidth(), map.getTileHeight()));

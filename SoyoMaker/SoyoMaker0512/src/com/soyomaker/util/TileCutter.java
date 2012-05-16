@@ -76,6 +76,14 @@ public class TileCutter {
     }
 
     /**
+     * 
+     */
+    public void reset() {
+        nextX = 0;
+        nextY = 0;
+    }
+
+    /**
      *
      * @return
      */

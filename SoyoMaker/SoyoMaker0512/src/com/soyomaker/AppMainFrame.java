@@ -275,6 +275,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         openProjectMenuItem = new javax.swing.JMenuItem();
         saveProjectMenuItem = new javax.swing.JMenuItem();
         closeProjectMenuItem = new javax.swing.JMenuItem();
+        cleanProjectMenuItem = new javax.swing.JMenuItem();
         openRecentMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
@@ -717,7 +718,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
             .addGroup(mapPaneLayout.createSequentialGroup()
                 .addComponent(mapToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(mapPane);
@@ -899,6 +900,15 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         });
         fileMenu.add(closeProjectMenuItem);
 
+        cleanProjectMenuItem.setText("清理项目");
+        cleanProjectMenuItem.setName("cleanProjectMenuItem"); // NOI18N
+        cleanProjectMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanProjectMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(cleanProjectMenuItem);
+
         openRecentMenu.setText(resourceMap.getString("openRecentMenu.text")); // NOI18N
         openRecentMenu.setName("openRecentMenu"); // NOI18N
         fileMenu.add(openRecentMenu);
@@ -1078,7 +1088,6 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
 
         layerMenu.setMnemonic('L');
         layerMenu.setText(resourceMap.getString("layerMenu.text")); // NOI18N
-        layerMenu.setName("layerMenu"); // NOI18N
 
         newLayerMenuItem.setText(resourceMap.getString("newLayerMenuItem.text")); // NOI18N
         newLayerMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -1695,7 +1704,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     continue;
                     //当转换出异常时，必然会是map文件夹中有类似 map2a.gat等的错误数据，因为有可能是用户自己的备份，所以不做处理，不进行删除
                 }
-                if (soft) {
+                if (!soft) {
                     mapIndex -= Configuration.Prefix.MAP_MASK;
                 }
                 if (AppData.getInstance().getCurProject().getMap(mapIndex) == null) {
@@ -1719,7 +1728,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     continue;
                     //当转换出异常时，必然会是npc文件夹中有类似 npc2a.gat等的错误数据，因为有可能是用户自己的备份，所以不做处理，不进行删除
                 }
-                if (soft) {
+                if (!soft) {
                     npcIndex -= Configuration.Prefix.NPC_MASK;
                 }
                 if (AppData.getInstance().getCurProject().getNpc(npcIndex) == null) {
@@ -1743,7 +1752,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     continue;
                     //当转换出异常时，必然会是npc文件夹中有类似 script2a.gat等的错误数据，因为有可能是用户自己的备份，所以不做处理，不进行删除
                 }
-                if (soft) {
+                if (!soft) {
                     scriptIndex -= Configuration.Prefix.SCRIPT_MASK;
                 }
                 if (AppData.getInstance().getCurProject().getScript(scriptIndex) == null) {
@@ -2828,6 +2837,35 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
         saveMap();
     }//GEN-LAST:event_saveMapMenuItemActionPerformed
 
+    private void cleanProjectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanProjectMenuItemActionPerformed
+        // TODO add your handling code here:
+        if (AppData.getInstance().getCurProject() == null) {
+            JOptionPane.showMessageDialog(this,
+                    "请先新建项目！");
+            return;
+        }
+        //清除错误的引擎地图数据文件
+        clearErrorMapFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "data" + File.separatorChar + "map"), false);
+        //清除错误的软件地图数据文件
+        clearErrorMapFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "softdata" + File.separatorChar + "map"), true);
+//        //清除错误的npc数据文件
+//        clearErrorNpcFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+//                + "data" + File.separatorChar + "npc"));
+        //清除错误的npc数据文件
+        clearErrorNpcFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "softdata" + File.separatorChar + "npc"), true);
+        //清除错误的script数据文件
+        clearErrorScriptFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "data" + File.separatorChar + "script"), false);
+        //清除错误的script数据文件
+        clearErrorScriptFile(new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
+                + "softdata" + File.separatorChar + "script"), true);
+        JOptionPane.showMessageDialog(this,
+                "清理项目成功！");
+    }//GEN-LAST:event_cleanProjectMenuItemActionPerformed
+
     private void systemTray() {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
@@ -2873,7 +2911,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
             UIManager.setLookAndFeel(s);
             SwingUtilities.updateComponentTreeUI(this);//更新控件的外观
         } catch (Exception e) {
-            logPrinter.e("软件皮肤设置异常！");
+//            logPrinter.e("软件皮肤设置异常！");
         }
     }
     private TrayIcon trayicon;
@@ -2955,6 +2993,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem checkUpdateMenuItem;
+    private javax.swing.JMenuItem cleanProjectMenuItem;
     private javax.swing.JMenuItem closeProjectMenuItem;
     private javax.swing.JButton copyMapButton;
     private javax.swing.JMenuItem copyMapMenuItem;

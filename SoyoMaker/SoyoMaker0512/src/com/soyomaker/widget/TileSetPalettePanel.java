@@ -7,6 +7,7 @@ import com.soyomaker.listener.TileRegionSelectionEvent;
 import com.soyomaker.listener.TileSelectionEvent;
 import com.soyomaker.listener.TileSelectionListener;
 import com.soyomaker.listener.TilesetChangeListener;
+import com.soyomaker.listener.TilesetChangedEvent;
 import com.soyomaker.model.map.TileLayer;
 import com.soyomaker.model.map.Tile;
 import com.soyomaker.model.map.TileSet;
@@ -15,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.event.MouseInputAdapter;
@@ -24,8 +24,8 @@ import javax.swing.event.MouseInputAdapter;
  *
  * @author 图元调色板，每张图都有一个调色板
  */
-public class TileSetPalettePanel extends JPanel implements Scrollable {
-    
+public class TileSetPalettePanel extends JPanel implements Scrollable, TilesetChangeListener {
+
     private TileSet tileset;
     private ArrayList<Tile> tilesetMap;
     private Rectangle selection;
@@ -36,11 +36,11 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
      */
     public TileSetPalettePanel() {
         tileSelectionListeners = new LinkedList();
-        
+
         MouseInputAdapter mouseInputAdapter = new MouseInputAdapter() {
-            
+
             private Point origin;
-            
+
             @Override
             public void mousePressed(MouseEvent e) {
                 origin = getTileCoordinates(e.getX(), e.getY());
@@ -65,7 +65,7 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
 //                    fireTileRegionSelectionEvent(selection);
 //                }
             }
-            
+
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point point = getTileCoordinates(e.getX(), e.getY());
@@ -92,6 +92,15 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
         addMouseMotionListener(mouseInputAdapter);
     }
 
+    public void tilesetChanged(TilesetChangedEvent event) {
+        tilesetMap = tileset.generateGaplessArrayList();
+        revalidate();
+        repaint();
+    }
+
+    public void nameChanged(TilesetChangedEvent event, String oldName, String newName) {
+    }
+
     /**
      * Adds tile selection listener. The listener will be notified when the
      * user selects a tile.
@@ -110,14 +119,14 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
     public void removeTileSelectionListener(TileSelectionListener listener) {
         tileSelectionListeners.remove(listener);
     }
-    
+
     private void fireTileSelectionEvent(Tile selectedTile) {
         TileSelectionEvent event = new TileSelectionEvent(this, selectedTile);
         for (TileSelectionListener listener : tileSelectionListeners) {
             listener.tileSelected(event);
         }
     }
-    
+
     private void fireTileRegionSelectionEvent(Rectangle selection) {
         TileLayer region = createTileLayerFromRegion(selection);
         TileRegionSelectionEvent event = new TileRegionSelectionEvent(this, region);
@@ -130,11 +139,11 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
     private void scrollTileToVisible(Point tile) {
         int twidth = tileset.getTileWidth();
         int theight = tileset.getTileHeight();
-        
+
         scrollRectToVisible(new Rectangle(
-            tile.x * twidth,
-            tile.y * theight,
-            twidth, theight));
+                tile.x * twidth,
+                tile.y * theight,
+                twidth, theight));
     }
 
     /**
@@ -152,11 +161,11 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
         int tileCount = tilesetMap.size();
         int tilesPerRow = getTilesPerRow();
         int rows = tileCount / tilesPerRow
-            + (tileCount % tilesPerRow > 0 ? 1 : 0);
-        
+                + (tileCount % tilesPerRow > 0 ? 1 : 0);
+
         int tileX = Math.max(0, Math.min(x / twidth, tilesPerRow - 1));
         int tileY = Math.max(0, Math.min(y / theight, rows - 1));
-        
+
         return new Point(tileX, tileY);
     }
 
@@ -177,13 +186,18 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
      * @param tileSet
      */
     public void setTileSet(TileSet tileSet) {
+        if (this.tileset != null) {
+            this.tileset.removeTilesetChangeListener(this);
+        }
         this.tileset = tileSet;
-        if (tileset != null) {
+        if (this.tileset != null) {
+            this.tileset.addTilesetChangeListener(this);
             tilesetMap = tileset.generateGaplessArrayList();
+            revalidate();
         }
         repaint();
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -196,16 +210,16 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
         if (selection != null) {
             g.setColor(new Color(100, 100, 255));
             g.draw3DRect(
-                selection.x * tileset.getTileWidth(), selection.y * tileset.getTileHeight(),
-                (selection.width + 1) * tileset.getTileWidth(),
-                (selection.height + 1) * tileset.getTileHeight(),
-                false);
+                    selection.x * tileset.getTileWidth(), selection.y * tileset.getTileHeight(),
+                    (selection.width + 1) * tileset.getTileWidth(),
+                    (selection.height + 1) * tileset.getTileHeight(),
+                    false);
             ((Graphics2D) g).setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_ATOP, 0.2f));
+                    AlphaComposite.SRC_ATOP, 0.2f));
             g.fillRect(
-                selection.x * tileset.getTileWidth() + 1, selection.y * tileset.getTileHeight() + 1,
-                (selection.width + 1) * tileset.getTileWidth() - 1,
-                (selection.height + 1) * tileset.getTileHeight() - 1);
+                    selection.x * tileset.getTileWidth() + 1, selection.y * tileset.getTileHeight() + 1,
+                    (selection.width + 1) * tileset.getTileWidth() - 1,
+                    (selection.height + 1) * tileset.getTileHeight() - 1);
         }
     }
 
@@ -217,7 +231,7 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
     private static void paintBackground(Graphics g) {
         Rectangle clip = g.getClipBounds();
         int side = 8;
-        
+
         int startX = clip.x / side;
         int startY = clip.y / side;
         int endX = (clip.x + clip.width) / side + 1;
@@ -237,19 +251,19 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
             }
         }
     }
-    
+
     private void repaintSelection() {
         if (selection != null) {
             int twidth = tileset.getTileWidth();
             int theight = tileset.getTileHeight();
-            
+
             repaint(selection.x * twidth - 1, selection.y * theight - 1,
-                (selection.width + 1) * twidth + 2,
-                (selection.height + 1) * theight + 2);//重绘区域稍大于选框，避免留下选框边缘
+                    (selection.width + 1) * twidth + 2,
+                    (selection.height + 1) * theight + 2);//重绘区域稍大于选框，避免留下选框边缘
         }
-        
+
     }
-    
+
     private void setSelection(Rectangle rect) {
         repaintSelection();
         selection = rect;
@@ -263,7 +277,7 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
     public TileSet getTileset() {
         return tileset;
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
         if (tileset != null) {
@@ -272,8 +286,8 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
             int tileCount = tilesetMap.size();
             int tilesPerRow = getTilesPerRow();
             int rows = tileCount / tilesPerRow
-                + (tileCount % tilesPerRow > 0 ? 1 : 0);
-            
+                    + (tileCount % tilesPerRow > 0 ? 1 : 0);
+
             return new Dimension(tilesPerRow * twidth + 1, rows * theight + 1);
         }
         return new Dimension(0, 0);
@@ -313,10 +327,10 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
                 layer.setTileAt(x - rect.x, y - rect.y, getTileAt(x, y));
             }
         }
-        
+
         return layer;
     }
-    
+
     private Tile[] getTilesAt(Rectangle coverRect) {
         ArrayList<Tile> tiles = new ArrayList<Tile>();
         int tilesPerRow = getTilesPerRow();
@@ -336,31 +350,31 @@ public class TileSetPalettePanel extends JPanel implements Scrollable {
     //调节滚动快慢
 
     public int getScrollableUnitIncrement(Rectangle visibleRect,
-        int orientation, int direction) {
+            int orientation, int direction) {
         if (tileset != null) {
             return tileset.getTileHeight();
         } else {
             return 0;
         }
     }
-    
+
     public int getScrollableBlockIncrement(Rectangle visibleRect,
-        int orientation, int direction) {
+            int orientation, int direction) {
         if (tileset != null) {
             return tileset.getTileHeight();
         } else {
             return 0;
         }
     }
-    
+
     public boolean getScrollableTracksViewportWidth() {
         return false;
     }
-    
+
     public boolean getScrollableTracksViewportHeight() {
         return false;
     }
-    
+
     public Dimension getPreferredScrollableViewportSize() {
         return null;
     }

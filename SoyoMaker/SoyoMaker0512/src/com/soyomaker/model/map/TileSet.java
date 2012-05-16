@@ -37,6 +37,8 @@ public class TileSet {
     private final List<TilesetChangeListener> tilesetChangeListeners = new LinkedList();
     private int tilesPerRow;
     private Rectangle tileDimensions;
+    private long tilebmpFileLastModified;
+    private TileCutter tileCutter;
 
     /**
      * Default constructor
@@ -112,6 +114,57 @@ public class TileSet {
     }
 
     /**
+     *
+     * @throws IOException
+     */
+    public void checkUpdate() throws IOException {
+        if (tilebmpFile != null
+                && tilebmpFile.lastModified() != tilebmpFileLastModified) {
+            refreshImportedTileBitmap();
+            tilebmpFileLastModified = tilebmpFile.lastModified();
+        }
+    }
+
+    /**
+     * Refreshes a tileset from a tileset image file.
+     *
+     * @throws IOException
+     * @see TileSet#importTileBitmap(BufferedImage,TileCutter)
+     */
+    private void refreshImportedTileBitmap()
+            throws IOException {
+        String imgFilename = tilebmpFile.getPath();
+
+        BufferedImage image = TileSetImageCache.getInstance().addImage(imgFilename);
+        if (image == null) {
+            throw new IOException("Failed to load " + tilebmpFile);
+        }
+
+        refreshImportedTileBitmap(image);
+    }
+
+    private void refreshImportedTileBitmap(BufferedImage tilebmp) {
+        assert tilebmp != null;
+
+        tileCutter.reset();
+        tileCutter.setImage(tilebmp);
+
+        tileSetImage = tilebmp;
+        tileDimensions = new Rectangle(tileCutter.getTileDimensions());
+
+        int id = 0;
+        Image tile = tileCutter.getNextTile();
+        while (tile != null) {
+            int imgId = getTile(id).getImageId();
+            overlayImage(imgId, tile);
+            tile = tileCutter.getNextTile();
+            id++;
+        }
+
+        fireTilesetChanged();
+    }
+
+    /**
      * 
      * @param listener
      */
@@ -171,6 +224,7 @@ public class TileSet {
      */
     public void setTilebmpFile(File tilebmpFile) {
         this.tilebmpFile = tilebmpFile;
+        tilebmpFileLastModified = tilebmpFile.lastModified();
     }
 
     /**
@@ -210,16 +264,10 @@ public class TileSet {
      */
     public void importTileBitmap(File imgFile, TileCutter cutter)
             throws IOException {
-        setTilebmpFile(imgFile);
         BufferedImage image = TileSetImageCache.getInstance().getImage(imgFile.getAbsolutePath());
         if (image == null) {
             throw new IOException("Failed to load " + tilebmpFile);
         }
-//        BufferedImage buffered = new BufferedImage(
-//                image.getWidth(null),
-//                image.getHeight(null),
-//                BufferedImage.TYPE_INT_ARGB);
-//        buffered.getGraphics().drawImage(image, 0, 0, null);
         importTileBitmap(image, cutter);
     }
 
@@ -284,7 +332,7 @@ public class TileSet {
                 g.drawImage(autoTileImages[i], i % 8 * cutter.getTileDimensions().width, i / 8 * cutter.getTileDimensions().height, null);
             }
         }
-
+        tileCutter = cutter;
         tileSetImage = tilebmp;
         cutter.setImage(tilebmp);
         tileDimensions = new Rectangle(cutter.getTileDimensions());

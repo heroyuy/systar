@@ -81,7 +81,6 @@ public class TileSetTabbedPane extends JSnapTipTabbedPane implements TileSelecti
                 }
             }
         }
-//        System.out.println("重建Tab页！");
     }
 
     /**
@@ -99,7 +98,6 @@ public class TileSetTabbedPane extends JSnapTipTabbedPane implements TileSelecti
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tilePanels.put(tileset, tilePanel);
         add(paletteScrollPane, "图" + tilePanels.size());
-//        System.out.println("增加调色板页！");
     }
     /**
      *
@@ -114,7 +112,7 @@ public class TileSetTabbedPane extends JSnapTipTabbedPane implements TileSelecti
         data.setBrush(new CustomBrush(e.getTileRegion()));
     }
 
-    private class MapChangeListenerImpl implements MapChangeListener {
+    private class MapChangeListenerImpl implements MapChangeListener{
 
         public void mapChanged(MapChangedEvent e) {
         }
