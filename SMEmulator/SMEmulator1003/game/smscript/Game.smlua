@@ -125,6 +125,8 @@ function Game:scriptEnd()
   --解锁playerTroop
   GameData.playerTroop:unlock()
   --解锁NPC
-  GameData.curLockedNPC.locked=false
-  GameData.curLockedNPC=nil
+  if GameData.curLockedNPC then
+    GameData.curLockedNPC.locked=false
+    GameData.curLockedNPC=nil
+  end
 end

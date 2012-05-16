@@ -276,10 +276,14 @@ end
 --============数据处理类============
 --开关操作
 function Interpreter:operateSwitch(switchId,value)
+  GameData.switchs[switchId]=value
+  return true
 end
 
 --获取开关值
 function Interpreter:getSwitch(switchId)
+  local value=GameData.switchs[switchId]==true
+  return true,value
 end
 
 --变量操作
@@ -288,6 +292,11 @@ end
 
 --获取变量值
 function Interpreter:getVariable(variableId)
+  local value=GameData.variables[variableId]
+  if value==nil then
+    value=0
+  end
+  return true,value
 end
 
 --玩家属性操作
