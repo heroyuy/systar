@@ -9,24 +9,20 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
---常量:tag
-clsSceneMap.Tag={}
-clsSceneMap.Tag.BUTTON_HEAD=100  --头像按钮
-clsSceneMap.Tag.BAR_HP=101       --HP条
-clsSceneMap.Tag.BAR_SP=102       --SP条
-
 --常量:param
 clsSceneMap.Param={}
 clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
 clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
-clsSceneMap.Param.BAR_HEIGHT=8   --HP、SP条高度
 
 --字段
-clsSceneMap.curPlayer=nil      --当前player
+clsSceneMap.menuItems={"状态","物品","技能","装备","存档","退出"}
 clsSceneMap.mapBgLayer=nil     --背景
 clsSceneMap.mapFgLayer=nil     --前景
 clsSceneMap.spriteLayer=nil    --精灵层
-clsSceneMap.layerHead=nil      --头像层
+clsSceneMap.buttonHead=nil     --头像按钮
+clsSceneMap.menu=nil     --菜单
+
+clsSceneMap.curPlayer=nil      --当前player
 clsSceneMap.aStar=nil          --A*寻路工具
 
 --构造器
@@ -46,38 +42,19 @@ function clsSceneMap:new()
     self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.mapFgLayer.enabled=false
     GameLayer:addChildToScene(self.mapFgLayer)
-    --头像层实例化
-    self.layerHead=clsUILayer:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT+2*self.Param.BAR_HEIGHT)
-    self.layerHead.anchor={0,0}
-      --头像按钮
-      local buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
-      buttonHead.anchor={0,0}
-      buttonHead.tag=self.Tag.BUTTON_HEAD
-      buttonHead.delegate=self
-      self.layerHead:addChild(buttonHead)
-      --HP背景
-      local layerHPbg=clsUILayer:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
-      layerHPbg.anchor={0,0}
-      layerHPbg.color=Skin:getTextColor(1,3)
-      self.layerHead:addChild(layerHPbg)
-      --HP
-      local layerHP=clsUILayer:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
-      layerHP.anchor={0,0}
-      layerHP.color=Skin:getTextColor(2,3)
-      layerHP.tag=self.Tag.BAR_HP
-      self.layerHead:addChild(layerHP)
-      --SP背景
-      local layerSPbg=clsUILayer:new(0,self.Param.HEAD_HEIGHT+self.Param.BAR_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
-      layerSPbg.anchor={0,0}
-      layerSPbg.color=Skin:getTextColor(1,2)
-      self.layerHead:addChild(layerSPbg)
-      --SP
-      local layerSP=clsUILayer:new(0,self.Param.HEAD_HEIGHT+self.Param.BAR_HEIGHT,self.Param.HEAD_WIDTH,self.Param.BAR_HEIGHT)
-      layerSP.anchor={0,0}
-      layerSP.color=Skin:getTextColor(2,2)
-      layerSP.tag=self.Tag.BAR_SP
-      self.layerHead:addChild(layerSP)
-      GameLayer:addChildToScene(self.layerHead)
+    --头像
+    self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
+    self.buttonHead.anchor={0,0}
+    self.buttonHead.delegate=self
+    GameLayer:addChildToScene(self.buttonHead)
+    --菜单
+    self.menu=clsMenu:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200)
+    self.menu.anchor={0,0}
+    self.menu.items=self.menuItems
+    self.menu.delegate=self
+    self.menu:refresh()
+    self.menu.visibility=false
+    GameLayer:addChildToScene(self.menu)
 	return self
 end
 
@@ -89,21 +66,16 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=GameData.playerTroop:curDisplayPlayer()
-  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
-  buttonHead.normalImage=self.curPlayer.headImage
-  buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
-  buttonHead:refresh()
+  self.buttonHead.normalImage=self.curPlayer.headImage
+  self.buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
+  self.buttonHead:refresh()
   local map=Dictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
 end
 
 -- 更新
 function clsSceneMap:update()
-  --此处不应该使用轮询机制，需要优化
-  local layerHP=self.layerHead:childWithTag(self.Tag.BAR_HP)
-  layerHP.width=self.Param.HEAD_WIDTH*self.curPlayer.hp/self.curPlayer.maxHp
-  local layerSP=self.layerHead:childWithTag(self.Tag.BAR_SP)
-  layerSP.width=self.Param.HEAD_WIDTH*self.curPlayer.sp/self.curPlayer.maxSp
+  --smLog:info("地图场景更新")
 end
 
 -- 退出
@@ -253,10 +225,29 @@ function clsSceneMap:calculateCharacterLocation(character)
   return px,py
 end
 
+--按钮点击的回调
 function clsSceneMap:buttonTapped(target)
-  local buttonHead=self.layerHead:childWithTag(self.Tag.BUTTON_HEAD)
-  if target==buttonHead then
-    Interpreter:runScript(111000001)
+  if target==self.buttonHead then
+    --显示/隐藏菜单
+    self.menu.visibility=not self.menu.visibility
+  end
+end
+
+--菜单点击的回调 {"状态","物品","技能","装备","存档","退出"}
+function clsSceneMap:menuItemSelected(index)
+  if index==1 then
+    --状态
+  elseif index==2 then
+    --物品
+  elseif index==3 then
+    --技能
+  elseif index==4 then
+    --装备
+  elseif index==5 then
+    --存档
+  elseif index==6 then
+    --退出
+    Game:changeScene(Game.SCENE_TITLE)
   end
 end
 

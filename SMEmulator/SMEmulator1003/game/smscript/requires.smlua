@@ -46,6 +46,7 @@ require("GameData")
 require("GameData_player")
 
 --layers
+require("clsMenu")
 require("clsTiled")
 require("clsOption")
 require("clsDialog")
