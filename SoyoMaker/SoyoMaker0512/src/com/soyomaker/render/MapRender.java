@@ -7,7 +7,8 @@ package com.soyomaker.render;
 import com.soyomaker.brush.AbBrush;
 import com.soyomaker.config.Preference;
 import com.soyomaker.AppData;
-import com.soyomaker.brush.CustomBrush;
+import com.soyomaker.brush.TileBrush;
+import com.soyomaker.brush.TileLayerBrush;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.dialog.EventManagerDialog;
@@ -231,7 +232,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
         int x = popupMenuShowPoint.x;
         int y = popupMenuShowPoint.y;
         Transferable contents = clipBoard.getContents(null);
-//        System.out.println(contents instanceof NpcTransferable);
         if (contents != null && contents instanceof NpcTransferable) {
 
             Npc npc = null;
@@ -599,17 +599,13 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
             switch (data.currentPsType) {
                 case AppData.PS_PEN:
                     if (data.getCurrentLayer() instanceof TileLayer) {
-//                        ((TileLayer) data.getCurrentLayer()).setSync(true);
-                        currentBrush.startPaint(map, tile.x, tile.y,
-                                e.getButton(), map.indexOfLayer(data.getCurrentLayer()));
-//                        ((TileLayer) data.getCurrentLayer()).setSync(false);
-//                        System.out.println("paint");
+                        currentBrush.startPaint(data.getCurrentLayer(), tile.x, tile.y,
+                                e.getButton());
                         paintEdit =
                                 new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                     } else if (data.getCurrentLayer() instanceof CollideLayer) {
-                        currentBrush.startPaint(map, tile.x, tile.y,
-                                e.getButton(), map.indexOfLayer(data.getCurrentLayer()));
-//                        ((CollideLayer) data.getCurrentLayer()).setCollideAt(tile.x, tile.y, true);
+                        currentBrush.startPaint(data.getCurrentLayer(), tile.x, tile.y,
+                                e.getButton());
                         paintEdit =
                                 new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                     } else if (data.getCurrentLayer() instanceof SpriteLayer) {
@@ -619,16 +615,10 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                     }
                     break;
                 case AppData.PS_ERASER:
-//                    if (data.getCurrentLayer() instanceof TileLayer) {
-//                        ((TileLayer) data.getCurrentLayer()).setSync(true);
-//                    }
                     paintEdit =
                             new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                     break;
                 case AppData.PS_FILL:
-//                    if (data.getCurrentLayer() instanceof TileLayer) {
-//                        ((TileLayer) data.getCurrentLayer()).setSync(true);
-//                    }
                     paintEdit =
                             new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                     break;
@@ -640,9 +630,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                 switch (data.currentPsType) {
                     case AppData.PS_PEN:
                     case AppData.PS_ERASER:
-//                        if (data.getCurrentLayer() instanceof TileLayer) {
-//                            ((TileLayer) data.getCurrentLayer()).setSync(true);
-//                        }
                         paintEdit =
                                 new LayerEdit(data.getCurrentLayer(), createLayerCopy(data.getCurrentLayer()), null);
                         break;
@@ -689,7 +676,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
             case AppData.PS_PEN:
                 if (data.getCurrentLayer() instanceof TileLayer) {
                     currentBrush.endPaint();
-//                    ((TileLayer) data.getCurrentLayer()).setSync(false);
                 } else if (data.getCurrentLayer() instanceof CollideLayer) {
                     currentBrush.endPaint();
                 } else if (data.getCurrentLayer() instanceof SpriteLayer) {
@@ -700,16 +686,10 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                 }
                 break;
             case AppData.PS_ERASER:
-//                if (data.getCurrentLayer() instanceof TileLayer) {
-//                    ((TileLayer) data.getCurrentLayer()).setSync(false);
-//                }
                 break;
             case AppData.PS_CHOOSE:
                 break;
             case AppData.PS_FILL:
-//                if (data.getCurrentLayer() instanceof TileLayer) {
-//                    ((TileLayer) data.getCurrentLayer()).setSync(false);
-//                }
                 break;
         }
         repaint();
@@ -747,19 +727,19 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     /**
      *
      */
-    public Cursor penCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_pen.png")).getImage(), new Point(0, 0), "pen");
+    private Cursor penCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_pen.png")).getImage(), new Point(0, 0), "pen");
     /**
      *
      */
-    public Cursor pourCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_pour.png")).getImage(), new Point(0, 0), "pour");
+    private Cursor pourCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_pour.png")).getImage(), new Point(0, 0), "pour");
     /**
      *
      */
-    public Cursor eraserCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_eraser.png")).getImage(), new Point(0, 0), "eraser");
+    private Cursor eraserCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_eraser.png")).getImage(), new Point(0, 0), "eraser");
     /**
      *
      */
-    public Cursor chooseCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_choose.png")).getImage(), new Point(0, 0), "choose");
+    private Cursor chooseCursor = toolkit.createCustomCursor(new ImageIcon(getClass().getResource("/com/soyomaker/resources/cursor_choose.png")).getImage(), new Point(0, 0), "choose");
 
     public void mouseMoved(MouseEvent e) {
         Point tile = screenToTileCoords(e.getX(), e.getY());
@@ -863,16 +843,11 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                 case AppData.PS_CHOOSE:
                     break;
                 case AppData.PS_FILL:
-//                    paintEdit = null;
-                    if (data.getCurrentLayer() instanceof TileLayer) {
+                    if (data.getCurrentLayer() instanceof TileLayer && currentBrush instanceof TileBrush) {
                         paintEdit.setPresentationName("填充");
                         TileLayer tileLayer = (TileLayer) data.getCurrentLayer();
                         Tile oldTile = tileLayer.getTileAt(tile.x, tile.y);
-//                        System.out.println("x:" + tile.x);
-//                        System.out.println("y:" + tile.y);
-//                        ((TileLayer) tileLayer).setSync(true);
-                        pour(tileLayer, tile.x, tile.y, data.getCurrentTile(), oldTile);
-//                        ((TileLayer) tileLayer).setSync(false);
+                        pour(tileLayer, tile.x, tile.y, ((TileBrush) currentBrush).getBrushTile(), oldTile);
                         repaint();
                     }
                     break;
@@ -896,7 +871,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
         if (newTile == oldTile || !layer.isVisible()) {
             return;
         }
-//        System.out.println("pour");
         Stack<Point> stack = new Stack<Point>();
 
         stack.push(new Point(x, y));
@@ -965,21 +939,16 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
     private void updateCursorHighlight(Point tile) {
 
         Rectangle redraw = cursorSelectionLayer.getBounds();
-        Rectangle brushRedraw = currentBrush.getBounds();
+        Rectangle brushRedraw = currentBrush.getShape().getBounds();
 
         brushRedraw.x = tile.x - brushRedraw.width / 2;
         brushRedraw.y = tile.y - brushRedraw.height / 2;
 
         if (!redraw.equals(brushRedraw)) {
-            if (currentBrush instanceof CustomBrush) {
-                CustomBrush customBrush = (CustomBrush) currentBrush;
-                ListIterator<Layer> layers = customBrush.getListLayers();
-                while (layers.hasNext()) {
-                    Layer layer = (Layer) layers.next();
-                    layer.setOffset(brushRedraw.x, brushRedraw.y);
-//                    if (layer instanceof TileLayer) {
-//                    }
-                }
+            if (currentBrush instanceof TileLayerBrush) {
+                TileLayerBrush customBrush = (TileLayerBrush) currentBrush;
+                Layer layer = customBrush.getBrushLayer();
+                layer.setOffset(brushRedraw.x, brushRedraw.y);
             }
             repaintRegion(redraw);
             cursorSelectionLayer.setOffset(brushRedraw.x, brushRedraw.y);

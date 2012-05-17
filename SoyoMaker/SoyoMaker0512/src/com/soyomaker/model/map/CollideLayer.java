@@ -124,7 +124,6 @@ public class CollideLayer extends Layer {
                 ((CollideLayer) other).setCollideAt(x, y, getCollideAt(x, y));
             }
         }
-//        System.out.println("c copyto");
     }
 
     /**
@@ -142,7 +141,6 @@ public class CollideLayer extends Layer {
                 setCollideAt(x, y, ((CollideLayer) other).getCollideAt(x, y));
             }
         }
-//        System.out.println("c copyfrom");
     }
 
     @Override
@@ -160,7 +158,6 @@ public class CollideLayer extends Layer {
                 }
             }
         }
-//        System.out.println("c mergeonto");
     }
 
     /**

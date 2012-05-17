@@ -14,7 +14,6 @@ package com.soyomaker.model.map;
  *  Adam Turk <aturk@biggeruniverse.com>
  *  Bjorn Lindeijer <bjorn@lindeijer.nl>
  */
-import com.soyomaker.brush.AbBrush;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -48,19 +47,10 @@ public class SelectionLayer extends TileLayer {
     }
 
     private void init() {
-
         highlightColor = Color.blue;
         selectTile = new Tile();
         selection = new Area();
     }
-//    private AbBrush brush;
-//
-//    private void setBrush(AbBrush b) {
-//        brush = b;
-//    }
-//    public void setSelectTile(Tile tile) {
-//        selectTile = tile;
-//    }
 
     /**
      * Returns the selected area.

@@ -3,8 +3,9 @@
  */
 package com.soyomaker.brush;
 
-import com.soyomaker.model.map.Map;
+import com.soyomaker.model.map.Layer;
 import java.awt.Rectangle;
+import java.awt.Shape;
 
 /**
  *
@@ -13,18 +14,11 @@ import java.awt.Rectangle;
 public interface IBrush {
 
     /**
-     * Returns the number of layers affected by this brush.
-     *
-     * @return int
-     */
-    public int getAffectedLayers();
-
-    /**
      * Returns the bounds of this brush. This is used for determining the area
      * to redraw when the brush moves.
      * @return
      */
-    public Rectangle getBounds();
+    public Shape getShape();
 
     /**
      * Called before painting operation starts. This is when the mouse is
@@ -39,7 +33,7 @@ public interface IBrush {
      * @see MultilayerPlane
      */
     public void startPaint(
-            Map mp, int x, int y, int button, int layer);
+            Layer mp, int x, int y, int button);
 
     /**
      * This is the main processing method for a brush. This method should only
@@ -59,12 +53,4 @@ public interface IBrush {
      * released.
      */
     public void endPaint();
-
-    /**
-     * Returns wether this brush equals another brush.
-     *
-     * @param brush
-     * @return boolean
-     */
-    public boolean equals(IBrush brush);
 }

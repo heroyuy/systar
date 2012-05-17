@@ -293,13 +293,6 @@ public abstract class Layer implements Cloneable {
     public abstract void mergeOnto(Layer other);
 
     /**
-     * 
-     * @param ml
-     * @return
-     */
-//    public abstract Layer createDiff(Layer ml);
-
-    /**
      * Unlike mergeOnto, copyTo includes the null tile when merging
      *
      * @see MapLayer#copyFrom
