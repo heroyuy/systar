@@ -35,7 +35,7 @@ function clsSceneMap:new()
 	setmetatable(self,clsSceneMap)
 	local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
 	--背景实例化
-	self.mapBgLayer=clsTiledLayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+	self.mapBgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.mapBgLayer.delegate=self
     GameLayer:addChildToScene(self.mapBgLayer)
     --精灵层实例化
@@ -43,7 +43,7 @@ function clsSceneMap:new()
     self.spriteLayer.enabled=false
     GameLayer:addChildToScene(self.spriteLayer)
     --前景实例化
-    self.mapFgLayer=clsTiledLayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+    self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     self.mapFgLayer.enabled=false
     GameLayer:addChildToScene(self.mapFgLayer)
     --头像层实例化

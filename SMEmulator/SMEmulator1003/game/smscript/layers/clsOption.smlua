@@ -5,15 +5,15 @@
 --]]
 
 --类结构定义
-clsOptionLayer={}
-setmetatable(clsOptionLayer,clsUILayer)
-clsOptionLayer.__index=clsOptionLayer
+clsOption={}
+setmetatable(clsOption,clsUILayer)
+clsOption.__index=clsOption
 
 --构造器
-function clsOptionLayer:new(optionItems)
+function clsOption:new(optionItems)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  setmetatable(self,clsOptionLayer)
+  setmetatable(self,clsOption)
   self.callback="optionSelected"
   --背景
   local gap=6
@@ -46,7 +46,7 @@ function clsUILayer:onTouch(event)
   
 end
 
-function clsOptionLayer:buttonTapped(target)
+function clsOption:buttonTapped(target)
   local index=target.tag
   GameLayer:removeChildFromScene(self)
   callFunction(self.delegate,self.callback,index)

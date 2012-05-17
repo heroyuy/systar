@@ -5,33 +5,33 @@
 --]]
 
 --类结构定义
-clsTiledLayer={}
-setmetatable(clsTiledLayer,clsUILayer)
-clsTiledLayer.__index=clsTiledLayer
+clsTiled={}
+setmetatable(clsTiled,clsUILayer)
+clsTiled.__index=clsTiled
 
 --字段
-clsTiledLayer.bufferedPainter=nil  	--缓冲画笔
-clsTiledLayer.bufferBound=1        	--缓冲边缘宽度（单位：单元格）
-clsTiledLayer.map=nil				--地图
-clsTiledLayer.layers=nil           	--贴图层数据
-clsTiledLayer.viewport=nil         --当前相机取景区域（视口）（单位：像素）
+clsTiled.bufferedPainter=nil  	--缓冲画笔
+clsTiled.bufferBound=1        	--缓冲边缘宽度（单位：单元格）
+clsTiled.map=nil				--地图
+clsTiled.layers=nil           	--贴图层数据
+clsTiled.viewport=nil         --当前相机取景区域（视口）（单位：像素）
 
-clsTiledLayer.bufferRow=nil        --缓冲区起始行号（单位：单元格）
-clsTiledLayer.bufferCol=nil        --缓冲区起始列号（单位：单元格）
-clsTiledLayer.bufferColNum=nil     --缓冲区宽度（单位：单元格）
-clsTiledLayer.bufferRowNum=nil     --缓冲区高度（单位：单元格）
+clsTiled.bufferRow=nil        --缓冲区起始行号（单位：单元格）
+clsTiled.bufferCol=nil        --缓冲区起始列号（单位：单元格）
+clsTiled.bufferColNum=nil     --缓冲区宽度（单位：单元格）
+clsTiled.bufferRowNum=nil     --缓冲区高度（单位：单元格）
 
 
 --构造器
-function clsTiledLayer:new(x,y,width,height)
+function clsTiled:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsTiledLayer)
+  setmetatable(self,clsTiled)
   self.callback="mapTapped"
   return self
 end
 
 --设置帖图数据
-function clsTiledLayer:init(mapId,layers,viewport)
+function clsTiled:init(mapId,layers,viewport)
   self.map=Dictionary:getMap(mapId)
   self.layers=layers
   self.viewport=viewport
@@ -50,13 +50,13 @@ function clsTiledLayer:init(mapId,layers,viewport)
 end
 
 --绘制自身
-function clsTiledLayer:paintLayer(painter)
+function clsTiled:paintLayer(painter)
   --绘图
   painter:drawImage(self.image,self.viewport.x-self.bufferCol*self.map.cellWidth,self.viewport.y-self.bufferRow*self.map.cellHeight,
      self.viewport.width,self.viewport.height,0,0,UIConst.anchor.LT)
 end
 
-function clsTiledLayer:onTouch(event)
+function clsTiled:onTouch(event)
   local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     smLog:info("地图被点击,物理坐标: x="..x.." y="..y)
@@ -65,7 +65,7 @@ function clsTiledLayer:onTouch(event)
 end
 
 --更新
-function clsTiledLayer:trackViewport(viewport)
+function clsTiled:trackViewport(viewport)
   self.viewport=viewport
   --根据窗口坐标和缓冲坐标判断是否需要更新缓冲
   if self.viewport.x<self.bufferCol*self.map.cellWidth then
@@ -112,7 +112,7 @@ function clsTiledLayer:trackViewport(viewport)
 end
 
 --绘制缓冲区
-function clsTiledLayer:refreshBuffer(rect,clearFlag)
+function clsTiled:refreshBuffer(rect,clearFlag)
   --清除
   if clearFlag then
     self.image:clear(rect.col*self.map.cellWidth,rect.row*self.map.cellHeight,

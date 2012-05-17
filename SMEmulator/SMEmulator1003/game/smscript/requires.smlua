@@ -46,9 +46,9 @@ require("GameData")
 require("GameData_player")
 
 --layers
-require("clsTiledLayer")
-require("clsOptionLayer")
-require("clsDialogLayer")
+require("clsTiled")
+require("clsOption")
+require("clsDialog")
 
 --scenes
 require("clsScene")

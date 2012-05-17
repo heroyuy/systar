@@ -81,7 +81,7 @@ function GameLayer:showNormalDialog(name,content,bustPath,position,target,callba
     eventLayer.visibility=false
     callFunction(target,callback)
   end
-  local normalDialog=clsDialogLayer:new(name,content,bustPath,position)
+  local normalDialog=clsDialog:new(name,content,bustPath,position)
   normalDialog.delegate=delegate
   normalDialog.callback=delegate.dialogEnd
   eventLayer.enabled=true
@@ -109,7 +109,7 @@ function GameLayer:showOptionDialog(options,target,callback)
     eventLayer.visibility=false
     callFunction(target,callback,index)
   end
-  local optionDialog=clsOptionLayer:new(options)
+  local optionDialog=clsOption:new(options)
   optionDialog.delegate=delegate
   optionDialog.callback=delegate.onSelected
   eventLayer.enabled=true

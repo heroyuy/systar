@@ -5,17 +5,17 @@
 --]]
 
 --类结构定义
-clsDialogLayer={}
-setmetatable(clsDialogLayer,clsUILayer)
-clsDialogLayer.__index=clsDialogLayer
+clsDialog={}
+setmetatable(clsDialog,clsUILayer)
+clsDialog.__index=clsDialog
 
-clsDialogLayer.contentLabel=nil
+clsDialog.contentLabel=nil
 
 --构造器
-function clsDialogLayer:new(name,content,bustPath,position)
+function clsDialog:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  setmetatable(self,clsDialogLayer)
+  setmetatable(self,clsDialog)
   self.callback="dialogEnd"
   --背景
   local gap=6
@@ -60,7 +60,7 @@ function clsDialogLayer:new(name,content,bustPath,position)
   return self
 end
 
-function clsDialogLayer:onTouch(event)
+function clsDialog:onTouch(event)
   local type=event:getType()
   if type==UIConst.eventType.DOWN then
     if not self.contentLabel:nextPage() then
