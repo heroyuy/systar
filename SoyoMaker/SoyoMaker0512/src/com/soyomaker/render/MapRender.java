@@ -41,7 +41,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
@@ -290,14 +289,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
      */
     public void setBrush(AbBrush brush) {
         currentBrush = brush;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public AbBrush getBrush() {
-        return currentBrush;
     }
 
     /**
@@ -696,12 +687,10 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
         if (paintEdit != null) {
             if (data.getCurrentLayer() != null) {
                 try {
-//                    Layer endLayer = paintEdit.getStart().createDiff(data.getCurrentLayer());
                     Layer endLayer = (Layer) data.getCurrentLayer().clone();
                     endLayer.setMap(map);
                     paintEdit.end(endLayer);
                     undoSupport.postEdit(paintEdit);
-//                    System.out.println("paint");
                 } catch (Exception ee) {
                     ee.printStackTrace();
                 }
@@ -832,6 +821,7 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
                         ((CollideLayer) data.getCurrentLayer()).setCollideAt(tile.x, tile.y, false);
                         repaintRegion(new Rectangle(tile.x, tile.y, 1, 1));
                     } else if (data.getCurrentLayer() instanceof SpriteLayer) {
+                        paintEdit.setPresentationName("擦除");
                         Npc npc = ((SpriteLayer) data.getCurrentLayer()).getNpcAt(tile.x, tile.y);
                         if (npc != null) {
                             AppData.getInstance().getCurProject().removeNpc(npc.getIndex());
@@ -952,7 +942,6 @@ public abstract class MapRender extends JPanel implements MouseListener, MouseMo
             }
             repaintRegion(redraw);
             cursorSelectionLayer.setOffset(brushRedraw.x, brushRedraw.y);
-//            cursorHighlight.selectRegion(currentBrush.getShape());
             repaintRegion(brushRedraw);
         }
     }

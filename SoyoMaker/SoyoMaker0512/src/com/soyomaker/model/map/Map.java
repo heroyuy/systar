@@ -34,14 +34,9 @@ public class Map implements Cloneable {
     private MapRender mapRender;                //每个地图都有自己的绘制器
     private PreviewRender previewRender;        //地图的预览窗口
     private final List mapChangeListeners = new LinkedList();
-    /**
-     *
-     */
-    protected int rowNum, colNum;               //地图大小
-    /**
-     *
-     */
-    protected int cellWidth, cellHeight;        //瓷砖大小
+    private int rowNum, colNum;               //地图大小
+    private int cellWidth, cellHeight;        //瓷砖大小
+    private boolean hasEdit = false;            //是否已经编辑过，用于保存时过滤
 
     /**
      * 
@@ -65,6 +60,14 @@ public class Map implements Cloneable {
         clone.previewRender = null;
         clone.mapRender = null;
         return clone;
+    }
+
+    public boolean isHasEdit() {
+        return hasEdit;
+    }
+
+    public void setHasEdit(boolean hasEdit) {
+        this.hasEdit = hasEdit;
     }
 
     /**
@@ -113,6 +116,7 @@ public class Map implements Cloneable {
      */
     public void setBattleBackground(String battleBackground) {
         this.battleBackground = battleBackground;
+        fireMapChanged();
     }
 
     /**
@@ -129,6 +133,7 @@ public class Map implements Cloneable {
      */
     public void setBattleMusicName(String battleMusicName) {
         this.battleMusicName = battleMusicName;
+        fireMapChanged();
     }
 
     /**
@@ -218,7 +223,7 @@ public class Map implements Cloneable {
     protected void fireMapChanged() {
         Iterator iterator = mapChangeListeners.iterator();
         MapChangedEvent event = null;
-
+        hasEdit = true;
         while (iterator.hasNext()) {
             if (event == null) {
                 event = new MapChangedEvent(this);
@@ -236,7 +241,7 @@ public class Map implements Cloneable {
     protected void fireLayerRemoved(int index) {
         Iterator iterator = mapChangeListeners.iterator();
         MapChangedEvent event = null;
-
+        hasEdit = true;
         while (iterator.hasNext()) {
             if (event == null) {
                 event = new MapChangedEvent(this);
@@ -254,7 +259,7 @@ public class Map implements Cloneable {
     protected void fireTilesetRemoved(int index) {
         Iterator iterator = mapChangeListeners.iterator();
         MapChangedEvent event = null;
-
+        hasEdit = true;
         while (iterator.hasNext()) {
             if (event == null) {
                 event = new MapChangedEvent(this);
@@ -273,7 +278,7 @@ public class Map implements Cloneable {
     protected void fireLayerAdded(Layer layer) {
         Iterator iterator = mapChangeListeners.iterator();
         MapChangedEvent event = null;
-
+        hasEdit = true;
         while (iterator.hasNext()) {
             if (event == null) {
                 event = new MapChangedEvent(this);
@@ -291,7 +296,7 @@ public class Map implements Cloneable {
     protected void fireTilesetAdded(TileSet tileset) {
         Iterator iterator = mapChangeListeners.iterator();
         MapChangedEvent event = null;
-
+        hasEdit = true;
         while (iterator.hasNext()) {
             if (event == null) {
                 event = new MapChangedEvent(this);
@@ -502,7 +507,6 @@ public class Map implements Cloneable {
      */
     public void setHeight(int height) {
         this.rowNum = height;
-
         fireMapChanged();
     }
 
@@ -665,16 +669,6 @@ public class Map implements Cloneable {
     }
 
     /**
-     *
-     * @param index
-     * @param layer
-     */
-    public void setLayer(int index, TileLayer layer) {
-        layer.setMap(this);
-        layers.set(index, layer);
-    }
-
-    /**
      * Calls super method, and additionally fires a {@link MapChangedEvent}.
      *
      * @param index
@@ -788,29 +782,6 @@ public class Map implements Cloneable {
         layers.add(layer);
         fireLayerAdded(layer);
         return layer;
-    }
-
-    /**
-     * Changes the bounds of this plane to include all layers completely.
-     */
-    public void fitBoundsToLayers() {
-        int width = 0;
-        int height = 0;
-
-        Rectangle layerBounds = new Rectangle();
-
-        for (int i = layers.size() - 1; i >= 0; i--) {
-            getLayer(i).getBounds(layerBounds);
-            if (width < layerBounds.width) {
-                width = layerBounds.width;
-            }
-            if (height < layerBounds.height) {
-                height = layerBounds.height;
-            }
-        }
-
-        colNum = width;
-        rowNum = height;
     }
 
     /**

@@ -29,7 +29,7 @@ public class SoftInformation {
     /**
      *
      */
-    public static final int lastVersion = 6;//尾版本号：尾版本号有2位，一般修改，增加此版本数
+    public static final int lastVersion = 7;//尾版本号：尾版本号有2位，一般修改，增加此版本数
     /**
      * 
      */

@@ -12,15 +12,8 @@ package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
 import com.soyomaker.data.DataManager;
-import com.soyomaker.model.map.CollideLayer;
 import com.soyomaker.model.map.Map;
-import com.soyomaker.model.map.SpriteLayer;
-import com.soyomaker.model.map.TileLayer;
-import com.soyomaker.render.MapRenderFactory;
 import javax.swing.JOptionPane;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 
 /**
  *

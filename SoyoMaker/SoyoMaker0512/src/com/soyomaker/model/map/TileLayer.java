@@ -328,7 +328,7 @@ public class TileLayer extends Layer {
                                 }
                             }
                         } else {
-                          //左边有，右边有，上面有
+                            //左边有，右边有，上面有
                             if ((state & BOTTOM) == 0) {//如果下面没有，则右下和左下失去影响力
                                 if ((state & LEFT_TOP) == 0) {
                                     if ((state & RIGHT_TOP) == 0) {
@@ -493,10 +493,11 @@ public class TileLayer extends Layer {
      * @param replace the replacement tile
      * @throws Exception
      */
-    public void replaceTile(Tile find, Tile replace) throws Exception {
+    public void replaceTile(Tile find, Tile replace) {
         if (!isVisible()) {
-            throw new Exception(
-                    "图层不可视！");
+//            throw new Exception(
+//                    "图层不可视！");
+            return;
         }
 
         for (int y = bounds.y; y < bounds.y + bounds.height; y++) {

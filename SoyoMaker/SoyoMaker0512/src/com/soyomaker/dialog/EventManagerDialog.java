@@ -144,8 +144,8 @@ public class EventManagerDialog extends javax.swing.JDialog {
         if (data.getCurrentLayer() instanceof SpriteLayer) {
             SpriteLayer layer = (SpriteLayer) data.getCurrentLayer();
             npc.setName(nameTextField.getText());
-            AppData.getInstance().getCurProject().replaceNpc(npc);
-            AppData.getInstance().getCurProject().replaceScript(npc.getNpcState().getScript());
+            data.getCurProject().replaceNpc(npc);
+            data.getCurProject().replaceScript(npc.getNpcState().getScript());
             layer.setNpcAt(data.getCurrentMap().getMapRender().mousePressLocation.x, data.getCurrentMap().getMapRender().mousePressLocation.y, npc);
         }
         dispose();

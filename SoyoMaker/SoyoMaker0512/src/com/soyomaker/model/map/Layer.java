@@ -141,6 +141,9 @@ public abstract class Layer implements Cloneable {
      */
     protected void fireLayerChanged() {
         LayerChangedEvent event = new LayerChangedEvent(this);
+        if (map != null) {
+            map.setHasEdit(true);
+        }
         for (LayerChangeListener listener : layerChangeListeners) {
             listener.layerChanged(event);
         }
@@ -153,6 +156,9 @@ public abstract class Layer implements Cloneable {
      */
     protected void fireNameChanged(String oldName, String newName) {
         LayerChangedEvent event = new LayerChangedEvent(this);
+        if (map != null) {
+            map.setHasEdit(true);
+        }
         for (LayerChangeListener listener : layerChangeListeners) {
             listener.nameChanged(event, oldName, newName);
         }

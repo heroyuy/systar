@@ -11,6 +11,7 @@
 package com.soyomaker.dialog;
 
 import com.soyomaker.AppData;
+import com.soyomaker.model.map.Map;
 import java.io.File;
 import javax.swing.JOptionPane;
 
@@ -59,15 +60,16 @@ public class EditMapDialog extends javax.swing.JDialog {
         for (int i = 0, n = files.length; i < n; i++) {
             battleBackgroundComboBox.addItem(files[i].getName());
         }
-        musicComboBox.setSelectedItem(data.getCurrentMap().getMusicName());
-        battleMusicComboBox.setSelectedItem(data.getCurrentMap().getBattleMusicName());
-        battleBackgroundComboBox.setSelectedItem(data.getCurrentMap().getBattleBackground());
-        mapNameTextField.setText(data.getCurrentMap().getName());
-        mapWidthTextField.setText("" + data.getCurrentMap().getWidth());
-        mapHeightTextField.setText("" + data.getCurrentMap().getHeight());
-        tileWidthTextField.setText("" + data.getCurrentMap().getTileWidth());
-        tileHeightTextField.setText("" + data.getCurrentMap().getTileHeight());
-        mapSizeLabel.setText("" + data.getCurrentMap().getWidth() * data.getCurrentMap().getTileWidth() + "x" + data.getCurrentMap().getHeight() * data.getCurrentMap().getTileHeight());
+        Map map = data.getCurrentMap();
+        musicComboBox.setSelectedItem(map.getMusicName());
+        battleMusicComboBox.setSelectedItem(map.getBattleMusicName());
+        battleBackgroundComboBox.setSelectedItem(map.getBattleBackground());
+        mapNameTextField.setText(map.getName());
+        mapWidthTextField.setText("" + map.getWidth());
+        mapHeightTextField.setText("" + map.getHeight());
+        tileWidthTextField.setText("" + map.getTileWidth());
+        tileHeightTextField.setText("" + map.getTileHeight());
+        mapSizeLabel.setText("" + map.getWidth() * map.getTileWidth() + "x" + map.getHeight() * map.getTileHeight());
     }
 
     /** This method is called from within the constructor to
@@ -304,11 +306,12 @@ public class EditMapDialog extends javax.swing.JDialog {
         String musicName = (String) musicComboBox.getSelectedItem() == null ? "" : (String) musicComboBox.getSelectedItem();
         String battleMusicName = (String) battleMusicComboBox.getSelectedItem() == null ? "" : (String) battleMusicComboBox.getSelectedItem();
         String battleBackgroundName = (String) battleBackgroundComboBox.getSelectedItem() == null ? "" : (String) battleBackgroundComboBox.getSelectedItem();
-        data.getCurrentMap().setName(mapName);
-        data.getCurrentMap().setBattleMusicName(battleMusicName);
-        data.getCurrentMap().setBattleBackground(battleBackgroundName);
-        data.getCurrentMap().resize(mapW, mapH, 0, 0);
-        data.getCurrentMap().setMusicName(musicName);
+        Map map = data.getCurrentMap();
+        map.setName(mapName);
+        map.setBattleMusicName(battleMusicName);
+        map.setBattleBackground(battleBackgroundName);
+        map.resize(mapW, mapH, 0, 0);
+        map.setMusicName(musicName);
         data.getMainFrame().mapScrollPane.setViewportView(data.getCurrentMap().getMapRender());
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
@@ -317,7 +320,6 @@ public class EditMapDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox battleBackgroundComboBox;
     private javax.swing.JComboBox battleMusicComboBox;

@@ -275,13 +275,10 @@ public class AppData {
      * @param layer
      */
     public void setCurrentLayer(Layer layer) {
-
         if (layer == null) {
             currentLayerIndex = -1;
         } else {
             if (getCurrentMap() == null) {
-//                System.out.println("当前地图为空！");
-//                iLogger.w("当前地图为空！");
                 return;
             }
             currentLayerIndex = getCurrentMap().indexOfLayer(layer);
@@ -295,8 +292,6 @@ public class AppData {
      */
     public Layer getCurrentLayer() {
         if (getCurrentMap() == null) {
-//            System.out.println("当前地图为空！");
-//            iLogger.w("当前地图为空！");
             return null;
         }
         return getCurrentMap().getLayerArrayList().get(currentLayerIndex);

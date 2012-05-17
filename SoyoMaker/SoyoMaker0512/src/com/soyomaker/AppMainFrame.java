@@ -1947,11 +1947,13 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     while (it.hasNext()) {
                         Integer key = (Integer) it.next();
                         Map map = AppData.getInstance().getCurProject().getMaps().get(key);
-                        if (map != null) {
+                        if (map != null && map.isHasEdit()) {
                             AppMainFrame.this.gGrassPane.setText("正在保存地图:" + map);
+                            logPrinter.v("正在保存地图:" + map);
                             IMapWriter softMapWriter = new DefaultSoftMapBinaryWriter();
                             softMapWriter.writeMap(map, AppData.getInstance().getCurProject().getPath() + File.separatorChar
                                     + "softdata" + File.separatorChar + "map" + File.separatorChar + "map" + map.getIndex() + ".gat");
+                            map.setHasEdit(false);//保存后重置hasEdit属性，防止重复保存
                         }
                     }
                     logPrinter.v("保存软件地图成功！");

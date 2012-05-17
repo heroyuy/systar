@@ -47,10 +47,6 @@ public abstract class PreviewRender extends JPanel implements Scrollable, MouseL
      * 
      */
     protected boolean showCollide = false;
-    /**
-     * 
-     */
-//    protected boolean showScreen = true;
     private BufferedImage image;
     private Rectangle bound = new Rectangle(480, 800);  //虚拟屏幕框大小，默认为480*800
     /**
@@ -91,7 +87,7 @@ public abstract class PreviewRender extends JPanel implements Scrollable, MouseL
     public PreviewRender(Map map) {
         setMap(map);
         image = new BufferedImage(map.getTileWidth() * map.getWidth(),
-                map.getTileHeight() * map.getHeight(), BufferedImage.TYPE_INT_RGB);
+                map.getTileHeight() * map.getHeight(), BufferedImage.TYPE_INT_ARGB);
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
     }
@@ -239,21 +235,6 @@ public abstract class PreviewRender extends JPanel implements Scrollable, MouseL
         this.showCollide = showCollide;
     }
 
-//    /**
-//     *
-//     * @return
-//     */
-//    public boolean isShowScreen() {
-//        return showScreen;
-//    }
-//
-//    /**
-//     *
-//     * @param showScreen
-//     */
-//    public void setShowScreen(boolean showScreen) {
-//        this.showScreen = showScreen;
-//    }
     /**
      * 
      */
@@ -311,14 +292,11 @@ public abstract class PreviewRender extends JPanel implements Scrollable, MouseL
     @Override
     public void paintComponent(Graphics g) {
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
+        g.setColor(DEFAULT_BACKGROUND_COLOR);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
         Graphics2D g2d = image.createGraphics();
-        g2d.setColor(DEFAULT_BACKGROUND_COLOR);
-        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
         paintMap(g2d);
         g.drawImage(image, 0, 0, null);
-//        if (showScreen) {
-//            paintScreen(g);
-//        }
         if (showPressPoint && pressPoint != null) {
             g.drawRect((int) (pressPoint.x * getTileSize().getWidth()),
                     (int) (pressPoint.y * getTileSize().getHeight()),
@@ -326,22 +304,6 @@ public abstract class PreviewRender extends JPanel implements Scrollable, MouseL
                     (int) getTileSize().getHeight());
         }
     }
-
-    /**
-     * 
-     * @param g
-     */
-//    protected void paintScreen(Graphics g) {
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.setComposite(AlphaComposite.getInstance(
-//                AlphaComposite.SRC_ATOP, 0.25f));
-//        g.setColor(new Color(100, 100, 255));
-//        g.fill3DRect((int) (bound.x * zoom), (int) (bound.y * zoom), (int) (bound.width * zoom), (int) (bound.height * zoom), true);
-//        g.setColor(Color.BLACK);
-//        g2d.setStroke(new BasicStroke(2.0F, BasicStroke.CAP_BUTT,
-//                BasicStroke.JOIN_MITER));
-//        g.drawRect((int) (bound.x * zoom), (int) (bound.y * zoom), (int) (bound.width * zoom), (int) (bound.height * zoom));
-//    }
 
     /**
      * 

@@ -135,6 +135,7 @@ public class DefaultSoftMapBinaryReader implements IMapReader {
             }
 
         }
+        map.setHasEdit(false);//表示刚刚导入时，是没有编辑过的
         dis.close();
         fis.close();
         return map;
