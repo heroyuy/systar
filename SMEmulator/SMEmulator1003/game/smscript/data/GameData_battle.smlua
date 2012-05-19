@@ -13,3 +13,37 @@ GameData.battle.BattleTypeRevive=1			--战斗模式：复活模式(失败游戏�
 GameData.battle.bg=nil						--战斗背景
 GameData.battle.enemyTroopId=nil			--敌人队伍ID
 GameData.battle.battleType=nil				--战斗类型
+
+GameData.battle.enemyTroop=nil				--敌人队伍
+
+function GameData.battle:initEnemyTroop()
+  self.enemyTroop={}
+  local enemyTroopDict=Dictionary.enemytroops[self.enemyTroopId]
+  for i,v in ipairs(enemyTroopDict.enemys) do
+    local enemyId=v.index
+    local enemyDict=Dictionary.enemys[enemyId]
+    local enemy=clsCharacter:new()
+    enemy.id=enemyId
+    enemy.name=enemyDict.name
+    enemy.desc=enemyDict.intro
+    enemy.battlerImageName=enemyDict.battleImg
+    if enemy.battlerImageName then
+      enemy.battlerImage=Image:getImage(enemy.battlerImageName)
+    end
+    enemy.lev=enemyDict.lev
+    enemy.maxHp=enemyDict.maxHp
+    enemy.maxSp=enemyDict.maxSp
+    enemy.hp=enemyDict.maxHp
+    enemy.sp=enemyDict.maxSp
+    enemy.str=enemyDict.stre
+    enemy.agi=enemyDict.agil
+    enemy.int=enemyDict.inte
+    enemy.vit=enemyDict.vita
+    enemy.dex=enemyDict.dext
+    enemy.luck=enemyDict.luck
+    enemy.exp=enemyDict.exp
+    enemy.money=enemyDict.money
+    table.insert(self.enemyTroop,enemy)
+  end
+  
+end

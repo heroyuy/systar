@@ -43,6 +43,8 @@ clsCharacter.money=0 --金钱
 clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
 clsCharacter.moveSequence=nil				--角色当前移动序列
 clsCharacter.curMoveDirection=nil			--角色当前移动方向
+clsCharacter.x=nil							--角色在屏幕上的x坐标
+clsCharacter.y=nil							--角色在屏幕上的y坐标
 
 clsCharacter.moveDelegate=nil     --行走事件委托 需要方法：
                                   --1、 “checkCellBeforeMove(character)”以检查指定单元格是否可以行走，是否有脚本要执行等

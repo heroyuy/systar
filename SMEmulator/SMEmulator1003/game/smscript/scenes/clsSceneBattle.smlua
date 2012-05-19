@@ -28,6 +28,9 @@ end
 -- 开始
 function clsSceneBattle:onStart()
   smLog:info("战斗场景启动")
+  --初始化敌人队伍
+  GameData.battle:initEnemyTroop()
+  
 end
 
 
