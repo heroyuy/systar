@@ -14,10 +14,10 @@ GameData.battle.bg=nil						--战斗背景
 GameData.battle.enemyTroopId=nil			--敌人队伍ID
 GameData.battle.battleType=nil				--战斗类型
 
-GameData.battle.enemyTroop=nil				--敌人队伍
+GameData.battle.enemys=nil				--敌人队伍
 
 function GameData.battle:initEnemyTroop()
-  self.enemyTroop={}
+  self.enemys={}
   local enemyTroopDict=Dictionary.enemytroops[self.enemyTroopId]
   for i,v in ipairs(enemyTroopDict.enemys) do
     local enemyId=v.index
@@ -45,7 +45,7 @@ function GameData.battle:initEnemyTroop()
     enemy.money=enemyDict.money
     enemy.x=v.x
     enemy.y=v.y
-    table.insert(self.enemyTroop,enemy)
+    table.insert(self.enemys,enemy)
   end
   
 end

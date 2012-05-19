@@ -35,12 +35,19 @@ function clsSceneBattle:onStart()
   smLog:info("战斗场景启动")
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
-  for i,enemy in ipairs(GameData.battle.enemyTroop) do
+  for i,enemy in ipairs(GameData.battle.enemys) do
     local enemySprite=clsUILayer:new(enemy.x,enemy.y,enemy.battlerImage:getWidth(),enemy.battlerImage:getHeight())
     enemySprite.anchor={0.5,1}
     enemySprite.image=enemy.battlerImage
-    smLog:info("x="..enemy.x.." y="..enemy.y)
     self.spriteLayer:addChild(enemySprite)
+  end
+  --初始化玩家队伍
+  for i,player in ipairs(GameData.playerTroop.players) do
+    local x,y=672+96*math.mod(i-1,2),352+96*math.floor((i-1)/2)
+    local playerSprite=clsUILayer:new(x,y,player.battlerImage:getWidth(),player.battlerImage:getHeight())
+    playerSprite.anchor={0.5,1}
+    playerSprite.image=player.battlerImage
+    self.spriteLayer:addChild(playerSprite)
   end
 end
 

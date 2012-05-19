@@ -46,7 +46,7 @@ function GameData:newGame()
   self.gameType=-1
   --初始化PlayerTroop
   for _,v in ipairs(Dictionary.config.playersIndex) do
-    smLog:info("new player")
+    smLog:info("new player:"..v)
     local player=clsPlayer:new()
     local playerDict=Dictionary.players[v]
     --直接取值字段值
@@ -64,6 +64,10 @@ function GameData:newGame()
     player.battlerImageName=playerDict.battlerImg
     if player.battlerImageName then
       player.battlerImage=Image:getImage(player.battlerImageName)
+    else
+      --没有设置战斗图则用行走图作为战斗图
+      local w,h=player.charImage:getWidth(),player.charImage:getHeight()
+      player.battlerImage=player.charImage:clip(0,h/4,w/4,h/4)
     end
     player.vocationId=playerDict.vocationIndex
     player.level=playerDict.startLev
@@ -85,9 +89,8 @@ function GameData:newGame()
     player.col=Dictionary.config.col
     player.face=Dictionary.config.face
     player.moveDelegate=self
-    self.playerTroop.players[player.id]=player
+    table.insert(self.playerTroop.players,player)
   end
-  self.playerTroop.leaderId=Dictionary.config.playersIndex[1] --TODO 此值应该读配置
   --初始化NPC信息表
   self.npcs={}
   --打开Model更新开关
