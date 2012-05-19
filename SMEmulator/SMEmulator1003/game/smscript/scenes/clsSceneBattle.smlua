@@ -9,11 +9,19 @@ clsSceneBattle = {}
 setmetatable(clsSceneBattle,clsScene)
 clsSceneBattle.__index = clsSceneBattle
 
+--字段
+clsSceneBattle.bgLayer=nil
+
 --构造器
 function clsSceneBattle:new()
 	local self = {}
 	self = clsScene:new()
 	setmetatable(self,clsSceneBattle)
+	local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+    local bgImage=Image:getImage(GameData.battle.bg)
+    self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,bgImage:getWidth(),bgImage:getHeight())
+    self.bgLayer.image=bgImage
+    GameLayer:addChildToScene(self.bgLayer)
 	return self
 end
 

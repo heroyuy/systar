@@ -1,9 +1,10 @@
 Game={}
 
 --标志常量：场景
-Game.SCENE_TITLE=0 --标题场景
-Game.SCENE_MAP=1   --地图场景
-Game.SCENE_STATUS=2   --状态场景
+Game.SCENE_TITLE=0 			--标题场景
+Game.SCENE_MAP=1   			--地图场景
+Game.SCENE_BATTLE=2   		--战斗场景
+Game.SCENE_STATUS=3   		--状态场景
 
 --成员
 Game.curScene=nil
@@ -114,6 +115,8 @@ function Game:createScene(index)
     self.curScene=clsSceneTitle:new()
   elseif index==self.SCENE_MAP then
     self.curScene=clsSceneMap:new()
+  elseif index==self.SCENE_BATTLE then
+    self.curScene=clsSceneBattle:new()
   elseif index==self.SCENE_STATUS then
     self.curScene=clsSceneStatus:new()
   end

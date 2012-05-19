@@ -56,6 +56,7 @@ require("clsDialog")
 require("clsScene")
 require("clsSceneTitle")
 require("clsSceneMap")
+require("clsSceneBattle")
 require("clsSceneStatus")
 
 --script

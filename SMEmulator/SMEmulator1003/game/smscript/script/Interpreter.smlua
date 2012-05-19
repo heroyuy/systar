@@ -212,6 +212,11 @@ end
 
 --开启战斗
 function Interpreter:startFight(enemyTroopId,type)
+  GameData.battle.enemyTroopId=enemyTroopId
+  GameData.battle.battleType=type
+  GameData.battle.bg=GameData.curMap.battleBack
+  Game:changeScene(Game.SCENE_BATTLE)
+  return false
 end
 
 --结束战斗
