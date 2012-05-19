@@ -1,0 +1,15 @@
+--[[
+  description:游戏数据管理器 战斗
+  author:wp_g4
+  date:2012/05/19
+--]]
+
+GameData.battle={}      					--战斗
+
+--字段
+GameData.battle.BattleTypeNormal=0			--战斗类型:普通模式(失败则游戏结束)
+GameData.battle.BattleTypeRevive=1			--战斗模式：复活模式(失败游戏继续)
+
+GameData.battle.bg=nil						--战斗背景
+GameData.battle.enemyTroopId=nil			--敌人队伍ID
+GameData.battle.battleType=nil				--战斗类型

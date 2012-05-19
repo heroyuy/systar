@@ -87,7 +87,7 @@ function GameData:newGame()
     player.moveDelegate=self
     self.playerTroop.players[player.id]=player
   end
-  self.playerTroop.curDisplayPlayerId=Dictionary.config.playersIndex[1] --TODO 此值应该读配置
+  self.playerTroop.leaderId=Dictionary.config.playersIndex[1] --TODO 此值应该读配置
   --初始化NPC信息表
   self.npcs={}
   --打开Model更新开关
@@ -146,8 +146,8 @@ function GameData:update()
     return
   end
   --更新玩家
-  if self.playerTroop:curDisplayPlayer() then
-    self.playerTroop:curDisplayPlayer():update()
+  if self.playerTroop:leader() then
+    self.playerTroop:leader():update()
   end
   --更新当前地图上的NPC
   if self.curMap then
@@ -171,7 +171,7 @@ function GameData:checkCellBeforeMove(character)
     return false
   end
   --检查精灵的碰撞
-  local player=self.playerTroop:curDisplayPlayer()
+  local player=self.playerTroop:leader()
   local pRow,pCol=player:getHoldingCell()
     --(1)、player即将移动
     if character==player then
@@ -208,7 +208,7 @@ end
 
 --检查是否可以继续行走
 function GameData:checkCellAfterMove(character)
-  local player=self.playerTroop:curDisplayPlayer()
+  local player=self.playerTroop:leader()
   local pRow,pCol=player:getHoldingCell()
   local cRow,cCol=character:getHoldingCell()
   --(1)、player移动结束
@@ -253,7 +253,7 @@ end
 
 --获取当前玩家的位置
 function GameData:curPlayerLocation()
-  return self.playerTroop:curDisplayPlayer():getHoldingCell()
+  return self.playerTroop:leader():getHoldingCell()
 end
 
 
