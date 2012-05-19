@@ -125,7 +125,6 @@ function clsSceneMap:changeMap(map)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)
-      smLog:info("nx="..nx.." ny="..ny)
       npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
       npcSprite:refresh()
       self.spriteLayer:addChild(npcSprite)

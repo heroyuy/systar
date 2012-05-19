@@ -26,7 +26,7 @@ function GameData.battle:initEnemyTroop()
     enemy.id=enemyId
     enemy.name=enemyDict.name
     enemy.desc=enemyDict.intro
-    enemy.battlerImageName=enemyDict.battleImg
+    enemy.battlerImageName=enemyDict.battlerImg
     if enemy.battlerImageName then
       enemy.battlerImage=Image:getImage(enemy.battlerImageName)
     end
@@ -43,6 +43,8 @@ function GameData.battle:initEnemyTroop()
     enemy.luck=enemyDict.luck
     enemy.exp=enemyDict.exp
     enemy.money=enemyDict.money
+    enemy.x=v.x
+    enemy.y=v.y
     table.insert(self.enemyTroop,enemy)
   end
   
