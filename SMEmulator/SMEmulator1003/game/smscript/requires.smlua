@@ -52,7 +52,8 @@ require("GameData_battle")
 require("clsTiled")
 require("clsOption")
 require("clsDialog")
-require("clsInfo")
+require("clsPlayerInfo")
+require("clsEnemyInfo")
 
 --scenes
 require("clsScene")

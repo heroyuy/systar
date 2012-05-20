@@ -10,35 +10,43 @@ setmetatable(clsSceneBattle,clsScene)
 clsSceneBattle.__index = clsSceneBattle
 
 --字段
-clsSceneBattle.bgLayer=nil			--背景层
-clsSceneBattle.spriteLayer=nil   	--精灵层
-clsSceneBattle.infoLayer=nil		--信息层
+clsSceneBattle.bgLayer=nil				--背景层
+clsSceneBattle.spriteLayer=nil   		--精灵层
+clsSceneBattle.playerInfoLayer=nil		--玩家信息层
+clsSceneBattle.enemyInfoLayer=nil		--敌人信息层
 
 --构造器
 function clsSceneBattle:new()
-	local self = {}
-	self = clsScene:new()
-	setmetatable(self,clsSceneBattle)
-	local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
-	--背景层
-    local bgImage=Image:getImage(GameData.battle.bg)
-    self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,bgImage:getWidth(),bgImage:getHeight())
-    self.bgLayer.image=bgImage
-    GameLayer:addChildToScene(self.bgLayer)
-    --精灵层
-    self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-    GameLayer:addChildToScene(self.spriteLayer)
-    --信息层
-    self.infoLayer=clsUILayer:new(screenWidth/2,screenHeight,screenWidth,160)
-    self.infoLayer.anchor={0.5,1}
-    self.infoLayer.image=Skin:createBgWithFrame(screenWidth,160)
-    GameLayer:addChildToScene(self.infoLayer)
-	return self
+  local self = {}
+  self = clsScene:new()
+  setmetatable(self,clsSceneBattle)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  --背景层
+  local bgImage=Image:getImage(GameData.battle.bg)
+  self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,bgImage:getWidth(),bgImage:getHeight())
+  self.bgLayer.image=bgImage
+  GameLayer:addChildToScene(self.bgLayer)
+  --精灵层
+  self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  GameLayer:addChildToScene(self.spriteLayer)
+  --玩家信息层
+  self.playerInfoLayer=clsUILayer:new(screenWidth/2,screenHeight,screenWidth,160)
+  self.playerInfoLayer.anchor={0.5,1}
+  self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
+  GameLayer:addChildToScene(self.playerInfoLayer)
+  --敌人信息层
+  self.enemyInfoLayer=clsUILayer:new(screenWidth/2,0,screenWidth,64)
+  self.enemyInfoLayer.anchor={0.5,0}
+  self.enemyInfoLayer.image=Skin:createBody(screenWidth,64)
+  GameLayer:addChildToScene(self.enemyInfoLayer)
+  
+  return self
 end
 
 -- 开始
 function clsSceneBattle:onStart()
   smLog:info("战斗场景启动")
+  GameData.updateSwitch=false
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
@@ -48,9 +56,17 @@ function clsSceneBattle:onStart()
     enemySprite.image=enemy.battlerImage
     self.spriteLayer:addChild(enemySprite)
   end
+  --初始化敌人队伍信息面板
+  local enemyNum=table.getn(GameData.battle.enemys)
+  local width,height=screenWidth/6,64
+  for i,enemy in ipairs(GameData.battle.enemys) do
+    local infoPane=clsEnemyInfo:new((i-1)*width,self.enemyInfoLayer.height/2,width,height,enemy)
+    infoPane.anchor={0,0.5}
+    self.enemyInfoLayer:addChild(infoPane)
+  end
   --初始化玩家队伍
   for i,player in ipairs(GameData.playerTroop.players) do
-    local x,y=672+96*math.mod(i-1,2),352+96*math.floor((i-1)/2)
+    local x,y=768,224+64*i
     local playerSprite=clsUILayer:new(x,y,player.battlerImage:getWidth(),player.battlerImage:getHeight())
     playerSprite.anchor={0.5,1}
     playerSprite.image=player.battlerImage
@@ -59,11 +75,11 @@ function clsSceneBattle:onStart()
   --初始化玩家队伍信息面板
   local gap=15
   local playerNum=table.getn(GameData.playerTroop.players)
-  local infoWidth,infoHeight=(screenWidth-(playerNum+1)*gap)/playerNum,self.infoLayer.height-2*gap
+  local width,height=(screenWidth-(playerNum+1)*gap)/playerNum,self.playerInfoLayer.height-2*gap
   for i,player in ipairs(GameData.playerTroop.players) do
-    local infoPane=clsInfo:new(gap+(i-1)*(infoWidth+gap),self.infoLayer.height/2,infoWidth,infoHeight,player)
+    local infoPane=clsPlayerInfo:new(gap+(i-1)*(width+gap),self.playerInfoLayer.height/2,width,height,player)
     infoPane.anchor={0,0.5}
-    self.infoLayer:addChild(infoPane)
+    self.playerInfoLayer:addChild(infoPane)
   end
 end
 

@@ -13,6 +13,8 @@ clsUIProgress.__index=clsUIProgress
 
 clsUIProgress.bgImage=nil             				--背景图片
 clsUIProgress.fgImage=nil               			--前景图片
+clsUIProgress.bgColor=nil             				--背景色
+clsUIProgress.fgColor=nil               			--前景色
 clsUIProgress.textColor="0xffffffff"           		--文字颜色
 clsUIProgress.textSize=-1                    		--文字大小
 clsUIProgress.maxValue=nil							--最大值
@@ -34,9 +36,12 @@ end
 function clsUIProgress:refresh()
   self:clear()
   self.image=self.bgImage
+  self.color=self.bgColor
   self.fgLayer=clsUILayer:new(0,0,self.width*self.value/self.maxValue,self.height)
   self.fgLayer.anchor={0,0}
   self.fgLayer.image=self.fgImage
+  self.fgLayer.color=self.fgColor
+  self.fgLayer.clipBounds=true
   self:addChild(self.fgLayer)
   if self.showValue then
     local text=self.value.."/"..self.maxValue
