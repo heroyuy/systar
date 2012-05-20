@@ -16,14 +16,14 @@ clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
 
 --字段
 clsSceneMap.menuItems={"状态","物品","技能","装备","存档","退出"}
-clsSceneMap.mapBgLayer=nil     --背景
-clsSceneMap.mapFgLayer=nil     --前景
-clsSceneMap.spriteLayer=nil    --精灵层
-clsSceneMap.buttonHead=nil     --头像按钮
-clsSceneMap.menu=nil     --菜单
+clsSceneMap.mapBgLayer=nil     		--背景
+clsSceneMap.mapFgLayer=nil    		--前景
+clsSceneMap.spriteLayer=nil    		--精灵层
+clsSceneMap.buttonHead=nil    		--头像按钮
+clsSceneMap.menu=nil     	 		--菜单
 
-clsSceneMap.curPlayer=nil      --当前player
-clsSceneMap.aStar=nil          --A*寻路工具
+clsSceneMap.curPlayer=nil     		--当前player
+clsSceneMap.aStar=nil      			--A*寻路工具
 
 --构造器
 function clsSceneMap:new()

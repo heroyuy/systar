@@ -15,6 +15,9 @@ clsSceneBattle.spriteLayer=nil   		--精灵层
 clsSceneBattle.playerInfoLayer=nil		--玩家信息层
 clsSceneBattle.enemyInfoLayer=nil		--敌人信息层
 clsSceneBattle.picker=nil				--角色选择器
+clsSceneBattle.menu=nil					--菜单
+
+clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
 
 --构造器
 function clsSceneBattle:new()
@@ -40,6 +43,14 @@ function clsSceneBattle:new()
   self.enemyInfoLayer.anchor={0.5,0}
   self.enemyInfoLayer.image=Skin:createBody(screenWidth,64)
   GameLayer:addChildToScene(self.enemyInfoLayer)
+  --菜单
+  self.menu=clsUIMenu:new(0,screenHeight-160,240,170)
+  self.menu.anchor={0,1}
+  self.menu.items=self.menuItems
+  self.menu.delegate=self
+  self.menu:refresh()
+  self.menu.visibility=true
+  GameLayer:addChildToScene(self.menu)
   return self
 end
 
