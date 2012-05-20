@@ -1,0 +1,44 @@
+--[[
+  description:角色选择器（战斗）。
+  author:wp_g4
+  date:2011/05/20
+--]]
+
+--类结构定义
+clsPicker={}
+setmetatable(clsPicker,clsUILayer)
+clsPicker.__index=clsPicker
+
+clsPicker.characters=nil
+
+--构造器
+function clsPicker:new(x,y,width,height,characters)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsPicker)
+  self.characters=characters
+  --背景
+  self.image=Image:getImage(Dictionary.config.skin_enemy)
+  --头像
+  local iw,ih=self.enemy.battlerImage:getWidth(),self.enemy.battlerImage:getHeight()
+  local s=math.max(iw/40,ih/40)
+  local hw,hh=iw/s,ih/s
+  self.headLayer=clsUILayer:new(4+40/2,12+40/2,hw,hh)
+  self.headLayer.image=self.enemy.battlerImage:scale(hw,hh)
+  self:addChild(self.headLayer)
+  --姓名
+  local nameLabel=clsUILabel:new(48,4,108,20)
+  nameLabel.anchor={0,0}
+  nameLabel.text=self.enemy.name
+  nameLabel:refresh()
+  self:addChild(nameLabel)
+  return self
+end
+
+--更新选择器
+function clsPicker:refresh()
+  
+end
+
+function clsPicker:onTouch(event)
+  --不做任何处理
+end

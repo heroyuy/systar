@@ -109,7 +109,7 @@ function clsSceneMap:changeMap(map)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
     --玩家
-    local playerSprite=clsUISprite:new(self.curPlayer.charImage,
+    local playerSprite=clsSprite:new(self.curPlayer.charImage,
        self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
     playerSprite.tag=self.curPlayer.id
     playerSprite.z=self.curPlayer.row
@@ -120,7 +120,7 @@ function clsSceneMap:changeMap(map)
     --NPC
     for k,v in pairs(GameData.curMap.npcs) do
       local npc=GameData:getNPC(v)
-      local npcSprite=clsUISprite:new(npc.charImage,
+      local npcSprite=clsSprite:new(npc.charImage,
         npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row

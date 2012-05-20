@@ -5,23 +5,23 @@
 --]]
 
 --类结构定义
-clsUISprite={}
-setmetatable(clsUISprite,clsUILayer)
-clsUISprite.__index=clsUISprite
+clsSprite={}
+setmetatable(clsSprite,clsUILayer)
+clsSprite.__index=clsSprite
 
 --重定向父类paintLayer(painter)方法
-clsUISprite.paintLayerF=clsUISprite.paintLayer
+clsSprite.paintLayerF=clsSprite.paintLayer
 
 --字段
-clsUISprite.spriteImage=nil    				--图像
-clsUISprite.frameIndex=0           			--当前帧index
-clsUISprite.colNum=1               			--帧列数
-clsUISprite.rowNum=1            			--帧行数
+clsSprite.spriteImage=nil    				--图像
+clsSprite.frameIndex=0           			--当前帧index
+clsSprite.colNum=1               			--帧列数
+clsSprite.rowNum=1            			--帧行数
 
 --构造器
-function clsUISprite:new(spriteImage,frameWidth,frameHeight)
+function clsSprite:new(spriteImage,frameWidth,frameHeight)
   local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
-  setmetatable(self,clsUISprite)
+  setmetatable(self,clsSprite)
   self.anchor={0.5,1}
   if type(spriteImage)=="string" then
     spriteImage=spriteImage:getspriteImage(spriteImage)
@@ -33,6 +33,6 @@ function clsUISprite:new(spriteImage,frameWidth,frameHeight)
 end
 
 --更新Sprite
-function clsUISprite:refresh()
+function clsSprite:refresh()
   self.image=self.spriteImage:getSubImage(self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height)
 end
