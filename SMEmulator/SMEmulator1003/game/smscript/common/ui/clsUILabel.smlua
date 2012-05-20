@@ -29,7 +29,7 @@ function clsUILabel:new(x,y,width,height)
 end
 
 --更新Label
-function clsUILayer:refresh()
+function clsUILabel:refresh()
   if self.text==nil then
     return
   end

@@ -1,0 +1,50 @@
+--[[
+  description:进度条
+  author:wp_g4
+  date:2011/05/20
+--]]
+
+--类结构定义
+clsUIProgress={}
+setmetatable(clsUIProgress,clsUILayer)
+clsUIProgress.__index=clsUIProgress
+
+--字段
+
+clsUIProgress.bgImage=nil             				--背景图片
+clsUIProgress.fgImage=nil               			--前景图片
+clsUIProgress.textColor="0xffffffff"           		--文字颜色
+clsUIProgress.textSize=-1                    		--文字大小
+clsUIProgress.maxValue=nil							--最大值
+clsUIProgress.value=nil								--当前值
+
+clsUIProgress.fgLayer=nil							--前景层
+clsUIProgress.label=nil								--显示文字的标签
+clsUIProgress.showValue=true						--是否显示进度值
+
+--构造器
+function clsUIProgress:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIProgress)
+  self.enabled=false
+  return self
+end
+
+--更新Progress
+function clsUIProgress:refresh()
+  self:clear()
+  self.image=self.bgImage
+  self.fgLayer=clsUILayer:new(0,0,self.width*self.value/self.maxValue,self.height)
+  self.fgLayer.anchor={0,0}
+  self.fgLayer.image=self.fgImage
+  self:addChild(self.fgLayer)
+  if self.showValue then
+    local text=self.value.."/"..self.maxValue
+    self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
+    self.label.text=text
+    self.label.textColor=self.textColor
+    self.label.textSize=self.textSize
+    self.label:refresh()
+    self:addChild(self.label)
+  end
+end

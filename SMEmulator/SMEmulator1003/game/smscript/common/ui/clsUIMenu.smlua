@@ -37,7 +37,7 @@ function clsUIMenu:refresh()
     button.normalImage=normalImage
     button.highlightImage=highlightImage
     button.text=item
-    button.textColor=Skin:getTextColor(1,1)
+    button.textColor=Skin:getColor(1,1)
     button.tag=i
     button.delegate=self
     button:refresh()

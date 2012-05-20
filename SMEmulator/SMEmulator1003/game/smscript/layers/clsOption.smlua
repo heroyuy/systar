@@ -32,7 +32,7 @@ function clsOption:new(optionItems)
     button.normalImage=normalImage
     button.highlightImage=highlightImage
     button.text=v
-    button.textColor=Skin:getTextColor(1,1)
+    button.textColor=Skin:getColor(1,1)
     button:refresh()
     button.tag=i
     button.delegate=self
@@ -42,7 +42,7 @@ function clsOption:new(optionItems)
 end
 
 --处理触屏事件（lua层不应该调用此方法）
-function clsUILayer:onTouch(event)
+function clsOption:onTouch(event)
   
 end
 

@@ -12,7 +12,6 @@ clsInfo.__index=clsInfo
 clsInfo.player=nil
 
 clsInfo.headLayer=nil
-clsInfo.nameLabel=nil
 
 --构造器
 function clsInfo:new(x,y,width,height,player)
@@ -25,16 +24,51 @@ function clsInfo:new(x,y,width,height,player)
   self.headLayer.image=self.player.headImage
   self:addChild(self.headLayer)
   --姓名
-  self.nameLabel=clsUILabel:new(80,10,self.width-80-10,20)
-  self.nameLabel.text=self.player.name
-  self.nameLabel.textColor="0xff0000ff"
-  self.nameLabel.alignment=clsUILabel.ALIGN_LEFT
-  self.nameLabel.anchor={0,0}
-  self.nameLabel:refresh()
-  self:addChild(self.nameLabel)
-  --进度条
+  local nameLabel=clsUILabel:new(80,10,self.width-80-10,20)
+  nameLabel.text=self.player.name
+  nameLabel.textColor="0xff0000ff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.anchor={0,0}
+  nameLabel:refresh()
+  self:addChild(nameLabel)
+  --状态
+  local buffLabel=clsUILabel:new(80,40,self.width-80-10,20)
+  buffLabel.text="没有Buff"
+  buffLabel.textColor="0xffaabbcc"
+  buffLabel.anchor={0,0}
+  buffLabel:refresh()
+  self:addChild(buffLabel)
   --HP
+  local hpLabel=clsUILabel:new(10,80,20,20)
+  hpLabel.text="HP"
+  hpLabel.alignment=clsUILabel.ALIGN_LEFT
+  hpLabel.textColor="0xffff0000"
+  hpLabel.anchor={0,0}
+  hpLabel:refresh()
+  self:addChild(hpLabel)
+  local hpProgress=clsUIProgress:new(40,80,self.width-10-40,20)
+  hpProgress.anchor={0,0}
+  hpProgress.value=100
+  hpProgress.maxValue=200
+  hpProgress.textColor="0xffff0000"
+  hpProgress:refresh()
+  self:addChild(hpProgress)
   --SP
+  local spLabel=clsUILabel:new(10,105,20,20)
+  spLabel.text="SP"
+  spLabel.alignment=clsUILabel.ALIGN_LEFT
+  spLabel.textColor="0xff0000ff"
+  spLabel.anchor={0,0}
+  spLabel:refresh()
+  self:addChild(spLabel)
+  local spProgress=clsUIProgress:new(40,105,self.width-10-40,20)
+  spProgress.anchor={0,0}
+  spProgress.value=80
+  spProgress.maxValue=120
+  spProgress.textColor="0xffff0000"
+  spProgress:refresh()
+  self:addChild(spProgress)
+  
   self.image=Skin:createBody(self.width,self.height)
   return self
 end

@@ -6,7 +6,7 @@ Skin.frame={}
 Skin.arrow={}
 Skin.selectedBg={}
 Skin.cursor={}
-Skin.textColor={}
+Skin.colors={}
 
 function Skin:init(skinPath)
   local img=Image:getImage(skinPath)
@@ -45,7 +45,7 @@ function Skin:init(skinPath)
   --字色，先行后列
   for i=1,4 do
    for j=1,8 do
-     self.textColor[i.."_"..j]=img:getRGB(64+(j-1)*8+4, 96+(i-1)*8+4)
+     self.colors[i.."_"..j]=img:getRGB(64+(j-1)*8+4, 96+(i-1)*8+4)
    end
   end
   
@@ -119,6 +119,6 @@ function Skin:createSelectedBg(width,height)
   return img
 end
 
-function Skin:getTextColor(i,j)
-  return self.textColor[i.."_"..j]
+function Skin:getColor(i,j)
+  return self.colors[i.."_"..j]
 end
