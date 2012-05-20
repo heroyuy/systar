@@ -14,6 +14,7 @@ clsSceneBattle.bgLayer=nil				--背景层
 clsSceneBattle.spriteLayer=nil   		--精灵层
 clsSceneBattle.playerInfoLayer=nil		--玩家信息层
 clsSceneBattle.enemyInfoLayer=nil		--敌人信息层
+clsSceneBattle.picker=nil				--角色选择器
 
 --构造器
 function clsSceneBattle:new()
@@ -39,7 +40,6 @@ function clsSceneBattle:new()
   self.enemyInfoLayer.anchor={0.5,0}
   self.enemyInfoLayer.image=Skin:createBody(screenWidth,64)
   GameLayer:addChildToScene(self.enemyInfoLayer)
-  
   return self
 end
 
@@ -81,14 +81,32 @@ function clsSceneBattle:onStart()
     infoPane.anchor={0,0.5}
     self.playerInfoLayer:addChild(infoPane)
   end
+  --角色选择器
+  local characters={}
+  for i,enemy in ipairs(GameData.battle.enemys) do
+    table.insert(characters,enemy)
+  end
+  for i,player in ipairs(GameData.playerTroop.players) do
+    table.insert(characters,player)
+  end
+  self.picker=clsPicker:new(screenWidth/2,100,screenWidth/2,32,characters)
+  self.picker.delegate=self
+  GameLayer:addChildToScene(self.picker)
 end
 
 
 -- 更新
 function clsSceneBattle:update()
   --smLog:info("战斗场景更新")
+  self.picker:refresh()
 end
 
+--角色选择器回调
+function clsSceneBattle:onCharacterPick(picker,id)
+  smLog:info("角色:"..id.."行动...")
+  smLog:info("角色:"..id.."行动结束")
+  picker.pause=false
+end
 
 -- 退出
 function clsSceneBattle:onStop()

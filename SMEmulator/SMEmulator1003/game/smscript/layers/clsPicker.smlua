@@ -9,34 +9,70 @@ clsPicker={}
 setmetatable(clsPicker,clsUILayer)
 clsPicker.__index=clsPicker
 
-clsPicker.characters=nil
+clsPicker.characters=nil			--角色列表
+clsPicker.startX=nil				--起点x坐标
+clsPicker.endX=nil					--终点x坐标
+clsPicker.lastUpdateTime=nil		--上次刷新时间
+clsPicker.pause=false				--是否暂停中
 
 --构造器
 function clsPicker:new(x,y,width,height,characters)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsPicker)
   self.characters=characters
+  self.callback="onCharacterPick"
   --背景
-  self.image=Image:getImage(Dictionary.config.skin_enemy)
-  --头像
-  local iw,ih=self.enemy.battlerImage:getWidth(),self.enemy.battlerImage:getHeight()
-  local s=math.max(iw/40,ih/40)
-  local hw,hh=iw/s,ih/s
-  self.headLayer=clsUILayer:new(4+40/2,12+40/2,hw,hh)
-  self.headLayer.image=self.enemy.battlerImage:scale(hw,hh)
-  self:addChild(self.headLayer)
-  --姓名
-  local nameLabel=clsUILabel:new(48,4,108,20)
-  nameLabel.anchor={0,0}
-  nameLabel.text=self.enemy.name
-  nameLabel:refresh()
-  self:addChild(nameLabel)
+  self.startX=height/2
+  self.endX=width-height/2
+  self.image=Skin:createBody(width,height)
+  for i,character in ipairs(characters) do
+    local iw,ih=character.battlerImage:getWidth(),character.battlerImage:getHeight()
+    local s=math.max(iw/height,ih/height)
+    local hw,hh=iw/s,ih/s
+    local characterLayer=clsUILayer:new(self.startX,height/2,hw,hh)
+    characterLayer.tag=character.id
+    characterLayer.image=character.battlerImage:scale(hw,hh)
+    self:addChild(characterLayer)
+  end
   return self
 end
 
 --更新选择器
 function clsPicker:refresh()
-  
+  if self.pause then
+    --暂停中则不更新
+    self.lastUpdateTime=Game:getTime()
+    return
+  end
+  if self.lastUpdateTime==nil then
+    self.lastUpdateTime=Game:getTime()
+  end
+  --将到达终点的角色移回起点
+  for i,characterLayer in ipairs(self.children) do
+    if characterLayer.x>=self.endX then
+      characterLayer.x=self.startX
+    end
+  end
+  --根据角色攻击速度移动精灵
+  local idPicked=nil
+  local curTime=Game:getTime()
+  local delta=curTime-self.lastUpdateTime
+  self.lastUpdateTime=curTime
+  for i,character in ipairs(self.characters) do
+    local atkSpeed=character:atkSpeed()  --每秒移动atkSpeed距离
+    local characterLayer=self:childWithTag(character.id)
+    characterLayer.x=characterLayer.x+atkSpeed/1000*delta
+    if characterLayer.x>=self.endX then
+      --有精灵走到了终点
+      idPicked=character.id
+      characterLayer.x=self.endX
+      self.pause=true
+      break
+    end
+  end
+  if idPicked then
+    callFunction(self.delegate,self.callback,self,idPicked)
+  end
 end
 
 function clsPicker:onTouch(event)

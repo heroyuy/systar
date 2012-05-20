@@ -58,6 +58,11 @@ function clsCharacter:new()
 	return self
 end
 
+--攻击速度(math.min(agi,200))
+function clsCharacter:atkSpeed()
+  return math.min(self.agi,200)
+end
+
 --更新[角色的基本更新] 
 function clsCharacter:update()
   --调用父类的update方法
