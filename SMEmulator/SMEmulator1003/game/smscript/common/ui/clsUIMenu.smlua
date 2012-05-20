@@ -5,24 +5,24 @@
 --]]
 
 --类结构定义
-clsMenu={}
-setmetatable(clsMenu,clsUILayer)
-clsMenu.__index=clsMenu
+clsUIMenu={}
+setmetatable(clsUIMenu,clsUILayer)
+clsUIMenu.__index=clsUIMenu
 
-clsMenu.items=nil					--菜单项
-clsMenu.colNum=1					--列数
-clsMenu.gap={10,5,10,10,5,10}		--间距(上中下左中右)
+clsUIMenu.items=nil					--菜单项
+clsUIMenu.colNum=1					--列数
+clsUIMenu.gap={10,5,10,10,5,10}		--间距(上中下左中右)
 
 --构造器
-function clsMenu:new(x,y,width,height)
+function clsUIMenu:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsMenu)
+  setmetatable(self,clsUIMenu)
   self.callback="menuItemSelected"
   return self
 end
 
 --更新菜单
-function clsMenu:refresh()
+function clsUIMenu:refresh()
   self.image=Skin:createBgWithFrame(self.width,self.height)
   local gt,gv,gb,gl,gh,gr=self.gap[1],self.gap[2],self.gap[3],self.gap[4],self.gap[5],self.gap[6]
   local itemWidth=math.floor((self.width-gl-gr-(self.colNum-1)*gh)/self.colNum)
@@ -45,11 +45,11 @@ function clsMenu:refresh()
   end
 end
 
-function clsMenu:onTouch(event)
+function clsUIMenu:onTouch(event)
   --不做任何处理
 end
 
-function clsMenu:buttonTapped(target)
+function clsUIMenu:buttonTapped(target)
   local index=target.tag
   callFunction(self.delegate,self.callback,index)
 end

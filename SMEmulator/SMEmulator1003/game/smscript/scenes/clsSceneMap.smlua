@@ -48,7 +48,7 @@ function clsSceneMap:new()
     self.buttonHead.delegate=self
     GameLayer:addChildToScene(self.buttonHead)
     --菜单
-    self.menu=clsMenu:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200)
+    self.menu=clsUIMenu:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200)
     self.menu.anchor={0,0}
     self.menu.items=self.menuItems
     self.menu.delegate=self

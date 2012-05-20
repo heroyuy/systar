@@ -25,6 +25,7 @@ require("clsUILabel")
 require("clsUITextArea")
 require("clsUIButton")
 require("clsUISprite")
+require("clsUIMenu")
 
 --common\util
 require("clsAStar")
@@ -47,10 +48,10 @@ require("GameData_player")
 require("GameData_battle")
 
 --layers
-require("clsMenu")
 require("clsTiled")
 require("clsOption")
 require("clsDialog")
+require("clsInfo")
 
 --scenes
 require("clsScene")

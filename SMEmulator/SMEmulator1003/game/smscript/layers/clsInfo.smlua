@@ -1,0 +1,49 @@
+--[[
+  description:信息面板（战斗）。
+  author:wp_g4
+  date:2011/05/20
+--]]
+
+--类结构定义
+clsInfo={}
+setmetatable(clsInfo,clsUILayer)
+clsInfo.__index=clsInfo
+
+clsInfo.player=nil
+
+clsInfo.headLayer=nil
+clsInfo.nameLabel=nil
+
+--构造器
+function clsInfo:new(x,y,width,height,player)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsInfo)
+  self.player=player
+  --头像
+  self.headLayer=clsUILayer:new(10,10,64,64)
+  self.headLayer.anchor={0,0}
+  self.headLayer.image=self.player.headImage
+  self:addChild(self.headLayer)
+  --姓名
+  self.nameLabel=clsUILabel:new(80,10,self.width-80-10,20)
+  self.nameLabel.text=self.player.name
+  self.nameLabel.textColor="0xff0000ff"
+  self.nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  self.nameLabel.anchor={0,0}
+  self.nameLabel:refresh()
+  self:addChild(self.nameLabel)
+  --进度条
+  --HP
+  --SP
+  self.image=Skin:createBody(self.width,self.height)
+  return self
+end
+
+--更新信息面板
+function clsInfo:refresh()
+  
+end
+
+function clsInfo:onTouch(event)
+  --不做任何处理
+end

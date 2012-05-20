@@ -12,6 +12,7 @@ clsSceneBattle.__index = clsSceneBattle
 --字段
 clsSceneBattle.bgLayer=nil			--背景层
 clsSceneBattle.spriteLayer=nil   	--精灵层
+clsSceneBattle.infoLayer=nil		--信息层
 
 --构造器
 function clsSceneBattle:new()
@@ -27,12 +28,18 @@ function clsSceneBattle:new()
     --精灵层
     self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
     GameLayer:addChildToScene(self.spriteLayer)
+    --信息层
+    self.infoLayer=clsUILayer:new(screenWidth/2,screenHeight,screenWidth,160)
+    self.infoLayer.anchor={0.5,1}
+    self.infoLayer.image=Skin:createBgWithFrame(screenWidth,160)
+    GameLayer:addChildToScene(self.infoLayer)
 	return self
 end
 
 -- 开始
 function clsSceneBattle:onStart()
   smLog:info("战斗场景启动")
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
   for i,enemy in ipairs(GameData.battle.enemys) do
@@ -48,6 +55,15 @@ function clsSceneBattle:onStart()
     playerSprite.anchor={0.5,1}
     playerSprite.image=player.battlerImage
     self.spriteLayer:addChild(playerSprite)
+  end
+  --初始化玩家队伍信息面板
+  local gap=15
+  local playerNum=table.getn(GameData.playerTroop.players)
+  local infoWidth,infoHeight=(screenWidth-(playerNum+1)*gap)/playerNum,self.infoLayer.height-2*gap
+  for i,player in ipairs(GameData.playerTroop.players) do
+    local infoPane=clsInfo:new(gap+(i-1)*(infoWidth+gap),self.infoLayer.height/2,infoWidth,infoHeight,player)
+    infoPane.anchor={0,0.5}
+    self.infoLayer:addChild(infoPane)
   end
 end
 
