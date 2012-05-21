@@ -24,7 +24,7 @@ function clsPicker:new(x,y,width,height,characters)
   --背景
   self.startX=height/2
   self.endX=width-height/2
-  self.image=Skin:createBody(width,height)
+  self.image=Skin:createSelectedBg(width,height)
   for i,character in ipairs(characters) do
     local iw,ih=character.battlerImage:getWidth(),character.battlerImage:getHeight()
     local s=math.max(iw/height,ih/height)
