@@ -55,6 +55,18 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 		initUI();
 	}
 
+	@Override
+	public void handleEvent(Event e) {
+		if (e.getCommand().equals(EventIdConst.GAME_BUILD_SUCCESSFUL)) {
+			this.setType(TYPE_PLUGIN);
+			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
+			this.setModal(true);
+			this.startGame();
+		} else {
+			System.out.println("游戏生成失败");
+		}
+	}
+
 	private void initGame() {
 		try {
 			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game").newInstance();
@@ -143,18 +155,6 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 		this.setVisible(false);
 		if (type == TYPE_SOFTWARE) {
 			System.exit(0);
-		}
-	}
-
-	@Override
-	public void handleEvent(Event e) {
-		if (e.getCommand().equals(EventIdConst.GAME_BUILD_SUCCESSFUL)) {
-			this.setType(TYPE_PLUGIN);
-			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
-			this.setModal(true);
-			this.startGame();
-		} else {
-			System.out.println("游戏生成失败");
 		}
 	}
 

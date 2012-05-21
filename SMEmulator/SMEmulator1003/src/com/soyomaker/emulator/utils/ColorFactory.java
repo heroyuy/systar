@@ -71,14 +71,10 @@ public class ColorFactory {
 		} else {
 			offset = 2;
 		}
-		int a = Integer.parseInt(colorString.substring(0 + offset, 2 + offset),
-				16);
-		int r = Integer.parseInt(colorString.substring(2 + offset, 4 + offset),
-				16);
-		int g = Integer.parseInt(colorString.substring(4 + offset, 6 + offset),
-				16);
-		int b = Integer.parseInt(colorString.substring(6 + offset, 8 + offset),
-				16);
+		int a = Integer.parseInt(colorString.substring(0 + offset, 2 + offset), 16);
+		int r = Integer.parseInt(colorString.substring(2 + offset, 4 + offset), 16);
+		int g = Integer.parseInt(colorString.substring(4 + offset, 6 + offset), 16);
+		int b = Integer.parseInt(colorString.substring(6 + offset, 8 + offset), 16);
 		return new Color(a, r, g, b);
 	}
 

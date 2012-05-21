@@ -23,10 +23,6 @@ public class Event {
 		this.type = type;
 	}
 
-	public Event relativeEvent(double x, double y) {
-		return new Event(this.getX() + x, this.getY() + y, this.getType());
-	}
-
 	public int getType() {
 		return type;
 	}
@@ -37,6 +33,10 @@ public class Event {
 
 	public double getY() {
 		return y;
+	}
+
+	public Event relativeEvent(double x, double y) {
+		return new Event(this.getX() + x, this.getY() + y, this.getType());
 	}
 
 	public void scale(double scale, double x, double y) {
