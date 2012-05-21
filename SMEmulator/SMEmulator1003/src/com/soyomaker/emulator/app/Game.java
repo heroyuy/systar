@@ -87,7 +87,7 @@ public class Game implements IGame, Runnable {
 				} else {
 					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
 					if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
-						SMLog.getInstance().info("总时间:" + t + " FPS警告:" + gameInfo.getActualFps());
+						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
 					}
 				}
 			}
