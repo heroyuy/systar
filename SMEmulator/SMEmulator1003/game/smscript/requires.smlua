@@ -25,7 +25,6 @@ require("clsUILabel")
 require("clsUITextArea")
 require("clsUIButton")
 require("clsUIMenu")
-require("clsUIProgress")
 
 --common\util
 require("clsAStar")
