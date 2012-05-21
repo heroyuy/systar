@@ -10,14 +10,26 @@ setmetatable(clsSceneBattle,clsScene)
 clsSceneBattle.__index = clsSceneBattle
 
 --字段
-clsSceneBattle.bgLayer=nil				--背景层
-clsSceneBattle.spriteLayer=nil   		--精灵层
-clsSceneBattle.playerInfoLayer=nil		--玩家信息层
-clsSceneBattle.enemyInfoLayer=nil		--敌人信息层
-clsSceneBattle.picker=nil				--角色选择器
-clsSceneBattle.menu=nil					--菜单
+clsSceneBattle.ACTION_TYPE_ATTAC=1			--动作:攻击
+clsSceneBattle.ACTION_TYPE_SKILL=2			--动作:技能
+clsSceneBattle.ACTION_TYPE_ITEM=3			--动作:物品
+clsSceneBattle.ACTION_TYPE_DEFEND=4			--动作:防御
+clsSceneBattle.ACTION_TYPE_ESCAPE=5			--动作:逃跑
 
 clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
+clsSceneBattle.curActor=nil					--当前行动者
+clsSceneBattle.curActionType=nil			--当前动作
+clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
+clsSceneBattle.curItem=nil					--当前物品(curActionType等于ACTION_TYPE_ITEM时有效)
+
+clsSceneBattle.bgLayer=nil					--背景层
+clsSceneBattle.spriteLayer=nil   			--精灵层
+clsSceneBattle.playerInfoLayer=nil			--玩家信息层
+clsSceneBattle.enemyInfoLayer=nil			--敌人信息层
+clsSceneBattle.picker=nil					--角色选择器
+clsSceneBattle.menu=nil						--菜单
+
+
 
 --构造器
 function clsSceneBattle:new()
@@ -50,7 +62,7 @@ function clsSceneBattle:new()
   self.menu.alpha=0.7
   self.menu.delegate=self
   self.menu:refresh()
-  self.menu.visibility=true
+  self.menu.visibility=false
   GameLayer:addChildToScene(self.menu)
   return self
 end
@@ -65,6 +77,7 @@ function clsSceneBattle:onStart()
   for i,enemy in ipairs(GameData.battle.enemys) do
     local enemySprite=clsUILayer:new(enemy.x,enemy.y,enemy.battlerImage:getWidth(),enemy.battlerImage:getHeight())
     enemySprite.anchor={0.5,1}
+    enemySprite.tag=enemy.id
     enemySprite.image=enemy.battlerImage
     self.spriteLayer:addChild(enemySprite)
   end
@@ -81,6 +94,7 @@ function clsSceneBattle:onStart()
     local x,y=768,224+64*i
     local playerSprite=clsUILayer:new(x,y,player.battlerImage:getWidth(),player.battlerImage:getHeight())
     playerSprite.anchor={0.5,1}
+    playerSprite.tag=player.id
     playerSprite.image=player.battlerImage
     self.spriteLayer:addChild(playerSprite)
   end
@@ -115,9 +129,55 @@ end
 
 --角色选择器回调
 function clsSceneBattle:onCharacterPick(picker,id)
-  smLog:info("角色:"..id.."行动...")
-  smLog:info("角色:"..id.."行动结束")
-  picker.pause=false
+  if math.floor(id/1000000)==101 then
+    --player
+    smLog:info("player:"..id.."开始行动...")
+    self:playerActionStart(id)
+  else
+    --enemy
+    smLog:info("enemy:"..id.."开始行动...")
+    self:enemyActionStart(id)
+  end
+end
+
+--player开始动作
+function clsSceneBattle:playerActionStart(id)
+  --判断当前player的序号
+  local index=1
+  for i,player in ipairs(GameData.playerTroop.players) do
+    if player.id==id then
+      index=i
+      break
+    end
+  end
+  --显示动作菜单
+  self.menu.x=(index-1)*240
+  self.menu.visibility=true
+end
+
+function clsSceneBattle:menuItemSelected(index)
+  if index==1 then
+    --攻击
+    smLog:info("攻击")
+  elseif index==2 then
+    --技能
+    smLog:info("使用技能")
+  elseif index==3 then
+    --物品
+    smLog:info("使用物品")
+  elseif index==4 then
+    --防御
+    smLog:info("防御")
+  elseif index==5 then
+    --逃跑
+    smLog:info("逃跑")
+  end
+end
+
+
+--enemy开始动作
+function clsSceneBattle:enemyActionStart(id)
+  
 end
 
 -- 退出
