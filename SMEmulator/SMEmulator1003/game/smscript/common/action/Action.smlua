@@ -106,6 +106,13 @@ function Action:newShadeAction(shade,time,type)
   return Action:newTintAction(tint,time,type)
 end
 
+--闪烁动作(TODO BY动作有问题)
+function Action:newBlinkAction()
+  local t1=Action:newShadeAction(2,100,clsAction.TYPE_LINEAR_TO)
+  local t2=Action:newShadeAction(1,100,clsAction.TYPE_LINEAR_TO)
+  return Action:newSequenceAction(1,t1,t2)
+end
+
 --震动动作
 function Action:newShakeAction(range,interval,times,type)
   return clsShakeAction:new(range,interval,times,type)
