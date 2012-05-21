@@ -131,17 +131,15 @@ end
 function clsSceneBattle:onCharacterPick(picker,id)
   if math.floor(id/1000000)==101 then
     --player
-    smLog:info("player:"..id.."开始行动...")
-    self:playerActionStart(id)
+    self:showMenuForPlayer(id)
   else
     --enemy
-    smLog:info("enemy:"..id.."开始行动...")
-    self:enemyActionStart(id)
+    self:doEnemyAction(id)
   end
 end
 
---player开始动作
-function clsSceneBattle:playerActionStart(id)
+--为player显示菜单
+function clsSceneBattle:showItemForPlayer(id)
   --判断当前player的序号
   local index=1
   for i,player in ipairs(GameData.playerTroop.players) do
@@ -150,33 +148,52 @@ function clsSceneBattle:playerActionStart(id)
       break
     end
   end
+  self.curActor=GameData.playerTroop.players[index]
+  smLog:info("player["..self.curActor.name.."]开始行动")
   --显示动作菜单
   self.menu.x=(index-1)*240
   self.menu.visibility=true
 end
 
+--菜单被选中
 function clsSceneBattle:menuItemSelected(index)
+  self.curActionType=index
+  smLog:info("["..self.curActor.name.."]选择了["..self.menuItems[self.curActionType].."]")
   if index==1 then
     --攻击
-    smLog:info("攻击")
   elseif index==2 then
     --技能
-    smLog:info("使用技能")
   elseif index==3 then
     --物品
-    smLog:info("使用物品")
   elseif index==4 then
     --防御
-    smLog:info("防御")
   elseif index==5 then
     --逃跑
-    smLog:info("逃跑")
   end
 end
 
+--player选择目标(如果是攻击则选择敌人，如果是辅助则选择自己)
+function clsSceneBattle:playerSelectTarget()
+end
+
+--player选择技能
+function clsSceneBattle:playerSelectSkill()
+end
+
+--player选择物品
+function clsSceneBattle:playerSelectItem()
+end
+
+--player防御
+function clsSceneBattle:playerDefend()
+end
+
+--player逃跑
+function clsSceneBattle:playerEscape()
+end
 
 --enemy开始动作
-function clsSceneBattle:enemyActionStart(id)
+function clsSceneBattle:doEnemyAction(id)
   
 end
 
