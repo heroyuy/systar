@@ -23,7 +23,6 @@ clsUILayer.scale=1.0						--缩放比
 clsUILayer.rotate=0.0						--旋转角
 clsUILayer.flip=nil							--翻转角{x,y}
 clsUILayer.tint=nil							--相对调色值{sr,sg,sb,tr,tg,tb}
-clsUILayer.absoluteTint=nil					--绝对调色值{sr,sg,sb,tr,tg,tb}
 
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true             	--是否可见
@@ -48,7 +47,6 @@ function clsUILayer:new(x,y,width,height)
   self.anchor={0.5,0.5}
   self.flip={0,0}
   self.tint={1,1,1,0,0,0}
-  self.absoluteTint={1,1,1,0,0,0}
   return self
 end
 
@@ -103,6 +101,7 @@ end
 function clsUILayer:paint(painter)
   local affineTransform=painter:getTransform()
   local composite=painter:getComposite()
+  local tint=painter:getTint()
   --(1)处理alpha
   if self.alpha~=1 then
     local alpha=painter:getAlpha()
@@ -120,11 +119,14 @@ function clsUILayer:paint(painter)
   if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
     painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
+  --(5)处理变色
+  painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
   --绘制自身
   self:paintLayer(painter)
   --绘制子Layer
   self:paintChildren(painter)
   --还原特效变换
+  painter:setTint(tint)
   painter:setComposite(composite)
   painter:setTransform(affineTransform)
 end
@@ -136,31 +138,7 @@ function clsUILayer:paintLayer(painter)
     painter:fillRect(0, 0, self.width, self.height)
   end
   if self.image then
-    --(1)计算绝对调色值，绝对调色值=父绝对调色值与自身相对调色值组合
-    if self.parent then
-      self.absoluteTint[1]=self.parent.absoluteTint[1]*self.tint[1]
-      self.absoluteTint[2]=self.parent.absoluteTint[2]*self.tint[2]
-      self.absoluteTint[3]=self.parent.absoluteTint[3]*self.tint[3]
-      self.absoluteTint[4]=self.parent.absoluteTint[4]+self.tint[4]
-      self.absoluteTint[5]=self.parent.absoluteTint[5]+self.tint[5]
-      self.absoluteTint[6]=self.parent.absoluteTint[6]+self.tint[6]
-    else
-      self.absoluteTint[1]=self.tint[1]
-      self.absoluteTint[2]=self.tint[2]
-      self.absoluteTint[3]=self.tint[3]
-      self.absoluteTint[4]=self.tint[4]
-      self.absoluteTint[5]=self.tint[5]
-      self.absoluteTint[6]=self.tint[6]
-    end
-    --(2)调色渲染
-    if not (self.absoluteTint[1]==1 and self.absoluteTint[2]==1 and self.absoluteTint[3]==1
-       and self.absoluteTint[4]==0 and self.absoluteTint[5]==0 and self.absoluteTint[6]==0) then
-      local rop=painter:tint(self.absoluteTint[1],self.absoluteTint[2],self.absoluteTint[3],
-                       self.absoluteTint[4],self.absoluteTint[5],self.absoluteTint[6])
-      painter:drawImage(self.image, 0, 0, 0,rop)
-    else
-      painter:drawImage(self.image, 0, 0, 0)
-    end
+    painter:drawImage(self.image, 0, 0, 0)
   end
 end
 
