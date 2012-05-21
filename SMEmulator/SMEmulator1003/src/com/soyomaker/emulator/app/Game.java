@@ -47,6 +47,7 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void onLowMemory() {
+		System.gc();
 		luaAdapter.onLowMemory();
 	}
 
@@ -78,8 +79,6 @@ public class Game implements IGame, Runnable {
 				luaAdapter.update();
 				// 重绘界面
 				UIScreen.getInstance().requestRepaint();
-				// 垃圾收集
-				luaAdapter.callLuaGC();
 				t = System.currentTimeMillis() - t;
 				GameInfo gameInfo = GameInfo.getInstance();
 				if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
@@ -88,7 +87,7 @@ public class Game implements IGame, Runnable {
 				} else {
 					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
 					if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
-						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
+						SMLog.getInstance().info("总时间:" + t + " FPS警告:" + gameInfo.getActualFps());
 					}
 				}
 			}

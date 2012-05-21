@@ -139,7 +139,7 @@ function clsSceneBattle:onCharacterPick(picker,id)
 end
 
 --为player显示菜单
-function clsSceneBattle:showItemForPlayer(id)
+function clsSceneBattle:showMenuForPlayer(id)
   --判断当前player的序号
   local index=1
   for i,player in ipairs(GameData.playerTroop.players) do
@@ -149,7 +149,7 @@ function clsSceneBattle:showItemForPlayer(id)
     end
   end
   self.curActor=GameData.playerTroop.players[index]
-  smLog:info("player["..self.curActor.name.."]开始行动")
+  smLog:info("player["..self.curActor.name.."]选择动作")
   --显示动作菜单
   self.menu.x=(index-1)*240
   self.menu.visibility=true
@@ -161,40 +161,55 @@ function clsSceneBattle:menuItemSelected(index)
   smLog:info("["..self.curActor.name.."]选择了["..self.menuItems[self.curActionType].."]")
   if index==1 then
     --攻击
+    self:selectedEnemy()
   elseif index==2 then
     --技能
+    self:selectedSkill()
   elseif index==3 then
     --物品
+    self:selectedItem()
   elseif index==4 then
     --防御
+    self:defend()
   elseif index==5 then
     --逃跑
+    self:escape()
   end
+  self.menu.visibility=false
 end
 
---player选择目标(如果是攻击则选择敌人，如果是辅助则选择自己)
-function clsSceneBattle:playerSelectTarget()
+--player选择目标攻击目标(单体攻击敌人时)
+function clsSceneBattle:selectedEnemy()
+  
 end
 
 --player选择技能
-function clsSceneBattle:playerSelectSkill()
+function clsSceneBattle:selectSkill()
 end
 
 --player选择物品
-function clsSceneBattle:playerSelectItem()
+function clsSceneBattle:selectItem()
 end
 
 --player防御
-function clsSceneBattle:playerDefend()
+function clsSceneBattle:defend()
 end
 
 --player逃跑
-function clsSceneBattle:playerEscape()
+function clsSceneBattle:escape()
+  smLog:info("逃跑失败")
+  self.picker.pause=false
 end
 
 --enemy开始动作
 function clsSceneBattle:doEnemyAction(id)
-  
+  for i,enemy in ipairs(GameData.battle.enemys) do
+    if enemy.id==id then
+      self.curActor=enemy
+      break
+    end
+  end
+  smLog:info("["..self.curActor.name.."]开始动作")
 end
 
 -- 退出

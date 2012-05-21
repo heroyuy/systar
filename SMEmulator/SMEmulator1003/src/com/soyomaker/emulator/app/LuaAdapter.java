@@ -83,16 +83,6 @@ public class LuaAdapter {
 		}
 	}
 
-	public void callLuaGC() {
-		luaState.getGlobal("collectgarbage");
-		try {
-			luaState.pushObjectValue("collect");
-		} catch (LuaException e) {
-			e.printStackTrace();
-		}
-		luaState.call(1, 0);
-	}
-
 	public float getLuaMemory() {
 		luaState.getGlobal("collectgarbage");
 		try {
