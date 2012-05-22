@@ -22,8 +22,9 @@ end
 
 --设置目标
 function clsMultipleAction:onReset()
-  for i,v in ipairs(self.actionList) do
-    v:setTarget(self.target)
+  for i,action in ipairs(self.actionList) do
+    action.target=self.target
+    action:onReset()
   end
   self.finished=false
 end

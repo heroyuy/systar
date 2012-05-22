@@ -141,8 +141,7 @@ ActionPlayer.actionList={}						--动作列表
 
 --播放动作
 function ActionPlayer:run(action)				
-  self.actionList[tostring(action)]=action		--加载播放列表
-  action.finished=false							--标志动作未完成
+  self.actionList[tostring(action)]=action		--加入播放列表
   action:onReset()								--重置动作
 end
 
@@ -150,9 +149,7 @@ end
 function ActionPlayer:update()
   for k,action in pairs(self.actionList) do
     if action.finished then
-      action:onEnd()							--动作结束
-      self.actionList[k]=nil					--移除动作
-      smLog:info("移除动作")
+      self:endAction(action)
     else
       action:onUpdate()
     end
@@ -161,24 +158,45 @@ end
 
 --停止动作
 function ActionPlayer:stopAction(action)
+  self.actionList[tostring(action)]=nil					--移除动作
+  smLog:info("移除动作")
 end
 
 --停止目标的所有动作
 function ActionPlayer:stopAllActionForTarget(target)
+  for k,action in pairs(self.actionList) do
+    if action.target==target then
+      self:stopAction(action)
+    end
+  end
 end
 
 --停止所有动作
 function ActionPlayer:stopAllAction(action)
+  for k,action in pairs(self.actionList) do
+    self:stopAction(action)
+  end
 end
 
 --结束动作
 function ActionPlayer:endAction(action)
+  action:onEnd()							--动作结束
+  self.actionList[tostring(action)]=nil					--移除动作
+  smLog:info("移除动作")
 end
 
 --结束目标的所有动作
 function ActionPlayer:endAllActionForTarget(target)
+  for k,action in pairs(self.actionList) do
+    if action.target==target then
+      self:endAction(action)
+    end
+  end
 end
 
 --结束所有动作
 function ActionPlayer:endAllAction(action)
+  for k,action in pairs(self.actionList) do
+    self:endAction(action)
+  end
 end

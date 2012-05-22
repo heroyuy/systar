@@ -26,8 +26,9 @@ end
 
 --设置目标
 function clsSequenceAction:onReset()
-  for i,v in ipairs(self.actionList) do
-    v:setTarget(self.target)
+  for i,action in ipairs(self.actionList) do
+    action.target=self.target
+    action:onReset()
   end
   if self.times<0 then
     self.remnantTimes=99999999
@@ -50,8 +51,8 @@ function clsSequenceAction:onUpdate()
     else
       --循环未结束，从头开始执行动作
       --重置所有动作
-      for i,v in ipairs(self.actionList) do
-        v:setTarget(self.target)
+      for i,action in ipairs(self.actionList) do
+        action:onReset()
       end
     end
   end
