@@ -43,7 +43,7 @@ function clsUILayer:new(x,y,width,height)
   self.y=y
   self.width=width
   self.height=height
-  self.children=clsList:new()
+  self.children={}
   self.anchor={0.5,0.5}
   self.flip={0,0}
   self.tint={1,1,1,0,0,0}
@@ -52,7 +52,8 @@ end
 
 --添加子Layer
 function clsUILayer:addChild(layer)
-  self.children:add(layer)
+  layer:removeFromParent()
+  table.insert(self.children,layer)
   layer.parent=self
 end
 
@@ -62,39 +63,55 @@ function clsUILayer:sortChildren()
 end
 
 --根据序号获取子layer
-function clsUILayer:getChild(index)
-  return self.children:get(index)
+function clsUILayer:getChildAt(index)
+  return self.children[index]
 end
 
 --根据tag获取子layer
 function clsUILayer:childWithTag(tag)
   local child=nil
-  for _,v in ipairs(self.children) do
-    if v.tag==tag then
-      child=v
+  for i,layer in ipairs(self.children) do
+    if layer.tag==tag then
+      child=layer
+      break
     end
   end
   return child
 end
 
---移除子Layer
-function clsUILayer:remove(index)
-  self:getChild(index).parent=nil
-  self.children:remove(index)
+--移除指定位置的子Layer(所有移除方法均依赖此方法)
+function clsUILayer:removeChildAt(index)
+  local layer=self:getChildAt(index)
+  layer:clear()							--清理待移除的层
+  layer:stopAllAction()					--停止层上的所有动作
+  layer.parent=nil						--移除父层引用
+  table.remove(self.children,index)		--移除列表
 end
 
 --移除子Layer
 function clsUILayer:removeChild(layer)
-  layer.parent=nil
-  self.children:removeObject(layer)
+  local index=0
+  for i,child in ipairs(self.children) do
+    if child==layer then
+      index=i
+      break
+    end
+  end
+  self:removeChildAt(index)
+end
+
+--从父层中移除自己
+function clsUILayer:removeFromParent()
+  if self.parent then
+    self.parent:removeChild(self)
+  end
 end
 
 --移除所有子Layer
 function clsUILayer:clear()
-  for i=1,self.children:size() do
-    self:getChild(i).parent=nil
+  for i=table.getn(self.children),1,-1 do
+    self:removeChildAt(i)
   end
-  self.children:clear()
 end
 
 --绘制Layer（lua层不应该调用此方法）
@@ -205,16 +222,40 @@ end
 
 --运行动作
 function clsUILayer:runAction(action)
-  action:setTarget(self)
+  action.target=self
   ActionPlayer:run(action)
+end
+
+--停止动作
+function clsUILayer:stopAction(action)
+  if action.target==self then
+    ActionPlayer:stopAction(action)
+  end
+end
+
+--停止所有动作
+function clsUILayer:stopAllAction()
+  ActionPlayer:stopAllActionForTarget(self)
+end
+
+--结束动作
+function clsUILayer:endAction(action)
+  if action.target==self then
+    ActionPlayer:stopAction(action)
+  end
+end
+
+--结束所有动作
+function clsUILayer:endAllAction()
+  ActionPlayer:endAllActionForTarget(self)
 end
 
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsUILayer:searchFocusLayer(x,y)
   local focus = nil
   --从上到下依次探查
-  for i=self.children:size(),1,-1 do
-    local layer=self.children:get(i)
+  for i=table.getn(self.children),1,-1 do
+    local layer=self:getChildAt(i)
     if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
       local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
