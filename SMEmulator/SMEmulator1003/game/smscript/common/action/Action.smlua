@@ -50,7 +50,7 @@ end
   date:2012/05/11
 --]]
 
-require("clsPropertyAction")
+require("clsGradientAction")
 require("clsShakeAction")
 require("clsMultipleAction")
 require("clsSequenceAction")
@@ -59,14 +59,14 @@ Action={}
 
 --淡入淡出动作
 function Action:newFadeAction(alpha,time,type)
-  return clsPropertyAction:new(alpha,time,type,"alpha")
+  return clsGradientAction:new(alpha,time,type,"alpha")
 end
 
 --翻转动作
 function Action:newFlipAction(flip,time,type)
   local res={}
   for i=1,2 do
-    table.insert(res,clsPropertyAction:new(flip[i],time,type,"flip",i))
+    table.insert(res,clsGradientAction:new(flip[i],time,type,"flip",i))
   end
   return Action:newMultipleAction(unpack(res))
 end
@@ -76,26 +76,26 @@ function Action:newMoveAction(location,time,type)
   local str={"x","y"}
   local res={}
   for i=1,2 do
-    table.insert(res,clsPropertyAction:new(location[i],time,type,str[i]))
+    table.insert(res,clsGradientAction:new(location[i],time,type,str[i]))
   end
   return Action:newMultipleAction(unpack(res))
 end
 
 --旋转动作
 function Action:newRotateAction(rotate,time,type)
-  return clsPropertyAction:new(rotate,time,type,"rotate")
+  return clsGradientAction:new(rotate,time,type,"rotate")
 end
 
 --缩放动作
 function Action:newScaleAction(scale,time,type)
-  return clsPropertyAction:new(scale,time,type,"scale")
+  return clsGradientAction:new(scale,time,type,"scale")
 end
 
 --变色动作
 function Action:newTintAction(tint,time,type)
   local res={}
   for i=1,6 do
-    table.insert(res,clsPropertyAction:new(tint[i],time,type,"tint",i))
+    table.insert(res,clsGradientAction:new(tint[i],time,type,"tint",i))
   end
   return Action:newMultipleAction(unpack(res))
 end

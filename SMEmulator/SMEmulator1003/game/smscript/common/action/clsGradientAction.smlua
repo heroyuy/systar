@@ -1,32 +1,32 @@
 --[[
-  description:属性动作。
+  description:渐变动作。
   author:wp_g4
   date:2012/05/09
 --]]
 
 --结构定义
-clsPropertyAction={}
-setmetatable(clsPropertyAction,clsAction)
-clsPropertyAction.__index = clsPropertyAction
+clsGradientAction={}
+setmetatable(clsGradientAction,clsAction)
+clsGradientAction.__index = clsGradientAction
 
 --字段定义
-clsPropertyAction.propertyTable=nil			--参数 属性所属的table 大多数情况此值等于target 这取决于构造中的可变参数
-clsPropertyAction.propertyKey=nil			--参数 属性的key string或number
-clsPropertyAction.value=nil					--参数 值
-clsPropertyAction.time=nil					--参数 时间
-clsPropertyAction.type=nil  				--参数 类型
-clsPropertyAction.arg=nil					--参数中的可变参数列表
+clsGradientAction.propertyTable=nil			--参数 属性所属的table 大多数情况此值等于target 这取决于构造中的可变参数
+clsGradientAction.propertyKey=nil			--参数 属性的key string或number
+clsGradientAction.value=nil					--参数 值
+clsGradientAction.time=nil					--参数 时间
+clsGradientAction.type=nil  				--参数 类型
+clsGradientAction.arg=nil					--参数中的可变参数列表
 
-clsPropertyAction.startValue=nil			--属性值起点
-clsPropertyAction.endValue=nil				--属性值终点
-clsPropertyAction.t0=nil					--动作开始时间
-clsPropertyAction.v0=nil					--动作开始时速度
-clsPropertyAction.a=nil						--动作加速度
+clsGradientAction.startValue=nil			--属性值起点
+clsGradientAction.endValue=nil				--属性值终点
+clsGradientAction.t0=nil					--动作开始时间
+clsGradientAction.v0=nil					--动作开始时速度
+clsGradientAction.a=nil						--动作加速度
 
 -- 构造
-function clsPropertyAction:new(value,time,type,...)
+function clsGradientAction:new(value,time,type,...)
   local self=clsAction:new()
-  setmetatable(self,clsPropertyAction)
+  setmetatable(self,clsGradientAction)
   self.value=value
   self.time=time
   self.type=type
@@ -35,7 +35,7 @@ function clsPropertyAction:new(value,time,type,...)
 end
 
 --设置目标
-function clsPropertyAction:reset()
+function clsGradientAction:reset()
   if self.type<0 or self.type>=clsAction.TYPE_MAX then
     --未知的属性类型
     smLog:info("未知的属性类型")
@@ -82,7 +82,7 @@ function clsPropertyAction:reset()
 end
 
 --更新
-function clsPropertyAction:update()
+function clsGradientAction:update()
   --更新的属性
   if self.t0==nil then
     --尚未开始属性
