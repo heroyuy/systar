@@ -50,12 +50,19 @@ end
   date:2012/05/11
 --]]
 
+require("clsCallbackAction")
 require("clsGradientAction")
 require("clsShakeAction")
 require("clsMultipleAction")
 require("clsSequenceAction")
 
 Action={}
+
+--回调动作
+function Action:newCallbackAction(delegate,callback,...)
+  return clsCallbackAction:new(delegate,callback,unpack(arg))
+end
+
 
 --淡入淡出动作
 function Action:newFadeAction(alpha,time,type)
