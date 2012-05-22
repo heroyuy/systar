@@ -25,7 +25,7 @@ function clsSequenceAction:new(times,...)
 end
 
 --设置目标
-function clsSequenceAction:reset()
+function clsSequenceAction:onReset()
   for i,v in ipairs(self.actionList) do
     v:setTarget(self.target)
   end
@@ -34,19 +34,19 @@ function clsSequenceAction:reset()
   else
     self.remnantTimes=self.times
   end
-  self.dead=false
+  self.finished=false
 end
 
 --更新
 function clsSequenceAction:update()
   --(1)检查动作是否结束,标志是动作列表中的最后一个动作结束
-  local dead=self.actionList[table.getn(self.actionList)].dead
-  if dead then
+  local finished=self.actionList[table.getn(self.actionList)].finished
+  if finished then
     --最后一个动作结束则判断是循环次数
     self.remnantTimes=self.remnantTimes-1
     if self.remnantTimes<=0 then
       --循环结束
-      self.dead=dead
+      self.finished=finished
     else
       --循环未结束，从头开始执行动作
       --重置所有动作
@@ -55,13 +55,13 @@ function clsSequenceAction:update()
       end
     end
   end
-  if self.dead then
+  if self.finished then
     smLog:info("序列动作结束")
     return
   end
   --(2)确定当前应该执行的动作
   for i,v in ipairs(self.actionList) do
-    if not v.dead then
+    if not v.finished then
       v:update()
       break
     end

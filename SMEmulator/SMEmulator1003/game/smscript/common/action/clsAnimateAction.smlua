@@ -1,0 +1,37 @@
+--[[
+  description:动画动作
+  author:wp_g4
+  date:2012/05/08
+--]]
+
+--结构定义
+clsAnimateAction={}
+setmetatable(clsAnimateAction,clsAction)
+clsAnimateAction.__index = clsAnimateAction
+
+--字段定义
+clsAnimateAction.images=nil				--动画图片列表
+clsAnimateAction.interval=nil			--动画间隔
+
+clsAnimateAction.startImage=nil			--初始图片
+clsAnimateAction.lastUpdateTime=nil		--上次更新时间
+
+-- 构造
+function clsAnimateAction:new(images,interval)
+  local self=clsAction:new()
+  setmetatable(self,clsAnimateAction)
+  self.images=images
+  self.interval=interval
+  return self
+end
+
+--设置目标
+function clsAnimateAction:onReset()
+  self.startImage=self.target.image
+  self.finished=false
+end
+
+--更新
+function clsAnimateAction:update()
+  
+end

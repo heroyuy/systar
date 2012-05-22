@@ -38,7 +38,7 @@ function clsShakeAction:new(range,interval,times,type)
 end
 
 --设置目标
-function clsShakeAction:reset()
+function clsShakeAction:onReset()
   self.startX=self.target.x
   self.startY=self.target.y
   if self.times<0 then
@@ -47,7 +47,29 @@ function clsShakeAction:reset()
     self.remnantTimes=self.times
   end
   self.lastShakeTime=nil
-  self.dead=false
+  self.finished=false
+end
+
+--更新
+function clsShakeAction:update()
+  if self.remnantTimes<=0 then
+    self.finished=true
+    smLog:info("震动结束")
+    --还原target坐标
+    self.target.x,self.target.y=self.startX,self.startY
+    return
+  end
+  local curTime=Game:getTime()
+  --动作尚未执行则将self.lastShakeTime设置为-self.interval以保证立即执行
+  if self.lastShakeTime==nil then
+    self.lastShakeTime=-self.interval
+  end
+  local delta=curTime-self.lastShakeTime
+  if delta>=self.interval then
+    self:modifyLocation()
+    self.remnantTimes=self.remnantTimes-1
+    self.lastShakeTime=curTime
+  end
 end
 
 --修改坐标
@@ -77,28 +99,6 @@ function clsShakeAction:modifyLocation()
   else
     --未知的震动类型
     smLog:info("未知的震动类型")
-    self.dead=true
-  end
-end
-
---更新
-function clsShakeAction:update()
-  if self.remnantTimes<=0 then
-    self.dead=true
-    smLog:info("震动结束")
-    --还原target坐标
-    self.target.x,self.target.y=self.startX,self.startY
-    return
-  end
-  local curTime=Game:getTime()
-  --动作尚未执行则将self.lastShakeTime设置为-self.interval以保证立即执行
-  if self.lastShakeTime==nil then
-    self.lastShakeTime=-self.interval
-  end
-  local delta=curTime-self.lastShakeTime
-  if delta>=self.interval then
-    self:modifyLocation()
-    self.remnantTimes=self.remnantTimes-1
-    self.lastShakeTime=curTime
+    self.finished=true
   end
 end

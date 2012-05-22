@@ -18,7 +18,7 @@ clsAction.TYPE_DECELERATE_BY=5		--类型：减速、追加
 clsAction.TYPE_MAX=6				--类型编号最大值
 
 clsAction.target=nil			--动作的目标
-clsAction.dead=false			--动作是否结束
+clsAction.finished=false			--动作是否结束
 
 -- 构造
 function clsAction:new()
@@ -30,11 +30,11 @@ end
 --设置目标
 function clsAction:setTarget(target)
   self.target=target
-  self:reset()
+  self:onReset()
 end
 
 --重置动作
-function clsAction:reset()
+function clsAction:onReset()
   --根据参数重置动作:子类实现
 end
 
@@ -142,13 +142,13 @@ ActionPlayer.actionList={}					--动作列表
 --播放动作
 function ActionPlayer:run(action)
   self.actionList[tostring(action)]=action
-  action.dead=false
+  action.finished=false
 end
 
 --更新
 function ActionPlayer:update()
   for k,action in pairs(self.actionList) do
-    if action.dead then
+    if action.finished then
       self.actionList[k]=nil
       smLog:info("移除动作")
     else

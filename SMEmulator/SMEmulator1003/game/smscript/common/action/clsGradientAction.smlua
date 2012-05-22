@@ -35,11 +35,11 @@ function clsGradientAction:new(value,time,type,...)
 end
 
 --设置目标
-function clsGradientAction:reset()
+function clsGradientAction:onReset()
   if self.type<0 or self.type>=clsAction.TYPE_MAX then
     --未知的属性类型
     smLog:info("未知的属性类型")
-    self.dead=true
+    self.finished=true
   else
     --从可变参数中分离出propertyTable和propertyKey
     local n=table.getn(self.arg)
@@ -77,7 +77,7 @@ function clsGradientAction:reset()
     --(4)加速度
     self.a=2*(self.endValue-self.startValue-self.v0*self.time)/(self.time*self.time)
     self.t0=nil
-    self.dead=false
+    self.finished=false
   end
 end
 
@@ -107,7 +107,7 @@ function clsGradientAction:update()
     end
   end
   if self.propertyTable[self.propertyKey]==self.endValue then
-    self.dead=true
+    self.finished=true
     smLog:info("动作结束")
   end
 end
