@@ -16,6 +16,9 @@ clsIntervalAction.values=nil				--参数 值表
 clsIntervalAction.interval=nil				--参数 间隔
 clsIntervalAction.arg=nil					--参数中的可变参数列表
 
+clsIntervalAction.lastUpdateTime=nil		--上次更新时间
+clsIntervalAction.index=nil					--当前值序号
+
 -- 构造
 function clsIntervalAction:new(values,interval,...)
   local self=clsAction:new()
@@ -39,37 +42,25 @@ function clsIntervalAction:onReset()
       self.propertyTable=self.propertyTable[v]
     end
   end
-  
+  self.lastUpdateTime=nil
+  self.index=1
   self.finished=false
 end
 
 --更新
 function clsIntervalAction:onUpdate()
-  --更新的属性
-  if self.t0==nil then
-    --尚未开始属性
-    self.t0=Game:getinterval()
-  end
-  local delta=Game:getinterval()-self.t0
-  local value=self.startValue+self.v0*delta+1/2*self.a*delta*delta
-  local v=self.v0+self.a*delta
-  if self.endValue-self.startValue>=0 then
-    --增加
-    if value>=self.endValue then
-      self.propertyTable[self.propertyKey]=self.endValue
-    else
-      self.propertyTable[self.propertyKey]=value
-    end
-  else
-    --减少
-    if value<=self.endValue then
-      self.propertyTable[self.propertyKey]=self.endValue
-    else
-      self.propertyTable[self.propertyKey]=value
-    end
-  end
-  if self.propertyTable[self.propertyKey]==self.endValue then
+  if self.index>table.getn(self.values) then
     self.finished=true
-    smLog:info("动作结束")
+    return
+  end
+  local curTime=Game:getTime()
+  if self.lastUpdateTime==nil then
+    self.lastUpdateTime=curTime
+  end
+  local delta=curTime-self.lastUpdateTime
+  if delta>=self.interval then
+    self.propertyTable[self.propertyKey]=self.values[self.index]
+    self.lastUpdateTime=curTime
+    self.index=self.index+1
   end
 end

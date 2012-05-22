@@ -52,6 +52,7 @@ end
 
 require("clsCallbackAction")
 require("clsGradientAction")
+require("clsIntervalAction")
 require("clsShakeAction")
 require("clsMultipleAction")
 require("clsSequenceAction")
@@ -62,7 +63,6 @@ Action={}
 function Action:newCallbackAction(delegate,callback,...)
   return clsCallbackAction:new(delegate,callback,unpack(arg))
 end
-
 
 --淡入淡出动作
 function Action:newFadeAction(alpha,time,type)
@@ -123,6 +123,11 @@ end
 --震动动作
 function Action:newShakeAction(range,interval,times,type)
   return clsShakeAction:new(range,interval,times,type)
+end
+
+--动画动作
+function Action:newAnimateAction(images,interval)
+  return clsIntervalAction:new(images,interval,"image")
 end
 
 --复合动作
