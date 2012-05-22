@@ -39,7 +39,7 @@ function clsAction:onReset()
 end
 
 --更新
-function clsAction:update()
+function clsAction:onUpdate()
   --根据具体action更新target的属性:子类实现
 end
 
@@ -152,7 +152,7 @@ function ActionPlayer:update()
       self.actionList[k]=nil
       smLog:info("移除动作")
     else
-      action:update()
+      action:onUpdate()
     end
   end
 end

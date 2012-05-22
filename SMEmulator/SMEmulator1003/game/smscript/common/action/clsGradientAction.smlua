@@ -82,7 +82,7 @@ function clsGradientAction:onReset()
 end
 
 --更新
-function clsGradientAction:update()
+function clsGradientAction:onUpdate()
   --更新的属性
   if self.t0==nil then
     --尚未开始属性

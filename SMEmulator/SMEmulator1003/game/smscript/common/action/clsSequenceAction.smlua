@@ -38,7 +38,7 @@ function clsSequenceAction:onReset()
 end
 
 --更新
-function clsSequenceAction:update()
+function clsSequenceAction:onUpdate()
   --(1)检查动作是否结束,标志是动作列表中的最后一个动作结束
   local finished=self.actionList[table.getn(self.actionList)].finished
   if finished then
@@ -62,7 +62,7 @@ function clsSequenceAction:update()
   --(2)确定当前应该执行的动作
   for i,v in ipairs(self.actionList) do
     if not v.finished then
-      v:update()
+      v:onUpdate()
       break
     end
   end

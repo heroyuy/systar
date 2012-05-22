@@ -32,6 +32,6 @@ function clsAnimateAction:onReset()
 end
 
 --更新
-function clsAnimateAction:update()
+function clsAnimateAction:onUpdate()
   
 end

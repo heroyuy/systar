@@ -51,7 +51,7 @@ function clsShakeAction:onReset()
 end
 
 --更新
-function clsShakeAction:update()
+function clsShakeAction:onUpdate()
   if self.remnantTimes<=0 then
     self.finished=true
     smLog:info("震动结束")
