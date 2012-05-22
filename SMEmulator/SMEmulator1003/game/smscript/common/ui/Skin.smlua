@@ -7,6 +7,7 @@ Skin.arrow={}
 Skin.selectedBg={}
 Skin.cursor={}
 Skin.colors={}
+Skin.cursorAnimateAction=nil
 
 function Skin:init(skinPath)
   local img=Image:getImage(skinPath)
@@ -41,6 +42,8 @@ function Skin:init(skinPath)
   self.cursor[2]=img:clip(112,64,16,16)  --右上
   self.cursor[3]=img:clip(96,80,16,16)   --左下
   self.cursor[4]=img:clip(112,80,16,16)   --右下
+  local animate=Action:newAnimateAction(self.cursor,100)
+  self.cursorAnimateAction=Action:newSequenceAction(-1,animate)
   
   --字色，先行后列
   for i=1,4 do

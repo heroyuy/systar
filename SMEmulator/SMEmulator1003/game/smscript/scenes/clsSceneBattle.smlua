@@ -21,6 +21,7 @@ clsSceneBattle.curActor=nil					--当前行动者
 clsSceneBattle.curActionType=nil			--当前动作
 clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
 clsSceneBattle.curItem=nil					--当前物品(curActionType等于ACTION_TYPE_ITEM时有效)
+clsSceneBattle.curTarget=nil				--当前行动目标
 
 clsSceneBattle.bgLayer=nil					--背景层
 clsSceneBattle.spriteLayer=nil   			--精灵层
@@ -28,7 +29,7 @@ clsSceneBattle.playerInfoLayer=nil			--玩家信息层
 clsSceneBattle.enemyInfoLayer=nil			--敌人信息层
 clsSceneBattle.picker=nil					--角色选择器
 clsSceneBattle.menu=nil						--菜单
-
+clsSceneBattle.cursor=nil					--箭头
 
 
 --构造器
@@ -64,6 +65,11 @@ function clsSceneBattle:new()
   self.menu:refresh()
   self.menu.visibility=false
   GameLayer:addChildToScene(self.menu)
+  --光标
+  self.cursor=clsUILayer:new(0,0,16,16)
+  self.cursor.visibility=false
+  self.cursor.anchor={0.5,1}
+  self.spriteLayer:addChild(self.cursor)
   return self
 end
 
@@ -180,7 +186,9 @@ end
 
 --player选择目标攻击目标(单体攻击敌人时)
 function clsSceneBattle:selectedEnemy()
-  
+  --当前目标默认为敌人队伍中的第一个目标
+  self.curTarget=GameData.battle.enemys[1]
+  self:showCursor()
 end
 
 --player选择技能
@@ -210,6 +218,24 @@ function clsSceneBattle:doEnemyAction(id)
     end
   end
   smLog:info("["..self.curActor.name.."]开始动作")
+end
+
+--显示光标在当前目标上
+function clsSceneBattle:showCursor()
+  --取消精灵层所有精灵的动作
+  for i,child in ipairs(self.spriteLayer.children) do
+    child:stopAllAction()
+  end
+  --取当前目标对应的精灵
+  local sprite=self.spriteLayer:childWithTag(self.curTarget.id)
+  --计算sprite顶部中间的坐标
+  local x,y=sprite.x-sprite.anchor[1]*sprite.width+sprite.width/2,sprite.y-sprite.anchor[2]*sprite.height
+  self.cursor.x,self.cursor.y=x,y
+  self.cursor.visibility=true
+  self.cursor:runAction(Skin.cursorAnimateAction)
+  sprite:stopAllAction()
+  local s=Action:newSequenceAction(-1,Action:newBlinkAction())
+  sprite:runAction(s)
 end
 
 -- 退出
