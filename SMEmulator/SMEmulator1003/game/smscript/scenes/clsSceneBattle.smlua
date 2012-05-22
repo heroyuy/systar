@@ -10,7 +10,7 @@ setmetatable(clsSceneBattle,clsScene)
 clsSceneBattle.__index = clsSceneBattle
 
 --字段
-clsSceneBattle.ACTION_TYPE_ATTAC=1			--动作:攻击
+clsSceneBattle.ACTION_TYPE_ATTACK=1			--动作:攻击
 clsSceneBattle.ACTION_TYPE_SKILL=2			--动作:技能
 clsSceneBattle.ACTION_TYPE_ITEM=3			--动作:物品
 clsSceneBattle.ACTION_TYPE_DEFEND=4			--动作:防御
@@ -85,6 +85,7 @@ function clsSceneBattle:onStart()
     enemySprite.anchor={0.5,1}
     enemySprite.tag=enemy.id
     enemySprite.image=enemy.battlerImage
+    enemySprite.delegate=self
     self.spriteLayer:addChild(enemySprite)
   end
   --初始化敌人队伍信息面板
@@ -102,6 +103,7 @@ function clsSceneBattle:onStart()
     playerSprite.anchor={0.5,1}
     playerSprite.tag=player.id
     playerSprite.image=player.battlerImage
+    playerSprite.delegate=self
     self.spriteLayer:addChild(playerSprite)
   end
   --初始化玩家队伍信息面板
@@ -236,6 +238,28 @@ function clsSceneBattle:showCursor()
   sprite:stopAllAction()
   local s=Action:newSequenceAction(-1,Action:newBlinkAction())
   sprite:runAction(s)
+end
+
+--回调:精灵被点击
+function clsSceneBattle:layerTapped(layer,event)
+  if event.type==UIConst.eventType.DOWN then
+    local targetType=-1   --0是player 1是敌人
+    if math.floor(layer.tag/1000000)== 101
+      targetType=0
+    else
+      targetType=1
+    end
+    --根据curActor和curActionType等判断动作
+    if math.floor(self.curActor.id/1000000)== 101 then
+      --玩家在行动
+      if self.curActionType==clsSceneBattle.ACTION_TYPE_ATTACK then
+        --普通攻击
+        if targetType==1 then
+          
+        end
+      end
+    end
+  end
 end
 
 -- 退出

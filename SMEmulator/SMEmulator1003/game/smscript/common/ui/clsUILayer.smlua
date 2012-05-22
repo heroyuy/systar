@@ -213,7 +213,7 @@ end
 
 --处理触屏事件（lua层不应该调用此方法）
 function clsUILayer:onTouch(event)
-  callFunction(self.delegate,self.callback,self.event)
+  callFunction(self.delegate,self.callback,self,self.event)
 end
 
 --更新层
