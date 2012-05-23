@@ -26,7 +26,6 @@ clsSceneBattle.curTarget=nil				--当前行动目标
 clsSceneBattle.bgLayer=nil					--背景层
 clsSceneBattle.spriteLayer=nil   			--精灵层
 clsSceneBattle.playerInfoLayer=nil			--玩家信息层
-clsSceneBattle.enemyInfoLayer=nil			--敌人信息层
 clsSceneBattle.picker=nil					--角色选择器
 clsSceneBattle.menu=nil						--菜单
 clsSceneBattle.cursor=nil					--箭头
@@ -51,11 +50,6 @@ function clsSceneBattle:new()
   self.playerInfoLayer.anchor={0.5,1}
   self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
   GameLayer:addChildToScene(self.playerInfoLayer)
-  --敌人信息层
-  self.enemyInfoLayer=clsUILayer:new(screenWidth/2,0,screenWidth,64)
-  self.enemyInfoLayer.anchor={0.5,0}
-  self.enemyInfoLayer.image=Skin:createBody(screenWidth,64)
-  GameLayer:addChildToScene(self.enemyInfoLayer)
   --菜单
   self.menu=clsUIMenu:new(0,screenHeight-160,120,170)
   self.menu.anchor={0,1}
@@ -87,14 +81,6 @@ function clsSceneBattle:onStart()
     enemySprite.image=enemy.battlerImage
     enemySprite.delegate=self
     self.spriteLayer:addChild(enemySprite)
-  end
-  --初始化敌人队伍信息面板
-  local enemyNum=table.getn(GameData.battle.enemys)
-  local width,height=screenWidth/6,64
-  for i,enemy in ipairs(GameData.battle.enemys) do
-    local infoPane=clsEnemyInfo:new((i-1)*width,self.enemyInfoLayer.height/2,width,height,enemy)
-    infoPane.anchor={0,0.5}
-    self.enemyInfoLayer:addChild(infoPane)
   end
   --初始化玩家队伍
   for i,player in ipairs(GameData.playerTroop.players) do
@@ -244,7 +230,7 @@ end
 function clsSceneBattle:layerTapped(layer,event)
   if event.type==UIConst.eventType.DOWN then
     local targetType=-1   --0是player 1是敌人
-    if math.floor(layer.tag/1000000)== 101
+    if math.floor(layer.tag/1000000)== 101 then
       targetType=0
     else
       targetType=1

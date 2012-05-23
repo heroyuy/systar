@@ -52,7 +52,6 @@ require("clsTiled")
 require("clsOption")
 require("clsDialog")
 require("clsPlayerInfo")
-require("clsEnemyInfo")
 require("clsPicker")
 
 --scenes
