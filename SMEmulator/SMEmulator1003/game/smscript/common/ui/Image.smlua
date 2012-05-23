@@ -61,6 +61,18 @@ function Image:releaseImage(file)
   end
 end
 
+function Image:split(image,row,col)
+  local w,h=image:getWidth()/col,image:getHeight()/row
+  local images={}
+  for i=1,row do
+    images[i]={}
+    for j=1,col do
+      images[i][j]=image:clip((j-1)*w,(i-1)*h,w,h)
+    end
+  end
+  return images
+end
+
 function Image:clean()
   --TODO 清理缓存（可在内存警报时调用）
 end

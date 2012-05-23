@@ -64,10 +64,6 @@ function GameData:newGame()
     player.battlerImageName=playerDict.battlerImg
     if player.battlerImageName then
       player.battlerImage=Image:getImage(player.battlerImageName)
-    else
-      --没有设置战斗图则用行走图作为战斗图
-      local w,h=player.charImage:getWidth(),player.charImage:getHeight()
-      player.battlerImage=player.charImage:clip(0,h/4,w/4,h/4)
     end
     player.vocationId=playerDict.vocationIndex
     player.level=playerDict.startLev

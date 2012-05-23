@@ -17,6 +17,7 @@ clsSceneBattle.ACTION_TYPE_DEFEND=4			--动作:防御
 clsSceneBattle.ACTION_TYPE_ESCAPE=5			--动作:逃跑
 
 clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
+clsSceneBattle.animates={}					--动画效果表
 clsSceneBattle.curActor=nil					--当前行动者
 clsSceneBattle.curActionType=nil			--当前动作
 clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
@@ -75,22 +76,43 @@ function clsSceneBattle:onStart()
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
   for i,enemy in ipairs(GameData.battle.enemys) do
-    local enemySprite=clsUILayer:new(enemy.x,enemy.y,enemy.battlerImage:getWidth(),enemy.battlerImage:getHeight())
+    --加载动作表
+    local w,h=enemy.battlerImage:getWidth(),enemy.battlerImage:getHeight()
+    local row,col=4,3
+    local images=Image:split(enemy.battlerImage,row,col)
+    for i=1,row do
+      local animate=Action:newAnimateAction(images[i],100)
+      local s=Action:newSequenceAction(-1,animate)
+      self.animates[enemy.id.."_"..i]=s
+    end
+    --实例化层
+    local enemySprite=clsUILayer:new(enemy.x,enemy.y,w/col,h/row)
     enemySprite.anchor={0.5,1}
     enemySprite.tag=enemy.id
-    enemySprite.image=enemy.battlerImage
+    enemySprite.image=images[1][1]
     enemySprite.delegate=self
     self.spriteLayer:addChild(enemySprite)
+    enemySprite:runAction(self.animates[enemy.id.."_"..1])
   end
   --初始化玩家队伍
   for i,player in ipairs(GameData.playerTroop.players) do
-    local x,y=768,224+64*i
-    local playerSprite=clsUILayer:new(x,y,player.battlerImage:getWidth(),player.battlerImage:getHeight())
+    --加载动作表
+    local w,h=player.battlerImage:getWidth(),player.battlerImage:getHeight()
+    local row,col=4,3
+    local images=Image:split(player.battlerImage,row,col)
+    for i=1,row do
+      local animate=Action:newAnimateAction(images[i],100)
+      local s=Action:newSequenceAction(-1,animate)
+      self.animates[player.id.."_"..i]=s
+    end
+    local x,y=768,192+64*i
+    local playerSprite=clsUILayer:new(x,y,w/col,h/row)
     playerSprite.anchor={0.5,1}
     playerSprite.tag=player.id
-    playerSprite.image=player.battlerImage
+    playerSprite.image=images[1][1]
     playerSprite.delegate=self
     self.spriteLayer:addChild(playerSprite)
+    playerSprite:runAction(self.animates[player.id.."_"..1])
   end
   --初始化玩家队伍信息面板
   local gap=15
@@ -109,7 +131,7 @@ function clsSceneBattle:onStart()
   for i,player in ipairs(GameData.playerTroop.players) do
     table.insert(characters,player)
   end
-  self.picker=clsPicker:new(screenWidth/2,100,screenWidth/2,32,characters)
+  self.picker=clsPicker:new(screenWidth/2,64,screenWidth/2,32,characters)
   self.picker.delegate=self
   GameLayer:addChildToScene(self.picker)
 end
