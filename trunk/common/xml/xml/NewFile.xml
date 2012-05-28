@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<people id="LS088" age="26" name="王xx">
-	<phoneList num="2">
-		<phone id="1" name="iphone" />
-		<phone id="2" name="lephone" />
-	</phoneList>
-</people>
+<AutoUpdate>
+	<!--> 要更新软件的升级包的服务器url < -->
+	<Url>http://192.168.1.1/soyomaker/update.zip</Url>
+	<!--> 要更新软件的版本 < -->
+	<Version>0.7.7.20120301</Version>
+	<!--> 要更新软件的更新日志 < -->
+	<Description>修正了一些bug</Description>
+	<!--> 要更新软件的各文件名称和本地路径 < -->
+	<Dictionary path=".">
+		<File>
+			<Name>SoyoMaker.jar</Name>
+		</File>
+	</Dictionary>
+	<Dictionary path=".\lib">
+		<File>
+			<Name>com.soyomaker.xml_v1.6.jar</Name>
+		</File>
+		<File>
+			<Name>appframework-1.0.3.jar</Name>
+		</File>
+		<File>
+			<Name>dom4j-full.jar</Name>
+		</File>
+		<File>
+			<Name>lua.jar</Name>
+		</File>
+		<File>
+			<Name>saint.jar</Name>
+		</File>
+		<File>
+			<Name>soyomaker-framework.jar</Name>
+		</File>
+		<File>
+			<Name>substance.jar</Name>
+		</File>
+		<File>
+			<Name>swing-worker-1.1.jar</Name>
+		</File>
+		<File>
+			<Name>trident.jar</Name>
+		</File>
+	</Dictionary>
+	<!--> 是否需要重启，当require为true时，后面name参数表示要重启的程序名称 ，为false时，name参数不启用< -->
+	<RestartApp require="true" name="SoyoMaker.jar"></RestartApp>
+</AutoUpdate>
