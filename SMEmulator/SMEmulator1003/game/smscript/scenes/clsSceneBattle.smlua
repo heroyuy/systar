@@ -16,14 +16,6 @@ clsSceneBattle.ACTION_TYPE_ITEM=3			--动作:物品
 clsSceneBattle.ACTION_TYPE_DEFEND=4			--动作:防御
 clsSceneBattle.ACTION_TYPE_ESCAPE=5			--动作:逃跑
 
-clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
-clsSceneBattle.animates={}					--动画效果表
-clsSceneBattle.curActor=nil					--当前行动者
-clsSceneBattle.curActionType=nil			--当前动作
-clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
-clsSceneBattle.curItem=nil					--当前物品(curActionType等于ACTION_TYPE_ITEM时有效)
-clsSceneBattle.curTarget=nil				--当前行动目标
-
 clsSceneBattle.bgLayer=nil					--背景层
 clsSceneBattle.spriteLayer=nil   			--精灵层
 clsSceneBattle.playerInfoLayer=nil			--玩家信息层
@@ -31,6 +23,14 @@ clsSceneBattle.picker=nil					--角色选择器
 clsSceneBattle.menu=nil						--菜单
 clsSceneBattle.cursor=nil					--箭头
 
+clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
+clsSceneBattle.actors=nil					--角色列表（包括player和enemy）
+clsSceneBattle.animates={}					--动画效果表
+clsSceneBattle.curActor=nil					--当前行动者
+clsSceneBattle.curActionType=nil			--当前动作
+clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
+clsSceneBattle.curItem=nil					--当前物品(curActionType等于ACTION_TYPE_ITEM时有效)
+clsSceneBattle.curTarget=nil				--当前行动目标
 
 --构造器
 function clsSceneBattle:new()
@@ -73,46 +73,38 @@ function clsSceneBattle:onStart()
   smLog:info("战斗场景启动")
   GameData.updateSwitch=false
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  self.actors={}
+  --初始化玩家队伍
+  for i,player in ipairs(GameData.playerTroop.players) do
+    --将player加入到角色列表
+    table.insert(self.actors,player)
+    --设置player的坐标
+    player.x,player.y=768,192+64*i
+  end
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
   for i,enemy in ipairs(GameData.battle.enemys) do
-    --加载动作表
-    local w,h=enemy.battlerImage:getWidth(),enemy.battlerImage:getHeight()
-    local row,col=4,3
-    local images=Image:split(enemy.battlerImage,row,col)
-    for i=1,row do
-      local animate=Action:newAnimateAction(images[i],100)
-      local s=Action:newSequenceAction(-1,animate)
-      self.animates[enemy.id.."_"..i]=s
-    end
-    --实例化层
-    local enemySprite=clsUILayer:new(enemy.x,enemy.y,w/col,h/row)
-    enemySprite.anchor={0.5,1}
-    enemySprite.tag=enemy.id
-    enemySprite.image=images[1][1]
-    enemySprite.delegate=self
-    self.spriteLayer:addChild(enemySprite)
-    enemySprite:runAction(self.animates[enemy.id.."_"..1])
+    --将enemy加入角色列表
+    table.insert(self.actors,enemy)
   end
-  --初始化玩家队伍
-  for i,player in ipairs(GameData.playerTroop.players) do
-    --加载动作表
-    local w,h=player.battlerImage:getWidth(),player.battlerImage:getHeight()
+  --初始化精灵层
+  for i,actor in ipairs(self.actors) do
+    --加载动作列表
+    local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
     local row,col=4,3
-    local images=Image:split(player.battlerImage,row,col)
+    local images=Image:split(actor.battlerImage,row,col)
     for i=1,row do
       local animate=Action:newAnimateAction(images[i],100)
-      local s=Action:newSequenceAction(-1,animate)
-      self.animates[player.id.."_"..i]=s
+      self.animates[actor.id.."_"..i]=animate
     end
-    local x,y=768,192+64*i
-    local playerSprite=clsUILayer:new(x,y,w/col,h/row)
-    playerSprite.anchor={0.5,1}
-    playerSprite.tag=player.id
-    playerSprite.image=images[1][1]
-    playerSprite.delegate=self
-    self.spriteLayer:addChild(playerSprite)
-    playerSprite:runAction(self.animates[player.id.."_"..1])
+    --创建精灵
+    local sprite=clsUILayer:new(actor.x,actor.y,w/col,h/row)
+    sprite.anchor={0.5,1}
+    sprite.tag=actor.id
+    sprite.image=images[1][1]
+    sprite.delegate=self
+    self.spriteLayer:addChild(sprite)
+    sprite:runAction(self.animates[actor.id.."_"..1])
   end
   --初始化玩家队伍信息面板
   local gap=15
@@ -124,14 +116,7 @@ function clsSceneBattle:onStart()
     self.playerInfoLayer:addChild(infoPane)
   end
   --角色选择器
-  local characters={}
-  for i,enemy in ipairs(GameData.battle.enemys) do
-    table.insert(characters,enemy)
-  end
-  for i,player in ipairs(GameData.playerTroop.players) do
-    table.insert(characters,player)
-  end
-  self.picker=clsPicker:new(screenWidth/2,64,screenWidth/2,32,characters)
+  self.picker=clsPicker:new(screenWidth/2,64,screenWidth/2,32,self.actors)
   self.picker.delegate=self
   GameLayer:addChildToScene(self.picker)
 end
