@@ -94,7 +94,6 @@ function clsUITextArea:drawPage()
     end
     self.rowIndex=self.rowIndex+1
   end
-  smLog:info("drawPage-over")
 end
 
 --解析功能字符串  <...>[...]

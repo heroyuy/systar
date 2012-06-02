@@ -54,7 +54,7 @@ end
 function clsShakeAction:onUpdate()
   if self.remnantTimes<=0 then
     self.finished=true
-    smLog:info("震动结束")
+    --smLog:info("震动结束")
     --还原target坐标
     self.target.x,self.target.y=self.startX,self.startY
     return

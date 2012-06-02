@@ -42,7 +42,7 @@ function clsMultipleAction:onUpdate()
   end
   self.finished=finished
   if self.finished then
-    smLog:info("复合动作结束")
+    --smLog:info("复合动作结束")
     return
   end
   --(2)更新

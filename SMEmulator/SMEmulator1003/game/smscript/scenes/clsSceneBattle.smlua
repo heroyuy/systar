@@ -106,6 +106,9 @@ function clsSceneBattle:onStart()
     --创建精灵
     local sprite=clsUILayer:new(actor.x,actor.y,w/self.ANIMATE_COL,h/self.ANIMATE_ROW)
     sprite.anchor={0.5,1}
+    if self:isPlayer(actor.id) then
+      sprite.flip={180,0}
+    end
     sprite.tag=actor.id
     sprite.image=images[1][1]
     sprite.delegate=self

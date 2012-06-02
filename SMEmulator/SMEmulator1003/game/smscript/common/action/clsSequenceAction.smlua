@@ -57,7 +57,7 @@ function clsSequenceAction:onUpdate()
     end
   end
   if self.finished then
-    smLog:info("序列动作结束")
+    --smLog:info("序列动作结束")
     return
   end
   --(2)确定当前应该执行的动作

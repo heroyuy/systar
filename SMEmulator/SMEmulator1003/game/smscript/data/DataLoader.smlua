@@ -101,10 +101,10 @@ end
 
 --加载Map数据
 function DataLoader:loadMap(id)
-  local t=os.time()
+  local t=Game:getTime()
   local path=string.gsub(self.mapPath,"{index}",id)
   dofile(path)
-  t=os.time()-t
+  t=Game:getTime()-t
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
 

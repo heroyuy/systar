@@ -171,7 +171,7 @@ end
 --停止动作
 function ActionPlayer:stopAction(action)
   self.actionList[tostring(action)]=nil					--移除动作
-  smLog:info("移除动作")
+  --smLog:info("移除动作")
 end
 
 --停止目标的所有动作
@@ -194,7 +194,7 @@ end
 function ActionPlayer:endAction(action)
   action:onEnd()							--动作结束
   self.actionList[tostring(action)]=nil					--移除动作
-  smLog:info("移除动作")
+  --smLog:info("移除动作")
 end
 
 --结束目标的所有动作

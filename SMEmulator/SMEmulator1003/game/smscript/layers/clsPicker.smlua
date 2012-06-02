@@ -30,13 +30,7 @@ function clsPicker:new(x,y,width,height,actors)
     local actorLayer=clsUILayer:new(self.startX,height,w/3,h/4)
     actorLayer.anchor={0.5,1}
     actorLayer.tag=actor.id
-    if math.floor(actor.id/1000000)==101 then
-      --player
-      actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4):flip(0)
-    else
-      --enemy
-      actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4)
-    end
+    actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4)
     self:addChild(actorLayer)
   end
   return self

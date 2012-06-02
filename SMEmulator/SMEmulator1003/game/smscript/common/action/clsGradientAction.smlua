@@ -108,6 +108,6 @@ function clsGradientAction:onUpdate()
   end
   if self.propertyTable[self.propertyKey]==self.endValue then
     self.finished=true
-    smLog:info("动作结束")
+    --smLog:info("动作结束")
   end
 end
