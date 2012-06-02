@@ -9,35 +9,35 @@ clsPicker={}
 setmetatable(clsPicker,clsUILayer)
 clsPicker.__index=clsPicker
 
-clsPicker.characters=nil			--角色列表
+clsPicker.actors=nil			--角色列表
 clsPicker.startX=nil				--起点x坐标
 clsPicker.endX=nil					--终点x坐标
 clsPicker.lastUpdateTime=nil		--上次刷新时间
 clsPicker.pause=false				--是否暂停中
 
 --构造器
-function clsPicker:new(x,y,width,height,characters)
+function clsPicker:new(x,y,width,height,actors)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsPicker)
-  self.characters=characters
-  self.callback="onCharacterPick"
+  self.actors=actors
+  self.callback="onActorPicked"
   --背景
   self.startX=height/2
   self.endX=width-height/2
   self.image=Skin:createSelectedBg(width,height)
-  for i,character in ipairs(characters) do
-    local w,h=character.battlerImage:getWidth(),character.battlerImage:getHeight()
-    local characterLayer=clsUILayer:new(self.startX,height,w/3,h/4)
-    characterLayer.anchor={0.5,1}
-    characterLayer.tag=character.id
-    if math.floor(character.id/1000000)==101 then
+  for k,actor in pairs(actors) do
+    local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
+    local actorLayer=clsUILayer:new(self.startX,height,w/3,h/4)
+    actorLayer.anchor={0.5,1}
+    actorLayer.tag=actor.id
+    if math.floor(actor.id/1000000)==101 then
       --player
-      characterLayer.image=character.battlerImage:clip(0,0,w/3,h/4):flip(0)
+      actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4):flip(0)
     else
       --enemy
-      characterLayer.image=character.battlerImage:clip(0,0,w/3,h/4)
+      actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4)
     end
-    self:addChild(characterLayer)
+    self:addChild(actorLayer)
   end
   return self
 end
@@ -53,9 +53,9 @@ function clsPicker:refresh()
     self.lastUpdateTime=Game:getTime()
   end
   --将到达终点的角色移回起点
-  for i,characterLayer in ipairs(self.children) do
-    if characterLayer.x>=self.endX then
-      characterLayer.x=self.startX
+  for i,actorLayer in ipairs(self.children) do
+    if actorLayer.x>=self.endX then
+      actorLayer.x=self.startX
     end
   end
   --根据角色攻击速度移动精灵
@@ -63,14 +63,14 @@ function clsPicker:refresh()
   local curTime=Game:getTime()
   local delta=curTime-self.lastUpdateTime
   self.lastUpdateTime=curTime
-  for i,character in ipairs(self.characters) do
-    local atkSpeed=character:atkSpeed()  --每秒移动atkSpeed距离
-    local characterLayer=self:childWithTag(character.id)
-    characterLayer.x=characterLayer.x+atkSpeed/1000*delta
-    if characterLayer.x>=self.endX then
+  for k,actor in pairs(self.actors) do
+    local atkSpeed=actor:atkSpeed()  --每秒移动atkSpeed距离
+    local actorLayer=self:childWithTag(actor.id)
+    actorLayer.x=actorLayer.x+atkSpeed/1000*delta
+    if actorLayer.x>=self.endX then
       --有精灵走到了终点
-      idPicked=character.id
-      characterLayer.x=self.endX
+      idPicked=actor.id
+      actorLayer.x=self.endX
       self.pause=true
       break
     end

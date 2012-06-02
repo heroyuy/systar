@@ -24,6 +24,13 @@ clsSceneBattle.menu=nil						--菜单
 clsSceneBattle.cursor=nil					--箭头
 
 clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
+clsSceneBattle.ANIMATE_ROW=4				--战斗图行数
+clsSceneBattle.ANIMATE_COL=3				--战斗图列帧数
+clsSceneBattle.ANIMATE_TYPE_STANDBY=1		--待机
+clsSceneBattle.ANIMATE_TYPE_ATTACK=2		--攻击
+clsSceneBattle.ANIMATE_TYPE_INJURE=3		--受伤
+clsSceneBattle.ANIMATE_TYPE_DEATH=4			--死亡
+
 clsSceneBattle.actors=nil					--角色列表（包括player和enemy）
 clsSceneBattle.animates={}					--动画效果表
 clsSceneBattle.curActor=nil					--当前行动者
@@ -52,8 +59,8 @@ function clsSceneBattle:new()
   self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
   GameLayer:addChildToScene(self.playerInfoLayer)
   --菜单
-  self.menu=clsUIMenu:new(0,screenHeight-160,120,170)
-  self.menu.anchor={0,1}
+  self.menu=clsUIMenu:new(screenWidth,96,120,170)
+  self.menu.anchor={1,0}
   self.menu.items=self.menuItems
   self.menu.alpha=0.7
   self.menu.delegate=self
@@ -76,35 +83,34 @@ function clsSceneBattle:onStart()
   self.actors={}
   --初始化玩家队伍
   for i,player in ipairs(GameData.playerTroop.players) do
-    --将player加入到角色列表
-    table.insert(self.actors,player)
     --设置player的坐标
     player.x,player.y=768,192+64*i
+    --将player加入到角色列表
+    self.actors[player.id]=player
   end
   --初始化敌人队伍
   GameData.battle:initEnemyTroop()
   for i,enemy in ipairs(GameData.battle.enemys) do
     --将enemy加入角色列表
-    table.insert(self.actors,enemy)
+    self.actors[enemy.id]=enemy
   end
   --初始化精灵层
-  for i,actor in ipairs(self.actors) do
+  for k,actor in pairs(self.actors) do
     --加载动作列表
     local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
-    local row,col=4,3
-    local images=Image:split(actor.battlerImage,row,col)
-    for i=1,row do
+    local images=Image:split(actor.battlerImage,self.ANIMATE_ROW,self.ANIMATE_COL)
+    for i=1,self.ANIMATE_ROW do
       local animate=Action:newAnimateAction(images[i],100)
       self.animates[actor.id.."_"..i]=animate
     end
     --创建精灵
-    local sprite=clsUILayer:new(actor.x,actor.y,w/col,h/row)
+    local sprite=clsUILayer:new(actor.x,actor.y,w/self.ANIMATE_COL,h/self.ANIMATE_ROW)
     sprite.anchor={0.5,1}
     sprite.tag=actor.id
     sprite.image=images[1][1]
     sprite.delegate=self
     self.spriteLayer:addChild(sprite)
-    sprite:runAction(self.animates[actor.id.."_"..1])
+    self:standby(actor)
   end
   --初始化玩家队伍信息面板
   local gap=15
@@ -127,9 +133,21 @@ function clsSceneBattle:update()
   self.picker:refresh()
 end
 
+--角色执行待机动作
+function clsSceneBattle:standby(actor)
+  local sprite=self.spriteLayer:childWithTag(actor.id)
+  local standby=Action:newSequenceAction(-1,self.animates[actor.id.."_"..self.ANIMATE_TYPE_STANDBY])
+  sprite:runAction(standby)
+end
+
+--判断actor是否是player
+function clsSceneBattle:isPlayer(id)
+  return math.floor(id/1000000)==101
+end
+
 --角色选择器回调
-function clsSceneBattle:onCharacterPick(picker,id)
-  if math.floor(id/1000000)==101 then
+function clsScene:onActorPicked(picker,id)
+  if self:isPlayer(id) then
     --player
     self:showMenuForPlayer(id)
   else
@@ -140,18 +158,7 @@ end
 
 --为player显示菜单
 function clsSceneBattle:showMenuForPlayer(id)
-  --判断当前player的序号
-  local index=1
-  for i,player in ipairs(GameData.playerTroop.players) do
-    if player.id==id then
-      index=i
-      break
-    end
-  end
-  self.curActor=GameData.playerTroop.players[index]
-  smLog:info("player["..self.curActor.name.."]选择动作")
-  --显示动作菜单
-  self.menu.x=(index-1)*240
+  self.curActor=self.actors[id]
   self.menu.visibility=true
 end
 

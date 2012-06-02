@@ -63,7 +63,7 @@ function clsUILayer:sortChildren()
 end
 
 --根据序号获取子layer
-function clsUILayer:getChildAt(index)
+function clsUILayer:childAt(index)
   return self.children[index]
 end
 
@@ -81,7 +81,7 @@ end
 
 --移除指定位置的子Layer(所有移除方法均依赖此方法)
 function clsUILayer:removeChildAt(index)
-  local layer=self:getChildAt(index)
+  local layer=self:childAt(index)
   layer:clear()							--清理待移除的层
   layer:stopAllAction()					--停止层上的所有动作
   layer.parent=nil						--移除父层引用
@@ -255,7 +255,7 @@ function clsUILayer:searchFocusLayer(x,y)
   local focus = nil
   --从上到下依次探查
   for i=table.getn(self.children),1,-1 do
-    local layer=self:getChildAt(i)
+    local layer=self:childAt(i)
     if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
       local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
