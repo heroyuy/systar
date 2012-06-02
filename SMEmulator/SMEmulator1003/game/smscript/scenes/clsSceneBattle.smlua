@@ -13,8 +13,7 @@ clsSceneBattle.__index = clsSceneBattle
 clsSceneBattle.ACTION_TYPE_ATTACK=1			--动作:攻击
 clsSceneBattle.ACTION_TYPE_SKILL=2			--动作:技能
 clsSceneBattle.ACTION_TYPE_ITEM=3			--动作:物品
-clsSceneBattle.ACTION_TYPE_DEFEND=4			--动作:防御
-clsSceneBattle.ACTION_TYPE_ESCAPE=5			--动作:逃跑
+clsSceneBattle.ACTION_TYPE_ESCAPE=4			--动作:逃跑
 
 clsSceneBattle.bgLayer=nil					--背景层
 clsSceneBattle.spriteLayer=nil   			--精灵层
@@ -23,7 +22,6 @@ clsSceneBattle.picker=nil					--角色选择器
 clsSceneBattle.menu=nil						--菜单
 clsSceneBattle.cursor=nil					--箭头
 
-clsSceneBattle.menuItems={"攻击","技能","物品","防御","逃跑"}
 clsSceneBattle.ANIMATE_ROW=4				--战斗图行数
 clsSceneBattle.ANIMATE_COL=3				--战斗图列帧数
 clsSceneBattle.ANIMATE_TYPE_STANDBY=1		--待机
@@ -31,6 +29,7 @@ clsSceneBattle.ANIMATE_TYPE_ATTACK=2		--攻击
 clsSceneBattle.ANIMATE_TYPE_INJURE=3		--受伤
 clsSceneBattle.ANIMATE_TYPE_DEATH=4			--死亡
 
+clsSceneBattle.menuItems={"攻击","技能","物品","逃跑"}
 clsSceneBattle.actors=nil					--角色列表（包括player和enemy）
 clsSceneBattle.animates={}					--动画效果表
 clsSceneBattle.curActor=nil					--当前行动者
@@ -38,6 +37,11 @@ clsSceneBattle.curActionType=nil			--当前动作
 clsSceneBattle.curSkill=nil					--当前技能(curActionType等于ACTION_TYPE_SKILL时有效)
 clsSceneBattle.curItem=nil					--当前物品(curActionType等于ACTION_TYPE_ITEM时有效)
 clsSceneBattle.curTarget=nil				--当前行动目标
+
+clsSceneBattle.SPRITE_SELECT_MODE_NIL=0		--精灵选择模式：空（不能选择）
+clsSceneBattle.SPRITE_SELECT_MODE_PLAYER=1	--精灵选择模式：player（只能选择player）
+clsSceneBattle.SPRITE_SELECT_MODE_ENEMY=2	--精灵选择模式：enemy（只能选择enemy）
+clsSceneBattle.spriteSelectMode=0			--精灵选择模式
 
 --构造器
 function clsSceneBattle:new()
@@ -59,7 +63,7 @@ function clsSceneBattle:new()
   self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
   GameLayer:addChildToScene(self.playerInfoLayer)
   --菜单
-  self.menu=clsUIMenu:new(screenWidth,96,120,170)
+  self.menu=clsUIMenu:new(screenWidth,96,120,140)
   self.menu.anchor={1,0}
   self.menu.items=self.menuItems
   self.menu.alpha=0.7
@@ -112,6 +116,7 @@ function clsSceneBattle:onStart()
     sprite.tag=actor.id
     sprite.image=images[1][1]
     sprite.delegate=self
+    sprite.callback="spriteTapped"
     self.spriteLayer:addChild(sprite)
     self:standby(actor)
   end
@@ -149,7 +154,7 @@ function clsSceneBattle:isPlayer(id)
 end
 
 --角色选择器回调
-function clsScene:onActorPicked(picker,id)
+function clsSceneBattle:onActorPicked(picker,id)
   if self:isPlayer(id) then
     --player
     self:showMenuForPlayer(id)
@@ -167,32 +172,31 @@ end
 
 --菜单被选中
 function clsSceneBattle:menuItemSelected(index)
+  --隐藏菜单
+  self.menu.visibility=false
   self.curActionType=index
   smLog:info("["..self.curActor.name.."]选择了["..self.menuItems[self.curActionType].."]")
-  if index==1 then
+  if index==self.ACTION_TYPE_ATTACK then
     --攻击
-    self:selectedEnemy()
-  elseif index==2 then
+    self:selectEnemy()
+  elseif index==self.ACTION_TYPE_SKILL then
     --技能
-    self:selectedSkill()
-  elseif index==3 then
+    self:selectSkill()
+  elseif index==self.ACTION_TYPE_ITEM then
     --物品
-    self:selectedItem()
-  elseif index==4 then
-    --防御
-    self:defend()
-  elseif index==5 then
+    self:selectItem()
+  elseif index==self.ACTION_TYPE_ESCAPE then
     --逃跑
     self:escape()
   end
-  self.menu.visibility=false
 end
 
 --player选择目标攻击目标(单体攻击敌人时)
-function clsSceneBattle:selectedEnemy()
+function clsSceneBattle:selectEnemy()
   --当前目标默认为敌人队伍中的第一个目标
   self.curTarget=GameData.battle.enemys[1]
   self:showCursor()
+  self.spriteSelectMode=self.SPRITE_SELECT_MODE_ENEMY
 end
 
 --player选择技能
@@ -203,14 +207,30 @@ end
 function clsSceneBattle:selectItem()
 end
 
---player防御
-function clsSceneBattle:defend()
-end
-
 --player逃跑
 function clsSceneBattle:escape()
   smLog:info("逃跑失败")
   self.picker.pause=false
+end
+
+--精灵被点击的回调
+function clsSceneBattle:spriteTapped(sprite,event)
+  if self.spriteSelectMode==self.SPRITE_SELECT_MODE_NIL then
+    return
+  end
+  local actor=self.actors[sprite.tag]
+  if event:getType()==UIConst.eventType.DOWN then
+    if self.spriteSelectMode==self.SPRITE_SELECT_MODE_PLAYER then
+      --player选择模式
+      if self:isPlayer(actor.id) then
+      end
+    else
+      --enemy选择模式
+      if not self:isPlayer(actor.id) then
+        smLog:info("["..self.curActor.name.."]选择了["..self.menuItems[self.curActionType].."]->["..actor.name.."]")
+      end
+    end
+  end
 end
 
 --enemy开始动作
