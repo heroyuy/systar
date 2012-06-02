@@ -136,7 +136,6 @@ function clsSceneBattle:onStart()
   GameLayer:addChildToScene(self.picker)
 end
 
-
 -- 更新
 function clsSceneBattle:update()
   --smLog:info("战斗场景更新")
