@@ -43,6 +43,9 @@ clsSceneBattle.SPRITE_SELECT_MODE_PLAYER=1	--精灵选择模式：player（只�
 clsSceneBattle.SPRITE_SELECT_MODE_ENEMY=2	--精灵选择模式：enemy（只能选择enemy）
 clsSceneBattle.spriteSelectMode=0			--精灵选择模式
 
+clsSceneBattle.ACTION_TAG_ACTION=100		--精灵动作tag()
+clsSceneBattle.ACTION_TAG_BLINK=101			--层动作tag(闪烁)
+
 --构造器
 function clsSceneBattle:new()
   local self = {}
@@ -104,7 +107,7 @@ function clsSceneBattle:onStart()
     local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
     local images=Image:split(actor.battlerImage,self.ANIMATE_ROW,self.ANIMATE_COL)
     for i=1,self.ANIMATE_ROW do
-      local animate=Action:newAnimateAction(images[i],100)
+      local animate=Action:newAnimateAction(images[i],200)
       self.animates[actor.id.."_"..i]=animate
     end
     --创建精灵
@@ -118,7 +121,7 @@ function clsSceneBattle:onStart()
     sprite.delegate=self
     sprite.callback="spriteTapped"
     self.spriteLayer:addChild(sprite)
-    self:standby(actor)
+    sprite:runAction(self:getSpriteAction(actor,self.ANIMATE_TYPE_STANDBY))
   end
   --初始化玩家队伍信息面板
   local gap=15
@@ -139,18 +142,6 @@ end
 function clsSceneBattle:update()
   --smLog:info("战斗场景更新")
   self.picker:refresh()
-end
-
---角色执行待机动作
-function clsSceneBattle:standby(actor)
-  local sprite=self.spriteLayer:childWithTag(actor.id)
-  local standby=Action:newSequenceAction(-1,self.animates[actor.id.."_"..self.ANIMATE_TYPE_STANDBY])
-  sprite:runAction(standby)
-end
-
---判断actor是否是player
-function clsSceneBattle:isPlayer(id)
-  return math.floor(id/1000000)==101
 end
 
 --角色选择器回调
@@ -194,8 +185,7 @@ end
 --player选择目标攻击目标(单体攻击敌人时)
 function clsSceneBattle:selectEnemy()
   --当前目标默认为敌人队伍中的第一个目标
-  self.curTarget=GameData.battle.enemys[1]
-  self:showCursor()
+  self:showCursorAtTarget(GameData.battle.enemys[1])
   self.spriteSelectMode=self.SPRITE_SELECT_MODE_ENEMY
 end
 
@@ -213,6 +203,29 @@ function clsSceneBattle:escape()
   self.picker.pause=false
 end
 
+--在目标上显示光标
+function clsSceneBattle:showCursorAtTarget(target)
+  if target==nil or self.curTarget==target then
+    return
+  end
+  if self.curTarget then
+    local sprite=self.spriteLayer:childWithTag(self.curTarget.id)
+    sprite:stopActionWithTag(self.ACTION_TAG_BLINK)
+  end
+  self.curTarget=target
+  --取当前目标对应的精灵
+  local sprite=self.spriteLayer:childWithTag(self.curTarget.id)
+  --计算sprite顶部中间的坐标
+  local x,y=sprite.x-sprite.anchor[1]*sprite.width+sprite.width/2,sprite.y-sprite.anchor[2]*sprite.height
+  self.cursor.x,self.cursor.y=x,y
+  self.cursor.visibility=true
+  self.cursor:stopAllAction()
+  self.cursor:runAction(Skin.cursorAnimateAction)
+  local s=Action:newSequenceAction(-1,Action:newBlinkAction())
+  s.tag=self.ACTION_TAG_BLINK
+  sprite:runAction(s)
+end
+
 --精灵被点击的回调
 function clsSceneBattle:spriteTapped(sprite,event)
   if self.spriteSelectMode==self.SPRITE_SELECT_MODE_NIL then
@@ -227,7 +240,9 @@ function clsSceneBattle:spriteTapped(sprite,event)
     else
       --enemy选择模式
       if not self:isPlayer(actor.id) then
-        smLog:info("["..self.curActor.name.."]选择了["..self.menuItems[self.curActionType].."]->["..actor.name.."]")
+        self.spriteSelectMode=self.SPRITE_SELECT_MODE_NIL
+        self:showCursorAtTarget(actor)
+        self:executeAction()
       end
     end
   end
@@ -235,57 +250,63 @@ end
 
 --enemy开始动作
 function clsSceneBattle:doEnemyAction(id)
-  for i,enemy in ipairs(GameData.battle.enemys) do
-    if enemy.id==id then
-      self.curActor=enemy
-      break
-    end
-  end
+  self.curActor=self.actors[id]
   smLog:info("["..self.curActor.name.."]开始动作")
+  --TODO 根据AI决定动作（攻击、物品、技能）
+  self.curActionType=self.ACTION_TYPE_ATTACK
+  self.curTarget=GameData.playerTroop.players[1]
+  self:executeAction()
 end
 
---显示光标在当前目标上
-function clsSceneBattle:showCursor()
-  --取消精灵层所有精灵的动作
-  for i,child in ipairs(self.spriteLayer.children) do
-    child:stopAllAction()
-  end
-  --取当前目标对应的精灵
-  local sprite=self.spriteLayer:childWithTag(self.curTarget.id)
-  --计算sprite顶部中间的坐标
-  local x,y=sprite.x-sprite.anchor[1]*sprite.width+sprite.width/2,sprite.y-sprite.anchor[2]*sprite.height
-  self.cursor.x,self.cursor.y=x,y
-  self.cursor.visibility=true
-  self.cursor:runAction(Skin.cursorAnimateAction)
-  sprite:stopAllAction()
-  local s=Action:newSequenceAction(-1,Action:newBlinkAction())
-  sprite:runAction(s)
-end
-
---回调:精灵被点击
-function clsSceneBattle:layerTapped(layer,event)
-  if event.type==UIConst.eventType.DOWN then
-    local targetType=-1   --0是player 1是敌人
-    if math.floor(layer.tag/1000000)== 101 then
-      targetType=0
-    else
-      targetType=1
+--执行动作
+function clsSceneBattle:executeAction()
+  smLog:info("["..self.curActor.name.."]对["..self.curTarget.name.."]使用["..self.menuItems[self.curActionType].."]")
+  local actorSprite=self.spriteLayer:childWithTag(self.curActor.id)
+  local targetSprite=self.spriteLayer:childWithTag(self.curTarget.id)
+  --(1)行动者和目标停止当前所有动作
+  actorSprite:stopAllAction()
+  targetSprite:stopAllAction()
+  --(1)行动者移动到目标身边
+  --(2)行动者发起攻击系列动作
+    --(a)攻击
+    local attackAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_ATTACK)
+    --(b)回调
+    local delegate={}
+    function delegate:callback(sceneBattle)
+      sceneBattle.picker.pause=false
+      sceneBattle.cursor.visibility=false
+      sceneBattle.cursor:stopAllAction()
     end
-    --根据curActor和curActionType等判断动作
-    if math.floor(self.curActor.id/1000000)== 101 then
-      --玩家在行动
-      if self.curActionType==clsSceneBattle.ACTION_TYPE_ATTACK then
-        --普通攻击
-        if targetType==1 then
-          
-        end
-      end
-    end
-  end
+    local funAction=Action:newCallbackAction(delegate,"callback",self)
+    --(c)待机
+    local standyAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_STANDBY)
+    actorSprite:runAction(Action:newSequenceAction(1,attackAction,funAction,standyAction))
+  --(3)目标发起受击系列动作
+    --(a)受击
+    local injureAction=self:getSpriteAction(self.curTarget,self.ANIMATE_TYPE_INJURE)
+    --(b)待机
+    local standyAction=self:getSpriteAction(self.curTarget,self.ANIMATE_TYPE_STANDBY)
+    targetSprite:runAction(Action:newSequenceAction(1,injureAction,standyAction))
 end
 
 -- 退出
 function clsSceneBattle:onStop()
   smLog:info("战斗场景退出")
+end
+
+--===============辅助方法===============
+--角色执行动作
+function clsSceneBattle:getSpriteAction(actor,actionType)
+  local action=self.animates[actor.id.."_"..actionType]
+  if actionType==self.ANIMATE_TYPE_STANDBY then
+    action=Action:newSequenceAction(-1,action)
+  end
+  action.tag=self.ACTION_TAG_ACTION
+  return action
+end
+
+--判断actor是否是player
+function clsSceneBattle:isPlayer(id)
+  return math.floor(id/1000000)==101
 end
 

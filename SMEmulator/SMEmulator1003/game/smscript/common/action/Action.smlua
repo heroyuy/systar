@@ -19,6 +19,7 @@ clsAction.TYPE_MAX=6				--类型编号最大值
 
 clsAction.target=nil				--动作的目标
 clsAction.finished=false			--动作是否结束
+clsAction.tag=nil					--动作的标志
 
 -- 构造
 function clsAction:new()
@@ -180,7 +181,7 @@ function ActionPlayer:endAction(action)
 end
 
 --中止目标的动作
-function ActionPlayer:stopActionForTarget(self,tag)
+function ActionPlayer:stopActionForTarget(target,tag)
   for k,action in pairs(self.actionList) do
     if action.target==target and (tag==nil or action.tag==tag) then
       self:stopAction(action)
@@ -189,7 +190,7 @@ function ActionPlayer:stopActionForTarget(self,tag)
 end
 
 --终止目标的动作
-function ActionPlayer:endActionForTarget(self,tag)
+function ActionPlayer:endActionForTarget(target,tag)
   for k,action in pairs(self.actionList) do
     if action.target==target and (tag==nil or action.tag==tag) then
       self:endAction(action)
