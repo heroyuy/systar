@@ -263,14 +263,38 @@ function clsSceneBattle:executeAction()
   smLog:info("["..self.curActor.name.."]对["..self.curTarget.name.."]使用["..self.menuItems[self.curActionType].."]")
   local actorSprite=self.spriteLayer:childWithTag(self.curActor.id)
   local targetSprite=self.spriteLayer:childWithTag(self.curTarget.id)
-  --(1)行动者和目标停止当前所有动作
+  --(1)行动者停止当前所有动作
   actorSprite:stopAllAction()
-  targetSprite:stopAllAction()
-  --(1)行动者移动到目标身边
-  --(2)行动者发起攻击系列动作
-    --(a)攻击
+  --(2)系列动作
+    local sx,sy=actorSprite.x,actorSprite.y
+    local ex,ey=targetSprite.x,targetSprite.y
+    if ex>=sx then
+      --目标在右边
+      ex=ex-targetSprite.width
+    else
+      --目标在左边
+      ex=ex+targetSprite.width
+    end
+    --(a)移动
+    local move1Action=Action:newMoveAction({ex,ey},2000,clsAction.TYPE_LINEAR_TO)
+    --(b-1)攻击
     local attackAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_ATTACK)
-    --(b)回调
+    --(b-2)受击
+    local delegate={}
+    function delegate:callback(sceneBattle)
+      --(b-2-1)目标停止当前所有动作
+      targetSprite:stopAllAction()
+      --(b-2-2)受击
+      local injureAction=sceneBattle:getSpriteAction(sceneBattle.curTarget,sceneBattle.ANIMATE_TYPE_INJURE)
+      --(b-2-3)待机
+      local standyAction=sceneBattle:getSpriteAction(sceneBattle.curTarget,sceneBattle.ANIMATE_TYPE_STANDBY)
+      targetSprite:runAction(Action:newSequenceAction(1,injureAction,standyAction))
+    end
+    local funAction=Action:newCallbackAction(delegate,"callback",self)
+    local multipleAction=Action:newMultipleAction(attackAction,funAction)
+    --(c)归位
+    local move2Action=Action:newMoveAction({sx,sy},2000,clsAction.TYPE_LINEAR_TO)
+    --(d)回调
     local delegate={}
     function delegate:callback(sceneBattle)
       sceneBattle.picker.pause=false
@@ -280,13 +304,7 @@ function clsSceneBattle:executeAction()
     local funAction=Action:newCallbackAction(delegate,"callback",self)
     --(c)待机
     local standyAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_STANDBY)
-    actorSprite:runAction(Action:newSequenceAction(1,attackAction,funAction,standyAction))
-  --(3)目标发起受击系列动作
-    --(a)受击
-    local injureAction=self:getSpriteAction(self.curTarget,self.ANIMATE_TYPE_INJURE)
-    --(b)待机
-    local standyAction=self:getSpriteAction(self.curTarget,self.ANIMATE_TYPE_STANDBY)
-    targetSprite:runAction(Action:newSequenceAction(1,injureAction,standyAction))
+    actorSprite:runAction(Action:newSequenceAction(1,move1Action,multipleAction,move2Action,funAction,standyAction))
 end
 
 -- 退出
