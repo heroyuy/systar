@@ -276,7 +276,7 @@ function clsSceneBattle:executeAction()
       ex=ex+targetSprite.width
     end
     --(a)移动
-    local move1Action=Action:newMoveAction({ex,ey},2000,clsAction.TYPE_LINEAR_TO)
+    local move1Action=Action:newMoveAction({ex,ey},1000,clsAction.TYPE_LINEAR_TO)
     --(b-1)攻击
     local attackAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_ATTACK)
     --(b-2)受击
@@ -293,7 +293,7 @@ function clsSceneBattle:executeAction()
     local funAction=Action:newCallbackAction(delegate,"callback",self)
     local multipleAction=Action:newMultipleAction(attackAction,funAction)
     --(c)归位
-    local move2Action=Action:newMoveAction({sx,sy},2000,clsAction.TYPE_LINEAR_TO)
+    local move2Action=Action:newMoveAction({sx,sy},1000,clsAction.TYPE_LINEAR_TO)
     --(d)回调
     local delegate={}
     function delegate:callback(sceneBattle)
