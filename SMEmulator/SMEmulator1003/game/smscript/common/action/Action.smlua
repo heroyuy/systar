@@ -21,6 +21,10 @@ clsAction.target=nil				--动作的目标
 clsAction.finished=false			--动作是否结束
 clsAction.tag=nil					--动作的标志
 
+clsAction.delegate=nil				--委托
+clsAction.callback="onActionEnd"	--回调
+
+
 -- 构造
 function clsAction:new()
   local self={}
@@ -41,6 +45,7 @@ end
 --结束
 function clsAction:onEnd()
   --结束action。action在此方法被调用后移除播放队列
+  callFunction(self.delegate,self.callback,self)
 end
 
 
@@ -169,18 +174,12 @@ function ActionPlayer:update()
   end
 end
 
---中止动作
+--停止动作
 function ActionPlayer:stopAction(action)
   self.actionList[tostring(action)]=nil					--移除动作
 end
 
---终止动作
-function ActionPlayer:endAction(action)
-  action:onEnd()										--动作终止
-  self.actionList[tostring(action)]=nil					--移除动作
-end
-
---中止目标的动作
+--停止目标的动作
 function ActionPlayer:stopActionForTarget(target,tag)
   for k,action in pairs(self.actionList) do
     if action.target==target and (tag==nil or action.tag==tag) then
@@ -189,25 +188,9 @@ function ActionPlayer:stopActionForTarget(target,tag)
   end
 end
 
---终止目标的动作
-function ActionPlayer:endActionForTarget(target,tag)
-  for k,action in pairs(self.actionList) do
-    if action.target==target and (tag==nil or action.tag==tag) then
-      self:endAction(action)
-    end
-  end
-end
-
---中止所有动作
+--停止所有动作
 function ActionPlayer:stopAllAction()
   for k,action in pairs(self.actionList) do
     self:stopAction(action)
-  end
-end
-
---终止所有动作
-function ActionPlayer:endAllAction(action)
-  for k,action in pairs(self.actionList) do
-    self:endAction(action)
   end
 end

@@ -9,13 +9,19 @@ end
 
 --------------callback--------------
 function callFunction(target,callback,...)
-  if target and callback then
+  if callback then
     if type(callback)=="string" then
-      if target[callback] then
-        target[callback](target,unpack(arg))
+      if target then
+        if target[callback] then
+          target[callback](target,unpack(arg))
+        end
       end
     else
-      callback(target,unpack(arg))
+      if target then
+        callback(target,unpack(arg))
+      else
+        callback(unpack(arg))
+      end
     end
   end
 end

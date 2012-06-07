@@ -226,38 +226,21 @@ function clsUILayer:runAction(action)
   ActionPlayer:run(action)
 end
 
---中止动作
+--停止动作
 function clsUILayer:stopAction(action)
   if action.target==self then
     ActionPlayer:stopAction(action)
   end
 end
 
---中止指定tag的动作
+--停止指定tag的动作
 function clsUILayer:stopActionWithTag(tag)
-    ActionPlayer:stopActionForTarget(self,tag)
+  ActionPlayer:stopActionForTarget(self,tag)
 end
 
---中止所有动作
+--停止所有动作
 function clsUILayer:stopAllAction()
   ActionPlayer:stopActionForTarget(self)
-end
-
---终止动作
-function clsUILayer:endAction(action)
-  if action.target==self then
-    ActionPlayer:endAction(action)
-  end
-end
-
---终止指定tag的动作
-function clsUILayer:endActionWithTag(tag)
-    ActionPlayer:endActionForTarget(self,tag)
-end
-
---终止所有动作
-function clsUILayer:endAllAction()
-  ActionPlayer:endActionForTarget(self)
 end
 
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）

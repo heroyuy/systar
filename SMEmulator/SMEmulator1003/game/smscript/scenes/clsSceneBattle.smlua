@@ -280,8 +280,7 @@ function clsSceneBattle:executeAction()
     --(b-1)攻击
     local attackAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_ATTACK)
     --(b-2)受击
-    local delegate={}
-    function delegate:callback(sceneBattle)
+    local function callback(sceneBattle)
       --(b-2-1)目标停止当前所有动作
       targetSprite:stopAllAction()
       --(b-2-2)受击
@@ -290,18 +289,17 @@ function clsSceneBattle:executeAction()
       local standyAction=sceneBattle:getSpriteAction(sceneBattle.curTarget,sceneBattle.ANIMATE_TYPE_STANDBY)
       targetSprite:runAction(Action:newSequenceAction(1,injureAction,standyAction))
     end
-    local funAction=Action:newCallbackAction(delegate,"callback",self)
+    local funAction=Action:newCallbackAction(nil,callback,self)
     local multipleAction=Action:newMultipleAction(attackAction,funAction)
     --(c)归位
     local move2Action=Action:newMoveAction({sx,sy},1000,clsAction.TYPE_LINEAR_TO)
     --(d)回调
-    local delegate={}
-    function delegate:callback(sceneBattle)
+    local function callback(sceneBattle)
       sceneBattle.picker.pause=false
       sceneBattle.cursor.visibility=false
       sceneBattle.cursor:stopAllAction()
     end
-    local funAction=Action:newCallbackAction(delegate,"callback",self)
+    local funAction=Action:newCallbackAction(nil,callback,self)
     --(c)待机
     local standyAction=self:getSpriteAction(self.curActor,self.ANIMATE_TYPE_STANDBY)
     actorSprite:runAction(Action:newSequenceAction(1,move1Action,multipleAction,move2Action,funAction,standyAction))
