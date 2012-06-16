@@ -167,7 +167,7 @@ end
 function ActionPlayer:update()
   for k,action in pairs(self.actionList) do
     if action.finished then
-      self:endAction(action)
+      self:stopAction(action)
     else
       action:onUpdate()
     end
@@ -176,6 +176,7 @@ end
 
 --停止动作
 function ActionPlayer:stopAction(action)
+  action:onEnd()
   self.actionList[tostring(action)]=nil					--移除动作
 end
 
