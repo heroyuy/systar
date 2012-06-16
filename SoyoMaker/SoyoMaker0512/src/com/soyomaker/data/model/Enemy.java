@@ -77,10 +77,6 @@ public class Enemy extends Model {
      */
     public ArrayList<Treasure> treasures = new ArrayList<Treasure>();
     /**
-     * 装备列表，身上穿的
-     */
-    public ArrayList<Equip> equips = new ArrayList<Equip>();
-    /**
      * 0 静止 1 普通攻击 2 防御	3 使用物品 5 使用技能 6 逃跑
      * 动作列表
      */

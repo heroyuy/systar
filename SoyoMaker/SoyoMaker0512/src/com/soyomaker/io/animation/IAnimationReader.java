@@ -5,8 +5,6 @@
 
 package com.soyomaker.io.animation;
 
-import com.soyomaker.model.animation.Animation;
-
 /**
  *
  * @author Administrator

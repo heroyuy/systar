@@ -15,6 +15,7 @@ import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Status;
 import com.soyomaker.data.model.Treasure;
+import com.soyomaker.infomation.SoftInformation;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
@@ -47,90 +48,93 @@ public class EnemyDao extends Dao<Enemy> {
         FileInputStream fis = null;
         File f = null;
 //        try {
-            f = new File(AppData.getInstance().getCurProject().getPath() + "/softdata/enemy.gat");
-            fis = new FileInputStream(f);
-            dis = new DataInputStream(fis);
-            int enemySum = dis.readInt();
-            Enemy enemy = null;
-            for (int i = 0; i < enemySum; i++) {
-                enemy = new Enemy();
-                enemy.setIndex(dis.readInt());
-                enemy.name = dis.readUTF();
-                enemy.intro = dis.readUTF();
-                enemy.battleImg = dis.readUTF();
-                enemy.lev = dis.readInt();
-                enemy.maxHp = dis.readInt();
-                enemy.maxSp = dis.readInt();
-                enemy.stre = dis.readInt();
-                enemy.inte = dis.readInt();
-                enemy.agil = dis.readInt();
-                enemy.dex = dis.readInt();
-                enemy.body = dis.readInt();
-                enemy.luck = dis.readInt();
-                enemy.exp = dis.readInt();
-                enemy.money = dis.readInt();
+        f = new File(AppData.getInstance().getCurProject().getPath() + "/softdata/enemy.gat");
+        fis = new FileInputStream(f);
+        dis = new DataInputStream(fis);
+        int enemySum = dis.readInt();
+        Enemy enemy = null;
+        for (int i = 0; i < enemySum; i++) {
+            enemy = new Enemy();
+            enemy.setIndex(dis.readInt());
+            enemy.name = dis.readUTF();
+            enemy.intro = dis.readUTF();
+            enemy.battleImg = dis.readUTF();
+            enemy.lev = dis.readInt();
+            enemy.maxHp = dis.readInt();
+            enemy.maxSp = dis.readInt();
+            enemy.stre = dis.readInt();
+            enemy.inte = dis.readInt();
+            enemy.agil = dis.readInt();
+            enemy.dex = dis.readInt();
+            enemy.body = dis.readInt();
+            enemy.luck = dis.readInt();
+            enemy.exp = dis.readInt();
+            enemy.money = dis.readInt();
+            //为了兼容
+            if (SoftInformation.minorVersion < 9) {
                 int equipN = dis.readInt();
                 for (int j = 0; j < equipN; j++) {
                     int kind = dis.readInt();
-                    Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
-                    equip.equipType = kind;
-                    equip.rate = dis.readInt();
-                    enemy.equips.add(equip);
+//                    Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
+//                    equip.equipType = kind;
+//                    equip.rate = dis.readInt();
+//                    enemy.equips.add(equip);
                 }
-                int treasureN = dis.readInt();
-                for (int j = 0; j < treasureN; j++) {
-                    int type = dis.readInt();
-                    switch (type) {
-                        case Treasure.TREASURE_ITEM:
-                            Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModel(Model.ITEM, dis.readInt());
-                            item.rate = dis.readInt();
-                            enemy.treasures.add(item);
-                            break;
-                        case Treasure.TREASURE_EQUIP:
-                            Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
-                            equip.rate = dis.readInt();
-                            enemy.treasures.add(equip);
-                            break;
-                    }
-                }
-                int actionN = dis.readInt();
-                for (int j = 0; j < actionN; j++) {
-                    Action action = new Action();
-                    int conditionN = dis.readInt();
-                    for (int k = 0; k < conditionN; k++) {
-                        Condition con = new Condition();
-                        con.conditionType = dis.readInt();
-                        int pars = dis.readInt();
-                        for (int m = 0; m < pars; m++) {
-                            con.paras.add(dis.readInt());
-                        }
-                        action.conds.add(con);
-                    }
-                    action.actionType = dis.readInt();
-                    int actionParaN = dis.readInt();
-                    for (int k = 0; k < actionParaN; k++) {
-                        action.paras.add(dis.readInt());
-                    }
-                    action.rate = dis.readInt();
-                    enemy.actions.add(action);
-                }
-                int attrN = dis.readInt();
-                for (int j = 0; j < attrN; j++) {
-                    Attribute attr = new Attribute();
-                    attr.id = dis.readInt();
-                    attr.value = dis.readInt();
-                    enemy.attributes.add(attr);
-                }
-                int statusN = dis.readInt();
-                for (int j = 0; j < statusN; j++) {
-                    Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
-                    status.value = dis.readInt();
-                    enemy.status.add(status);
-                }
-                AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMY, enemy);
             }
-            dis.close();
-            fis.close();
+            int treasureN = dis.readInt();
+            for (int j = 0; j < treasureN; j++) {
+                int type = dis.readInt();
+                switch (type) {
+                    case Treasure.TREASURE_ITEM:
+                        Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModel(Model.ITEM, dis.readInt());
+                        item.rate = dis.readInt();
+                        enemy.treasures.add(item);
+                        break;
+                    case Treasure.TREASURE_EQUIP:
+                        Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
+                        equip.rate = dis.readInt();
+                        enemy.treasures.add(equip);
+                        break;
+                }
+            }
+            int actionN = dis.readInt();
+            for (int j = 0; j < actionN; j++) {
+                Action action = new Action();
+                int conditionN = dis.readInt();
+                for (int k = 0; k < conditionN; k++) {
+                    Condition con = new Condition();
+                    con.conditionType = dis.readInt();
+                    int pars = dis.readInt();
+                    for (int m = 0; m < pars; m++) {
+                        con.paras.add(dis.readInt());
+                    }
+                    action.conds.add(con);
+                }
+                action.actionType = dis.readInt();
+                int actionParaN = dis.readInt();
+                for (int k = 0; k < actionParaN; k++) {
+                    action.paras.add(dis.readInt());
+                }
+                action.rate = dis.readInt();
+                enemy.actions.add(action);
+            }
+            int attrN = dis.readInt();
+            for (int j = 0; j < attrN; j++) {
+                Attribute attr = new Attribute();
+                attr.id = dis.readInt();
+                attr.value = dis.readInt();
+                enemy.attributes.add(attr);
+            }
+            int statusN = dis.readInt();
+            for (int j = 0; j < statusN; j++) {
+                Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
+                status.value = dis.readInt();
+                enemy.status.add(status);
+            }
+            AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMY, enemy);
+        }
+        dis.close();
+        fis.close();
 //        } catch (IOException e) {
 ////            System.out.println("没有可加载的Enemy");
 //            printer.e("没有可加载的Enemy");
@@ -152,9 +156,9 @@ public class EnemyDao extends Dao<Enemy> {
             lt.addNode("intro", enemy.intro);
             lt.addNode("\n");
             if (enemy.battleImg == null || enemy.battleImg.equals("")) {
-                lt.addNode("battleImg", "nil");
+                lt.addNode("battlerImg", "nil");
             } else {
-                lt.addNode("battleImg", "/image/battler/" + enemy.battleImg);
+                lt.addNode("battlerImg", "/image/battler/" + enemy.battleImg);
             }
             lt.addNode("\n");
             lt.addNode("lev", enemy.lev);
@@ -202,22 +206,6 @@ public class EnemyDao extends Dao<Enemy> {
                 }
             }
             lt.addNode("treasures", treas);
-            lt.addNode("\n");
-            LuaTable eqs = new LuaTable();
-            if (!enemy.equips.isEmpty()) {
-                eqs.addNode("\n");
-            }
-            for (int j = 0; j < enemy.equips.size(); j++) {
-                LuaTable eq = new LuaTable();
-                eq.addNode("kind", enemy.equips.get(j).equipType);
-                eq.addNode("index", Configuration.Prefix.EQUIP_MASK + enemy.equips.get(j).getIndex() + 1);
-                eq.addNode("rate", enemy.equips.get(j).rate);
-                eqs.addNode("[" + (Configuration.Prefix.EQUIP_MASK + enemy.equips.get(j).getIndex() + 1) + "]", eq);
-                if (j != enemy.equips.size() - 1) {
-                    eqs.addNode("\n");
-                }
-            }
-            lt.addNode("equips", eqs);
             lt.addNode("\n");
             LuaTable acts = new LuaTable();
             if (!enemy.actions.isEmpty()) {
@@ -325,12 +313,12 @@ public class EnemyDao extends Dao<Enemy> {
                 dos.writeInt(enemy.luck);
                 dos.writeInt(enemy.exp);
                 dos.writeInt(enemy.money);
-                dos.writeInt(enemy.equips.size());
-                for (int j = 0; j < enemy.equips.size(); j++) {
-                    dos.writeInt(enemy.equips.get(j).equipType);
-                    dos.writeInt(enemy.equips.get(j).getIndex());
-                    dos.writeInt(enemy.equips.get(j).rate);
-                }
+//                dos.writeInt(enemy.equips.size());
+//                for (int j = 0; j < enemy.equips.size(); j++) {
+//                    dos.writeInt(enemy.equips.get(j).equipType);
+//                    dos.writeInt(enemy.equips.get(j).getIndex());
+//                    dos.writeInt(enemy.equips.get(j).rate);
+//                }
                 dos.writeInt(enemy.treasures.size());
                 for (int j = 0; j < enemy.treasures.size(); j++) {
                     if (enemy.treasures.get(j) instanceof Item) {

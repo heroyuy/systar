@@ -14,6 +14,7 @@ import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
 import com.soyomaker.lua.LuaNode;
 import com.soyomaker.lua.LuaTable;
+import java.awt.Point;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -54,7 +55,13 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             int enemyN = dis.readInt();
             for (int j = 0; j < enemyN; j++) {
                 Enemy enemy = (Enemy) AppData.getInstance().getCurProject().getDataManager().getModel(Model.ENEMY, dis.readInt());
+                int x = dis.readInt();
+                int y = dis.readInt();
+                Point point = new Point();
+                point.x = x;
+                point.y = y;
                 enemyTroop.enemys.add(enemy);
+                enemyTroop.points.add(point);
             }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMYTROOP, enemyTroop);
         }
@@ -77,7 +84,9 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             lt.addNode("\n");
             LuaTable ens = new LuaTable();
             for (int j = 0; j < enemyTroop.enemys.size(); j++) {
-                ens.addNode(Configuration.Prefix.ENEMY_MASK + enemyTroop.enemys.get(j).getIndex() + 1);
+                ens.addNode("index", Configuration.Prefix.ENEMY_MASK + enemyTroop.enemys.get(j).getIndex() + 1);
+                ens.addNode("x", enemyTroop.points.get(j).x);
+                ens.addNode("y", enemyTroop.points.get(j).y);
             }
             lt.addNode("enemys", ens);
             lts.addNode("[" + (Configuration.Prefix.ENEMYTROOP_MASK + enemyTroop.getIndex() + 1) + "]", lt);
@@ -115,6 +124,8 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
                 dos.writeInt(enemyTroop.enemys.size());
                 for (int j = 0; j < enemyTroop.enemys.size(); j++) {
                     dos.writeInt(enemyTroop.enemys.get(j).getIndex());
+                    dos.writeInt(enemyTroop.points.get(j).x);
+                    dos.writeInt(enemyTroop.points.get(j).y);
                 }
             }
             dos.close();

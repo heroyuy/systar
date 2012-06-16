@@ -1529,26 +1529,23 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                 sped = new SpriteEditorDialog(AppMainFrame.this, true);//读取动画
                 AppMainFrame.this.gGrassPane.setText("导入动画数据开始...");
                 logPrinter.v("导入动画数据开始...");
-                File aniFile = new File(project.getPath() + File.separator + "softdata" + File.separator + "animation.gat");
-                if (aniFile.exists()) {
-                    IAnimationReader aniReader = new DefaultSoftAnimationBinaryReader();
-                    try {
-                        aniReader.readAnimation(project.getPath() + File.separator + "softdata" + File.separator + "animation.gat");
-                        File f = new File(project.getPath() + File.separator + "softdata" + File.separator + "animation.xml");
-                        if (f.exists()) {
-                            SAXReader reader = new SAXReader();
-                            InputStream ifile = new FileInputStream(f);
-                            InputStreamReader ir = new InputStreamReader(ifile, "UTF-8");
-                            Document doc = reader.read(ir);
-                            Element root = doc.getRootElement();
-                            loadAllAnimation(root, (DefaultMutableTreeNode) sped.animationTree.getModel().getRoot());
-                        }
-                        logPrinter.v("导入动画数据成功！");
-                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_LOAD_SUCCESSFUL);
-                    } catch (Exception ex) {
-                        logPrinter.e("导入动画数据失败！" + ex.toString());
-                        Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_LOAD_FAILURE);
+                IAnimationReader aniReader = new DefaultSoftAnimationBinaryReader();
+                try {
+                    aniReader.readAnimation(project.getPath() + File.separator + "softdata" + File.separator + "effect.gat");
+                    File f = new File(project.getPath() + File.separator + "softdata" + File.separator + "effect.xml");
+                    if (f.exists()) {
+                        SAXReader reader = new SAXReader();
+                        InputStream ifile = new FileInputStream(f);
+                        InputStreamReader ir = new InputStreamReader(ifile, "UTF-8");
+                        Document doc = reader.read(ir);
+                        Element root = doc.getRootElement();
+                        loadAllAnimation(root, (DefaultMutableTreeNode) sped.animationTree.getModel().getRoot());
                     }
+                    logPrinter.v("导入动画数据成功！");
+                    Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_LOAD_SUCCESSFUL);
+                } catch (Exception ex) {
+                    logPrinter.e("导入动画数据失败！" + ex.toString());
+                    Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_LOAD_FAILURE);
                 }
             }
         };
@@ -1564,9 +1561,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     AppData.getInstance().getCurProject().getDataManager().init(AppData.getInstance().getCurProject().getPath());
                     logPrinter.v("导入数据编辑器数据成功！");
                     Notifier.getInstance().notifyEvent(EventIdConst.SOFT_DATA_LOAD_SUCCESSFUL);
-                } catch (FileNotFoundException ex) {
-                    logPrinter.e("找不到文件异常：" + ex.toString());
-                } catch (IOException ex) {
+                }catch (Exception ex) {
                     logPrinter.e("导入数据编辑器数据失败！" + ex.toString());
                     Notifier.getInstance().notifyEvent(EventIdConst.SOFT_DATA_LOAD_FAILURE);
                 }
@@ -1853,7 +1848,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     //保存动画
                     IAnimationWriter aniSoftWriter = new DefaultAnimationLuaWriter();
                     aniSoftWriter.writeAnimation(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                            + "data" + File.separatorChar + "animation.gat");
+                            + "data" + File.separatorChar + "effect.gat");
                     logPrinter.v("保存引擎动画数据成功！");
                     Notifier.getInstance().notifyEvent(EventIdConst.GAME_ANIMATION_SAVE_SUCCESSFUL);
                 } catch (Exception e) {
@@ -1924,12 +1919,12 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     try {
                         OutputFormat format = OutputFormat.createPrettyPrint();
                         format.setEncoding("UTF-8");
-                        XMLWriter xmlw = new XMLWriter(new FileOutputStream(AppData.getInstance().getCurProject().getPath() + File.separator + "softdata" + File.separator + "animation.xml"), format);
+                        XMLWriter xmlw = new XMLWriter(new FileOutputStream(AppData.getInstance().getCurProject().getPath() + File.separator + "softdata" + File.separator + "effect.xml"), format);
                         xmlw.write(doc);
                         xmlw.close();
-                        logPrinter.v("animation.xml写出成功！");
+                        logPrinter.v("effect.xml写出成功！");
                     } catch (IOException e) {
-                        logPrinter.e("animation.xml写出失败！" + e.toString());
+                        logPrinter.e("effect.xml写出失败！" + e.toString());
                     }
                 }
             }
@@ -1975,7 +1970,7 @@ public class AppMainFrame extends javax.swing.JFrame implements RenderListener, 
                     //保存动画
                     IAnimationWriter aniSoftWriter = new DefaultSoftAnimationBinaryWriter();
                     aniSoftWriter.writeAnimation(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-                            + "softdata" + File.separatorChar + "animation.gat");
+                            + "softdata" + File.separatorChar + "effect.gat");
                     logPrinter.v("保存软件动画数据成功！");
                     Notifier.getInstance().notifyEvent(EventIdConst.SOFT_ANIMATION_SAVE_SUCCESSFUL);
                 } catch (Exception e) {

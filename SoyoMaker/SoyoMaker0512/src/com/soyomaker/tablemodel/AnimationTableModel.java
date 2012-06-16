@@ -8,7 +8,6 @@ import com.soyomaker.model.animation.Animation;
 import com.soyomaker.AppData;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

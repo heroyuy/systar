@@ -295,7 +295,6 @@ public class EditMapDialog extends javax.swing.JDialog {
             return;
         }
         int mapW = Integer.parseInt(mapWidthTextField.getText());
-
         if (mapHeightTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
                     "地图高度不能为空！");

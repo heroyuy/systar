@@ -90,7 +90,9 @@ public class HandleFramePane extends JPanel implements DropTargetListener, Runna
      */
     public void setCurFrame(Frame curFrame) {
         this.curFrame = curFrame;
-        repaint();
+        this.ani = curFrame.getAnimation();
+//        repaint();
+        updateUI();
     }
 
     public Dimension getPreferredScrollableViewportSize() {
@@ -185,8 +187,12 @@ public class HandleFramePane extends JPanel implements DropTargetListener, Runna
 
     @Override
     public Dimension getPreferredSize() {
-        Dimension size = this.getParent().getSize();
-        return size;
+//        Dimension size = this.getParent().getSize();
+        if (ani != null) {
+            return new Dimension(ani.getWidth(), ani.getHeight());
+        } else {
+            return new Dimension();
+        }
     }
 
     @Override
@@ -280,7 +286,7 @@ public class HandleFramePane extends JPanel implements DropTargetListener, Runna
             isPlay = false;
         } else {
             isPlay = true;
-            ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+//            ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
         }
         selectedTileIndex = -1;
     }

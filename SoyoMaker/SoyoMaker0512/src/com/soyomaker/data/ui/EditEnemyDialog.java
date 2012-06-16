@@ -13,7 +13,6 @@ package com.soyomaker.data.ui;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.ModelActionTableModel;
 import com.soyomaker.data.model.ModelAttributeTableModel;
-import com.soyomaker.data.model.ModelEquipTableModel;
 import com.soyomaker.data.model.ModelStatusTableModel;
 import com.soyomaker.data.model.ModelTreasureTableModel;
 import java.awt.Color;
@@ -22,7 +21,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +35,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
      */
     public EditEnemyDialog(EnemyPanel parent, boolean modal, Enemy enemy) {
         setModal(modal);
-        metm = new ModelEquipTableModel(enemy.equips);
         mttm = new ModelTreasureTableModel(enemy.treasures);
         matm = new ModelAttributeTableModel(enemy.attributes);
         mstm = new ModelStatusTableModel(enemy.status);
@@ -74,7 +71,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     }
     private Enemy enemy;
     private ModelTreasureTableModel mttm;
-    private ModelEquipTableModel metm;
     private ModelAttributeTableModel matm;
     private ModelStatusTableModel mstm;
     private ModelActionTableModel mactm;
@@ -139,11 +135,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         treasureTable = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         attributeTable = new javax.swing.JTable();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        equipTable = new javax.swing.JTable();
-        jToolBar2 = new javax.swing.JToolBar();
-        addEquipButton = new javax.swing.JButton();
-        removeEquipButton = new javax.swing.JButton();
         jToolBar3 = new javax.swing.JToolBar();
         addTreasureButton = new javax.swing.JButton();
         removeTreasureButton = new javax.swing.JButton();
@@ -283,41 +274,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     attributeTable.setRowHeight(20);
     jScrollPane5.setViewportView(attributeTable);
 
-    jScrollPane6.setName("jScrollPane6"); // NOI18N
-
-    equipTable.setModel(metm);
-    equipTable.setName("equipTable"); // NOI18N
-    equipTable.setRowHeight(20);
-    jScrollPane6.setViewportView(equipTable);
-
-    jToolBar2.setFloatable(false);
-    jToolBar2.setRollover(true);
-    jToolBar2.setName("jToolBar2"); // NOI18N
-
-    addEquipButton.setText("添加装备");
-    addEquipButton.setFocusable(false);
-    addEquipButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    addEquipButton.setName("addEquipButton"); // NOI18N
-    addEquipButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    addEquipButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            addEquipButtonActionPerformed(evt);
-        }
-    });
-    jToolBar2.add(addEquipButton);
-
-    removeEquipButton.setText("删除装备");
-    removeEquipButton.setFocusable(false);
-    removeEquipButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    removeEquipButton.setName("removeEquipButton"); // NOI18N
-    removeEquipButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    removeEquipButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            removeEquipButtonActionPerformed(evt);
-        }
-    });
-    jToolBar2.add(removeEquipButton);
-
     jToolBar3.setFloatable(false);
     jToolBar3.setRollover(true);
     jToolBar3.setName("jToolBar3"); // NOI18N
@@ -435,46 +391,49 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     jPanel3Layout.setHorizontalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jToolBar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jToolBar6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane2, jScrollPane3, jScrollPane4, jScrollPane5, jScrollPane6, jToolBar2, jToolBar3, jToolBar4, jToolBar5, jToolBar6});
+    jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane2, jScrollPane3, jScrollPane4, jScrollPane5, jToolBar3, jToolBar4, jToolBar5, jToolBar6});
 
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2, 0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, 0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
+            .addContainerGap())
     );
 
     okButton.setText("确定");
@@ -523,7 +482,7 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     );
     enemyBattleImgPanelLayout.setVerticalGroup(
         enemyBattleImgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 115, Short.MAX_VALUE)
+        .addGap(0, 112, Short.MAX_VALUE)
     );
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -537,7 +496,7 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
         .addComponent(enemyBattleImgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
@@ -629,7 +588,7 @@ public class EditEnemyDialog extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -759,31 +718,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         statusTable.updateUI();
     }//GEN-LAST:event_removeStatusButtonActionPerformed
 
-    private void addEquipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEquipButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelEquipDialog etd = new AddModelEquipDialog(this, true);
-        etd.setVisible(true);
-        if (etd.getSelectEquip() != null) {
-            for (int i = 0; i < enemy.equips.size(); i++) {
-                if (enemy.equips.get(i).equipType == etd.getSelectEquip().equipType) {
-                    JOptionPane.showMessageDialog(this,
-                            "同类型装备只能装备一个！");
-                    return;
-                }
-            }
-            enemy.equips.add(etd.getSelectEquip());
-            equipTable.updateUI();
-        }
-    }//GEN-LAST:event_addEquipButtonActionPerformed
-
-    private void removeEquipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEquipButtonActionPerformed
-        // TODO add your handling code here:
-        if (equipTable.getSelectedRow() >= 0 && equipTable.getSelectedRow() < enemy.equips.size()) {
-            enemy.equips.remove(equipTable.getSelectedRow());
-        }
-        equipTable.updateUI();
-    }//GEN-LAST:event_removeEquipButtonActionPerformed
-
     private void addTreasureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTreasureButtonActionPerformed
         // TODO add your handling code here:
         AddModelTreasureDialog etd = new AddModelTreasureDialog(this, true);
@@ -824,7 +758,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     private javax.swing.JTable actionTable;
     private javax.swing.JButton addActionButton;
     private javax.swing.JButton addAttributeButton;
-    private javax.swing.JButton addEquipButton;
     private javax.swing.JButton addStausButton;
     private javax.swing.JButton addTreasureButton;
     private javax.swing.JTable attributeTable;
@@ -844,7 +777,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     private javax.swing.JTextField enemyMoneyTextField;
     private javax.swing.JTextField enemyNameTextField;
     private javax.swing.JTextField enemyStreTextField;
-    private javax.swing.JTable equipTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -865,9 +797,7 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
@@ -875,7 +805,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     private javax.swing.JButton okButton;
     private javax.swing.JButton removeActionButton;
     private javax.swing.JButton removeAttributeButton;
-    private javax.swing.JButton removeEquipButton;
     private javax.swing.JButton removeStatusButton;
     private javax.swing.JButton removeTreasureButton;
     private javax.swing.JTable statusTable;

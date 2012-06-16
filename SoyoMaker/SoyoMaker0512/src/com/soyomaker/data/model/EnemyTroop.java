@@ -4,6 +4,7 @@
  */
 package com.soyomaker.data.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -24,4 +25,8 @@ public class EnemyTroop extends Model {
      * 敌人列表
      */
     public ArrayList<Enemy> enemys = new ArrayList<Enemy>();
+    /**
+     * 位置列表
+     */
+    public ArrayList<Point> points = new ArrayList<Point>();
 }

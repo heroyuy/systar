@@ -14,6 +14,7 @@ import com.soyomaker.AppData;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
 import com.soyomaker.data.model.Model;
+import java.awt.Point;
 import javax.swing.DefaultListModel;
 
 /**
@@ -43,11 +44,11 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
             allEnemylistModel.addElement(((Enemy) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ENEMY)[i]));
         }
         allEnemyList.setModel(allEnemylistModel);
-        DefaultListModel troopEnemylistModel = new DefaultListModel();
-        for (int i = 0; i < enemyTroop.enemys.size(); i++) {
-            troopEnemylistModel.addElement(enemyTroop.enemys.get(i));
-        }
-        troopEnemyList.setModel(troopEnemylistModel);
+//        DefaultListModel troopEnemylistModel = new DefaultListModel();
+//        for (int i = 0; i < enemyTroop.enemys.size(); i++) {
+//            troopEnemylistModel.addElement(enemyTroop.enemys.get(i));
+//        }
+//        troopEnemyList.setModel(troopEnemylistModel);
     }
 
     /** This method is called from within the constructor to
@@ -61,8 +62,6 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         troopNameTextField = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        troopEnemyList = new javax.swing.JList();
         addEnemyButton = new javax.swing.JButton();
         removeEnemyButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -71,6 +70,7 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
         clearEnemyButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
+        editEnemyPositionPane = new com.soyomaker.widget.EditEnemyPositionPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("编辑敌人队伍"); // NOI18N
@@ -80,11 +80,6 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
         jLabel1.setName("jLabel1"); // NOI18N
 
         troopNameTextField.setName("troopNameTextField"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        troopEnemyList.setName("troopEnemyList"); // NOI18N
-        jScrollPane1.setViewportView(troopEnemyList);
 
         addEnemyButton.setText("< 添加");
         addEnemyButton.setName("addEnemyButton"); // NOI18N
@@ -139,37 +134,49 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
             }
         });
 
+        editEnemyPositionPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        editEnemyPositionPane.setName("editEnemyPositionPane"); // NOI18N
+
+        javax.swing.GroupLayout editEnemyPositionPaneLayout = new javax.swing.GroupLayout(editEnemyPositionPane);
+        editEnemyPositionPane.setLayout(editEnemyPositionPaneLayout);
+        editEnemyPositionPaneLayout.setHorizontalGroup(
+            editEnemyPositionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 188, Short.MAX_VALUE)
+        );
+        editEnemyPositionPaneLayout.setVerticalGroup(
+            editEnemyPositionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 281, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(clearEnemyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(removeEnemyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addEnemyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(troopNameTextField)
+                        .addComponent(troopNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(autoTroopNameButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
-                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(editEnemyPositionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(clearEnemyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(removeEnemyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addEnemyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -180,19 +187,16 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
                     .addComponent(autoTroopNameButton))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(editEnemyPositionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(okButton)
                             .addComponent(closeButton)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
+                        .addGap(102, 102, 102)
                         .addComponent(addEnemyButton)
                         .addGap(18, 18, 18)
                         .addComponent(removeEnemyButton)
@@ -201,8 +205,6 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -210,9 +212,10 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         enemyTroop.enemys.clear();
         enemyTroop.name = troopNameTextField.getText();
-        for (int i = 0; i < ((DefaultListModel) troopEnemyList.getModel()).size(); i++) {
-            enemyTroop.enemys.add((Enemy) ((DefaultListModel) troopEnemyList.getModel()).elementAt(i));
-        }
+//        for (int i = 0; i < ((DefaultListModel) troopEnemyList.getModel()).size(); i++) {
+//            enemyTroop.enemys.add((Enemy) ((DefaultListModel) troopEnemyList.getModel()).elementAt(i));
+//            enemyTroop.points.add(new Point());
+//        }
         dispose();
 }//GEN-LAST:event_okButtonActionPerformed
 
@@ -223,51 +226,49 @@ public class EditEnemyTroopDialog extends javax.swing.JDialog {
 
     private void addEnemyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnemyButtonActionPerformed
         // TODO add your handling code here:
-        if (allEnemyList.getSelectedIndex() != -1) {
-            ((DefaultListModel) troopEnemyList.getModel()).addElement((Enemy) allEnemyList.getSelectedValue());
-        }
-        troopEnemyList.updateUI();
+//        if (allEnemyList.getSelectedIndex() != -1) {
+//            ((DefaultListModel) troopEnemyList.getModel()).addElement((Enemy) allEnemyList.getSelectedValue());
+//        }
+//        troopEnemyList.updateUI();
     }//GEN-LAST:event_addEnemyButtonActionPerformed
 
     private void removeEnemyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnemyButtonActionPerformed
         // TODO add your handling code here:
-        if (troopEnemyList.getSelectedIndex() != -1) {
-            ((DefaultListModel) troopEnemyList.getModel()).removeElement((Enemy) troopEnemyList.getSelectedValue());
-        }
-        troopEnemyList.updateUI();
+//        if (troopEnemyList.getSelectedIndex() != -1) {
+//            ((DefaultListModel) troopEnemyList.getModel()).removeElement((Enemy) troopEnemyList.getSelectedValue());
+//        }
+//        troopEnemyList.updateUI();
     }//GEN-LAST:event_removeEnemyButtonActionPerformed
 
     private void clearEnemyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEnemyButtonActionPerformed
         // TODO add your handling code here:
-        ((DefaultListModel) troopEnemyList.getModel()).removeAllElements();
-        troopEnemyList.updateUI();
+//        ((DefaultListModel) troopEnemyList.getModel()).removeAllElements();
+//        troopEnemyList.updateUI();
     }//GEN-LAST:event_clearEnemyButtonActionPerformed
 
     private void autoTroopNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoTroopNameButtonActionPerformed
         // TODO add your handling code here:
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < troopEnemyList.getModel().getSize(); i++) {
-            if (i == troopEnemyList.getModel().getSize() - 1) {
-                sb.append(((Enemy) troopEnemyList.getModel().getElementAt(i)).name);
-            } else {
-                sb.append(((Enemy) troopEnemyList.getModel().getElementAt(i)).name).append(",");
-            }
-        }
-        troopNameTextField.setText(sb.toString());
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < troopEnemyList.getModel().getSize(); i++) {
+//            if (i == troopEnemyList.getModel().getSize() - 1) {
+//                sb.append(((Enemy) troopEnemyList.getModel().getElementAt(i)).name);
+//            } else {
+//                sb.append(((Enemy) troopEnemyList.getModel().getElementAt(i)).name).append(",");
+//            }
+//        }
+//        troopNameTextField.setText(sb.toString());
     }//GEN-LAST:event_autoTroopNameButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEnemyButton;
     private javax.swing.JList allEnemyList;
     private javax.swing.JButton autoTroopNameButton;
     private javax.swing.JButton clearEnemyButton;
     private javax.swing.JButton closeButton;
+    private com.soyomaker.widget.EditEnemyPositionPane editEnemyPositionPane;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton okButton;
     private javax.swing.JButton removeEnemyButton;
-    private javax.swing.JList troopEnemyList;
     private javax.swing.JTextField troopNameTextField;
     // End of variables declaration//GEN-END:variables
 }

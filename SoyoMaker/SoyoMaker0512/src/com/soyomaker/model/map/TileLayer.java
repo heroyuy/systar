@@ -491,7 +491,6 @@ public class TileLayer extends Layer {
      *
      * @param find    the tile to replace
      * @param replace the replacement tile
-     * @throws Exception
      */
     public void replaceTile(Tile find, Tile replace) {
         if (!isVisible()) {

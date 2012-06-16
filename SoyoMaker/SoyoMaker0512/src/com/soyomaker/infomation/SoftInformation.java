@@ -25,15 +25,15 @@ public class SoftInformation {
     /**
      * 
      */
-    public static final int minorVersion = 8;//次版本号：次版本号有2位，偶数表示稳定版，奇数表示开发版，数据结构或者较大修改，增加此版本数
+    public static final int minorVersion = 9;//次版本号：次版本号有2位，偶数表示稳定版，奇数表示开发版，数据结构或者较大修改，增加此版本数
     /**
      *
      */
-    public static final int lastVersion = 7;//尾版本号：尾版本号有2位，一般修改，增加此版本数
+    public static final int lastVersion = 0;//尾版本号：尾版本号有2位，一般修改，增加此版本数
     /**
      * 
      */
-    public static final int modifiedVersion = 20120517;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
+    public static final int modifiedVersion = 20120615;//修改号：修改号8位，采用提交时的日期，当系统进行任何修改后，修改号都要随之改变
     /**
      *
      */

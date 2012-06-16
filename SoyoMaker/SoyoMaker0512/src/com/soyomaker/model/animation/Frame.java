@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Frame implements Cloneable {
 
     private int delay = 100;//单帧延迟时间,默认为100ms
-    private String name = "";//可选，帧的名称
+    private String name = "新建帧";//可选，帧的名称
     private ArrayList<Clip> tiles = new ArrayList<Clip>();//所使用的模块集
     private Animation animation;
 

@@ -119,7 +119,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel1" max="32767" attributes="1"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" pref="117" max="32767" attributes="1"/>
+                          <Component id="jScrollPane1" alignment="0" pref="114" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -355,30 +355,27 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jToolBar2" linkSize="2" alignment="0" pref="162" max="32767" attributes="1"/>
-                      <Component id="jScrollPane6" linkSize="2" alignment="0" pref="162" max="32767" attributes="1"/>
-                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jToolBar3" linkSize="2" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane4" linkSize="2" alignment="0" pref="160" max="32767" attributes="1"/>
+                      <Component id="jScrollPane4" linkSize="2" alignment="0" min="-2" pref="160" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jToolBar4" linkSize="2" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane2" linkSize="2" alignment="0" pref="162" max="32767" attributes="1"/>
+                      <Component id="jScrollPane2" linkSize="2" alignment="0" min="-2" pref="162" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jToolBar5" linkSize="2" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane5" linkSize="2" alignment="0" pref="162" max="32767" attributes="1"/>
+                      <Component id="jScrollPane5" linkSize="2" alignment="0" min="-2" pref="162" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jToolBar6" linkSize="2" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane3" linkSize="2" alignment="0" pref="160" max="32767" attributes="1"/>
+                      <Component id="jScrollPane3" linkSize="2" alignment="0" min="-2" pref="160" max="-2" attributes="1"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -387,20 +384,28 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jToolBar2" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jToolBar6" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jToolBar3" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jToolBar4" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jToolBar5" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jToolBar6" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="0" pref="0" max="32767" attributes="1"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jToolBar5" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" min="0" pref="0" max="32767" attributes="1"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jToolBar4" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="0" pref="0" max="32767" attributes="1"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jToolBar3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" pref="133" max="32767" attributes="1"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane6" alignment="0" pref="133" max="32767" attributes="1"/>
-                      <Component id="jScrollPane4" alignment="0" pref="133" max="32767" attributes="1"/>
-                      <Component id="jScrollPane5" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane3" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -511,68 +516,6 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane6">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="jScrollPane6" noResource="true"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTable" name="equipTable">
-              <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="metm" type="code"/>
-                </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="0"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="equipTable" noResource="true"/>
-                <Property name="rowHeight" type="int" value="20"/>
-                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JToolBar" name="jToolBar2">
-          <Properties>
-            <Property name="floatable" type="boolean" value="false"/>
-            <Property name="rollover" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="jToolBar2" noResource="true"/>
-          </Properties>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="addEquipButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&#x6dfb;&#x52a0;&#x88c5;&#x5907;"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="addEquipButton" noResource="true"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addEquipButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="removeEquipButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&#x5220;&#x9664;&#x88c5;&#x5907;"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="removeEquipButton" noResource="true"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeEquipButtonActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -753,7 +696,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jToolBar1" alignment="0" pref="117" max="32767" attributes="0"/>
+              <Component id="jToolBar1" alignment="0" pref="114" max="32767" attributes="0"/>
               <Component id="enemyBattleImgPanel" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
@@ -809,7 +752,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="115" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="112" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

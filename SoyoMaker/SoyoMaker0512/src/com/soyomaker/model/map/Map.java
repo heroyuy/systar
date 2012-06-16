@@ -62,10 +62,18 @@ public class Map implements Cloneable {
         return clone;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isHasEdit() {
         return hasEdit;
     }
 
+    /**
+     *
+     * @param hasEdit
+     */
     public void setHasEdit(boolean hasEdit) {
         this.hasEdit = hasEdit;
     }

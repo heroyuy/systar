@@ -4,27 +4,27 @@
  */
 package com.soyomaker.tablemodel;
 
-import com.soyomaker.model.animation.Frame;
 import com.soyomaker.AppData;
+import com.soyomaker.model.animation.Action;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Administrator
  */
-public class FrameTableModel extends AbstractTableModel {
+public class ActionTableModel extends AbstractTableModel {
 
     private static final String COLUMN_NAME[] = {
-        "ID", "帧名"
+        "ID", "音效", "光影"
     };
     private static final Class COLUMN_CLASS[] = {
-        Integer.class, String.class
+        Integer.class, String.class, String.class
     };
 
     /**
      *
      */
-    public FrameTableModel() {
+    public ActionTableModel() {
     }
 
     @Override
@@ -44,38 +44,18 @@ public class FrameTableModel extends AbstractTableModel {
     private AppData data = AppData.getInstance();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Frame frame = data.getCurrentAnimation().getFrame(rowIndex);
-        if (frame != null) {
+        Action action = data.getCurrentAnimation().getAction(rowIndex);
+        if (action != null) {
             switch (columnIndex) {
                 case 0:
                     return rowIndex;
                 case 1:
-                    return frame.getName();
+                    return action.getMusicName();
+                case 2:
+                    return Action.EFFECTS[action.getEffectType()];
             }
         }
         return null;
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int col) {
-        if (col == 0) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void setValueAt(Object v, int r, int c) {
-        Frame frame = data.getCurrentAnimation().getFrame(r);
-
-        if (frame != null) {
-            switch (c) {
-                case 1:
-                    frame.setName(v.toString());
-                    break;
-            }
-        }
-        this.fireTableCellUpdated(r, c);
     }
 
     @Override
@@ -83,6 +63,6 @@ public class FrameTableModel extends AbstractTableModel {
         if (data.getCurrentAnimation() == null) {
             return 0;
         }
-        return data.getCurrentAnimation().getFrames().size();
+        return data.getCurrentAnimation().getActions().size();
     }
 }

@@ -15,10 +15,70 @@ public class Animation {
     private int index;//动画的序号，动画的唯一性标识
     private String name = "";//可选，动画的名称
     private ArrayList<Frame> frames = new ArrayList<Frame>();//帧序列
+    private ArrayList<Action> actions = new ArrayList<Action>();//动作序列
+    private int width = 384;
+    private int height = 384;
+    private int frameDelay = 100;
 
     @Override
     public String toString() {
         return this.getName() + " ID:" + this.getIndex() + "";
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getFrameDelay() {
+        return frameDelay;
+    }
+
+    /**
+     *
+     * @param frameDelay
+     */
+    public void setFrameDelay(int frameDelay) {
+        this.frameDelay = frameDelay;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     *
+     * @param height
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     *
+     * @param width
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Action> getActions() {
+        return actions;
     }
 
     /**
@@ -43,6 +103,18 @@ public class Animation {
             }
         }
         return pics;
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Action getAction(int id) {
+        if (id < 0 || id > actions.size() - 1) {
+            return null;
+        }
+        return actions.get(id);
     }
 
     /**
@@ -83,6 +155,31 @@ public class Animation {
         Frame hold = getFrame(index - 1);
         frames.set(index - 1, getFrame(index));
         frames.set(index, hold);
+    }
+
+    /**
+     *
+     * @param action
+     */
+    public void addAction(Action action) {
+        action.setAnimation(this);
+        actions.add(action);
+    }
+
+    /**
+     *
+     * @param id
+     */
+    public void removeAction(int id) {
+        actions.remove(id);
+    }
+
+    /**
+     *
+     * @param actions
+     */
+    public void setAction(ArrayList<Action> actions) {
+        this.actions = actions;
     }
 
     /**

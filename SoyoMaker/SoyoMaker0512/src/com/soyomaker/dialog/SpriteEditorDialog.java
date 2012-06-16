@@ -19,6 +19,7 @@ import com.soyomaker.listener.FrameListener;
 import com.soyomaker.listener.ProjectAnimationChangeListener;
 import com.soyomaker.listener.ProjectAnimationChangedEvent;
 import com.soyomaker.model.animation.Clip;
+import com.soyomaker.tablemodel.ActionTableModel;
 import com.soyomaker.util.ImagePreviewer;
 import com.soyomaker.util.TileCutter;
 import com.soyomaker.widget.JAccordionPane;
@@ -41,8 +42,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -121,18 +120,27 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         jToolBar2 = new javax.swing.JToolBar();
         newAniButton = new javax.swing.JButton();
         removeAniButton = new javax.swing.JButton();
-        renameAniButton = new javax.swing.JButton();
+        editAniButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         animationTree = new javax.swing.JTree();
         jPanel11 = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         addFrameButton = new javax.swing.JButton();
         removeFrameButton = new javax.swing.JButton();
         cloneFrameButton = new javax.swing.JButton();
         upFrameButton = new javax.swing.JButton();
         downFrameButton = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
         frameTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jToolBar4 = new javax.swing.JToolBar();
+        addActionButton = new javax.swing.JButton();
+        removeActionButton = new javax.swing.JButton();
+        editActionButton = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        actionTable = new javax.swing.JTable();
         jSplitPane9 = new javax.swing.JSplitPane();
         jPanel9 = new javax.swing.JPanel();
         jToolBar5 = new javax.swing.JToolBar();
@@ -357,17 +365,17 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         });
         jToolBar2.add(removeAniButton);
 
-        renameAniButton.setText("重命名动画");
-        renameAniButton.setFocusable(false);
-        renameAniButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        renameAniButton.setName("renameAniButton"); // NOI18N
-        renameAniButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        renameAniButton.addActionListener(new java.awt.event.ActionListener() {
+        editAniButton.setText("编辑动画");
+        editAniButton.setFocusable(false);
+        editAniButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editAniButton.setName("editAniButton"); // NOI18N
+        editAniButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editAniButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                renameAniButtonActionPerformed(evt);
+                editAniButtonActionPerformed(evt);
             }
         });
-        jToolBar2.add(renameAniButton);
+        jToolBar2.add(editAniButton);
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -393,20 +401,26 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
         );
 
         jSplitPane7.setTopComponent(jPanel4);
 
         jPanel11.setName("jPanel11"); // NOI18N
+
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.setResizeWeight(0.5);
+        jSplitPane1.setName("jSplitPane1"); // NOI18N
+
+        jPanel2.setName("jPanel2"); // NOI18N
 
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
@@ -472,7 +486,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         });
         jToolBar3.add(downFrameButton);
 
-        jScrollPane4.setName("jScrollPane4"); // NOI18N
+        jScrollPane6.setName("jScrollPane6"); // NOI18N
 
         ftm = new FrameTableModel();
         frameTable.setModel(ftm);
@@ -489,21 +503,100 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
                 frameTableMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(frameTable);
+        jScrollPane6.setViewportView(frameTable);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+        );
+
+        jSplitPane1.setRightComponent(jPanel2);
+
+        jPanel3.setName("jPanel3"); // NOI18N
+
+        jToolBar4.setFloatable(false);
+        jToolBar4.setRollover(true);
+        jToolBar4.setName("jToolBar4"); // NOI18N
+
+        addActionButton.setText("添加特效");
+        addActionButton.setFocusable(false);
+        addActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addActionButton.setName("addActionButton"); // NOI18N
+        addActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionButtonActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(addActionButton);
+
+        removeActionButton.setText("删除特效");
+        removeActionButton.setFocusable(false);
+        removeActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeActionButton.setName("removeActionButton"); // NOI18N
+        removeActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        removeActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionButtonActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(removeActionButton);
+
+        editActionButton.setText("编辑特效");
+        editActionButton.setFocusable(false);
+        editActionButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editActionButton.setName("editActionButton"); // NOI18N
+        editActionButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionButtonActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(editActionButton);
+
+        jScrollPane8.setName("jScrollPane8"); // NOI18N
+
+        atm = new ActionTableModel();
+        actionTable.setModel(atm);
+        actionTable.setName("actionTable"); // NOI18N
+        jScrollPane8.setViewportView(actionTable);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+        );
+
+        jSplitPane1.setLeftComponent(jPanel3);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         jSplitPane7.setRightComponent(jPanel11);
@@ -720,11 +813,11 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         handleFramePane.setLayout(handleFramePaneLayout);
         handleFramePaneLayout.setHorizontalGroup(
             handleFramePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 625, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         handleFramePaneLayout.setVerticalGroup(
             handleFramePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(handleFramePane);
@@ -796,10 +889,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(alphaSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                             .addComponent(zoomSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jToolBar7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -820,7 +913,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE))
         );
 
         jSplitPane9.setLeftComponent(jPanel9);
@@ -962,33 +1055,36 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void newAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAniButtonActionPerformed
         // TODO add your handling code here:
-        Animation ani = new Animation();
-        ani.setName("新动画");
-        AppData.getInstance().getCurProject().addAnimation(ani);
-        Frame frame = new Frame();
-        frame.setName("双击设置帧名称");
-        ani.addFrame(frame);
-        handleFramePane.setCurFrame(frame);
+        NewAnimationDialog nad = new NewAnimationDialog(this, true);
+        nad.setVisible(true);
+        if (nad.getAnimation() != null) {
+            Animation ani = nad.getAnimation();
+            AppData.getInstance().getCurProject().addAnimation(ani);
+            Frame frame = new Frame();
+            ani.addFrame(frame);
+            frame.setDelay(ani.getFrameDelay());
+            handleFramePane.setCurFrame(frame);
 
-        AppData.getInstance().setCurrentAnimationIndex(ani.getIndex());
-        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(ani);
-        //将新节点插入到指定位置
-        if (selectNode == null) {
-            ((DefaultMutableTreeNode) dtm.getRoot()).add(newNode);
-            dtm.reload((DefaultMutableTreeNode) dtm.getRoot());
-        } else {
-            selectNode.add(newNode);
-            dtm.reload(selectNode);
-        }
-        animationTree.expandPath(tp);
-        animationTree.setSelectionPath(new TreePath(dtm.getPathToRoot(newNode)));
-        //设置维持当前的选择路径
-        animationTree.setExpandsSelectedPaths(true);
-        frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
-                ani.getFrames().size() - 1);
-        frameTable.updateUI();
-        if (ani.getFrames().size() > 0) {
-            handleFramePane.setCurFrame(ani.getFrame(ani.getFrames().size() - 1));
+            AppData.getInstance().setCurrentAnimationIndex(ani.getIndex());
+            DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(ani);
+            //将新节点插入到指定位置
+            if (selectNode == null) {
+                ((DefaultMutableTreeNode) dtm.getRoot()).add(newNode);
+                dtm.reload((DefaultMutableTreeNode) dtm.getRoot());
+            } else {
+                selectNode.add(newNode);
+                dtm.reload(selectNode);
+            }
+            animationTree.expandPath(tp);
+            animationTree.setSelectionPath(new TreePath(dtm.getPathToRoot(newNode)));
+            //设置维持当前的选择路径
+            animationTree.setExpandsSelectedPaths(true);
+            frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
+                    ani.getFrames().size() - 1);
+            frameTable.updateUI();
+            if (ani.getFrames().size() > 0) {
+                handleFramePane.setCurFrame(ani.getFrame(ani.getFrames().size() - 1));
+            }
         }
     }//GEN-LAST:event_newAniButtonActionPerformed
 
@@ -1172,7 +1268,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void frameTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameTableMouseClicked
         // TODO add your handling code here:
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         if (frameTable.getSelectedRow() < 0 || frameTable.getSelectedRow() > ani.getFrames().size() - 1) {
             return;
         }
@@ -1181,10 +1277,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void downFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0) {
+        if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         int frameIndex = ani.getFrames().indexOf(handleFramePane.getCurFrame());
         int totalFrames = ani.getFrames().size();
         if (frameIndex < totalFrames - 1) {
@@ -1198,10 +1294,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void upFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0) {
+        if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         int frameIndex = ani.getFrames().indexOf(handleFramePane.getCurFrame());
         if (frameIndex > 0) {
             ani.swapFrameUp(frameIndex);
@@ -1214,10 +1310,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void cloneFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cloneFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0) {
+        if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         Frame frame = null;
         if (handleFramePane.getCurFrame() != null) {
             try {
@@ -1235,10 +1331,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void removeFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0) {
+        if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         if (frameTable.getSelectedRow() < 0 || frameTable.getSelectedRow() > ani.getFrames().size() - 1) {
             return;
         }
@@ -1254,14 +1350,14 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
 
     private void addFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFrameButtonActionPerformed
         // TODO add your handling code here:
-        if (data.getCurrentAnimationIndex() < 0) {
+        if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurProject().getAnimation(data.getCurrentAnimationIndex());
+        Animation ani = data.getCurrentAnimation();
         Frame frame = new Frame();
-        frame.setName("双击设置帧名称");
         frame.setAnimation(ani);
         ani.addFrame(frame);
+        frame.setDelay(ani.getFrameDelay());
         handleFramePane.setCurFrame(frame);
         frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
                 ani.getFrames().size() - 1);
@@ -1380,21 +1476,39 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         tp = evt.getPath();
     }//GEN-LAST:event_animationTreeTreeExpanded
 
-    private void renameAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameAniButtonActionPerformed
+    private void editAniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAniButtonActionPerformed
         // TODO add your handling code here:
         if (selectNode != null && selectNode.getUserObject() instanceof Animation) {
             EditAnimationDialog ead = new EditAnimationDialog(this, true);
             ead.setVisible(true);
-            if (ead.getNewName() != null) {
-                ((Animation) selectNode.getUserObject()).setName(ead.getNewName());
-                animationTree.updateUI();
-            }
+//            if (ead.getNewName() != null) {
+//                ((Animation) selectNode.getUserObject()).setName(ead.getNewName());
+            animationTree.updateUI();
+            handleFramePane.updateUI();
+//            }
         }
-    }//GEN-LAST:event_renameAniButtonActionPerformed
+    }//GEN-LAST:event_editAniButtonActionPerformed
+
+    private void addActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionButtonActionPerformed
+        // TODO add your handling code here:
+        NewActionDialog nad = new NewActionDialog(this,true);
+        nad.setVisible(true);
+    }//GEN-LAST:event_addActionButtonActionPerformed
+
+    private void removeActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeActionButtonActionPerformed
+
+    private void editActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editActionButtonActionPerformed
     private AutoCutDialog autoCutDialog;
     private FrameTableModel ftm;
+    private ActionTableModel atm;
     private ChoosePicturePane picturePane;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable actionTable;
+    private javax.swing.JButton addActionButton;
     private javax.swing.JButton addFrameButton;
     private javax.swing.JButton addImageButton;
     private javax.swing.JSlider alphaSlider;
@@ -1404,6 +1518,8 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JButton cloneFrameButton;
     private javax.swing.JButton downAlignButton;
     private javax.swing.JButton downFrameButton;
+    private javax.swing.JButton editActionButton;
+    private javax.swing.JButton editAniButton;
     private javax.swing.JButton flipHorizontalButton;
     private javax.swing.JButton flipVerticalButton;
     private javax.swing.JTable frameTable;
@@ -1414,6 +1530,8 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1422,7 +1540,9 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane5;
     private javax.swing.JSplitPane jSplitPane6;
     private javax.swing.JSplitPane jSplitPane7;
@@ -1430,6 +1550,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JToolBar jToolBar6;
     private javax.swing.JToolBar jToolBar7;
@@ -1443,10 +1564,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JButton newAniButton;
     private javax.swing.JButton normalPictureButton;
     private javax.swing.JButton playAnimationButton;
+    private javax.swing.JButton removeActionButton;
     private javax.swing.JButton removeAniButton;
     private javax.swing.JButton removeFrameButton;
     private javax.swing.JButton removeImageButton;
-    private javax.swing.JButton renameAniButton;
     private javax.swing.JButton rightAlignButton;
     private javax.swing.JButton rightRotate90Button;
     public javax.swing.JScrollPane showPictureScrollPane;

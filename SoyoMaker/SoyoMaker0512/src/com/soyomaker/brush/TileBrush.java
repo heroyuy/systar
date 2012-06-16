@@ -36,6 +36,7 @@ public class TileBrush extends AbBrush {
 
     /**
      *
+     * @param tile
      */
     public TileBrush(Tile tile) {
         paintTile = tile;

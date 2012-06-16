@@ -12,6 +12,9 @@ import java.awt.Rectangle;
  */
 public abstract class AbBrush implements IBrush {
 
+    /**
+     *
+     */
     protected Layer affectedLayer;
     /**
      *

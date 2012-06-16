@@ -7,6 +7,7 @@ package com.soyomaker;
 import com.soyomaker.brush.AbBrush;
 import com.soyomaker.brush.TileLayerBrush;
 import com.soyomaker.brush.TileBrush;
+import com.soyomaker.model.animation.Animation;
 import com.soyomaker.model.map.Layer;
 import com.soyomaker.model.map.Map;
 import com.soyomaker.model.map.Tile;
@@ -52,7 +53,7 @@ public class AppData {
     private int currentLayerIndex = -1;
     private int currentAnimationIndex = -1;
     private AppMainFrame mf;
-    private Tile currentTile;
+//    private Tile currentTile;
     private int cpuNums = Runtime.getRuntime().availableProcessors();
     private Executor executor = Executors.newFixedThreadPool(cpuNums);
 //    private Executor executor = Executors.newCachedThreadPool();
@@ -102,13 +103,13 @@ public class AppData {
         return data;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getCurrentAnimationIndex() {
-        return currentAnimationIndex;
-    }
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getCurrentAnimationIndex() {
+//        return currentAnimationIndex;
+//    }
 
     /**
      *
@@ -118,14 +119,13 @@ public class AppData {
         this.currentAnimationIndex = currentAnimationIndex;
     }
 
-    /**
-     * 
-     * @return
-     */
-    public int getCurrentLayerIndex() {
-        return currentLayerIndex;
-    }
-
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getCurrentLayerIndex() {
+//        return currentLayerIndex;
+//    }
     /**
      * 
      * @param currentLayerIndex
@@ -136,14 +136,13 @@ public class AppData {
         mf.layerTable.updateUI();
     }
 
-    /**
-     * 
-     * @return
-     */
-    public int getCurrentMapIndex() {
-        return currentMapIndex;
-    }
-
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getCurrentMapIndex() {
+//        return currentMapIndex;
+//    }
     /**
      * 
      * @param currentMapIndex
@@ -256,20 +255,19 @@ public class AppData {
         return project.getMap(currentMapIndex);
     }
 
-    /**
-     * 
-     */
-    public void resetCurrentMapIndex() {
-        currentMapIndex = -1;
-    }
-
-    /**
-     * 
-     */
-    public void resetCurrentLayerIndex() {
-        currentLayerIndex = -1;
-    }
-
+//    /**
+//     *
+//     */
+//    public void resetCurrentMapIndex() {
+//        currentMapIndex = -1;
+//    }
+//
+//    /**
+//     *
+//     */
+//    public void resetCurrentLayerIndex() {
+//        currentLayerIndex = -1;
+//    }
     /**
      * 
      * @param layer
@@ -284,6 +282,14 @@ public class AppData {
             currentLayerIndex = getCurrentMap().indexOfLayer(layer);
         }
         mf.layerTable.getSelectionModel().setSelectionInterval(currentLayerIndex, currentLayerIndex);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Animation getCurrentAnimation() {
+        return project.getAnimation(currentAnimationIndex);
     }
 
     /**

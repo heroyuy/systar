@@ -23,6 +23,10 @@ public class TileLayerBrush extends AbBrush {
         brushLayer = mapLayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public Layer getBrushLayer() {
         return brushLayer;
     }

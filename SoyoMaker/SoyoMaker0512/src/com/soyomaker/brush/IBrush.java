@@ -28,8 +28,6 @@ public interface IBrush {
      * @param x       the tile x-coordinate where the user initiated the paint.
      * @param y       the tile y-coordinate where the user initiated the paint.
      * @param button  the mouse button that was used.
-     * @param layer   the selected layer.
-     *
      * @see MultilayerPlane
      */
     public void startPaint(

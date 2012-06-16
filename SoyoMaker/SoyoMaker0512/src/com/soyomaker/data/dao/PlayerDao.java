@@ -209,7 +209,7 @@ public class PlayerDao extends Dao<Player> {
             }
             lt.addNode("\n");
             if (player.battleImg == null || player.battleImg.equals("")) {
-                lt.addNode("battleImg", "nil");
+                lt.addNode("battlerImg", "nil");
             } else {
                 lt.addNode("battlerImg", "/image/battler/" + player.battleImg);
             }
