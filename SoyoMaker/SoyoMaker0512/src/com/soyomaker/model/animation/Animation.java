@@ -16,8 +16,8 @@ public class Animation {
     private String name = "";//可选，动画的名称
     private ArrayList<Frame> frames = new ArrayList<Frame>();//帧序列
     private ArrayList<Action> actions = new ArrayList<Action>();//动作序列
-    private int width = 384;
-    private int height = 384;
+//    private int width = 384;
+//    private int height = 384;
     private int frameDelay = 100;
 
     @Override
@@ -39,39 +39,43 @@ public class Animation {
      */
     public void setFrameDelay(int frameDelay) {
         this.frameDelay = frameDelay;
+        //保证动画中每个帧的播放时间相同
+        for (int i = 0; i < frames.size(); i++) {
+            frames.get(i).setDelay(frameDelay);
+        }
     }
-
-    /**
-     *
-     * @return
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     *
-     * @param height
-     */
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     *
-     * @param width
-     */
-    public void setWidth(int width) {
-        this.width = width;
-    }
+//
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getHeight() {
+//        return height;
+//    }
+//
+//    /**
+//     *
+//     * @param height
+//     */
+//    public void setHeight(int height) {
+//        this.height = height;
+//    }
+//
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getWidth() {
+//        return width;
+//    }
+//
+//    /**
+//     *
+//     * @param width
+//     */
+//    public void setWidth(int width) {
+//        this.width = width;
+//    }
 
     /**
      *

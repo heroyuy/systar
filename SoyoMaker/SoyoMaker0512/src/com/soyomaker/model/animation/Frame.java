@@ -17,6 +17,14 @@ public class Frame implements Cloneable {
     private String name = "新建帧";//可选，帧的名称
     private ArrayList<Clip> tiles = new ArrayList<Clip>();//所使用的模块集
     private Animation animation;
+    private int width = 384;
+    private int height = 384;
+    private int pngX = 0;//在生成的动画图片中，该帧的x坐标
+    private int pngY = 0;//在生成的动画图片中，该帧的y坐标
+    private int pngWidth = 0;//在生成的动画图片中，该帧的宽度（计算所有Clip所得到的实际宽度）
+    private int pngHeight = 0;//在生成的动画图片中，该帧的高度（计算所有Clip所得到的实际高度）
+    private int offsetX = 0;//针对这个实际宽度，与原先设定的帧的宽度之间的偏移值
+    private int offsetY = 0;//针对这个实际高度，与原先设定的帧的高度之间的偏移值
 
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -26,6 +34,70 @@ public class Frame implements Cloneable {
             clone.tiles.add((Clip) tiles.get(i).clone());
         }
         return clone;
+    }
+
+    public int getPngHeight() {
+        return pngHeight;
+    }
+
+    public void setPngHeight(int pngHeight) {
+        this.pngHeight = pngHeight;
+    }
+
+    public int getPngWidth() {
+        return pngWidth;
+    }
+
+    public void setPngWidth(int pngWidth) {
+        this.pngWidth = pngWidth;
+    }
+
+    public int getPngX() {
+        return pngX;
+    }
+
+    public void setPngX(int pngX) {
+        this.pngX = pngX;
+    }
+
+    public int getPngY() {
+        return pngY;
+    }
+
+    public void setPngY(int pngY) {
+        this.pngY = pngY;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     /**

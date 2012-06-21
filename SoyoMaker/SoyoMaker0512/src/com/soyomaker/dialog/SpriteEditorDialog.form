@@ -516,6 +516,18 @@
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeFrameButtonActionPerformed"/>
                                       </Events>
                                     </Component>
+                                    <Component class="javax.swing.JButton" name="editFrameButton">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="&#x7f16;&#x8f91;&#x5e27;"/>
+                                        <Property name="focusable" type="boolean" value="false"/>
+                                        <Property name="horizontalTextPosition" type="int" value="0"/>
+                                        <Property name="name" type="java.lang.String" value="editFrameButton" noResource="true"/>
+                                        <Property name="verticalTextPosition" type="int" value="3"/>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editFrameButtonActionPerformed"/>
+                                      </Events>
+                                    </Component>
                                     <Component class="javax.swing.JButton" name="cloneFrameButton">
                                       <Properties>
                                         <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">

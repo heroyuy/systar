@@ -4,13 +4,13 @@
  */
 
 /*
- * NewAnimationDialog.java
+ * NewFrameDialog.java
  *
- * Created on 2012-5-22, 14:40:49
+ * Created on 2012-6-16, 21:47:18
  */
 package com.soyomaker.dialog;
 
-import com.soyomaker.model.animation.Animation;
+import com.soyomaker.model.animation.Frame;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -18,25 +18,18 @@ import javax.swing.JOptionPane;
  *
  * @author Administrator
  */
-public class NewAnimationDialog extends javax.swing.JDialog {
+public class NewFrameDialog extends javax.swing.JDialog {
 
-    /** Creates new form NewAnimationDialog
-     * @param parent
-     * @param modal
-     */
-    public NewAnimationDialog(JDialog parent, boolean modal) {
+    /** Creates new form NewFrameDialog */
+    public NewFrameDialog(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
     }
-    private Animation animation = null;
+    private Frame frame = null;
 
-    /**
-     *
-     * @return
-     */
-    public Animation getAnimation() {
-        return animation;
+    public Frame getFrame() {
+        return frame;
     }
 
     /** This method is called from within the constructor to
@@ -49,26 +42,35 @@ public class NewAnimationDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        aniNameTextField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        frameDelayTextField = new javax.swing.JTextField();
+        frameNameTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        frameWidthTextField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        frameHeightTextField = new javax.swing.JTextField();
         cancleButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("新建动画");
+        setTitle("新建帧");
+        setResizable(false);
 
-        jLabel1.setText("动画名称");
+        jLabel1.setText("帧名称");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        aniNameTextField.setText("未命名");
-        aniNameTextField.setName("aniNameTextField"); // NOI18N
+        frameNameTextField.setText("新建帧");
+        frameNameTextField.setName("frameNameTextField"); // NOI18N
 
-        jLabel4.setText("帧间隔(ms)");
-        jLabel4.setName("jLabel4"); // NOI18N
+        jLabel2.setText("帧宽度");
+        jLabel2.setName("jLabel2"); // NOI18N
 
-        frameDelayTextField.setText("100");
-        frameDelayTextField.setName("frameDelayTextField"); // NOI18N
+        frameWidthTextField.setText("384");
+        frameWidthTextField.setName("frameWidthTextField"); // NOI18N
+
+        jLabel3.setText("帧高度");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        frameHeightTextField.setText("384");
+        frameHeightTextField.setName("frameHeightTextField"); // NOI18N
 
         cancleButton.setText("取消");
         cancleButton.setName("cancleButton"); // NOI18N
@@ -95,30 +97,40 @@ public class NewAnimationDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(okButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(cancleButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancleButton)
+                        .addGap(1, 1, 1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
-                            .addGap(22, 22, 22)
-                            .addComponent(aniNameTextField))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(frameDelayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(frameNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(frameWidthTextField)
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(frameHeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {frameHeightTextField, frameWidthTextField});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(aniNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(frameNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(frameDelayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(frameWidthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(frameHeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancleButton)
@@ -126,57 +138,37 @@ public class NewAnimationDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {aniNameTextField, frameDelayTextField});
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        if (aniNameTextField.getText().equals("")) {
+        frame = new Frame();
+        if (frameWidthTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
-                    "动画名不能为空！");
+                    "帧宽度不能为空！");
             return;
         }
-        String aniName = aniNameTextField.getText();
-//        if (aniWidthTextField.getText().equals("")) {
-//            JOptionPane.showMessageDialog(this,
-//                    "动画宽度不能为空！");
-//            return;
-//        }
-//        int aniW = Integer.parseInt(aniWidthTextField.getText());
-//        if (aniW > 2048) {
-//            JOptionPane.showMessageDialog(this,
-//                    "动画宽度不能超过2048！");
-//            return;
-//        }
-//        if (aniHeightTextField.getText().equals("")) {
-//            JOptionPane.showMessageDialog(this,
-//                    "动画高度不能为空！");
-//            return;
-//        }
-//        int aniH = Integer.parseInt(aniHeightTextField.getText());
-//        if (aniH > 2048) {
-//            JOptionPane.showMessageDialog(this,
-//                    "动画高度不能超过2048！");
-//            return;
-//        }
-        if (frameDelayTextField.getText().equals("")) {
+        int frameW = Integer.parseInt(frameWidthTextField.getText());
+        if (frameW > 2048) {
             JOptionPane.showMessageDialog(this,
-                    "帧延时不能为空！");
+                    "帧宽度不能超过2048！");
             return;
         }
-        int aniDelay = Integer.parseInt(frameDelayTextField.getText());
-        if (aniDelay < 0) {
+        if (frameHeightTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
-                    "帧延时不能小于0");
+                    "帧高度不能为空！");
             return;
         }
-        animation = new Animation();
-        animation.setName(aniName);
-//        animation.setWidth(aniW);
-//        animation.setHeight(aniH);
-        animation.setFrameDelay(aniDelay);
+        int frameH = Integer.parseInt(frameHeightTextField.getText());
+        if (frameH > 2048) {
+            JOptionPane.showMessageDialog(this,
+                    "帧高度不能超过2048！");
+            return;
+        }
+        frame.setName(frameNameTextField.getText());
+        frame.setWidth(frameW);
+        frame.setHeight(frameH);
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -185,11 +177,13 @@ public class NewAnimationDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField aniNameTextField;
     private javax.swing.JButton cancleButton;
-    private javax.swing.JTextField frameDelayTextField;
+    private javax.swing.JTextField frameHeightTextField;
+    private javax.swing.JTextField frameNameTextField;
+    private javax.swing.JTextField frameWidthTextField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

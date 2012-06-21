@@ -188,8 +188,8 @@ public class HandleFramePane extends JPanel implements DropTargetListener, Runna
     @Override
     public Dimension getPreferredSize() {
 //        Dimension size = this.getParent().getSize();
-        if (ani != null) {
-            return new Dimension(ani.getWidth(), ani.getHeight());
+        if (curFrame != null) {
+            return new Dimension(curFrame.getWidth(), curFrame.getHeight());
         } else {
             return new Dimension();
         }

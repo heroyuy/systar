@@ -10,6 +10,8 @@
  */
 package com.soyomaker.dialog;
 
+import com.soyomaker.data.DataManager;
+import com.soyomaker.model.animation.Action;
 import javax.swing.JDialog;
 
 /**
@@ -23,6 +25,15 @@ public class NewActionDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        musicNameComboBox.addItem("");
+        for (int i = 0; i < DataManager.listMusicName().length; i++) {
+            musicNameComboBox.addItem(DataManager.listMusicName()[i]);
+        }
+    }
+    private Action action = null;
+
+    public Action getAction() {
+        return action;
     }
 
     /** This method is called from within the constructor to
@@ -36,18 +47,18 @@ public class NewActionDialog extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        startFrameIndexSpinner = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        musicNameComboBox = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        nothingRadioButton = new javax.swing.JRadioButton();
+        screenFlickerRadioButton = new javax.swing.JRadioButton();
+        objectFlickerRadioButton = new javax.swing.JRadioButton();
+        objectDisappearRadioButton = new javax.swing.JRadioButton();
         cancleButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        lastFrameCountSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -57,33 +68,33 @@ public class NewActionDialog extends javax.swing.JDialog {
         jLabel1.setText("开始帧");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-        jSpinner1.setName("jSpinner1"); // NOI18N
+        startFrameIndexSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        startFrameIndexSpinner.setName("startFrameIndexSpinner"); // NOI18N
 
         jLabel2.setText("音效");
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setName("jComboBox1"); // NOI18N
+        musicNameComboBox.setName("musicNameComboBox"); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("光影"));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("无");
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        buttonGroup1.add(nothingRadioButton);
+        nothingRadioButton.setSelected(true);
+        nothingRadioButton.setText("无");
+        nothingRadioButton.setName("nothingRadioButton"); // NOI18N
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("全屏闪烁");
-        jRadioButton2.setName("jRadioButton2"); // NOI18N
+        buttonGroup1.add(screenFlickerRadioButton);
+        screenFlickerRadioButton.setText("全屏闪烁");
+        screenFlickerRadioButton.setName("screenFlickerRadioButton"); // NOI18N
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("对象闪烁");
-        jRadioButton3.setName("jRadioButton3"); // NOI18N
+        buttonGroup1.add(objectFlickerRadioButton);
+        objectFlickerRadioButton.setText("对象闪烁");
+        objectFlickerRadioButton.setName("objectFlickerRadioButton"); // NOI18N
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("对象消失");
-        jRadioButton4.setName("jRadioButton4"); // NOI18N
+        buttonGroup1.add(objectDisappearRadioButton);
+        objectDisappearRadioButton.setText("对象消失");
+        objectDisappearRadioButton.setName("objectDisappearRadioButton"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,13 +102,13 @@ public class NewActionDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addComponent(nothingRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(screenFlickerRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(objectFlickerRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton4)
+                .addComponent(objectDisappearRadioButton)
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -105,24 +116,34 @@ public class NewActionDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(nothingRadioButton)
+                    .addComponent(screenFlickerRadioButton)
+                    .addComponent(objectFlickerRadioButton)
+                    .addComponent(objectDisappearRadioButton))
                 .addContainerGap(165, Short.MAX_VALUE))
         );
 
         cancleButton.setText("取消");
         cancleButton.setName("cancleButton"); // NOI18N
+        cancleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleButtonActionPerformed(evt);
+            }
+        });
 
         okButton.setText("确定");
         okButton.setName("okButton"); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("持续时间");
         jLabel3.setName("jLabel3"); // NOI18N
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        jSpinner2.setName("jSpinner2"); // NOI18N
+        lastFrameCountSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        lastFrameCountSpinner.setName("lastFrameCountSpinner"); // NOI18N
 
         jLabel4.setText("帧");
         jLabel4.setName("jLabel4"); // NOI18N
@@ -137,7 +158,7 @@ public class NewActionDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastFrameCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -149,15 +170,15 @@ public class NewActionDialog extends javax.swing.JDialog {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(startFrameIndexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(musicNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox1, jSpinner1, jSpinner2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lastFrameCountSpinner, musicNameComboBox, startFrameIndexSpinner});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,15 +186,15 @@ public class NewActionDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startFrameIndexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(musicNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastFrameCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -184,21 +205,45 @@ public class NewActionDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // TODO add your handling code here:
+        action = new Action();
+        if (nothingRadioButton.isSelected()) {
+            action.setEffectType(Action.NOTHING);
+        } else if (screenFlickerRadioButton.isSelected()) {
+            action.setEffectType(Action.SCREEN_FLICKER);
+        } else if (objectFlickerRadioButton.isSelected()) {
+            action.setEffectType(Action.OBJECT_FLICKER);
+        } else if (objectDisappearRadioButton.isSelected()) {
+            action.setEffectType(Action.OBJECT_DISAPPEAR);
+        }
+        String musicName = (String) musicNameComboBox.getSelectedItem() == null ? "" : (String) musicNameComboBox.getSelectedItem();
+        action.setStartFrameIndex(Integer.parseInt(startFrameIndexSpinner.getValue().toString()));
+        action.setLastFrameCount(Integer.parseInt(lastFrameCountSpinner.getValue().toString()));
+        action.setMusicName(musicName);
+        dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_cancleButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancleButton;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner lastFrameCountSpinner;
+    private javax.swing.JComboBox musicNameComboBox;
+    private javax.swing.JRadioButton nothingRadioButton;
+    private javax.swing.JRadioButton objectDisappearRadioButton;
+    private javax.swing.JRadioButton objectFlickerRadioButton;
     private javax.swing.JButton okButton;
+    private javax.swing.JRadioButton screenFlickerRadioButton;
+    private javax.swing.JSpinner startFrameIndexSpinner;
     // End of variables declaration//GEN-END:variables
 }

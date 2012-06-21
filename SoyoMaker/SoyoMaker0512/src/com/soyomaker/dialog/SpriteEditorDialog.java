@@ -18,6 +18,7 @@ import com.soyomaker.AppData;
 import com.soyomaker.listener.FrameListener;
 import com.soyomaker.listener.ProjectAnimationChangeListener;
 import com.soyomaker.listener.ProjectAnimationChangedEvent;
+import com.soyomaker.model.animation.Action;
 import com.soyomaker.model.animation.Clip;
 import com.soyomaker.tablemodel.ActionTableModel;
 import com.soyomaker.util.ImagePreviewer;
@@ -129,6 +130,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         jToolBar3 = new javax.swing.JToolBar();
         addFrameButton = new javax.swing.JButton();
         removeFrameButton = new javax.swing.JButton();
+        editFrameButton = new javax.swing.JButton();
         cloneFrameButton = new javax.swing.JButton();
         upFrameButton = new javax.swing.JButton();
         downFrameButton = new javax.swing.JButton();
@@ -449,6 +451,18 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
             }
         });
         jToolBar3.add(removeFrameButton);
+
+        editFrameButton.setText("编辑帧");
+        editFrameButton.setFocusable(false);
+        editFrameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editFrameButton.setName("editFrameButton"); // NOI18N
+        editFrameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editFrameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFrameButtonActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(editFrameButton);
 
         cloneFrameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyomaker/resources/copy.png"))); // NOI18N
         cloneFrameButton.setFocusable(false);
@@ -1353,15 +1367,28 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         if (data.getCurrentAnimation() == null) {
             return;
         }
-        Animation ani = data.getCurrentAnimation();
-        Frame frame = new Frame();
-        frame.setAnimation(ani);
-        ani.addFrame(frame);
-        frame.setDelay(ani.getFrameDelay());
-        handleFramePane.setCurFrame(frame);
-        frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
-                ani.getFrames().size() - 1);
-        frameTable.updateUI();
+        NewFrameDialog nad = new NewFrameDialog(this, true);
+        nad.setVisible(true);
+        if (nad.getFrame() != null) {
+            Animation ani = data.getCurrentAnimation();
+            Frame frame = nad.getFrame();
+            frame.setAnimation(ani);
+            frame.setDelay(ani.getFrameDelay());
+            ani.addFrame(frame);
+            handleFramePane.setCurFrame(frame);
+            frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
+                    ani.getFrames().size() - 1);
+            frameTable.updateUI();
+        }
+//        Animation ani = data.getCurrentAnimation();
+//        Frame frame = new Frame();
+//        frame.setAnimation(ani);
+//        ani.addFrame(frame);
+//        frame.setDelay(ani.getFrameDelay());
+//        handleFramePane.setCurFrame(frame);
+//        frameTable.getSelectionModel().setSelectionInterval(ani.getFrames().size() - 1,
+//                ani.getFrames().size() - 1);
+//        frameTable.updateUI();
 }//GEN-LAST:event_addFrameButtonActionPerformed
 
     private void moveTopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveTopButtonActionPerformed
@@ -1481,27 +1508,61 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         if (selectNode != null && selectNode.getUserObject() instanceof Animation) {
             EditAnimationDialog ead = new EditAnimationDialog(this, true);
             ead.setVisible(true);
-//            if (ead.getNewName() != null) {
-//                ((Animation) selectNode.getUserObject()).setName(ead.getNewName());
             animationTree.updateUI();
             handleFramePane.updateUI();
-//            }
         }
     }//GEN-LAST:event_editAniButtonActionPerformed
 
     private void addActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionButtonActionPerformed
         // TODO add your handling code here:
-        NewActionDialog nad = new NewActionDialog(this,true);
+        NewActionDialog nad = new NewActionDialog(this, true);
         nad.setVisible(true);
+        if (nad.getAction() != null) {
+            Animation ani = data.getCurrentAnimation();
+            Action action = nad.getAction();
+            action.setAnimation(ani);
+            ani.addAction(action);
+            actionTable.getSelectionModel().setSelectionInterval(ani.getActions().size() - 1,
+                    ani.getActions().size() - 1);
+            actionTable.updateUI();
+        }
     }//GEN-LAST:event_addActionButtonActionPerformed
 
     private void removeActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionButtonActionPerformed
         // TODO add your handling code here:
+        if (data.getCurrentAnimation() == null) {
+            return;
+        }
+        Animation ani = data.getCurrentAnimation();
+        if (actionTable.getSelectedRow() < 0 || actionTable.getSelectedRow() > ani.getActions().size() - 1) {
+            return;
+        }
+        ani.removeAction(actionTable.getSelectedRow());
+        if (ani.getActions().size() > 0) {
+            actionTable.getSelectionModel().setSelectionInterval(0, 0);
+        } else {
+            actionTable.getSelectionModel().clearSelection();
+        }
+        actionTable.updateUI();
     }//GEN-LAST:event_removeActionButtonActionPerformed
 
     private void editActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionButtonActionPerformed
         // TODO add your handling code here:
+        if (actionTable.getSelectedRow() == -1) {
+            return;
+        }
+        EditActionDialog ead = new EditActionDialog(this, true);
+        ead.setVisible(true);
     }//GEN-LAST:event_editActionButtonActionPerformed
+
+    private void editFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFrameButtonActionPerformed
+        // TODO add your handling code here:
+        if (frameTable.getSelectedRow() == -1) {
+            return;
+        }
+        EditFrameDialog ead = new EditFrameDialog(this, true);
+        ead.setVisible(true);
+    }//GEN-LAST:event_editFrameButtonActionPerformed
     private AutoCutDialog autoCutDialog;
     private FrameTableModel ftm;
     private ActionTableModel atm;
@@ -1520,6 +1581,7 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
     private javax.swing.JButton downFrameButton;
     private javax.swing.JButton editActionButton;
     private javax.swing.JButton editAniButton;
+    private javax.swing.JButton editFrameButton;
     private javax.swing.JButton flipHorizontalButton;
     private javax.swing.JButton flipVerticalButton;
     private javax.swing.JTable frameTable;

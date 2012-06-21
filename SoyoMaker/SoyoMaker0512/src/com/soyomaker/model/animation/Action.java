@@ -4,8 +4,6 @@
  */
 package com.soyomaker.model.animation;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Administrator
@@ -22,6 +20,60 @@ public class Action {
     private int effectType = 0;//光影效果
     private String musicName = "";
     public static final String[] EFFECTS = {"无", "全屏闪烁", "对象闪烁", "对象消失"};
+    private int sr = 1;
+    private int sg = 1;
+    private int sb = 1;
+    private int tr = 0;
+    private int tg = 0;
+    private int tb = 0;
+
+    public int getSb() {
+        return sb;
+    }
+
+    public void setSb(int sb) {
+        this.sb = sb;
+    }
+
+    public int getSg() {
+        return sg;
+    }
+
+    public void setSg(int sg) {
+        this.sg = sg;
+    }
+
+    public int getSr() {
+        return sr;
+    }
+
+    public void setSr(int sr) {
+        this.sr = sr;
+    }
+
+    public int getTb() {
+        return tb;
+    }
+
+    public void setTb(int tb) {
+        this.tb = tb;
+    }
+
+    public int getTg() {
+        return tg;
+    }
+
+    public void setTg(int tg) {
+        this.tg = tg;
+    }
+
+    public int getTr() {
+        return tr;
+    }
+
+    public void setTr(int tr) {
+        this.tr = tr;
+    }
 
     public String getMusicName() {
         return musicName;

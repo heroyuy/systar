@@ -99,7 +99,6 @@ public class NewMapDialog extends javax.swing.JDialog {
         setTitle(resourceMap.getString("title")); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setName("jPanel1"); // NOI18N
 
         mapNameTextField.setName("mapNameTextField"); // NOI18N
