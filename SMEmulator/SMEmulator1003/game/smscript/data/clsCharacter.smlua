@@ -12,6 +12,28 @@ clsCharacter.__index = clsCharacter
 --重定向需要覆盖的父类方法
 clsCharacter.updateF=clsCharacter.update
 
+--常量定义
+clsCharacter.STR="str"
+clsCharacter.AGI="agi"
+clsCharacter.INT="int"
+clsCharacter.DEX="dex"
+clsCharacter.VIT="vit"
+clsCharacter.LUCK="luck"
+clsCharacter.HP="HP"
+clsCharacter.SP="SP"
+clsCharacter.HRP="hpr"
+clsCharacter.SPR="spr"
+clsCharacter.ATK="atk"
+clsCharacter.DEF="def"
+clsCharacter.MATK="matk"
+clsCharacter.MDEF="mdef"
+clsCharacter.HIT="hit"
+clsCharacter.FLEE="flee"
+clsCharacter.ASPD="aspd"
+clsCharacter.MSPD="mspd"
+clsCharacter.CRI="cri"
+clsCharacter.STA="sta"
+
 --字段定义
 clsCharacter.name="" --角色名称
 clsCharacter.desc="" --角色描述
@@ -27,16 +49,8 @@ clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 
 clsCharacter.step=0 --角色当前行走步数 取值范围[0,3]
 clsCharacter.level=0 --等级
-clsCharacter.maxHp=0 --MaxHP值
-clsCharacter.maxSp=0 --MaxSP值
 clsCharacter.hp=0 --HP值
 clsCharacter.sp=0 --SP值
-clsCharacter.str=0 --力量
-clsCharacter.agi=0 --敏捷
-clsCharacter.int=0 --智力
-clsCharacter.vit=0 --体力
-clsCharacter.dex=0 --灵巧
-clsCharacter.luck=0 --幸运
 clsCharacter.exp=0 --经验值
 clsCharacter.money=0 --金钱
 
@@ -45,10 +59,16 @@ clsCharacter.moveSequence=nil				--角色当前移动序列
 clsCharacter.curMoveDirection=nil			--角色当前移动方向
 clsCharacter.x=nil							--角色在屏幕上的x坐标
 clsCharacter.y=nil							--角色在屏幕上的y坐标
-
 clsCharacter.moveDelegate=nil     --行走事件委托 需要方法：
                                   --1、 “checkCellBeforeMove(character)”以检查指定单元格是否可以行走，是否有脚本要执行等
                                   --2、 “checkCellAfterMove(character)”以检查是否有事件要执行等
+                   
+clsCharacter.str=0 		--力量(基本值，不考虑装备和Buff的)
+clsCharacter.agi=0 		--敏捷(基本值，不考虑装备和Buff的)
+clsCharacter.int=0			--智力(基本值，不考虑装备和Buff的)
+clsCharacter.vit=0 		--体力(基本值，不考虑装备和Buff的)
+clsCharacter.dex=0 		--灵巧(基本值，不考虑装备和Buff的)
+clsCharacter.luck=0 		--幸运(基本值，不考虑装备和Buff的)
 
 --构造器
 function clsCharacter:new()
@@ -58,9 +78,22 @@ function clsCharacter:new()
 	return self
 end
 
+function clsCharacter:getProperty(name)
+  --(1)取配置中的公式计算基本值
+  function fun=loadstring(Dictionary.config.formulas[name])
+  local value=fun()
+  --(2)考虑装备
+  --(3)考虑Buff
+end
+
 --攻击速度(math.min(agi,200))
 function clsCharacter:atkSpeed()
   return math.min(self.agi,200)
+end
+
+--HP
+function clsCharacter:HP()
+  return math.floor(self.vit+math.pow((self.vit/3),2))
 end
 
 --更新[角色的基本更新] 

@@ -31,10 +31,6 @@ function GameData.battle:initEnemyTroop()
       enemy.battlerImage=Image:getImage(enemy.battlerImageName)
     end
     enemy.lev=enemyDict.lev
-    enemy.maxHp=enemyDict.maxHp
-    enemy.maxSp=enemyDict.maxSp
-    enemy.hp=enemyDict.maxHp
-    enemy.sp=enemyDict.maxSp
     enemy.str=enemyDict.stre
     enemy.agi=enemyDict.agil
     enemy.int=enemyDict.inte
@@ -43,6 +39,8 @@ function GameData.battle:initEnemyTroop()
     enemy.luck=enemyDict.luck
     enemy.exp=enemyDict.exp
     enemy.money=enemyDict.money
+    enemy.hp=enemy:getProperty(clsCharacter.HP)
+    enemy.sp=enemy:getProperty(clsCharacter.SP)
     enemy.x=v.x
     enemy.y=v.y
     table.insert(self.enemys,enemy)

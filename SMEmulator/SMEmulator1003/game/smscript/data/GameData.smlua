@@ -69,16 +69,14 @@ function GameData:newGame()
     player.level=playerDict.startLev
     --查表获取字段值
     player.exp=playerDict.expList[player.level]
-    player.maxHp=playerDict.maxHpList[player.level]
-    player.maxSp=playerDict.maxSpList[player.level]
-    player.hp=playerDict.maxHpList[player.level]
-    player.sp=playerDict.maxSpList[player.level]
     player.str=playerDict.strList[player.level]
     player.agi=playerDict.agiList[player.level]
     player.int=playerDict.intList[player.level]
     player.vit=playerDict.vitList[player.level]
     player.dex=playerDict.dexList[player.level]
     player.luck=playerDict.lucList[player.level]
+    player.hp=player:getProperty(clsCharacter.HP)
+    player.sp=player:getProperty(clsCharacter.SP)
     --查配置获取字段值
     player.mapId=Dictionary.config.curMapIndex
     player.row=Dictionary.config.row
