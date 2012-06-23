@@ -1352,6 +1352,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
         if (frameTable.getSelectedRow() < 0 || frameTable.getSelectedRow() > ani.getFrames().size() - 1) {
             return;
         }
+        if (ani.getFrames().size() == 1) {
+            JOptionPane.showMessageDialog(this, "动画至少应该包含一帧！", "警告", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         ani.removeFrame(frameTable.getSelectedRow());
         handleFramePane.setCurFrame(ani.getFrame(0));
         if (ani.getFrames().size() > 0) {

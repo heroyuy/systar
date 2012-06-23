@@ -4,6 +4,8 @@
  */
 package com.soyomaker.model.animation;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +18,6 @@ public class Animation {
     private String name = "";//可选，动画的名称
     private ArrayList<Frame> frames = new ArrayList<Frame>();//帧序列
     private ArrayList<Action> actions = new ArrayList<Action>();//动作序列
-//    private int width = 384;
-//    private int height = 384;
     private int frameDelay = 100;
 
     @Override
@@ -44,38 +44,6 @@ public class Animation {
             frames.get(i).setDelay(frameDelay);
         }
     }
-//
-//    /**
-//     *
-//     * @return
-//     */
-//    public int getHeight() {
-//        return height;
-//    }
-//
-//    /**
-//     *
-//     * @param height
-//     */
-//    public void setHeight(int height) {
-//        this.height = height;
-//    }
-//
-//    /**
-//     *
-//     * @return
-//     */
-//    public int getWidth() {
-//        return width;
-//    }
-//
-//    /**
-//     *
-//     * @param width
-//     */
-//    public void setWidth(int width) {
-//        this.width = width;
-//    }
 
     /**
      *
@@ -193,6 +161,32 @@ public class Animation {
     public void addFrame(Frame frame) {
         frame.setAnimation(this);
         frames.add(frame);
+    }
+
+    /**
+     * FIXME 需要优化
+     * @return
+     */
+    public BufferedImage getPngBufferedImage() {
+        int w = 0;
+        int h = -Integer.MAX_VALUE;
+        for (Frame frame : frames) {
+            w += frame.getPngWidth();
+            if (frame.getPngHeight() > h) {
+                h = frame.getPngHeight();
+            }
+        }
+        BufferedImage buffImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = buffImage.getGraphics();
+        int x = 0;
+        int y = 0;
+        for (Frame frame : frames) {
+            frame.setPngX(x);
+            frame.setPngY(y);
+            g.drawImage(frame.getPngBufferedImage(), x, y, null);
+            x += frame.getPngWidth();
+        }
+        return buffImage;
     }
 
     /**

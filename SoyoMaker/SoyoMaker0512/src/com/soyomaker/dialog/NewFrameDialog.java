@@ -20,7 +20,10 @@ import javax.swing.JOptionPane;
  */
 public class NewFrameDialog extends javax.swing.JDialog {
 
-    /** Creates new form NewFrameDialog */
+    /** Creates new form NewFrameDialog
+     * @param parent
+     * @param modal
+     */
     public NewFrameDialog(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,6 +31,10 @@ public class NewFrameDialog extends javax.swing.JDialog {
     }
     private Frame frame = null;
 
+    /**
+     *
+     * @return
+     */
     public Frame getFrame() {
         return frame;
     }
@@ -150,22 +157,22 @@ public class NewFrameDialog extends javax.swing.JDialog {
             return;
         }
         int frameW = Integer.parseInt(frameWidthTextField.getText());
-        if (frameW > 2048) {
-            JOptionPane.showMessageDialog(this,
-                    "帧宽度不能超过2048！");
-            return;
-        }
+//        if (frameW > 2048) {
+//            JOptionPane.showMessageDialog(this,
+//                    "帧宽度不能超过2048！");
+//            return;
+//        }
         if (frameHeightTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
                     "帧高度不能为空！");
             return;
         }
         int frameH = Integer.parseInt(frameHeightTextField.getText());
-        if (frameH > 2048) {
-            JOptionPane.showMessageDialog(this,
-                    "帧高度不能超过2048！");
-            return;
-        }
+//        if (frameH > 2048) {
+//            JOptionPane.showMessageDialog(this,
+//                    "帧高度不能超过2048！");
+//            return;
+//        }
         frame.setName(frameNameTextField.getText());
         frame.setWidth(frameW);
         frame.setHeight(frameH);

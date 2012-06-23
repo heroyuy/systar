@@ -86,9 +86,10 @@ public class Picture {
         Composite composite = g2d.getComposite();
 
         BufferedImage bImage = sourceImage.getSubimage(pai.getRec().x, pai.getRec().y, pai.getRec().width, pai.getRec().height);
+
         g2d.rotate(Math.toRadians(pai.getRotate()), x + pai.getRec().width * pai.getZoom() / 2, y + pai.getRec().height * pai.getZoom() / 2);
         g2d.setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_ATOP, (255 - pai.getTransparency() * 1.0f) / 255));
+                AlphaComposite.SRC_OVER, (255 - pai.getTransparency() * 1.0f) / 255));
         if (pai.isMirror()) {
             AffineTransform transform = new AffineTransform(-1, 0, 0, 1, bImage.getWidth() - 1, 0);
             AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);

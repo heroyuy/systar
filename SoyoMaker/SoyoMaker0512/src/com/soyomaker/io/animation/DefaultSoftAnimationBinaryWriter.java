@@ -38,7 +38,7 @@ public class DefaultSoftAnimationBinaryWriter implements IAnimationWriter {
             dos.writeInt(pic.getTiles().size());
             for (int j = 0; j < pic.getTiles().size(); j++) {
                 Clip t = pic.getTile(j);
-                dos.writeInt(data.getCurProject().getClips().indexOf(t));
+//                dos.writeInt(data.getCurProject().getClips().indexOf(t));
                 //dos.writeInt(allClipsNum + j);//写入全局唯一的Index
 //                System.out.println("源图 切块ID:" + data.getCurProject().getClips().indexOf(t));
                 dos.writeInt(t.getSourcePoint().x);
@@ -64,14 +64,14 @@ public class DefaultSoftAnimationBinaryWriter implements IAnimationWriter {
                 dos.writeInt(framesSize);
                 for (int i = 0; i < framesSize; i++) {
                     Frame frame = ani.getFrame(i);
-                    dos.writeInt(allFramsNum + i);
+//                    dos.writeInt(allFramsNum + i);
 //                    System.out.println("帧ID:" + (allFramsNum + i));
                     dos.writeUTF(frame.getName());
                     dos.writeInt(frame.getDelay());
-//                    dos.writeInt(frame.getW());
-                    dos.writeInt(0);
-//                    dos.writeInt(frame.getH());
-                    dos.writeInt(0);
+                    dos.writeInt(frame.getWidth());
+//                    dos.writeInt(0);
+                    dos.writeInt(frame.getHeight());
+//                    dos.writeInt(0);
                     dos.writeInt(frame.getTiles().size());
                     for (int j = 0; j < frame.getTiles().size(); j++) {
                         Clip t = frame.getTiles().get(j);

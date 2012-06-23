@@ -20,7 +20,10 @@ import javax.swing.JDialog;
  */
 public class NewActionDialog extends javax.swing.JDialog {
 
-    /** Creates new form NewActionDialog */
+    /** Creates new form NewActionDialog
+     * @param parent
+     * @param modal
+     */
     public NewActionDialog(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -32,6 +35,10 @@ public class NewActionDialog extends javax.swing.JDialog {
     }
     private Action action = null;
 
+    /**
+     *
+     * @return
+     */
     public Action getAction() {
         return action;
     }

@@ -332,8 +332,8 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jToolBar2" alignment="0" pref="285" max="32767" attributes="0"/>
-                              <Component id="jScrollPane3" alignment="0" pref="285" max="32767" attributes="0"/>
+                              <Component id="jToolBar2" alignment="0" pref="367" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" alignment="0" pref="367" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -436,7 +436,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jSplitPane1" alignment="0" pref="285" max="32767" attributes="0"/>
+                              <Component id="jSplitPane1" alignment="0" pref="367" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -468,8 +468,8 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jToolBar3" alignment="0" pref="283" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane6" alignment="0" pref="283" max="32767" attributes="0"/>
+                                      <Component id="jToolBar3" alignment="0" pref="365" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane6" alignment="0" pref="365" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
@@ -620,8 +620,8 @@
                               <Layout>
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jToolBar4" alignment="0" pref="283" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane8" alignment="0" pref="283" max="32767" attributes="0"/>
+                                      <Component id="jToolBar4" alignment="0" pref="365" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane8" alignment="0" pref="365" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">

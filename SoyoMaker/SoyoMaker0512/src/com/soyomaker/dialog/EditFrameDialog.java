@@ -18,7 +18,10 @@ import javax.swing.JDialog;
  */
 public class EditFrameDialog extends javax.swing.JDialog {
 
-    /** Creates new form EditFrameDialog */
+    /** Creates new form EditFrameDialog
+     * @param parent
+     * @param modal
+     */
     public EditFrameDialog(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();

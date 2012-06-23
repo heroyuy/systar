@@ -24,8 +24,17 @@ public class Clip implements Cloneable {
         return clone;
     }
     private Point framePoint = new Point();//图块相对于帧的位置
-    private PaintParameter pai = new PaintParameter();
+    private PaintParameter paintParameter = new PaintParameter();
     private Clip me = null;
+    private Point sourcePoint = new Point();//图块相对于原图的位置
+    private int rotation;//图块的翻转角度 0 不翻转,90 顺时针90,-90 逆时针 90
+    private boolean mirror;//图块是否镜像
+    private Picture picture;//图块所属的Picture
+    private float zoom;//图块缩放
+    private float frameZoom;//帧缩放
+    private int transparency;//图块透明度 0~255
+    private int w;//图块的宽度
+    private int h;//图块的高度
 
     /**
      *
@@ -40,17 +49,33 @@ public class Clip implements Cloneable {
 
     /**
      *
+     * @return
+     */
+    public PaintParameter getPaintParameter() {
+        return paintParameter;
+    }
+
+    /**
+     * 
+     * @param paintParameter
+     */
+    public void setPaintParameter(PaintParameter paintParameter) {
+        this.paintParameter = paintParameter;
+    }
+
+    /**
+     *
      * @param g
      * @param x
      * @param y
      */
     public void paint(Graphics g, int x, int y) {
-        pai.setRec(new Rectangle(sourcePoint.x, sourcePoint.y, w, h));
-        pai.setMirror(mirror);
-        pai.setRotate(rotation);
-        pai.setZoom(zoom);
-        pai.setTransparency(transparency);
-        picture.paint(g, pai, framePoint.x - zoom * w / 2 + x, framePoint.y - zoom * h / 2 + y);
+        paintParameter.setRec(new Rectangle(sourcePoint.x, sourcePoint.y, w, h));
+        paintParameter.setMirror(mirror);
+        paintParameter.setRotate(rotation);
+        paintParameter.setZoom(zoom);
+        paintParameter.setTransparency(transparency);
+        picture.paint(g, paintParameter, framePoint.x - zoom * w / 2 + x, framePoint.y - zoom * h / 2 + y);
     }
 
     /**
@@ -172,16 +197,6 @@ public class Clip implements Cloneable {
     public void setW(int w) {
         this.w = w;
     }
-    private Point sourcePoint = new Point();//图块相对于原图的位置
-    private int rotation;//图块的翻转角度 0 不翻转,90 顺时针90,-90 逆时针 90
-    private boolean mirror;//图块是否镜像
-    private Picture picture;//图块所属的Picture
-    private float zoom;//图块缩放
-    private float frameZoom;//帧缩放
-    private int transparency;//图块透明度 0~255
-//    private int renderType = 0;//渲染方式
-    private int w;//图块的宽度
-    private int h;//图块的高度
 
     /**
      *
@@ -247,21 +262,6 @@ public class Clip implements Cloneable {
         this.mirror = mirror;
     }
 
-//    /**
-//     *
-//     * @return
-//     */
-//    public int getRenderType() {
-//        return renderType;
-//    }
-//
-//    /**
-//     *
-//     * @param renderType
-//     */
-//    public void setRenderType(int renderType) {
-//        this.renderType = renderType;
-//    }
     /**
      *
      * @return

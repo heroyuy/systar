@@ -36,7 +36,7 @@ public class DefaultSoftAnimationBinaryReader implements IAnimationReader {
             int picClipsSize = dis.readInt();
             for (int j = 0; j < picClipsSize; j++) {
                 Clip clip = new Clip();
-                int clipID = dis.readInt();//暂时不用
+//                int clipID = dis.readInt();//暂时不用
                 clip.setSourcePoint(new Point(dis.readInt(), dis.readInt()));
                 clip.setW(dis.readInt());
                 clip.setH(dis.readInt());
@@ -53,13 +53,13 @@ public class DefaultSoftAnimationBinaryReader implements IAnimationReader {
             int frameSize = dis.readInt();
             for (int j = 0; j < frameSize; j++) {
                 Frame frame = new Frame();
-                int frameID = dis.readInt();//暂时未用
+//                int frameID = dis.readInt();//暂时未用
                 frame.setName(dis.readUTF());
                 frame.setDelay(dis.readInt());
-//                frame.setW(dis.readInt());
-                dis.readInt();
-//                frame.setH(dis.readInt());
-                dis.readInt();
+                frame.setWidth(dis.readInt());
+//                dis.readInt();
+                frame.setHeight(dis.readInt());
+//                dis.readInt();
                 int frameClipsSize = dis.readInt();
                 for (int k = 0; k < frameClipsSize; k++) {
                     Clip clip = data.getCurProject().getClips().get(dis.readInt()).clone();//根据ID还原切块
