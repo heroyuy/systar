@@ -33,11 +33,6 @@ function clsPlayerInfo:new(x,y,width,height,player)
   return self
 end
 
---更新信息面板
-function clsPlayerInfo:refresh()
-  
-end
-
 function clsPlayerInfo:onTouch(event)
   --不做任何处理
 end

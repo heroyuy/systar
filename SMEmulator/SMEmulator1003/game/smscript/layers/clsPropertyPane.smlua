@@ -16,11 +16,6 @@ function clsPropertyPane:new(x,y,width,height)
   return self
 end
 
---更新信息面板
-function clsPropertyPane:refresh()
-  
-end
-
 function clsPropertyPane:onTouch(event)
   --不做任何处理
 end
