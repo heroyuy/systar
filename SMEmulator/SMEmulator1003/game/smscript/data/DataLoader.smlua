@@ -17,7 +17,7 @@ DataLoader.itemPath=Game.path.."/data/item.gat";
 DataLoader.enemyPath=Game.path.."/data/enemy.gat";
 DataLoader.enemyTroopPath=Game.path.."/data/enemyTroop.gat";
 DataLoader.statusPath=Game.path.."/data/buff.gat";
-DataLoader.mapPath=Game.path.."/data/map/map{index}.gat";
+DataLoader.mapPath=Game.path.."/data/map/map{id}.gat";
 DataLoader.npcPath=Game.path.."/data/npc.gat";
 DataLoader.animationPath=Game.path.."/data/effect.gat";
 DataLoader.configPath=Game.path.."/data/config.gat";
@@ -99,7 +99,7 @@ end
 --加载Map数据
 function DataLoader:loadMap(id)
   local t=Game:getTime()
-  local path=string.gsub(self.mapPath,"{index}",id)
+  local path=string.gsub(self.mapPath,"{id}",id)
   dofile(path)
   t=Game:getTime()-t
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")

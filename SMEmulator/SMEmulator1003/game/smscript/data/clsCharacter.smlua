@@ -80,20 +80,11 @@ end
 
 function clsCharacter:getProperty(name)
   --(1)取配置中的公式计算基本值
-  function fun=loadstring(Dictionary.config.formulas[name])
-  local value=fun()
+  local fun=loadstring("return function(self) return "..Dictionary.config.formulas[name].." end")()
+  local value=fun(self)
   --(2)考虑装备
   --(3)考虑Buff
-end
-
---攻击速度(math.min(agi,200))
-function clsCharacter:atkSpeed()
-  return math.min(self.agi,200)
-end
-
---HP
-function clsCharacter:HP()
-  return math.floor(self.vit+math.pow((self.vit/3),2))
+  return value
 end
 
 --更新[角色的基本更新] 

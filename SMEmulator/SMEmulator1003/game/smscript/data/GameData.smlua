@@ -45,12 +45,12 @@ function GameData:newGame()
   smLog:info("newGame");
   self.gameType=-1
   --初始化PlayerTroop
-  for _,v in ipairs(Dictionary.config.playersIndex) do
+  for _,v in ipairs(Dictionary.config.playerList) do
     smLog:info("new player:"..v)
     local player=clsPlayer:new()
     local playerDict=Dictionary.players[v]
     --直接取值字段值
-    player.id=playerDict.index
+    player.id=playerDict.id
     player.name=playerDict.name
     player.desc=playerDict.intro
     player.headImageName=playerDict.headImg
@@ -65,7 +65,7 @@ function GameData:newGame()
     if player.battlerImageName then
       player.battlerImage=Image:getImage(player.battlerImageName)
     end
-    player.vocationId=playerDict.vocationIndex
+    player.vocationId=playerDict.vocationId
     player.level=playerDict.startLev
     --查表获取字段值
     player.exp=playerDict.expList[player.level]
@@ -74,11 +74,11 @@ function GameData:newGame()
     player.int=playerDict.intList[player.level]
     player.vit=playerDict.vitList[player.level]
     player.dex=playerDict.dexList[player.level]
-    player.luck=playerDict.lucList[player.level]
+    player.luck=playerDict.luckList[player.level]
     player.hp=player:getProperty(clsCharacter.HP)
     player.sp=player:getProperty(clsCharacter.SP)
     --查配置获取字段值
-    player.mapId=Dictionary.config.curMapIndex
+    player.mapId=Dictionary.config.mapId
     player.row=Dictionary.config.row
     player.col=Dictionary.config.col
     player.face=Dictionary.config.face
@@ -113,8 +113,7 @@ function GameData:getNPC(id)
       --加载存档
       npcDict=nil  --TODO 从存档加载NPC信息
     end
-    npc.id=npcDict.index
-    npc.mapId=npcDict.mapIndex
+    npc.id=npcDict.id
     npc.row=npcDict.row
     npc.col=npcDict.col
     npc.name=npcDict.name
@@ -238,8 +237,7 @@ function GameData:checkScript(npc)
     --当前有脚本在执行则直接返回
     return
   end
-  local id=npc.id
-  local scriptId=Dictionary.npcs[id].scriptIndex
+  local scriptId=Dictionary.npcs[npc.id].scriptId
   --锁定playerTroop
   self.playerTroop:lock()
   --锁定当前NPC

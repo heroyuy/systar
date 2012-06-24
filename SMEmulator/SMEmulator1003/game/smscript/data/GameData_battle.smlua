@@ -19,8 +19,8 @@ GameData.battle.enemys=nil				--敌人队伍
 function GameData.battle:initEnemyTroop()
   self.enemys={}
   local enemyTroopDict=Dictionary.enemytroops[self.enemyTroopId]
-  for i,v in ipairs(enemyTroopDict.enemys) do
-    local enemyId=v.index
+  for i,v in ipairs(enemyTroopDict.enemyList) do
+    local enemyId=v.id
     local enemyDict=Dictionary.enemys[enemyId]
     local enemy=clsCharacter:new()
     enemy.id=enemyId
