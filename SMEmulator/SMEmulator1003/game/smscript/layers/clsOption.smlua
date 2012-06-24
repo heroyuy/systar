@@ -33,7 +33,6 @@ function clsOption:new(optionItems)
     button.highlightImage=highlightImage
     button.text=v
     button.textColor=Skin:getColor(1,1)
-    button:refresh()
     button.tag=i
     button.delegate=self
     bgLayer:addChild(button)
@@ -51,5 +50,3 @@ function clsOption:buttonTapped(target)
   GameLayer:removeChildFromScene(self)
   callFunction(self.delegate,self.callback,index)
 end
-
-

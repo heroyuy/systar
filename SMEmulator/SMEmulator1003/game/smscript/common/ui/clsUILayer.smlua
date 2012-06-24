@@ -216,10 +216,6 @@ function clsUILayer:onTouch(event)
   callFunction(self.delegate,self.callback,self,event)
 end
 
---更新层
-function clsUILayer:refresh()
-end
-
 --运行动作
 function clsUILayer:runAction(action)
   action.target=self

@@ -15,9 +15,6 @@ clsUIButton.STATE_HIGHLIGHT=1             			--高亮状态
 
 clsUIButton.highlightImage=nil             			--高亮时图片
 clsUIButton.normalImage=nil               			--普通时图片
-clsUIButton.text=nil                        		--按钮文字
-clsUIButton.textColor="0xffffffff"           		--文字颜色
-clsUIButton.textSize=-1                    			--文字大小
 
 clsUIButton.buttonState=clsUIButton.STATE_NORMAL	--按钮状态
 clsUIButton.label=nil								--按钮上用于显示文字的标签
@@ -27,22 +24,10 @@ clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
 function clsUIButton:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUIButton)
+  self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
+  self:addChild(self.label)
   self.callback="buttonTapped"
   return self
-end
-
---更新Button
-function clsUIButton:refresh()
-  self:clear()
-  self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
-  self.label.text=self.text
-  self.label.textColor=self.textColor
-  self.label.textSize=self.textSize
-  self.label:refresh()
-  self:addChild(self.label)
-  if self.image==nil then
-    self.image=self.normalImage
-  end
 end
 
 --处理触屏事件（lua层不应该调用此方法）

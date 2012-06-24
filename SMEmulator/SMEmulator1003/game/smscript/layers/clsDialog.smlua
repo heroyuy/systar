@@ -45,7 +45,6 @@ function clsDialog:new(name,content,bustPath,position)
   if position==0 then
     nameLabel.x=2*gap+bustLayer.width
   end
-  nameLabel:refresh()
   bgLayer:addChild(nameLabel)
   --内容
   self.contentLabel=clsUITextArea:new(4*gap,2*gap+(cellHeight+gap),self.width-6*gap-bustLayer.width,frameHeight-5*gap-cellHeight)
@@ -55,7 +54,6 @@ function clsDialog:new(name,content,bustPath,position)
   if position==0 then
     self.contentLabel.x=4*gap+bustLayer.width
   end
-  self.contentLabel:refresh()
   bgLayer:addChild(self.contentLabel)
   return self
 end

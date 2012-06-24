@@ -1,0 +1,26 @@
+--[[
+  description:信息面板。
+  author:wp_g4
+  date:2011/05/20
+--]]
+
+--类结构定义
+clsPropertyPane={}
+setmetatable(clsPropertyPane,clsUILayer)
+clsPropertyPane.__index=clsPropertyPane
+
+--构造器
+function clsPropertyPane:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsPropertyPane)
+  return self
+end
+
+--更新信息面板
+function clsPropertyPane:refresh()
+  
+end
+
+function clsPropertyPane:onTouch(event)
+  --不做任何处理
+end

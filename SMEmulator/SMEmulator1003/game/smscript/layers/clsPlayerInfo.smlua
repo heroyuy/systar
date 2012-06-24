@@ -29,7 +29,6 @@ function clsPlayerInfo:new(x,y,width,height,player)
   local nameLabel=clsUILabel:new(80,10,128,20)
   nameLabel.text=self.player.name
   nameLabel.anchor={0,0}
-  nameLabel:refresh()
   self:addChild(nameLabel)
   return self
 end
