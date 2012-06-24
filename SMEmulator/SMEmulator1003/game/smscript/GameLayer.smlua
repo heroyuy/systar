@@ -67,8 +67,17 @@ function GameLayer:addChildToScene(layer)
 end
 
 --从场景上移除元件
-function GameLayer:removeChildFromScene(layer)
+function GameLayer:removeChildFromSceneLayer(layer)
   self.sceneLayer:removeChild(layer)
+end
+
+--从事件层上移除元件
+function GameLayer:removeChildFromEventLayer(layer)
+  self.eventLayer:removeChild(layer)
+  if table.getn(self.eventLayer.children)==0 then
+    self.eventLayer.enabled=false
+    self.eventLayer.visibility=false
+  end
 end
 
 --显示普通对话框

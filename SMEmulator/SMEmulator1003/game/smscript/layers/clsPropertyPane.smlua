@@ -13,9 +13,11 @@ clsPropertyPane.__index=clsPropertyPane
 function clsPropertyPane:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsPropertyPane)
+  self.image=Skin:createBgWithFrame(self.width,self.height)
   return self
 end
 
 function clsPropertyPane:onTouch(event)
   --不做任何处理
+  self:removeFromParent()
 end

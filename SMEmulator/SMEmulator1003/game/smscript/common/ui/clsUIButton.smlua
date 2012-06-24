@@ -9,6 +9,9 @@ clsUIButton={}
 setmetatable(clsUIButton,clsUILayer)
 clsUIButton.__index=clsUIButton
 
+--重定向需要覆盖的父类方法
+clsUIButton.paintLayerF=clsUIButton.paintLayer
+
 --字段
 clsUIButton.STATE_NORMAL=0                			--普通状态
 clsUIButton.STATE_HIGHLIGHT=1             			--高亮状态
@@ -28,6 +31,16 @@ function clsUIButton:new(x,y,width,height)
   self:addChild(self.label)
   self.callback="buttonTapped"
   return self
+end
+
+
+--绘制Button
+function clsUIButton:paintLayer(painter)
+  if self.image==nil then
+    self.image=self.normalImage
+  end
+  --调用父类绘制方法
+  self:paintLayerF(painter)
 end
 
 --处理触屏事件（lua层不应该调用此方法）

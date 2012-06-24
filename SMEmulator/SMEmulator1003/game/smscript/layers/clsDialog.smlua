@@ -54,6 +54,7 @@ function clsDialog:new(name,content,bustPath,position)
   if position==0 then
     self.contentLabel.x=4*gap+bustLayer.width
   end
+  self.contentLabel:refresh()
   bgLayer:addChild(self.contentLabel)
   return self
 end
@@ -62,7 +63,7 @@ function clsDialog:onTouch(event)
   local type=event:getType()
   if type==UIConst.eventType.DOWN then
     if not self.contentLabel:nextPage() then
-      GameLayer:removeChildFromScene(self)
+      GameLayer:removeChildFromEventLayer(self)
       callFunction(self.delegate,self.callback)
     end
   end

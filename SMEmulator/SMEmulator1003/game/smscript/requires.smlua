@@ -53,6 +53,7 @@ require("clsOption")
 require("clsDialog")
 require("clsPlayerInfo")
 require("clsPicker")
+require("clsPropertyPane")
 
 --scenes
 require("clsScene")

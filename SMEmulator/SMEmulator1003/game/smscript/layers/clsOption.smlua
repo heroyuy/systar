@@ -47,6 +47,6 @@ end
 
 function clsOption:buttonTapped(target)
   local index=target.tag
-  GameLayer:removeChildFromScene(self)
+  GameLayer:removeChildFromEventLayer(self)
   callFunction(self.delegate,self.callback,index)
 end
