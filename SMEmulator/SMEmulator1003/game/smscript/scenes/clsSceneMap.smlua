@@ -66,8 +66,8 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=GameData.playerTroop:leader()
-  self.buttonHead.normalImage=self.curPlayer.headImage
-  self.buttonHead.highlightImage=self.curPlayer.headImage:tone(1,1,0)
+  self.buttonHead.normalImage=self.curPlayer.headImg
+  self.buttonHead.highlightImage=self.curPlayer.headImg:tone(1,1,0)
   self.buttonHead:refresh()
   local map=Dictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
@@ -109,8 +109,8 @@ function clsSceneMap:changeMap(map)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
     --玩家
-    local playerSprite=clsSprite:new(self.curPlayer.charImage,
-       self.curPlayer.charImage:getWidth()/4,self.curPlayer.charImage:getHeight()/4)
+    local playerSprite=clsSprite:new(self.curPlayer.charImg,
+       self.curPlayer.charImg:getWidth()/4,self.curPlayer.charImg:getHeight()/4)
     playerSprite.tag=self.curPlayer.id
     playerSprite.z=self.curPlayer.row
     local px,py=self:calculateCharacterLocation(self.curPlayer)
@@ -120,8 +120,8 @@ function clsSceneMap:changeMap(map)
     --NPC
     for k,v in pairs(GameData.curMap.npcs) do
       local npc=GameData:getNPC(v)
-      local npcSprite=clsSprite:new(npc.charImage,
-        npc.charImage:getWidth()/4,npc.charImage:getHeight()/4)
+      local npcSprite=clsSprite:new(npc.charImg,
+        npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
       npcSprite.tag=npc.id
       npcSprite.z=npc.row
       local nx,ny=self:calculateCharacterLocation(npc)

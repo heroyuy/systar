@@ -26,16 +26,16 @@ function GameData.battle:initEnemyTroop()
     enemy.id=enemyId
     enemy.name=enemyDict.name
     enemy.desc=enemyDict.intro
-    enemy.battlerImageName=enemyDict.battlerImg
-    if enemy.battlerImageName then
-      enemy.battlerImage=Image:getImage(enemy.battlerImageName)
+    enemy.actionImgName=enemyDict.actionImg
+    if enemy.actionImgName then
+      enemy.actionImg=Image:getImage(enemy.actionImgName)
     end
     enemy.lev=enemyDict.lev
-    enemy.str=enemyDict.stre
-    enemy.agi=enemyDict.agil
-    enemy.int=enemyDict.inte
-    enemy.vit=enemyDict.vita
-    enemy.dex=enemyDict.dext
+    enemy.str=enemyDict.str
+    enemy.agi=enemyDict.agi
+    enemy.int=enemyDict.int
+    enemy.vit=enemyDict.vit
+    enemy.dex=enemyDict.dex
     enemy.luck=enemyDict.luck
     enemy.exp=enemyDict.exp
     enemy.money=enemyDict.money

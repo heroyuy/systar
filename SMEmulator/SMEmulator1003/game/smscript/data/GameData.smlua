@@ -53,20 +53,20 @@ function GameData:newGame()
     player.id=playerDict.id
     player.name=playerDict.name
     player.desc=playerDict.intro
-    player.headImageName=playerDict.headImg
-    if player.headImageName then
-      player.headImage=Image:getImage(player.headImageName)
+    player.headImgName=playerDict.headImg
+    if player.headImgName then
+      player.headImg=Image:getImage(player.headImgName)
     end
-    player.charImageName=playerDict.charImg
-    if player.charImageName then
-      player.charImage=Image:getImage(player.charImageName)
+    player.charImgName=playerDict.charImg
+    if player.charImgName then
+      player.charImg=Image:getImage(player.charImgName)
     end
-    player.battlerImageName=playerDict.battlerImg
-    if player.battlerImageName then
-      player.battlerImage=Image:getImage(player.battlerImageName)
+    player.actionImgName=playerDict.actionImg
+    if player.actionImgName then
+      player.actionImg=Image:getImage(player.actionImgName)
     end
     player.vocationId=playerDict.vocationId
-    player.level=playerDict.startLev
+    player.level=1
     --查表获取字段值
     player.exp=playerDict.expList[player.level]
     player.str=playerDict.strList[player.level]
@@ -117,13 +117,13 @@ function GameData:getNPC(id)
     npc.row=npcDict.row
     npc.col=npcDict.col
     npc.name=npcDict.name
-    npc.charImageName=npcDict.charImg
-    if npc.charImageName then
-      npc.charImage=Image:getImage(npc.charImageName)
+    npc.charImgName=npcDict.charImg
+    if npc.charImgName then
+      npc.charImg=Image:getImage(npc.charImgName)
     end
-    npc.headImageName=npcDict.headImg
-    if npc.headImageName then
-      npc.headImage=Image:getImage(npc.headImageName)
+    npc.headImgName=npcDict.headImg
+    if npc.headImgName then
+      npc.headImg=Image:getImage(npc.headImgName)
     end
     npc.face=npcDict.face
     npc.moveType=npcDict.moveType

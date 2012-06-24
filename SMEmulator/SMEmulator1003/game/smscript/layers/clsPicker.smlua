@@ -26,11 +26,11 @@ function clsPicker:new(x,y,width,height,actors)
   self.endX=width-height/2
   self.image=Skin:createSelectedBg(width,height)
   for k,actor in pairs(actors) do
-    local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
+    local w,h=actor.actionImg:getWidth(),actor.actionImg:getHeight()
     local actorLayer=clsUILayer:new(self.startX,height,w/3,h/4)
     actorLayer.anchor={0.5,1}
     actorLayer.tag=actor.id
-    actorLayer.image=actor.battlerImage:clip(0,0,w/3,h/4)
+    actorLayer.image=actor.actionImg:clip(0,0,w/3,h/4)
     self:addChild(actorLayer)
   end
   return self
@@ -58,9 +58,9 @@ function clsPicker:refresh()
   local delta=curTime-self.lastUpdateTime
   self.lastUpdateTime=curTime
   for k,actor in pairs(self.actors) do
-    local atkSpeed=actor:atkSpeed()  --每秒移动atkSpeed距离
+    local aspd=actor:getProperty(clsCharacter.ASPD)  --每秒移动atkSpeed距离
     local actorLayer=self:childWithTag(actor.id)
-    actorLayer.x=actorLayer.x+atkSpeed/1000*delta
+    actorLayer.x=actorLayer.x+aspd/1000*delta
     if actorLayer.x>=self.endX then
       --有精灵走到了终点
       idPicked=actor.id

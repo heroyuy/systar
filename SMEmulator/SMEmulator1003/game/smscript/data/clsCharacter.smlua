@@ -37,12 +37,12 @@ clsCharacter.STA="sta"
 --字段定义
 clsCharacter.name="" --角色名称
 clsCharacter.desc="" --角色描述
-clsCharacter.headImageName=nil --头像名称
-clsCharacter.headImage=nil --头像
-clsCharacter.charImageName=nil --行走图名称
-clsCharacter.charImage=nil --行走图
-clsCharacter.battlerImageName=nil --战斗图名称
-clsCharacter.battlerImage=nil --战斗图
+clsCharacter.headImgName=nil --头像名称
+clsCharacter.headImg=nil --头像
+clsCharacter.charImgName=nil --行走图名称
+clsCharacter.charImg=nil --行走图
+clsCharacter.actionImgName=nil --战斗图名称
+clsCharacter.actionImg=nil --战斗图
 clsCharacter.mapId=0 --角色当前所在地图ID
 clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
@@ -79,9 +79,11 @@ function clsCharacter:new()
 end
 
 function clsCharacter:getProperty(name)
+  smLog:info("str:"..self.str.." agi:"..self.agi.." int:"..self.int.." dex:"..self.dex.." vit:"..self.vit.." luck:"..self.luck)
   --(1)取配置中的公式计算基本值
   local fun=loadstring("return function(self) return "..Dictionary.config.formulas[name].." end")()
   local value=fun(self)
+  smLog:info("getProperty->name:"..name.." value:"..value)
   --(2)考虑装备
   --(3)考虑Buff
   return value

@@ -104,8 +104,8 @@ function clsSceneBattle:onStart()
   --初始化精灵层
   for k,actor in pairs(self.actors) do
     --加载动作列表
-    local w,h=actor.battlerImage:getWidth(),actor.battlerImage:getHeight()
-    local images=Image:split(actor.battlerImage,self.ANIMATE_ROW,self.ANIMATE_COL)
+    local w,h=actor.actionImg:getWidth(),actor.actionImg:getHeight()
+    local images=Image:split(actor.actionImg,self.ANIMATE_ROW,self.ANIMATE_COL)
     for i=1,self.ANIMATE_ROW do
       local animate=Action:newAnimateAction(images[i],200)
       self.animates[actor.id.."_"..i]=animate
