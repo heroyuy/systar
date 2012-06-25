@@ -37,8 +37,10 @@ function clsSceneTitle:onStart()
     self.bgLayer.image=Image:getImage(Dictionary.config.titleImg)
   end
   --主菜单
-  self.menu=clsUIMenu:new(screenWidth/2,screenHeight-120,200,110,self.menuItems)
+  self.menu=clsUIMenu:new(screenWidth/2,screenHeight-120,200,110)
+  self.menu.items=self.menuItems
   self.menu.delegate=self
+  self.menu:refresh()
   self.bgLayer:addChild(self.menu)
   GameLayer:addChildToScene(self.bgLayer)
 end

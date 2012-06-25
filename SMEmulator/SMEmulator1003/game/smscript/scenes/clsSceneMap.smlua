@@ -48,9 +48,11 @@ function clsSceneMap:new()
     self.buttonHead.delegate=self
     GameLayer:addChildToScene(self.buttonHead)
     --菜单
-    self.menu=clsUIMenu:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200,self.menuItems)
+    self.menu=clsUIMenu:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200)
     self.menu.anchor={0,0}
     self.menu.delegate=self
+    self.menu.items=self.menuItems
+    self.menu:refresh()
     self.menu.visibility=false
     GameLayer:addChildToScene(self.menu)
 	return self
@@ -65,7 +67,6 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   self.curPlayer=GameData.playerTroop:leader()
   self.buttonHead.normalImage=self.curPlayer.headImg
-  self.buttonHead.highlightImage=self.curPlayer.headImg:tone(1,1,0)
   local map=Dictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
 end

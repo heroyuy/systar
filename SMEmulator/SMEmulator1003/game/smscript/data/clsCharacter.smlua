@@ -79,7 +79,6 @@ function clsCharacter:new()
 end
 
 function clsCharacter:getProperty(name)
-  smLog:info("str:"..self.str.." agi:"..self.agi.." int:"..self.int.." dex:"..self.dex.." vit:"..self.vit.." luck:"..self.luck)
   --(1)取配置中的公式计算基本值
   local fun=loadstring("return function(self) return "..Dictionary.config.formulas[name].." end")()
   local value=fun(self)

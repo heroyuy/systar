@@ -14,6 +14,21 @@ function clsPropertyPane:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsPropertyPane)
   self.image=Skin:createBgWithFrame(self.width,self.height)
+  --标题
+  local menuItems={}
+  for _,player in ipairs(GameData.playerTroop.players) do
+    table.insert(menuItems,player.name)
+  end
+  local x,y,h=10,10,36
+  local menu=clsUIMenu:new(x,y,width-2*x,h)
+  menu.anchor={0,0}
+  menu.gap={5,5,5,5,5,5}
+  menu.image=Skin:createBg(menu.width,menu.height)
+  menu.delegate=self
+  menu.items=menuItems
+  menu.colNum=table.getn(GameData.playerTroop.players)
+  menu:refresh()
+  self:addChild(menu)
   return self
 end
 

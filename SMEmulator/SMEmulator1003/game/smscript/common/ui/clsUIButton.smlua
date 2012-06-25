@@ -36,6 +36,11 @@ end
 
 --绘制Button
 function clsUIButton:paintLayer(painter)
+  if self.highlightImage==nil then
+    if self.normalImage then
+      self.highlightImage=self.normalImage:tone(0.5,0.5,0.5)
+    end
+  end
   if self.image==nil then
     self.image=self.normalImage
   end
