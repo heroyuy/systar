@@ -52,6 +52,7 @@ clsCharacter.level=0 --等级
 clsCharacter.hp=0 --HP值
 clsCharacter.sp=0 --SP值
 clsCharacter.exp=0 --经验值
+clsCharacter.nextExp=0 --升到下一级需要的经验值
 clsCharacter.money=0 --金钱
 
 clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
@@ -82,10 +83,9 @@ function clsCharacter:getProperty(name)
   --(1)取配置中的公式计算基本值
   local fun=loadstring("return function(self) return "..Dictionary.config.formulas[name].." end")()
   local value=fun(self)
-  smLog:info("getProperty->name:"..name.." value:"..value)
   --(2)考虑装备
   --(3)考虑Buff
-  return value
+  return math.floor(value)
 end
 
 --更新[角色的基本更新] 

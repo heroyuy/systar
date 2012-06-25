@@ -68,7 +68,7 @@ function GameData:newGame()
     player.vocationId=playerDict.vocationId
     player.level=1
     --查表获取字段值
-    player.exp=playerDict.expList[player.level]
+    player.nextExp=playerDict.expList[player.level+1]
     player.str=playerDict.strList[player.level]
     player.agi=playerDict.agiList[player.level]
     player.int=playerDict.intList[player.level]

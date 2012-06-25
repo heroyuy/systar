@@ -1,13 +1,25 @@
 --[[
   description:信息面板。
   author:wp_g4
-  date:2011/05/20
+  date:2012/06/25
 --]]
 
 --类结构定义
 clsPropertyPane={}
 setmetatable(clsPropertyPane,clsUILayer)
 clsPropertyPane.__index=clsPropertyPane
+
+--字段
+clsPropertyPane.index=1				--当前显示的player的序号
+clsPropertyPane.imageHead=nil		--头像
+clsPropertyPane.labelLev=nil		--Lev
+clsPropertyPane.labelExp=nil		--Exp
+clsPropertyPane.labelHp=nil			--HP
+clsPropertyPane.labelSp=nil			--SP
+
+clsPropertyPane.propertyList={"str","agi","int","dex","vit","luck",
+							  "hpr","spr","atk","def","matk","mdef",
+							  "hit","flee","aspd","mspd","cri","sta"}
 
 --构造器
 function clsPropertyPane:new(x,y,width,height)
@@ -19,8 +31,8 @@ function clsPropertyPane:new(x,y,width,height)
   for _,player in ipairs(GameData.playerTroop.players) do
     table.insert(menuItems,player.name)
   end
-  local x,y,h=10,10,36
-  local menu=clsUIMenu:new(x,y,width-2*x,h)
+  local h,gap=36,10
+  local menu=clsUIMenu:new(gap,gap,width-2*gap,h)
   menu.anchor={0,0}
   menu.gap={5,5,5,5,5,5}
   menu.image=Skin:createBg(menu.width,menu.height)
@@ -29,7 +41,68 @@ function clsPropertyPane:new(x,y,width,height)
   menu.colNum=table.getn(GameData.playerTroop.players)
   menu:refresh()
   self:addChild(menu)
+  --头像
+  local headW,headH=64,64
+  self.imageHead=clsUILayer:new(2*gap,h+2*gap,headW,headH)
+  self.imageHead.anchor={0,0}
+  self:addChild(self.imageHead)
+  --Lev Exp HP SP
+  local labelW,labelH=120,24
+  self.labelLev=clsUILabel:new(headW+4*gap,h+2*gap,labelW,labelH)
+  self.labelLev.anchor={0,0}
+  self.labelLev.alignment=clsUILabel.ALIGN_LEFT
+  self:addChild(self.labelLev)
+  self.labelExp=clsUILabel:new(headW+labelW+5*gap,h+2*gap,labelW,labelH)
+  self.labelExp.anchor={0,0}
+  self.labelExp.alignment=clsUILabel.ALIGN_LEFT
+  self:addChild(self.labelExp)
+  self.labelHp=clsUILabel:new(headW+4*gap,h+labelH+3*gap,labelW,labelH)
+  self.labelHp.anchor={0,0}
+  self.labelHp.alignment=clsUILabel.ALIGN_LEFT
+  self:addChild(self.labelHp)
+  self.labelSp=clsUILabel:new(headW+labelW+5*gap,h+labelH+3*gap,labelW,labelH)
+  self.labelSp.anchor={0,0}
+  self.labelSp.alignment=clsUILabel.ALIGN_LEFT
+  self:addChild(self.labelSp)
+  --Propertys
+  local num=6
+  local labelW=(self.width-(num+3)*gap)/6
+  for i,v in ipairs(self.propertyList) do
+    local label=clsUILabel:new(2*gap+(math.mod(i-1,num))*(labelW+gap),h+4*gap+headH+(math.floor((i-1)/num))*(labelH+2*gap),labelW,labelH)
+    label.anchor={0,0}
+    label.alignment=clsUILabel.ALIGN_LEFT
+    label.tag=v
+    self:addChild(label)
+  end
+  self:refresh()
   return self
+end
+
+function clsPropertyPane:refresh()
+  local player=GameData.playerTroop.players[self.index]
+  --头像
+  self.imageHead.image=player.headImg
+  --Lev
+  self.labelLev.text="Lev:"..player.level
+  --Exp
+  self.labelExp.text="Exp:"..player.exp.."/"..player.nextExp
+  --HP
+  self.labelHp.text="HP:"..player.hp.."/"..player:getProperty(clsCharacter.HP)
+  --SP
+  self.labelSp.text="SP:"..player.sp.."/"..player:getProperty(clsCharacter.SP)
+  --Propertys
+  for i,v in ipairs(self.propertyList) do
+    local label=self:childWithTag(v)
+    print("label:"..tostring(label))
+    label.text=v..":"..player:getProperty(v)
+  end
+end
+
+function clsPropertyPane:menuItemSelected(index)
+  if self.index~=index then
+    self.index=index
+    self:refresh()
+  end
 end
 
 function clsPropertyPane:onTouch(event)
