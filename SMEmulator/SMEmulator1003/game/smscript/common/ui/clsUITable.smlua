@@ -9,16 +9,17 @@ clsUITable={}
 setmetatable(clsUITable,clsUILayer)
 clsUITable.__index=clsUITable
 
-clsUITable.dataSource=nil				--数据源
 clsUITable.cellWidth=nil				--单元格宽度
 clsUITable.cellHeight=nil				--单元格高度
+clsUITable.cellNum=nil					--单元格数量
+clsUITable.colNum=nil					--单元格列数
 clsUITable.gap={10,5,10,10,5,10}		--间距(上中下左中右)
 
 --构造器
 function clsUITable:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUITable)
-  self.callback="itemSelected"
+  self.callback="cellSelected"
   return self
 end
 
@@ -26,15 +27,13 @@ end
 function clsUITable:refresh()
   self:clear()
   local gt,gv,gb,gl,gh,gr=self.gap[1],self.gap[2],self.gap[3],self.gap[4],self.gap[5],self.gap[6]
-  if self.dataSource then
-    local cellNum=callFunction(self.dataSource,"tableCellNum",self)
-    local colNum=callFunction(self.dataSource,"tableColNum",self)
-    for i=1,cellNum do
-      local row=math.floor((i-1)/colNum)
-      local col=(i-1)%colNum
+  if self.delegate then
+    for i=1,self.cellNum do
+      local row=math.floor((i-1)/self.colNum)
+      local col=(i-1)%self.colNum
       local cellLayer=clsUILayer:new(gl+col*(self.cellWidth+gh),gt+row*(self.cellHeight+gv),self.cellWidth,self.cellHeight)
       cellLayer.anchor={0,0}
-      callFunction(self.dataSource,"cellLayerAtIndex",self,cellLayer,i)
+      callFunction(self.delegate,"cellLayerAtIndex",self,cellLayer,i)
       self:addChild(cellLayer)
     end
   end
