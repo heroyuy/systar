@@ -50,14 +50,14 @@ function callFunction(target,callback,...)
     if type(callback)=="string" then
       if target then
         if target[callback] then
-          target[callback](target,unpack(arg))
+          return target[callback](target,unpack(arg))
         end
       end
     else
       if target then
-        callback(target,unpack(arg))
+        return callback(target,unpack(arg))
       else
-        callback(unpack(arg))
+        return callback(unpack(arg))
       end
     end
   end
