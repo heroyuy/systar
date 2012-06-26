@@ -65,8 +65,8 @@ function clsPropertyPane:new(x,y,width,height)
   self.labelSp.alignment=clsUILabel.ALIGN_LEFT
   self:addChild(self.labelSp)
   --Propertys
-  local num=6
-  local labelW=(self.width-(num+3)*gap)/6
+  local num=5
+  local labelW=(self.width-(num+3)*gap)/num
   for i,v in ipairs(self.propertyList) do
     local label=clsUILabel:new(2*gap+(math.mod(i-1,num))*(labelW+gap),h+4*gap+headH+(math.floor((i-1)/num))*(labelH+2*gap),labelW,labelH)
     label.anchor={0,0}
@@ -83,18 +83,17 @@ function clsPropertyPane:refresh()
   --头像
   self.imageHead.image=player.headImg
   --Lev
-  self.labelLev.text="Lev:"..player.level
+  self.labelLev.text=Dictionary.config.level..":"..player.level
   --Exp
-  self.labelExp.text="Exp:"..player.exp.."/"..player.nextExp
+  self.labelExp.text=Dictionary.config.exp..":"..player.exp.."/"..player.nextExp
   --HP
-  self.labelHp.text="HP:"..player.hp.."/"..player:getProperty(clsCharacter.HP)
+  self.labelHp.text=Dictionary.config.hp..":"..player.hp.."/"..player:getProperty(clsCharacter.HP)
   --SP
-  self.labelSp.text="SP:"..player.sp.."/"..player:getProperty(clsCharacter.SP)
+  self.labelSp.text=Dictionary.config.sp..":"..player.sp.."/"..player:getProperty(clsCharacter.SP)
   --Propertys
   for i,v in ipairs(self.propertyList) do
     local label=self:childWithTag(v)
-    print("label:"..tostring(label))
-    label.text=v..":"..player:getProperty(v)
+    label.text=Dictionary.config[v]..":"..player:getProperty(v)
   end
 end
 

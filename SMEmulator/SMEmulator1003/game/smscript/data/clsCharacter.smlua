@@ -85,7 +85,7 @@ function clsCharacter:getProperty(name)
   local value=fun(self)
   --(2)考虑装备
   --(3)考虑Buff
-  return math.floor(value)
+  return value
 end
 
 --更新[角色的基本更新] 
