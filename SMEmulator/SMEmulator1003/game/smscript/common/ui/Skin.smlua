@@ -59,7 +59,15 @@ function Skin:createBg(width,height)
 end
 
 function Skin:createBody(width,height)
-  return self.body:scale(width,height)
+  local img=self.body:clip(0,0,64,2)
+  img=img:scale(width,2)
+  local imgRes=Image:createImage(width,height)
+  local painter=imgRes:getPainter()
+  local num=math.ceil(height/2)
+  for i=1,num do
+    painter:drawImage(img,0,(i-1)*2,UIConst.anchor.LT)
+  end
+  return imgRes
 end
 
 function Skin:createFrame(width,height)
