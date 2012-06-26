@@ -25,6 +25,7 @@ require("clsUILabel")
 require("clsUITextArea")
 require("clsUIButton")
 require("clsUIList")
+require("clsUITable")
 
 --common\util
 require("clsAStar")
