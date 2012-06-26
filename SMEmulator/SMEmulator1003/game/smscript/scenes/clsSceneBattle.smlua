@@ -66,7 +66,7 @@ function clsSceneBattle:new()
   self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
   GameLayer:addChildToScene(self.playerInfoLayer)
   --菜单
-  self.menu=clsUIMenu:new(screenWidth,96,120,140)
+  self.menu=clsUIList:new(screenWidth,96,120,140)
   self.menu.anchor={1,0}
   self.menu.alpha=0.7
   self.menu.delegate=self

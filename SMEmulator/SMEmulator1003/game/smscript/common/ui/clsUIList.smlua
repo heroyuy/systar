@@ -1,28 +1,28 @@
 --[[
-  description:菜单。
+  description:列表。
   author:wp_g4
   date:2011/05/17
 --]]
 
 --类结构定义
-clsUIMenu={}
-setmetatable(clsUIMenu,clsUILayer)
-clsUIMenu.__index=clsUIMenu
+clsUIList={}
+setmetatable(clsUIList,clsUILayer)
+clsUIList.__index=clsUIList
 
-clsUIMenu.items=nil					--菜单项
-clsUIMenu.colNum=1					--列数
-clsUIMenu.gap={10,5,10,10,5,10}		--间距(上中下左中右)
+clsUIList.items=nil					--菜单项
+clsUIList.colNum=1					--列数
+clsUIList.gap={10,5,10,10,5,10}		--间距(上中下左中右)
 
 --构造器
-function clsUIMenu:new(x,y,width,height)
+function clsUIList:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsUIMenu)
+  setmetatable(self,clsUIList)
   self.callback="menuItemSelected"
   return self
 end
 
 --更新菜单
-function clsUIMenu:refresh()
+function clsUIList:refresh()
   if self.image==nil then
     self.image=Skin:createBgWithFrame(self.width,self.height)
   end
@@ -46,11 +46,11 @@ function clsUIMenu:refresh()
   end
 end
 
-function clsUIMenu:onTouch(event)
+function clsUIList:onTouch(event)
   --不做任何处理
 end
 
-function clsUIMenu:buttonTapped(target)
+function clsUIList:buttonTapped(target)
   local index=target.tag
   callFunction(self.delegate,self.callback,index)
 end
