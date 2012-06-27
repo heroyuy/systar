@@ -5,24 +5,24 @@
 --]]
 
 --类结构定义
-clsUIList={}
-setmetatable(clsUIList,clsUILayer)
-clsUIList.__index=clsUIList
+clsUIMenu={}
+setmetatable(clsUIMenu,clsUILayer)
+clsUIMenu.__index=clsUIMenu
 
-clsUIList.items=nil					--菜单项
-clsUIList.colNum=1					--列数
-clsUIList.gap={10,5,10,10,5,10}		--间距(上中下左中右)
+clsUIMenu.items=nil					--菜单项
+clsUIMenu.colNum=1					--列数
+clsUIMenu.gap={10,5,10,10,5,10}		--间距(上中下左中右)
 
 --构造器
-function clsUIList:new(x,y,width,height)
+function clsUIMenu:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsUIList)
+  setmetatable(self,clsUIMenu)
   self.callback="menuItemSelected"
   return self
 end
 
 --更新菜单
-function clsUIList:refresh()
+function clsUIMenu:refresh()
   if self.image==nil then
     self.image=Skin:createBgWithFrame(self.width,self.height)
   end
@@ -46,11 +46,11 @@ function clsUIList:refresh()
   end
 end
 
-function clsUIList:onTouch(event)
+function clsUIMenu:onTouch(event)
   --不做任何处理
 end
 
-function clsUIList:buttonTapped(target)
+function clsUIMenu:buttonTapped(target)
   local index=target.tag
   callFunction(self.delegate,self.callback,index)
 end

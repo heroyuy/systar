@@ -45,6 +45,7 @@ function GameData:newGame()
   smLog:info("newGame");
   self.gameType=-1
   --初始化PlayerTroop
+  self.playerTroop.players={}
   for _,v in ipairs(Dictionary.config.playerList) do
     smLog:info("new player:"..v)
     local player=clsPlayer:new()

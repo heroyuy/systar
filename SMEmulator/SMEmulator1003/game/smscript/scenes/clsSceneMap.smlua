@@ -27,35 +27,38 @@ clsSceneMap.aStar=nil      			--A*寻路工具
 
 --构造器
 function clsSceneMap:new()
-	local self = clsScene:new()
-	setmetatable(self,clsSceneMap)
-	local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
-	--背景实例化
-	self.mapBgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-    self.mapBgLayer.delegate=self
-    GameLayer:addChildToScene(self.mapBgLayer)
-    --精灵层实例化
-    self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-    self.spriteLayer.enabled=false
-    GameLayer:addChildToScene(self.spriteLayer)
-    --前景实例化
-    self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-    self.mapFgLayer.enabled=false
-    GameLayer:addChildToScene(self.mapFgLayer)
-    --头像
-    self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
-    self.buttonHead.anchor={0,0}
-    self.buttonHead.delegate=self
-    GameLayer:addChildToScene(self.buttonHead)
-    --菜单
-    self.menu=clsUIList:new(0,self.Param.HEAD_HEIGHT,self.Param.HEAD_WIDTH,200)
-    self.menu.anchor={0,0}
-    self.menu.delegate=self
-    self.menu.items=self.menuItems
-    self.menu:refresh()
-    self.menu.visibility=false
-    GameLayer:addChildToScene(self.menu)
-	return self
+  local self = clsScene:new()
+  setmetatable(self,clsSceneMap)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  --背景实例化
+  self.mapBgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.mapBgLayer.delegate=self
+  GameLayer:addChildToScene(self.mapBgLayer)
+  --精灵层实例化
+  self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.spriteLayer.enabled=false
+  GameLayer:addChildToScene(self.spriteLayer)
+  --前景实例化
+  self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.mapFgLayer.enabled=false
+  GameLayer:addChildToScene(self.mapFgLayer)
+  --头像
+  self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
+  self.buttonHead.anchor={0,0}
+  self.buttonHead.delegate=self
+  self.buttonHead.callback="buttonHeadTapped"
+  GameLayer:addChildToScene(self.buttonHead)
+  --菜单
+  local w,h=self.Param.HEAD_WIDTH,200
+  self.menu=clsUITable:new(0,self.Param.HEAD_HEIGHT,w,h)
+  self.menu.anchor={0,0}
+  self.menu.image=Skin:createBgWithFrame(w,h)
+  self.menu.delegate=self
+  self.menu.cellNum=table.getn(self.menuItems)
+  self.menu:refresh()
+  self.menu.visibility=false
+  GameLayer:addChildToScene(self.menu)
+  return self
 end
 
 -- 开始
@@ -223,15 +226,29 @@ function clsSceneMap:calculateCharacterLocation(character)
 end
 
 --按钮点击的回调
-function clsSceneMap:buttonTapped(target)
+function clsSceneMap:buttonHeadTapped(target)
   if target==self.buttonHead then
     --显示/隐藏菜单
     self.menu.visibility=not self.menu.visibility
   end
 end
 
+----------------菜单（UITable）的数据配置----------------
+--单元格配置
+function clsSceneMap:cellLayerAtIndex(table,cellLayer,index)
+  local w,h=cellLayer.width,cellLayer.height
+  local button=clsUIButton:new(w/2,h/2,w,h)
+  button.normalImage=Skin:createBody(w,h)
+  button.highlightImage=Skin:createSelectedBg(w,h)
+  button.label.text=self.menuItems[index]
+  button.tag=index
+  button.delegate=self
+  cellLayer:addChild(button)
+end
+
 --菜单点击的回调 {"状态","物品","技能","装备","存档","退出"}
-function clsSceneMap:menuItemSelected(index)
+function clsSceneMap:buttonTapped(button)
+  local index=button.tag
   self.menu.visibility=false
   if index==1 then
     --状态

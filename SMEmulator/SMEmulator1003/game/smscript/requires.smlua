@@ -24,7 +24,7 @@ require("clsUILayer")
 require("clsUILabel")
 require("clsUITextArea")
 require("clsUIButton")
-require("clsUIList")
+require("clsUIMenu")
 require("clsUITable")
 
 --common\util

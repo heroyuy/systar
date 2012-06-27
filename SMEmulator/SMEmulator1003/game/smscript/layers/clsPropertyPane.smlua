@@ -32,7 +32,7 @@ function clsPropertyPane:new(x,y,width,height)
     table.insert(menuItems,player.name)
   end
   local h,gap=36,10
-  local menu=clsUIList:new(gap,gap,width-2*gap,h)
+  local menu=clsUIMenu:new(gap,gap,width-2*gap,h)
   menu.anchor={0,0}
   menu.gap={5,5,5,5,5,5}
   menu.image=Skin:createBg(menu.width,menu.height)

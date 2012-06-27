@@ -40,10 +40,7 @@ function clsSceneTitle:onStart()
   self.menu=clsUITable:new(screenWidth/2,screenHeight-120,200,120)
   self.menu.image=Skin:createBgWithFrame(200,120)
   self.menu.delegate=self
-  self.menu.cellWidth=180
-  self.menu.cellHeight=30
   self.menu.cellNum=table.getn(self.menuItems)
-  self.menu.colNum=1
   self.menu:refresh()
   self.bgLayer:addChild(self.menu)
   GameLayer:addChildToScene(self.bgLayer)

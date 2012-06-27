@@ -27,6 +27,16 @@ end
 function clsUITable:refresh()
   self:clear()
   local gt,gv,gb,gl,gh,gr=self.gap[1],self.gap[2],self.gap[3],self.gap[4],self.gap[5],self.gap[6]
+  if self.colNum==nil then
+    self.colNum=1
+  end
+  if self.cellWidth==nil then
+    self.cellWidth=(self.width-gl-gr-(self.colNum-1)*gh)/self.colNum
+  end
+  local rowNum=math.ceil(self.cellNum/self.colNum)
+  if self.cellHeight==nil then
+    self.cellHeight=(self.height-gt-gb-(rowNum-1)*gv)/rowNum
+  end
   if self.delegate then
     for i=1,self.cellNum do
       local row=math.floor((i-1)/self.colNum)
