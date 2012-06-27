@@ -66,11 +66,10 @@ function clsSceneBattle:new()
   self.playerInfoLayer.image=Skin:createBgWithFrame(screenWidth,160)
   GameLayer:addChildToScene(self.playerInfoLayer)
   --菜单
-  self.menu=clsUIMenu:new(screenWidth,96,120,140)
+  self.menu=clsUITable:standardMenu(screenWidth,96,120,140,self.menuItems)
   self.menu.anchor={1,0}
   self.menu.alpha=0.7
   self.menu.delegate=self
-  self.menu.items=self.menuItems
   self.menu:refresh()
   self.menu.visibility=false
   GameLayer:addChildToScene(self.menu)
@@ -162,7 +161,7 @@ function clsSceneBattle:showMenuForPlayer(id)
 end
 
 --菜单被选中
-function clsSceneBattle:menuItemSelected(index)
+function clsSceneBattle:itemSelected(menu,index)
   --隐藏菜单
   self.menu.visibility=false
   self.curActionType=index

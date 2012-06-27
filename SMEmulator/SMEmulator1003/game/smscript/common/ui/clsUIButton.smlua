@@ -16,6 +16,7 @@ clsUIButton.paintLayerF=clsUIButton.paintLayer
 clsUIButton.STATE_NORMAL=0                			--普通状态
 clsUIButton.STATE_HIGHLIGHT=1             			--高亮状态
 
+clsUIButton.callback="buttonTapped"					--事件回调
 clsUIButton.highlightImage=nil             			--高亮时图片
 clsUIButton.normalImage=nil               			--普通时图片
 
@@ -38,7 +39,6 @@ function clsUIButton:new(x,y,width,height)
   setmetatable(self,clsUIButton)
   self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
   self:addChild(self.label)
-  self.callback="buttonTapped"
   return self
 end
 

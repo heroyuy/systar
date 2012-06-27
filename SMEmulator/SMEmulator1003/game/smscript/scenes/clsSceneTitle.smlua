@@ -37,10 +37,8 @@ function clsSceneTitle:onStart()
     self.bgLayer.image=Image:getImage(Dictionary.config.titleImg)
   end
   --主菜单
-  self.menu=clsUITable:new(screenWidth/2,screenHeight-120,200,120)
-  self.menu.image=Skin:createBgWithFrame(200,120)
+  self.menu=clsUITable:standardMenu(screenWidth/2,screenHeight-120,200,120,self.menuItems)
   self.menu.delegate=self
-  self.menu.cellNum=table.getn(self.menuItems)
   self.menu:refresh()
   self.bgLayer:addChild(self.menu)
   GameLayer:addChildToScene(self.bgLayer)
@@ -59,18 +57,7 @@ function clsSceneTitle:onStop()
   smAudioPlayer:stop()
 end
 
-----------------菜单（UITable）的数据配置----------------
---单元格配置
-function clsSceneTitle:cellLayerAtIndex(table,cellLayer,index)
-  local w,h=cellLayer.width,cellLayer.height
-  local button=clsUIButton:standardButton(w/2,h/2,w,h,self.menuItems[index])
-  button.tag=index
-  button.delegate=self
-  cellLayer:addChild(button)
-end
-
-function clsSceneTitle:buttonTapped(button)
-  local index=button.tag
+function clsSceneTitle:itemSelected(menu,index)
   if index==1 then
     --新的游戏
     GameData:newGame()

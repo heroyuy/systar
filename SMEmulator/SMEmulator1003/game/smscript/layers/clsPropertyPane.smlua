@@ -32,13 +32,11 @@ function clsPropertyPane:new(x,y,width,height)
     table.insert(menuItems,player.name)
   end
   local h,gap=36,10
-  local menu=clsUIMenu:new(gap,gap,width-2*gap,h)
+  local menu=clsUITable:standardMenu(gap,gap,width-2*gap,h,menuItems,table.getn(menuItems))
   menu.anchor={0,0}
   menu.gap={5,5,5,5,5,5}
   menu.image=Skin:createBg(menu.width,menu.height)
   menu.delegate=self
-  menu.items=menuItems
-  menu.colNum=table.getn(GameData.playerTroop.players)
   menu:refresh()
   self:addChild(menu)
   --头像
@@ -97,7 +95,7 @@ function clsPropertyPane:refresh()
   end
 end
 
-function clsPropertyPane:menuItemSelected(index)
+function clsPropertyPane:itemSelected(menu,index)
   if self.index~=index then
     self.index=index
     self:refresh()

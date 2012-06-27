@@ -9,39 +9,42 @@ clsUITable={}
 setmetatable(clsUITable,clsUILayer)
 clsUITable.__index=clsUITable
 
-clsUITable.dataSource=nil				--表格数据源
-clsUITable.cellWidth=nil				--单元格宽度
-clsUITable.cellHeight=nil				--单元格高度
-clsUITable.cellNum=nil					--单元格数量
-clsUITable.colNum=nil					--单元格列数
-clsUITable.gap={10,5,10,10,5,10}		--间距(上中下左中右)
+clsUITable.callback="itemSelected"						--事件回调
+clsUITable.dataSource=nil								--表格数据源
+clsUITable.dataSourceCallback="cellLayerAtIndex"		--表格数据源回调
+clsUITable.cellWidth=nil								--单元格宽度
+clsUITable.cellHeight=nil								--单元格高度
+clsUITable.cellNum=nil									--单元格数量
+clsUITable.colNum=nil									--单元格列数
+clsUITable.gap={10,5,10,10,5,10}						--间距(上中下左中右)
 
 --标准菜单
 function clsUITable:standardMenu(x,y,width,height,items,colNum)
-  local table=clsUITable:new(x,y,width,height)
-  table.cellNum=_G.table.getn(items)
-  table.colNum=colNum
-  table.dataSource={
-    cellLayerAtIndex=function(table,cellLayer,index)
+  local menu=clsUITable:new(x,y,width,height)
+  menu.image=Skin:createBgWithFrame(menu.width,menu.height)
+  menu.cellNum=table.getn(items)
+  menu.colNum=colNum
+  menu.dataSource={
+    cellLayerAtIndex=function(self,menu,cellLayer,index)
       local w,h=cellLayer.width,cellLayer.height
       local button=clsUIButton:standardButton(w/2,h/2,w,h,items[index])
       button.tag=index
       button.delegate={
-        buttonTapped=function(button)
+        buttonTapped=function(self,button)
           local index=button.tag
-          callFunction(table.delegate,table.callBack,table,index)
+          callFunction(menu.delegate,menu.callback,menu,index)
         end
       }
       cellLayer:addChild(button)
     end
   }
+  return menu
 end
 
 --构造器
 function clsUITable:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUITable)
-  self.callback="itemSelected"
   return self
 end
 
@@ -59,13 +62,13 @@ function clsUITable:refresh()
   if self.cellHeight==nil then
     self.cellHeight=(self.height-gt-gb-(rowNum-1)*gv)/rowNum
   end
-  if self.delegate then
+  if self.dataSource then
     for i=1,self.cellNum do
       local row=math.floor((i-1)/self.colNum)
       local col=(i-1)%self.colNum
       local cellLayer=clsUILayer:new(gl+col*(self.cellWidth+gh),gt+row*(self.cellHeight+gv),self.cellWidth,self.cellHeight)
       cellLayer.anchor={0,0}
-      callFunction(self.dataSource,"cellLayerAtIndex",self,cellLayer,i)
+      callFunction(self.dataSource,self.dataSourceCallback,self,cellLayer,i)
       self:addChild(cellLayer)
     end
   end

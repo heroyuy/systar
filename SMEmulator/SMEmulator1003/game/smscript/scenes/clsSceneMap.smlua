@@ -50,11 +50,9 @@ function clsSceneMap:new()
   GameLayer:addChildToScene(self.buttonHead)
   --菜单
   local w,h=self.Param.HEAD_WIDTH,200
-  self.menu=clsUITable:new(0,self.Param.HEAD_HEIGHT,w,h)
+  self.menu=clsUITable:standardMenu(0,self.Param.HEAD_HEIGHT,w,h,self.menuItems)
   self.menu.anchor={0,0}
-  self.menu.image=Skin:createBgWithFrame(w,h)
   self.menu.delegate=self
-  self.menu.cellNum=table.getn(self.menuItems)
   self.menu:refresh()
   self.menu.visibility=false
   GameLayer:addChildToScene(self.menu)
@@ -233,22 +231,8 @@ function clsSceneMap:buttonHeadTapped(target)
   end
 end
 
-----------------菜单（UITable）的数据配置----------------
---单元格配置
-function clsSceneMap:cellLayerAtIndex(table,cellLayer,index)
-  local w,h=cellLayer.width,cellLayer.height
-  local button=clsUIButton:new(w/2,h/2,w,h)
-  button.normalImage=Skin:createBody(w,h)
-  button.highlightImage=Skin:createSelectedBg(w,h)
-  button.label.text=self.menuItems[index]
-  button.tag=index
-  button.delegate=self
-  cellLayer:addChild(button)
-end
-
 --菜单点击的回调 {"状态","物品","技能","装备","存档","退出"}
-function clsSceneMap:buttonTapped(button)
-  local index=button.tag
+function clsSceneMap:itemSelected(menu,index)
   self.menu.visibility=false
   if index==1 then
     --状态
