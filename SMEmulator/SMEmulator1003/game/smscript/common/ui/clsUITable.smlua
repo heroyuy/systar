@@ -9,17 +9,39 @@ clsUITable={}
 setmetatable(clsUITable,clsUILayer)
 clsUITable.__index=clsUITable
 
+clsUITable.dataSource=nil				--表格数据源
 clsUITable.cellWidth=nil				--单元格宽度
 clsUITable.cellHeight=nil				--单元格高度
 clsUITable.cellNum=nil					--单元格数量
 clsUITable.colNum=nil					--单元格列数
 clsUITable.gap={10,5,10,10,5,10}		--间距(上中下左中右)
 
+--标准菜单
+function clsUITable:standardMenu(x,y,width,height,items,colNum)
+  local table=clsUITable:new(x,y,width,height)
+  table.cellNum=_G.table.getn(items)
+  table.colNum=colNum
+  table.dataSource={
+    cellLayerAtIndex=function(table,cellLayer,index)
+      local w,h=cellLayer.width,cellLayer.height
+      local button=clsUIButton:standardButton(w/2,h/2,w,h,items[index])
+      button.tag=index
+      button.delegate={
+        buttonTapped=function(button)
+          local index=button.tag
+          callFunction(table.delegate,table.callBack,table,index)
+        end
+      }
+      cellLayer:addChild(button)
+    end
+  }
+end
+
 --构造器
 function clsUITable:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUITable)
-  self.callback="cellSelected"
+  self.callback="itemSelected"
   return self
 end
 
@@ -43,7 +65,7 @@ function clsUITable:refresh()
       local col=(i-1)%self.colNum
       local cellLayer=clsUILayer:new(gl+col*(self.cellWidth+gh),gt+row*(self.cellHeight+gv),self.cellWidth,self.cellHeight)
       cellLayer.anchor={0,0}
-      callFunction(self.delegate,"cellLayerAtIndex",self,cellLayer,i)
+      callFunction(self.dataSource,"cellLayerAtIndex",self,cellLayer,i)
       self:addChild(cellLayer)
     end
   end

@@ -24,6 +24,15 @@ clsUIButton.label=nil								--按钮上用于显示文字的标签
 clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
 
 --构造器
+function clsUIButton:standardButton(x,y,width,height,title)
+  local button=clsUIButton:new(x,y,width,height)
+  button.label.text=title
+  button.normalImage=Skin:createBody(button.width,button.height)
+  button.highlightImage=Skin:createSelectedBg(button.width,button.height)
+  return button
+end
+
+--构造器
 function clsUIButton:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUIButton)

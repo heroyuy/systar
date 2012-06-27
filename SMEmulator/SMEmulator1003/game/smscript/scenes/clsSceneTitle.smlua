@@ -63,10 +63,7 @@ end
 --单元格配置
 function clsSceneTitle:cellLayerAtIndex(table,cellLayer,index)
   local w,h=cellLayer.width,cellLayer.height
-  local button=clsUIButton:new(w/2,h/2,w,h)
-  button.normalImage=Skin:createBody(w,h)
-  button.highlightImage=Skin:createSelectedBg(w,h)
-  button.label.text=self.menuItems[index]
+  local button=clsUIButton:standardButton(w/2,h/2,w,h,self.menuItems[index])
   button.tag=index
   button.delegate=self
   cellLayer:addChild(button)
