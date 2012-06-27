@@ -46,7 +46,6 @@ function clsSceneMap:new()
   self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
   self.buttonHead.anchor={0,0}
   self.buttonHead.delegate=self
-  self.buttonHead.callback="buttonHeadTapped"
   GameLayer:addChildToScene(self.buttonHead)
   --菜单
   local w,h=self.Param.HEAD_WIDTH,200
@@ -224,8 +223,8 @@ function clsSceneMap:calculateCharacterLocation(character)
 end
 
 --按钮点击的回调
-function clsSceneMap:buttonHeadTapped(target)
-  if target==self.buttonHead then
+function clsSceneMap:buttonTapped(button)
+  if button==self.buttonHead then
     --显示/隐藏菜单
     self.menu.visibility=not self.menu.visibility
   end
