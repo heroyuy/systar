@@ -5,26 +5,27 @@
 --]]
 
 --类结构定义
-clsPropertyPane={}
-setmetatable(clsPropertyPane,clsUILayer)
-clsPropertyPane.__index=clsPropertyPane
+clsBasicInfo={}
+setmetatable(clsBasicInfo,clsUILayer)
+clsBasicInfo.__index=clsBasicInfo
 
 --字段
-clsPropertyPane.index=1				--当前显示的player的序号
-clsPropertyPane.imageHead=nil		--头像
-clsPropertyPane.labelLev=nil		--Lev
-clsPropertyPane.labelExp=nil		--Exp
-clsPropertyPane.labelHp=nil			--HP
-clsPropertyPane.labelSp=nil			--SP
+clsBasicInfo.index=1				--当前显示的player的序号
+clsBasicInfo.imageHead=nil		--头像
+clsBasicInfo.labelLev=nil		--Lev
+clsBasicInfo.labelExp=nil		--Exp
+clsBasicInfo.labelHp=nil			--HP
+clsBasicInfo.labelSp=nil			--SP
 
-clsPropertyPane.propertyList={"str","agi","int","dex","vit","luck",
+clsBasicInfo.propertyList={"str","agi","int","dex","vit","luck",
 							  "hpr","spr","atk","def","matk","mdef",
 							  "hit","flee","aspd","mspd","cri","sta"}
 
 --构造器
-function clsPropertyPane:new(x,y,width,height)
-  local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsPropertyPane)
+function clsBasicInfo:new()
+  local w,h=480,320
+  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,w,h)
+  setmetatable(self,clsBasicInfo)
   self.image=Skin:createBgWithFrame(self.width,self.height)
   --标题
   local menuItems={}
@@ -32,7 +33,7 @@ function clsPropertyPane:new(x,y,width,height)
     table.insert(menuItems,player.name)
   end
   local h,gap=36,10
-  local menu=clsUITable:standardMenu(gap,gap,width-2*gap,h,menuItems,table.getn(menuItems))
+  local menu=clsUITable:standardMenu(gap,gap,self.width-2*gap,h,menuItems,table.getn(menuItems))
   menu.anchor={0,0}
   menu.gap={5,5,5,5,5,5}
   menu.image=Skin:createBg(menu.width,menu.height)
@@ -76,7 +77,7 @@ function clsPropertyPane:new(x,y,width,height)
   return self
 end
 
-function clsPropertyPane:refresh()
+function clsBasicInfo:refresh()
   local player=GameData.playerTroop.players[self.index]
   --头像
   self.imageHead.image=player.headImg
@@ -95,14 +96,14 @@ function clsPropertyPane:refresh()
   end
 end
 
-function clsPropertyPane:itemSelected(menu,index)
+function clsBasicInfo:itemSelected(menu,index)
   if self.index~=index then
     self.index=index
     self:refresh()
   end
 end
 
-function clsPropertyPane:onTouch(event)
+function clsBasicInfo:onTouch(event)
   --不做任何处理
   self:removeFromParent()
 end

@@ -1,0 +1,33 @@
+--[[
+  description:背包
+  author:wp_g4
+  date:2012/06/30
+--]]
+
+--类结构定义
+clsBag={}
+setmetatable(clsBag,clsUILayer)
+clsBag.__index=clsBag
+
+--字段
+
+
+--构造器
+function clsBag:new(x,y,width,height)
+  local w,h=240,320
+  local self = clsUILayer:new(Game:getWidth()/2+w/2,Game:getHeight()/2,w,h)
+  setmetatable(self,clsBag)
+  self.image=Skin:createBgWithFrame(self.width,self.height)
+  
+  self:refresh()
+  return self
+end
+
+function clsBag:refresh()
+  
+end
+
+function clsBag:onTouch(event)
+  --不做任何处理
+  self:removeFromParent()
+end

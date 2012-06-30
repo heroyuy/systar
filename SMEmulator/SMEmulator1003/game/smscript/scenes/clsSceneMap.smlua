@@ -235,10 +235,12 @@ function clsSceneMap:itemSelected(menu,index)
   self.menu.visibility=false
   if index==1 then
     --状态
-    local propertyPane=clsPropertyPane:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
-    GameLayer:addChildToScene(propertyPane)
+    local basicInfo=clsBasicInfo:new()
+    GameLayer:addChildToScene(basicInfo)
   elseif index==2 then
     --物品
+    local bag=clsBag:new()
+    GameLayer:addChildToScene(bag)
   elseif index==3 then
     --技能
   elseif index==4 then
