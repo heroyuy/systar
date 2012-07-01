@@ -24,6 +24,7 @@ function clsBag:new()
   self.tableBag.cellWidth,self.tableBag.cellHeight=36,36
   self.tableBag.colNum=5
   self.tableBag.cellBackground=Skin:createBody(self.tableBag.cellWidth,self.tableBag.cellHeight)
+  self.tableBag.cellSelectedBackground=Skin:createSelectedBg(self.tableBag.cellWidth,self.tableBag.cellHeight)
   self:addChild(self.tableBag)
   self:refresh()
   return self
@@ -40,6 +41,7 @@ function clsBag:cellLayerAtIndex(table,cellLayer,i)
     local itemDict=Dictionary.items[itemCell.id]
     local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
     layerIcon.image=Image:getImage(itemDict.icon)
+    layerIcon.enabled=false
     cellLayer:addChild(layerIcon)
   end
 end
