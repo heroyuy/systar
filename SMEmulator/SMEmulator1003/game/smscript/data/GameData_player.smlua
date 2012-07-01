@@ -6,7 +6,9 @@
 
 GameData.playerTroop={}      --玩家队伍
 
-GameData.playerTroop.players={}  			--Player列表
+GameData.playerTroop.players=nil  			--Player列表
+
+GameData.playerTroop.itemList=nil			--道具列表（背包,单元结构为:{id,num}）
 
 function GameData.playerTroop:leader()
   return self.players[1]
@@ -26,3 +28,34 @@ function GameData.playerTroop:unlock()
   end
 end
 
+--获取指定id的物品单元结构
+function GameData.playerTroop:itemWithId(itemId)
+  local index=0  --下标为0自动返回nil
+  for i,itemCell in ipairs(self.itemList) do
+    if itemCell.id==itemId then
+      index=i
+      break
+    end
+  end
+  return self.itemList[index]
+end
+
+--获取指定位置的物品单元结构
+function GameData.playerTroop:itemAt(index)
+  return self.itemList[index]
+end
+
+--增加道具
+function GameData.playerTroop:addItem(itemId,num)
+  local itemCell=self:itemWithId(itemId)
+  if itemCell then
+    itemCell.num=itemCell.num+num
+  else
+    table.insert(self.itemList,{id=itemId,num=num})
+  end
+end
+
+--删除道具
+function GameData.playerTroop:removeItem(itemId,num)
+  
+end

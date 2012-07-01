@@ -16,6 +16,8 @@ clsUITable.cellWidth=nil								--单元格宽度
 clsUITable.cellHeight=nil								--单元格高度
 clsUITable.cellNum=nil									--单元格数量
 clsUITable.colNum=nil									--单元格列数
+clsUITable.cellBackground=nil							--单元格背景
+clsUITable.cellSelectedBackground=nil					--单元格选中时背景
 clsUITable.gap={10,5,10,10,5,10}						--间距(上中下左中右)
 
 --标准菜单
@@ -68,6 +70,7 @@ function clsUITable:refresh()
       local col=(i-1)%self.colNum
       local cellLayer=clsUILayer:new(gl+col*(self.cellWidth+gh),gt+row*(self.cellHeight+gv),self.cellWidth,self.cellHeight)
       cellLayer.anchor={0,0}
+      cellLayer.image=self.cellBackground
       callFunction(self.dataSource,self.dataSourceCallback,self,cellLayer,i)
       self:addChild(cellLayer)
     end

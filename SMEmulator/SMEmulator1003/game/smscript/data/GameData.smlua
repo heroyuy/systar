@@ -86,6 +86,21 @@ function GameData:newGame()
     player.moveDelegate=self
     table.insert(self.playerTroop.players,player)
   end
+  self.playerTroop.itemList={}
+  --test
+  self.playerTroop:addItem(103000001,2)
+  self.playerTroop:addItem(103000002,4)
+  self.playerTroop:addItem(103000003,67)
+  self.playerTroop:addItem(103000004,12)
+  self.playerTroop:addItem(103000005,9)
+  self.playerTroop:addItem(103000006,1)
+  self.playerTroop:addItem(103000007,1)
+  self.playerTroop:addItem(103000008,1)
+  self.playerTroop:addItem(103000009,1)
+  self.playerTroop:addItem(103000010,2)
+  self.playerTroop:addItem(103000011,4)
+  self.playerTroop:addItem(103000012,5)
+  self.playerTroop:addItem(103000013,5)
   --初始化NPC信息表
   self.npcs={}
   --打开Model更新开关

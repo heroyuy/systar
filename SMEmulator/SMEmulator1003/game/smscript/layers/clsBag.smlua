@@ -10,21 +10,38 @@ setmetatable(clsBag,clsUILayer)
 clsBag.__index=clsBag
 
 --字段
-
+clsBag.tableBag=nil				--道具表格
 
 --构造器
-function clsBag:new(x,y,width,height)
+function clsBag:new()
   local w,h=240,320
   local self = clsUILayer:new(Game:getWidth()/2+w/2,Game:getHeight()/2,w,h)
   setmetatable(self,clsBag)
   self.image=Skin:createBgWithFrame(self.width,self.height)
-  
+  self.tableBag=clsUITable:new(self.width/2,self.height/2,self.width-20,self.height-20)
+  self.tableBag.dataSource=self
+  self.tableBag.delegate=self
+  self.tableBag.cellWidth,self.tableBag.cellHeight=36,36
+  self.tableBag.colNum=5
+  self.tableBag.cellBackground=Skin:createBody(self.tableBag.cellWidth,self.tableBag.cellHeight)
+  self:addChild(self.tableBag)
   self:refresh()
   return self
 end
 
 function clsBag:refresh()
-  
+  self.tableBag.cellNum=math.ceil(table.getn(GameData.playerTroop.itemList)/self.tableBag.colNum)*self.tableBag.colNum
+  self.tableBag:refresh()
+end
+
+function clsBag:cellLayerAtIndex(table,cellLayer,i)
+  local itemCell=GameData.playerTroop:itemAt(i)
+  if itemCell then
+    local itemDict=Dictionary.items[itemCell.id]
+    local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
+    layerIcon.image=Image:getImage(itemDict.icon)
+    cellLayer:addChild(layerIcon)
+  end
 end
 
 function clsBag:onTouch(event)

@@ -36,6 +36,7 @@ function Image:createImage(width,height)
   return smImageFactory:createImage(width,height)
 end
 
+--加载但不使用图片
 function Image:loadImage(file)
   local node=self.nodes[file]
   if node==nil then
@@ -44,6 +45,7 @@ function Image:loadImage(file)
   end
 end
 
+--使用图片
 function Image:getImage(file)
   local node=self.nodes[file]
   if node==nil then
@@ -54,6 +56,7 @@ function Image:getImage(file)
   return self.nodes[file].image
 end
 
+--释放图片
 function Image:releaseImage(file)
   local node=self.nodes[file]
   if node then
