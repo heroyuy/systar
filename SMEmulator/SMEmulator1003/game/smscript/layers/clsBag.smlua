@@ -11,6 +11,10 @@ clsBag.__index=clsBag
 
 --字段
 clsBag.tableBag=nil				--道具表格
+clsBag.labelItemName=nil		--道具名称
+clsBag.textAreaItemDesc=nil		--道具描述
+clsBag.buttonUse=nil			--使用
+clsBag.buttonThrow=nil			--丢弃
 
 --构造器
 function clsBag:new()
@@ -18,7 +22,11 @@ function clsBag:new()
   local self = clsUILayer:new(Game:getWidth()/2+w/2,Game:getHeight()/2,w,h)
   setmetatable(self,clsBag)
   self.image=Skin:createBgWithFrame(self.width,self.height)
-  self.tableBag=clsUITable:new(self.width/2,self.height/2,self.width-20,self.height-20)
+  --物品列表
+  local gap=10
+  self.tableBag=clsUITable:new(self.width/2,gap,self.width-2*gap,h-100)
+  self.tableBag.anchor={0.5,0}
+  self.tableBag.color=Skin:getColor(2,2)
   self.tableBag.dataSource=self
   self.tableBag.delegate=self
   self.tableBag.cellWidth,self.tableBag.cellHeight=36,36
@@ -26,6 +34,26 @@ function clsBag:new()
   self.tableBag.cellBackground=Skin:createBody(self.tableBag.cellWidth,self.tableBag.cellHeight)
   self.tableBag.cellSelectedBackground=Skin:createSelectedBg(self.tableBag.cellWidth,self.tableBag.cellHeight)
   self:addChild(self.tableBag)
+  --物品名称
+  self.labelItemName=clsUILabel:new(gap,self.tableBag.y+self.tableBag.height+gap/2,80,20)
+  self.labelItemName.anchor={0,0}
+  self.labelItemName.color=Skin:getColor(2,2)
+  self:addChild(self.labelItemName)
+  --物品描述
+  self.textAreaItemDesc=clsUITextArea:new(self.width/2,self.tableBag.y+self.tableBag.height+gap/2+self.labelItemName.height+gap/2,self.width-2*gap,50)
+  self.textAreaItemDesc.anchor={0.5,0}
+  self.textAreaItemDesc.color=Skin:getColor(2,2)
+  self.textAreaItemDesc.textSize=13
+  self:addChild(self.textAreaItemDesc)
+  --使用按钮
+  self.buttonUse=clsUIButton:standardButton(gap+self.labelItemName.width+gap,self.tableBag.y+self.tableBag.height+gap/2,60,20,"使用")
+  self.buttonUse.anchor={0,0}
+  self:addChild(self.buttonUse)
+  --丢弃按钮
+  self.buttonThrow=clsUIButton:standardButton(gap+self.labelItemName.width+gap+self.buttonUse.width+gap,self.tableBag.y+self.tableBag.height+gap/2,60,20,"丢弃")
+  self.buttonThrow.anchor={0,0}
+  self:addChild(self.buttonThrow)
+  
   self:refresh()
   return self
 end
@@ -43,6 +71,16 @@ function clsBag:cellLayerAtIndex(table,cellLayer,i)
     layerIcon.image=Image:getImage(itemDict.icon)
     layerIcon.enabled=false
     cellLayer:addChild(layerIcon)
+  end
+end
+
+function clsBag:itemSelected(menu,index)
+  local itemCell=GameData.playerTroop:itemAt(index)
+  if itemCell then
+    local itemDict=Dictionary.items[itemCell.id]
+    self.labelItemName.text=itemDict.name
+    self.textAreaItemDesc.text=itemDict.desc
+    self.textAreaItemDesc:refresh()
   end
 end
 
