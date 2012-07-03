@@ -7,6 +7,8 @@ package com.soyomaker.model.animation;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * 
@@ -163,6 +165,16 @@ public class Animation {
         frames.add(frame);
     }
 
+    class FrameHeightComparator implements Comparator {
+
+        public int compare(Object o1, Object o2) {
+            Frame t1 = (Frame) o1;
+            Frame t2 = (Frame) o2;
+            int result = t1.getPngHeight() > t2.getPngHeight() ? 1 : (t1.getPngHeight() == t2.getPngHeight() ? 0 : -1);
+            return result;
+        }
+    }
+
     /**
      * FIXME 需要优化
      * @return
@@ -170,23 +182,57 @@ public class Animation {
     public BufferedImage getPngBufferedImage() {
         int w = 0;
         int h = -Integer.MAX_VALUE;
+        ArrayList<Frame> frameList = new ArrayList<Frame>();
         for (Frame frame : frames) {
-            w += frame.getPngWidth();
-            if (frame.getPngHeight() > h) {
-                h = frame.getPngHeight();
+            frameList.add(frame);
+        }
+        Collections.sort(frameList, new FrameHeightComparator());//根据帧高度从大到小排列帧列表
+        BufferedImage image = new BufferedImage(2048, 2048, BufferedImage.TYPE_INT_ARGB);//先创建一个默认支持的最大的图像
+        Graphics ig = image.getGraphics();
+        int dx = 0;
+        int dy = 0;
+        int hh = frameList.get(0).getPngHeight();
+        int ww = 0;
+        for (Frame frame : frameList) {
+            if (dx + frame.getPngWidth() < 2048) {
+                frame.setPngX(dx);
+                frame.setPngY(dy);
+                ig.drawImage(frame.getPngBufferedImage(), dx, dy, null);
+                dx += frame.getPngWidth();
+            } else {
+                if (dx > ww) {
+                    ww = dx;
+                }
+                dx = 0;
+                dy = hh;
+                frame.setPngX(dx);
+                frame.setPngY(dy);
+                ig.drawImage(frame.getPngBufferedImage(), dx, dy, null);
+                dx += frame.getPngWidth();
+                hh += frame.getPngHeight();
             }
         }
-        BufferedImage buffImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = buffImage.getGraphics();
-        int x = 0;
-        int y = 0;
-        for (Frame frame : frames) {
-            frame.setPngX(x);
-            frame.setPngY(y);
-            g.drawImage(frame.getPngBufferedImage(), x, y, null);
-            x += frame.getPngWidth();
-        }
-        return buffImage;
+//        System.out.println("w:" + Math.max(ww, dx) + " h:" + hh);
+//
+//        for (Frame frame : frames) {
+//            w += frame.getPngWidth();
+//            if (h < frame.getPngHeight()) {
+//                h = frame.getPngHeight();
+//            }
+//        }
+////        System.out.println("w:" + w + " h:" + h);
+//        BufferedImage buffImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+//        Graphics g = buffImage.getGraphics();
+//        int x = 0;
+//        int y = 0;
+//        for (Frame frame : frames) {
+//            frame.setPngX(x);
+//            frame.setPngY(y);
+//            g.drawImage(frame.getPngBufferedImage(), x, y, null);
+//            x += frame.getPngWidth();
+//        }
+//        return buffImage;
+        return image.getSubimage(0, 0, Math.max(ww, dx), hh);
     }
 
     /**

@@ -56,8 +56,8 @@ public class DefaultAnimationLuaWriter implements IAnimationWriter {
                     fr.addNode("height", frame.getPngHeight());
                     fr.addNode("offsetX", frame.getOffsetX());
                     fr.addNode("offsetY", frame.getOffsetY());
-//                    ImageIO.write(frame.getPngBufferedImage(), "png", new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar
-//                            + "data" + File.separatorChar + ani.getName() + i + ".png"));
+//                    ImageIO.write(frame.getPngBufferedImage(), "png",
+//                            new File(AppData.getInstance().getCurProject().getPath() + File.separatorChar + "data" + File.separatorChar + frame.getID() + ".png"));
                     frs.addNode(fr);
                 }
                 lt.addNode("frameList", frs);

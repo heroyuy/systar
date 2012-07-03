@@ -1565,7 +1565,10 @@ public class SpriteEditorDialog extends javax.swing.JDialog implements ProjectAn
             return;
         }
         EditFrameDialog ead = new EditFrameDialog(this, true);
+        ead.setFrame(handleFramePane.getCurFrame());
         ead.setVisible(true);
+        frameTable.updateUI();
+        handleFramePane.updateUI();
     }//GEN-LAST:event_editFrameButtonActionPerformed
     private AutoCutDialog autoCutDialog;
     private FrameTableModel ftm;

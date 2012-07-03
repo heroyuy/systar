@@ -111,12 +111,12 @@ public class ConfigDao extends Dao<Config> {
         config.term.item = dis.readUTF();
         config.term.equip = dis.readUTF();
         config.term.skill = dis.readUTF();
-        config.system.skin = dis.readUTF();
+        config.system.frameSkin = dis.readUTF();
         config.system.startAniIndex = dis.readInt();
         config.system.titleBackground = dis.readUTF();
         config.system.titleMusic = dis.readUTF();
         config.system.startBattleSound = dis.readUTF();
-        config.system.battleMusic = dis.readUTF();
+        config.system.failSound = dis.readUTF();
         config.system.winBattleSound = dis.readUTF();
         config.system.escapeSound = dis.readUTF();
         config.system.endAniIndex = dis.readInt();
@@ -179,13 +179,13 @@ public class ConfigDao extends Dao<Config> {
         config.term.equip = getText(root, "equip");
         config.term.skill = getText(root, "skill");
 
-        config.system.skin = getText(root, "skin");
+        config.system.frameSkin = getText(root, "skin");
         config.system.startAniIndex = Integer.parseInt(getText(root, "startAniIndex"));
         config.system.endAniIndex = Integer.parseInt(getText(root, "endAniIndex"));
         config.system.titleBackground = getText(root, "titleBackground");
         config.system.titleMusic = getText(root, "titleMusic");
         config.system.startBattleSound = getText(root, "startBattleSound");
-        config.system.battleMusic = getText(root, "battleMusic");
+        config.system.failSound = getText(root, "battleMusic");
         config.system.winBattleSound = getText(root, "winSound");
         config.system.escapeSound = getText(root, "escapeSound");
         config.system.selectedSound = getText(root, "selectedSound");
@@ -335,7 +335,7 @@ public class ConfigDao extends Dao<Config> {
             skill.setText(config.term.skill);
 
             Element skin = root.addElement("skin");
-            skin.setText(config.system.skin);
+            skin.setText(config.system.frameSkin);
 
             Element startAniIndex = root.addElement("startAniIndex");
             startAniIndex.setText("" + config.system.startAniIndex);
@@ -352,8 +352,8 @@ public class ConfigDao extends Dao<Config> {
             Element startBattleSound = root.addElement("startBattleSound");
             startBattleSound.setText(config.system.startBattleSound);
 
-            Element battleMusic = root.addElement("battleMusic");
-            battleMusic.setText(config.system.battleMusic);
+            Element battleMusic = root.addElement("failSound");
+            battleMusic.setText(config.system.failSound);
 
             Element winSound = root.addElement("winSound");
             winSound.setText(config.system.winBattleSound);
@@ -438,6 +438,77 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         lt.addNode("gold", config.term.gold);
         lt.addNode("\n");
+        LuaTable ltSkins = new LuaTable();
+        if (config.system.frameSkin == null || config.system.frameSkin.equals("")) {
+            ltSkins.addNode("frame", "nil");
+        } else {
+            ltSkins.addNode("frame", "/image/skin/" + config.system.frameSkin);
+        }
+        if (config.system.playerInfoSkin == null || config.system.playerInfoSkin.equals("")) {
+            ltSkins.addNode("playerInfo", "nil");
+        } else {
+            ltSkins.addNode("playerInfo", "/image/skin/" + config.system.playerInfoSkin);
+        }
+        if (config.system.inputDialogSkin == null || config.system.inputDialogSkin.equals("")) {
+            ltSkins.addNode("inputDialog", "nil");
+        } else {
+            ltSkins.addNode("inputDialog", "/image/skin/" + config.system.inputDialogSkin);
+        }
+        lt.addNode("skins", ltSkins);
+        if (config.system.startAniIndex == -1) {
+            lt.addNode("startAniId", -1);
+        } else {
+            lt.addNode("startAniId", Configuration.Prefix.ANIMATION_MASK + config.system.startAniIndex + 1);
+        }
+        lt.addNode("\n");
+        if (config.system.titleBackground == null || config.system.titleBackground.equals("")) {
+            lt.addNode("titleImg", "nil");
+        } else {
+            lt.addNode("titleImg", "/image/title/" + config.system.titleBackground);
+        }
+        lt.addNode("\n");
+        if (config.system.titleMusic == null || config.system.titleMusic.equals("")) {
+            lt.addNode("titleMusic", "nil");
+        } else {
+            lt.addNode("titleMusic", "/audio/music/" + config.system.titleMusic);
+        }
+        lt.addNode("\n");
+        lt.addNode("cellWidth", config.system.cellWidth);
+        lt.addNode("\n");
+        lt.addNode("cellHeight", config.system.cellHeight);
+        lt.addNode("\n");
+        LuaTable ltId = new LuaTable();
+        for (int i = 0; i < config.system.initPlayers.size(); i++) {
+            ltId.addNode(Configuration.Prefix.PLAYER_MASK + config.system.initPlayers.get(i).getIndex() + 1);
+        }
+        lt.addNode("playerList", ltId);
+        lt.addNode("\n");
+        if (config.system.curMapIndex == -1) {
+            lt.addNode("mapId", -1);
+        } else {
+            lt.addNode("mapId", Configuration.Prefix.MAP_MASK + config.system.curMapIndex + 1);
+        }
+        lt.addNode("\n");
+        lt.addNode("row", config.system.row);
+        lt.addNode("\n");
+        lt.addNode("col", config.system.col);
+        lt.addNode("\n");
+        lt.addNode("face", config.system.face);
+        lt.addNode("\n");
+        lt.addNode("\n");
+        lt.addNode("str", config.term.stre);
+        lt.addNode("\n");
+        lt.addNode("int", config.term.inte);
+        lt.addNode("\n");
+        lt.addNode("agi", config.term.agil);
+        lt.addNode("\n");
+        lt.addNode("dex", config.term.dext);
+        lt.addNode("\n");
+        lt.addNode("vit", config.term.vita);
+        lt.addNode("\n");
+        lt.addNode("luck", config.term.luck);
+        lt.addNode("\n");
+
         lt.addNode("hp", config.term.hp);
         lt.addNode("\n");
         lt.addNode("sp", config.term.sp);
@@ -450,18 +521,14 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         lt.addNode("mdef", config.term.mdef);
         lt.addNode("\n");
-        lt.addNode("stre", config.term.stre);
+
+        lt.addNode("item", config.term.item);
         lt.addNode("\n");
-        lt.addNode("inte", config.term.inte);
+        lt.addNode("equip", config.term.equip);
         lt.addNode("\n");
-        lt.addNode("agil", config.term.agil);
+        lt.addNode("skill", config.term.skill);
         lt.addNode("\n");
-        lt.addNode("dext", config.term.dext);
-        lt.addNode("\n");
-        lt.addNode("vita", config.term.vita);
-        lt.addNode("\n");
-        lt.addNode("luck", config.term.luck);
-        lt.addNode("\n");
+
         lt.addNode("helm", config.term.helm);
         lt.addNode("\n");
         lt.addNode("armour", config.term.armour);
@@ -474,40 +541,11 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         lt.addNode("jewelry", config.term.jewelry);
         lt.addNode("\n");
-        lt.addNode("item", config.term.item);
-        lt.addNode("\n");
-        lt.addNode("equip", config.term.equip);
-        lt.addNode("\n");
-        lt.addNode("skill", config.term.skill);
-        lt.addNode("\n");
-        if (config.system.skin == null || config.system.skin.equals("")) {
-            lt.addNode("skin", "nil");
-        } else {
-            lt.addNode("skin", "/image/skin/" + config.system.skin);
-        }
-        lt.addNode("\n");
-        if (config.system.titleBackground == null || config.system.titleBackground.equals("")) {
-            lt.addNode("titleBackground", "nil");
-        } else {
-            lt.addNode("titleBackground", "/image/title/" + config.system.titleBackground);
-        }
-        lt.addNode("\n");
-        if (config.system.titleMusic == null || config.system.titleMusic.equals("")) {
-            lt.addNode("titleMusic", "nil");
-        } else {
-            lt.addNode("titleMusic", "/audio/music/" + config.system.titleMusic);
-        }
-        lt.addNode("\n");
+
         if (config.system.startBattleSound == null || config.system.startBattleSound.equals("")) {
             lt.addNode("startBattleSound", "nil");
         } else {
             lt.addNode("startBattleSound", "/audio/sound/" + config.system.startBattleSound);
-        }
-        lt.addNode("\n");
-        if (config.system.battleMusic == null || config.system.battleMusic.equals("")) {
-            lt.addNode("battleMusic", "nil");
-        } else {
-            lt.addNode("battleMusic", "/audio/music/" + config.system.battleMusic);
         }
         lt.addNode("\n");
         if (config.system.winBattleSound == null || config.system.winBattleSound.equals("")) {
@@ -516,22 +554,22 @@ public class ConfigDao extends Dao<Config> {
             lt.addNode("winSound", "/audio/sound/" + config.system.winBattleSound);
         }
         lt.addNode("\n");
+        if (config.system.failSound == null || config.system.failSound.equals("")) {
+            lt.addNode("failSound", "nil");
+        } else {
+            lt.addNode("failSound", "/audio/sound/" + config.system.failSound);
+        }
+        lt.addNode("\n");
+        if (config.system.endAniIndex == -1) {
+            lt.addNode("endAniId", -1);
+        } else {
+            lt.addNode("endAniId", Configuration.Prefix.ANIMATION_MASK + config.system.endAniIndex + 1);
+        }
+        lt.addNode("\n");
         if (config.system.escapeSound == null || config.system.escapeSound.equals("")) {
             lt.addNode("escapeSound", "nil");
         } else {
             lt.addNode("escapeSound", "/audio/sound/" + config.system.escapeSound);
-        }
-        lt.addNode("\n");
-        if (config.system.startAniIndex == -1) {
-            lt.addNode("startAniIndex", -1);
-        } else {
-            lt.addNode("startAniIndex", Configuration.Prefix.ANIMATION_MASK + config.system.startAniIndex + 1);
-        }
-        lt.addNode("\n");
-        if (config.system.endAniIndex == -1) {
-            lt.addNode("endAniIndex", -1);
-        } else {
-            lt.addNode("endAniIndex", Configuration.Prefix.ANIMATION_MASK + config.system.endAniIndex + 1);
         }
         lt.addNode("\n");
         if (config.system.selectedSound == null || config.system.selectedSound.equals("")) {
@@ -571,9 +609,9 @@ public class ConfigDao extends Dao<Config> {
         }
         lt.addNode("\n");
         if (config.system.readSound == null || config.system.readSound.equals("")) {
-            lt.addNode("readSound", "nil");
+            lt.addNode("loadSound", "nil");
         } else {
-            lt.addNode("readSound", "/audio/sound/" + config.system.readSound);
+            lt.addNode("loadSound", "/audio/sound/" + config.system.readSound);
         }
         lt.addNode("\n");
         if (config.system.saveSound == null || config.system.saveSound.equals("")) {
@@ -582,41 +620,23 @@ public class ConfigDao extends Dao<Config> {
             lt.addNode("saveSound", "/audio/sound/" + config.system.saveSound);
         }
         lt.addNode("\n");
-        LuaTable ltId = new LuaTable();
-        for (int i = 0; i < config.system.initPlayers.size(); i++) {
-            ltId.addNode(Configuration.Prefix.PLAYER_MASK + config.system.initPlayers.get(i).getIndex() + 1);
-        }
-        lt.addNode("playersIndex", ltId);
-        lt.addNode("\n");
-        if (config.system.curMapIndex == -1) {
-            lt.addNode("curMapIndex", -1);
-        } else {
-            lt.addNode("curMapIndex", Configuration.Prefix.MAP_MASK + config.system.curMapIndex + 1);
-        }
-        lt.addNode("\n");
-        lt.addNode("row", config.system.row);
-        lt.addNode("\n");
-        lt.addNode("col", config.system.col);
-        lt.addNode("\n");
-        lt.addNode("face", config.system.face);
-        lt.addNode("\n");
 
-        LuaTable ltPrefixList = new LuaTable();
-
-        ltPrefixList.addNode("[" + Configuration.Prefix.VOCATION + "]", 0);
-        ltPrefixList.addNode("[" + Configuration.Prefix.PLAYER + "]", 1);
-        ltPrefixList.addNode("[" + Configuration.Prefix.SKILL + "]", 2);
-        ltPrefixList.addNode("[" + Configuration.Prefix.ITEM + "]", 3);
-        ltPrefixList.addNode("[" + Configuration.Prefix.EQUIP + "]", 4);
-        ltPrefixList.addNode("[" + Configuration.Prefix.ENEMY + "]", 5);
-        ltPrefixList.addNode("[" + Configuration.Prefix.ENEMYTROOP + "]", 6);
-        ltPrefixList.addNode("[" + Configuration.Prefix.STATUS + "]", 7);
-        ltPrefixList.addNode("[" + Configuration.Prefix.MAP + "]", 8);
-        ltPrefixList.addNode("[" + Configuration.Prefix.NPC + "]", 9);
-        ltPrefixList.addNode("[" + Configuration.Prefix.ANIMATION + "]", 10);
-        ltPrefixList.addNode("[" + Configuration.Prefix.SCRIPT + "]", 11);
-        ltPrefixList.addNode("[" + Configuration.Prefix.ATTRIBUTE + "]", 12);
-        lt.addNode("idPrefixList", ltPrefixList);
+//        LuaTable ltPrefixList = new LuaTable();
+//
+//        ltPrefixList.addNode("[" + Configuration.Prefix.VOCATION + "]", 0);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.PLAYER + "]", 1);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.SKILL + "]", 2);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.ITEM + "]", 3);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.EQUIP + "]", 4);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.ENEMY + "]", 5);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.ENEMYTROOP + "]", 6);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.STATUS + "]", 7);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.MAP + "]", 8);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.NPC + "]", 9);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.ANIMATION + "]", 10);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.SCRIPT + "]", 11);
+//        ltPrefixList.addNode("[" + Configuration.Prefix.ATTRIBUTE + "]", 12);
+//        lt.addNode("idPrefixList", ltPrefixList);
 
         lt.addNode("\n");
         LuaTable ltAttrs = new LuaTable();
@@ -632,6 +652,48 @@ public class ConfigDao extends Dao<Config> {
             }
         }
         lt.addNode("attributes", ltAttrs);
+        LuaTable ltFormulas = new LuaTable();
+        ltFormulas.addNode("str", config.system.strFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("agi", config.system.agiFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("int", config.system.intFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("dex", config.system.dexFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("vit", config.system.vitFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("luck", config.system.luckFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("HP", config.system.HPFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("SP", config.system.SPFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("hpr", config.system.hprFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("spr", config.system.sprFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("atk", config.system.atkFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("def", config.system.defFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("matk", config.system.matkFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("mdef", config.system.mdefFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("hit", config.system.hitFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("flee", config.system.fleeFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("aspd", config.system.aspdFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("mspd", config.system.mspdFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("cri", config.system.criFormula);
+        ltFormulas.addNode("\n");
+        ltFormulas.addNode("sta", config.system.staFormula);
+        ltFormulas.addNode("\n");
+        lt.addNode("formulas", ltFormulas);
         LuaNode ln = new LuaNode("Dictionary.config", lt);
         try {
             LuaFileUtil.writeToFile(ln, AppData.getInstance().getCurProject().getPath() + "/data/config.gat");
@@ -699,12 +761,12 @@ public class ConfigDao extends Dao<Config> {
             dos.writeUTF(config.term.item);
             dos.writeUTF(config.term.equip);
             dos.writeUTF(config.term.skill);
-            dos.writeUTF(config.system.skin);
+            dos.writeUTF(config.system.frameSkin);
             dos.writeInt(config.system.startAniIndex);
             dos.writeUTF(config.system.titleBackground);
             dos.writeUTF(config.system.titleMusic);
             dos.writeUTF(config.system.startBattleSound);
-            dos.writeUTF(config.system.battleMusic);
+            dos.writeUTF(config.system.failSound);
             dos.writeUTF(config.system.winBattleSound);
             dos.writeUTF(config.system.escapeSound);
             dos.writeInt(config.system.endAniIndex);

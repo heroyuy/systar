@@ -42,11 +42,11 @@ public class Frame implements Cloneable {
         int minY = Integer.MAX_VALUE;
         int maxY = -Integer.MAX_VALUE;
         for (Clip clip : tiles) {
-            if (clip.getFramePoint().y < minY) {
-                minY = clip.getFramePoint().y;
+            if (clip.getFramePoint().y - clip.getH() / 2 < minY) {
+                minY = clip.getFramePoint().y - clip.getH() / 2;
             }
-            if (clip.getFramePoint().y + clip.getH() > maxY) {
-                maxY = clip.getFramePoint().y + clip.getH();
+            if (clip.getFramePoint().y + clip.getH() / 2 > maxY) {
+                maxY = clip.getFramePoint().y + clip.getH() / 2;
             }
         }
         return maxY - minY;
@@ -61,11 +61,11 @@ public class Frame implements Cloneable {
         int minX = Integer.MAX_VALUE;
         int maxX = -Integer.MAX_VALUE;
         for (Clip clip : tiles) {
-            if (clip.getFramePoint().x < minX) {
-                minX = clip.getFramePoint().x;
+            if (clip.getFramePoint().x - clip.getW() / 2 < minX) {
+                minX = clip.getFramePoint().x - clip.getW() / 2;
             }
-            if (clip.getFramePoint().x + clip.getW() > maxX) {
-                maxX = clip.getFramePoint().x + clip.getW();
+            if (clip.getFramePoint().x + clip.getW() / 2 > maxX) {
+                maxX = clip.getFramePoint().x + clip.getW() / 2;
             }
         }
         return maxX - minX;
@@ -109,12 +109,16 @@ public class Frame implements Cloneable {
      */
     public int getOffsetX() {
         int minX = Integer.MAX_VALUE;
+        int maxX = -Integer.MAX_VALUE;
         for (Clip clip : tiles) {
-            if (clip.getFramePoint().x < minX) {
-                minX = clip.getFramePoint().x;
+            if (clip.getFramePoint().x - clip.getW() / 2 < minX) {
+                minX = clip.getFramePoint().x - clip.getW() / 2;
+            }
+            if (clip.getFramePoint().x + clip.getW() / 2 > maxX) {
+                maxX = clip.getFramePoint().x + clip.getW() / 2;
             }
         }
-        return minX;
+        return (minX + maxX) / 2;
     }
 
     /**
@@ -123,12 +127,16 @@ public class Frame implements Cloneable {
      */
     public int getOffsetY() {
         int minY = Integer.MAX_VALUE;
+        int maxY = -Integer.MAX_VALUE;
         for (Clip clip : tiles) {
-            if (clip.getFramePoint().y < minY) {
-                minY = clip.getFramePoint().y;
+            if (clip.getFramePoint().y - clip.getH() / 2 < minY) {
+                minY = clip.getFramePoint().y - clip.getH() / 2;
+            }
+            if (clip.getFramePoint().y + clip.getH() / 2 > maxY) {
+                maxY = clip.getFramePoint().y + clip.getH() / 2;
             }
         }
-        return minY;
+        return (minY + maxY) / 2;
     }
 
     /**
@@ -140,9 +148,19 @@ public class Frame implements Cloneable {
                 this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D frameg = frameImage.createGraphics();
         paint(frameg, width / 2, height / 2);
+        int w = this.getPngWidth();
+        int h = this.getPngHeight();
+        BufferedImage image = new BufferedImage(w,
+                h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = image.createGraphics();
         int x = this.getOffsetX() + width / 2 - this.getPngWidth() / 2;
         int y = this.getOffsetY() + height / 2 - this.getPngHeight() / 2;
-        return frameImage.getSubimage(x, y, this.getPngWidth(), this.getPngHeight());
+//        System.out.println("x:" + x);
+//        System.out.println("y:" + y);
+//        System.out.println("w:" + w);
+//        System.out.println("h:" + h);
+        g.drawImage(frameImage, -x, -y, null);
+        return image;
     }
 
     /**

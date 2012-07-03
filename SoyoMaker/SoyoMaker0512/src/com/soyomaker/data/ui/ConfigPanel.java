@@ -21,6 +21,7 @@ import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.model.animation.Animation;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -76,7 +77,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         configPlayerTable.updateUI();
         titleMusicComboBox.setSelectedItem(config.system.titleMusic);
         battleStartSoundComboBox.setSelectedItem(config.system.startBattleSound);
-        battleBackgroundMusicComboBox.setSelectedItem(config.system.battleMusic);
+        failComboBox.setSelectedItem(config.system.failSound);
         battleWinSoundComboBox.setSelectedItem(config.system.winBattleSound);
         escapeSoundComboBox.setSelectedItem(config.system.escapeSound);
         loadSoundComboBox.setSelectedItem(config.system.readSound);
@@ -93,7 +94,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         initFaceComboBox.setSelectedIndex(config.system.face);
         gameStartAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(config.system.startAniIndex));
         gameOverAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(config.system.endAniIndex));
-        skinComboBox.setSelectedItem(config.system.skin);
+        frameSkinComboBox.setSelectedItem(config.system.frameSkin);
         titleSceneBackgroundComboBox.setSelectedItem(config.system.titleBackground);
     }
 
@@ -103,11 +104,11 @@ public class ConfigPanel extends javax.swing.JPanel {
     public void refresh() {
         gameStartAniComboBox.removeAllItems();
         gameOverAniComboBox.removeAllItems();
-        skinComboBox.removeAllItems();
+        frameSkinComboBox.removeAllItems();
         titleSceneBackgroundComboBox.removeAllItems();
         titleMusicComboBox.removeAllItems();
         battleStartSoundComboBox.removeAllItems();
-        battleBackgroundMusicComboBox.removeAllItems();
+        failComboBox.removeAllItems();
         battleWinSoundComboBox.removeAllItems();
         escapeSoundComboBox.removeAllItems();
         loadSoundComboBox.removeAllItems();
@@ -119,9 +120,9 @@ public class ConfigPanel extends javax.swing.JPanel {
         selectSoundComboBox.removeAllItems();
         shopSoundComboBox.removeAllItems();
         initMapComboBox.removeAllItems();
-        skinComboBox.addItem("");
+        frameSkinComboBox.addItem("");
         for (int i = 0; i < DataManager.listSkinImageName().length; i++) {
-            skinComboBox.addItem(DataManager.listSkinImageName()[i]);
+            frameSkinComboBox.addItem(DataManager.listSkinImageName()[i]);
         }
         titleSceneBackgroundComboBox.addItem("");
         for (int i = 0; i < DataManager.listTitleBackgroundName().length; i++) {
@@ -135,9 +136,9 @@ public class ConfigPanel extends javax.swing.JPanel {
         for (int i = 0; i < DataManager.listSoundName().length; i++) {
             battleStartSoundComboBox.addItem(DataManager.listSoundName()[i]);
         }
-        battleBackgroundMusicComboBox.addItem("");
+        failComboBox.addItem("");
         for (int i = 0; i < DataManager.listMusicName().length; i++) {
-            battleBackgroundMusicComboBox.addItem(DataManager.listMusicName()[i]);
+            failComboBox.addItem(DataManager.listMusicName()[i]);
         }
         battleWinSoundComboBox.addItem("");
         for (int i = 0; i < DataManager.listSoundName().length; i++) {
@@ -254,7 +255,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         config.term.gold = configMoneyTextField.getText();
         config.system.titleMusic = getSelectedItem(titleMusicComboBox);
         config.system.startBattleSound = getSelectedItem(battleStartSoundComboBox);
-        config.system.battleMusic = getSelectedItem(battleBackgroundMusicComboBox);
+        config.system.failSound = getSelectedItem(failComboBox);
         config.system.winBattleSound = getSelectedItem(battleWinSoundComboBox);
         config.system.escapeSound = getSelectedItem(escapeSoundComboBox);
         config.system.readSound = getSelectedItem(loadSoundComboBox);
@@ -281,7 +282,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         } else {
             config.system.curMapIndex = ((Map) initMapComboBox.getSelectedItem()).getIndex();
         }
-        config.system.skin = getSelectedItem(skinComboBox);
+        config.system.frameSkin = getSelectedItem(frameSkinComboBox);
         config.system.titleBackground = getSelectedItem(titleSceneBackgroundComboBox);
         config.system.row = Integer.parseInt(initRowTextField.getText());
         config.system.col = Integer.parseInt(initColTextField.getText());
@@ -338,7 +339,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         jLabel36 = new javax.swing.JLabel();
         battleStartSoundComboBox = new javax.swing.JComboBox();
         jLabel37 = new javax.swing.JLabel();
-        battleBackgroundMusicComboBox = new javax.swing.JComboBox();
+        failComboBox = new javax.swing.JComboBox();
         jLabel38 = new javax.swing.JLabel();
         battleWinSoundComboBox = new javax.swing.JComboBox();
         jLabel39 = new javax.swing.JLabel();
@@ -364,9 +365,15 @@ public class ConfigPanel extends javax.swing.JPanel {
         jLabel32 = new javax.swing.JLabel();
         gameOverAniComboBox = new javax.swing.JComboBox();
         jLabel33 = new javax.swing.JLabel();
-        skinComboBox = new javax.swing.JComboBox();
+        frameSkinComboBox = new javax.swing.JComboBox();
         jLabel34 = new javax.swing.JLabel();
         titleSceneBackgroundComboBox = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        inputDialogComboBox = new javax.swing.JComboBox();
+        playerInfoSkinComboBox = new javax.swing.JComboBox();
+        jPanel11 = new javax.swing.JPanel();
+        editFormulaButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -543,28 +550,32 @@ public class ConfigPanel extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(markPositionButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addComponent(varRadioButton)
-                    .addComponent(directRadioButton)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel27)
-                        .addGap(18, 18, 18)
-                        .addComponent(initMapComboBox, 0, 83, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(markPositionButton, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel28)
-                        .addGap(18, 18, 18)
-                        .addComponent(initRowTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(18, 18, 18)
-                        .addComponent(initColTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel30)
-                        .addGap(18, 18, 18)
-                        .addComponent(initFaceComboBox, 0, 83, Short.MAX_VALUE)))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(varRadioButton)
+                            .addComponent(directRadioButton)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(18, 18, 18)
+                                .addComponent(initMapComboBox, 0, 83, Short.MAX_VALUE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel28)
+                                .addGap(18, 18, 18)
+                                .addComponent(initRowTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel29)
+                                .addGap(18, 18, 18)
+                                .addComponent(initColTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel30)
+                                .addGap(18, 18, 18)
+                                .addComponent(initFaceComboBox, 0, 83, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -592,7 +603,7 @@ public class ConfigPanel extends javax.swing.JPanel {
                 .addComponent(directRadioButton)
                 .addGap(18, 18, 18)
                 .addComponent(markPositionButton)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("属性"));
@@ -661,10 +672,10 @@ public class ConfigPanel extends javax.swing.JPanel {
 
         battleStartSoundComboBox.setName("battleStartSoundComboBox"); // NOI18N
 
-        jLabel37.setText("战斗背景音乐");
+        jLabel37.setText("失败音效");
         jLabel37.setName("jLabel37"); // NOI18N
 
-        battleBackgroundMusicComboBox.setName("battleBackgroundMusicComboBox"); // NOI18N
+        failComboBox.setName("failComboBox"); // NOI18N
 
         jLabel38.setText("战斗胜利音效");
         jLabel38.setName("jLabel38"); // NOI18N
@@ -726,15 +737,25 @@ public class ConfigPanel extends javax.swing.JPanel {
 
         gameOverAniComboBox.setName("gameOverAniComboBox"); // NOI18N
 
-        jLabel33.setText("皮肤图片");
+        jLabel33.setText("窗体皮肤");
         jLabel33.setName("jLabel33"); // NOI18N
 
-        skinComboBox.setName("skinComboBox"); // NOI18N
+        frameSkinComboBox.setName("frameSkinComboBox"); // NOI18N
 
         jLabel34.setText("标题背景");
         jLabel34.setName("jLabel34"); // NOI18N
 
         titleSceneBackgroundComboBox.setName("titleSceneBackgroundComboBox"); // NOI18N
+
+        jLabel1.setText("信息皮肤");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel48.setText("输入框皮肤");
+        jLabel48.setName("jLabel48"); // NOI18N
+
+        inputDialogComboBox.setName("inputDialogComboBox"); // NOI18N
+
+        playerInfoSkinComboBox.setName("playerInfoSkinComboBox"); // NOI18N
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -751,20 +772,22 @@ public class ConfigPanel extends javax.swing.JPanel {
                     .addComponent(jLabel36)
                     .addComponent(jLabel35)
                     .addComponent(jLabel31)
-                    .addComponent(jLabel34))
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel48))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(titleSceneBackgroundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gameStartAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(titleMusicComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(battleStartSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(escapeSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(battleWinSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(battleBackgroundMusicComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputDialogComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(titleSceneBackgroundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(gameStartAniComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(titleMusicComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(battleStartSoundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(saveSoundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(loadSoundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(escapeSoundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(battleWinSoundComboBox, 0, 108, Short.MAX_VALUE)
+                    .addComponent(failComboBox, 0, 108, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel44)
                         .addGap(18, 18, 18)
@@ -795,12 +818,16 @@ public class ConfigPanel extends javax.swing.JPanel {
                             .addComponent(jLabel33))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(skinComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gameOverAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(frameSkinComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gameOverAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(playerInfoSkinComboBox, 0, 108, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        jPanel10Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {battleBackgroundMusicComboBox, battleStartSoundComboBox, battleWinSoundComboBox, cancleSoundComboBox, equipSoundComboBox, escapeSoundComboBox, gameOverAniComboBox, gameStartAniComboBox, loadSoundComboBox, okSoundComboBox, saveSoundComboBox, selectSoundComboBox, shopSoundComboBox, skinComboBox, titleMusicComboBox, titleSceneBackgroundComboBox, warnSoundComboBox});
+        jPanel10Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {battleStartSoundComboBox, battleWinSoundComboBox, cancleSoundComboBox, equipSoundComboBox, escapeSoundComboBox, failComboBox, frameSkinComboBox, gameOverAniComboBox, gameStartAniComboBox, loadSoundComboBox, okSoundComboBox, saveSoundComboBox, selectSoundComboBox, shopSoundComboBox, titleMusicComboBox, titleSceneBackgroundComboBox, warnSoundComboBox});
 
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -820,7 +847,7 @@ public class ConfigPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37)
-                    .addComponent(battleBackgroundMusicComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(failComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel43)
                     .addComponent(warnSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -853,12 +880,47 @@ public class ConfigPanel extends javax.swing.JPanel {
                     .addComponent(jLabel31)
                     .addComponent(gameStartAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33)
-                    .addComponent(skinComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(frameSkinComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel34)
-                    .addComponent(titleSceneBackgroundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(93, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(titleSceneBackgroundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(playerInfoSkinComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel48)
+                    .addComponent(inputDialogComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("公式"));
+        jPanel11.setName("jPanel11"); // NOI18N
+
+        editFormulaButton.setText("编辑公式");
+        editFormulaButton.setName("editFormulaButton"); // NOI18N
+        editFormulaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFormulaButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(editFormulaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(editFormulaButton)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -873,7 +935,9 @@ public class ConfigPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -886,7 +950,10 @@ public class ConfigPanel extends javax.swing.JPanel {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -1428,10 +1495,15 @@ public class ConfigPanel extends javax.swing.JPanel {
         initColTextField.setText(config.system.col + "");
         initFaceComboBox.setSelectedIndex(config.system.face);
     }//GEN-LAST:event_markPositionButtonActionPerformed
+
+    private void editFormulaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFormulaButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "暂未开放此功能！", "提示", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_editFormulaButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAttributeButton;
     private javax.swing.JButton addPlayerButton;
-    private javax.swing.JComboBox battleBackgroundMusicComboBox;
     private javax.swing.JComboBox battleStartSoundComboBox;
     private javax.swing.JComboBox battleWinSoundComboBox;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1464,14 +1536,19 @@ public class ConfigPanel extends javax.swing.JPanel {
     private javax.swing.JTextField configStreTextField;
     private javax.swing.JTextField configWeaponTextField;
     private javax.swing.JRadioButton directRadioButton;
+    private javax.swing.JButton editFormulaButton;
     private javax.swing.JComboBox equipSoundComboBox;
     private javax.swing.JComboBox escapeSoundComboBox;
+    private javax.swing.JComboBox failComboBox;
+    private javax.swing.JComboBox frameSkinComboBox;
     private javax.swing.JComboBox gameOverAniComboBox;
     private javax.swing.JComboBox gameStartAniComboBox;
     private javax.swing.JTextField initColTextField;
     private javax.swing.JComboBox initFaceComboBox;
     private javax.swing.JComboBox initMapComboBox;
     private javax.swing.JTextField initRowTextField;
+    private javax.swing.JComboBox inputDialogComboBox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1513,6 +1590,7 @@ public class ConfigPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1520,6 +1598,7 @@ public class ConfigPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1538,12 +1617,12 @@ public class ConfigPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox loadSoundComboBox;
     private javax.swing.JButton markPositionButton;
     private javax.swing.JComboBox okSoundComboBox;
+    private javax.swing.JComboBox playerInfoSkinComboBox;
     private javax.swing.JButton removeAttributeButton;
     private javax.swing.JButton removePlayerButton;
     private javax.swing.JComboBox saveSoundComboBox;
     private javax.swing.JComboBox selectSoundComboBox;
     private javax.swing.JComboBox shopSoundComboBox;
-    private javax.swing.JComboBox skinComboBox;
     private javax.swing.JComboBox titleMusicComboBox;
     private javax.swing.JComboBox titleSceneBackgroundComboBox;
     private javax.swing.JRadioButton varRadioButton;

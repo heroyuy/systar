@@ -10,7 +10,9 @@
  */
 package com.soyomaker.dialog;
 
+import com.soyomaker.model.animation.Frame;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +29,11 @@ public class EditFrameDialog extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
     }
+    private Frame frame = null;
+
+    public void setFrame(Frame frame) {
+        this.frame = frame;
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -37,22 +44,146 @@ public class EditFrameDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        frameWidthTextField = new javax.swing.JTextField();
+        frameNameTextField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        frameHeightTextField = new javax.swing.JTextField();
+        okButton = new javax.swing.JButton();
+        cancleButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("编辑帧");
+
+        jLabel1.setText("帧名称");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel2.setText("帧宽度");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        frameWidthTextField.setText("384");
+        frameWidthTextField.setName("frameWidthTextField"); // NOI18N
+
+        frameNameTextField.setText("新建帧");
+        frameNameTextField.setName("frameNameTextField"); // NOI18N
+
+        jLabel3.setText("帧高度");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        frameHeightTextField.setText("384");
+        frameHeightTextField.setName("frameHeightTextField"); // NOI18N
+
+        okButton.setText("确定");
+        okButton.setName("okButton"); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        cancleButton.setText("取消");
+        cancleButton.setName("cancleButton"); // NOI18N
+        cancleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 257, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(okButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancleButton)
+                        .addGap(1, 1, 1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(frameNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(frameWidthTextField)
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(frameHeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 113, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(frameNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(frameWidthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(frameHeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancleButton)
+                    .addComponent(okButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // TODO add your handling code here:
+        if (frameWidthTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "帧宽度不能为空！");
+            return;
+        }
+        int frameW = Integer.parseInt(frameWidthTextField.getText());
+        //        if (frameW > 2048) {
+        //            JOptionPane.showMessageDialog(this,
+        //                    "帧宽度不能超过2048！");
+        //            return;
+        //        }
+        if (frameHeightTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "帧高度不能为空！");
+            return;
+        }
+        int frameH = Integer.parseInt(frameHeightTextField.getText());
+        //        if (frameH > 2048) {
+        //            JOptionPane.showMessageDialog(this,
+        //                    "帧高度不能超过2048！");
+        //            return;
+        //        }
+        frame.setName(frameNameTextField.getText());
+        frame.setWidth(frameW);
+        frame.setHeight(frameH);
+        dispose();
+}//GEN-LAST:event_okButtonActionPerformed
+
+    private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+}//GEN-LAST:event_cancleButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancleButton;
+    private javax.swing.JTextField frameHeightTextField;
+    private javax.swing.JTextField frameNameTextField;
+    private javax.swing.JTextField frameWidthTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

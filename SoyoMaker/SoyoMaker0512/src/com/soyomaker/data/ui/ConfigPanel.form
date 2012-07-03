@@ -61,7 +61,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel8" max="32767" attributes="1"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jPanel11" max="32767" attributes="0"/>
+                          <Component id="jPanel8" alignment="0" max="32767" attributes="1"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -77,7 +80,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jPanel9" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jPanel8" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jPanel11" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -193,31 +200,38 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="markPositionButton" alignment="0" pref="149" max="32767" attributes="0"/>
-                              <Component id="varRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="directRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="initMapComboBox" pref="83" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="markPositionButton" pref="153" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="initRowTextField" pref="83" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="initColTextField" pref="83" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="initFaceComboBox" pref="83" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="varRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="directRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="initMapComboBox" pref="83" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="initRowTextField" pref="83" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="initColTextField" pref="83" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="initFaceComboBox" pref="83" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -253,7 +267,7 @@
                           <Component id="directRadioButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="markPositionButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="169" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -464,7 +478,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel37" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -476,21 +490,23 @@
                               <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel48" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="titleSceneBackgroundComboBox" linkSize="4" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="gameStartAniComboBox" linkSize="4" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="titleMusicComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="battleStartSoundComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="saveSoundComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="loadSoundComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="escapeSoundComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="battleWinSoundComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="battleBackgroundMusicComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="inputDialogComboBox" max="32767" attributes="1"/>
+                              <Component id="titleSceneBackgroundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="gameStartAniComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="titleMusicComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="battleStartSoundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="saveSoundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="loadSoundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="escapeSoundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="battleWinSoundComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
+                              <Component id="failComboBox" linkSize="4" alignment="0" pref="108" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -528,9 +544,14 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="skinComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                                      <Component id="frameSkinComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
                                       <Component id="gameOverAniComboBox" linkSize="4" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="playerInfoSkinComboBox" pref="108" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -557,7 +578,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="battleBackgroundMusicComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="failComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel43" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="warnSoundComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -596,14 +617,23 @@
                               <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="gameStartAniComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="skinComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="frameSkinComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                              <Component id="titleSceneBackgroundComboBox" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="titleSceneBackgroundComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="playerInfoSkinComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="93" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel48" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputDialogComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="54" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -639,16 +669,16 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel37">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x6218;&#x6597;&#x80cc;&#x666f;&#x97f3;&#x4e50;"/>
+                    <Property name="text" type="java.lang.String" value="&#x5931;&#x8d25;&#x97f3;&#x6548;"/>
                     <Property name="name" type="java.lang.String" value="jLabel37" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="battleBackgroundMusicComboBox">
+                <Component class="javax.swing.JComboBox" name="failComboBox">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="battleBackgroundMusicComboBox" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="failComboBox" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel38">
@@ -821,16 +851,16 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel33">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x76ae;&#x80a4;&#x56fe;&#x7247;"/>
+                    <Property name="text" type="java.lang.String" value="&#x7a97;&#x4f53;&#x76ae;&#x80a4;"/>
                     <Property name="name" type="java.lang.String" value="jLabel33" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="skinComboBox">
+                <Component class="javax.swing.JComboBox" name="frameSkinComboBox">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="skinComboBox" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="frameSkinComboBox" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel34">
@@ -846,6 +876,76 @@
                     </Property>
                     <Property name="name" type="java.lang.String" value="titleSceneBackgroundComboBox" noResource="true"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x4fe1;&#x606f;&#x76ae;&#x80a4;"/>
+                    <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel48">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x8f93;&#x5165;&#x6846;&#x76ae;&#x80a4;"/>
+                    <Property name="name" type="java.lang.String" value="jLabel48" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="inputDialogComboBox">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="inputDialogComboBox" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="playerInfoSkinComboBox">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="playerInfoSkinComboBox" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel11">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="&#x516c;&#x5f0f;"/>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jPanel11" noResource="true"/>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="editFormulaButton" pref="153" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="editFormulaButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="94" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="editFormulaButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x7f16;&#x8f91;&#x516c;&#x5f0f;"/>
+                    <Property name="name" type="java.lang.String" value="editFormulaButton" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editFormulaButtonActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
