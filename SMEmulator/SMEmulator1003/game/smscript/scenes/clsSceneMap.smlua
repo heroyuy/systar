@@ -103,7 +103,7 @@ function clsSceneMap:changeMap(map)
     end
   end
   local viewport=self:checkViewport()
-  self.mapBgLayer:init(map.index,bgLayers,viewport)
+  self.mapBgLayer:init(map.id,bgLayers,viewport)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
     --玩家
@@ -138,7 +138,7 @@ function clsSceneMap:changeMap(map)
   end
   if fgLayers:size()>0 then
     self.mapFgLayer.visibility=true
-    self.mapFgLayer:init(map.index,fgLayers,viewport)
+    self.mapFgLayer:init(map.id,fgLayers,viewport)
   else
     self.mapFgLayer.visibility=false
   end
