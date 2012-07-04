@@ -67,8 +67,7 @@ public class Painter {
 	 */
 	public Painter(Graphics2D graphics) {
 		this.graphics = graphics;
-		((Graphics2D) this.graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		this.graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		point = new Point(0, 0);
 		setTextSize(16);
 	}
@@ -201,9 +200,9 @@ public class Painter {
 	 */
 	public void copyArea(int x, int y, int width, int height, int dx, int dy) {
 		Composite c = ((Graphics2D) graphics).getComposite();
-		((Graphics2D) graphics).setComposite(AlphaComposite.Src);
+		graphics.setComposite(AlphaComposite.Src);
 		graphics.copyArea(x, y, width, height, dx - x, dy - y);
-		((Graphics2D) graphics).setComposite(c);
+		graphics.setComposite(c);
 	}
 
 	/**
