@@ -23,8 +23,7 @@ clsBasicInfo.propertyList={"str","agi","int","dex","vit","luck",
 
 --构造器
 function clsBasicInfo:new()
-  local w,h=480,320
-  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,w,h)
+  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBasicInfo)
   self.image=Skin:createBgWithFrame(self.width,self.height)
   --标题

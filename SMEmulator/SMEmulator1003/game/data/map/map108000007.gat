@@ -1,5 +1,5 @@
 Dictionary.maps[108000007]={
-index=108000007,
+id=108000007,
 name="宫殿1",
 musicName="/audio/music/my_love.mp3",
 battleBack=nil,

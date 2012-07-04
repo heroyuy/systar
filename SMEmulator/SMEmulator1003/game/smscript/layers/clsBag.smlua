@@ -18,8 +18,7 @@ clsBag.buttonThrow=nil			--丢弃
 
 --构造器
 function clsBag:new()
-  local w,h=240,320
-  local self = clsUILayer:new(Game:getWidth()/2+w/2,Game:getHeight()/2,w,h)
+  local self = clsUILayer:new(Game:getWidth()/2+w/2,Game:getHeight()/2,Game:getWidth()/2+w/2,Game:getHeight()/2)
   setmetatable(self,clsBag)
   self.image=Skin:createBgWithFrame(self.width,self.height)
   --物品列表
