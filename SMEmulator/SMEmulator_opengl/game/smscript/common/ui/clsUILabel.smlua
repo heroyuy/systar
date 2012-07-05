@@ -1,0 +1,53 @@
+--[[
+  description:标签
+  author:wp_g4
+  date:2011/05/13
+--]]
+
+--类结构定义
+clsUILabel={}
+setmetatable(clsUILabel,clsUILayer)
+clsUILabel.__index=clsUILabel
+
+--重定向需要覆盖的父类方法
+clsUILabel.paintLayerF=clsUILabel.paintLayer
+
+--字段
+clsUILabel.ALIGN_LEFT=0                         --左对齐
+clsUILabel.ALIGN_CENTER=1                       --居中
+clsUILabel.ALIGN_RIGHT=2                        --右对齐
+
+clsUILabel.text=nil                             --标签文字
+clsUILabel.textColor="0xffffffff"               --文字颜色
+clsUILabel.textSize=-1                          --文字大小
+clsUILabel.alignment=clsUILabel.ALIGN_CENTER	--对齐方式
+
+--构造器
+function clsUILabel:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUILabel)
+  self.enabled=false
+  return self
+end
+
+--绘制Label
+function clsUILabel:paintLayer(painter)
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+  if self.text then
+    painter:setColor(self.textColor)
+    if self.textSize>0 then
+      painter:setTextSize(self.textSize)
+    end
+    if self.alignment==clsUILabel.ALIGN_LEFT then
+      --左对齐
+      painter:drawString(self.text, 0, self.height/2, UIConst.anchor.LV)
+    elseif self.alignment==clsUILabel.ALIGN_CENTER then
+      --居中
+      painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
+    else
+      --右对齐
+      painter:drawString(self.text, self.width, self.height/2, UIConst.anchor.RV)
+    end
+  end
+end

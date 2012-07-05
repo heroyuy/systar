@@ -1,0 +1,122 @@
+--[[
+  description:背包
+  author:wp_g4
+  date:2012/06/30
+--]]
+
+--类结构定义
+clsBag={}
+setmetatable(clsBag,clsUILayer)
+clsBag.__index=clsBag
+
+--字段
+clsBag.menu=nil					--玩家切换菜单
+clsBag.equipButtonList=nil		--玩家装备按钮
+
+clsBag.tableBag=nil				--道具表格
+clsBag.labelItemName=nil		--道具名称
+clsBag.textAreaItemDesc=nil		--道具描述
+clsBag.buttonUse=nil			--使用
+clsBag.buttonThrow=nil			--丢弃
+
+--构造器
+function clsBag:new()
+  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
+  setmetatable(self,clsBag)
+  self.image=Skin:createBgWithFrame(self.width,self.height)
+  self.equipButtonList={}
+  local gap=10
+  local w=(self.width-3*gap)/2
+  local cw,ch=32,32
+  --人物切换菜单
+  local menuItems={}
+  for _,player in ipairs(GameData.playerTroop.players) do
+    table.insert(menuItems,player.name)
+  end
+  self.menu=clsUITable:standardMenu(gap,gap,w,36,menuItems,table.getn(menuItems))
+  self.menu.anchor={0,0}
+  self.menu.gap={5,5,5,5,5,5}
+  self.menu.image=Skin:createBg(self.menu.width,self.menu.height)
+  self.menu.delegate=self
+  self.menu:refresh()
+  self:addChild(self.menu)
+  --装备背景
+  for i=1,6 do
+    local equipBgLayer=clsUILayer:new(3*gap+(i-1)%2*(w-4*gap-cw),gap+self.menu.height+gap+(gap+32)*math.floor((i-1)/2),cw+4,ch+4)
+    equipBgLayer.anchor={0,0}
+    equipBgLayer.image=Skin:createBody(equipBgLayer.width,equipBgLayer.height)
+    self.equipButtonList[i]=clsUIButton:new(equipBgLayer.width/2,equipBgLayer.height/2,cw,ch)
+    local itemCell=GameData.playerTroop:itemAt(i)
+    local itemDict=Dictionary.items[itemCell.id]
+    self.equipButtonList[i].normalImage=Image:getImage(itemDict.icon)
+    equipBgLayer:addChild(self.equipButtonList[i])
+    self:addChild(equipBgLayer)
+  end
+  --物品列表
+  self.tableBag=clsUITable:new(w+2*gap,gap,w,self.height-100)
+  self.tableBag.anchor={0,0}
+  self.tableBag.color=Skin:getColor(2,2)
+  self.tableBag.dataSource=self
+  self.tableBag.delegate=self
+  self.tableBag.cellWidth,self.tableBag.cellHeight=cw+4,ch+4
+  self.tableBag.colNum=5
+  self.tableBag.cellBackground=Skin:createBody(self.tableBag.cellWidth,self.tableBag.cellHeight)
+  self.tableBag.cellSelectedBackground=Skin:createSelectedBg(self.tableBag.cellWidth,self.tableBag.cellHeight)
+  self:addChild(self.tableBag)
+  --物品名称
+  self.labelItemName=clsUILabel:new(w+2*gap,self.tableBag.y+self.tableBag.height+gap/2,80,20)
+  self.labelItemName.anchor={0,0}
+  self.labelItemName.color=Skin:getColor(2,2)
+  self:addChild(self.labelItemName)
+  --物品描述
+  self.textAreaItemDesc=clsUITextArea:new(w+2*gap,self.tableBag.y+self.tableBag.height+gap/2+self.labelItemName.height+gap/2,w,50)
+  self.textAreaItemDesc.anchor={0,0}
+  self.textAreaItemDesc.color=Skin:getColor(2,2)
+  self.textAreaItemDesc.textSize=13
+  self:addChild(self.textAreaItemDesc)
+  --使用按钮
+  self.buttonUse=clsUIButton:standardButton(w+2*gap+self.labelItemName.width+gap,self.tableBag.y+self.tableBag.height+gap/2,60,20,"使用")
+  self.buttonUse.anchor={0,0}
+  self:addChild(self.buttonUse)
+  --丢弃按钮
+  self.buttonThrow=clsUIButton:standardButton(w+2*gap+self.labelItemName.width+gap+self.buttonUse.width+gap,self.tableBag.y+self.tableBag.height+gap/2,60,20,"丢弃")
+  self.buttonThrow.anchor={0,0}
+  self:addChild(self.buttonThrow)
+  
+  self:refresh()
+  return self
+end
+
+function clsBag:refresh()
+  self.tableBag.cellNum=math.ceil(table.getn(GameData.playerTroop.itemList)/self.tableBag.colNum)*self.tableBag.colNum
+  self.tableBag:refresh()
+end
+
+function clsBag:cellLayerAtIndex(table,cellLayer,i)
+  local itemCell=GameData.playerTroop:itemAt(i)
+  if itemCell then
+    local itemDict=Dictionary.items[itemCell.id]
+    local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
+    layerIcon.image=Image:getImage(itemDict.icon)
+    layerIcon.enabled=false
+    cellLayer:addChild(layerIcon)
+  end
+end
+
+function clsBag:itemSelected(menu,index)
+  if menu==self.menu then
+  elseif menu==self.tableBag then
+    local itemCell=GameData.playerTroop:itemAt(index)
+    if itemCell then
+      local itemDict=Dictionary.items[itemCell.id]
+      self.labelItemName.text=itemDict.name
+      self.textAreaItemDesc.text=itemDict.desc
+      self.textAreaItemDesc:refresh()
+    end
+  end
+end
+
+function clsBag:onTouch(event)
+  --不做任何处理
+  self:removeFromParent()
+end

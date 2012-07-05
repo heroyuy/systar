@@ -1,0 +1,21 @@
+--UI相关常量
+UIConst = {}
+
+--触屏事件
+UIConst.eventType = {}
+UIConst.eventType.DOWN = 0 --按下
+UIConst.eventType.MOVE = 1 --移动
+UIConst.eventType.UP = 2   --离开
+
+--锚点
+UIConst.anchor = {}
+UIConst.anchor.LT = 0  --水平左对齐，竖向顶对齐
+UIConst.anchor.LV = 1  --水平左对齐，竖向居中对齐
+UIConst.anchor.LB = 2  --水平左对齐，竖向底对齐
+UIConst.anchor.HT = 3  --水平居中对齐，竖向顶对齐
+UIConst.anchor.HV = 4  --水平居中对齐，竖向居中对齐
+UIConst.anchor.HB = 5  --水平居中对齐，竖向底对齐
+UIConst.anchor.RT = 6  --水平右对齐，竖向顶对齐
+UIConst.anchor.RV = 7  --水平右对齐，竖向居中对齐
+UIConst.anchor.RB = 8  --水平右对齐，竖向底对齐
+

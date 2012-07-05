@@ -1,0 +1,38 @@
+--[[
+  description:回调动作
+  author:wp_g4
+  date:2012/05/22
+--]]
+
+--结构定义
+clsCallbackAction={}
+setmetatable(clsCallbackAction,clsAction)
+clsCallbackAction.__index = clsCallbackAction
+
+--字段定义
+clsCallbackAction.delegate=nil			--回调委托
+clsCallbackAction.callback=nil			--回调
+clsCallbackAction.arg=nil				--回调参数
+
+-- 构造
+function clsCallbackAction:new(delegate,callback,...)
+  local self=clsAction:new()
+  setmetatable(self,clsCallbackAction)
+  self.delegate=delegate
+  self.callback=callback
+  self.arg=arg
+  return self
+end
+
+--设置目标
+function clsCallbackAction:onReset()
+  self.finished=false
+end
+
+--更新
+function clsCallbackAction:onUpdate()
+  if not self.finished then
+    callFunction(self.delegate,self.callback,unpack(self.arg))
+    self.finished=true
+  end
+end

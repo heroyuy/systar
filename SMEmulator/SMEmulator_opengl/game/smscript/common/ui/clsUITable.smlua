@@ -1,0 +1,97 @@
+--[[
+  description:表格。
+  author:wp_g4
+  date:2012/06/26
+--]]
+
+--类结构定义
+clsUITable={}
+setmetatable(clsUITable,clsUILayer)
+clsUITable.__index=clsUITable
+
+clsUITable.callback="itemSelected"						--事件回调
+clsUITable.dataSource=nil								--表格数据源
+clsUITable.dataSourceCallback="cellLayerAtIndex"		--表格数据源回调
+clsUITable.cellWidth=nil								--单元格宽度
+clsUITable.cellHeight=nil								--单元格高度
+clsUITable.cellNum=nil									--单元格数量
+clsUITable.colNum=nil									--单元格列数
+clsUITable.cellBackground=nil							--单元格背景
+clsUITable.cellSelectedBackground=nil					--单元格选中时背景
+clsUITable.gap={10,5,10,10,5,10}						--间距(上中下左中右)
+
+clsUITable.selectedIndex=nil							--选中的单元格序号
+
+clsUITable.CellTagMin=100								--单元格tag最小值
+
+--标准菜单
+function clsUITable:standardMenu(x,y,width,height,items,colNum)
+  local menu=clsUITable:new(x,y,width,height)
+  menu.image=Skin:createBgWithFrame(menu.width,menu.height)
+  menu.cellNum=table.getn(items)
+  menu.colNum=colNum
+  menu.dataSource={
+    cellLayerAtIndex=function(self,menu,cellLayer,index)
+      local w,h=cellLayer.width,cellLayer.height
+      local button=clsUIButton:standardButton(w/2,h/2,w,h,items[index])
+      button.tag=index
+      button.delegate={
+        buttonTapped=function(self,button)
+          local index=button.tag
+          callFunction(menu.delegate,menu.callback,menu,index)
+        end
+      }
+      cellLayer:addChild(button)
+    end
+  }
+  return menu
+end
+
+--构造器
+function clsUITable:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUITable)
+  return self
+end
+
+--更新表格
+function clsUITable:refresh()
+  self:clear()
+  self.selectedIndex=nil
+  local gt,gv,gb,gl,gh,gr=self.gap[1],self.gap[2],self.gap[3],self.gap[4],self.gap[5],self.gap[6]
+  if self.colNum==nil then
+    self.colNum=1
+  end
+  if self.cellWidth==nil then
+    self.cellWidth=(self.width-gl-gr-(self.colNum-1)*gh)/self.colNum
+  end
+  local rowNum=math.ceil(self.cellNum/self.colNum)
+  if self.cellHeight==nil then
+    self.cellHeight=(self.height-gt-gb-(rowNum-1)*gv)/rowNum
+  end
+  if self.dataSource then
+    for i=1,self.cellNum do
+      local row=math.floor((i-1)/self.colNum)
+      local col=(i-1)%self.colNum
+      local cellLayer=clsUILayer:new(gl+col*(self.cellWidth+gh),gt+row*(self.cellHeight+gv),self.cellWidth,self.cellHeight)
+      cellLayer.delegate=self
+      cellLayer.anchor={0,0}
+      cellLayer.tag=self.CellTagMin+i
+      cellLayer.image=self.cellBackground
+      callFunction(self.dataSource,self.dataSourceCallback,self,cellLayer,i)
+      self:addChild(cellLayer)
+    end
+  end
+end
+
+function clsUITable:layerTapped(layer,event)
+  if event:getType()==UIConst.eventType.DOWN then
+    if self.selectedIndex then
+      local lastSelectedlayer=self:childWithTag(self.CellTagMin+self.selectedIndex)
+      lastSelectedlayer.image=self.cellBackground
+    end
+    layer.image=self.cellSelectedBackground
+    self.selectedIndex=layer.tag-self.CellTagMin
+    callFunction(self.delegate,self.callback,self,self.selectedIndex)
+  end
+end

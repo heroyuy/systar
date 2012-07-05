@@ -1,0 +1,324 @@
+--[[
+  description:地图场景  TODO 重新核对坐标
+  author:wp_g4
+  date:2011/12/18
+--]]
+
+--结构定义
+clsSceneMap = {}
+setmetatable(clsSceneMap,clsScene)
+clsSceneMap.__index = clsSceneMap
+
+--常量:param
+clsSceneMap.Param={}
+clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
+clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
+
+--字段
+clsSceneMap.menuItems={"状态","物品","技能","装备","存档","退出"}
+clsSceneMap.mapBgLayer=nil     		--背景
+clsSceneMap.mapFgLayer=nil    		--前景
+clsSceneMap.spriteLayer=nil    		--精灵层
+clsSceneMap.buttonHead=nil    		--头像按钮
+clsSceneMap.menu=nil     	 		--菜单
+
+clsSceneMap.curPlayer=nil     		--当前player
+clsSceneMap.aStar=nil      			--A*寻路工具
+
+--构造器
+function clsSceneMap:new()
+  local self = clsScene:new()
+  setmetatable(self,clsSceneMap)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  --背景实例化
+  self.mapBgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.mapBgLayer.delegate=self
+  GameLayer:addChildToScene(self.mapBgLayer)
+  --精灵层实例化
+  self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.spriteLayer.enabled=false
+  GameLayer:addChildToScene(self.spriteLayer)
+  --前景实例化
+  self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.mapFgLayer.enabled=false
+  GameLayer:addChildToScene(self.mapFgLayer)
+  --头像
+  self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
+  self.buttonHead.anchor={0,0}
+  self.buttonHead.delegate=self
+  GameLayer:addChildToScene(self.buttonHead)
+  --菜单
+  local w,h=self.Param.HEAD_WIDTH,200
+  self.menu=clsUITable:standardMenu(0,self.Param.HEAD_HEIGHT,w,h,self.menuItems)
+  self.menu.anchor={0,0}
+  self.menu.delegate=self
+  self.menu:refresh()
+  self.menu.visibility=false
+  GameLayer:addChildToScene(self.menu)
+  return self
+end
+
+-- 开始
+function clsSceneMap:onStart()
+  smLog:info("地图场景启动")
+  --注册接收通知
+  Notifier:addObserver(Const.NotifyCMD.Character.MOVED,self,self.characterMoved)
+  Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
+  Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
+  self.curPlayer=GameData.playerTroop:leader()
+  self.buttonHead.normalImage=self.curPlayer.headImg
+  local map=Dictionary:getMap(self.curPlayer.mapId)
+  self:changeMap(map)
+end
+
+-- 更新
+function clsSceneMap:update()
+  --smLog:info("地图场景更新")
+end
+
+-- 退出
+function clsSceneMap:onStop()
+  smLog:info("地图场景退出")
+  smAudioPlayer:stop()
+  Notifier:removeObserver(Const.NotifyCMD.Character.MOVED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Character.MAP_CHANGED,self)
+end
+
+--切换地图
+function clsSceneMap:changeMap(map)
+  local t0=Game:getTime()
+  GameData.curMap=map
+  self.aStar=clsAStar:new(map.areas)
+  --预加载地图图集
+  for _,v in pairs(GameData.curMap.tilesets) do
+    Image:loadImage(v.path)
+  end
+  --加载背景
+  local bgLayers=clsList:new()
+  for i=1,table.getn(GameData.curMap.layers) do
+    local layer=GameData.curMap.layers[i]
+    if layer.deepth<0 then
+      bgLayers:add(layer)
+    end
+  end
+  local viewport=self:checkViewport()
+  self.mapBgLayer:init(map.id,bgLayers,viewport)
+  --精灵层移除所有sprite
+  self.spriteLayer:clear()
+    --玩家
+    local playerSprite=clsSprite:new(self.curPlayer.charImg,
+       self.curPlayer.charImg:getWidth()/4,self.curPlayer.charImg:getHeight()/4)
+    playerSprite.tag=self.curPlayer.id
+    playerSprite.z=self.curPlayer.row
+    local px,py=self:calculateCharacterLocation(self.curPlayer)
+    playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
+    playerSprite:refresh()
+    self.spriteLayer:addChild(playerSprite)
+    --NPC
+    for k,v in pairs(GameData.curMap.npcs) do
+      local npc=GameData:getNPC(v)
+      local npcSprite=clsSprite:new(npc.charImg,
+        npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
+      npcSprite.tag=npc.id
+      npcSprite.z=npc.row
+      local nx,ny=self:calculateCharacterLocation(npc)
+      npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
+      npcSprite:refresh()
+      self.spriteLayer:addChild(npcSprite)
+    end
+  self.spriteLayer:sortChildren()
+  --加载前景
+  local fgLayers=clsList:new()
+  for i=1,table.getn(GameData.curMap.layers) do
+    local layer=GameData.curMap.layers[i]
+    if layer.deepth>0 then
+      fgLayers:add(layer)
+    end
+  end
+  if fgLayers:size()>0 then
+    self.mapFgLayer.visibility=true
+    self.mapFgLayer:init(map.id,fgLayers,viewport)
+  else
+    self.mapFgLayer.visibility=false
+  end
+end
+
+--地图点击事件
+function clsSceneMap:mapTapped(target,row,col)
+  smLog:info("逻辑坐标: row="..row.." col="..col)
+  --向player发送移动命令
+  --(1)清除原有的行走命令
+  self.curPlayer.moveSequence:clear()
+  --(2)获取寻路起点
+  local curRow=self.curPlayer.row
+  local curCol=self.curPlayer.col
+  --(3)起点修正
+  if self.curPlayer.step~=0 then
+    --player行走中
+    if self.curPlayer.face==0 then
+      --上
+      curRow=curRow-1
+    elseif self.curPlayer.face==1 then
+      --下
+      curRow=curRow+1
+    elseif self.curPlayer.face==2 then
+      --左
+      curCol=curCol-1
+    elseif self.curPlayer.face==3 then
+      --右
+      curCol=curCol+1
+    end
+  end
+  --(4)寻路
+  local directions=self.aStar:searchDirection(curRow+1,curCol+1,row,col)
+  --(5)发送行走命令(TODO 可优化)
+  while directions:size()>0 do
+    local direction=directions:poll()
+    self.curPlayer.moveSequence:offer(direction)
+  end
+end
+
+--计算viewport
+function clsSceneMap:checkViewport()
+  local px,py=self:calculateCharacterLocation(self.curPlayer)
+  local width=Game:getWidth()
+  local height=Game:getHeight()
+  local vx=px-width/2
+  local vy=py-height/2
+  if vx<0 then
+    vx=0
+  end
+  if vx>GameData.curMap.colNum*GameData.curMap.cellWidth-width then
+    vx=GameData.curMap.colNum*GameData.curMap.cellWidth-width
+  end
+  if vy<0 then
+    vy=0
+  end
+  if vy>GameData.curMap.rowNum*GameData.curMap.cellHeight-height then
+    vy=GameData.curMap.rowNum*GameData.curMap.cellHeight-height
+  end
+  return {x=vx,y=vy,width=width,height=height}
+end
+
+--计算characher当前物理坐标(characher双脚中间坐标+行走修正)
+function clsSceneMap:calculateCharacterLocation(character)
+  local px=character.col*GameData.curMap.cellWidth+GameData.curMap.cellWidth/2
+  local py=character.row*GameData.curMap.cellHeight+GameData.curMap.cellHeight
+  --根据player当前面向和行走状态进行位置修正
+  if character.face==0 then
+    --上
+    py=py-GameData.curMap.cellHeight/4*character.step
+  elseif character.face==1 then
+    --下
+    py=py+GameData.curMap.cellHeight/4*character.step
+  elseif character.face==2 then
+    --左
+    px=px-GameData.curMap.cellWidth/4*character.step
+  elseif character.face==3 then
+    --右
+    px=px+GameData.curMap.cellWidth/4*character.step
+  end
+  return px,py
+end
+
+--按钮点击的回调
+function clsSceneMap:buttonTapped(button)
+  if button==self.buttonHead then
+    --显示/隐藏菜单
+    self.menu.visibility=not self.menu.visibility
+  end
+end
+
+--菜单点击的回调 {"状态","物品","技能","装备","存档","退出"}
+function clsSceneMap:itemSelected(menu,index)
+  self.menu.visibility=false
+  if index==1 then
+    --状态
+    local basicInfo=clsBasicInfo:new()
+    GameLayer:addChildToScene(basicInfo)
+  elseif index==2 then
+    --物品
+    local bag=clsBag:new()
+    GameLayer:addChildToScene(bag)
+  elseif index==3 then
+    --技能
+  elseif index==4 then
+    --装备
+  elseif index==5 then
+    --存档
+  elseif index==6 then
+    --退出
+    Game:changeScene(Game.SCENE_TITLE)
+  end
+end
+
+--============处理通知============
+--character移动
+function clsSceneMap:characterMoved(param)
+  --如果character的行有变化需要修改对应sprite的z值
+  if param.rowChanged then
+    local sprite=self.spriteLayer:childWithTag(param.character.id)
+    sprite.z=param.character.row
+    self.spriteLayer:sortChildren()
+  end
+  if param.character==self.curPlayer then
+    --玩家移动(检测viewport是否改变)
+    local viewport=self:checkViewport()
+    local offsetX=viewport.x-self.mapBgLayer.viewport.x
+    local offsetY=viewport.y-self.mapBgLayer.viewport.y
+    if offsetX~=0 or offsetY~=0 then
+      --viewport有变化
+      --背景移动
+      self.mapBgLayer:trackViewport(viewport)
+      --前景移动
+      if self.mapFgLayer.visibility then
+        self.mapFgLayer:trackViewport(viewport)
+      end
+      --修正character位置
+      if offsetX~=0 then
+        --地图水平滚动
+        for k,sprite in pairs(self.spriteLayer.children) do
+          sprite.x=sprite.x-offsetX
+        end
+      elseif offsetY~=0 then
+        --地图垂直滚动
+        for k,sprite in pairs(self.spriteLayer.children) do
+          sprite.y=sprite.y-offsetY
+        end
+      end
+    end
+  end
+  --character移动
+  local sprite=self.spriteLayer:childWithTag(param.character.id)   
+  if param.direction==0 then
+    --上
+    sprite.y=sprite.y-GameData.curMap.cellHeight/4
+  elseif param.direction==1 then
+    --下
+    sprite.y=sprite.y+GameData.curMap.cellHeight/4
+  elseif param.direction==2 then
+    --左
+    sprite.x=sprite.x-GameData.curMap.cellWidth/4
+  elseif param.direction==3 then
+    --右
+    sprite.x=sprite.x+GameData.curMap.cellWidth/4
+  end
+  sprite.frameIndex=param.character:getCurFrameIndex()
+  sprite:refresh()
+end
+
+--character面向改变
+function clsSceneMap:characterFaceChanged(param)
+  local sprite=self.spriteLayer:childWithTag(param.character.id)  
+  sprite.frameIndex=param.character:getCurFrameIndex()
+  sprite:refresh()
+end
+
+--character地图改变
+function clsSceneMap:characterMapChanged(param)
+  if param.character==self.curPlayer then
+    local map=Dictionary:getMap(self.curPlayer.mapId)
+    self:changeMap(map)
+  end
+end

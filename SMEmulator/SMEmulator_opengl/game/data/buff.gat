@@ -1,0 +1,16 @@
+Dictionary.buffs={
+[107000001]={
+id=107000001,
+name="沉默",
+desc="被沉默的角色不能进行攻击,持续10秒",
+icon="/image/icon/status/IconSet_222.png",
+lev=1,
+aniId=-1,
+type=0,
+typeParam=10,
+limitType=2,
+datas={
+},
+conditions={},
+}
+}

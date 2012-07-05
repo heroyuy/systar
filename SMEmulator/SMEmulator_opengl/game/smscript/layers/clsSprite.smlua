@@ -1,0 +1,38 @@
+--[[
+  description:精灵。
+  author:wp_g4
+  date:2011/12/22
+--]]
+
+--类结构定义
+clsSprite={}
+setmetatable(clsSprite,clsUILayer)
+clsSprite.__index=clsSprite
+
+--重定向父类paintLayer(painter)方法
+clsSprite.paintLayerF=clsSprite.paintLayer
+
+--字段
+clsSprite.spriteImage=nil    				--图像
+clsSprite.frameIndex=0           			--当前帧index
+clsSprite.colNum=1               			--帧列数
+clsSprite.rowNum=1            			--帧行数
+
+--构造器
+function clsSprite:new(spriteImage,frameWidth,frameHeight)
+  local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
+  setmetatable(self,clsSprite)
+  self.anchor={0.5,1}
+  if type(spriteImage)=="string" then
+    spriteImage=spriteImage:getspriteImage(spriteImage)
+  end
+  self.spriteImage=spriteImage
+  self.colNum=spriteImage:getWidth()/frameWidth
+  self.rowNum=spriteImage:getHeight()/frameHeight
+  return self
+end
+
+--更新Sprite
+function clsSprite:refresh()
+  self.image=self.spriteImage:getSubImage(self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height)
+end

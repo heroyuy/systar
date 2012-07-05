@@ -1,0 +1,83 @@
+--[[
+  description:按钮。
+  author:wp_g4
+  date:2011/12/18
+--]]
+
+--类结构定义
+clsUIButton={}
+setmetatable(clsUIButton,clsUILayer)
+clsUIButton.__index=clsUIButton
+
+--重定向需要覆盖的父类方法
+clsUIButton.paintLayerF=clsUIButton.paintLayer
+
+--字段
+clsUIButton.STATE_NORMAL=0                			--普通状态
+clsUIButton.STATE_HIGHLIGHT=1             			--高亮状态
+
+clsUIButton.callback="buttonTapped"					--事件回调
+clsUIButton.highlightImage=nil             			--高亮时图片
+clsUIButton.normalImage=nil               			--普通时图片
+
+clsUIButton.buttonState=clsUIButton.STATE_NORMAL	--按钮状态
+clsUIButton.label=nil								--按钮上用于显示文字的标签
+clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
+
+--构造器
+function clsUIButton:standardButton(x,y,width,height,title)
+  local button=clsUIButton:new(x,y,width,height)
+  button.label.text=title
+  button.normalImage=Skin:createBody(button.width,button.height)
+  button.highlightImage=Skin:createSelectedBg(button.width,button.height)
+  return button
+end
+
+--构造器
+function clsUIButton:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIButton)
+  self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
+  self:addChild(self.label)
+  return self
+end
+
+
+--绘制Button
+function clsUIButton:paintLayer(painter)
+  if self.highlightImage==nil then
+    if self.normalImage then
+      self.highlightImage=self.normalImage:tone(0.5,0.5,0.5)
+    end
+  end
+  if self.image==nil then
+    self.image=self.normalImage
+  end
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+end
+
+--处理触屏事件（lua层不应该调用此方法）
+function clsUIButton:onTouch(event)
+  local x,y,type=event:getX(),event:getY(),event:getType()
+  if type==UIConst.eventType.DOWN then
+    self.buttonState=clsUIButton.STATE_HIGHLIGHT
+    self.image=self.highlightImage
+  elseif type==UIConst.eventType.MOVE then
+    local offsetWidth=(self.highlightBoundTimes-1)*self.width
+    local offsetHeight=(self.highlightBoundTimes-1)*self.height
+    if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
+      self.buttonState=clsUIButton.STATE_HIGHLIGHT
+      self.image=self.highlightImage
+    else
+      self.buttonState=clsUIButton.STATE_NORMAL
+      self.image=self.normalImage
+    end
+  elseif type==UIConst.eventType.UP then
+    if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      callFunction(self.delegate,self.callback,self)
+    end
+    self.buttonState=clsUIButton.STATE_NORMAL
+    self.image=self.normalImage
+  end
+end

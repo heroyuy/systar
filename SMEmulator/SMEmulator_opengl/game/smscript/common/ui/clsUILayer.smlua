@@ -1,0 +1,259 @@
+--[[
+  description:层。所有组件的父类
+  author:wp_g4
+  date:2011/12/16
+--]]
+
+--类结构定义
+clsUILayer={}
+clsUILayer.__index=clsUILayer
+
+--字段
+clsUILayer.x=0                           	--x坐标
+clsUILayer.y=0                        		--y坐标
+clsUILayer.z=0                           	--z坐标
+clsUILayer.width=0                      	--宽度
+clsUILayer.height=0                       	--高度
+clsUILayer.anchor=nil						--锚点
+
+clsUILayer.color=nil               			--背景色
+clsUILayer.image = nil           			--图像
+clsUILayer.alpha=1.0               			--透明度
+clsUILayer.scale=1.0						--缩放比
+clsUILayer.rotate=0.0						--旋转角
+clsUILayer.flip=nil							--翻转角{x,y}
+clsUILayer.tint=nil							--相对调色值{sr,sg,sb,tr,tg,tb}
+
+clsUILayer.tag=0                       		--标志（可选）
+clsUILayer.visibility = true             	--是否可见
+clsUILayer.enabled = true                 	--是否接收事件
+clsUILayer.clipBounds=false              	--是否裁剪区域
+clsUILayer.delegate=nil                    	--事件委托
+clsUILayer.callback="layerTapped"			--回调方法
+
+clsUILayer.parent=nil                   	--父layer
+clsUILayer.children=nil                   	--子layer
+clsUILayer.focusLayer=nil               	--当前事件焦点子layer
+
+--构造器
+function clsUILayer:new(x,y,width,height)
+  local self = {}
+  setmetatable(self,clsUILayer)
+  self.x=x
+  self.y=y
+  self.width=width
+  self.height=height
+  self.children={}
+  self.anchor={0.5,0.5}
+  self.flip={0,0}
+  self.tint={1,1,1,0,0,0}
+  return self
+end
+
+--添加子Layer
+function clsUILayer:addChild(layer)
+  layer:removeFromParent()
+  table.insert(self.children,layer)
+  layer.parent=self
+end
+
+--子Layer排序
+function clsUILayer:sortChildren()
+  table.sort(self.children,function(a,b) return a.z < b.z end)
+end
+
+--根据序号获取子layer
+function clsUILayer:childAt(index)
+  return self.children[index]
+end
+
+--根据tag获取子layer
+function clsUILayer:childWithTag(tag)
+  local child=nil
+  for i,layer in ipairs(self.children) do
+    if layer.tag==tag then
+      child=layer
+      break
+    end
+  end
+  return child
+end
+
+--移除指定位置的子Layer(所有移除方法均依赖此方法)
+function clsUILayer:removeChildAt(index)
+  local layer=self:childAt(index)
+  layer:clear()							--清理待移除的层
+  layer:stopAllAction()					--停止层上的所有动作
+  layer.parent=nil						--移除父层引用
+  table.remove(self.children,index)		--移除列表
+end
+
+--移除子Layer
+function clsUILayer:removeChild(layer)
+  local index=0
+  for i,child in ipairs(self.children) do
+    if child==layer then
+      index=i
+      break
+    end
+  end
+  self:removeChildAt(index)
+end
+
+--从父层中移除自己
+function clsUILayer:removeFromParent()
+  if self.parent then
+    self.parent:removeChild(self)
+  end
+end
+
+--移除所有子Layer
+function clsUILayer:clear()
+  for i=table.getn(self.children),1,-1 do
+    self:removeChildAt(i)
+  end
+end
+
+--绘制Layer（lua层不应该调用此方法）
+function clsUILayer:paint(painter)
+  local affineTransform=painter:getTransform()
+  local composite=painter:getComposite()
+  local tint=painter:getTint()
+  --(1)处理alpha
+  if self.alpha~=1 then
+    local alpha=painter:getAlpha()
+    painter:setAlpha(alpha*self.alpha)
+  end
+  --(2)处理scale
+  if self.scale~=1 then
+    painter:scale(self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
+  --(3)处理rotate
+  if math.mod(self.rotate,360)~=0 then
+    painter:rotate(self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
+  --(4)处理flip
+  if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
+    painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
+  --(5)处理变色
+  painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
+  --绘制自身
+  self:paintLayer(painter)
+  --绘制子Layer
+  self:paintChildren(painter)
+  --还原特效变换
+  painter:setTint(tint)
+  painter:setComposite(composite)
+  painter:setTransform(affineTransform)
+end
+
+--绘制自身（lua层不应该调用此方法）
+function clsUILayer:paintLayer(painter)
+  if self.color then
+    painter:setColor(self.color)
+    painter:fillRect(0, 0, self.width, self.height)
+  end
+  if self.image then
+    painter:drawImage(self.image, 0, 0, 0)
+  end
+end
+
+--绘制子Layer（lua层不应该调用此方法）
+function clsUILayer:paintChildren(painter)
+  for _,layer in ipairs(self.children) do
+    if layer.visibility and layer.alpha~=0 then
+      --设置坐标系
+      local x,y=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
+      painter:setBasePoint(x,y)
+      --设置裁剪区
+      local clip=nil;
+      if layer.clipBounds then
+        clip=painter:getClip()
+        painter:clipRect(0,0,layer.width,layer.height)
+      end
+      --绘制子Layer
+      layer:paint(painter)
+      --还原裁剪区
+      if layer.clipBounds then
+        painter:forceClip(clip)
+      end
+      --还原坐标系
+      painter:setBasePoint(-x,-y)
+    end
+  end
+      
+end
+
+--事件分发（lua层不应该调用此方法）
+function clsUILayer:dispatchEvent(event)
+  --TODO 事件应该根据特效做处理，目前只处理的缩放，其它有待加强
+  --(1)处理scale
+  if self.scale~=1 then
+    event:scale(1/self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
+  end
+  local x,y,type=event:getX(),event:getY(),event:getType()
+  if type==UIConst.eventType.DOWN then
+    --如果是DOWN事件，则从子组件中寻找焦点组件
+    self.focusLayer = self:searchFocusLayer(x,y)
+  end
+  if self.focusLayer then
+    --找到焦点组件
+    local lx,ly=self.focusLayer.x-self.focusLayer.anchor[1]*self.focusLayer.width,self.focusLayer.y-self.focusLayer.anchor[2]*self.focusLayer.height
+    self.focusLayer:dispatchEvent(event:relativeEvent(-lx,-ly))
+  else
+    --未找到焦点组件
+    self:onTouch(event)
+  end
+  if type==UIConst.eventType.UP then
+    --如果是UP事件，则清除焦点
+    self.focusLayer = nil
+  end
+end
+
+--处理触屏事件（lua层不应该调用此方法）
+function clsUILayer:onTouch(event)
+  callFunction(self.delegate,self.callback,self,event)
+end
+
+--运行动作
+function clsUILayer:runAction(action)
+  action.target=self
+  ActionPlayer:run(action)
+end
+
+--停止动作
+function clsUILayer:stopAction(action)
+  if action.target==self then
+    ActionPlayer:stopAction(action)
+  end
+end
+
+--停止指定tag的动作
+function clsUILayer:stopActionWithTag(tag)
+  ActionPlayer:stopActionForTarget(self,tag)
+end
+
+--停止所有动作
+function clsUILayer:stopAllAction()
+  ActionPlayer:stopActionForTarget(self)
+end
+
+--搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
+function clsUILayer:searchFocusLayer(x,y)
+  local focus = nil
+  --从上到下依次探查
+  for i=table.getn(self.children),1,-1 do
+    local layer=self:childAt(i)
+    if layer.visibility and layer.alpha~=0 and layer.enabled then
+      --子Layer可见并且可以接收事件
+      local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
+      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height then
+        --命中
+        focus = layer
+        break
+      end
+    end
+  end
+  return focus
+end
