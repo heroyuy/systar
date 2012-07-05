@@ -26,7 +26,7 @@ function clsBasicInfo:new()
   local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBasicInfo)
   self.image=Skin:createBgWithFrame(self.width,self.height)
-  --标题
+  --切换菜单
   local menuItems={}
   for _,player in ipairs(GameData.playerTroop.players) do
     table.insert(menuItems,player.name)
