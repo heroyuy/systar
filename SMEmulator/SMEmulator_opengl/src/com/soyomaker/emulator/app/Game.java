@@ -1,19 +1,71 @@
 package com.soyomaker.emulator.app;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.SMLog;
 
-public class Game implements IGame, Runnable {
+public class Game {
+
+	public static String DEFAULT_GAME_PATH = "./game";
 
 	private LuaAdapter luaAdapter = null;
 
-	private boolean running = false;
+	private Painter painter = new Painter();
 
-	private Event event = null;
+	public static void main(String[] args) {
+		new Game().start();
+	}
 
-	private String inputValue = null;
+	private Game() {
+		try {
+			Display.setTitle("Game");
+			Display.setDisplayMode(new DisplayMode(getWidth(), getHeight()));
+			Display.create();
+			Display.setVSyncEnabled(true);
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	private long time = 0;
+	private void start() {
+		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
+		luaAdapter = new LuaAdapter(this);
+		luaAdapter.onStart();
+		while (!Display.isCloseRequested()) {
+			long t = getTime();
+			updateModel();
+			dealControlEvent();
+			paintView();
+			Display.update();
+			t = getTime() - t;
+			GameInfo gameInfo = GameInfo.getInstance();
+			if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
+				gameInfo.setActualFPS(gameInfo.getRatedFPS());
+				this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
+			} else {
+				gameInfo.setActualFPS((int) (1000 * 1.0 / t));
+				if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
+					SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
+				}
+			}
+		}
+		Display.destroy();
+	}
+
+	private void updateModel() {
+		luaAdapter.update();
+	}
+
+	private void dealControlEvent() {
+	}
+
+	private void paintView() {
+		luaAdapter.paint(painter);
+	}
 
 	public int getHeight() {
 		return GameInfo.getInstance().getHeight();
@@ -23,101 +75,19 @@ public class Game implements IGame, Runnable {
 		return GameInfo.getInstance().getGamePath();
 	}
 
-	public int getTime() {
-		return (int) (System.currentTimeMillis() - time);
+	public long getTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	public int getWidth() {
 		return GameInfo.getInstance().getWidth();
 	}
 
-	public boolean isRunning() {
-		return running;
-	}
-
-	@Override
-	public void onEvent(Event e) {
-		this.event = e;
-	}
-
-	@Override
-	public void onInput(String value) {
-		this.inputValue = value;
-	}
-
-	@Override
-	public void onLowMemory() {
-		System.gc();
-		luaAdapter.onLowMemory();
-	}
-
-	@Override
-	public void onPaint(Painter painter) {
-		luaAdapter.paint(painter);
-
-	}
-
-	@Override
-	public void run() {
-		time = System.currentTimeMillis();
-		// 此处调用lua的onstart()方法
-		luaAdapter.onStart();
-		while (running) {
-			long t = 0;
-			while (running) {
-				t = System.currentTimeMillis();
-				// 处理事件
-				if (inputValue != null) {
-					luaAdapter.onInput(inputValue);
-					inputValue = null;
-				}
-				if (event != null) {
-					luaAdapter.onTouch(event);
-					event = null;
-				}
-				// 更新游戏
-				luaAdapter.update();
-				// 重绘界面
-				UIScreen.getInstance().requestRepaint();
-				t = System.currentTimeMillis() - t;
-				GameInfo gameInfo = GameInfo.getInstance();
-				if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
-					gameInfo.setActualFPS(gameInfo.getRatedFPS());
-					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
-				} else {
-					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
-					if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
-						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
-					}
-				}
-			}
-			// 此处调用lua的onStop()方法
-			luaAdapter.onStop();
-		}
-	}
-
-	public void showInputDialog(String tip) {
-		UIScreen.getInstance().showInputDialog(tip);
-	}
-
-	public void sleep(int millis) {
+	private void sleep(int millis) {
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void start() {
-		luaAdapter = new LuaAdapter(this);
-		running = true;
-		new Thread(this).start();
-	}
-
-	@Override
-	public void stop() {
-		running = false;
-	}
-
 }

@@ -3,14 +3,7 @@ package com.soyomaker.emulator.ui;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.IndexColorModel;
 import java.awt.image.RescaleOp;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.soyomaker.emulator.utils.ColorFactory;
 
@@ -47,9 +40,6 @@ public class Image {
 	 * 
 	 */
 	public Image(Image image) {
-		content = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		painter = new Painter((Graphics2D) content.getGraphics());
-		painter.drawImage(image, 0, 0, Painter.LT);
 	}
 
 	/**
@@ -61,8 +51,6 @@ public class Image {
 	 *            高度
 	 */
 	public Image(int width, int height) {
-		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		painter = new Painter((Graphics2D) content.getGraphics());
 	}
 
 	/**
@@ -72,18 +60,6 @@ public class Image {
 	 *            文件名
 	 */
 	public Image(String fileName) {
-		try {
-			content = ImageIO.read(new File(fileName));
-			painter = new Painter((Graphics2D) content.getGraphics());
-			if (content.getColorModel() instanceof IndexColorModel || content.getType() != BufferedImage.TYPE_INT_ARGB) {
-				BufferedImage temp = content;
-				content = new BufferedImage(temp.getWidth(), temp.getHeight(), BufferedImage.TYPE_INT_ARGB);
-				content.getGraphics().drawImage(temp, 0, 0, null);
-				painter = new Painter((Graphics2D) content.getGraphics());
-			}
-		} catch (IOException ex) {
-			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-		}
 	}
 
 	/**
@@ -249,10 +225,7 @@ public class Image {
 	}
 
 	public Image getSubImage(int x, int y, int w, int h) {
-		Image res = new Image();
-		res.content = this.content.getSubimage(x, y, w, h);
-		res.painter = new Painter((Graphics2D) res.content.getGraphics());
-		return res;
+		return null;
 	}
 
 	/**

@@ -7,10 +7,10 @@ package com.soyomaker.emulator.ui;
  */
 public class Rect {
 
-	private int x = 0;
-	private int y = 0;
-	private int width = 0;
-	private int height = 0;
+	private float x = 0;
+	private float y = 0;
+	private float width = 0;
+	private float height = 0;
 
 	/**
 	 * 构造一个新的矩形，其左上角被指定为 (x,y)，其宽度为 width ，高度为 height 。
@@ -24,7 +24,7 @@ public class Rect {
 	 * @param height
 	 *            矩形的高度
 	 */
-	public Rect(int x, int y, int width, int height) {
+	public Rect(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -49,7 +49,7 @@ public class Rect {
 	 * 
 	 * @return 矩形的高度
 	 */
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
@@ -58,7 +58,7 @@ public class Rect {
 	 * 
 	 * @return 矩形的宽度
 	 */
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 
@@ -67,7 +67,7 @@ public class Rect {
 	 * 
 	 * @return 矩形左上角的点的 x 坐标
 	 */
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
@@ -76,7 +76,7 @@ public class Rect {
 	 * 
 	 * @return 矩形左上角的点的 y 坐标
 	 */
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
@@ -86,7 +86,7 @@ public class Rect {
 	 * @param height
 	 *            新的矩形高度
 	 */
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 
@@ -96,7 +96,7 @@ public class Rect {
 	 * @param width
 	 *            新的矩形宽度
 	 */
-	public void setWidth(int width) {
+	public void setWidth(float width) {
 		this.width = width;
 	}
 
@@ -106,7 +106,7 @@ public class Rect {
 	 * @param x
 	 *            新的矩形左上角的点的 x 坐标
 	 */
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
@@ -116,7 +116,7 @@ public class Rect {
 	 * @param y
 	 *            新的矩形左上角的点的 y 坐标
 	 */
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 }
