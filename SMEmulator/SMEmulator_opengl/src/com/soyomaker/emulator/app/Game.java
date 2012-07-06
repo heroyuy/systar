@@ -1,10 +1,14 @@
 package com.soyomaker.emulator.app;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
+import com.soyomaker.emulator.ui.Color;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.SMLog;
 
@@ -14,26 +18,49 @@ public class Game {
 
 	private LuaAdapter luaAdapter = null;
 
-	private Painter painter = new Painter();
+	private Painter painter = null;
 
 	public static void main(String[] args) {
 		new Game().start();
 	}
 
-	private Game() {
+	private Game() {// initialize the window beforehand
 		try {
-			Display.setTitle("Game");
-			Display.setDisplayMode(new DisplayMode(getWidth(), getHeight()));
+			int width = getWidth();
+			int height = getHeight();
+			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setTitle("SMEmulator");
 			Display.create();
-			Display.setVSyncEnabled(true);
-		} catch (LWJGLException e) {
-			e.printStackTrace();
+			// grab the mouse, dont want that hideous cursor when we're playing!
+			// Mouse.setGrabbed(true);
+			// enable textures since we're going to use these for our sprites
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+
+			GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			GL11.glClearDepth(1);
+
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+			GL11.glViewport(0, 0, width, height);
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+			GL11.glMatrixMode(GL11.GL_PROJECTION);
+			GL11.glLoadIdentity();
+			GL11.glOrtho(0, width, height, 0, 1, -1);
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		} catch (LWJGLException le) {
+			le.printStackTrace();
 		}
 	}
 
 	private void start() {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		luaAdapter = new LuaAdapter(this);
+		painter = new Painter();
 		luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
 			long t = getTime();
@@ -52,8 +79,15 @@ public class Game {
 					SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
 				}
 			}
+			// show fps
+			showFPS();
 		}
 		Display.destroy();
+	}
+
+	private void showFPS() {
+		painter.setColor(Color.WHITE);
+		painter.drawString("fps:" + GameInfo.getInstance().getActualFps(), 400, 400);
 	}
 
 	private void updateModel() {
@@ -64,6 +98,9 @@ public class Game {
 	}
 
 	private void paintView() {
+		// 清屏
+		glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		// 游戏绘制
 		luaAdapter.paint(painter);
 	}
 
@@ -75,6 +112,11 @@ public class Game {
 		return GameInfo.getInstance().getGamePath();
 	}
 
+	/**
+	 * Get the accurate system time
+	 * 
+	 * @return The system time in milliseconds
+	 */
 	public long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}

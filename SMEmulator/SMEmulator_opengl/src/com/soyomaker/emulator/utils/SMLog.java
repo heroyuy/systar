@@ -10,7 +10,7 @@ public class SMLog {
 
 	private static String CONFIG_PATH = "plugin/emulator/config/log4j.properties";
 
-	private boolean debug;
+	private boolean debug = true;
 
 	private static SMLog instance = new SMLog();
 

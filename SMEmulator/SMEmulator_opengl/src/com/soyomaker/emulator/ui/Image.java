@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 
-import com.soyomaker.emulator.utils.ColorFactory;
-
 /**
  * 图形图像 TODO 图片处理算法需要重写
  * 
@@ -27,10 +25,6 @@ public class Image {
 	private BufferedImage content = null;// 图片上下文
 
 	private Painter painter = null;
-
-	private Image() {
-
-	}
 
 	/**
 	 * 根据指定的Image对象创建一个新的Image对象
@@ -110,9 +104,7 @@ public class Image {
 	 * @return 裁剪后的图像
 	 */
 	public Image clip(int x, int y, int width, int height) {
-		Image res = new Image(width, height);
-		res.getPainter().drawImage(this, x, y, width, height, 0, 0, Painter.LT);
-		return res;
+		return null;
 	}
 
 	/**
@@ -132,7 +124,6 @@ public class Image {
 	 *            指定点y坐标
 	 */
 	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight, int x, int y) {
-		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
 	}
 
 	/**
@@ -221,7 +212,7 @@ public class Image {
 	// }
 
 	public Color getRGB(int x, int y) {
-		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
+		return null;
 	}
 
 	public Image getSubImage(int x, int y, int w, int h) {

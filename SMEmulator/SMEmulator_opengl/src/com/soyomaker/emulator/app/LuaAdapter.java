@@ -5,6 +5,7 @@ import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
+import com.soyomaker.emulator.ui.Color;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
@@ -151,6 +152,7 @@ public class LuaAdapter {
 	 * paint方法的转换
 	 */
 	public void paint(Painter painter) {
+		new PainterTest().test(painter);
 		// try {
 		// luaFunctionOnPaint.call(new Object[] { luaGame, painter });
 		// } catch (LuaException e) {

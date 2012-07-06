@@ -1,11 +1,34 @@
 package com.soyomaker.emulator.ui;
 
+import static org.lwjgl.opengl.GL11.*;
+
+import java.awt.Font;
+
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+
 /**
  * 画笔
  * 
  * @author wp_g4
  */
 public class Painter {
+
+	/** default text size is 12 */
+	public static final int DEFAULT_TEXT_SIZE = 12;
+
+	private Color color = null;
+
+	private int textSize = 0;
+
+	/** The fonts to draw to the screen */
+	private UnicodeFont font = null;
+
+	public Painter() {
+		this.setTextSize(DEFAULT_TEXT_SIZE);
+	}
 
 	/**
 	 * 绘制图片
@@ -36,7 +59,10 @@ public class Painter {
 	 *            终点 y 坐标
 	 */
 	public void drawLine(int x1, int y1, int x2, int y2) {
-
+		glBegin(GL11.GL_LINES);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+		glEnd();
 	}
 
 	/**
@@ -63,10 +89,9 @@ public class Painter {
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
-	 * @param anchor
-	 *            锚点
 	 */
-	public void drawString(String str, int x, int y, int anchor) {
+	public void drawString(String str, int x, int y) {
+		font.drawString(x, y, str, org.newdawn.slick.Color.yellow);
 	}
 
 	/**
@@ -90,7 +115,7 @@ public class Painter {
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return null;
+		return this.color;
 	}
 
 	/**
@@ -99,7 +124,7 @@ public class Painter {
 	 * @return 绘制文字的尺寸
 	 */
 	public int getTextSize() {
-		return 0;
+		return this.textSize;
 	}
 
 	/**
@@ -108,7 +133,9 @@ public class Painter {
 	 * @param color
 	 *            颜色
 	 */
-	public void setColor(String color) {
+	public void setColor(Color color) {
+		this.color = color;
+		glColor3f(1.0f * color.getRed() / 255, 1.0f * color.getGreen() / 255, 1.0f * color.getBlue() / 255);
 	}
 
 	/**
@@ -118,6 +145,16 @@ public class Painter {
 	 *            绘制文字的尺寸
 	 */
 	public void setTextSize(int size) {
+		this.textSize = size;
+		font = new UnicodeFont(new Font("黑体", Font.PLAIN, this.getTextSize()));
+		// Requires at least one effect
+		font.getEffects().add(new ColorEffect(java.awt.Color.white));
+		font.addGlyphs("fps:0123456789");
+		try {
+			font.loadGlyphs();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -128,7 +165,7 @@ public class Painter {
 	 * @return 字符串的宽度
 	 */
 	public int stringWidth(String str) {
-		return 0;
+		return font.getWidth(str);
 	}
 
 }
