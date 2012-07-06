@@ -10,6 +10,11 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
 /**
+ *  TODO
+ *   1.drawString应该优化,在游戏启动时加载所有游戏中会用到的字符
+ */
+
+/**
  * 画笔
  * 
  * @author wp_g4
@@ -17,7 +22,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class Painter {
 
 	/** default text size is 12 */
-	public static final int DEFAULT_TEXT_SIZE = 12;
+	public static final int DEFAULT_TEXT_SIZE = 14;
 
 	private Color color = null;
 
@@ -77,7 +82,23 @@ public class Painter {
 	 * @param height
 	 *            矩形区域高度
 	 */
-	public void drawRect(int x, int y, int width, int height) {
+	public void drawRect(float x, float y, float width, float height) {
+		glBegin(GL11.GL_LINE_LOOP);
+		glVertex2f(x, y);
+		glVertex2f(x + width, y);
+		glVertex2f(x + width, y + height);
+		glVertex2f(x, y + height);
+		glEnd();
+	}
+
+	/**
+	 * 绘制矩形区域
+	 * 
+	 * @param rect
+	 *            矩形区域
+	 */
+	public void drawRect(Rect rect) {
+		this.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -91,7 +112,15 @@ public class Painter {
 	 *            绘制的位置的 y 坐标
 	 */
 	public void drawString(String str, int x, int y) {
-		font.drawString(x, y, str, org.newdawn.slick.Color.yellow);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		font.addGlyphs(str);
+		try {
+			font.loadGlyphs();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		font.drawString(x, y, str, new org.newdawn.slick.Color(getColor().getArgb()));
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
 	/**
@@ -106,7 +135,23 @@ public class Painter {
 	 * @param height
 	 *            矩形区域高度
 	 */
-	public void fillRect(int x, int y, int width, int height) {
+	public void fillRect(float x, float y, float width, float height) {
+		glBegin(GL11.GL_POLYGON);
+		glVertex2f(x, y);
+		glVertex2f(x + width, y);
+		glVertex2f(x + width, y + height);
+		glVertex2f(x, y + height);
+		glEnd();
+	}
+
+	/**
+	 * 填充矩形区域
+	 * 
+	 * @param rect
+	 *            矩形区域
+	 */
+	public void fillRect(Rect rect) {
+		this.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -144,17 +189,15 @@ public class Painter {
 	 * @param size
 	 *            绘制文字的尺寸
 	 */
+	@SuppressWarnings("unchecked")
 	public void setTextSize(int size) {
+		if (font != null) {
+			font.clearGlyphs();
+		}
 		this.textSize = size;
 		font = new UnicodeFont(new Font("黑体", Font.PLAIN, this.getTextSize()));
 		// Requires at least one effect
 		font.getEffects().add(new ColorEffect(java.awt.Color.white));
-		font.addGlyphs("fps:0123456789");
-		try {
-			font.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**

@@ -80,43 +80,4 @@ public class Rect {
 		return y;
 	}
 
-	/**
-	 * 设置矩形的高度
-	 * 
-	 * @param height
-	 *            新的矩形高度
-	 */
-	public void setHeight(float height) {
-		this.height = height;
-	}
-
-	/**
-	 * 设置矩形的宽度
-	 * 
-	 * @param width
-	 *            新的矩形宽度
-	 */
-	public void setWidth(float width) {
-		this.width = width;
-	}
-
-	/**
-	 * 设置矩形的位置
-	 * 
-	 * @param x
-	 *            新的矩形左上角的点的 x 坐标
-	 */
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	/**
-	 * 设置矩形的位置
-	 * 
-	 * @param y
-	 *            新的矩形左上角的点的 y 坐标
-	 */
-	public void setY(float y) {
-		this.y = y;
-	}
 }
