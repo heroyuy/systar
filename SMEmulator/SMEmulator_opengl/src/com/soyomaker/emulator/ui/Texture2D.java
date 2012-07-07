@@ -1,6 +1,5 @@
 package com.soyomaker.emulator.ui;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.newdawn.slick.opengl.Texture;
@@ -21,9 +20,9 @@ public class Texture2D {
 		}
 	}
 
-	public Texture2D(BufferedImage image, String name) {
+	public Texture2D(Image image, String name) {
 		try {
-			texture = BufferedImageUtil.getTexture(name, image);
+			texture = BufferedImageUtil.getTexture(name, image.getContent());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

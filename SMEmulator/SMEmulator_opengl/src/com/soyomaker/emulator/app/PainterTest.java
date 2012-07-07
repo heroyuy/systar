@@ -1,13 +1,10 @@
 package com.soyomaker.emulator.app;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import com.soyomaker.emulator.ui.Color;
+import com.soyomaker.emulator.ui.Image;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.ui.Rect;
 import com.soyomaker.emulator.ui.Texture2D;
@@ -25,13 +22,10 @@ public class PainterTest {
 		list.add(new Texture2D("game/image/battle/forest_autumn.png"));
 		list.add(new Texture2D("game/image/battle/forest_winter.png"));
 		list.add(new Texture2D("game/image/battle/hill_spring.png"));
-		try {
-			for (int i = 1; i < 49; i++) {
-				String name = "game/image/tileset/" + i + "号墙壁.png";
-				list.add(new Texture2D(ImageIO.read(new File(name)), name.substring(name.lastIndexOf("/") + 1)));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		for (int i = 1; i < 49; i++) {
+			String name = "game/image/tileset/" + i + "号墙壁.png";
+			list.add(new Texture2D(new Image(name), name.substring(name.lastIndexOf("/") + 1)));
 		}
 
 	}

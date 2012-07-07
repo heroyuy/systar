@@ -27,4 +27,8 @@ public class Texture2DCache {
 		return texture2DCacheMap.get(fileName);
 	}
 
+	public Texture2D loadTexture2D(Image image, String name) {
+		return new Texture2D(image, name);
+	}
+
 }
