@@ -37,22 +37,22 @@ public class Game {
 			System.exit(0);
 		}
 
-		GL11.glShadeModel(GL11.GL_SMOOTH);
+		// 关闭深度测试
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		// 关闭光照
 		GL11.glDisable(GL11.GL_LIGHTING);
-
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		GL11.glClearDepth(1);
-
+		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
+		// 视口
 		GL11.glViewport(0, 0, width, height);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-
+		// 设置投影变换
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		// 重置投影矩阵
 		GL11.glLoadIdentity();
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
 		GL11.glOrtho(0, width, height, 0, 1, -1);
+		// 设置模型变换
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 	}
@@ -66,6 +66,7 @@ public class Game {
 			long t = getTime();
 			updateModel();
 			dealControlEvent();
+			GL11.glLoadIdentity();
 			paintView();
 			t = getTime() - t;
 			GameInfo gameInfo = GameInfo.getInstance();

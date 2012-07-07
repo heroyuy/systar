@@ -22,7 +22,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class Painter {
 
 	/** default text size is 12 */
-	public static final int DEFAULT_TEXT_SIZE = 14;
+	public static final int DEFAULT_TEXT_SIZE = 18;
 
 	private Color color = null;
 
@@ -244,6 +244,47 @@ public class Painter {
 	 */
 	public int stringWidth(String str) {
 		return font.getWidth(str);
+	}
+
+	/**
+	 * 缩放
+	 * 
+	 * @param scale
+	 *            缩放系数
+	 * @param x
+	 *            缩放原点的 x 坐标
+	 * @param y
+	 *            缩放原点的 y 坐标
+	 */
+	public void scale(double scale, double x, double y) {
+		this.translate((1 - scale) * x, (1 - scale) * y);
+		glScaled(scale, scale, 1);
+	}
+
+	/**
+	 * 旋转
+	 * 
+	 * @param angle
+	 *            旋转的角度
+	 * @param x
+	 *            旋转原点的 x 坐标
+	 * @param y
+	 *            旋转原点的 y 坐标
+	 */
+	public void rotate(double angle, double x, double y) {
+		glRotated(angle, x, y, 0);
+	}
+
+	/**
+	 * 平移
+	 * 
+	 * @param tx
+	 *            沿 x 轴平移的距离
+	 * @param ty
+	 *            沿 y 轴平移的距离
+	 */
+	public void translate(double tx, double ty) {
+		glTranslated(tx, ty, 0);
 	}
 
 }

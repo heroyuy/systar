@@ -47,8 +47,9 @@ public class PainterTest {
 		// 再次绘制字符串
 		painter.drawString("我是123wp_g4", 500, 500);
 		// 再次绘图
+		painter.rotate(Math.PI/2, 480, 320);
 		painter.drawTexture2D(title, 240, 160, 480, 320, 240, 160);
-
+		painter.rotate(-Math.PI/2, 480, 320);
 	}
 
 }
