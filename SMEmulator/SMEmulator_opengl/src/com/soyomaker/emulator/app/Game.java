@@ -24,6 +24,8 @@ public class Game {
 
 	private Painter painter = null;
 
+	private long t = 0;
+
 	private Game() {// initialize the window beforehand
 		int width = getWidth();
 		int height = getHeight();
@@ -54,7 +56,7 @@ public class Game {
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 	}
 
-	private void dealControlEvent() {
+	private void dealEvent() {
 	}
 
 	public int getHeight() {
@@ -89,9 +91,24 @@ public class Game {
 		luaAdapter.paint(painter);
 	}
 
-	private void showFPS() {
+	private void showDebugInfo() {
+		// 计算FPS
+		int delta = (int) (getTime() - t);
+		GameInfo gameInfo = GameInfo.getInstance();
+		if (delta < 1000 * 1.0 / gameInfo.getRatedFPS()) {
+			gameInfo.setActualFPS(gameInfo.getRatedFPS());
+			this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - delta));
+		} else {
+			gameInfo.setActualFPS((int) (1000 * 1.0 / delta));
+			if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
+				SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
+			}
+		}
+		// 显示FPS和内存
 		painter.setColor(Color.WHITE);
-		painter.drawString("fps:" + GameInfo.getInstance().getActualFps(), 10, getHeight() - painter.getTextSize() - 10);
+		painter.drawString("fps:" + GameInfo.getInstance().getActualFps() + " lua memory:" + luaAdapter.getLuaMemory(),
+				10, getHeight() - painter.getTextSize() - 10);
+		t = getTime();
 	}
 
 	private void sleep(int millis) {
@@ -106,29 +123,17 @@ public class Game {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		luaAdapter = new LuaAdapter(this);
 		painter = new Painter();
+		t = getTime();
 		luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
-			long t = getTime();
+			// 处理事件
+			dealEvent();
 			// 更新模型
 			updateModel();
-			// 处理事件
-			dealControlEvent();
 			// 绘制视图
 			paintView();
-			// 计算FPS
-			t = getTime() - t;
-			GameInfo gameInfo = GameInfo.getInstance();
-			if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
-				gameInfo.setActualFPS(gameInfo.getRatedFPS());
-				this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
-			} else {
-				gameInfo.setActualFPS((int) (1000 * 1.0 / t));
-				if (gameInfo.getActualFps() < gameInfo.getRatedFPS()) {
-					SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
-				}
-			}
-			// 显示FPS
-			showFPS();
+			// 显示debug信息
+			showDebugInfo();
 			// 提交更新
 			Display.update();
 

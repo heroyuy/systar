@@ -127,7 +127,7 @@ public class Painter {
 	 *            绘制的位置的 y 坐标
 	 */
 	public void drawTexture2D(Texture2D texture2D, int x, int y) {
-		this.drawTexture2D(texture2D, 0, 0, texture2D.getImageWidth(), texture2D.getImageHeight(), x, y);
+		this.drawTexture2D(texture2D, 0, 0, texture2D.getContentWidth(), texture2D.getContentHeight(), x, y);
 	}
 
 	/**

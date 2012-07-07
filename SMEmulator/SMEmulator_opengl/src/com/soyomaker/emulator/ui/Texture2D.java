@@ -23,11 +23,11 @@ public class Texture2D {
 		texture.bind();
 	}
 
-	public int getImageHeight() {
+	public int getContentHeight() {
 		return texture.getImageHeight();
 	}
 
-	public int getImageWidth() {
+	public int getContentWidth() {
 		return texture.getImageWidth();
 	}
 
