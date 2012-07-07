@@ -52,9 +52,6 @@ public class Game {
 		GL11.glLoadIdentity();
 		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
 		GL11.glOrtho(0, width, height, 0, 1, -1);
-		// 设置模型变换
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-
 	}
 
 	private void start() {
@@ -64,10 +61,13 @@ public class Game {
 		luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
 			long t = getTime();
+			// 更新模型
 			updateModel();
+			// 处理事件
 			dealControlEvent();
-			GL11.glLoadIdentity();
+			// 绘制视图
 			paintView();
+			// 计算FPS
 			t = getTime() - t;
 			GameInfo gameInfo = GameInfo.getInstance();
 			if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
@@ -79,8 +79,9 @@ public class Game {
 					SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFps());
 				}
 			}
-			// show fps
+			// 显示FPS
 			showFPS();
+			// 提交更新
 			Display.update();
 
 		}
@@ -100,6 +101,10 @@ public class Game {
 	}
 
 	private void paintView() {
+		// 设置模型变换
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		// 重置矩阵
+		GL11.glLoadIdentity();
 		// 清屏
 		glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		// 游戏绘制
