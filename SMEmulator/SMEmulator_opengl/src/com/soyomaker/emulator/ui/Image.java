@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.soyomaker.emulator.utils.ColorFactory;
-
 /**
  * 图形图像 TODO 图片处理算法需要重写
  * 
@@ -207,45 +205,8 @@ public class Image {
 		return painter;
 	}
 
-	//
-	// /**
-	// * 灰度处理
-	// *
-	// * @param mask
-	// * 掩码
-	// * @return 处理后的图像
-	// */
-	// @Deprecated
-	// public Image gray(int mask) {
-	// Image image = new Image(this);
-	// if (mask != 0) {
-	// for (int i = 0; i < getWidth(); i++) {
-	// for (int j = 0; j < getHeight(); j++) {
-	// Color color = image.getRGB(i, j);
-	// int a = color.getAlpha();
-	// int r = color.getRed();
-	// int g = color.getGreen();
-	// int b = color.getBlue();
-	// int temp = (int) (0.299 * r + 0.587 * g + 0.114 * b);
-	// if (r <= mask) {
-	// r = temp;
-	// }
-	// if (g <= mask) {
-	// g = temp;
-	// }
-	// if (b <= mask) {
-	// b = temp;
-	// }
-	//
-	// image.content.setRGB(i, j, new Color(a, r, g, b).getArgb());
-	// }
-	// }
-	// }
-	// return image;
-	// }
-
 	public Color getRGB(int x, int y) {
-		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
+		return new Color(content.getRGB(x, y));
 	}
 
 	public Image getSubImage(int x, int y, int w, int h) {

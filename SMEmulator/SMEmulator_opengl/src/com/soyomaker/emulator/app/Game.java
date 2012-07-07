@@ -20,9 +20,11 @@ public class Game {
 		new Game().start();
 	}
 
-	private LuaAdapter luaAdapter = null;
+	// private LuaAdapter luaAdapter = null;
 
 	private Painter painter = null;
+
+	private PainterTest pt = null;
 
 	private long t = 0;
 
@@ -88,7 +90,8 @@ public class Game {
 		// 清屏
 		glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		// 游戏绘制
-		luaAdapter.paint(painter);
+		// luaAdapter.paint(painter);
+		pt.test(painter);
 	}
 
 	private void showDebugInfo() {
@@ -106,8 +109,11 @@ public class Game {
 		}
 		// 显示FPS和内存
 		painter.setColor(Color.WHITE);
-		painter.drawString("FPS:" + GameInfo.getInstance().getActualFps() + " LuaMemory:" + luaAdapter.getLuaMemory()
-				+ "K", 10, getHeight() - painter.getTextSize() - 10);
+		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
+		painter.drawString(fpsStr, 10, getHeight() - painter.getTextSize() - 10);
+		// String memoryStr=" LuaMemory:" + luaAdapter.getLuaMemory()+ "K";
+		// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
+		// getHeight() - painter.getTextSize() - 10);
 		t = getTime();
 	}
 
@@ -121,10 +127,11 @@ public class Game {
 
 	private void start() {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
-		luaAdapter = new LuaAdapter(this);
+		// luaAdapter = new LuaAdapter(this);
 		painter = new Painter();
+		pt = new PainterTest();
 		t = getTime();
-		luaAdapter.onStart();
+		// luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
 			// 处理事件
 			dealEvent();
@@ -138,11 +145,11 @@ public class Game {
 			Display.update();
 
 		}
-		luaAdapter.onStop();
+		// luaAdapter.onStop();
 		Display.destroy();
 	}
 
 	private void updateModel() {
-		luaAdapter.update();
+		// luaAdapter.update();
 	}
 }

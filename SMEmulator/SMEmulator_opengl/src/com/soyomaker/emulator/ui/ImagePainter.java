@@ -4,12 +4,9 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.RescaleOp;
-
-import com.soyomaker.emulator.utils.ColorFactory;
 
 /**
  * 
@@ -55,8 +52,6 @@ public class ImagePainter {
 	public static final int RB = 8;
 
 	private Graphics2D graphics = null;// 图形上下文
-	private Point point = null;// 原点
-	private Rect curClip = null;// 当前裁剪区
 	private float[] tint = new float[] { 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f };// 当前变色参数
 
 	/**
@@ -68,7 +63,6 @@ public class ImagePainter {
 	public ImagePainter(Graphics2D graphics) {
 		this.graphics = graphics;
 		this.graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		point = new Point(0, 0);
 		setTextSize(16);
 	}
 
@@ -86,32 +80,6 @@ public class ImagePainter {
 		float[] scales = new float[] { tint[0], tint[1], tint[2], 1.0f };
 		float[] offsets = new float[] { tint[3], tint[4], tint[5], 1.0f };
 		return new RescaleOp(scales, offsets, null);
-	}
-
-	/**
-	 * 裁剪区域
-	 * 
-	 * @param x
-	 *            区域x坐标
-	 * @param y
-	 *            区域y坐标
-	 * @param width
-	 *            区域宽度
-	 * @param height
-	 *            区域高度
-	 */
-	public void clipRect(int x, int y, int width, int height) {
-		graphics.clipRect(x, y, width, height);
-	}
-
-	/**
-	 * 裁剪区域
-	 * 
-	 * @param rect
-	 *            区域
-	 */
-	public void clipRect(Rect rect) {
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -421,16 +389,6 @@ public class ImagePainter {
 	}
 
 	/**
-	 * 强制裁剪
-	 * 
-	 * @param clip
-	 *            裁剪区
-	 */
-	public void forceClip(Rect clip) {
-		graphics.setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());
-	}
-
-	/**
 	 * 获取画笔的alpha值
 	 * 
 	 * @return 画笔的alpha值
@@ -445,31 +403,12 @@ public class ImagePainter {
 	}
 
 	/**
-	 * 获取基准点
-	 * 
-	 * @return 基准点
-	 */
-	public Point getBasePoint() {
-		return new Point(point);
-	}
-
-	/**
-	 * 获取裁剪区域
-	 * 
-	 * @return 裁剪区域
-	 */
-	public Rect getClip() {
-		Rectangle rectangle = graphics.getClipBounds();
-		return new Rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-	}
-
-	/**
 	 * 获取当前画笔颜色
 	 * 
 	 * @return 当前画笔颜色
 	 */
 	public Color getColor() {
-		return ColorFactory.getInstance().parseInt(graphics.getColor().getRGB());
+		return new Color(graphics.getColor().getRGB());
 	}
 
 	/**
@@ -479,15 +418,6 @@ public class ImagePainter {
 	 */
 	public Composite getComposite() {
 		return graphics.getComposite();
-	}
-
-	/**
-	 * 获取当前裁剪区
-	 * 
-	 * @return 当前裁剪区
-	 */
-	public Rect getCurClip() {
-		return curClip;
 	}
 
 	/**
@@ -550,65 +480,6 @@ public class ImagePainter {
 	}
 
 	/**
-	 * 设置基准点
-	 * 
-	 * @param x
-	 *            x坐标
-	 * @param y
-	 *            y坐标
-	 */
-	public void setBasePoint(int x, int y) {
-		graphics.translate(x, y);
-		point.setX(point.getX() + x);
-		point.setY(point.getY() + y);
-
-	}
-
-	/**
-	 * 设置基准点
-	 * 
-	 * @param point
-	 *            基准点
-	 */
-	public void setBasePoint(Point point) {
-		graphics.translate(point.getX(), point.getY());
-		this.point.setX(this.point.getX() + point.getX());
-		this.point.setY(this.point.getY() + point.getY());
-	}
-
-	/**
-	 * 设置裁剪区域
-	 * 
-	 * @param x
-	 *            裁剪区域 x 坐标
-	 * @param y
-	 *            裁剪区域 y 坐标
-	 * @param width
-	 *            裁剪区域宽度
-	 * @param height
-	 *            裁剪区域高度
-	 */
-	public void setClip(int x, int y, int width, int height) {
-		if (curClip != null) {
-			forceClip(curClip);
-		}
-		graphics.clipRect(x, y, width, height);
-	}
-
-	/**
-	 * 设置裁剪区域
-	 * 
-	 * @param rect
-	 *            裁剪区域
-	 */
-	public void setClip(Rect rect) {
-		if (curClip != null) {
-			forceClip(curClip);
-		}
-		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}
-
-	/**
 	 * 设置画笔颜色
 	 * 
 	 * @param color
@@ -627,7 +498,7 @@ public class ImagePainter {
 	 *            颜色
 	 */
 	public void setColor(String color) {
-		this.setColor(ColorFactory.getInstance().parseString(color));
+		this.setColor(new Color(color));
 	}
 
 	/**
@@ -638,16 +509,6 @@ public class ImagePainter {
 	 */
 	public void setComposite(Composite composite) {
 		graphics.setComposite(composite);
-	}
-
-	/**
-	 * 设置当前裁剪区
-	 * 
-	 * @param curClip
-	 *            裁剪区
-	 */
-	public void setCurClip(Rect curClip) {
-		this.curClip = curClip;
 	}
 
 	/**
