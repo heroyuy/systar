@@ -8,6 +8,11 @@ package com.soyomaker.emulator.ui;
 public class Color {
 
 	/**
+	 * 透明
+	 */
+	public static Color NULL = new Color(0x00000000);
+
+	/**
 	 * 黑色
 	 */
 	public static Color BLACK = new Color(0xff000000);

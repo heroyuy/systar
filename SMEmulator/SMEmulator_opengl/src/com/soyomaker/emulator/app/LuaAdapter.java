@@ -44,6 +44,8 @@ public class LuaAdapter {
 
 	private static String GAME_NAME = "Game";
 
+	private PainterTest pt = new PainterTest();
+
 	public LuaAdapter(Game game) {
 		try {
 			// 设置LuaState
@@ -152,7 +154,7 @@ public class LuaAdapter {
 	 * paint方法的转换
 	 */
 	public void paint(Painter painter) {
-		new PainterTest().test(painter);
+		pt.test(painter);
 		// try {
 		// luaFunctionOnPaint.call(new Object[] { luaGame, painter });
 		// } catch (LuaException e) {

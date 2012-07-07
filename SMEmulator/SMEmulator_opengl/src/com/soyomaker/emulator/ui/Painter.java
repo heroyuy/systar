@@ -36,18 +36,51 @@ public class Painter {
 	}
 
 	/**
-	 * 绘制图片
+	 * 绘制2D纹理
 	 * 
-	 * @param img
-	 *            要绘制的图片
+	 * @param texture2D
+	 *            要绘制的2D纹理
 	 * @param x
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
-	 * @param anchor
-	 *            锚点
 	 */
-	public void drawImage(Image img, int x, int y, int anchor) {
+	public void drawTexture2D(Texture2D texture2D, int x, int y) {
+		Color c = getColor();
+		setColor(Color.WHITE);
+		texture2D.bind();
+		glBegin(GL11.GL_QUADS);
+		glTexCoord2f(0, 0);
+		glVertex2f(x, y);
+		glTexCoord2f(1, 0);
+		glVertex2f(x + texture2D.getTextureWidth(), y);
+		glTexCoord2f(1, 1);
+		glVertex2f(x + texture2D.getTextureWidth(), y + texture2D.getTextureHeight());
+		glTexCoord2f(0, 1);
+		glVertex2f(x, y + texture2D.getTextureHeight());
+		glEnd();
+		setColor(c);
+	}
+
+	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture2D
+	 *            要绘制的2D纹理
+	 * @param dx
+	 *            绘制区域在纹理上的x坐标
+	 * @param dy
+	 *            绘制区域在纹理上的y坐标
+	 * @param width
+	 *            绘制区域的宽度
+	 * @param height
+	 *            绘制区域的高度
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 */
+	public void drawTexture2D(Texture2D texture2D, int dx, int dy, int width, int height, int x, int y) {
 
 	}
 
@@ -112,7 +145,7 @@ public class Painter {
 	 *            绘制的位置的 y 坐标
 	 */
 	public void drawString(String str, int x, int y) {
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		glEnable(GL11.GL_TEXTURE_2D);
 		font.addGlyphs(str);
 		try {
 			font.loadGlyphs();
@@ -120,7 +153,7 @@ public class Painter {
 			e.printStackTrace();
 		}
 		font.drawString(x, y, str, new org.newdawn.slick.Color(getColor().getArgb()));
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		glDisable(GL11.GL_TEXTURE_2D);
 	}
 
 	/**
