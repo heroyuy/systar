@@ -16,9 +16,11 @@ public class Game {
 
 	public static String DEFAULT_GAME_PATH = "./game";
 
-	private LuaAdapter luaAdapter = null;
+	// private LuaAdapter luaAdapter = null;
 
 	private Painter painter = null;
+
+	private PainterTest pt = null;
 
 	public static void main(String[] args) {
 		new Game().start();
@@ -56,9 +58,10 @@ public class Game {
 
 	private void start() {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
-		luaAdapter = new LuaAdapter(this);
+		// luaAdapter = new LuaAdapter(this);
 		painter = new Painter();
-		luaAdapter.onStart();
+		pt = new PainterTest();
+		// luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
 			long t = getTime();
 			// 更新模型
@@ -94,7 +97,7 @@ public class Game {
 	}
 
 	private void updateModel() {
-		luaAdapter.update();
+		// luaAdapter.update();
 	}
 
 	private void dealControlEvent() {
@@ -108,7 +111,8 @@ public class Game {
 		// 清屏
 		glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		// 游戏绘制
-		luaAdapter.paint(painter);
+		// luaAdapter.paint(painter);
+		pt.test(painter);
 	}
 
 	public int getHeight() {
