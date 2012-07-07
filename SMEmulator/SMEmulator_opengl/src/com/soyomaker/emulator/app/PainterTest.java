@@ -12,6 +12,8 @@ public class PainterTest {
 
 	private List<Texture2D> list = new ArrayList<Texture2D>();
 
+	private Texture2D title = new Texture2D("game/image/title/001-Title01.jpg");
+
 	public PainterTest() {
 		list.add(new Texture2D("game/image/title/001-Title01.jpg"));
 		list.add(new Texture2D("game/image/title/title.png"));
@@ -19,8 +21,8 @@ public class PainterTest {
 		list.add(new Texture2D("game/image/battle/forest_autumn.png"));
 		list.add(new Texture2D("game/image/battle/forest_winter.png"));
 		list.add(new Texture2D("game/image/battle/hill_spring.png"));
-		for (int i = 1; i < 2; i++) {
-			// list.add(new Texture2D("game/image/tileset/" + i + "号墙壁.png"));
+		for (int i = 1; i < 49; i++) {
+			list.add(new Texture2D("game/image/tileset/" + i + "号墙壁.png"));
 		}
 	}
 
@@ -40,10 +42,12 @@ public class PainterTest {
 		painter.fillRect(new Rect(150, 250, 200, 300));
 		// 绘制纹理
 		for (int i = 0; i < list.size(); i++) {
-			painter.drawTexture2D(list.get(i), -200, -500);
+			painter.drawTexture2D(list.get(i), i * 10, i * 10);
 		}
 		// 再次绘制字符串
 		painter.drawString("我是123wp_g4", 500, 500);
+		// 再次绘图
+		painter.drawTexture2D(title, 240, 160, 480, 320, 240, 160);
 
 	}
 

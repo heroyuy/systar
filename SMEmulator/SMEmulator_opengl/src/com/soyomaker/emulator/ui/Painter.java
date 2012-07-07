@@ -46,20 +46,7 @@ public class Painter {
 	 *            绘制的位置的 y 坐标
 	 */
 	public void drawTexture2D(Texture2D texture2D, int x, int y) {
-		Color c = getColor();
-		setColor(Color.WHITE);
-		texture2D.bind();
-		glBegin(GL11.GL_QUADS);
-		glTexCoord2f(0, 0);
-		glVertex2f(x, y);
-		glTexCoord2f(1, 0);
-		glVertex2f(x + texture2D.getTextureWidth(), y);
-		glTexCoord2f(1, 1);
-		glVertex2f(x + texture2D.getTextureWidth(), y + texture2D.getTextureHeight());
-		glTexCoord2f(0, 1);
-		glVertex2f(x, y + texture2D.getTextureHeight());
-		glEnd();
-		setColor(c);
+		this.drawTexture2D(texture2D, 0, 0, texture2D.getImageWidth(), texture2D.getImageHeight(), x, y);
 	}
 
 	/**
@@ -81,7 +68,22 @@ public class Painter {
 	 *            绘制的位置的 y 坐标
 	 */
 	public void drawTexture2D(Texture2D texture2D, int dx, int dy, int width, int height, int x, int y) {
-
+		Color c = getColor();
+		setColor(Color.WHITE);
+		texture2D.bind();
+		glBegin(GL11.GL_QUADS);
+		float tw = texture2D.getTextureWidth();
+		float th = texture2D.getTextureHeight();
+		glTexCoord2f(dx / tw, dy / th);
+		glVertex2f(x, y);
+		glTexCoord2f((dx + width) / tw, dy / th);
+		glVertex2f(x + width, y);
+		glTexCoord2f((dx + width) / tw, (dy + height) / th);
+		glVertex2f(x + width, y + height);
+		glTexCoord2f(dx / tw, (dy + height) / th);
+		glVertex2f(x, y + height);
+		glEnd();
+		setColor(c);
 	}
 
 	/**
