@@ -305,4 +305,28 @@ public class Painter {
 		glTranslated(tx, ty, 0);
 	}
 
+	/**
+	 * 裁剪区域
+	 * 
+	 * @param x
+	 *            区域x坐标
+	 * @param y
+	 *            区域y坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 */
+	public void clipRect(int x, int y, int width, int height) {
+		// 视口
+		GL11.glViewport(x, y, width, height);
+		// 设置投影变换
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		// 重置投影矩阵
+		GL11.glLoadIdentity();
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
+		GL11.glOrtho(x, x + width, y + height, y, 1, -1);
+		// 设置投影变换
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+	}
 }
