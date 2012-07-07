@@ -14,6 +14,8 @@ public class PainterTest {
 
 	private Texture2D title = new Texture2D("game/image/title/001-Title01.jpg");
 
+	private int i = 0;
+
 	public PainterTest() {
 		list.add(new Texture2D("game/image/title/001-Title01.jpg"));
 		list.add(new Texture2D("game/image/title/title.png"));
@@ -47,9 +49,11 @@ public class PainterTest {
 		// 再次绘制字符串
 		painter.drawString("我是123wp_g4", 500, 500);
 		// 再次绘图
-		painter.rotate(Math.PI/2, 480, 320);
-		painter.drawTexture2D(title, 240, 160, 480, 320, 240, 160);
-		painter.rotate(-Math.PI/2, 480, 320);
+		i += 5;
+		painter.translate(240, 160);
+		painter.rotate(i, 0, 0);
+		painter.drawTexture2D(title, 240, 160, 480, 320, 0, 0);
+		painter.rotate(-i, 0, 0);
 	}
 
 }

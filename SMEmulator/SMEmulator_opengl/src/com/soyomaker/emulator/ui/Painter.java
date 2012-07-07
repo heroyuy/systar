@@ -1,6 +1,15 @@
 package com.soyomaker.emulator.ui;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glScaled;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.awt.Font;
 
@@ -33,57 +42,6 @@ public class Painter {
 
 	public Painter() {
 		this.setTextSize(DEFAULT_TEXT_SIZE);
-	}
-
-	/**
-	 * 绘制2D纹理
-	 * 
-	 * @param texture2D
-	 *            要绘制的2D纹理
-	 * @param x
-	 *            绘制的位置的 x 坐标
-	 * @param y
-	 *            绘制的位置的 y 坐标
-	 */
-	public void drawTexture2D(Texture2D texture2D, int x, int y) {
-		this.drawTexture2D(texture2D, 0, 0, texture2D.getImageWidth(), texture2D.getImageHeight(), x, y);
-	}
-
-	/**
-	 * 绘制2D纹理
-	 * 
-	 * @param texture2D
-	 *            要绘制的2D纹理
-	 * @param dx
-	 *            绘制区域在纹理上的x坐标
-	 * @param dy
-	 *            绘制区域在纹理上的y坐标
-	 * @param width
-	 *            绘制区域的宽度
-	 * @param height
-	 *            绘制区域的高度
-	 * @param x
-	 *            绘制的位置的 x 坐标
-	 * @param y
-	 *            绘制的位置的 y 坐标
-	 */
-	public void drawTexture2D(Texture2D texture2D, int dx, int dy, int width, int height, int x, int y) {
-		Color c = getColor();
-		setColor(Color.WHITE);
-		texture2D.bind();
-		glBegin(GL11.GL_QUADS);
-		float tw = texture2D.getTextureWidth();
-		float th = texture2D.getTextureHeight();
-		glTexCoord2f(dx / tw, dy / th);
-		glVertex2f(x, y);
-		glTexCoord2f((dx + width) / tw, dy / th);
-		glVertex2f(x + width, y);
-		glTexCoord2f((dx + width) / tw, (dy + height) / th);
-		glVertex2f(x + width, y + height);
-		glTexCoord2f(dx / tw, (dy + height) / th);
-		glVertex2f(x, y + height);
-		glEnd();
-		setColor(c);
 	}
 
 	/**
@@ -159,6 +117,57 @@ public class Painter {
 	}
 
 	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture2D
+	 *            要绘制的2D纹理
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 */
+	public void drawTexture2D(Texture2D texture2D, int x, int y) {
+		this.drawTexture2D(texture2D, 0, 0, texture2D.getImageWidth(), texture2D.getImageHeight(), x, y);
+	}
+
+	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture2D
+	 *            要绘制的2D纹理
+	 * @param dx
+	 *            绘制区域在纹理上的x坐标
+	 * @param dy
+	 *            绘制区域在纹理上的y坐标
+	 * @param width
+	 *            绘制区域的宽度
+	 * @param height
+	 *            绘制区域的高度
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 */
+	public void drawTexture2D(Texture2D texture2D, int dx, int dy, int width, int height, int x, int y) {
+		Color c = getColor();
+		setColor(Color.WHITE);
+		texture2D.bind();
+		glBegin(GL11.GL_QUADS);
+		float tw = texture2D.getTextureWidth();
+		float th = texture2D.getTextureHeight();
+		glTexCoord2f(dx / tw, dy / th);
+		glVertex2f(x, y);
+		glTexCoord2f((dx + width) / tw, dy / th);
+		glVertex2f(x + width, y);
+		glTexCoord2f((dx + width) / tw, (dy + height) / th);
+		glVertex2f(x + width, y + height);
+		glTexCoord2f(dx / tw, (dy + height) / th);
+		glVertex2f(x, y + height);
+		glEnd();
+		setColor(c);
+	}
+
+	/**
 	 * 填充矩形区域
 	 * 
 	 * @param x
@@ -208,6 +217,44 @@ public class Painter {
 	}
 
 	/**
+	 * 旋转
+	 * 
+	 * @param angle
+	 *            旋转的角度
+	 * @param x
+	 *            旋转原点的 x 坐标
+	 * @param y
+	 *            旋转原点的 y 坐标
+	 */
+	public void rotate(double angle, double x, double y) {
+		if (!(x == 0 && y == 0)) {
+			double L = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+			double a1 = Math.asin(y / L);
+			double a = angle * Math.PI / 180;
+			double l = 2 * L * Math.sin(a / 2);
+			double ox = l * Math.sin(a / 2 + a1);
+			double oy = l * Math.cos(a / 2 + a1);
+			this.translate(ox, -oy);
+		}
+		glRotated(angle, 0, 0, 1);
+	}
+
+	/**
+	 * 缩放
+	 * 
+	 * @param scale
+	 *            缩放系数
+	 * @param x
+	 *            缩放原点的 x 坐标
+	 * @param y
+	 *            缩放原点的 y 坐标
+	 */
+	public void scale(double scale, double x, double y) {
+		this.translate((1 - scale) * x, (1 - scale) * y);
+		glScaled(scale, scale, 1);
+	}
+
+	/**
 	 * 设置画笔颜色
 	 * 
 	 * @param color
@@ -244,35 +291,6 @@ public class Painter {
 	 */
 	public int stringWidth(String str) {
 		return font.getWidth(str);
-	}
-
-	/**
-	 * 缩放
-	 * 
-	 * @param scale
-	 *            缩放系数
-	 * @param x
-	 *            缩放原点的 x 坐标
-	 * @param y
-	 *            缩放原点的 y 坐标
-	 */
-	public void scale(double scale, double x, double y) {
-		this.translate((1 - scale) * x, (1 - scale) * y);
-		glScaled(scale, scale, 1);
-	}
-
-	/**
-	 * 旋转
-	 * 
-	 * @param angle
-	 *            旋转的角度
-	 * @param x
-	 *            旋转原点的 x 坐标
-	 * @param y
-	 *            旋转原点的 y 坐标
-	 */
-	public void rotate(double angle, double x, double y) {
-		glRotated(angle, x, y, 0);
 	}
 
 	/**
