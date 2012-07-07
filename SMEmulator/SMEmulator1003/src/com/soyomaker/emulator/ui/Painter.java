@@ -528,12 +528,6 @@ public class Painter {
 	 * 
 	 * @param scale
 	 *            缩放系数
-	 */
-	/**
-	 * 缩放
-	 * 
-	 * @param scale
-	 *            缩放系数
 	 * @param x
 	 *            缩放原点的 x 坐标
 	 * @param y
