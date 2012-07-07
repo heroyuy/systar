@@ -3,7 +3,16 @@ package com.soyomaker.emulator.ui;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.IndexColorModel;
 import java.awt.image.RescaleOp;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+
+import com.soyomaker.emulator.utils.ColorFactory;
 
 /**
  * 图形图像 TODO 图片处理算法需要重写
@@ -24,7 +33,11 @@ public class Image {
 	/* ----------------------------- 字段 ----------------------------- */
 	private BufferedImage content = null;// 图片上下文
 
-	private Painter painter = null;
+	private ImagePainter painter = null;
+
+	private Image() {
+
+	}
 
 	/**
 	 * 根据指定的Image对象创建一个新的Image对象
@@ -34,6 +47,9 @@ public class Image {
 	 * 
 	 */
 	public Image(Image image) {
+		content = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		painter = new ImagePainter((Graphics2D) content.getGraphics());
+		painter.drawImage(image, 0, 0, ImagePainter.LT);
 	}
 
 	/**
@@ -45,6 +61,8 @@ public class Image {
 	 *            高度
 	 */
 	public Image(int width, int height) {
+		content = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		painter = new ImagePainter((Graphics2D) content.getGraphics());
 	}
 
 	/**
@@ -54,6 +72,18 @@ public class Image {
 	 *            文件名
 	 */
 	public Image(String fileName) {
+		try {
+			content = ImageIO.read(new File(fileName));
+			painter = new ImagePainter((Graphics2D) content.getGraphics());
+			if (content.getColorModel() instanceof IndexColorModel || content.getType() != BufferedImage.TYPE_INT_ARGB) {
+				BufferedImage temp = content;
+				content = new BufferedImage(temp.getWidth(), temp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				content.getGraphics().drawImage(temp, 0, 0, null);
+				painter = new ImagePainter((Graphics2D) content.getGraphics());
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	/**
@@ -104,7 +134,9 @@ public class Image {
 	 * @return 裁剪后的图像
 	 */
 	public Image clip(int x, int y, int width, int height) {
-		return null;
+		Image res = new Image(width, height);
+		res.getPainter().drawImage(this, x, y, width, height, 0, 0, ImagePainter.LT);
+		return res;
 	}
 
 	/**
@@ -124,6 +156,7 @@ public class Image {
 	 *            指定点y坐标
 	 */
 	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight, int x, int y) {
+		this.getPainter().copyArea(srcX, srcY, srcWidth, srcHeight, x, y);
 	}
 
 	/**
@@ -170,7 +203,7 @@ public class Image {
 	 * 
 	 * @return 绘制图像的图形上下文（画笔）
 	 */
-	public Painter getPainter() {
+	public ImagePainter getPainter() {
 		return painter;
 	}
 
@@ -212,11 +245,14 @@ public class Image {
 	// }
 
 	public Color getRGB(int x, int y) {
-		return null;
+		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
 	}
 
 	public Image getSubImage(int x, int y, int w, int h) {
-		return null;
+		Image res = new Image();
+		res.content = this.content.getSubimage(x, y, w, h);
+		res.painter = new ImagePainter((Graphics2D) res.content.getGraphics());
+		return res;
 	}
 
 	/**

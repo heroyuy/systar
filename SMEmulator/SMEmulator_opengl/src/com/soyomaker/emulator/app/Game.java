@@ -106,8 +106,8 @@ public class Game {
 		}
 		// 显示FPS和内存
 		painter.setColor(Color.WHITE);
-		painter.drawString("fps:" + GameInfo.getInstance().getActualFps() + " lua memory:" + luaAdapter.getLuaMemory(),
-				10, getHeight() - painter.getTextSize() - 10);
+		painter.drawString("FPS:" + GameInfo.getInstance().getActualFps() + " LuaMemory:" + luaAdapter.getLuaMemory()
+				+ "K", 10, getHeight() - painter.getTextSize() - 10);
 		t = getTime();
 	}
 
@@ -138,6 +138,7 @@ public class Game {
 			Display.update();
 
 		}
+		luaAdapter.onStop();
 		Display.destroy();
 	}
 

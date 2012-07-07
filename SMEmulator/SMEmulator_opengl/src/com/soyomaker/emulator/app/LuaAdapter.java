@@ -6,6 +6,7 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.utils.ImageFactory;
 import com.soyomaker.emulator.utils.Texture2DCache;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
@@ -55,6 +56,9 @@ public class LuaAdapter {
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
 			// --注册ImageFactory
+			luaState.pushObjectValue(ImageFactory.getInstance());
+			luaState.setGlobal("smImageFactory");
+			// --注册Texture2DCache
 			luaState.pushObjectValue(Texture2DCache.getInstance());
 			luaState.setGlobal("smTexture2DCache");
 			// --注册SMAudioPlayer
@@ -76,7 +80,7 @@ public class LuaAdapter {
 		}
 	}
 
-	public float getLuaMemory() {
+	public int getLuaMemory() {
 		luaState.getGlobal("collectgarbage");
 		try {
 			luaState.pushObjectValue("count");
@@ -86,7 +90,7 @@ public class LuaAdapter {
 		luaState.call(1, 1);
 		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
 		LuaObject lobj = luaState.getLuaObject("result");
-		return (float) (lobj.getNumber() * 1024);
+		return (int) lobj.getNumber();
 	}
 
 	/**
