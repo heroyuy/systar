@@ -11,6 +11,24 @@ public class Texture2D {
 
 	private Texture texture = null;
 
+	/**
+	 * 创建空白纹理
+	 * 
+	 * @param width
+	 *            纹理宽度
+	 * @param height
+	 *            纹理高度
+	 */
+	public Texture2D(int width, int height) {
+
+	}
+
+	/**
+	 * 从文件中创建纹理
+	 * 
+	 * @param file
+	 *            纹理文件
+	 */
 	public Texture2D(String file) {
 		try {
 			texture = TextureLoader.getTexture(file.substring(file.lastIndexOf(".") + 1),
@@ -28,24 +46,47 @@ public class Texture2D {
 		}
 	}
 
-	public void bind() {
+	/**
+	 * 绑定纹理
+	 */
+	protected void bind() {
 		texture.bind();
 	}
 
-	public int getContentHeight() {
+	/**
+	 * 获取纹理有效高度
+	 * 
+	 * @return 纹理有效高度
+	 */
+	public int getHeight() {
 		return texture.getImageHeight();
 	}
 
-	public int getContentWidth() {
-		return texture.getImageWidth();
-	}
-
-	public int getTextureHeight() {
+	/**
+	 * 获取纹理高度
+	 * 
+	 * @return 纹理高度
+	 */
+	protected int getTextureHeight() {
 		return texture.getTextureHeight();
 	}
 
-	public int getTextureWidth() {
+	/**
+	 * 获取纹理宽度
+	 * 
+	 * @return 纹理宽度
+	 */
+	protected int getTextureWidth() {
 		return texture.getTextureWidth();
+	}
+
+	/**
+	 * 获取纹理有效宽度
+	 * 
+	 * @return 获取纹理有效宽度
+	 */
+	public int getWidth() {
+		return texture.getImageWidth();
 	}
 
 }
