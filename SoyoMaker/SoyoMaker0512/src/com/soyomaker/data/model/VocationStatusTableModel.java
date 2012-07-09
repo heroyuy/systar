@@ -53,7 +53,7 @@ public class VocationStatusTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object v, int r, int c) {
-        Status attr = (Status) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[r];
+        Buff attr = (Buff) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[r];
         if (attr != null) {
             switch (c) {
                 case 0:
@@ -72,7 +72,7 @@ public class VocationStatusTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Status attr = (Status) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[rowIndex];
+        Buff attr = (Buff) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[rowIndex];
         if (attr != null) {
             switch (columnIndex) {
                 case 0:

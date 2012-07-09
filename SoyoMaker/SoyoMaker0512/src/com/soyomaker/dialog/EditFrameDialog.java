@@ -31,6 +31,10 @@ public class EditFrameDialog extends javax.swing.JDialog {
     }
     private Frame frame = null;
 
+    /**
+     *
+     * @param frame
+     */
     public void setFrame(Frame frame) {
         this.frame = frame;
     }

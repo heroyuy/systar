@@ -24,22 +24,22 @@ public class Enemy extends Model {
      *
      */
     public String intro = "";
+    public int attackDistance = 0;
+    public String attackSound = "";
+    public String onAttackSound = "";
+    public String deadSound = "";
     /**
-     * 战斗图
+     * 行走图
      */
-    public String battleImg = "";
+    public String charImg = "";
+    /**
+     * 动作图
+     */
+    public String actionImg = "";
     /**
      *  等级
      */
     public int lev;
-    /**
-     *  最大生命值
-     */
-    public int maxHp;
-    /**
-     *  最大魔法值
-     */
-    public int maxSp;
     /**
      * 力量
      */
@@ -72,21 +72,20 @@ public class Enemy extends Model {
      * 金币
      */
     public int money;
+    public int attributeId = -1;
+
+    public static class ItemInfo {
+
+        public Item item;
+        public int rate;
+    }
     /**
-     * 宝物列表，可能掉落的
+     * 宝物列表
      */
-    public ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+    public ArrayList<ItemInfo> treasures = new ArrayList<ItemInfo>();
     /**
      * 0 静止 1 普通攻击 2 防御	3 使用物品 5 使用技能 6 逃跑
      * 动作列表
      */
     public ArrayList<Action> actions = new ArrayList<Action>();
-    /**
-     * 属性
-     */
-    public ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-    /**
-     * 状态
-     */
-    public ArrayList<Status> status = new ArrayList<Status>();
 }

@@ -4,7 +4,7 @@
  */
 
 /*
- * AddModelStatusDialog.java
+ * AddModelBuffDialog.java
  *
  * Created on 2011-10-9, 0:28:39
  */
@@ -12,23 +12,23 @@ package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
 import com.soyomaker.data.model.Model;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 
 /**
  *
  * @author Administrator
  */
-public class AddModelStatusDialog extends javax.swing.JDialog {
+public class AddModelBuffDialog extends javax.swing.JDialog {
 
-    /** Creates new form AddModelStatusDialog
+    /** Creates new form AddModelBuffDialog
      * @param parent
      * @param modal
      */
-    public AddModelStatusDialog(javax.swing.JDialog parent, boolean modal) {
+    public AddModelBuffDialog(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        Status[] statuss = (Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS);
+        Buff[] statuss = (Buff[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS);
         for (int i = 0; i < statuss.length; i++) {
             statusComboBox.addItem(statuss[i]);
         }
@@ -51,7 +51,7 @@ public class AddModelStatusDialog extends javax.swing.JDialog {
         statusTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(AddModelStatusDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(AddModelBuffDialog.class);
         setTitle(resourceMap.getString("title")); // NOI18N
         setResizable(false);
 
@@ -128,30 +128,28 @@ public class AddModelStatusDialog extends javax.swing.JDialog {
      *
      * @return
      */
-    public Status getSelectStatus() {
-        if (!isOk) {
-            return null;
-        }
+    public Buff getBuff() {
         return status;
     }
-    private Status status;
-    private boolean isOk;
+
+    public int getRate() {
+        return rate;
+    }
+    private Buff status;
+    private int rate;
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         if (statusComboBox.getSelectedIndex() != -1) {
-            status = (Status) statusComboBox.getSelectedItem();
-            status.value = Integer.parseInt(statusTextField.getText());
+            status = (Buff) statusComboBox.getSelectedItem();
+            rate = Integer.parseInt(statusTextField.getText());
         }
-        isOk = true;
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
         // TODO add your handling code here:
-        isOk = false;
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancleButton;
     private javax.swing.JLabel jLabel1;

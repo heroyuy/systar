@@ -4,7 +4,7 @@
  */
 
 /*
- * EditStatusDialog.java
+ * EditBuffDialog.java
  *
  * Created on 2011-9-23, 23:15:16
  */
@@ -18,30 +18,23 @@ import com.soyomaker.data.model.ModelConditionTableModel;
 import com.soyomaker.data.model.ModelParameterTableModel;
 import com.soyomaker.data.model.ModelStatusTableModel;
 import com.soyomaker.data.model.Parameter;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.model.animation.Animation;
-import com.soyomaker.widget.JTabelComboBoxRender;
-import com.soyomaker.widget.JTableComboBoxEditor;
-import java.util.Iterator;
 import javax.swing.ImageIcon;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author Administrator
  */
-public class EditStatusDialog extends javax.swing.JDialog {
+public class EditBuffDialog extends javax.swing.JDialog {
 
-    /** Creates new form EditStatusDialog
+    /** Creates new form EditBuffDialog
      * @param parent
      * @param modal
      * @param status
      */
-    public EditStatusDialog(StatusPanel parent, boolean modal, Status status) {
+    public EditBuffDialog(StatusPanel parent, boolean modal, Buff status) {
         setModal(modal);
-        matm = new ModelAttributeTableModel(status.attrs);
-        mstm = new ModelStatusTableModel(status.status);
         mctm = new ModelConditionTableModel(status.conds);
         mptm = new ModelParameterTableModel(status.paras);
         initComponents();
@@ -57,56 +50,16 @@ public class EditStatusDialog extends javax.swing.JDialog {
             java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
             statusAniComboBox.addItem(((Animation) entry.getValue()));
         }
-//        TableColumnModel tcm = parameterTable.getColumnModel();
-//        TableColumn iconC = tcm.getColumn(0);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(Parameter.types);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(Parameter.types);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
-
-        TableColumnModel tcm2 = parameterTable.getColumnModel();
-        TableColumn iconC2 = tcm2.getColumn(1);
-        JTabelComboBoxRender strI2 = new JTabelComboBoxRender(Parameter.rules);
-        JTableComboBoxEditor steI2 = new JTableComboBoxEditor(Parameter.rules);
-        iconC2.setCellRenderer(strI2);
-        iconC2.setCellEditor(steI2);
-
-//        TableColumnModel tcm1 = conditionTable.getColumnModel();
-//        TableColumn iconC1 = tcm1.getColumn(0);
-//        JTabelComboBoxRender strI1 = new JTabelComboBoxRender(Condition.statusConditionTypes);
-//        JTableComboBoxEditor steI1 = new JTableComboBoxEditor(Condition.statusConditionTypes);
-//        iconC1.setCellRenderer(strI1);
-//        iconC1.setCellEditor(steI1);
-//
-//        TableColumnModel tcm3 = attributeTable.getColumnModel();
-//        TableColumn iconC3 = tcm3.getColumn(0);
-//        ArrayList<Attribute> attrs = ((Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0]).system.attributes;
-//        String[] ats = new String[attrs.size()];
-//        for (int i = 0; i < attrs.size(); i++) {
-//            ats[i] = attrs.get(i).name;
-//        }
-//        JTabelComboBoxRender strI3 = new JTabelComboBoxRender(ats);
-//        JTableComboBoxEditor steI3 = new JTableComboBoxEditor(ats);
-//        iconC3.setCellRenderer(strI3);
-//        iconC3.setCellEditor(steI3);
-//
-//        TableColumnModel tcm4 = statusTable.getColumnModel();
-//        TableColumn iconC4 = tcm4.getColumn(0);
-//        JTabelComboBoxRender strI4 = new JTabelComboBoxRender((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        JTableComboBoxEditor steI4 = new JTableComboBoxEditor((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        iconC4.setCellRenderer(strI4);
-//        iconC4.setCellEditor(steI4);
-
         setStatus(status);
     }
-    private Status status;
+    private Buff status;
     private ImageIcon[] statusIcons;
     private ModelAttributeTableModel matm;
     private ModelStatusTableModel mstm;
     private ModelConditionTableModel mctm;
     private ModelParameterTableModel mptm;
 
-    private void setStatus(Status status) {
+    private void setStatus(Buff status) {
         this.status = status;
         statusNameTextField.setText(status.name);
         statusIntroTextArea.setText(status.description);
@@ -118,9 +71,9 @@ public class EditStatusDialog extends javax.swing.JDialog {
         }
         statusLevTextField.setText(status.lev + "");
         statusAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(status.aniIndex));
-        statusKindComboBox.setSelectedIndex(status.type);
-        statusLastTypeComboBox.setSelectedIndex(status.lastType);
-        statusLastValueTextField.setText(status.lastValue + "");
+        statusKindComboBox.setSelectedIndex(status.limitType);
+        statusLastTypeComboBox.setSelectedIndex(status.type);
+        statusLastValueTextField.setText(status.typeParam + "");
     }
 
     /** This method is called from within the constructor to
@@ -149,32 +102,23 @@ public class EditStatusDialog extends javax.swing.JDialog {
         statusLastTypeComboBox = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         statusLastValueTextField = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
+        okButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         addParameterButton = new javax.swing.JButton();
         removeParameterButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         parameterTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        conditionTable = new javax.swing.JTable();
         jToolBar2 = new javax.swing.JToolBar();
         addConditionButton = new javax.swing.JButton();
         removeConditionButton = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        conditionTable = new javax.swing.JTable();
-        jToolBar3 = new javax.swing.JToolBar();
-        addAttributeButton = new javax.swing.JButton();
-        removeAttributeButton = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        attributeTable = new javax.swing.JTable();
-        jToolBar4 = new javax.swing.JToolBar();
-        addStatusButton = new javax.swing.JButton();
-        removeStatusButton = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        statusTable = new javax.swing.JTable();
-        okButton = new javax.swing.JButton();
-        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EditStatusDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EditBuffDialog.class);
         setTitle(resourceMap.getString("title")); // NOI18N
         setResizable(false);
 
@@ -197,18 +141,13 @@ public class EditStatusDialog extends javax.swing.JDialog {
         jLabel3.setText("图标");
         jLabel3.setName("jLabel3"); // NOI18N
 
-        jLabel4.setText("类型");
+        jLabel4.setText("限制类型");
         jLabel4.setName("jLabel4"); // NOI18N
 
         statusIconComboBox.setName("statusIconComboBox"); // NOI18N
 
-        statusKindComboBox.setModel(new javax.swing.DefaultComboBoxModel(Status.kinds));
+        statusKindComboBox.setModel(new javax.swing.DefaultComboBoxModel(com.soyomaker.data.model.Buff.limitKinds));
         statusKindComboBox.setName("statusKindComboBox"); // NOI18N
-        statusKindComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                statusKindComboBoxItemStateChanged(evt);
-            }
-        });
 
         jLabel5.setText("等级");
         jLabel5.setName("jLabel5"); // NOI18N
@@ -221,26 +160,41 @@ public class EditStatusDialog extends javax.swing.JDialog {
 
         statusAniComboBox.setName("statusAniComboBox"); // NOI18N
 
-        jLabel7.setText("持续类型");
+        jLabel7.setText("类型");
         jLabel7.setName("jLabel7"); // NOI18N
 
-        switch(statusKindComboBox.getSelectedIndex()){
-            case Status.LIMIT:
-            statusLastTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(Status.limitKinds));
-            break;
-            case Status.LAST:
-            statusLastTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(Status.lastKinds));
-            break;
-        }
+        statusLastTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(com.soyomaker.data.model.Buff.lastKinds));
         statusLastTypeComboBox.setName("statusLastTypeComboBox"); // NOI18N
+        statusLastTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                statusLastTypeComboBoxItemStateChanged(evt);
+            }
+        });
 
-        jLabel8.setText("持续值");
+        jLabel8.setText("类型参数");
         jLabel8.setName("jLabel8"); // NOI18N
 
         statusLastValueTextField.setText("0");
         statusLastValueTextField.setName("statusLastValueTextField"); // NOI18N
 
-        jPanel1.setName("jPanel1"); // NOI18N
+        okButton.setText("确定");
+        okButton.setName("okButton"); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        closeButton.setText("关闭");
+        closeButton.setName("closeButton"); // NOI18N
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("数据列表"));
+        jPanel2.setName("jPanel2"); // NOI18N
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -273,10 +227,37 @@ public class EditStatusDialog extends javax.swing.JDialog {
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         parameterTable.setModel(mptm);
-        parameterTable.setName("parameterTable"); // NOI18N
-        parameterTable.setName("parameterTable"); // NOI18N
         parameterTable.setRowHeight(20);
         jScrollPane2.setViewportView(parameterTable);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(233, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("解除条件列表"));
+        jPanel3.setName("jPanel3"); // NOI18N
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        conditionTable.setModel(mctm);
+        conditionTable.setName("conditionTable"); // NOI18N
+        conditionTable.setRowHeight(20);
+        jScrollPane3.setViewportView(conditionTable);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -306,155 +287,29 @@ public class EditStatusDialog extends javax.swing.JDialog {
         });
         jToolBar2.add(removeConditionButton);
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        conditionTable.setModel(mctm);
-        conditionTable.setName("conditionTable"); // NOI18N
-        conditionTable.setRowHeight(20);
-        jScrollPane3.setViewportView(conditionTable);
-
-        jToolBar3.setFloatable(false);
-        jToolBar3.setRollover(true);
-        jToolBar3.setName("jToolBar3"); // NOI18N
-
-        addAttributeButton.setText("添加属性");
-        addAttributeButton.setFocusable(false);
-        addAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addAttributeButton.setName("addAttributeButton"); // NOI18N
-        addAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addAttributeButtonActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(addAttributeButton);
-
-        removeAttributeButton.setText("删除属性");
-        removeAttributeButton.setFocusable(false);
-        removeAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeAttributeButton.setName("removeAttributeButton"); // NOI18N
-        removeAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeAttributeButtonActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(removeAttributeButton);
-
-        jScrollPane4.setName("jScrollPane4"); // NOI18N
-
-        attributeTable.setModel(matm);
-        attributeTable.setName("attributeTable"); // NOI18N
-        attributeTable.setRowHeight(20);
-        jScrollPane4.setViewportView(attributeTable);
-
-        jToolBar4.setFloatable(false);
-        jToolBar4.setRollover(true);
-        jToolBar4.setName("jToolBar4"); // NOI18N
-
-        addStatusButton.setText("添加状态");
-        addStatusButton.setFocusable(false);
-        addStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addStatusButton.setName("addStatusButton"); // NOI18N
-        addStatusButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addStatusButtonActionPerformed(evt);
-            }
-        });
-        jToolBar4.add(addStatusButton);
-
-        removeStatusButton.setText("删除状态");
-        removeStatusButton.setFocusable(false);
-        removeStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeStatusButton.setName("removeStatusButton"); // NOI18N
-        removeStatusButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeStatusButtonActionPerformed(evt);
-            }
-        });
-        jToolBar4.add(removeStatusButton);
-
-        jScrollPane5.setName("jScrollPane5"); // NOI18N
-
-        statusTable.setModel(mstm);
-        statusTable.setName("statusTable"); // NOI18N
-        statusTable.setRowHeight(20);
-        jScrollPane5.setViewportView(statusTable);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane2, jScrollPane3, jScrollPane4, jScrollPane5, jToolBar1, jToolBar2, jToolBar3, jToolBar4});
-
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, 0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
         );
-
-        okButton.setText("确定");
-        okButton.setName("okButton"); // NOI18N
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
-            }
-        });
-
-        closeButton.setText("关闭");
-        closeButton.setName("closeButton"); // NOI18N
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -481,19 +336,22 @@ public class EditStatusDialog extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(statusLastValueTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                            .addComponent(statusAniComboBox, 0, 184, Short.MAX_VALUE)
-                            .addComponent(statusLevTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+                            .addComponent(statusLastValueTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(statusAniComboBox, 0, 172, Short.MAX_VALUE)
+                            .addComponent(statusLevTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel2, jPanel3});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -508,7 +366,7 @@ public class EditStatusDialog extends javax.swing.JDialog {
                         .addComponent(jLabel5)
                         .addComponent(statusLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -522,15 +380,19 @@ public class EditStatusDialog extends javax.swing.JDialog {
                             .addComponent(jLabel8)
                             .addComponent(statusLastValueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(closeButton)
-                    .addComponent(okButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(closeButton)
+                        .addComponent(okButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel2, jPanel3});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -547,8 +409,8 @@ public class EditStatusDialog extends javax.swing.JDialog {
             status.aniIndex = ((Animation) statusAniComboBox.getSelectedItem()).getIndex();
         }
         status.type = statusKindComboBox.getSelectedIndex();
-        status.lastType = statusLastTypeComboBox.getSelectedIndex();
-        status.lastValue = Integer.parseInt(statusLastValueTextField.getText());
+        status.type = statusLastTypeComboBox.getSelectedIndex();
+        status.typeParam = Integer.parseInt(statusLastValueTextField.getText());
         dispose();
 }//GEN-LAST:event_okButtonActionPerformed
 
@@ -557,66 +419,9 @@ public class EditStatusDialog extends javax.swing.JDialog {
         dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
-    private void statusKindComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_statusKindComboBoxItemStateChanged
-        // TODO add your handling code here:
-        switch (statusKindComboBox.getSelectedIndex()) {
-            case Status.LIMIT:
-                statusLastTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(Status.limitKinds));
-                break;
-            case Status.LAST:
-                statusLastTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(Status.lastKinds));
-                break;
-        }
-    }//GEN-LAST:event_statusKindComboBoxItemStateChanged
-
-    private void addAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelAttributeDialog etd = new AddModelAttributeDialog(this, true);
-        etd.setVisible(true);
-        if (etd.getSelectAttribute() != null) {
-            status.attrs.add(etd.getSelectAttribute());
-            attributeTable.updateUI();
-        }
-    }//GEN-LAST:event_addAttributeButtonActionPerformed
-
-    private void removeAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        if (attributeTable.getSelectedRow() >= 0 && attributeTable.getSelectedRow() < status.attrs.size()) {
-            status.attrs.remove(attributeTable.getSelectedRow());
-        }
-        attributeTable.updateUI();
-    }//GEN-LAST:event_removeAttributeButtonActionPerformed
-
-    private void addStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStatusButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelStatusDialog amsd = new AddModelStatusDialog(this, true);
-        amsd.setVisible(true);
-        if (amsd.getSelectStatus() != null) {
-            status.status.add(amsd.getSelectStatus());
-            statusTable.updateUI();
-        }
-    }//GEN-LAST:event_addStatusButtonActionPerformed
-
-    private void removeStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStatusButtonActionPerformed
-        // TODO add your handling code here:
-        if (statusTable.getSelectedRow() >= 0 && statusTable.getSelectedRow() < status.status.size()) {
-            status.status.remove(statusTable.getSelectedRow());
-        }
-        statusTable.updateUI();
-    }//GEN-LAST:event_removeStatusButtonActionPerformed
-
     private void addParameterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParameterButtonActionPerformed
         // TODO add your handling code here:
         Parameter para = new Parameter();
-//        int max = -1;
-//        Iterator<Parameter> it = status.paras.iterator();
-//        while (it.hasNext()) {
-//            Parameter m = (Parameter) it.next();
-//            if (m.type > max) {
-//                max = m.type;
-//            }
-//        }
-//        para.type = max + 1;
         para.type = status.paras.size();
         status.paras.add(para);
         parameterTable.updateUI();
@@ -646,12 +451,13 @@ public class EditStatusDialog extends javax.swing.JDialog {
         conditionTable.updateUI();
     }//GEN-LAST:event_removeConditionButtonActionPerformed
 
+    private void statusLastTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_statusLastTypeComboBoxItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusLastTypeComboBoxItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAttributeButton;
     private javax.swing.JButton addConditionButton;
     private javax.swing.JButton addParameterButton;
-    private javax.swing.JButton addStatusButton;
-    private javax.swing.JTable attributeTable;
     private javax.swing.JButton closeButton;
     private javax.swing.JTable conditionTable;
     private javax.swing.JLabel jLabel1;
@@ -662,22 +468,17 @@ public class EditStatusDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JToolBar jToolBar3;
-    private javax.swing.JToolBar jToolBar4;
     private javax.swing.JButton okButton;
     private javax.swing.JTable parameterTable;
-    private javax.swing.JButton removeAttributeButton;
     private javax.swing.JButton removeConditionButton;
     private javax.swing.JButton removeParameterButton;
-    private javax.swing.JButton removeStatusButton;
     private javax.swing.JComboBox statusAniComboBox;
     private javax.swing.JComboBox statusIconComboBox;
     private javax.swing.JTextArea statusIntroTextArea;
@@ -686,6 +487,5 @@ public class EditStatusDialog extends javax.swing.JDialog {
     private javax.swing.JTextField statusLastValueTextField;
     private javax.swing.JTextField statusLevTextField;
     private javax.swing.JTextField statusNameTextField;
-    private javax.swing.JTable statusTable;
     // End of variables declaration//GEN-END:variables
 }

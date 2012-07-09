@@ -7,6 +7,7 @@ package com.soyomaker.data.dao;
 import com.soyomaker.AppData;
 import com.soyomaker.config.Configuration;
 import com.soyomaker.data.model.Attribute;
+import com.soyomaker.data.model.AttributeFactor;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -179,13 +180,15 @@ public class ConfigDao extends Dao<Config> {
         config.term.equip = getText(root, "equip");
         config.term.skill = getText(root, "skill");
 
-        config.system.frameSkin = getText(root, "skin");
+        config.system.frameSkin = getText(root, "frameSkin");
+        config.system.inputDialogSkin = getText(root, "inputDialogSkin");
+        config.system.playerInfoSkin = getText(root, "playerInfoSkin");
         config.system.startAniIndex = Integer.parseInt(getText(root, "startAniIndex"));
         config.system.endAniIndex = Integer.parseInt(getText(root, "endAniIndex"));
         config.system.titleBackground = getText(root, "titleBackground");
         config.system.titleMusic = getText(root, "titleMusic");
         config.system.startBattleSound = getText(root, "startBattleSound");
-        config.system.failSound = getText(root, "battleMusic");
+        config.system.failSound = getText(root, "failSound");
         config.system.winBattleSound = getText(root, "winSound");
         config.system.escapeSound = getText(root, "escapeSound");
         config.system.selectedSound = getText(root, "selectedSound");
@@ -220,6 +223,16 @@ public class ConfigDao extends Dao<Config> {
                 attr.id = attributeIndex;
                 attr.name = attribute.attributeValue("name");
                 attr.description = attribute.attributeValue("desc");
+                for (Iterator iii = attribute.elementIterator("factors"); iii.hasNext();) {
+                    Element factors = (Element) iii.next();
+                    for (Iterator fe = factors.elementIterator("factor"); fe.hasNext();) {
+                        Element factore = (Element) fe.next();
+                        AttributeFactor af = new AttributeFactor();
+                        af.targetId = Integer.parseInt(factore.attributeValue("targetId"));
+                        af.value = Integer.parseInt(factore.attributeValue("value"));
+                        attr.factors.add(af);
+                    }
+                }
                 config.system.attributes.add(attr);
             }
         }
@@ -334,8 +347,14 @@ public class ConfigDao extends Dao<Config> {
             Element skill = root.addElement("skill");
             skill.setText(config.term.skill);
 
-            Element skin = root.addElement("skin");
-            skin.setText(config.system.frameSkin);
+            Element frameSkin = root.addElement("frameSkin");
+            frameSkin.setText(config.system.frameSkin);
+
+            Element playerInfoSkin = root.addElement("playerInfoSkin");
+            playerInfoSkin.setText(config.system.playerInfoSkin);
+
+            Element inputDialogSkin = root.addElement("inputDialogSkin");
+            inputDialogSkin.setText(config.system.inputDialogSkin);
 
             Element startAniIndex = root.addElement("startAniIndex");
             startAniIndex.setText("" + config.system.startAniIndex);
@@ -352,8 +371,8 @@ public class ConfigDao extends Dao<Config> {
             Element startBattleSound = root.addElement("startBattleSound");
             startBattleSound.setText(config.system.startBattleSound);
 
-            Element battleMusic = root.addElement("failSound");
-            battleMusic.setText(config.system.failSound);
+            Element failSound = root.addElement("failSound");
+            failSound.setText(config.system.failSound);
 
             Element winSound = root.addElement("winSound");
             winSound.setText(config.system.winBattleSound);
@@ -396,17 +415,24 @@ public class ConfigDao extends Dao<Config> {
                 Player p = config.system.initPlayers.get(i);
                 Element pla = players.addElement("player");
                 pla.addAttribute("index", "" + p.getIndex());
-                pla.addAttribute("name", "" + p.name);
-                pla.addAttribute("desc", "" + p.intro);
+//                pla.addAttribute("name", "" + p.name);
+//                pla.addAttribute("desc", "" + p.intro);
             }
 
             Element attrs = root.addElement("attributes");
             for (int i = 0; i < config.system.attributes.size(); i++) {
                 Attribute att = config.system.attributes.get(i);
                 Element attr = attrs.addElement("attribute");
-                attr.addAttribute("index", "" + att.id);
+                attr.addAttribute("index", "" + i);
                 attr.addAttribute("name", att.name);
                 attr.addAttribute("desc", att.description);
+                Element factors = attr.addElement("factors");
+                for (int j = 0; j < att.factors.size(); j++) {
+                    AttributeFactor af = att.factors.get(j);
+                    Element factor = factors.addElement("factor");
+                    factor.addAttribute("targetId", "" + af.targetId);
+                    factor.addAttribute("value", "" + af.value);
+                }
             }
 
             OutputFormat format = OutputFormat.createPrettyPrint();
@@ -455,6 +481,7 @@ public class ConfigDao extends Dao<Config> {
             ltSkins.addNode("inputDialog", "/image/skin/" + config.system.inputDialogSkin);
         }
         lt.addNode("skins", ltSkins);
+        lt.addNode("\n");
         if (config.system.startAniIndex == -1) {
             lt.addNode("startAniId", -1);
         } else {
@@ -473,9 +500,9 @@ public class ConfigDao extends Dao<Config> {
             lt.addNode("titleMusic", "/audio/music/" + config.system.titleMusic);
         }
         lt.addNode("\n");
-        lt.addNode("cellWidth", config.system.cellWidth);
+        lt.addNode("cellWidth", AppData.getInstance().getCurProject().getCellWidth());
         lt.addNode("\n");
-        lt.addNode("cellHeight", config.system.cellHeight);
+        lt.addNode("cellHeight", AppData.getInstance().getCurProject().getCellHeight());
         lt.addNode("\n");
         LuaTable ltId = new LuaTable();
         for (int i = 0; i < config.system.initPlayers.size(); i++) {
@@ -494,7 +521,6 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("col", config.system.col);
         lt.addNode("\n");
         lt.addNode("face", config.system.face);
-        lt.addNode("\n");
         lt.addNode("\n");
         lt.addNode("str", config.term.stre);
         lt.addNode("\n");
@@ -541,7 +567,6 @@ public class ConfigDao extends Dao<Config> {
         lt.addNode("\n");
         lt.addNode("jewelry", config.term.jewelry);
         lt.addNode("\n");
-
         if (config.system.startBattleSound == null || config.system.startBattleSound.equals("")) {
             lt.addNode("startBattleSound", "nil");
         } else {
@@ -638,20 +663,26 @@ public class ConfigDao extends Dao<Config> {
 //        ltPrefixList.addNode("[" + Configuration.Prefix.ATTRIBUTE + "]", 12);
 //        lt.addNode("idPrefixList", ltPrefixList);
 
-        lt.addNode("\n");
+//        lt.addNode("\n");
         LuaTable ltAttrs = new LuaTable();
         ltAttrs.addNode("\n");
         for (int i = 0; i < config.system.attributes.size(); i++) {
+            Attribute attr = config.system.attributes.get(i);
             LuaTable ltAttr = new LuaTable();
-            ltAttr.addNode("index", Configuration.Prefix.ATTRIBUTE_MASK + config.system.attributes.get(i).id + 1);
-            ltAttr.addNode("name", config.system.attributes.get(i).name);
-            ltAttr.addNode("desc", config.system.attributes.get(i).description);
-            ltAttrs.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + config.system.attributes.get(i).id + 1) + "]", ltAttr);
+            ltAttr.addNode("id", Configuration.Prefix.ATTRIBUTE_MASK + i + 1);
+            ltAttr.addNode("name", attr.name);
+            ltAttr.addNode("desc", attr.description);
+            LuaTable ltFactors = new LuaTable();
+            for (AttributeFactor factor : attr.factors) {
+                ltFactors.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + factor.targetId + 1) + "]", factor.value);
+            }
+            ltAttrs.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + i + 1) + "]", ltAttr);
             if (i != config.system.attributes.size() - 1) {
                 ltAttrs.addNode("\n");
             }
         }
         lt.addNode("attributes", ltAttrs);
+        lt.addNode("\n");
         LuaTable ltFormulas = new LuaTable();
         ltFormulas.addNode("str", config.system.strFormula);
         ltFormulas.addNode("\n");
@@ -732,7 +763,7 @@ public class ConfigDao extends Dao<Config> {
             }
             dos.writeInt(config.system.attributes.size());
             for (int i = 0; i < config.system.attributes.size(); i++) {
-                dos.writeInt(config.system.attributes.get(i).id);
+                dos.writeInt(i);
                 dos.writeUTF(config.system.attributes.get(i).name);
                 dos.writeUTF(config.system.attributes.get(i).description);
             }

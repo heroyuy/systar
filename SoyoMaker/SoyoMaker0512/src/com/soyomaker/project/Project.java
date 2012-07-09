@@ -35,6 +35,8 @@ public class Project {
 
     private String name = "";//项目标题名
     private String path = "";//路径名
+    private int cellWidth = 32;
+    private int cellHeight = 32;
     private String createSoftVersion = "";//创建项目的软件版本
     private String createTime = "";//创建项目的时间
     private String lastSaveSoftVersion = "";//保存项目的软件版本
@@ -51,6 +53,38 @@ public class Project {
     private ArrayList<Clip> clips = new ArrayList<Clip>();
     private ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
     private DataManager dataManager = new DataManager();
+
+    /**
+     *
+     * @return
+     */
+    public int getCellHeight() {
+        return cellHeight;
+    }
+
+    /**
+     *
+     * @param cellHeight
+     */
+    public void setCellHeight(int cellHeight) {
+        this.cellHeight = cellHeight;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getCellWidth() {
+        return cellWidth;
+    }
+
+    /**
+     *
+     * @param cellWidth
+     */
+    public void setCellWidth(int cellWidth) {
+        this.cellWidth = cellWidth;
+    }
 
     /**
      *
@@ -618,6 +652,7 @@ public class Project {
         }
         return max;
     }
+
     /**
      *
      * @param listener
@@ -633,6 +668,7 @@ public class Project {
     public void removeProjectMapChangeListener(ProjectMapChangeListener listener) {
         projectMapChangeListeners.remove(listener);
     }
+
     /**
      * 
      * @param listener

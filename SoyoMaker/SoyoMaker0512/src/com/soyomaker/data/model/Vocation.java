@@ -42,5 +42,5 @@ public class Vocation extends Model {
     /**
      *
      */
-    public ArrayList<Status> status = new ArrayList<Status>();
+    public ArrayList<Buff> status = new ArrayList<Buff>();
 }

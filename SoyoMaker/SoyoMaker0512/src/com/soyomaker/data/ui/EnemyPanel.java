@@ -22,7 +22,7 @@ import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 
 /**
@@ -175,7 +175,7 @@ public class EnemyPanel extends javax.swing.JPanel implements DataChangeListener
     public void vocationRemoved(DataChangedEvent sce, int id) {
     }
 
-    public void statusAdded(DataChangedEvent sce, Status status) {
+    public void statusAdded(DataChangedEvent sce, Buff status) {
     }
 
     public void statusRemoved(DataChangedEvent sce, int id) {

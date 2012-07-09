@@ -4,34 +4,33 @@
  */
 package com.soyomaker.data.model;
 
-import com.soyomaker.data.model.Skill.BuffInfo;
-import java.util.ArrayList;
+import com.soyomaker.AppData;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Administrator
  */
-public class ModelStatusTableModel extends AbstractTableModel {
+public class AttributeFactorTableModel extends AbstractTableModel {
 
-    private ArrayList<BuffInfo> status;
+    private Attribute attribute;
 
     /**
      *
-     * @param status
+     * @param config
      */
-    public ModelStatusTableModel(ArrayList<BuffInfo> status) {
-        this.status = status;
+    public AttributeFactorTableModel(Attribute attr) {
+        this.attribute = attr;
     }
     private static final String COLUMN_NAME[] = {
-        "状态名称", "状态有效度"
+        "属性ID", "名称", "相克系数"
     };
     private static final Class COLUMN_CLASS[] = {
-        String.class, Integer.class
+        Integer.class, String.class, Integer.class
     };
 
     public int getRowCount() {
-        return status.size();
+        return attribute.factors.size();
     }
 
     @Override
@@ -46,19 +45,20 @@ public class ModelStatusTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == 0) {
-            return false;
+        if (col == 2) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
     public void setValueAt(Object v, int r, int c) {
-        BuffInfo attr = status.get(r);
-        if (attr != null) {
+        super.setValueAt(v, r, c);
+        AttributeFactor af = attribute.factors.get(r);
+        if (af != null) {
             switch (c) {
-                case 1:
-                    attr.rate = Integer.parseInt(v.toString());
+                case 2:
+                    af.value = Integer.parseInt(v.toString());
                     break;
             }
         }
@@ -66,13 +66,16 @@ public class ModelStatusTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        BuffInfo attr = status.get(rowIndex);
-        if (attr != null) {
+        AttributeFactor af = attribute.factors.get(rowIndex);
+        if (af != null) {
             switch (columnIndex) {
                 case 0:
-                    return attr.buff.name;
+                    return rowIndex;
                 case 1:
-                    return attr.rate;
+                    Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
+                    return config.system.attributes.get(af.targetId).name;
+                case 2:
+                    return af.value;
             }
         }
         return null;

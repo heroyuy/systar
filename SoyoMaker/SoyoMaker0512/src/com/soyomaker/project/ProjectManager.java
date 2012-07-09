@@ -45,6 +45,8 @@ public class ProjectManager {
         Document doc = DocumentHelper.createDocument();
         Element project = doc.addElement("Project");
         project.addAttribute("name", AppData.getInstance().getCurProject().getName());
+        project.addAttribute("cellWidth", AppData.getInstance().getCurProject().getCellWidth() + "");
+        project.addAttribute("cellHeight", AppData.getInstance().getCurProject().getCellHeight() + "");
         Element softVersion = project.addElement("SoftVersion");
         //创建项目时，保存软件版本和时间和创建时的相同
         softVersion.addAttribute("create", AppData.getInstance().getCurProject().getCreateSoftVersion());
@@ -72,6 +74,8 @@ public class ProjectManager {
         Document doc = DocumentHelper.createDocument();
         Element project = doc.addElement("Project");
         project.addAttribute("name", AppData.getInstance().getCurProject().getName());
+        project.addAttribute("cellWidth", AppData.getInstance().getCurProject().getCellWidth() + "");
+        project.addAttribute("cellHeight", AppData.getInstance().getCurProject().getCellHeight() + "");
         Element softVersion = project.addElement("SoftVersion");
         softVersion.addAttribute("create", AppData.getInstance().getCurProject().getCreateSoftVersion());
         softVersion.addAttribute("save", SoftInformation.getVersion());
@@ -111,6 +115,12 @@ public class ProjectManager {
         if (root.attributeValue("name") != null) {
             AppData.getInstance().getCurProject().setName(root.attributeValue("name"));
         }
+        if (root.attributeValue("cellWidth") != null) {
+            AppData.getInstance().getCurProject().setCellWidth(Integer.parseInt(root.attributeValue("cellWidth")));
+        }
+        if (root.attributeValue("cellHeight") != null) {
+            AppData.getInstance().getCurProject().setCellHeight(Integer.parseInt(root.attributeValue("cellHeight")));
+        }
         for (Iterator i = root.elementIterator("SoftVersion"); i.hasNext();) {
             Element version = (Element) i.next();
             if (version.attributeValue("create") != null) {
@@ -131,13 +141,11 @@ public class ProjectManager {
         }
         ifile.close();
         ir.close();
-//            System.out.println("项目名:" + AppData.getInstance().getCurProject().getName());
         printer.d("项目名:" + AppData.getInstance().getCurProject().getName());
-//            System.out.println("创建项目软件版本:" + AppData.getInstance().getCurProject().getCreateSoftVersion());
+        printer.d("项目单元格宽度:" + AppData.getInstance().getCurProject().getCellWidth());
+        printer.d("项目单元格高度:" + AppData.getInstance().getCurProject().getCellHeight());
         printer.d("创建项目软件版本:" + AppData.getInstance().getCurProject().getCreateSoftVersion());
-//            System.out.println("创建项目时间:" + AppData.getInstance().getCurProject().getCreateTime());
         printer.d("创建项目时间:" + AppData.getInstance().getCurProject().getCreateTime());
-//            System.out.println("读取项目文件成功!");
         printer.d("读取项目文件成功!");
     }
 }

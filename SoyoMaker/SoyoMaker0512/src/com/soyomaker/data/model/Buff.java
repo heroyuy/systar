@@ -10,12 +10,8 @@ import java.util.ArrayList;
  * 状态
  * @author Administrator
  */
-public class Status extends Model {
+public class Buff extends Model {
 
-    /**
-     *
-     */
-    public static final String[] kinds = {"限制型", "持续型"};
     /**
      *
      */
@@ -23,24 +19,16 @@ public class Status extends Model {
     /**
      *
      */
-    public static final String[] limitKinds = {"无限制", "不能够使用魔法", "普通攻击敌人", "普通攻击同伴", "不能行动", "不能行动和回避"};
-    /**
-     *
-     */
-    public static final int LIMIT = 0;
-    /**
-     *
-     */
-    public static final int LAST = 1;
+    public static final String[] limitKinds = {"无限制", "不能够使用技能", "不能进行攻击"};
 
     @Override
     public String toString() {
         return name;
     }
     /**
-     * 参数类型 0 限制型 1 持续型
+     * 0 无限制 1 限制技能 2 限制攻击
      */
-    public int type;
+    public int limitType;
     /**
      *
      */
@@ -63,17 +51,13 @@ public class Status extends Model {
     public int aniIndex = -1;
     /**
      * 持续类型 0 单次 1 时间持续	2 回合持续
-     * 限制类型 0 无限制 1 不能够使用魔法 2 普通攻击敌人 3 普通攻击同伴 4 不能行动 5 不能行动和回避
      */
-    public int lastType;
+    public int type;
     /**
-     * 持续值
+     * 分别对应 
+     * 持续时间 持续时间 回合数
      */
-    public int lastValue;
-    /**
-     * 状态效果值
-     */
-    public int value;
+    public int typeParam;
     /**
      * 参数列表
      */
@@ -83,12 +67,4 @@ public class Status extends Model {
      * 条件列表
      */
     public ArrayList<Condition> conds = new ArrayList<Condition>();
-    /**
-     * 属性列表
-     */
-    public ArrayList<Attribute> attrs = new ArrayList<Attribute>();
-    /**
-     * 状态列表
-     */
-    public ArrayList<Status> status = new ArrayList<Status>();
 }

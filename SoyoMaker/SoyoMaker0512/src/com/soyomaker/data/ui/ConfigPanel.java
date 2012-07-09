@@ -95,6 +95,8 @@ public class ConfigPanel extends javax.swing.JPanel {
         gameStartAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(config.system.startAniIndex));
         gameOverAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(config.system.endAniIndex));
         frameSkinComboBox.setSelectedItem(config.system.frameSkin);
+        playerInfoSkinComboBox.setSelectedItem(config.system.playerInfoSkin);
+        inputDialogComboBox.setSelectedItem(config.system.inputDialogSkin);
         titleSceneBackgroundComboBox.setSelectedItem(config.system.titleBackground);
     }
 
@@ -123,6 +125,14 @@ public class ConfigPanel extends javax.swing.JPanel {
         frameSkinComboBox.addItem("");
         for (int i = 0; i < DataManager.listSkinImageName().length; i++) {
             frameSkinComboBox.addItem(DataManager.listSkinImageName()[i]);
+        }
+        inputDialogComboBox.addItem("");
+        for (int i = 0; i < DataManager.listSkinImageName().length; i++) {
+            inputDialogComboBox.addItem(DataManager.listSkinImageName()[i]);
+        }
+        playerInfoSkinComboBox.addItem("");
+        for (int i = 0; i < DataManager.listSkinImageName().length; i++) {
+            playerInfoSkinComboBox.addItem(DataManager.listSkinImageName()[i]);
         }
         titleSceneBackgroundComboBox.addItem("");
         for (int i = 0; i < DataManager.listTitleBackgroundName().length; i++) {
@@ -217,17 +227,19 @@ public class ConfigPanel extends javax.swing.JPanel {
         }
         Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
         config.system.initPlayers.clear();
-        for (int i = 0; i < configPlayerTable.getRowCount(); i++) {
-            config.system.initPlayers.add((Player) AppData.getInstance().getCurProject().getDataManager().getModel(Model.PLAYER, Integer.parseInt(configPlayerTable.getModel().getValueAt(i, 0).toString())));
+        for (int i = 0; i < conf.system.initPlayers.size(); i++) {
+//            config.system.initPlayers.add((Player) AppData.getInstance().getCurProject().getDataManager().getModel(Model.PLAYER, Integer.parseInt(configPlayerTable.getModel().getValueAt(i, 0).toString())));
+            config.system.initPlayers.add(conf.system.initPlayers.get(i));
         }
         config.system.attributes.clear();
-        for (int i = 0; i < configAttributeTable.getRowCount(); i++) {
-            Attribute attr = new Attribute();
-            attr.id = i;
-            attr.name = configAttributeTable.getModel().getValueAt(i, 1).toString();
-            attr.description = configAttributeTable.getModel().getValueAt(i, 2).toString();
-            config.system.attributes.add(attr);
+        for (int i = 0; i < conf.system.attributes.size(); i++) {
+//            Attribute attr = new Attribute();
+//            attr.id = i;
+//            attr.name = configAttributeTable.getModel().getValueAt(i, 1).toString();
+//            attr.description = configAttributeTable.getModel().getValueAt(i, 2).toString();
+            config.system.attributes.add(conf.system.attributes.get(i));
         }
+
         config.term.about = configAboutTextArea.getText();
         config.term.help = configHelpTextArea.getText();
         config.term.name = configNameTextField.getText();
@@ -283,6 +295,8 @@ public class ConfigPanel extends javax.swing.JPanel {
             config.system.curMapIndex = ((Map) initMapComboBox.getSelectedItem()).getIndex();
         }
         config.system.frameSkin = getSelectedItem(frameSkinComboBox);
+        config.system.inputDialogSkin = getSelectedItem(inputDialogComboBox);
+        config.system.playerInfoSkin = getSelectedItem(playerInfoSkinComboBox);
         config.system.titleBackground = getSelectedItem(titleSceneBackgroundComboBox);
         config.system.row = Integer.parseInt(initRowTextField.getText());
         config.system.col = Integer.parseInt(initColTextField.getText());
@@ -333,6 +347,7 @@ public class ConfigPanel extends javax.swing.JPanel {
         jToolBar1 = new javax.swing.JToolBar();
         addAttributeButton = new javax.swing.JButton();
         removeAttributeButton = new javax.swing.JButton();
+        editAttributeButton = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         titleMusicComboBox = new javax.swing.JComboBox();
@@ -643,6 +658,18 @@ public class ConfigPanel extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(removeAttributeButton);
+
+        editAttributeButton.setText("编辑属性");
+        editAttributeButton.setFocusable(false);
+        editAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editAttributeButton.setName("editAttributeButton"); // NOI18N
+        editAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editAttributeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editAttributeButtonActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(editAttributeButton);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -1441,10 +1468,11 @@ public class ConfigPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         ConfigAttributeDialog cad = new ConfigAttributeDialog(this, true);
         cad.setVisible(true);
-        if (cad.getSelectAttribute() != null) {
-            Attribute attr = cad.getSelectAttribute();
-            attr.id = conf.system.attributes.size();
-            conf.system.attributes.add(cad.getSelectAttribute());
+        if (cad.getAttribute() != null) {
+//            System.out.println(cad.getAttribute().factors.size());
+//            Attribute attr = cad.getAttribute();
+//            attr.id = conf.system.attributes.size();
+            conf.system.attributes.add(cad.getAttribute());
             configAttributeTable.updateUI();
         }
     }//GEN-LAST:event_addAttributeButtonActionPerformed
@@ -1501,6 +1529,17 @@ public class ConfigPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "暂未开放此功能！", "提示", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_editFormulaButtonActionPerformed
 
+    private void editAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAttributeButtonActionPerformed
+        // TODO add your handling code here:
+//        JOptionPane.showMessageDialog(this, "暂未开放此功能！", "提示", JOptionPane.INFORMATION_MESSAGE);
+        if (configAttributeTable.getSelectedRow() >= 0 && configAttributeTable.getSelectedRow() < conf.system.attributes.size()) {
+//            conf.system.attributes.remove(configAttributeTable.getSelectedRow());
+            ConfigAttributeDialog cad = new ConfigAttributeDialog(this, true);
+            cad.setAttribute(conf.system.attributes.get(configAttributeTable.getSelectedRow()));
+            cad.setVisible(true);
+        }
+        configAttributeTable.updateUI();
+    }//GEN-LAST:event_editAttributeButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAttributeButton;
     private javax.swing.JButton addPlayerButton;
@@ -1536,6 +1575,7 @@ public class ConfigPanel extends javax.swing.JPanel {
     private javax.swing.JTextField configStreTextField;
     private javax.swing.JTextField configWeaponTextField;
     private javax.swing.JRadioButton directRadioButton;
+    private javax.swing.JButton editAttributeButton;
     private javax.swing.JButton editFormulaButton;
     private javax.swing.JComboBox equipSoundComboBox;
     private javax.swing.JComboBox escapeSoundComboBox;

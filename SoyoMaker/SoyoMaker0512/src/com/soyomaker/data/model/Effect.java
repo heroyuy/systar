@@ -13,7 +13,7 @@ public class Effect {
     /**
      *
      */
-    public static final String[] effects = {"基本伤害值", "HP回复量", "HP回复率", "SP回复量", "SP回复率"};
+    public static final String[] effects = {"力量", "敏捷", "智力", "灵巧", "体力", "幸运", "生命值", "魔法值", "金币"};
     /**
      *
      */
@@ -25,5 +25,5 @@ public class Effect {
     /**
      *
      */
-    public int effectValue;//效果值
+    public int effectValue;//效果值 12(纯数值) 12%(当前百分比) 12#（总量百分比）
 }

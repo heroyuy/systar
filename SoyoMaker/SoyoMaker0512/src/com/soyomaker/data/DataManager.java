@@ -10,11 +10,10 @@ import com.soyomaker.data.dao.ConfigDao;
 import com.soyomaker.data.dao.Dao;
 import com.soyomaker.data.dao.EnemyDao;
 import com.soyomaker.data.dao.EnemyTroopDao;
-import com.soyomaker.data.dao.EquipDao;
 import com.soyomaker.data.dao.ItemDao;
 import com.soyomaker.data.dao.PlayerDao;
 import com.soyomaker.data.dao.SkillDao;
-import com.soyomaker.data.dao.StatusDao;
+import com.soyomaker.data.dao.BuffDao;
 import com.soyomaker.data.dao.VocationDao;
 import com.soyomaker.data.listener.DataChangeListener;
 import com.soyomaker.data.listener.DataChangedEvent;
@@ -26,7 +25,7 @@ import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.util.FileUtil;
 import java.io.File;
@@ -48,7 +47,7 @@ public class DataManager {
     private HashMap<Integer, Dao> daos = null;
     private Class[] modelClass = {
         Config.class,
-        Status.class,
+        Buff.class,
         Skill.class,
         Item.class,
         Equip.class,
@@ -68,10 +67,9 @@ public class DataManager {
     public DataManager() {
         daos = new HashMap<Integer, Dao>();
 
-        daos.put(Model.STATUS, new StatusDao());
+        daos.put(Model.STATUS, new BuffDao());
         daos.put(Model.SKILL, new SkillDao());
         daos.put(Model.ITEM, new ItemDao());
-        daos.put(Model.EQUIP, new EquipDao());
         daos.put(Model.VOCATION, new VocationDao());
         daos.put(Model.PLAYER, new PlayerDao());
         daos.put(Model.CONFIG, new ConfigDao());
@@ -420,7 +418,7 @@ public class DataManager {
      *
      * @param layer
      */
-    protected void fireStatusAdded(Status layer) {
+    protected void fireStatusAdded(Buff layer) {
         Iterator iterator = dataChangeListeners.iterator();
         DataChangedEvent event = null;
 
@@ -620,7 +618,7 @@ public class DataManager {
                 fireConfigChanged((Config) model);
                 break;
             case Model.STATUS:
-                fireStatusAdded((Status) model);
+                fireStatusAdded((Buff) model);
                 break;
             case Model.VOCATION:
                 fireVocationAdded((Vocation) model);
@@ -688,8 +686,8 @@ public class DataManager {
     public void removeAllModel(int type) {
         switch (type) {
             case Model.STATUS:
-                for (int i = 0; i < daos.get(type).getModels(Status.class).length; i++) {
-                    Model model = daos.get(type).getModels(Status.class)[i];
+                for (int i = 0; i < daos.get(type).getModels(Buff.class).length; i++) {
+                    Model model = daos.get(type).getModels(Buff.class)[i];
                     removeModel(Model.STATUS, model.getIndex());
                 }
                 break;

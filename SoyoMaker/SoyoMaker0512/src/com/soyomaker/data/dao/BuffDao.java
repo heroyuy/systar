@@ -6,11 +6,10 @@ package com.soyomaker.data.dao;
 
 import com.soyomaker.AppData;
 import com.soyomaker.config.Configuration;
-import com.soyomaker.data.model.Attribute;
 import com.soyomaker.data.model.Condition;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Parameter;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
@@ -28,7 +27,7 @@ import java.io.IOException;
  *
  * @author Administrator
  */
-public class StatusDao extends Dao<Status> {
+public class BuffDao extends Dao<Buff> {
 
     private LogPrinter printer = LogPrinterFactory.getDefaultLogPrinter();
 
@@ -43,18 +42,18 @@ public class StatusDao extends Dao<Status> {
         fis = new FileInputStream(f);
         dis = new DataInputStream(fis);
         int statusSum = dis.readInt();
-        Status status = null;
+        Buff status = null;
         for (int i = 0; i < statusSum; i++) {
-            status = new Status();
+            status = new Buff();
             status.setIndex(dis.readInt());
-            status.type = dis.readInt();
+            status.limitType = dis.readInt();
             status.name = dis.readUTF();
             status.description = dis.readUTF();
             status.icon = dis.readUTF();
             status.lev = dis.readInt();
             status.aniIndex = dis.readInt();
-            status.lastType = dis.readInt();
-            status.lastValue = dis.readInt();
+            status.type = dis.readInt();
+            status.typeParam = dis.readInt();
             int paraN = dis.readInt();
             for (int j = 0; j < paraN; j++) {
                 Parameter para = new Parameter();
@@ -72,32 +71,7 @@ public class StatusDao extends Dao<Status> {
                 cond.para = dis.readInt();
                 status.conds.add(cond);
             }
-            int attrN = dis.readInt();
-            for (int j = 0; j < attrN; j++) {
-                Attribute attr = new Attribute();
-                attr.id = dis.readInt();
-                attr.value = dis.readInt();
-                status.attrs.add(attr);
-            }
-            int statusN = dis.readInt();
-            for (int j = 0; j < statusN; j++) {
-                Status statu = new Status();//不直接用datamanager里的，是由于可能为空
-                statu.setIndex(dis.readInt());
-                statu.value = dis.readInt();
-                status.status.add(statu);
-            }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.STATUS, status);
-        }
-        //更新子状态
-        for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS).length; i++) {
-            Status statu = (Status) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[i];
-            for (int j = 0; j < statu.status.size(); j++) {
-                int id = statu.status.get(j).getIndex();
-                int value = statu.status.get(j).value;
-                Status sta = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, id);
-                sta.value = value;
-                statu.status.set(j, sta);
-            }
         }
         dis.close();
         fis.close();
@@ -105,8 +79,8 @@ public class StatusDao extends Dao<Status> {
     }
 
     private boolean saveLua() {
-        Status[] status = this.getModels(Status.class);
-        Status statu = null;
+        Buff[] status = this.getModels(Buff.class);
+        Buff statu = null;
         LuaTable lts = new LuaTable();
         for (int i = 0; i < size(); i++) {
             statu = status[i];
@@ -114,7 +88,7 @@ public class StatusDao extends Dao<Status> {
             lt.addNode("\n");
             lt.addNode("index", Configuration.Prefix.STATUS_MASK + statu.getIndex() + 1);
             lt.addNode("\n");
-            lt.addNode("type", statu.type);
+            lt.addNode("limitType", statu.limitType);
             lt.addNode("\n");
             lt.addNode("name", statu.name);
             lt.addNode("\n");
@@ -132,9 +106,9 @@ public class StatusDao extends Dao<Status> {
                 lt.addNode("aniIndex", Configuration.Prefix.ANIMATION_MASK + statu.aniIndex);
             }
             lt.addNode("\n");
-            lt.addNode("lastType", statu.lastType);
+            lt.addNode("type", statu.type);
             lt.addNode("\n");
-            lt.addNode("lastValue", statu.lastValue);
+            lt.addNode("typeParam", statu.typeParam);
             lt.addNode("\n");
             LuaTable pas = new LuaTable();
             if (!statu.paras.isEmpty()) {
@@ -151,53 +125,8 @@ public class StatusDao extends Dao<Status> {
                     pas.addNode("\n");
                 }
             }
-            lt.addNode("parameters", pas);
+            lt.addNode("datas", pas);
             lt.addNode("\n");
-            LuaTable rcs = new LuaTable();
-            if (!statu.conds.isEmpty()) {
-                rcs.addNode("\n");
-            }
-            for (int j = 0; j < statu.conds.size(); j++) {
-                LuaTable rc = new LuaTable();
-                rc.addNode("conditionType", statu.conds.get(j).conditionType + 1);
-                rc.addNode("conditionName", statu.conds.get(j).conditionName);
-                rc.addNode("param", statu.conds.get(j).para);
-                rcs.addNode("[" + (statu.conds.get(j).conditionType + 1) + "]", rc);
-                if (j != statu.conds.size() - 1) {
-                    rcs.addNode("\n");
-                }
-            }
-            lt.addNode("conditions", rcs);
-            lt.addNode("\n");
-            LuaTable attrs = new LuaTable();
-            if (!statu.attrs.isEmpty()) {
-                attrs.addNode("\n");
-            }
-            for (int j = 0; j < statu.attrs.size(); j++) {
-                LuaTable attr = new LuaTable();
-                attr.addNode("index", Configuration.Prefix.ATTRIBUTE_MASK + statu.attrs.get(j).id + 1);
-                attr.addNode("value", statu.attrs.get(j).value);
-                attrs.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + statu.attrs.get(j).id + 1) + "]", attr);
-                if (j != statu.attrs.size() - 1) {
-                    attrs.addNode("\n");
-                }
-            }
-            lt.addNode("attributes", attrs);
-            lt.addNode("\n");
-            LuaTable sts = new LuaTable();
-            if (!statu.status.isEmpty()) {
-                sts.addNode("\n");
-            }
-            for (int j = 0; j < statu.status.size(); j++) {
-                LuaTable st = new LuaTable();
-                st.addNode("index", Configuration.Prefix.STATUS_MASK + statu.status.get(j).getIndex() + 1);
-                st.addNode("value", statu.status.get(j).value);
-                sts.addNode("[" + (Configuration.Prefix.STATUS_MASK + statu.status.get(j).getIndex() + 1) + "]", st);
-                if (j != statu.status.size() - 1) {
-                    sts.addNode("\n");
-                }
-            }
-            lt.addNode("buffs", sts);
             lts.addNode("[" + (Configuration.Prefix.STATUS_MASK + statu.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
@@ -223,19 +152,19 @@ public class StatusDao extends Dao<Status> {
             fos = new FileOutputStream(f);
             dos = new DataOutputStream(fos);
             dos.writeInt(size());
-            Status[] status = this.getModels(Status.class);
-            Status statu = null;
+            Buff[] status = this.getModels(Buff.class);
+            Buff statu = null;
             for (int i = 0; i < size(); i++) {
                 statu = status[i];
                 dos.writeInt(statu.getIndex());
-                dos.writeInt(statu.type);
+                dos.writeInt(statu.limitType);
                 dos.writeUTF(statu.name);
                 dos.writeUTF(statu.description);
                 dos.writeUTF(statu.icon);
                 dos.writeInt(statu.lev);
                 dos.writeInt(statu.aniIndex);
-                dos.writeInt(statu.lastType);
-                dos.writeInt(statu.lastValue);
+                dos.writeInt(statu.type);
+                dos.writeInt(statu.typeParam);
                 dos.writeInt(statu.paras.size());
                 for (int j = 0; j < statu.paras.size(); j++) {
                     Parameter para = statu.paras.get(j);
@@ -250,16 +179,6 @@ public class StatusDao extends Dao<Status> {
                     dos.writeInt(cond.conditionType);
                     dos.writeUTF(cond.conditionName);
                     dos.writeInt(cond.para);
-                }
-                dos.writeInt(statu.attrs.size());
-                for (int j = 0; j < statu.attrs.size(); j++) {
-                    dos.writeInt(statu.attrs.get(j).id);
-                    dos.writeInt(statu.attrs.get(j).value);
-                }
-                dos.writeInt(statu.status.size());
-                for (int j = 0; j < statu.status.size(); j++) {
-                    dos.writeInt(statu.status.get(j).getIndex());
-                    dos.writeInt(statu.status.get(j).value);
                 }
             }
             dos.close();

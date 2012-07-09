@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Administrator
  */
-public class StatusTableModel extends AbstractTableModel {
+public class BuffTableModel extends AbstractTableModel {
 
     private static final String COLUMN_NAME[] = {
         "ID", "名称", "介绍", "图标", "类型", "等级"
@@ -48,7 +48,7 @@ public class StatusTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object v, int r, int c) {
         super.setValueAt(v, r, c);
-        Status status = (Status) data.getModels(Model.STATUS)[r];
+        Buff status = (Buff) data.getModels(Model.STATUS)[r];
         if (status != null) {
             switch (c) {
                 case 1:
@@ -57,12 +57,9 @@ public class StatusTableModel extends AbstractTableModel {
                 case 2:
                     status.description = v.toString();
                     break;
-//                case 3:
-//                    status.icon = v.toString();
-//                    break;
                 case 4:
-                    for (int i = 0; i < Status.kinds.length; i++) {
-                        if (Status.kinds[i].equals(v.toString())) {
+                    for (int i = 0; i < Buff.lastKinds.length; i++) {
+                        if (Buff.lastKinds[i].equals(v.toString())) {
                             status.type = i;
                         }
                     }
@@ -77,7 +74,7 @@ public class StatusTableModel extends AbstractTableModel {
     private ImageIcon[] statusIcons = DataManager.listStatusIconName();
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Status status = (Status) data.getModels(Model.STATUS)[rowIndex];
+        Buff status = (Buff) data.getModels(Model.STATUS)[rowIndex];
         if (status != null) {
             switch (columnIndex) {
                 case 0:
@@ -87,7 +84,6 @@ public class StatusTableModel extends AbstractTableModel {
                 case 2:
                     return status.description;
                 case 3:
-
                     for (int i = 0; i < statusIcons.length; i++) {
                         if (statusIcons[i].getDescription().equals(status.icon)) {
                             return statusIcons[i];
@@ -95,7 +91,7 @@ public class StatusTableModel extends AbstractTableModel {
                     }
                     return null;
                 case 4:
-                    return Status.kinds[status.type];
+                    return Buff.lastKinds[status.type];
                 case 5:
                     return status.lev;
             }

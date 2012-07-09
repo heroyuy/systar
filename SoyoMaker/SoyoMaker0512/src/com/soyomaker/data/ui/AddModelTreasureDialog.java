@@ -11,10 +11,8 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
-import com.soyomaker.data.model.Treasure;
 
 /**
  *
@@ -30,10 +28,6 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        Equip[] equips = (Equip[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP);
-        for (int i = 0; i < equips.length; i++) {
-            equipComboBox.addItem(equips[i]);
-        }
         Item[] items = (Item[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM);
         for (int i = 0; i < items.length; i++) {
             itemComboBox.addItem(items[i]);
@@ -50,42 +44,18 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        equipRadioButton = new javax.swing.JRadioButton();
-        itemRadioButton = new javax.swing.JRadioButton();
-        equipComboBox = new javax.swing.JComboBox();
         itemComboBox = new javax.swing.JComboBox();
         okButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         rateTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(AddModelTreasureDialog.class);
         setTitle(resourceMap.getString("title")); // NOI18N
         setResizable(false);
 
-        buttonGroup1.add(equipRadioButton);
-        equipRadioButton.setSelected(true);
-        equipRadioButton.setText("装备");
-        equipRadioButton.setName("equipRadioButton"); // NOI18N
-        equipRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                equipRadioButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(itemRadioButton);
-        itemRadioButton.setText("物品");
-        itemRadioButton.setName("itemRadioButton"); // NOI18N
-        itemRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemRadioButtonActionPerformed(evt);
-            }
-        });
-
-        equipComboBox.setName("equipComboBox"); // NOI18N
-
-        itemComboBox.setEnabled(false);
         itemComboBox.setName("itemComboBox"); // NOI18N
 
         okButton.setText("确定");
@@ -110,6 +80,9 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
         rateTextField.setText("0");
         rateTextField.setName("rateTextField"); // NOI18N
 
+        jLabel2.setText("宝物");
+        jLabel2.setName("jLabel2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,14 +96,12 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
                         .addComponent(cancleButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itemRadioButton)
-                            .addComponent(equipRadioButton)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(equipComboBox, 0, 167, Short.MAX_VALUE)
-                            .addComponent(rateTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                            .addComponent(itemComboBox, 0, 167, Short.MAX_VALUE))))
+                            .addComponent(rateTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(itemComboBox, 0, 173, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -138,17 +109,13 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(equipRadioButton)
-                    .addComponent(equipComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemRadioButton)
-                    .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(cancleButton))
@@ -157,63 +124,40 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private Treasure trea;
+    private Item trea;
+    private int rate;
 
     /**
      *
      * @return
      */
-    public Treasure getSelectTreasure() {
-        if (!isOk) {
-            return null;
-        }
+    public Item getItem() {
         return trea;
     }
-    private boolean isOk;
-    private void equipRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equipRadioButtonActionPerformed
-        // TODO add your handling code here:
-        equipComboBox.setEnabled(true);
-        itemComboBox.setEnabled(false);
-    }//GEN-LAST:event_equipRadioButtonActionPerformed
 
-    private void itemRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRadioButtonActionPerformed
-        // TODO add your handling code here:
-        equipComboBox.setEnabled(false);
-        itemComboBox.setEnabled(true);
-    }//GEN-LAST:event_itemRadioButtonActionPerformed
+    public int getRate() {
+        return rate;
+    }
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        if (equipRadioButton.isSelected()) {
-            if (equipComboBox.getSelectedIndex() != -1) {
-                trea = (Equip) equipComboBox.getSelectedItem();
-                trea.rate = Integer.parseInt(rateTextField.getText());
-            }
+        if (itemComboBox.getSelectedIndex() != -1) {
+            trea = (Item) itemComboBox.getSelectedItem();
+            rate = Integer.parseInt(rateTextField.getText());
         }
-        if (itemRadioButton.isSelected()) {
-            if (itemComboBox.getSelectedIndex() != -1) {
-                trea = (Item) itemComboBox.getSelectedItem();
-                trea.rate = Integer.parseInt(rateTextField.getText());
-            }
-        }
-        isOk = true;
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
         // TODO add your handling code here:
-        isOk = false;
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancleButton;
-    private javax.swing.JComboBox equipComboBox;
-    private javax.swing.JRadioButton equipRadioButton;
     private javax.swing.JComboBox itemComboBox;
-    private javax.swing.JRadioButton itemRadioButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton okButton;
     private javax.swing.JTextField rateTextField;
     // End of variables declaration//GEN-END:variables

@@ -11,7 +11,7 @@ import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
@@ -71,12 +71,12 @@ public class VocationDao extends Dao<Vocation> {
                 attr.value = dis.readInt();
                 vocation.attrs.add(attr);
             }
-            int statusN = dis.readInt();
-            for (int j = 0; j < statusN; j++) {
-                Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
-                status.value = dis.readInt();
-                vocation.status.add(status);
-            }
+//            int statusN = dis.readInt();
+//            for (int j = 0; j < statusN; j++) {
+//                Buff status = (Buff) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
+//                status.value = dis.readInt();
+//                vocation.status.add(status);
+//            }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.VOCATION, vocation);
         }
         dis.close();
@@ -129,20 +129,20 @@ public class VocationDao extends Dao<Vocation> {
             }
             lt.addNode("attributes", attrs);
             lt.addNode("\n");
-            LuaTable status = new LuaTable();
-            if (!vocation.status.isEmpty()) {
-                status.addNode("\n");
-            }
-            for (int j = 0; j < vocation.status.size(); j++) {
-                LuaTable statu = new LuaTable();
-                statu.addNode("index", Configuration.Prefix.STATUS_MASK + vocation.status.get(j).getIndex() + 1);
-                statu.addNode("value", vocation.status.get(j).value);
-                status.addNode("[" + (Configuration.Prefix.STATUS_MASK + vocation.status.get(j).getIndex() + 1) + "]", statu);
-                if (j != vocation.status.size() - 1) {
-                    status.addNode("\n");
-                }
-            }
-            lt.addNode("buffs", status);
+//            LuaTable status = new LuaTable();
+//            if (!vocation.status.isEmpty()) {
+//                status.addNode("\n");
+//            }
+//            for (int j = 0; j < vocation.status.size(); j++) {
+//                LuaTable statu = new LuaTable();
+//                statu.addNode("index", Configuration.Prefix.STATUS_MASK + vocation.status.get(j).getIndex() + 1);
+//                statu.addNode("value", vocation.status.get(j).value);
+//                status.addNode("[" + (Configuration.Prefix.STATUS_MASK + vocation.status.get(j).getIndex() + 1) + "]", statu);
+//                if (j != vocation.status.size() - 1) {
+//                    status.addNode("\n");
+//                }
+//            }
+//            lt.addNode("buffs", status);
             lts.addNode("[" + (Configuration.Prefix.VOCATION_MASK + vocation.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
@@ -191,11 +191,11 @@ public class VocationDao extends Dao<Vocation> {
                     dos.writeInt(vocation.attrs.get(j).id);
                     dos.writeInt(vocation.attrs.get(j).value);
                 }
-                dos.writeInt(vocation.status.size());
-                for (int j = 0; j < vocation.status.size(); j++) {
-                    dos.writeInt(vocation.status.get(j).getIndex());
-                    dos.writeInt(vocation.status.get(j).value);
-                }
+//                dos.writeInt(vocation.status.size());
+//                for (int j = 0; j < vocation.status.size(); j++) {
+//                    dos.writeInt(vocation.status.get(j).getIndex());
+//                    dos.writeInt(vocation.status.get(j).value);
+//                }
             }
             dos.close();
             fos.close();

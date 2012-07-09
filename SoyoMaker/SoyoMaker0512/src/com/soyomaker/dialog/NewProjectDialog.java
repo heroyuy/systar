@@ -220,6 +220,8 @@ public class NewProjectDialog extends javax.swing.JDialog {
         project.setName(projectNameTextField.getText());
         project.setPath(f.getPath());
         project.setCreateSoftVersion(SoftInformation.getVersion());
+        project.setCellWidth(Integer.parseInt(cellWidthTextField.getText()));
+        project.setCellHeight(Integer.parseInt(cellHeightTextField.getText()));
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

@@ -12,18 +12,12 @@ package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
 import com.soyomaker.data.DataManager;
-import com.soyomaker.data.model.Cost;
-import com.soyomaker.data.model.Effect;
-import com.soyomaker.data.model.Factor;
-import com.soyomaker.data.model.ModelAttributeTableModel;
-import com.soyomaker.data.model.ModelCostTableModel;
 import com.soyomaker.data.model.ModelEffectTableModel;
-import com.soyomaker.data.model.ModelFactorTableModel;
 import com.soyomaker.data.model.ModelStatusTableModel;
 import com.soyomaker.data.model.Skill;
+import com.soyomaker.data.model.Skill.BuffInfo;
 import com.soyomaker.model.animation.Animation;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,10 +33,7 @@ public class EditSkillDialog extends javax.swing.JDialog {
     public EditSkillDialog(SkillPanel parent, boolean modal, Skill skill) {
         //super(parent, modal);
         setModal(modal);
-        ictm = new ModelCostTableModel(skill.costs);
         ietm = new ModelEffectTableModel(skill.effects);
-        iftm = new ModelFactorTableModel(skill.factors);
-        matm = new ModelAttributeTableModel(skill.attributes);
         mstm = new ModelStatusTableModel(skill.status);
         initComponents();
         setLocationRelativeTo(null);
@@ -51,11 +42,11 @@ public class EditSkillDialog extends javax.swing.JDialog {
         for (int i = 0; i < skillIcons.length; i++) {
             skillIconComboBox.addItem(skillIcons[i]);
         }
-        skillSounds = DataManager.listSoundName();
-        skillMenuSoundComboBox.addItem("");
-        for (int i = 0; i < skillSounds.length; i++) {
-            skillMenuSoundComboBox.addItem(skillSounds[i]);
-        }
+//        skillSounds = DataManager.listSoundName();
+//        skillAttributeComboBox.addItem("");
+//        for (int i = 0; i < skillSounds.length; i++) {
+//            skillAttributeComboBox.addItem(skillSounds[i]);
+//        }
         skillUserAniComboBox.addItem("");
         java.util.Iterator it = AppData.getInstance().getCurProject().getAnimations().entrySet().iterator();
         while (it.hasNext()) {
@@ -68,54 +59,12 @@ public class EditSkillDialog extends javax.swing.JDialog {
             java.util.Map.Entry entry = (java.util.Map.Entry) it1.next();
             skillTargetAniComboBox.addItem(((Animation) entry.getValue()));
         }
-//        TableColumnModel tcm = costTable.getColumnModel();
-//        TableColumn iconC = tcm.getColumn(0);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(Cost.costs);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(Cost.costs);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
-
-//        TableColumnModel tcm1 = effectTable.getColumnModel();
-//        TableColumn iconC1 = tcm1.getColumn(0);
-//        JTabelComboBoxRender strI1 = new JTabelComboBoxRender(Effect.effects);
-//        JTableComboBoxEditor steI1 = new JTableComboBoxEditor(Effect.effects);
-//        iconC1.setCellRenderer(strI1);
-//        iconC1.setCellEditor(steI1);
-
-//        TableColumnModel tcm2 = factorTable.getColumnModel();
-//        TableColumn iconC2 = tcm2.getColumn(0);
-//        JTabelComboBoxRender strI2 = new JTabelComboBoxRender(Factor.factors);
-//        JTableComboBoxEditor steI2 = new JTableComboBoxEditor(Factor.factors);
-//        iconC2.setCellRenderer(strI2);
-//        iconC2.setCellEditor(steI2);
-
-//        TableColumnModel tcm3 = attributeTable.getColumnModel();
-//        TableColumn iconC3 = tcm3.getColumn(0);
-//        ArrayList<Attribute> attrs = ((Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0]).system.attributes;
-//        String[] ats = new String[attrs.size()];
-//        for (int i = 0; i < attrs.size(); i++) {
-//            ats[i] = attrs.get(i).name;
-//        }
-//        JTabelComboBoxRender strI3 = new JTabelComboBoxRender(ats);
-//        JTableComboBoxEditor steI3 = new JTableComboBoxEditor(ats);
-//        iconC3.setCellRenderer(strI3);
-//        iconC3.setCellEditor(steI3);
-//
-//        TableColumnModel tcm4 = statusTable.getColumnModel();
-//        TableColumn iconC4 = tcm4.getColumn(0);
-//        JTabelComboBoxRender strI4 = new JTabelComboBoxRender((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        JTableComboBoxEditor steI4 = new JTableComboBoxEditor((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        iconC4.setCellRenderer(strI4);
-//        iconC4.setCellEditor(steI4);
         setSkill(skill);
     }
     private ImageIcon[] skillIcons;
-    private String[] skillSounds;
+//    private String[] skillSounds;
     private Skill skill;
-    private ModelCostTableModel ictm;
     private ModelEffectTableModel ietm;
-    private ModelFactorTableModel iftm;
-    private ModelAttributeTableModel matm;
     private ModelStatusTableModel mstm;
 
     private void setSkill(Skill skill) {
@@ -130,11 +79,11 @@ public class EditSkillDialog extends javax.swing.JDialog {
         }
         skillLevTextField.setText(skill.lev + "");
         skillTargetComboBox.setSelectedIndex(skill.target);
-        skillLimitComboBox.setSelectedIndex(skill.limit);
+        skillTypeComboBox.setSelectedIndex(skill.type);
         skillUserAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(skill.userAniIndex));
         skillTargetAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(skill.targetAniIndex));
         skillEventComboBox.setSelectedIndex(skill.eventIndex);
-        skillMenuSoundComboBox.setSelectedItem(skill.menuUseSound);
+        skillAttributeComboBox.setSelectedItem(skill.attributeId);
     }
 
     /** This method is called from within the constructor to
@@ -160,36 +109,16 @@ public class EditSkillDialog extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         skillUserAniComboBox = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        skillLimitComboBox = new javax.swing.JComboBox();
+        skillTypeComboBox = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         skillTargetAniComboBox = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
-        skillMenuSoundComboBox = new javax.swing.JComboBox();
+        skillAttributeComboBox = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         skillEventComboBox = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        factorTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         statusTable = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        effectTable = new javax.swing.JTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        attributeTable = new javax.swing.JTable();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        costTable = new javax.swing.JTable();
-        jToolBar1 = new javax.swing.JToolBar();
-        addCostButton = new javax.swing.JButton();
-        removeCostButton = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
-        addEffectButton = new javax.swing.JButton();
-        removeEffectButton = new javax.swing.JButton();
-        jToolBar3 = new javax.swing.JToolBar();
-        addFactorButton = new javax.swing.JButton();
-        removeFactorButton = new javax.swing.JButton();
-        jToolBar4 = new javax.swing.JToolBar();
-        addAttributeButton = new javax.swing.JButton();
-        removeAttributeButton = new javax.swing.JButton();
         jToolBar5 = new javax.swing.JToolBar();
         addStatusButton = new javax.swing.JButton();
         removeStatusButton = new javax.swing.JButton();
@@ -197,6 +126,16 @@ public class EditSkillDialog extends javax.swing.JDialog {
         skillIntroTextArea = new javax.swing.JTextArea();
         closeButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        effectTable = new javax.swing.JTable();
+        jToolBar1 = new javax.swing.JToolBar();
+        addEffectButton = new javax.swing.JButton();
+        removeEffectButton = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -250,32 +189,26 @@ public class EditSkillDialog extends javax.swing.JDialog {
         jLabel7.setText("使用动画");
         jLabel7.setName("jLabel7"); // NOI18N
 
-        skillLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(Skill.limits));
-        skillLimitComboBox.setName("skillLimitComboBox"); // NOI18N
+        skillTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(Skill.types));
+        skillTypeComboBox.setName("skillTypeComboBox"); // NOI18N
 
-        jLabel8.setText("使用限制");
+        jLabel8.setText("类型");
         jLabel8.setName("jLabel8"); // NOI18N
 
         skillTargetAniComboBox.setName("skillTargetAniComboBox"); // NOI18N
 
-        jLabel9.setText("菜单使用音效");
+        jLabel9.setText("属性");
         jLabel9.setName("jLabel9"); // NOI18N
 
-        skillMenuSoundComboBox.setName("skillMenuSoundComboBox"); // NOI18N
+        skillAttributeComboBox.setName("skillAttributeComboBox"); // NOI18N
 
         jLabel10.setText("公共事件编号");
         jLabel10.setName("jLabel10"); // NOI18N
 
         skillEventComboBox.setName("skillEventComboBox"); // NOI18N
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buff列表"));
         jPanel1.setName("jPanel1"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        factorTable.setModel(iftm);
-        factorTable.setName("factorTable"); // NOI18N
-        factorTable.setRowHeight(20);
-        jScrollPane1.setViewportView(factorTable);
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -283,139 +216,6 @@ public class EditSkillDialog extends javax.swing.JDialog {
         statusTable.setName("statusTable"); // NOI18N
         statusTable.setRowHeight(20);
         jScrollPane3.setViewportView(statusTable);
-
-        jScrollPane4.setName("jScrollPane4"); // NOI18N
-
-        effectTable.setModel(ietm);
-        effectTable.setName("effectTable"); // NOI18N
-        effectTable.setRowHeight(20);
-        jScrollPane4.setViewportView(effectTable);
-
-        jScrollPane5.setName("jScrollPane5"); // NOI18N
-
-        attributeTable.setModel(matm);
-        attributeTable.setName("attributeTable"); // NOI18N
-        attributeTable.setRowHeight(20);
-        jScrollPane5.setViewportView(attributeTable);
-
-        jScrollPane6.setName("jScrollPane6"); // NOI18N
-
-        costTable.setModel(ictm);
-        costTable.setName("costTable"); // NOI18N
-        costTable.setRowHeight(20);
-        jScrollPane6.setViewportView(costTable);
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-
-        addCostButton.setText("添加消耗");
-        addCostButton.setFocusable(false);
-        addCostButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addCostButton.setName("addCostButton"); // NOI18N
-        addCostButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addCostButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCostButtonActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(addCostButton);
-
-        removeCostButton.setText("删除消耗");
-        removeCostButton.setFocusable(false);
-        removeCostButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeCostButton.setName("removeCostButton"); // NOI18N
-        removeCostButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeCostButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeCostButtonActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(removeCostButton);
-
-        jToolBar2.setFloatable(false);
-        jToolBar2.setRollover(true);
-        jToolBar2.setName("jToolBar2"); // NOI18N
-
-        addEffectButton.setText("添加效果");
-        addEffectButton.setFocusable(false);
-        addEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addEffectButton.setName("addEffectButton"); // NOI18N
-        addEffectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addEffectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEffectButtonActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(addEffectButton);
-
-        removeEffectButton.setText("删除效果");
-        removeEffectButton.setFocusable(false);
-        removeEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeEffectButton.setName("removeEffectButton"); // NOI18N
-        removeEffectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeEffectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeEffectButtonActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(removeEffectButton);
-
-        jToolBar3.setFloatable(false);
-        jToolBar3.setRollover(true);
-        jToolBar3.setName("jToolBar3"); // NOI18N
-
-        addFactorButton.setText("添加因数");
-        addFactorButton.setFocusable(false);
-        addFactorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addFactorButton.setName("addFactorButton"); // NOI18N
-        addFactorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addFactorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addFactorButtonActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(addFactorButton);
-
-        removeFactorButton.setText("删除因数");
-        removeFactorButton.setFocusable(false);
-        removeFactorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeFactorButton.setName("removeFactorButton"); // NOI18N
-        removeFactorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeFactorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFactorButtonActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(removeFactorButton);
-
-        jToolBar4.setFloatable(false);
-        jToolBar4.setRollover(true);
-        jToolBar4.setName("jToolBar4"); // NOI18N
-
-        addAttributeButton.setText("添加属性");
-        addAttributeButton.setFocusable(false);
-        addAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        addAttributeButton.setName("addAttributeButton"); // NOI18N
-        addAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addAttributeButtonActionPerformed(evt);
-            }
-        });
-        jToolBar4.add(addAttributeButton);
-
-        removeAttributeButton.setText("删除属性");
-        removeAttributeButton.setFocusable(false);
-        removeAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        removeAttributeButton.setName("removeAttributeButton"); // NOI18N
-        removeAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        removeAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeAttributeButtonActionPerformed(evt);
-            }
-        });
-        jToolBar4.add(removeAttributeButton);
 
         jToolBar5.setFloatable(false);
         jToolBar5.setRollover(true);
@@ -449,59 +249,16 @@ public class EditSkillDialog extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)))
+            .addComponent(jToolBar5, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, jScrollPane3, jScrollPane4, jScrollPane5, jScrollPane6, jToolBar1, jToolBar2, jToolBar3, jToolBar4, jToolBar5});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, 0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jScrollPane1, jScrollPane3, jScrollPane4, jScrollPane5, jScrollPane6});
 
         jScrollPane7.setName("jScrollPane7"); // NOI18N
 
@@ -527,60 +284,137 @@ public class EditSkillDialog extends javax.swing.JDialog {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("数据列表"));
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        jScrollPane6.setName("jScrollPane6"); // NOI18N
+
+        effectTable.setModel(ietm);
+        effectTable.setName("effectTable"); // NOI18N
+        effectTable.setRowHeight(20);
+        jScrollPane6.setViewportView(effectTable);
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+
+        addEffectButton.setText("添加效果");
+        addEffectButton.setFocusable(false);
+        addEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addEffectButton.setName("addEffectButton"); // NOI18N
+        addEffectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addEffectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEffectButtonActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(addEffectButton);
+
+        removeEffectButton.setText("删除效果");
+        removeEffectButton.setFocusable(false);
+        removeEffectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeEffectButton.setName("removeEffectButton"); // NOI18N
+        removeEffectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        removeEffectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEffectButtonActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(removeEffectButton);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+        );
+
+        jLabel11.setText("攻击距离");
+        jLabel11.setName("jLabel11"); // NOI18N
+
+        jTextField1.setName("jTextField1"); // NOI18N
+
+        jLabel12.setText("消耗Sp");
+        jLabel12.setName("jLabel12"); // NOI18N
+
+        jTextField2.setName("jTextField2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(skillNameTextField)
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(skillEventComboBox, 0, 151, Short.MAX_VALUE)
-                                    .addComponent(skillTargetComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(skillIconComboBox, 0, 140, Short.MAX_VALUE)
-                                    .addComponent(skillUserAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel4))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(skillMenuSoundComboBox, 0, 166, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(skillLimitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(skillTargetAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(skillLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(skillNameTextField)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(skillEventComboBox, 0, 151, Short.MAX_VALUE)
+                            .addComponent(skillTargetComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(skillIconComboBox, 0, 140, Short.MAX_VALUE)
+                            .addComponent(skillUserAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel4))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(skillAttributeComboBox, 0, 166, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(skillTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(skillTargetAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(skillLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(13, 13, 13))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                                .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {skillEventComboBox, skillIconComboBox, skillLevTextField, skillLimitComboBox, skillMenuSoundComboBox, skillTargetAniComboBox, skillTargetComboBox, skillUserAniComboBox});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {skillAttributeComboBox, skillEventComboBox, skillIconComboBox, skillLevTextField, skillTargetAniComboBox, skillTargetComboBox, skillTypeComboBox, skillUserAniComboBox});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {closeButton, okButton});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel1, jPanel2});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -615,25 +449,36 @@ public class EditSkillDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(skillLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(skillLimitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(skillTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(skillTargetAniComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                             .addComponent(skillEventComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
-                            .addComponent(skillMenuSoundComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(skillAttributeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okButton)
-                    .addComponent(closeButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(okButton)
+                        .addComponent(closeButton))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {skillEventComboBox, skillIconComboBox, skillLevTextField, skillLimitComboBox, skillMenuSoundComboBox, skillTargetAniComboBox, skillTargetComboBox, skillUserAniComboBox});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {skillAttributeComboBox, skillEventComboBox, skillIconComboBox, skillLevTextField, skillTargetAniComboBox, skillTargetComboBox, skillTypeComboBox, skillUserAniComboBox});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel1, jPanel2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -645,7 +490,7 @@ public class EditSkillDialog extends javax.swing.JDialog {
         skill.icon = skillIconComboBox.getSelectedItem().toString();
         skill.lev = Integer.parseInt(skillLevTextField.getText());
         skill.target = skillTargetComboBox.getSelectedIndex();
-        skill.limit = skillLimitComboBox.getSelectedIndex();
+        skill.type = skillTypeComboBox.getSelectedIndex();
         if (skillUserAniComboBox.getSelectedItem() == null || skillUserAniComboBox.getSelectedItem().toString().equals("")) {
             skill.userAniIndex = -1;
         } else {
@@ -657,7 +502,7 @@ public class EditSkillDialog extends javax.swing.JDialog {
             skill.targetAniIndex = ((Animation) skillTargetAniComboBox.getSelectedItem()).getIndex();
         }
         skill.eventIndex = skillEventComboBox.getSelectedIndex();
-        skill.menuUseSound = skillMenuSoundComboBox.getSelectedItem().toString();
+        skill.attributeId = Integer.parseInt(skillAttributeComboBox.getSelectedItem().toString());
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -666,94 +511,23 @@ public class EditSkillDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
-    private void addCostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCostButtonActionPerformed
-        // TODO add your handling code here:
-        Cost cost = new Cost();
-        cost.costType = skill.costs.size();
-        skill.costs.add(cost);
-        costTable.updateUI();
-    }//GEN-LAST:event_addCostButtonActionPerformed
-
-    private void removeCostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCostButtonActionPerformed
-        // TODO add your handling code here:
-//        if (costTable.getSelectedRow() == 0) {
-//            JOptionPane.showMessageDialog(this,
-//                    "默认数据不能删除！");
-//            return;
-//        }
-        if (costTable.getSelectedRow() >= 0 && costTable.getSelectedRow() < skill.costs.size()) {
-            skill.costs.remove(costTable.getSelectedRow());
-            costTable.updateUI();
-        }
-
-    }//GEN-LAST:event_removeCostButtonActionPerformed
-
     private void addEffectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEffectButtonActionPerformed
         // TODO add your handling code here:
-        Effect effect = new Effect();
-        effect.effectType = skill.effects.size();
-        skill.effects.add(effect);
-        effectTable.updateUI();
     }//GEN-LAST:event_addEffectButtonActionPerformed
 
     private void removeEffectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEffectButtonActionPerformed
         // TODO add your handling code here:
-//        if (effectTable.getSelectedRow() == 0) {
-//            JOptionPane.showMessageDialog(this,
-//                    "默认数据不能删除！");
-//            return;
-//        }
-        if (effectTable.getSelectedRow() >= 0 && effectTable.getSelectedRow() < skill.effects.size()) {
-            skill.effects.remove(effectTable.getSelectedRow());
-        }
-        effectTable.updateUI();
     }//GEN-LAST:event_removeEffectButtonActionPerformed
-
-    private void addFactorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFactorButtonActionPerformed
-        // TODO add your handling code here:
-        Factor factor = new Factor();
-        factor.factorType = skill.factors.size();
-        skill.factors.add(factor);
-        factorTable.updateUI();
-    }//GEN-LAST:event_addFactorButtonActionPerformed
-
-    private void removeFactorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFactorButtonActionPerformed
-        // TODO add your handling code here:
-//        if (factorTable.getSelectedRow() >= 0 && factorTable.getSelectedRow() < 6) {
-//            JOptionPane.showMessageDialog(this,
-//                    "默认数据不能删除！");
-//            return;
-//        }
-        if (factorTable.getSelectedRow() >= 0 && factorTable.getSelectedRow() < skill.factors.size()) {
-            skill.factors.remove(factorTable.getSelectedRow());
-        }
-        factorTable.updateUI();
-    }//GEN-LAST:event_removeFactorButtonActionPerformed
-
-    private void addAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelAttributeDialog etd = new AddModelAttributeDialog(this, true);
-        etd.setVisible(true);
-        if (etd.getSelectAttribute() != null) {
-            skill.attributes.add(etd.getSelectAttribute());
-            attributeTable.updateUI();
-        }
-    }//GEN-LAST:event_addAttributeButtonActionPerformed
-
-    private void removeAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        if (attributeTable.getSelectedRow() >= 0 && attributeTable.getSelectedRow() < skill.attributes.size()) {
-            skill.attributes.remove(attributeTable.getSelectedRow());
-        }
-        attributeTable.updateUI();
-    }//GEN-LAST:event_removeAttributeButtonActionPerformed
 
     private void addStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStatusButtonActionPerformed
         // TODO add your handling code here:
-        AddModelStatusDialog etd = new AddModelStatusDialog(this, true);
+        AddModelBuffDialog etd = new AddModelBuffDialog(this, true);
         etd.setVisible(true);
-        if (etd.getSelectStatus() != null) {
-            skill.status.add(etd.getSelectStatus());
+        if (etd.getBuff() != null) {
+            BuffInfo buffInfo = new BuffInfo();
+            buffInfo.buff = etd.getBuff();
+            buffInfo.rate = etd.getRate();
+            skill.status.add(buffInfo);
             statusTable.updateUI();
         }
     }//GEN-LAST:event_addStatusButtonActionPerformed
@@ -762,23 +536,19 @@ public class EditSkillDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (statusTable.getSelectedRow() >= 0 && statusTable.getSelectedRow() < skill.status.size()) {
             skill.status.remove(statusTable.getSelectedRow());
+            statusTable.updateUI();
         }
-        statusTable.updateUI();
     }//GEN-LAST:event_removeStatusButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAttributeButton;
-    private javax.swing.JButton addCostButton;
     private javax.swing.JButton addEffectButton;
-    private javax.swing.JButton addFactorButton;
     private javax.swing.JButton addStatusButton;
-    private javax.swing.JTable attributeTable;
     private javax.swing.JButton closeButton;
-    private javax.swing.JTable costTable;
     private javax.swing.JTable effectTable;
-    private javax.swing.JTable factorTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -788,34 +558,28 @@ public class EditSkillDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JToolBar jToolBar3;
-    private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JButton okButton;
-    private javax.swing.JButton removeAttributeButton;
-    private javax.swing.JButton removeCostButton;
     private javax.swing.JButton removeEffectButton;
-    private javax.swing.JButton removeFactorButton;
     private javax.swing.JButton removeStatusButton;
+    private javax.swing.JComboBox skillAttributeComboBox;
     private javax.swing.JComboBox skillEventComboBox;
     private javax.swing.JComboBox skillIconComboBox;
     private javax.swing.JTextArea skillIntroTextArea;
     private javax.swing.JTextField skillLevTextField;
-    private javax.swing.JComboBox skillLimitComboBox;
-    private javax.swing.JComboBox skillMenuSoundComboBox;
     private javax.swing.JTextField skillNameTextField;
     private javax.swing.JComboBox skillTargetAniComboBox;
     private javax.swing.JComboBox skillTargetComboBox;
+    private javax.swing.JComboBox skillTypeComboBox;
     private javax.swing.JComboBox skillUserAniComboBox;
     private javax.swing.JTable statusTable;
     // End of variables declaration//GEN-END:variables

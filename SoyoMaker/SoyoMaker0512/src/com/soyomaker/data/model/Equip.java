@@ -125,5 +125,5 @@ public class Equip extends Treasure {
     /**
      * 状态
      */
-    public ArrayList<Status> status = new ArrayList<Status>();
+    public ArrayList<Buff> status = new ArrayList<Buff>();
 }

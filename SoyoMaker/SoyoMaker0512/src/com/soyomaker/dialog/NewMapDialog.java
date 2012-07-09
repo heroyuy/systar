@@ -46,6 +46,9 @@ public class NewMapDialog extends javax.swing.JDialog {
         for (int i = 0; i < DataManager.listBattleImageName().length; i++) {
             battleBackgroundComboBox.addItem(DataManager.listBattleImageName()[i]);
         }
+
+        tileWidthTextField.setText("" + AppData.getInstance().getCurProject().getCellWidth());
+        tileHeightTextField.setText("" + AppData.getInstance().getCurProject().getCellHeight());
     }
 
     private void initialize() {
@@ -107,6 +110,7 @@ public class NewMapDialog extends javax.swing.JDialog {
         mapHeightTextField.setName("mapHeightTextField"); // NOI18N
 
         tileHeightTextField.setText("32");
+        tileHeightTextField.setEnabled(false);
         tileHeightTextField.setName("tileHeightTextField"); // NOI18N
 
         jLabel1.setText("名称");
@@ -122,6 +126,7 @@ public class NewMapDialog extends javax.swing.JDialog {
         mapWidthTextField.setName("mapWidthTextField"); // NOI18N
 
         tileWidthTextField.setText("32");
+        tileWidthTextField.setEnabled(false);
         tileWidthTextField.setName("tileWidthTextField"); // NOI18N
 
         jLabel2.setText("Map宽");

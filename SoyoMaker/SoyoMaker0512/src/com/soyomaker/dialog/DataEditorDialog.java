@@ -10,17 +10,15 @@
  */
 package com.soyomaker.dialog;
 
-import com.soyomaker.AppData;
 import com.soyomaker.data.ui.ConfigPanel;
 import com.soyomaker.data.ui.EnemyPanel;
 import com.soyomaker.data.ui.EnemyTroopPanel;
-import com.soyomaker.data.ui.EquipPanel;
+//import com.soyomaker.data.ui.EquipPanel;
 import com.soyomaker.data.ui.ItemPanel;
 import com.soyomaker.data.ui.PlayerPanel;
 import com.soyomaker.data.ui.SkillPanel;
 import com.soyomaker.data.ui.StatusPanel;
 import com.soyomaker.data.ui.VocationPanel;
-import java.io.File;
 
 /**
  *
@@ -48,7 +46,7 @@ public class DataEditorDialog extends javax.swing.JDialog {
         enemyTroopPanel.refresh();
         itemPanel.refresh();
         playerPanel.refresh();
-        equipPanel.refresh();
+//        equipPanel.refresh();
         statusPanel.refresh();
         vocationPanel.refresh();
     }
@@ -58,7 +56,7 @@ public class DataEditorDialog extends javax.swing.JDialog {
     private EnemyTroopPanel enemyTroopPanel;
     private ItemPanel itemPanel;
     private PlayerPanel playerPanel;
-    private EquipPanel equipPanel;
+//    private EquipPanel equipPanel;
     private StatusPanel statusPanel;
     private VocationPanel vocationPanel;
 
@@ -70,17 +68,17 @@ public class DataEditorDialog extends javax.swing.JDialog {
         enemyTroopPanel = new EnemyTroopPanel();
         itemPanel = new ItemPanel();
         playerPanel = new PlayerPanel();
-        equipPanel = new EquipPanel();
+//        equipPanel = new EquipPanel();
         statusPanel = new StatusPanel();
         vocationPanel = new VocationPanel();
         dataTabbedPane.add("角色", playerPanel);
         dataTabbedPane.add("职业", vocationPanel);
         dataTabbedPane.add("技能", skillPanel);
         dataTabbedPane.add("物品", itemPanel);
-        dataTabbedPane.add("装备", equipPanel);
+//        dataTabbedPane.add("装备", equipPanel);
         dataTabbedPane.add("敌人", enemyPanel);
         dataTabbedPane.add("队伍", enemyTroopPanel);
-        dataTabbedPane.add("状态", statusPanel);
+        dataTabbedPane.add("Buff", statusPanel);
         dataTabbedPane.add("配置", configPanel);
     }
 

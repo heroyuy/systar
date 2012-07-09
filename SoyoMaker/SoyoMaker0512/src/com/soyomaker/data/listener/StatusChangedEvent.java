@@ -5,7 +5,7 @@
 
 package com.soyomaker.data.listener;
 
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import java.util.EventObject;
 
 /**
@@ -18,7 +18,7 @@ public class StatusChangedEvent extends EventObject {
      *
      * @param obj
      */
-    public StatusChangedEvent(Status obj) {
+    public StatusChangedEvent(Buff obj) {
         super(obj);
     }
 }

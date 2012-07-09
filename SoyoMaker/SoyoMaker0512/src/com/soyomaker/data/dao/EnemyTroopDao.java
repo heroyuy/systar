@@ -84,11 +84,11 @@ public class EnemyTroopDao extends Dao<EnemyTroop> {
             lt.addNode("\n");
             LuaTable ens = new LuaTable();
             for (int j = 0; j < enemyTroop.enemys.size(); j++) {
-                ens.addNode("index", Configuration.Prefix.ENEMY_MASK + enemyTroop.enemys.get(j).getIndex() + 1);
+                ens.addNode("id", Configuration.Prefix.ENEMY_MASK + enemyTroop.enemys.get(j).getIndex() + 1);
                 ens.addNode("x", enemyTroop.points.get(j).x);
                 ens.addNode("y", enemyTroop.points.get(j).y);
             }
-            lt.addNode("enemys", ens);
+            lt.addNode("enemyList", ens);
             lts.addNode("[" + (Configuration.Prefix.ENEMYTROOP_MASK + enemyTroop.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");

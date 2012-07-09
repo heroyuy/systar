@@ -11,10 +11,9 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.data.model.Enemy;
+import com.soyomaker.data.model.Enemy.ItemInfo;
 import com.soyomaker.data.model.ModelActionTableModel;
-import com.soyomaker.data.model.ModelAttributeTableModel;
-import com.soyomaker.data.model.ModelStatusTableModel;
-import com.soyomaker.data.model.ModelTreasureTableModel;
+import com.soyomaker.data.model.ModelItemTableModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -35,44 +34,14 @@ public class EditEnemyDialog extends javax.swing.JDialog {
      */
     public EditEnemyDialog(EnemyPanel parent, boolean modal, Enemy enemy) {
         setModal(modal);
-        mttm = new ModelTreasureTableModel(enemy.treasures);
-        matm = new ModelAttributeTableModel(enemy.attributes);
-        mstm = new ModelStatusTableModel(enemy.status);
+        mttm = new ModelItemTableModel(enemy.treasures);
         mactm = new ModelActionTableModel(enemy.actions);
         initComponents();
         setLocationRelativeTo(null);
-
-//        TableColumnModel tcm2 = equipTable.getColumnModel();
-//        TableColumn iconC2 = tcm2.getColumn(0);
-//        JTabelComboBoxRender strI2 = new JTabelComboBoxRender((Equip[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP));
-//        JTableComboBoxEditor steI2 = new JTableComboBoxEditor((Equip[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP));
-//        iconC2.setCellRenderer(strI2);
-//        iconC2.setCellEditor(steI2);
-
-//        TableColumnModel tcm3 = attributeTable.getColumnModel();
-//        TableColumn iconC3 = tcm3.getColumn(0);
-//        ArrayList<Attribute> attrs3 = ((Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0]).system.attributes;
-//        String[] ats3 = new String[attrs3.size()];
-//        for (int i = 0; i < attrs3.size(); i++) {
-//            ats3[i] = attrs3.get(i).name;
-//        }
-//        JTabelComboBoxRender strI3 = new JTabelComboBoxRender(ats3);
-//        JTableComboBoxEditor steI3 = new JTableComboBoxEditor(ats3);
-//        iconC3.setCellRenderer(strI3);
-//        iconC3.setCellEditor(steI3);
-
-//        TableColumnModel tcm4 = statusTable.getColumnModel();
-//        TableColumn iconC4 = tcm4.getColumn(0);
-//        JTabelComboBoxRender strI4 = new JTabelComboBoxRender((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        JTableComboBoxEditor steI4 = new JTableComboBoxEditor((Status[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS));
-//        iconC4.setCellRenderer(strI4);
-//        iconC4.setCellEditor(steI4);
         setEnemy(enemy);
     }
     private Enemy enemy;
-    private ModelTreasureTableModel mttm;
-    private ModelAttributeTableModel matm;
-    private ModelStatusTableModel mstm;
+    private ModelItemTableModel mttm;
     private ModelActionTableModel mactm;
 
     private void setEnemy(Enemy enemy) {
@@ -80,8 +49,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         enemyNameTextField.setText(enemy.name);
         enemyIntroTextArea.setText(enemy.intro);
         enemyLevTextField.setText("" + enemy.lev);
-        enemyMaxHpTextField.setText("" + enemy.maxHp);
-        enemyMaxSpTextField.setText("" + enemy.maxSp);
         enemyBodyTextField.setText("" + enemy.body);
         enemyStreTextField.setText("" + enemy.stre);
         enemyInteTextField.setText("" + enemy.inte);
@@ -108,10 +75,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         enemyIntroTextArea = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         enemyLevTextField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        enemyMaxHpTextField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        enemyMaxSpTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         enemyStreTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -126,52 +89,55 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         enemyExpTextField = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         enemyMoneyTextField = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        actionTable = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        statusTable = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        treasureTable = new javax.swing.JTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        attributeTable = new javax.swing.JTable();
+        okButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        enemyBodyTextField = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         addTreasureButton = new javax.swing.JButton();
         removeTreasureButton = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        treasureTable = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        actionTable = new javax.swing.JTable();
         jToolBar4 = new javax.swing.JToolBar();
         addActionButton = new javax.swing.JButton();
         removeActionButton = new javax.swing.JButton();
-        jToolBar5 = new javax.swing.JToolBar();
-        addAttributeButton = new javax.swing.JButton();
-        removeAttributeButton = new javax.swing.JButton();
-        jToolBar6 = new javax.swing.JToolBar();
-        addStausButton = new javax.swing.JButton();
-        removeStatusButton = new javax.swing.JButton();
-        okButton = new javax.swing.JButton();
-        closeButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
-        chooseEnemyBattleImgButton = new javax.swing.JButton();
-        enemyBattleImgPanel = new javax.swing.JPanel(){
+        jLabel4 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jComboBox3 = new javax.swing.JComboBox();
+        jComboBox4 = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        enemyCharImgPanel = new javax.swing.JPanel(){
             public void paint(Graphics g){
                 g.setColor(new Color(255,153,153));
                 g.fillRect(0, 0, this.getWidth(), this.getHeight());
                 Image img;
-                if(enemy.battleImg.equals("")){
+                if(enemy.charImg.equals("")){
                     return;
                 }
                 try{
                     img = ImageIO.read(new File(com.soyomaker.AppData.getInstance().getCurProject().getPath()
-                        +File.separator+"image"+File.separator+"battler"+File.separator+
-                        enemy.battleImg));
+                        +File.separator+"image"+File.separator+"character"+File.separator+
+                        enemy.charImg));
                 g.drawImage(img, this.getWidth()/2-img.getWidth(null)/2,
                     this.getHeight()/2-img.getHeight(null)/2, null);
             }catch(IOException e){
             }
         }
     };
-    jLabel13 = new javax.swing.JLabel();
-    enemyBodyTextField = new javax.swing.JTextField();
+    chooseEnemyCharImgButton = new javax.swing.JButton();
+    jButton1 = new javax.swing.JButton();
+    jPanel6 = new javax.swing.JPanel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EditEnemyDialog.class);
@@ -198,16 +164,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     jLabel3.setName("jLabel3"); // NOI18N
 
     enemyLevTextField.setName("enemyLevTextField"); // NOI18N
-
-    jLabel4.setText("MaxHp");
-    jLabel4.setName("jLabel4"); // NOI18N
-
-    enemyMaxHpTextField.setName("enemyMaxHpTextField"); // NOI18N
-
-    jLabel5.setText("MaxSp");
-    jLabel5.setName("jLabel5"); // NOI18N
-
-    enemyMaxSpTextField.setName("enemyMaxSpTextField"); // NOI18N
 
     jLabel6.setText("力量");
     jLabel6.setName("jLabel6"); // NOI18N
@@ -244,35 +200,29 @@ public class EditEnemyDialog extends javax.swing.JDialog {
 
     enemyMoneyTextField.setName("enemyMoneyTextField"); // NOI18N
 
-    jPanel3.setName("jPanel3"); // NOI18N
+    okButton.setText("确定");
+    okButton.setName("okButton"); // NOI18N
+    okButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            okButtonActionPerformed(evt);
+        }
+    });
 
-    jScrollPane2.setName("jScrollPane2"); // NOI18N
+    closeButton.setText("关闭");
+    closeButton.setName("closeButton"); // NOI18N
+    closeButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            closeButtonActionPerformed(evt);
+        }
+    });
 
-    actionTable.setModel(mactm);
-    actionTable.setName("actionTable"); // NOI18N
-    actionTable.setRowHeight(20);
-    jScrollPane2.setViewportView(actionTable);
+    jLabel13.setText("体力");
+    jLabel13.setName("jLabel13"); // NOI18N
 
-    jScrollPane3.setName("jScrollPane3"); // NOI18N
+    enemyBodyTextField.setName("enemyBodyTextField"); // NOI18N
 
-    statusTable.setModel(mstm);
-    statusTable.setName("statusTable"); // NOI18N
-    statusTable.setRowHeight(20);
-    jScrollPane3.setViewportView(statusTable);
-
-    jScrollPane4.setName("jScrollPane4"); // NOI18N
-
-    treasureTable.setModel(mttm);
-    treasureTable.setName("treasureTable"); // NOI18N
-    treasureTable.setRowHeight(20);
-    jScrollPane4.setViewportView(treasureTable);
-
-    jScrollPane5.setName("jScrollPane5"); // NOI18N
-
-    attributeTable.setModel(matm);
-    attributeTable.setName("attributeTable"); // NOI18N
-    attributeTable.setRowHeight(20);
-    jScrollPane5.setViewportView(attributeTable);
+    jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("宝物列表"));
+    jPanel2.setName("jPanel2"); // NOI18N
 
     jToolBar3.setFloatable(false);
     jToolBar3.setRollover(true);
@@ -302,6 +252,38 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     });
     jToolBar3.add(removeTreasureButton);
 
+    jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+    treasureTable.setModel(mttm);
+    treasureTable.setName("treasureTable"); // NOI18N
+    treasureTable.setRowHeight(20);
+    jScrollPane4.setViewportView(treasureTable);
+
+    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+    );
+    jPanel2Layout.setVerticalGroup(
+        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel2Layout.createSequentialGroup()
+            .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+    );
+
+    jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("动作列表"));
+    jPanel4.setName("jPanel4"); // NOI18N
+
+    jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+    actionTable.setModel(mactm);
+    actionTable.setName("actionTable"); // NOI18N
+    actionTable.setRowHeight(20);
+    jScrollPane2.setViewportView(actionTable);
+
     jToolBar4.setFloatable(false);
     jToolBar4.setRollover(true);
     jToolBar4.setName("jToolBar4"); // NOI18N
@@ -330,61 +312,52 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     });
     jToolBar4.add(removeActionButton);
 
-    jToolBar5.setFloatable(false);
-    jToolBar5.setRollover(true);
-    jToolBar5.setName("jToolBar5"); // NOI18N
+    javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+    jPanel4.setLayout(jPanel4Layout);
+    jPanel4Layout.setHorizontalGroup(
+        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jToolBar4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+    );
+    jPanel4Layout.setVerticalGroup(
+        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel4Layout.createSequentialGroup()
+            .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+    );
 
-    addAttributeButton.setText("添加属性");
-    addAttributeButton.setFocusable(false);
-    addAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    addAttributeButton.setName("addAttributeButton"); // NOI18N
-    addAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    addAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            addAttributeButtonActionPerformed(evt);
-        }
-    });
-    jToolBar5.add(addAttributeButton);
+    jLabel4.setText("攻击距离");
+    jLabel4.setName("jLabel4"); // NOI18N
 
-    removeAttributeButton.setText("删除属性");
-    removeAttributeButton.setFocusable(false);
-    removeAttributeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    removeAttributeButton.setName("removeAttributeButton"); // NOI18N
-    removeAttributeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    removeAttributeButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            removeAttributeButtonActionPerformed(evt);
-        }
-    });
-    jToolBar5.add(removeAttributeButton);
+    jTextField1.setName("jTextField1"); // NOI18N
 
-    jToolBar6.setFloatable(false);
-    jToolBar6.setRollover(true);
-    jToolBar6.setName("jToolBar6"); // NOI18N
+    jLabel5.setText("属性");
+    jLabel5.setName("jLabel5"); // NOI18N
 
-    addStausButton.setText("添加状态");
-    addStausButton.setFocusable(false);
-    addStausButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    addStausButton.setName("addStausButton"); // NOI18N
-    addStausButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    addStausButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            addStausButtonActionPerformed(evt);
-        }
-    });
-    jToolBar6.add(addStausButton);
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jComboBox1.setName("jComboBox1"); // NOI18N
 
-    removeStatusButton.setText("删除状态");
-    removeStatusButton.setFocusable(false);
-    removeStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    removeStatusButton.setName("removeStatusButton"); // NOI18N
-    removeStatusButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    removeStatusButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            removeStatusButtonActionPerformed(evt);
-        }
-    });
-    jToolBar6.add(removeStatusButton);
+    jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("音效"));
+    jPanel3.setName("jPanel3"); // NOI18N
+
+    jLabel14.setText("攻击音效");
+    jLabel14.setName("jLabel14"); // NOI18N
+
+    jLabel15.setText("受击音效");
+    jLabel15.setName("jLabel15"); // NOI18N
+
+    jLabel16.setText("死亡音效");
+    jLabel16.setName("jLabel16"); // NOI18N
+
+    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jComboBox2.setName("jComboBox2"); // NOI18N
+
+    jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jComboBox3.setName("jComboBox3"); // NOI18N
+
+    jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jComboBox4.setName("jComboBox4"); // NOI18N
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -392,118 +365,119 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jToolBar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jToolBar6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jLabel14)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jComboBox2, 0, 226, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jLabel15)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jComboBox3, 0, 226, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jLabel16)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jComboBox4, 0, 226, Short.MAX_VALUE)))
+            .addContainerGap())
     );
-
-    jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane2, jScrollPane3, jScrollPane4, jScrollPane5, jToolBar3, jToolBar4, jToolBar5, jToolBar6});
-
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE))
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE))
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane2, 0, 0, Short.MAX_VALUE))
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel14)
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel15)
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel16)
+                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("图像"));
+    jPanel5.setName("jPanel5"); // NOI18N
+
+    enemyCharImgPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    enemyCharImgPanel.setName("enemyCharImgPanel"); // NOI18N
+
+    javax.swing.GroupLayout enemyCharImgPanelLayout = new javax.swing.GroupLayout(enemyCharImgPanel);
+    enemyCharImgPanel.setLayout(enemyCharImgPanelLayout);
+    enemyCharImgPanelLayout.setHorizontalGroup(
+        enemyCharImgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 137, Short.MAX_VALUE)
+    );
+    enemyCharImgPanelLayout.setVerticalGroup(
+        enemyCharImgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 178, Short.MAX_VALUE)
+    );
+
+    chooseEnemyCharImgButton.setText("设置行走图");
+    chooseEnemyCharImgButton.setFocusable(false);
+    chooseEnemyCharImgButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    chooseEnemyCharImgButton.setName("chooseEnemyCharImgButton"); // NOI18N
+    chooseEnemyCharImgButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    chooseEnemyCharImgButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            chooseEnemyCharImgButtonActionPerformed(evt);
+        }
+    });
+
+    jButton1.setText("设置动作图");
+    jButton1.setName("jButton1"); // NOI18N
+
+    jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    jPanel6.setName("jPanel6"); // NOI18N
+
+    javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+    jPanel6.setLayout(jPanel6Layout);
+    jPanel6Layout.setHorizontalGroup(
+        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 137, Short.MAX_VALUE)
+    );
+    jPanel6Layout.setVerticalGroup(
+        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 178, Short.MAX_VALUE)
+    );
+
+    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+    jPanel5.setLayout(jPanel5Layout);
+    jPanel5Layout.setHorizontalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(chooseEnemyCharImgButton)
+                .addComponent(enemyCharImgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(6, 6, 6)
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1))
             .addContainerGap())
     );
 
-    okButton.setText("确定");
-    okButton.setName("okButton"); // NOI18N
-    okButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            okButtonActionPerformed(evt);
-        }
-    });
+    jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {enemyCharImgPanel, jPanel6});
 
-    closeButton.setText("关闭");
-    closeButton.setName("closeButton"); // NOI18N
-    closeButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            closeButtonActionPerformed(evt);
-        }
-    });
-
-    jPanel1.setName("jPanel1"); // NOI18N
-
-    jToolBar1.setFloatable(false);
-    jToolBar1.setOrientation(javax.swing.JToolBar.VERTICAL);
-    jToolBar1.setRollover(true);
-    jToolBar1.setName("jToolBar1"); // NOI18N
-
-    chooseEnemyBattleImgButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/soyomaker/resources/menu_open.PNG"))); // NOI18N
-    chooseEnemyBattleImgButton.setFocusable(false);
-    chooseEnemyBattleImgButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    chooseEnemyBattleImgButton.setName("chooseEnemyBattleImgButton"); // NOI18N
-    chooseEnemyBattleImgButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    chooseEnemyBattleImgButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            chooseEnemyBattleImgButtonActionPerformed(evt);
-        }
-    });
-    jToolBar1.add(chooseEnemyBattleImgButton);
-
-    enemyBattleImgPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    enemyBattleImgPanel.setName("enemyBattleImgPanel"); // NOI18N
-
-    javax.swing.GroupLayout enemyBattleImgPanelLayout = new javax.swing.GroupLayout(enemyBattleImgPanel);
-    enemyBattleImgPanel.setLayout(enemyBattleImgPanelLayout);
-    enemyBattleImgPanelLayout.setHorizontalGroup(
-        enemyBattleImgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 171, Short.MAX_VALUE)
-    );
-    enemyBattleImgPanelLayout.setVerticalGroup(
-        enemyBattleImgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 112, Short.MAX_VALUE)
+    jPanel5Layout.setVerticalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jButton1)
+                    .addGap(10, 10, 10)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(chooseEnemyCharImgButton)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(enemyCharImgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap())
     );
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(enemyBattleImgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    jPanel1Layout.setVerticalGroup(
-        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-        .addComponent(enemyBattleImgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    );
-
-    jLabel13.setText("体力");
-    jLabel13.setName("jLabel13"); // NOI18N
-
-    enemyBodyTextField.setName("enemyBodyTextField"); // NOI18N
+    jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {enemyCharImgPanel, jPanel6});
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -511,67 +485,69 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(enemyNameTextField))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel12))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(enemyLevTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                        .addComponent(enemyMoneyTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(enemyNameTextField))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(enemyLevTextField))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(enemyInteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(enemyStreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(enemyMaxHpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyMaxSpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyBodyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel12))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(enemyMoneyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyLuckTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyDexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enemyAgilTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap())
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel11))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(enemyExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyLuckTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyDexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyBodyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyAgilTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyInteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enemyStreTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel5)
+                    .addGap(18, 18, 18)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
                     .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(326, 326, 326))))
+                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap())
     );
 
-    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {enemyAgilTextField, enemyBodyTextField, enemyDexTextField, enemyExpTextField, enemyInteTextField, enemyLuckTextField, enemyMaxHpTextField, enemyMaxSpTextField, enemyMoneyTextField, enemyStreTextField});
+    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {enemyAgilTextField, enemyBodyTextField, enemyDexTextField, enemyExpTextField, enemyInteTextField, enemyLuckTextField, enemyStreTextField, jComboBox1});
+
+    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel2, jPanel4});
 
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,72 +555,76 @@ public class EditEnemyDialog extends javax.swing.JDialog {
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(enemyStreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(enemyInteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(enemyAgilTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel13)
+                                .addComponent(enemyBodyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(112, 112, 112)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(enemyDexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(enemyLuckTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel11)
+                                .addComponent(enemyExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(31, 31, 31)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(enemyLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel12)
+                                .addComponent(enemyMoneyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(closeButton)
+                        .addComponent(okButton)))
+                .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(enemyNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(enemyLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
+                        .addComponent(jLabel4)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(124, 124, 124))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(enemyDexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(enemyLuckTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(enemyExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(enemyAgilTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(enemyMoneyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(enemyMaxSpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5)))
-                            .addComponent(enemyMaxHpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(enemyBodyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(enemyStreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(enemyInteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(closeButton)
-                .addComponent(okButton))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addContainerGap())
     );
 
-    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {enemyAgilTextField, enemyBodyTextField, enemyDexTextField, enemyExpTextField, enemyInteTextField, enemyLuckTextField, enemyMaxHpTextField, enemyMaxSpTextField, enemyMoneyTextField, enemyStreTextField});
+    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {enemyAgilTextField, enemyBodyTextField, enemyDexTextField, enemyExpTextField, enemyInteTextField, enemyLuckTextField, enemyMoneyTextField, enemyStreTextField, jComboBox1, jTextField1});
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -654,8 +634,6 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         enemy.name = enemyNameTextField.getText();
         enemy.intro = enemyIntroTextArea.getText();
         enemy.lev = Integer.parseInt(enemyLevTextField.getText());
-        enemy.maxHp = Integer.parseInt(enemyMaxHpTextField.getText());
-        enemy.maxSp = Integer.parseInt(enemyMaxSpTextField.getText());
         enemy.body = Integer.parseInt(enemyBodyTextField.getText());
         enemy.stre = Integer.parseInt(enemyStreTextField.getText());
         enemy.inte = Integer.parseInt(enemyInteTextField.getText());
@@ -672,58 +650,25 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
-    private void chooseEnemyBattleImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseEnemyBattleImgButtonActionPerformed
+    private void chooseEnemyCharImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseEnemyCharImgButtonActionPerformed
         // TODO add your handling code here:
-        ChooseImageDialog ebd = new ChooseImageDialog(this, true, "image" + File.separator + "battler");
+        ChooseImageDialog ebd = new ChooseImageDialog(this, true, "image" + File.separator + "character");
         ebd.setVisible(true);
         if (!ebd.getSelectedImage().equals("")) {
-            enemy.battleImg = ebd.getSelectedImage();
-            enemyBattleImgPanel.updateUI();
+            enemy.charImg = ebd.getSelectedImage();
+            enemyCharImgPanel.updateUI();
         }
-    }//GEN-LAST:event_chooseEnemyBattleImgButtonActionPerformed
-
-    private void addAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelAttributeDialog etd = new AddModelAttributeDialog(this, true);
-        etd.setVisible(true);
-        if (etd.getSelectAttribute() != null) {
-            enemy.attributes.add(etd.getSelectAttribute());
-            attributeTable.updateUI();
-        }
-    }//GEN-LAST:event_addAttributeButtonActionPerformed
-
-    private void addStausButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStausButtonActionPerformed
-        // TODO add your handling code here:
-        AddModelStatusDialog etd = new AddModelStatusDialog(this, true);
-        etd.setVisible(true);
-        if (etd.getSelectStatus() != null) {
-            enemy.status.add(etd.getSelectStatus());
-            statusTable.updateUI();
-        }
-    }//GEN-LAST:event_addStausButtonActionPerformed
-
-    private void removeAttributeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttributeButtonActionPerformed
-        // TODO add your handling code here:
-        if (attributeTable.getSelectedRow() >= 0 && attributeTable.getSelectedRow() < enemy.attributes.size()) {
-            enemy.attributes.remove(attributeTable.getSelectedRow());
-        }
-        attributeTable.updateUI();
-    }//GEN-LAST:event_removeAttributeButtonActionPerformed
-
-    private void removeStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStatusButtonActionPerformed
-        // TODO add your handling code here:
-        if (statusTable.getSelectedRow() >= 0 && statusTable.getSelectedRow() < enemy.status.size()) {
-            enemy.status.remove(statusTable.getSelectedRow());
-        }
-        statusTable.updateUI();
-    }//GEN-LAST:event_removeStatusButtonActionPerformed
+    }//GEN-LAST:event_chooseEnemyCharImgButtonActionPerformed
 
     private void addTreasureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTreasureButtonActionPerformed
         // TODO add your handling code here:
         AddModelTreasureDialog etd = new AddModelTreasureDialog(this, true);
         etd.setVisible(true);
-        if (etd.getSelectTreasure() != null) {
-            enemy.treasures.add(etd.getSelectTreasure());
+        if (etd.getItem() != null) {
+            ItemInfo ii = new ItemInfo();
+            ii.item = etd.getItem();
+            ii.rate = etd.getRate();
+            enemy.treasures.add(ii);
             treasureTable.updateUI();
         }
     }//GEN-LAST:event_addTreasureButtonActionPerformed
@@ -732,8 +677,8 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (treasureTable.getSelectedRow() >= 0 && treasureTable.getSelectedRow() < enemy.treasures.size()) {
             enemy.treasures.remove(treasureTable.getSelectedRow());
+            treasureTable.updateUI();
         }
-        treasureTable.updateUI();
     }//GEN-LAST:event_removeTreasureButtonActionPerformed
 
     private void addActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionButtonActionPerformed
@@ -750,38 +695,40 @@ public class EditEnemyDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (actionTable.getSelectedRow() >= 0 && actionTable.getSelectedRow() < enemy.actions.size()) {
             enemy.actions.remove(actionTable.getSelectedRow());
+            actionTable.updateUI();
         }
-        actionTable.updateUI();
     }//GEN-LAST:event_removeActionButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable actionTable;
     private javax.swing.JButton addActionButton;
-    private javax.swing.JButton addAttributeButton;
-    private javax.swing.JButton addStausButton;
     private javax.swing.JButton addTreasureButton;
-    private javax.swing.JTable attributeTable;
-    private javax.swing.JButton chooseEnemyBattleImgButton;
+    private javax.swing.JButton chooseEnemyCharImgButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JTextField enemyAgilTextField;
-    public javax.swing.JPanel enemyBattleImgPanel;
     private javax.swing.JTextField enemyBodyTextField;
+    public javax.swing.JPanel enemyCharImgPanel;
     private javax.swing.JTextField enemyDexTextField;
     private javax.swing.JTextField enemyExpTextField;
     private javax.swing.JTextField enemyInteTextField;
     private javax.swing.JTextArea enemyIntroTextArea;
     private javax.swing.JTextField enemyLevTextField;
     private javax.swing.JTextField enemyLuckTextField;
-    private javax.swing.JTextField enemyMaxHpTextField;
-    private javax.swing.JTextField enemyMaxSpTextField;
     private javax.swing.JTextField enemyMoneyTextField;
     private javax.swing.JTextField enemyNameTextField;
     private javax.swing.JTextField enemyStreTextField;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -790,24 +737,20 @@ public class EditEnemyDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JToolBar jToolBar4;
-    private javax.swing.JToolBar jToolBar5;
-    private javax.swing.JToolBar jToolBar6;
     private javax.swing.JButton okButton;
     private javax.swing.JButton removeActionButton;
-    private javax.swing.JButton removeAttributeButton;
-    private javax.swing.JButton removeStatusButton;
     private javax.swing.JButton removeTreasureButton;
-    private javax.swing.JTable statusTable;
     private javax.swing.JTable treasureTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,10 +10,8 @@
  */
 package com.soyomaker.data.ui;
 
-import com.soyomaker.AppData;
 import com.soyomaker.data.model.Attribute;
-import com.soyomaker.data.model.Config;
-import com.soyomaker.data.model.Model;
+import com.soyomaker.data.model.AttributeFactorTableModel;
 
 /**
  *
@@ -33,16 +31,30 @@ public class ConfigAttributeDialog extends javax.swing.JDialog {
 
     /**
      *
+     * @param attr
+     */
+    public void setAttribute(Attribute attr) {
+        this.setTitle("编辑属性");
+        this.attr = attr;
+        attributeNameTextField.setText(attr.name);
+        attributeIntroTextArea.setText(attr.description);
+        aftm = new AttributeFactorTableModel(attr);
+        factorTable.setModel(aftm);
+        factorTable.updateUI();
+    }
+
+    /**
+     *
      * @return
      */
-    public Attribute getSelectAttribute() {
+    public Attribute getAttribute() {
         if (!isOk) {
             return null;
         }
         return attr;
     }
     private boolean isOk;
-    private Attribute attr;
+    private Attribute attr = new Attribute();
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -60,6 +72,10 @@ public class ConfigAttributeDialog extends javax.swing.JDialog {
         attributeIntroTextArea = new javax.swing.JTextArea();
         okButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        factorTable = new javax.swing.JTable();
+        addFactorButton = new javax.swing.JButton();
+        removeFactorButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(ConfigAttributeDialog.class);
@@ -97,51 +113,85 @@ public class ConfigAttributeDialog extends javax.swing.JDialog {
             }
         });
 
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        factorTable.setModel(aftm);
+        factorTable.setName("factorTable"); // NOI18N
+        jScrollPane2.setViewportView(factorTable);
+
+        addFactorButton.setText("添加相克系数");
+        addFactorButton.setName("addFactorButton"); // NOI18N
+        addFactorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFactorButtonActionPerformed(evt);
+            }
+        });
+
+        removeFactorButton.setText("删除相克系数");
+        removeFactorButton.setName("removeFactorButton"); // NOI18N
+        removeFactorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFactorButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(attributeNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(okButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
-                        .addComponent(cancleButton)))
+                        .addGap(18, 18, 18)
+                        .addComponent(cancleButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(attributeNameTextField)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addFactorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeFactorButton))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(attributeNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(attributeNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addFactorButton)
+                    .addComponent(removeFactorButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2, 0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancleButton)
-                    .addComponent(okButton))
-                .addContainerGap())
+                    .addComponent(okButton)
+                    .addComponent(cancleButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private AttributeFactorTableModel aftm = new AttributeFactorTableModel(attr);
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        attr = new Attribute();
+//        attr = new Attribute();
         attr.name = attributeNameTextField.getText();
         attr.description = attributeIntroTextArea.getText();
         isOk = true;
@@ -154,13 +204,35 @@ public class ConfigAttributeDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_cancleButtonActionPerformed
 
+    private void addFactorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFactorButtonActionPerformed
+        // TODO add your handling code here:
+        AddAttributeFactorDialog aafd = new AddAttributeFactorDialog(this, true);
+        aafd.setVisible(true);
+        if (aafd.getAttributeFactor() != null) {
+            attr.factors.add(aafd.getAttributeFactor());
+            factorTable.updateUI();
+        }
+    }//GEN-LAST:event_addFactorButtonActionPerformed
+
+    private void removeFactorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFactorButtonActionPerformed
+        // TODO add your handling code here:
+        if (factorTable.getSelectedRow() == -1 || attr.factors.isEmpty()) {
+            return;
+        }
+        attr.factors.remove(factorTable.getSelectedRow());
+        factorTable.updateUI();
+    }//GEN-LAST:event_removeFactorButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addFactorButton;
     private javax.swing.JTextArea attributeIntroTextArea;
     private javax.swing.JTextField attributeNameTextField;
     private javax.swing.JButton cancleButton;
+    private javax.swing.JTable factorTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton okButton;
+    private javax.swing.JButton removeFactorButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,7 +11,7 @@ import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import java.util.EventListener;
 
@@ -61,7 +61,7 @@ public interface DataChangeListener extends EventListener {
      * @param sce
      * @param status
      */
-    public void statusAdded(DataChangedEvent sce, Status status);
+    public void statusAdded(DataChangedEvent sce, Buff status);
 
     /**
      *

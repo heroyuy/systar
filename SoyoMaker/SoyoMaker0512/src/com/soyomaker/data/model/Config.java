@@ -43,8 +43,6 @@ public class Config extends Model {
          *
          */
         public byte face;//初始面向
-        public int cellWidth = 32;
-        public int cellHeight = 32;
         /**
          *
          */
@@ -130,25 +128,85 @@ public class Config extends Model {
          */
         public String saveSound = "";//存档音效
         
+        /**
+         *
+         */
         public String strFormula = "self.str";
+        /**
+         * 
+         */
         public String agiFormula = "self.agi";
+        /**
+         *
+         */
         public String intFormula = "self.int";
+        /**
+         *
+         */
         public String dexFormula = "self.dex";
+        /**
+         *
+         */
         public String vitFormula = "self.vit";
+        /**
+         *
+         */
         public String luckFormula = "self.luck";
+        /**
+         *
+         */
         public String HPFormula = "math.floor(self:getProperty(\"vit\")+(self:getProperty(\"vit\")/3)^2)";
+        /**
+         *
+         */
         public String SPFormula = "math.floor(self:getProperty(\"int\")+(self:getProperty(\"int\")/5)^2)";
+        /**
+         *
+         */
         public String hprFormula = "math.floor(self:getProperty(\"vit\")/3)";
+        /**
+         *
+         */
         public String sprFormula = "math.floor(self:getProperty(\"int\")/5)";
+        /**
+         *
+         */
         public String atkFormula = "math.floor(self:getProperty(\"str\")+(self:getProperty(\"str\")/8)^2)";
+        /**
+         *
+         */
         public String defFormula = "math.floor(self:getProperty(\"vit\")+(self:getProperty(\"vit\")/10)^2)";
+        /**
+         *
+         */
         public String matkFormula = "math.floor((self:getProperty(\"int\")+(self:getProperty(\"int\")/10)^2)/250,2)";
+        /**
+         *
+         */
         public String mdefFormula = "math.limit(math.floor(self:getProperty(\"int\")/250,2),0,1)";
+        /**
+         *
+         */
         public String hitFormula = "math.floor(self:getProperty(\"dex\"))";
+        /**
+         *
+         */
         public String fleeFormula = "math.floor(self:getProperty(\"agi\"))";
+        /**
+         *
+         */
         public String aspdFormula = "math.floor(self:getProperty(\"dex\"))";
+        /**
+         *
+         */
         public String mspdFormula = "math.floor(self:getProperty(\"agi\"))";
+        /**
+         *
+         */
         public String criFormula = "math.limit(math.floor(self:getProperty(\"luck\")/250,2),0,1)";
+        /**
+         *
+         */
         public String staFormula = "math.limit(math.floor(0.5+(self:getProperty(\"dex\")+self:getProperty(\"agi\"))/1000,2),0,1)";
     }
     // 用语

@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class SkillTableModel extends AbstractTableModel {
 
     private static final String COLUMN_NAME[] = {
-        "ID", "名称", "介绍", "图标", "限制等级", "使用目标", "使用限制"
+        "ID", "名称", "介绍", "图标", "限制等级", "使用目标", "技能类型"
     };
     private static final Class COLUMN_CLASS[] = {
         Integer.class, String.class, String.class, ImageIcon.class, Integer.class, Object.class, Object.class
@@ -57,9 +57,6 @@ public class SkillTableModel extends AbstractTableModel {
                 case 2:
                     skill.intro = v.toString();
                     break;
-//                case 3:
-//                    skill.icon = ((ImageIcon) v).getDescription();
-//                    break;
                 case 4:
                     skill.lev = Integer.parseInt(v.toString());
                     break;
@@ -71,9 +68,9 @@ public class SkillTableModel extends AbstractTableModel {
                     }
                     break;
                 case 6:
-                    for (int i = 0; i < Skill.limits.length; i++) {
-                        if (Skill.limits[i].contains(v.toString())) {
-                            skill.limit = i;
+                    for (int i = 0; i < Skill.types.length; i++) {
+                        if (Skill.types[i].contains(v.toString())) {
+                            skill.type = i;
                         }
                     }
                     break;
@@ -94,7 +91,6 @@ public class SkillTableModel extends AbstractTableModel {
                 case 2:
                     return skill.intro;
                 case 3:
-
                     for (int i = 0; i < skillIcons.length; i++) {
                         if (skillIcons[i].getDescription().equals(skill.icon)) {
                             return skillIcons[i];
@@ -106,7 +102,7 @@ public class SkillTableModel extends AbstractTableModel {
                 case 5:
                     return Skill.targets[skill.target];
                 case 6:
-                    return Skill.limits[skill.limit];
+                    return Skill.types[skill.type];
             }
         }
         return null;

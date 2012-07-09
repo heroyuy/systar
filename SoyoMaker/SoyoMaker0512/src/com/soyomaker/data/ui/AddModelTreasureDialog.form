@@ -38,15 +38,13 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="itemRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="equipRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="equipComboBox" alignment="0" pref="167" max="32767" attributes="0"/>
-                          <Component id="rateTextField" alignment="1" pref="167" max="32767" attributes="0"/>
-                          <Component id="itemComboBox" alignment="0" pref="167" max="32767" attributes="0"/>
+                          <Component id="rateTextField" alignment="1" pref="173" max="32767" attributes="0"/>
+                          <Component id="itemComboBox" alignment="0" pref="173" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -57,22 +55,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="equipRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="equipComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="itemRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="itemComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="rateTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancleButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -83,45 +76,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JRadioButton" name="equipRadioButton">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttonGroup1"/>
-        </Property>
-        <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="&#x88c5;&#x5907;"/>
-        <Property name="name" type="java.lang.String" value="equipRadioButton" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="equipRadioButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="itemRadioButton">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttonGroup1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="&#x7269;&#x54c1;"/>
-        <Property name="name" type="java.lang.String" value="itemRadioButton" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemRadioButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="equipComboBox">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="equipComboBox" noResource="true"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="itemComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
-        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="itemComboBox" noResource="true"/>
       </Properties>
     </Component>
@@ -153,6 +112,12 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
         <Property name="name" type="java.lang.String" value="rateTextField" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x5b9d;&#x7269;"/>
+        <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

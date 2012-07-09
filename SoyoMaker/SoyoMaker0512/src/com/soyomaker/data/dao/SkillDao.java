@@ -12,7 +12,8 @@ import com.soyomaker.data.model.Effect;
 import com.soyomaker.data.model.Factor;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
+import com.soyomaker.data.model.Skill.BuffInfo;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
@@ -59,19 +60,12 @@ public class SkillDao extends Dao<Skill> {
             skill.icon = dis.readUTF();
             skill.lev = dis.readInt();
             skill.target = dis.readInt();
-            skill.limit = dis.readInt();
+            skill.type = dis.readInt();
             skill.userAniIndex = dis.readInt();
             skill.targetAniIndex = dis.readInt();
-            skill.menuUseSound = dis.readUTF();
+            skill.attackDistance = dis.readInt();
+            skill.attributeId = dis.readInt();
             skill.eventIndex = dis.readInt();
-            int costN = dis.readInt();
-            for (int j = 0; j < costN; j++) {
-                Cost cost = new Cost();
-                cost.costType = dis.readInt();
-                cost.costName = dis.readUTF();
-                cost.costValue = dis.readInt();
-                skill.costs.add(cost);
-            }
             int effectN = dis.readInt();
             for (int j = 0; j < effectN; j++) {
                 Effect effect = new Effect();
@@ -80,26 +74,14 @@ public class SkillDao extends Dao<Skill> {
                 effect.effectValue = dis.readInt();
                 skill.effects.add(effect);
             }
-            int factorN = dis.readInt();
-            for (int j = 0; j < factorN; j++) {
-                Factor factor = new Factor();
-                factor.factorType = dis.readInt();
-                factor.factorName = dis.readUTF();
-                factor.factorValue = dis.readInt();
-                skill.factors.add(factor);
-            }
-            int attrN = dis.readInt();
-            for (int j = 0; j < attrN; j++) {
-                Attribute attr = new Attribute();
-                attr.id = dis.readInt();
-                attr.value = dis.readInt();
-                skill.attributes.add(attr);
-            }
             int statusN = dis.readInt();
             for (int j = 0; j < statusN; j++) {
-                Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
-                status.value = dis.readInt();
-                skill.status.add(status);
+                Buff status = (Buff) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
+                int rate = dis.readInt();
+                BuffInfo buffInfo = new BuffInfo();
+                buffInfo.buff = status;
+                buffInfo.rate = rate;
+                skill.status.add(buffInfo);
             }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.SKILL, skill);
         }
@@ -120,7 +102,7 @@ public class SkillDao extends Dao<Skill> {
             lt.addNode("\n");
             lt.addNode("name", skill.name);
             lt.addNode("\n");
-            lt.addNode("intro", skill.intro);
+            lt.addNode("desc", skill.intro);
             lt.addNode("\n");
             if (skill.icon == null || skill.icon.equals("")) {
                 lt.addNode("icon", "nil");
@@ -128,31 +110,29 @@ public class SkillDao extends Dao<Skill> {
                 lt.addNode("icon", "/image/icon/skill/" + skill.icon);
             }
             lt.addNode("\n");
-            lt.addNode("target", skill.target);
+            lt.addNode("targetType", skill.target);
             lt.addNode("\n");
-            lt.addNode("limit", skill.limit);
+            lt.addNode("type", skill.type);
             lt.addNode("\n");
             lt.addNode("lev", skill.lev);
             lt.addNode("\n");
             if (skill.userAniIndex == -1) {
                 lt.addNode("useAniIndex", -1);
             } else {
-                lt.addNode("useAniIndex", Configuration.Prefix.ANIMATION_MASK + skill.userAniIndex);
+                lt.addNode("useAniIndex", Configuration.Prefix.ANIMATION_MASK + skill.userAniIndex + 1);
             }
             lt.addNode("\n");
             if (skill.targetAniIndex == -1) {
                 lt.addNode("targetAniIndex", -1);
             } else {
-                lt.addNode("targetAniIndex", Configuration.Prefix.ANIMATION_MASK + skill.targetAniIndex);
-            }
-            lt.addNode("\n");
-            if (skill.menuUseSound == null || skill.menuUseSound.equals("")) {
-                lt.addNode("sound", "nil");
-            } else {
-                lt.addNode("sound", "/audio/sound/" + skill.menuUseSound);
+                lt.addNode("targetAniIndex", Configuration.Prefix.ANIMATION_MASK + skill.targetAniIndex + 1);
             }
             lt.addNode("\n");
             lt.addNode("eventIndex", skill.eventIndex);
+            lt.addNode("\n");
+            lt.addNode("attackDistance", skill.attackDistance);
+            lt.addNode("\n");
+            lt.addNode("attributeId", Configuration.Prefix.ATTRIBUTE_MASK + skill.attributeId + 1);
             lt.addNode("\n");
             LuaTable efs = new LuaTable();
             if (!skill.effects.isEmpty()) {
@@ -168,54 +148,7 @@ public class SkillDao extends Dao<Skill> {
                     efs.addNode("\n");
                 }
             }
-            lt.addNode("effects", efs);
-            lt.addNode("\n");
-            LuaTable cos = new LuaTable();
-            if (!skill.costs.isEmpty()) {
-                cos.addNode("\n");
-            }
-            for (int j = 0; j < skill.costs.size(); j++) {
-                LuaTable co = new LuaTable();
-                co.addNode("index", skill.costs.get(j).costType + 1);
-                co.addNode("name", skill.costs.get(j).costName);
-                co.addNode("value", skill.costs.get(j).costValue);
-                cos.addNode("[" + (skill.costs.get(j).costType + 1) + "]", co);
-                if (j != skill.costs.size() - 1) {
-                    cos.addNode("\n");
-                }
-            }
-            lt.addNode("costs", cos);
-            lt.addNode("\n");
-            LuaTable fas = new LuaTable();
-            if (!skill.factors.isEmpty()) {
-                fas.addNode("\n");
-            }
-            for (int j = 0; j < skill.factors.size(); j++) {
-                LuaTable fa = new LuaTable();
-                fa.addNode("index", skill.factors.get(j).factorType + 1);
-                fa.addNode("name", skill.factors.get(j).factorName);
-                fa.addNode("value", skill.factors.get(j).factorValue);
-                fas.addNode("[" + (skill.factors.get(j).factorType + 1) + "]", fa);
-                if (j != skill.factors.size() - 1) {
-                    fas.addNode("\n");
-                }
-            }
-            lt.addNode("factors", fas);
-            lt.addNode("\n");
-            LuaTable attrs = new LuaTable();
-            if (!skill.attributes.isEmpty()) {
-                attrs.addNode("\n");
-            }
-            for (int j = 0; j < skill.attributes.size(); j++) {
-                LuaTable attr = new LuaTable();
-                attr.addNode("index", Configuration.Prefix.ATTRIBUTE_MASK + skill.attributes.get(j).id + 1);
-                attr.addNode("value", skill.attributes.get(j).value);
-                attrs.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + skill.attributes.get(j).id + 1) + "]", attr);
-                if (j != skill.attributes.size() - 1) {
-                    attrs.addNode("\n");
-                }
-            }
-            lt.addNode("attributes", attrs);
+            lt.addNode("datas", efs);
             lt.addNode("\n");
             LuaTable status = new LuaTable();
             if (!skill.status.isEmpty()) {
@@ -223,9 +156,9 @@ public class SkillDao extends Dao<Skill> {
             }
             for (int j = 0; j < skill.status.size(); j++) {
                 LuaTable statu = new LuaTable();
-                statu.addNode("index", Configuration.Prefix.STATUS_MASK + skill.status.get(j).getIndex() + 1);
-                statu.addNode("value", skill.status.get(j).value);
-                status.addNode("[" + (Configuration.Prefix.STATUS_MASK + skill.status.get(j).getIndex() + 1) + "]", statu);
+                statu.addNode("id", Configuration.Prefix.STATUS_MASK + skill.status.get(j).buff.getIndex() + 1);
+                statu.addNode("value", skill.status.get(j).rate);
+                status.addNode("[" + (Configuration.Prefix.STATUS_MASK + skill.status.get(j).buff.getIndex() + 1) + "]", statu);
                 if (j != skill.status.size() - 1) {
                     status.addNode("\n");
                 }
@@ -266,38 +199,22 @@ public class SkillDao extends Dao<Skill> {
                 dos.writeUTF(skill.icon);
                 dos.writeInt(skill.lev);
                 dos.writeInt(skill.target);
-                dos.writeInt(skill.limit);
+                dos.writeInt(skill.type);
                 dos.writeInt(skill.userAniIndex);
                 dos.writeInt(skill.targetAniIndex);
-                dos.writeUTF(skill.menuUseSound);
+                dos.writeInt(skill.attackDistance);
+                dos.writeInt(skill.attributeId);
                 dos.writeInt(skill.eventIndex);
-                dos.writeInt(skill.costs.size());
-                for (int j = 0; j < skill.costs.size(); j++) {
-                    dos.writeInt(skill.costs.get(j).costType);
-                    dos.writeUTF(skill.costs.get(j).costName);
-                    dos.writeInt(skill.costs.get(j).costValue);
-                }
                 dos.writeInt(skill.effects.size());
                 for (int j = 0; j < skill.effects.size(); j++) {
                     dos.writeInt(skill.effects.get(j).effectType);
                     dos.writeUTF(skill.effects.get(j).effectName);
                     dos.writeInt(skill.effects.get(j).effectValue);
                 }
-                dos.writeInt(skill.factors.size());
-                for (int j = 0; j < skill.factors.size(); j++) {
-                    dos.writeInt(skill.factors.get(j).factorType);
-                    dos.writeUTF(skill.factors.get(j).factorName);
-                    dos.writeInt(skill.factors.get(j).factorValue);
-                }
-                dos.writeInt(skill.attributes.size());
-                for (int j = 0; j < skill.attributes.size(); j++) {
-                    dos.writeInt(skill.attributes.get(j).id);
-                    dos.writeInt(skill.attributes.get(j).value);
-                }
                 dos.writeInt(skill.status.size());
                 for (int j = 0; j < skill.status.size(); j++) {
-                    dos.writeInt(skill.status.get(j).getIndex());
-                    dos.writeInt(skill.status.get(j).value);
+                    dos.writeInt(skill.status.get(j).buff.getIndex());
+                    dos.writeInt(skill.status.get(j).rate);
                 }
             }
             dos.close();

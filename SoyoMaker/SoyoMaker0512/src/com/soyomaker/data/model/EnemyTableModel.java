@@ -15,10 +15,10 @@ import javax.swing.table.AbstractTableModel;
 public class EnemyTableModel extends AbstractTableModel {
 
     private static final String COLUMN_NAME[] = {
-        "ID", "名称", "介绍", "等级", "最大生命值", "最大魔法值", "经验", "金钱"
+        "ID", "名称", "介绍", "等级", "攻击距离", "经验", "金钱"
     };
     private static final Class COLUMN_CLASS[] = {
-        Integer.class, String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+        Integer.class, String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class
     };
     private DataManager data = AppData.getInstance().getCurProject().getDataManager();
 
@@ -60,15 +60,12 @@ public class EnemyTableModel extends AbstractTableModel {
                     enemy.lev = Integer.parseInt(v.toString());
                     break;
                 case 4:
-                    enemy.maxHp = Integer.parseInt(v.toString());
+                    enemy.attackDistance = Integer.parseInt(v.toString());
                     break;
                 case 5:
-                    enemy.maxSp = Integer.parseInt(v.toString());
-                    break;
-                case 6:
                     enemy.exp = Integer.parseInt(v.toString());
                     break;
-                case 7:
+                case 6:
                     enemy.money = Integer.parseInt(v.toString());
                     break;
             }
@@ -89,12 +86,10 @@ public class EnemyTableModel extends AbstractTableModel {
                 case 3:
                     return enemy.lev;
                 case 4:
-                    return enemy.maxHp;
+                    return enemy.attackDistance;
                 case 5:
-                    return enemy.maxSp;
-                case 6:
                     return enemy.exp;
-                case 7:
+                case 6:
                     return enemy.money;
             }
         }

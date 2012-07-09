@@ -10,10 +10,11 @@ import com.soyomaker.data.model.Action;
 import com.soyomaker.data.model.Attribute;
 import com.soyomaker.data.model.Condition;
 import com.soyomaker.data.model.Enemy;
+import com.soyomaker.data.model.Enemy.ItemInfo;
 import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Treasure;
 import com.soyomaker.infomation.SoftInformation;
 import com.soyomaker.log.LogPrinter;
@@ -58,10 +59,9 @@ public class EnemyDao extends Dao<Enemy> {
             enemy.setIndex(dis.readInt());
             enemy.name = dis.readUTF();
             enemy.intro = dis.readUTF();
-            enemy.battleImg = dis.readUTF();
+            enemy.charImg = dis.readUTF();
+            enemy.actionImg = dis.readUTF();
             enemy.lev = dis.readInt();
-            enemy.maxHp = dis.readInt();
-            enemy.maxSp = dis.readInt();
             enemy.stre = dis.readInt();
             enemy.inte = dis.readInt();
             enemy.agil = dis.readInt();
@@ -70,32 +70,14 @@ public class EnemyDao extends Dao<Enemy> {
             enemy.luck = dis.readInt();
             enemy.exp = dis.readInt();
             enemy.money = dis.readInt();
-            //为了兼容
-            if (SoftInformation.minorVersion < 9) {
-                int equipN = dis.readInt();
-                for (int j = 0; j < equipN; j++) {
-                    int kind = dis.readInt();
-//                    Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
-//                    equip.equipType = kind;
-//                    equip.rate = dis.readInt();
-//                    enemy.equips.add(equip);
-                }
-            }
+            enemy.attributeId = dis.readInt();
             int treasureN = dis.readInt();
             for (int j = 0; j < treasureN; j++) {
-                int type = dis.readInt();
-                switch (type) {
-                    case Treasure.TREASURE_ITEM:
-                        Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModel(Model.ITEM, dis.readInt());
-                        item.rate = dis.readInt();
-                        enemy.treasures.add(item);
-                        break;
-                    case Treasure.TREASURE_EQUIP:
-                        Equip equip = (Equip) AppData.getInstance().getCurProject().getDataManager().getModel(Model.EQUIP, dis.readInt());
-                        equip.rate = dis.readInt();
-                        enemy.treasures.add(equip);
-                        break;
-                }
+                Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModel(Model.ITEM, dis.readInt());
+                ItemInfo itemInfo = new ItemInfo();
+                itemInfo.item = item;
+                itemInfo.rate = dis.readInt();
+                enemy.treasures.add(itemInfo);
             }
             int actionN = dis.readInt();
             for (int j = 0; j < actionN; j++) {
@@ -118,27 +100,10 @@ public class EnemyDao extends Dao<Enemy> {
                 action.rate = dis.readInt();
                 enemy.actions.add(action);
             }
-            int attrN = dis.readInt();
-            for (int j = 0; j < attrN; j++) {
-                Attribute attr = new Attribute();
-                attr.id = dis.readInt();
-                attr.value = dis.readInt();
-                enemy.attributes.add(attr);
-            }
-            int statusN = dis.readInt();
-            for (int j = 0; j < statusN; j++) {
-                Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModel(Model.STATUS, dis.readInt());
-                status.value = dis.readInt();
-                enemy.status.add(status);
-            }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMY, enemy);
         }
         dis.close();
         fis.close();
-//        } catch (IOException e) {
-////            System.out.println("没有可加载的Enemy");
-//            printer.e("没有可加载的Enemy");
-//        }
     }
 
     private boolean saveLua() {
@@ -155,17 +120,18 @@ public class EnemyDao extends Dao<Enemy> {
             lt.addNode("\n");
             lt.addNode("intro", enemy.intro);
             lt.addNode("\n");
-            if (enemy.battleImg == null || enemy.battleImg.equals("")) {
-                lt.addNode("battlerImg", "nil");
+            if (enemy.charImg == null || enemy.charImg.equals("")) {
+                lt.addNode("charImg", "nil");
             } else {
-                lt.addNode("battlerImg", "/image/battler/" + enemy.battleImg);
+                lt.addNode("charImg", "/image/character/" + enemy.charImg);
+            }
+            if (enemy.actionImg == null || enemy.actionImg.equals("")) {
+                lt.addNode("actionImg", "nil");
+            } else {
+                lt.addNode("actionImg", "/image/battler/" + enemy.charImg);
             }
             lt.addNode("\n");
             lt.addNode("lev", enemy.lev);
-            lt.addNode("\n");
-            lt.addNode("maxHp", enemy.maxHp);
-            lt.addNode("\n");
-            lt.addNode("maxSp", enemy.maxSp);
             lt.addNode("\n");
             lt.addNode("stre", enemy.stre);
             lt.addNode("\n");
@@ -183,29 +149,22 @@ public class EnemyDao extends Dao<Enemy> {
             lt.addNode("\n");
             lt.addNode("money", enemy.money);
             lt.addNode("\n");
+            lt.addNode("attributeId", Configuration.Prefix.ATTRIBUTE_MASK + enemy.attributeId + 1);
+            lt.addNode("\n");
             LuaTable treas = new LuaTable();
             if (!enemy.treasures.isEmpty()) {
                 treas.addNode("\n");
             }
             for (int j = 0; j < enemy.treasures.size(); j++) {
                 LuaTable trea = new LuaTable();
-                if (enemy.treasures.get(j) instanceof Item) {
-                    trea.addNode("type", Treasure.TREASURE_ITEM);
-                    trea.addNode("index", Configuration.Prefix.ITEM_MASK + enemy.treasures.get(j).getIndex() + 1);
-                    trea.addNode("rate", enemy.treasures.get(j).rate);
-                    treas.addNode("[" + (Configuration.Prefix.ITEM_MASK + enemy.treasures.get(j).getIndex() + 1) + "]", trea);
-                } else {
-                    trea.addNode("type", Treasure.TREASURE_EQUIP);
-                    trea.addNode("index", Configuration.Prefix.EQUIP_MASK + enemy.treasures.get(j).getIndex() + 1);
-                    trea.addNode("rate", enemy.treasures.get(j).rate);
-                    treas.addNode("[" + (Configuration.Prefix.EQUIP_MASK + enemy.treasures.get(j).getIndex() + 1) + "]", trea);
-                }
-
+                trea.addNode("id", Configuration.Prefix.ITEM_MASK + enemy.treasures.get(j).item.getIndex() + 1);
+                trea.addNode("rate", enemy.treasures.get(j).rate);
+                treas.addNode("[" + (Configuration.Prefix.ITEM_MASK + enemy.treasures.get(j).item.getIndex() + 1) + "]", trea);
                 if (j != enemy.treasures.size() - 1) {
                     treas.addNode("\n");
                 }
             }
-            lt.addNode("treasures", treas);
+            lt.addNode("treasureList", treas);
             lt.addNode("\n");
             LuaTable acts = new LuaTable();
             if (!enemy.actions.isEmpty()) {
@@ -229,45 +188,16 @@ public class EnemyDao extends Dao<Enemy> {
                 for (int m = 0; m < enemy.actions.get(j).paras.size(); m++) {
                     pars.addNode(enemy.actions.get(j).paras.get(m));
                 }
-                act.addNode("parameters", pars);
-                act.addNode("actionType", enemy.actions.get(j).actionType);
+                act.addNode("params", pars);
+                act.addNode("type", enemy.actions.get(j).actionType);
                 act.addNode("rate", enemy.actions.get(j).rate);
                 acts.addNode("[" + enemy.actions.get(j).actionType + "]", act);
                 if (j != enemy.actions.size() - 1) {
                     acts.addNode("\n");
                 }
             }
-            lt.addNode("actions", acts);
+            lt.addNode("actionList", acts);
             lt.addNode("\n");
-            LuaTable attrs = new LuaTable();
-            if (!enemy.attributes.isEmpty()) {
-                attrs.addNode("\n");
-            }
-            for (int j = 0; j < enemy.attributes.size(); j++) {
-                LuaTable attr = new LuaTable();
-                attr.addNode("index", Configuration.Prefix.ATTRIBUTE_MASK + enemy.attributes.get(j).id + 1);
-                attr.addNode("value", enemy.attributes.get(j).value);
-                attrs.addNode("[" + (Configuration.Prefix.ATTRIBUTE_MASK + enemy.attributes.get(j).id + 1) + "]", attr);
-                if (j != enemy.attributes.size() - 1) {
-                    attrs.addNode("\n");
-                }
-            }
-            lt.addNode("attributes", attrs);
-            lt.addNode("\n");
-            LuaTable status = new LuaTable();
-            if (!enemy.status.isEmpty()) {
-                status.addNode("\n");
-            }
-            for (int j = 0; j < enemy.status.size(); j++) {
-                LuaTable statu = new LuaTable();
-                statu.addNode("index", Configuration.Prefix.STATUS_MASK + enemy.status.get(j).getIndex() + 1);
-                statu.addNode("value", enemy.status.get(j).value);
-                status.addNode("[" + (Configuration.Prefix.STATUS_MASK + enemy.status.get(j).getIndex() + 1) + "]", statu);
-                if (j != enemy.status.size() - 1) {
-                    status.addNode("\n");
-                }
-            }
-            lt.addNode("buffs", status);
             lts.addNode("[" + (Configuration.Prefix.ENEMY_MASK + enemy.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
                 lts.addNode("\n");
@@ -301,10 +231,9 @@ public class EnemyDao extends Dao<Enemy> {
                 dos.writeInt(enemy.getIndex());
                 dos.writeUTF(enemy.name);
                 dos.writeUTF(enemy.intro);
-                dos.writeUTF(enemy.battleImg);
+                dos.writeUTF(enemy.charImg);
+                dos.writeUTF(enemy.actionImg);
                 dos.writeInt(enemy.lev);
-                dos.writeInt(enemy.maxHp);
-                dos.writeInt(enemy.maxSp);
                 dos.writeInt(enemy.stre);
                 dos.writeInt(enemy.inte);
                 dos.writeInt(enemy.agil);
@@ -313,20 +242,10 @@ public class EnemyDao extends Dao<Enemy> {
                 dos.writeInt(enemy.luck);
                 dos.writeInt(enemy.exp);
                 dos.writeInt(enemy.money);
-//                dos.writeInt(enemy.equips.size());
-//                for (int j = 0; j < enemy.equips.size(); j++) {
-//                    dos.writeInt(enemy.equips.get(j).equipType);
-//                    dos.writeInt(enemy.equips.get(j).getIndex());
-//                    dos.writeInt(enemy.equips.get(j).rate);
-//                }
+                dos.writeInt(enemy.attributeId);
                 dos.writeInt(enemy.treasures.size());
                 for (int j = 0; j < enemy.treasures.size(); j++) {
-                    if (enemy.treasures.get(j) instanceof Item) {
-                        dos.writeInt(Treasure.TREASURE_ITEM);
-                    } else {
-                        dos.writeInt(Treasure.TREASURE_EQUIP);
-                    }
-                    dos.writeInt(enemy.treasures.get(j).getIndex());
+                    dos.writeInt(enemy.treasures.get(j).item.getIndex());
                     dos.writeInt(enemy.treasures.get(j).rate);
                 }
                 dos.writeInt(enemy.actions.size());
@@ -347,16 +266,6 @@ public class EnemyDao extends Dao<Enemy> {
                         dos.writeInt(action.paras.get(k));
                     }
                     dos.writeInt(action.rate);
-                }
-                dos.writeInt(enemy.attributes.size());
-                for (int j = 0; j < enemy.attributes.size(); j++) {
-                    dos.writeInt(enemy.attributes.get(j).id);
-                    dos.writeInt(enemy.attributes.get(j).value);
-                }
-                dos.writeInt(enemy.status.size());
-                for (int j = 0; j < enemy.status.size(); j++) {
-                    dos.writeInt(enemy.status.get(j).getIndex());
-                    dos.writeInt(enemy.status.get(j).value);
                 }
             }
             dos.close();

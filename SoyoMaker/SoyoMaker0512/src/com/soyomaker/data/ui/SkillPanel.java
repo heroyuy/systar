@@ -23,7 +23,7 @@ import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
 import com.soyomaker.data.model.SkillTableModel;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.widget.JTabelComboBoxRender;
 import com.soyomaker.widget.JTableComboBoxEditor;
@@ -42,12 +42,6 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
         initComponents();
         AppData.getInstance().getCurProject().getDataManager().addDataChangeListener(this);
         TableColumnModel tcm = skillTable.getColumnModel();
-//        ImageIcon[] skillIcons = DataManager.listSkillIconName();
-//        TableColumn iconC = tcm.getColumn(3);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(skillIcons);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(skillIcons);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
 
         TableColumn targetC = tcm.getColumn(5);
         JTabelComboBoxRender strT = new JTabelComboBoxRender(Skill.targets);
@@ -55,8 +49,8 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
         targetC.setCellRenderer(strT);
         targetC.setCellEditor(steT);
         TableColumn limitC = tcm.getColumn(6);
-        JTabelComboBoxRender strL = new JTabelComboBoxRender(Skill.limits);
-        JTableComboBoxEditor steL = new JTableComboBoxEditor(Skill.limits);
+        JTabelComboBoxRender strL = new JTabelComboBoxRender(Skill.types);
+        JTableComboBoxEditor steL = new JTableComboBoxEditor(Skill.types);
         limitC.setCellRenderer(strL);
         limitC.setCellEditor(steL);
     }
@@ -162,7 +156,6 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
     private void addSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSkillButtonActionPerformed
         // TODO add your handling code here:
         Skill skill = new Skill();
-        skill.addDefault();
         skill.setIndex(AppData.getInstance().getCurProject().getDataManager().allocateIndex(Model.SKILL));
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.SKILL, skill);
         EditSkillDialog eid = new EditSkillDialog(this, true, skill);
@@ -212,7 +205,7 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
     public void vocationRemoved(DataChangedEvent sce, int id) {
     }
 
-    public void statusAdded(DataChangedEvent sce, Status status) {
+    public void statusAdded(DataChangedEvent sce, Buff status) {
     }
 
     public void statusRemoved(DataChangedEvent sce, int id) {

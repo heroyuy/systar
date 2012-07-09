@@ -23,7 +23,7 @@ import com.soyomaker.data.model.ItemTableModel;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
+import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.widget.JTabelComboBoxRender;
 import com.soyomaker.widget.JTableComboBoxEditor;
@@ -50,15 +50,10 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
 //        iconC.setCellEditor(steI);
 
         TableColumn targetC = tcm.getColumn(5);
-        JTabelComboBoxRender strT = new JTabelComboBoxRender(Item.targets);
-        JTableComboBoxEditor steT = new JTableComboBoxEditor(Item.targets);
+        JTabelComboBoxRender strT = new JTabelComboBoxRender(Item.types);
+        JTableComboBoxEditor steT = new JTableComboBoxEditor(Item.types);
         targetC.setCellRenderer(strT);
         targetC.setCellEditor(steT);
-        TableColumn limitC = tcm.getColumn(6);
-        JTabelComboBoxRender strL = new JTabelComboBoxRender(Item.limits);
-        JTableComboBoxEditor steL = new JTableComboBoxEditor(Item.limits);
-        limitC.setCellRenderer(strL);
-        limitC.setCellEditor(steL);
     }
     private ItemTableModel itm = new ItemTableModel();
 
@@ -150,7 +145,6 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
         Item item = new Item();
-        item.addDefault();
         item.setIndex(AppData.getInstance().getCurProject().getDataManager().allocateIndex(Model.ITEM));
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ITEM, item);
         EditItemDialog eid = new EditItemDialog(this, true, item);
@@ -200,7 +194,7 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
     public void vocationRemoved(DataChangedEvent sce, int id) {
     }
 
-    public void statusAdded(DataChangedEvent sce, Status status) {
+    public void statusAdded(DataChangedEvent sce, Buff status) {
     }
 
     public void statusRemoved(DataChangedEvent sce, int id) {

@@ -11,7 +11,6 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.DataManager;
 import com.soyomaker.data.listener.DataChangeListener;
 import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
@@ -22,13 +21,11 @@ import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
-import com.soyomaker.data.model.Status;
-import com.soyomaker.data.model.StatusTableModel;
+import com.soyomaker.data.model.Buff;
+import com.soyomaker.data.model.BuffTableModel;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.widget.JTabelComboBoxRender;
 import com.soyomaker.widget.JTableComboBoxEditor;
-import java.io.File;
-import javax.swing.ImageIcon;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -43,19 +40,13 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
         initComponents();
         AppData.getInstance().getCurProject().getDataManager().addDataChangeListener(this);
         TableColumnModel tcm = statusTable.getColumnModel();
-//        ImageIcon[] statusIcons = DataManager.listStatusIconName();
-//        TableColumn iconC = tcm.getColumn(3);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(statusIcons);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(statusIcons);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
         TableColumn targetC = tcm.getColumn(4);
-        JTabelComboBoxRender strT = new JTabelComboBoxRender(Status.kinds);
-        JTableComboBoxEditor steT = new JTableComboBoxEditor(Status.kinds);
+        JTabelComboBoxRender strT = new JTabelComboBoxRender(Buff.lastKinds);
+        JTableComboBoxEditor steT = new JTableComboBoxEditor(Buff.lastKinds);
         targetC.setCellRenderer(strT);
         targetC.setCellEditor(steT);
     }
-    private StatusTableModel stm = new StatusTableModel();
+    private BuffTableModel stm = new BuffTableModel();
 
     /**
      *
@@ -144,10 +135,10 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
 
     private void addStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStatusButtonActionPerformed
         // TODO add your handling code here:
-        Status status = new Status();
+        Buff status = new Buff();
         status.setIndex(AppData.getInstance().getCurProject().getDataManager().allocateIndex(Model.STATUS));
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.STATUS, status);
-        EditStatusDialog eid = new EditStatusDialog(this, true, status);
+        EditBuffDialog eid = new EditBuffDialog(this, true, status);
         eid.setVisible(true);
     }//GEN-LAST:event_addStatusButtonActionPerformed
 
@@ -157,8 +148,8 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
         if (id < 0 || id >= AppData.getInstance().getCurProject().getDataManager().size(Model.STATUS)) {
             return;
         }
-        Status status = (Status) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[id];
-        EditStatusDialog eid = new EditStatusDialog(this, true, status);
+        Buff status = (Buff) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[id];
+        EditBuffDialog eid = new EditBuffDialog(this, true, status);
         eid.setVisible(true);
     }//GEN-LAST:event_editStatusButtonActionPerformed
 
@@ -194,7 +185,7 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
     public void vocationRemoved(DataChangedEvent sce, int id) {
     }
 
-    public void statusAdded(DataChangedEvent sce, Status status) {
+    public void statusAdded(DataChangedEvent sce, Buff status) {
         statusTable.updateUI();
     }
 

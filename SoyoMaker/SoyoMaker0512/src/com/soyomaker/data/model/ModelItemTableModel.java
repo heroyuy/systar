@@ -4,6 +4,7 @@
  */
 package com.soyomaker.data.model;
 
+import com.soyomaker.data.model.Enemy.ItemInfo;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -11,15 +12,15 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Administrator
  */
-public class ModelTreasureTableModel extends AbstractTableModel {
+public class ModelItemTableModel extends AbstractTableModel {
 
-    private ArrayList<Treasure> treas;
+    private ArrayList<ItemInfo> treas;
 
     /**
      *
      * @param status
      */
-    public ModelTreasureTableModel(ArrayList<Treasure> status) {
+    public ModelItemTableModel(ArrayList<ItemInfo> status) {
         this.treas = status;
     }
     private static final String COLUMN_NAME[] = {
@@ -53,29 +54,23 @@ public class ModelTreasureTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object v, int r, int c) {
-        Treasure attr = treas.get(r);
-        if (attr != null) {
-            switch (c) {
-                case 0:
-                    attr.name = v.toString();
-                    break;
-                case 1:
-                    attr.rate = Integer.parseInt(v.toString());
-                    break;
-            }
+        switch (c) {
+            case 0:
+                treas.get(r).item.name = v.toString();
+                break;
+            case 1:
+                treas.get(r).rate = Integer.parseInt(v.toString());
+                break;
         }
         this.fireTableCellUpdated(r, c);
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Treasure attr = treas.get(rowIndex);
-        if (attr != null) {
-            switch (columnIndex) {
-                case 0:
-                    return attr.name;
-                case 1:
-                    return attr.rate;
-            }
+        switch (columnIndex) {
+            case 0:
+                return treas.get(rowIndex).item.name;
+            case 1:
+                return treas.get(rowIndex).rate;
         }
         return null;
     }

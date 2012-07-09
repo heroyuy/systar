@@ -4,6 +4,8 @@
  */
 package com.soyomaker.data.model;
 
+import java.util.ArrayList;
+
 /**
  * 属性
  * @author Administrator
@@ -30,4 +32,8 @@ public class Attribute {
      * 属性效果值
      */
     public int value;
+    /**
+     *
+     */
+    public ArrayList<AttributeFactor> factors = new ArrayList<AttributeFactor>();
 }
