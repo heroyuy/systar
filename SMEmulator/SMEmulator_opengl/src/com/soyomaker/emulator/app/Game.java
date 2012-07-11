@@ -109,7 +109,7 @@ public class Game {
 		}
 		// 显示FPS和内存
 		painter.setColor(Color.WHITE);
-		String fpsStr = "帧率FPS:" + GameInfo.getInstance().getActualFps();
+		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - painter.getTextSize() - 10);
 		// String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
 		// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
