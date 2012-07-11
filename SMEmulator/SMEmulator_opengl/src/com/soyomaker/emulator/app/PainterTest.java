@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.soyomaker.emulator.ui.Color;
-import com.soyomaker.emulator.ui.Image;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.ui.Rect;
 import com.soyomaker.emulator.ui.Texture2D;
@@ -25,7 +24,7 @@ public class PainterTest {
 
 		for (int i = 1; i < 49; i++) {
 			String name = "game/image/tileset/" + i + "号墙壁.png";
-			list.add(new Texture2D(new Image(name), name.substring(name.lastIndexOf("/") + 1)));
+			list.add(new Texture2D(name));
 		}
 
 	}
@@ -33,27 +32,27 @@ public class PainterTest {
 	public void test(Painter painter) {
 
 		// 绘制直线
-		painter.setColor(Color.BLACK);
+		painter.setColor(Color.GREEN);
 		painter.drawLine(100, 100, 250, 250);
 		painter.drawLine(100, 250, 250, 100);
 		// 绘制字符串
 		painter.setColor(new Color("0xff00ff00"));
 		painter.drawString("我是中国人", 100, 100);
-		// 绘制rect
+//		// 绘制rect
 		painter.drawRect(new Rect(100, 200, 300, 400));
-		// 填充rect
+//		// 填充rect
 		painter.setColor(Color.BLUE);
 		painter.fillRect(new Rect(150, 250, 200, 300));
-		// 绘制纹理
+//		// 绘制纹理
 		for (int i = 0; i < list.size(); i++) {
 			painter.drawTexture2D(list.get(i), i * 10, i * 10);
 		}
-		// 再次绘图
+//		// 再次绘图
 		painter.clipRect(240, 160, 480, 320);
 		painter.drawTexture2D(title, 0, 0);
 		painter.clipRect(0, 0, 960, 640);
-		// 再次绘制字符串
-		painter.drawString("我是123wp_g4", 500, 500);
+//		// 再次绘制字符串
+		painter.drawString("123wp_g4", 500, 500);
 	}
 
 }

@@ -6,11 +6,10 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.utils.ImageFactory;
-import com.soyomaker.emulator.utils.Texture2DCache;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
 import com.soyomaker.emulator.utils.SMString;
+import com.soyomaker.emulator.utils.Texture2DFactory;
 
 /**
  * Lua适配器，功能：<br>
@@ -56,11 +55,8 @@ public class LuaAdapter {
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
 			// --注册ImageFactory
-			luaState.pushObjectValue(ImageFactory.getInstance());
-			luaState.setGlobal("smImageFactory");
-			// --注册Texture2DCache
-			luaState.pushObjectValue(Texture2DCache.getInstance());
-			luaState.setGlobal("smTexture2DCache");
+			luaState.pushObjectValue(Texture2DFactory.getInstance());
+			luaState.setGlobal("smTexture2DFactory");
 			// --注册SMAudioPlayer
 			luaState.pushObjectValue(SMAudioPlayer.getInstance());
 			luaState.setGlobal("smAudioPlayer");
