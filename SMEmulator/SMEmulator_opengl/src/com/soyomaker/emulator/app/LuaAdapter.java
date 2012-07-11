@@ -9,7 +9,7 @@ import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.SMAudioPlayer;
 import com.soyomaker.emulator.utils.SMLog;
 import com.soyomaker.emulator.utils.SMString;
-import com.soyomaker.emulator.utils.Texture2DFactory;
+import com.soyomaker.emulator.utils.TextureFactory;
 
 /**
  * Lua适配器，功能：<br>
@@ -55,8 +55,8 @@ public class LuaAdapter {
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
 			// --注册ImageFactory
-			luaState.pushObjectValue(Texture2DFactory.getInstance());
-			luaState.setGlobal("smTexture2DFactory");
+			luaState.pushObjectValue(TextureFactory.getInstance());
+			luaState.setGlobal("smTextureFactory");
 			// --注册SMAudioPlayer
 			luaState.pushObjectValue(SMAudioPlayer.getInstance());
 			luaState.setGlobal("smAudioPlayer");

@@ -150,21 +150,21 @@ public class Painter {
 	/**
 	 * 绘制2D纹理
 	 * 
-	 * @param texture2D
+	 * @param texture
 	 *            要绘制的2D纹理
 	 * @param x
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
 	 */
-	public void drawTexture2D(Texture2D texture2D, int x, int y) {
-		this.drawTexture2D(texture2D, 0, 0, texture2D.getWidth(), texture2D.getHeight(), x, y);
+	public void drawTexture(Texture texture, int x, int y) {
+		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y);
 	}
 
 	/**
 	 * 绘制2D纹理
 	 * 
-	 * @param texture2D
+	 * @param texture
 	 *            要绘制的2D纹理
 	 * @param dx
 	 *            绘制区域在纹理上的x坐标
@@ -179,14 +179,14 @@ public class Painter {
 	 * @param y
 	 *            绘制的位置的 y 坐标
 	 */
-	public void drawTexture2D(Texture2D texture2D, int dx, int dy, int width, int height, int x, int y) {
+	public void drawTexture(Texture texture, int dx, int dy, int width, int height, int x, int y) {
 		glEnable(GL_TEXTURE_2D);
 		Color c = getColor();
 		setColor(Color.WHITE);
-		glBindTexture(GL_TEXTURE_2D, texture2D.getTextureID());
+		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 		glBegin(GL_QUADS);
-		float tw = texture2D.getTextureWidth();
-		float th = texture2D.getTextureHeight();
+		float tw = texture.getTextureWidth();
+		float th = texture.getTextureHeight();
 		glTexCoord2f(dx / tw, dy / th);
 		glVertex2f(x, y);
 		glTexCoord2f((dx + width) / tw, dy / th);

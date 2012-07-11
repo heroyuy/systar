@@ -22,7 +22,7 @@ import org.lwjgl.opengl.EXTTextureMirrorClamp;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-public class Texture2D {
+public class Texture {
 
 	/** The colour model including alpha for the GL image */
 	private static final ColorModel glAlphaColorModel = new ComponentColorModel(
@@ -51,7 +51,7 @@ public class Texture2D {
 	 * @param height
 	 *            纹理高度
 	 */
-	public Texture2D(int width, int height) {
+	public Texture(int width, int height) {
 		initWithBufferedImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
 	}
 
@@ -61,7 +61,7 @@ public class Texture2D {
 	 * @param file
 	 *            纹理文件
 	 */
-	public Texture2D(String file) {
+	public Texture(String file) {
 		try {
 			BufferedImage image = ImageIO.read(new File(file));
 			BufferedImage texImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);

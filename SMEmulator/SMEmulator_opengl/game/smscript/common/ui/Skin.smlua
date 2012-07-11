@@ -10,7 +10,7 @@ Skin.colors={}
 Skin.cursorAnimateAction=nil
 
 function Skin:init(skinPath)
-  local img=smTexture2DFactory:loadTexture(skinPath)
+  local img=smTextureFactory:loadTexture(skinPath)
   self.bg=img:clip(0,0,64,64)
   self.body=img:clip(0,64,64,64)
   
