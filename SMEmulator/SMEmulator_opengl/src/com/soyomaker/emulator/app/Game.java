@@ -40,7 +40,6 @@ public class Game {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
 		// 关闭深度测试
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		// 关闭光照
@@ -48,7 +47,6 @@ public class Game {
 		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		// 视口
 		GL11.glViewport(0, 0, width, height);
 		// 设置投影变换
