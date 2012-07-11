@@ -1,33 +1,17 @@
 package com.soyomaker.emulator.ui;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_POLYGON;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glScaled;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+
+/**
+ *  TODO
+ *   1.drawString应该优化,在游戏启动时加载所有游戏中会用到的字符
+ */
 
 /**
  * 画笔
@@ -48,31 +32,6 @@ public class Painter {
 
 	public Painter() {
 		this.setTextSize(DEFAULT_TEXT_SIZE);
-	}
-
-	/**
-	 * 裁剪区域
-	 * 
-	 * @param x
-	 *            区域x坐标
-	 * @param y
-	 *            区域y坐标
-	 * @param width
-	 *            区域宽度
-	 * @param height
-	 *            区域高度
-	 */
-	public void clipRect(int x, int y, int width, int height) {
-		// 视口
-		glViewport(x, y, width, height);
-		// 设置投影变换
-		glMatrixMode(GL_PROJECTION);
-		// 重置投影矩阵
-		glLoadIdentity();
-		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
-		glOrtho(x, x + width, y + height, y, 1, -1);
-		// 设置投影变换
-		glMatrixMode(GL_MODELVIEW);
 	}
 
 	/**
@@ -126,7 +85,7 @@ public class Painter {
 	}
 
 	/**
-	 * 绘制字符串。TODO 应该优化,在游戏启动时加载所有游戏中会用到的字符
+	 * 绘制字符串
 	 * 
 	 * @param str
 	 *            要绘制的字符串
@@ -150,7 +109,7 @@ public class Painter {
 	/**
 	 * 绘制2D纹理
 	 * 
-	 * @param texture
+	 * @param texture2D
 	 *            要绘制的2D纹理
 	 * @param x
 	 *            绘制的位置的 x 坐标
@@ -164,7 +123,7 @@ public class Painter {
 	/**
 	 * 绘制2D纹理
 	 * 
-	 * @param texture
+	 * @param texture2D
 	 *            要绘制的2D纹理
 	 * @param dx
 	 *            绘制区域在纹理上的x坐标
@@ -336,5 +295,30 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
+	}
+
+	/**
+	 * 裁剪区域
+	 * 
+	 * @param x
+	 *            区域x坐标
+	 * @param y
+	 *            区域y坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 */
+	public void clipRect(int x, int y, int width, int height) {
+		// 视口
+		glViewport(x, y, width, height);
+		// 设置投影变换
+		glMatrixMode(GL_PROJECTION);
+		// 重置投影矩阵
+		glLoadIdentity();
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
+		glOrtho(x, x + width, y + height, y, 1, -1);
+		// 设置投影变换
+		glMatrixMode(GL_MODELVIEW);
 	}
 }

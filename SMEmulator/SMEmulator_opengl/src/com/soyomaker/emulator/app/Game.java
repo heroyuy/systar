@@ -40,6 +40,7 @@ public class Game {
 			e.printStackTrace();
 			System.exit(0);
 		}
+
 		// 关闭深度测试
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		// 关闭光照
@@ -108,7 +109,7 @@ public class Game {
 		}
 		// 显示FPS和内存
 		painter.setColor(Color.WHITE);
-		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
+		String fpsStr = "帧率FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - painter.getTextSize() - 10);
 		// String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
 		// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
