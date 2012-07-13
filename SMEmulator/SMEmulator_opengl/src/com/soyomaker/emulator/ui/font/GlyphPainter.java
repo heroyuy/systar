@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 
 import org.lwjgl.opengl.GL11;
 
-import com.soyomaker.emulator.ui.Color;
-
 /**
  * 字库
  * 
