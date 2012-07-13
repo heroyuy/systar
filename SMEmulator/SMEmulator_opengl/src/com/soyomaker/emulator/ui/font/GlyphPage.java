@@ -13,10 +13,24 @@ import com.soyomaker.emulator.ui.Texture;
  */
 public class GlyphPage {
 
+	private static int WIDTH = 512;
+
+	private static int HEIGHT = 512;
+
+	private Font font = null;
+
 	private Texture texture = null;
 
+	private int fontHeight = 0;
+
 	public GlyphPage(Font font) {
-		// TODO Auto-generated constructor stub
+		this.font = font;
+		this.fontHeight = GlyphPainter.fontHeight(this.font);
+		this.texture = new Texture(WIDTH, HEIGHT);
+	}
+
+	public Rect addChar(char ch) {
+		return null;
 	}
 
 	protected Texture getTexture() {
@@ -25,10 +39,5 @@ public class GlyphPage {
 
 	public boolean isFull() {
 		return false;
-	}
-
-	public Rect addChar(char ch) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

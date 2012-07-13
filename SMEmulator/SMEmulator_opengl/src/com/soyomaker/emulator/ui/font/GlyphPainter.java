@@ -21,7 +21,44 @@ public class GlyphPainter {
 	/**
 	 * 辅助用java画笔
 	 */
-	private Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
+	private static Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
+
+	/**
+	 * 测量字符的宽度
+	 * 
+	 * @param ch
+	 *            字符
+	 * @param font
+	 *            字体
+	 * @return 指定字体的字符的宽度
+	 */
+	public static int charWidth(char ch, Font font) {
+		return gTemp.getFontMetrics(font).charWidth(ch);
+	}
+
+	/**
+	 * 获取字体的高度
+	 * 
+	 * @param font
+	 *            字体
+	 * @return 高度
+	 */
+	public static int fontHeight(Font font) {
+		return gTemp.getFontMetrics(font).getHeight();
+	}
+
+	/**
+	 * 测量字符串的宽度
+	 * 
+	 * @param str
+	 *            字符串
+	 * @param font
+	 *            字体
+	 * @return 指定字体的字符串的宽度
+	 */
+	public static int stringWidth(String str, Font font) {
+		return gTemp.getFontMetrics(font).stringWidth(str);
+	}
 
 	/**
 	 * 当前字形页map
@@ -35,28 +72,6 @@ public class GlyphPainter {
 
 	public GlyphPainter() {
 
-	}
-
-	/**
-	 * 绘制字符串
-	 * 
-	 * @param str
-	 *            字符串
-	 * @param x
-	 *            x坐标
-	 * @param y
-	 *            y坐标
-	 * @param font
-	 *            字体
-	 * @param color
-	 *            颜色
-	 */
-	public void drawString(String str, float x, float y, Font font) {
-		for (int i = 0; i < str.length(); i++) {
-			char ch = str.charAt(i);
-			this.drawChar(ch, x, y, font);
-			x += this.charWidth(ch, font);
-		}
 	}
 
 	/**
@@ -80,6 +95,28 @@ public class GlyphPainter {
 		GL11.glCallList(glyph.getDisplayListID());
 		// 恢复坐标系
 		GL11.glTranslatef(-x, -y, 0);
+	}
+
+	/**
+	 * 绘制字符串
+	 * 
+	 * @param str
+	 *            字符串
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 * @param font
+	 *            字体
+	 * @param color
+	 *            颜色
+	 */
+	public void drawString(String str, float x, float y, Font font) {
+		for (int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			this.drawChar(ch, x, y, font);
+			x += GlyphPainter.charWidth(ch, font);
+		}
 	}
 
 	/**
@@ -108,31 +145,5 @@ public class GlyphPainter {
 			glyphMap.put(charKey, glyph);
 		}
 		return glyph;
-	}
-
-	/**
-	 * 测量字符串的宽度
-	 * 
-	 * @param str
-	 *            字符串
-	 * @param font
-	 *            字体
-	 * @return 指定字体的字符串的宽度
-	 */
-	public int stringWidth(String str, Font font) {
-		return gTemp.getFontMetrics(font).stringWidth(str);
-	}
-
-	/**
-	 * 测量字符的宽度
-	 * 
-	 * @param ch
-	 *            字符
-	 * @param font
-	 *            字体
-	 * @return 指定字体的字符的宽度
-	 */
-	public int charWidth(char ch, Font font) {
-		return gTemp.getFontMetrics(font).charWidth(ch);
 	}
 }
