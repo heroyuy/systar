@@ -22,7 +22,7 @@ public class Game {
 
 	// private LuaAdapter luaAdapter = null;
 
-	private Painter painter = null;
+	private Painter painter = Painter.getInstance();
 
 	private PainterTest pt = null;
 
@@ -128,7 +128,6 @@ public class Game {
 	private void start() {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// luaAdapter = new LuaAdapter(this);
-		painter = new Painter();
 		pt = new PainterTest();
 		t = getTime();
 		// luaAdapter.onStart();

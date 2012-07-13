@@ -4,9 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
+import com.soyomaker.emulator.ui.font.GlyphPainter;
 
 /**
  *  TODO
@@ -20,18 +18,59 @@ import org.newdawn.slick.font.effects.ColorEffect;
  */
 public class Painter {
 
-	/** default text size is 12 */
-	public static final int DEFAULT_TEXT_SIZE = 18;
+	private static Painter instance = new Painter();
+
+	/** default font name is "黑体" */
+	public static final String DEFAULT_FONT_NAME = "黑体";
+
+	/** default font style is PLAIN */
+	public static final int DEFAULT_FONT_STYLE = Font.PLAIN;
+	/** default font size is 18 */
+	public static final int DEFAULT_FONT_SIZE = 18;
+	/** default color is black */
+	public static final Color DEFAULT_COLOR = Color.BLACK;
+
+	public static Painter getInstance() {
+		return instance;
+	}
 
 	private Color color = null;
 
-	private int textSize = 0;
+	private Font font = null;
 
-	/** The fonts to draw to the screen */
-	private UnicodeFont font = null;
+	/**
+	 * 字形绘制委托
+	 */
+	private GlyphPainter glyphPainter = new GlyphPainter();
 
-	public Painter() {
-		this.setTextSize(DEFAULT_TEXT_SIZE);
+	private Painter() {
+		this.setTextSize(DEFAULT_FONT_SIZE);
+		this.setColor(DEFAULT_COLOR);
+	}
+
+	/**
+	 * 裁剪区域
+	 * 
+	 * @param x
+	 *            区域x坐标
+	 * @param y
+	 *            区域y坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 */
+	public void clipRect(int x, int y, int width, int height) {
+		// 视口
+		glViewport(x, y, width, height);
+		// 设置投影变换
+		glMatrixMode(GL_PROJECTION);
+		// 重置投影矩阵
+		glLoadIdentity();
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
+		glOrtho(x, x + width, y + height, y, 1, -1);
+		// 设置投影变换
+		glMatrixMode(GL_MODELVIEW);
 	}
 
 	/**
@@ -46,7 +85,7 @@ public class Painter {
 	 * @param y2
 	 *            终点 y 坐标
 	 */
-	public void drawLine(int x1, int y1, int x2, int y2) {
+	public void drawLine(float x1, float y1, float x2, float y2) {
 		glBegin(GL_LINES);
 		glVertex2f(x1, y1);
 		glVertex2f(x2, y2);
@@ -94,16 +133,8 @@ public class Painter {
 	 * @param y
 	 *            绘制的位置的 y 坐标
 	 */
-	public void drawString(String str, int x, int y) {
-		glEnable(GL_TEXTURE_2D);
-		font.addGlyphs(str);
-		try {
-			font.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		font.drawString(x, y, str, new org.newdawn.slick.Color(getColor().getArgb()));
-		glDisable(GL_TEXTURE_2D);
+	public void drawString(String str, float x, float y) {
+		glyphPainter.drawString(str, x, y, font);
 	}
 
 	/**
@@ -116,8 +147,24 @@ public class Painter {
 	 * @param y
 	 *            绘制的位置的 y 坐标
 	 */
-	public void drawTexture(Texture texture, int x, int y) {
+	public void drawTexture(Texture texture, float x, float y) {
 		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y);
+	}
+
+	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture
+	 *            要绘制的2D纹理
+	 * @param rect
+	 *            绘制区域
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 */
+	public void drawTexture(Texture texture, Rect rect, float x, float y) {
+		this.drawTexture(texture, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), x, y);
 	}
 
 	/**
@@ -138,7 +185,7 @@ public class Painter {
 	 * @param y
 	 *            绘制的位置的 y 坐标
 	 */
-	public void drawTexture(Texture texture, int dx, int dy, int width, int height, int x, int y) {
+	public void drawTexture(Texture texture, float dx, float dy, float width, float height, float x, float y) {
 		glEnable(GL_TEXTURE_2D);
 		Color c = getColor();
 		setColor(Color.WHITE);
@@ -205,7 +252,7 @@ public class Painter {
 	 * @return 绘制文字的尺寸
 	 */
 	public int getTextSize() {
-		return this.textSize;
+		return font.getSize();
 	}
 
 	/**
@@ -263,15 +310,8 @@ public class Painter {
 	 * @param size
 	 *            绘制文字的尺寸
 	 */
-	@SuppressWarnings("unchecked")
 	public void setTextSize(int size) {
-		if (font != null) {
-			font.clearGlyphs();
-		}
-		this.textSize = size;
-		font = new UnicodeFont(new Font("黑体", Font.PLAIN, this.getTextSize()));
-		// Requires at least one effect
-		font.getEffects().add(new ColorEffect(java.awt.Color.white));
+		font = new Font(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, size);
 	}
 
 	/**
@@ -282,7 +322,7 @@ public class Painter {
 	 * @return 字符串的宽度
 	 */
 	public int stringWidth(String str) {
-		return font.getWidth(str);
+		return glyphPainter.stringWidth(str, font);
 	}
 
 	/**
@@ -295,30 +335,5 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
-	}
-
-	/**
-	 * 裁剪区域
-	 * 
-	 * @param x
-	 *            区域x坐标
-	 * @param y
-	 *            区域y坐标
-	 * @param width
-	 *            区域宽度
-	 * @param height
-	 *            区域高度
-	 */
-	public void clipRect(int x, int y, int width, int height) {
-		// 视口
-		glViewport(x, y, width, height);
-		// 设置投影变换
-		glMatrixMode(GL_PROJECTION);
-		// 重置投影矩阵
-		glLoadIdentity();
-		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
-		glOrtho(x, x + width, y + height, y, 1, -1);
-		// 设置投影变换
-		glMatrixMode(GL_MODELVIEW);
 	}
 }
