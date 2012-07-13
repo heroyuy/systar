@@ -44,8 +44,7 @@ public class Painter {
 	private GlyphPainter glyphPainter = new GlyphPainter();
 
 	private Painter() {
-		this.setTextSize(DEFAULT_FONT_SIZE);
-		this.setColor(DEFAULT_COLOR);
+
 	}
 
 	/**
@@ -154,22 +153,6 @@ public class Painter {
 	/**
 	 * 绘制2D纹理
 	 * 
-	 * @param texture
-	 *            要绘制的2D纹理
-	 * @param rect
-	 *            绘制区域
-	 * @param x
-	 *            绘制的位置的 x 坐标
-	 * @param y
-	 *            绘制的位置的 y 坐标
-	 */
-	public void drawTexture(Texture texture, Rect rect, float x, float y) {
-		this.drawTexture(texture, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), x, y);
-	}
-
-	/**
-	 * 绘制2D纹理
-	 * 
 	 * @param texture2D
 	 *            要绘制的2D纹理
 	 * @param dx
@@ -204,6 +187,22 @@ public class Painter {
 		glEnd();
 		setColor(c);
 		glDisable(GL_TEXTURE_2D);
+	}
+
+	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture
+	 *            要绘制的2D纹理
+	 * @param rect
+	 *            绘制区域
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 */
+	public void drawTexture(Texture texture, Rect rect, float x, float y) {
+		this.drawTexture(texture, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), x, y);
 	}
 
 	/**
@@ -253,6 +252,14 @@ public class Painter {
 	 */
 	public int getTextSize() {
 		return font.getSize();
+	}
+
+	/**
+	 * 重置画笔
+	 */
+	public void reset() {
+		this.setTextSize(DEFAULT_FONT_SIZE);
+		this.setColor(DEFAULT_COLOR);
 	}
 
 	/**

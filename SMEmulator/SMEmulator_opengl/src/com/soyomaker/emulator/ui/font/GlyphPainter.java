@@ -3,8 +3,12 @@ package com.soyomaker.emulator.ui.font;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
+
+import com.soyomaker.emulator.ui.Rect;
 
 /**
  * 字库
@@ -14,7 +18,20 @@ import org.lwjgl.opengl.GL11;
  */
 public class GlyphPainter {
 
+	/**
+	 * 辅助用java画笔
+	 */
 	private Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
+
+	/**
+	 * 当前字形页map
+	 */
+	private Map<String, GlyphPage> glyphPageMap = new HashMap<String, GlyphPage>();
+
+	/**
+	 * 字库
+	 */
+	private Map<String, Glyph> glyphMap = new HashMap<String, Glyph>();
 
 	public GlyphPainter() {
 
@@ -75,8 +92,22 @@ public class GlyphPainter {
 	 * @return 指定字体的字符的字形
 	 */
 	private Glyph getGlyph(char ch, Font font) {
-		// TODO Auto-generated method stub
-		return null;
+		String charKey = ch + "";
+		Glyph glyph = glyphMap.get(charKey);
+		if (glyph == null) {
+			String separator = "|";
+			// name style size 唯一确定一个字体
+			String fontKey = font.getName() + separator + font.getStyle() + separator + font.getSize();
+			GlyphPage glyphPage = glyphPageMap.get(fontKey);
+			if (glyphPage == null || glyphPage.isFull()) {
+				glyphPage = new GlyphPage(font);
+				glyphPageMap.put(fontKey, glyphPage);
+			}
+			Rect rect = glyphPage.addChar(ch);
+			glyph = new Glyph(glyphPage, rect);
+			glyphMap.put(charKey, glyph);
+		}
+		return glyph;
 	}
 
 	/**

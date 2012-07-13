@@ -128,6 +128,7 @@ public class Game {
 	private void start() {
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// luaAdapter = new LuaAdapter(this);
+		painter.reset();
 		pt = new PainterTest();
 		t = getTime();
 		// luaAdapter.onStart();
