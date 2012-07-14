@@ -23,6 +23,13 @@ public class GlyphPainter {
 	 */
 	private static Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
 
+	/**
+	 * 获取字符的key
+	 * 
+	 * @param ch
+	 *            字符
+	 * @return key
+	 */
 	private static String charKey(char ch) {
 		return ch + "";
 	}
@@ -51,6 +58,13 @@ public class GlyphPainter {
 		return gTemp.getFontMetrics(font).getHeight();
 	}
 
+	/**
+	 * 获取字体的key
+	 * 
+	 * @param font
+	 *            字体
+	 * @return key
+	 */
 	private static String fontKey(Font font) {
 		// name style size 唯一确定一个字体
 		String separator = "|";
