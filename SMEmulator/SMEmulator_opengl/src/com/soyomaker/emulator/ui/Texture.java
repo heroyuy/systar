@@ -33,6 +33,18 @@ public class Texture {
 	private static final ColorModel glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
 			new int[] { 8, 8, 8, 0 }, false, false, ComponentColorModel.OPAQUE, DataBuffer.TYPE_BYTE);
 
+	/**
+	 * 将图像转换为ByteBuffer
+	 * 
+	 * @param image
+	 *            图像
+	 * @return 图像数据的ByteBuffer
+	 */
+	public static ByteBuffer imageToByteBuffer(BufferedImage image) {
+		return null;
+
+	}
+
 	private int textureID = 0;
 
 	private int width = 0;
@@ -179,6 +191,24 @@ public class Texture {
 		}
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.textureWidth, this.textureHeight, 0, GL11.GL_RGBA,
 				GL11.GL_UNSIGNED_BYTE, imageBuffer);
+	}
+
+	/**
+	 * 设置纹理上的数据
+	 * 
+	 * @param byteBuffer
+	 *            数据
+	 * @param x
+	 *            替换区域的x坐标
+	 * @param y
+	 *            替换区域的y坐标
+	 * @param width
+	 *            替换区域的宽度
+	 * @param height
+	 *            替换区域的高度
+	 */
+	public void setData(ByteBuffer byteBuffer, int x, int y, int width, int height) {
+
 	}
 
 }

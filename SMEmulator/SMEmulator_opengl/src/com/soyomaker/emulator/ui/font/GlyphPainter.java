@@ -136,11 +136,12 @@ public class GlyphPainter {
 			// name style size 唯一确定一个字体
 			String fontKey = font.getName() + separator + font.getStyle() + separator + font.getSize();
 			GlyphPage glyphPage = glyphPageMap.get(fontKey);
-			if (glyphPage == null || glyphPage.isFull()) {
+			Rect rect = null;
+			if (glyphPage == null || (rect = glyphPage.addChar(ch)) == null) {
 				glyphPage = new GlyphPage(font);
 				glyphPageMap.put(fontKey, glyphPage);
+				rect = glyphPage.addChar(ch);
 			}
-			Rect rect = glyphPage.addChar(ch);
 			glyph = new Glyph(glyphPage, rect);
 			glyphMap.put(charKey, glyph);
 		}
