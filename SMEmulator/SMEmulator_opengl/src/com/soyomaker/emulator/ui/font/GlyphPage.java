@@ -31,6 +31,8 @@ public class GlyphPage {
 
 	private int cursorY = 0;
 
+	boolean test = false;
+
 	/**
 	 * 创建新的字形页
 	 * 
@@ -42,8 +44,6 @@ public class GlyphPage {
 		this.fontHeight = GlyphPainter.fontHeight(this.font);
 		this.texture = new Texture(WIDTH, HEIGHT);
 	}
-
-	boolean test = false;
 
 	/**
 	 * 往字形页中添加字符
@@ -67,7 +67,6 @@ public class GlyphPage {
 			this.texture.setData(Texture.imageToByteBuffer(charImage), (int) rect.getX(), (int) rect.getY(),
 					(int) rect.getWidth(), (int) rect.getHeight());
 			g.dispose();
-
 		}
 		return rect;
 	}
@@ -87,15 +86,17 @@ public class GlyphPage {
 		int charWidth = GlyphPainter.charWidth(ch, this.font);
 		// 横向尝试
 		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight <= HEIGHT) {
+			Rect rect = new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
 			this.cursorX += charWidth;
-			return new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
+			return rect;
 		}
 		// 横向尝试失败则竖向再尝试一次
 		this.cursorX = 0;
 		this.cursorY += this.fontHeight;
 		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight <= HEIGHT) {
+			Rect rect = new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
 			this.cursorX += charWidth;
-			return new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
+			return rect;
 		}
 		// 两次尝试均失败则返回null
 		return null;

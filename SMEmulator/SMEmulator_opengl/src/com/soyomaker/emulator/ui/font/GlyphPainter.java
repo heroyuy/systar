@@ -23,6 +23,10 @@ public class GlyphPainter {
 	 */
 	private static Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
 
+	private static String charKey(char ch) {
+		return ch + "";
+	}
+
 	/**
 	 * 测量字符的宽度
 	 * 
@@ -45,10 +49,6 @@ public class GlyphPainter {
 	 */
 	public static int fontHeight(Font font) {
 		return gTemp.getFontMetrics(font).getHeight();
-	}
-
-	private static String charKey(char ch) {
-		return ch + "";
 	}
 
 	private static String fontKey(Font font) {

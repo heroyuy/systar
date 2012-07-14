@@ -226,7 +226,7 @@ public class Texture {
 			textureHeight *= 2;
 		}
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
-		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, textureWidth, textureHeight, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
-				byteBuffer);
+		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, textureWidth, textureHeight, GL11.GL_RGBA,
+				GL11.GL_UNSIGNED_BYTE, byteBuffer);
 	}
 }
