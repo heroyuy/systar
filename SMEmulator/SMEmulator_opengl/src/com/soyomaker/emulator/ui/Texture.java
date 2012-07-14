@@ -5,7 +5,14 @@ import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glFramebufferTexture2DEXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glGenFramebuffersEXT;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -200,14 +207,23 @@ public class Texture {
 
 		}
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
-		GL11.glPushAttrib(GL11.GL_VIEWPORT_BIT);
-		GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
+		// 视口
+		glViewport(0, 0, this.getWidth(), this.getHeight());
+		// 设置投影变换
+		glMatrixMode(GL_PROJECTION);
+		// 重置投影矩阵
+		glLoadIdentity();
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在左上角）
+		glOrtho(0, this.getWidth(), 0, this.getHeight(), 1, -1);
+		// 设置模型变换
+		glMatrixMode(GL_MODELVIEW);
 		return Painter.getInstance();
 	}
 
 	public void disposePainter() {
+		GL11.glFlush();
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		GL11.glPopAttrib();
+		Painter.getInstance().clipRect(0, 0, 960, 640);
 	}
 
 }

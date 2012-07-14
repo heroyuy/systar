@@ -12,7 +12,7 @@ public class PainterTest {
 
 	private List<Texture> list = new ArrayList<Texture>();
 
-	private Texture title = new Texture("game/image/face/关平.png");
+	private Texture title = new Texture("game/image/title/001-Title01.jpg");
 
 	public PainterTest() {
 		// list.add(new Texture("game/image/title/001-Title01.jpg"));
@@ -29,6 +29,10 @@ public class PainterTest {
 		Painter p = title.createPainter();
 		p.setColor(Color.CYAN);
 		p.fillRect(10, 10, 200, 100);
+//		title.disposePainter();
+//		p = title.createPainter();
+		p.setColor(Color.BLUE);
+		p.drawString("FBO测试", 0, 0);
 		title.disposePainter();
 	}
 
