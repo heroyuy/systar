@@ -31,8 +31,6 @@ public class GlyphPage {
 
 	private int cursorY = 0;
 
-	boolean test = false;
-
 	/**
 	 * 创建新的字形页
 	 * 
