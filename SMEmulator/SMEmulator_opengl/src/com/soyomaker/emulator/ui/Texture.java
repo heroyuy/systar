@@ -1,5 +1,12 @@
 package com.soyomaker.emulator.ui;
 
+import static org.lwjgl.opengl.EXTFramebufferObject.GL_COLOR_ATTACHMENT0_EXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.glFramebufferTexture2DEXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.glGenFramebuffersEXT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
@@ -76,6 +83,8 @@ public class Texture {
 		return imageBuffer;
 
 	}
+
+	private int frameBufferID = 0;
 
 	private int textureID = 0;
 
@@ -182,4 +191,23 @@ public class Texture {
 		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
 				byteBuffer);
 	}
+
+	public Painter createPainter() {
+		if (this.frameBufferID == 0) {
+			this.frameBufferID = glGenFramebuffersEXT();
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
+			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.textureID, 0);
+
+		}
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
+		GL11.glPushAttrib(GL11.GL_VIEWPORT_BIT);
+		GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
+		return Painter.getInstance();
+	}
+
+	public void disposePainter() {
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+		GL11.glPopAttrib();
+	}
+
 }

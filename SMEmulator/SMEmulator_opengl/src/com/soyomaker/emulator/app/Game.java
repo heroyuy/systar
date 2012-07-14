@@ -88,7 +88,7 @@ public class Game {
 		// 重置矩阵
 		GL11.glLoadIdentity();
 		// 清屏
-		glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		glClear(GL11.GL_COLOR_BUFFER_BIT );
 		// 游戏绘制
 		// luaAdapter.paint(painter);
 		pt.test(painter);

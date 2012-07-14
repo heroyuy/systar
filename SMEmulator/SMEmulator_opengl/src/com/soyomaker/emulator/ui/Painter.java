@@ -82,9 +82,9 @@ public class Painter {
 		glMatrixMode(GL_PROJECTION);
 		// 重置投影矩阵
 		glLoadIdentity();
-		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
+		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在左上角）
 		glOrtho(x, x + width, y + height, y, 1, -1);
-		// 设置投影变换
+		// 设置模型变换
 		glMatrixMode(GL_MODELVIEW);
 	}
 
