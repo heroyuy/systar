@@ -188,8 +188,8 @@ public class Painter {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 		glBegin(GL_QUADS);
-		float tw = texture.getTextureWidth();
-		float th = texture.getTextureHeight();
+		float tw = texture.getWidth();
+		float th = texture.getHeight();
 		glTexCoord2f(dx / tw, dy / th);
 		glVertex2f(x, y);
 		glTexCoord2f((dx + width) / tw, dy / th);

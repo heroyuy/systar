@@ -47,21 +47,13 @@ public class Texture {
 		BufferedImage texImage = null;
 		int width = image.getWidth();
 		int height = image.getHeight();
-		int textureWidth = 2;
-		int textureHeight = 2;
-		while (textureWidth < width) {
-			textureWidth *= 2;
-		}
-		while (textureHeight < height) {
-			textureHeight *= 2;
-		}
 		// 创建一个raster作为数据源
 		boolean hasAlpha = image.getColorModel().hasAlpha();
 		if (hasAlpha) {
-			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, textureWidth, textureHeight, 4, null);
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, width, height, 4, null);
 			texImage = new BufferedImage(glAlphaColorModel, raster, false, new Hashtable());
 		} else {
-			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, textureWidth, textureHeight, 3, null);
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, width, height, 3, null);
 			texImage = new BufferedImage(glColorModel, raster, false, new Hashtable());
 		}
 		// 复制数据
@@ -70,7 +62,7 @@ public class Texture {
 		if (hasAlpha) {
 			// 兼容mac系统需要进行下面操作
 			g.setColor(new java.awt.Color(0f, 0f, 0f, 0f));
-			g.fillRect(0, 0, textureWidth, textureHeight);
+			g.fillRect(0, 0, width, height);
 		}
 		g.drawImage(image, 0, 0, null);
 		// 创建ByteBuffer
@@ -90,10 +82,6 @@ public class Texture {
 	private int width = 0;
 
 	private int height = 0;
-
-	private int textureWidth = 0;
-
-	private int textureHeight = 0;
 
 	/**
 	 * 创建空白纹理
@@ -136,30 +124,12 @@ public class Texture {
 	}
 
 	/**
-	 * 获取纹理高度
-	 * 
-	 * @return 纹理高度
-	 */
-	protected int getTextureHeight() {
-		return textureHeight;
-	}
-
-	/**
 	 * 获取纹理的ID
 	 * 
 	 * @return 纹理的ID
 	 */
 	protected int getTextureID() {
 		return textureID;
-	}
-
-	/**
-	 * 获取纹理宽度
-	 * 
-	 * @return 纹理宽度
-	 */
-	protected int getTextureWidth() {
-		return textureWidth;
 	}
 
 	/**
@@ -175,15 +145,6 @@ public class Texture {
 		// 纹理有效高度
 		this.width = image.getWidth();
 		this.height = image.getHeight();
-		// TODO 计算纹理尺寸，算法可改进
-		this.textureWidth = 2;
-		this.textureHeight = 2;
-		while (this.textureWidth < this.width) {
-			this.textureWidth *= 2;
-		}
-		while (this.textureHeight < this.height) {
-			this.textureHeight *= 2;
-		}
 		// 创建纹理
 		this.textureID = GL11.glGenTextures();
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
@@ -198,7 +159,7 @@ public class Texture {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 		}
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.textureWidth, this.textureHeight, 0, GL11.GL_RGBA,
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.width, this.height, 0, GL11.GL_RGBA,
 				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
 	}
 
@@ -217,16 +178,8 @@ public class Texture {
 	 *            替换区域的高度
 	 */
 	public void setData(ByteBuffer byteBuffer, int x, int y, int width, int height) {
-		int textureWidth = 2;
-		int textureHeight = 2;
-		while (textureWidth < width) {
-			textureWidth *= 2;
-		}
-		while (textureHeight < height) {
-			textureHeight *= 2;
-		}
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
-		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, textureWidth, textureHeight, GL11.GL_RGBA,
-				GL11.GL_UNSIGNED_BYTE, byteBuffer);
+		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
+				byteBuffer);
 	}
 }
