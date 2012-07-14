@@ -28,11 +28,6 @@ import java.awt.Font;
 import com.soyomaker.emulator.ui.font.GlyphPainter;
 
 /**
- *  TODO
- *   1.drawString应该优化,在游戏启动时加载所有游戏中会用到的字符
- */
-
-/**
  * 画笔
  * 
  * @author wp_g4
@@ -191,8 +186,6 @@ public class Painter {
 	 */
 	public void drawTexture(Texture texture, float dx, float dy, float width, float height, float x, float y) {
 		glEnable(GL_TEXTURE_2D);
-		Color c = getColor();
-		setColor(Color.WHITE);
 		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 		glBegin(GL_QUADS);
 		float tw = texture.getTextureWidth();
@@ -206,7 +199,6 @@ public class Painter {
 		glTexCoord2f(dx / tw, (dy + height) / th);
 		glVertex2f(x, y + height);
 		glEnd();
-		setColor(c);
 		glDisable(GL_TEXTURE_2D);
 	}
 
