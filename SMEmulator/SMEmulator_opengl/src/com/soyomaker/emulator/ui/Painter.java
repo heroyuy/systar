@@ -48,8 +48,8 @@ public class Painter {
 	public static final int DEFAULT_FONT_STYLE = Font.PLAIN;
 	/** default font size is 18 */
 	public static final int DEFAULT_FONT_SIZE = 18;
-	/** default color is black */
-	public static final Color DEFAULT_COLOR = Color.BLACK;
+	/** default color is white */
+	public static final Color DEFAULT_COLOR = Color.WHITE;
 
 	public static Painter getInstance() {
 		return instance;

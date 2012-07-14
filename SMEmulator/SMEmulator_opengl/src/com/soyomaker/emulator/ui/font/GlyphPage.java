@@ -1,7 +1,9 @@
 package com.soyomaker.emulator.ui.font;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import com.soyomaker.emulator.ui.Rect;
@@ -41,6 +43,8 @@ public class GlyphPage {
 		this.texture = new Texture(WIDTH, HEIGHT);
 	}
 
+	boolean test = false;
+
 	/**
 	 * 往字形页中添加字符
 	 * 
@@ -55,12 +59,15 @@ public class GlyphPage {
 			// 将字符绘制到字形页上
 			BufferedImage charImage = new BufferedImage(GlyphPainter.charWidth(ch, this.font), this.fontHeight,
 					BufferedImage.TYPE_INT_ARGB);
-			Graphics g = charImage.getGraphics();
+			Graphics2D g = (Graphics2D) charImage.getGraphics();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setFont(this.font);
-			g.drawString(ch + "", 0, 0);
+			g.setColor(Color.white);
+			g.drawString(ch + "", 0, charImage.getHeight() - g.getFontMetrics().getDescent());
 			this.texture.setData(Texture.imageToByteBuffer(charImage), (int) rect.getX(), (int) rect.getY(),
 					(int) rect.getWidth(), (int) rect.getHeight());
 			g.dispose();
+
 		}
 		return rect;
 	}
@@ -79,13 +86,15 @@ public class GlyphPage {
 	private Rect searchRect(char ch) {
 		int charWidth = GlyphPainter.charWidth(ch, this.font);
 		// 横向尝试
-		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight < HEIGHT) {
+		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight <= HEIGHT) {
+			this.cursorX += charWidth;
 			return new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
 		}
 		// 横向尝试失败则竖向再尝试一次
 		this.cursorX = 0;
 		this.cursorY += this.fontHeight;
-		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight < HEIGHT) {
+		if (this.cursorX + charWidth <= WIDTH && this.cursorY + this.fontHeight <= HEIGHT) {
+			this.cursorX += charWidth;
 			return new Rect(this.cursorX, this.cursorY, charWidth, this.fontHeight);
 		}
 		// 两次尝试均失败则返回null

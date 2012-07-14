@@ -40,8 +40,48 @@ public class Texture {
 	 *            图像
 	 * @return 图像数据的ByteBuffer
 	 */
+	@SuppressWarnings("rawtypes")
 	public static ByteBuffer imageToByteBuffer(BufferedImage image) {
-		return null;
+		ByteBuffer imageBuffer = null;
+		WritableRaster raster = null;
+		BufferedImage texImage = null;
+		int width = image.getWidth();
+		int height = image.getHeight();
+		int textureWidth = 2;
+		int textureHeight = 2;
+		while (textureWidth < width) {
+			textureWidth *= 2;
+		}
+		while (textureHeight < height) {
+			textureHeight *= 2;
+		}
+		// 创建一个raster作为数据源
+		boolean hasAlpha = image.getColorModel().hasAlpha();
+		if (hasAlpha) {
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, textureWidth, textureHeight, 4, null);
+			texImage = new BufferedImage(glAlphaColorModel, raster, false, new Hashtable());
+		} else {
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, textureWidth, textureHeight, 3, null);
+			texImage = new BufferedImage(glColorModel, raster, false, new Hashtable());
+		}
+		// 复制数据
+		Graphics2D g = (Graphics2D) texImage.getGraphics();
+
+		if (hasAlpha) {
+			// 兼容mac系统需要进行下面操作
+			g.setColor(new java.awt.Color(0f, 0f, 0f, 0f));
+			g.fillRect(0, 0, textureWidth, textureHeight);
+		}
+		g.drawImage(image, 0, 0, null);
+		// 创建ByteBuffer
+		byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
+		imageBuffer = ByteBuffer.allocateDirect(data.length);
+		imageBuffer.order(ByteOrder.nativeOrder());
+		imageBuffer.put(data, 0, data.length);
+		imageBuffer.flip();
+		g.dispose();
+
+		return imageBuffer;
 
 	}
 
@@ -131,11 +171,7 @@ public class Texture {
 		return width;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void initWithBufferedImage(BufferedImage image) {
-		ByteBuffer imageBuffer = null;
-		WritableRaster raster = null;
-		BufferedImage texImage = null;
 		// 纹理有效高度
 		this.width = image.getWidth();
 		this.height = image.getHeight();
@@ -148,33 +184,6 @@ public class Texture {
 		while (this.textureHeight < this.height) {
 			this.textureHeight *= 2;
 		}
-		// 创建一个raster作为数据源
-		boolean hasAlpha = image.getColorModel().hasAlpha();
-		if (hasAlpha) {
-			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, this.textureWidth, this.textureHeight, 4,
-					null);
-			texImage = new BufferedImage(glAlphaColorModel, raster, false, new Hashtable());
-		} else {
-			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, this.textureWidth, this.textureHeight, 3,
-					null);
-			texImage = new BufferedImage(glColorModel, raster, false, new Hashtable());
-		}
-		// 复制数据
-		Graphics2D g = (Graphics2D) texImage.getGraphics();
-
-		if (hasAlpha) {
-			// 兼容mac系统需要进行下面操作
-			g.setColor(new java.awt.Color(0f, 0f, 0f, 0f));
-			g.fillRect(0, 0, this.textureWidth, this.textureHeight);
-		}
-		g.drawImage(image, 0, 0, null);
-		// 创建ByteBuffer
-		byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
-		imageBuffer = ByteBuffer.allocateDirect(data.length);
-		imageBuffer.order(ByteOrder.nativeOrder());
-		imageBuffer.put(data, 0, data.length);
-		imageBuffer.flip();
-		g.dispose();
 		// 创建纹理
 		this.textureID = GL11.glGenTextures();
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
@@ -190,7 +199,7 @@ public class Texture {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 		}
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.textureWidth, this.textureHeight, 0, GL11.GL_RGBA,
-				GL11.GL_UNSIGNED_BYTE, imageBuffer);
+				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
 	}
 
 	/**
@@ -208,7 +217,16 @@ public class Texture {
 	 *            替换区域的高度
 	 */
 	public void setData(ByteBuffer byteBuffer, int x, int y, int width, int height) {
-
+		int textureWidth = 2;
+		int textureHeight = 2;
+		while (textureWidth < width) {
+			textureWidth *= 2;
+		}
+		while (textureHeight < height) {
+			textureHeight *= 2;
+		}
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
+		GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, x, y, textureWidth, textureHeight, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
+				byteBuffer);
 	}
-
 }

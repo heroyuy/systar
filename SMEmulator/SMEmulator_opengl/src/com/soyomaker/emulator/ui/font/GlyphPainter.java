@@ -47,6 +47,17 @@ public class GlyphPainter {
 		return gTemp.getFontMetrics(font).getHeight();
 	}
 
+	private static String charKey(char ch) {
+		return ch + "";
+	}
+
+	private static String fontKey(Font font) {
+		// name style size 唯一确定一个字体
+		String separator = "|";
+		String fontKey = font.getName() + separator + font.getStyle() + separator + font.getSize();
+		return fontKey;
+	}
+
 	/**
 	 * 测量字符串的宽度
 	 * 
@@ -61,14 +72,14 @@ public class GlyphPainter {
 	}
 
 	/**
-	 * 当前字形页map
+	 * 当前字形页map 按字体索引
 	 */
 	private Map<String, GlyphPage> glyphPageMap = new HashMap<String, GlyphPage>();
 
 	/**
-	 * 字库
+	 * 字库 按字体-字符 索引
 	 */
-	private Map<String, Glyph> glyphMap = new HashMap<String, Glyph>();
+	private Map<String, Map<String, Glyph>> glyphMaps = new HashMap<String, Map<String, Glyph>>();
 
 	public GlyphPainter() {
 
@@ -129,12 +140,15 @@ public class GlyphPainter {
 	 * @return 指定字体的字符的字形
 	 */
 	private Glyph getGlyph(char ch, Font font) {
-		String charKey = ch + "";
+		String fontKey = GlyphPainter.fontKey(font);
+		String charKey = GlyphPainter.charKey(ch);
+		Map<String, Glyph> glyphMap = glyphMaps.get(fontKey);
+		if (glyphMap == null) {
+			glyphMap = new HashMap<String, Glyph>();
+			glyphMaps.put(fontKey, glyphMap);
+		}
 		Glyph glyph = glyphMap.get(charKey);
 		if (glyph == null) {
-			String separator = "|";
-			// name style size 唯一确定一个字体
-			String fontKey = font.getName() + separator + font.getStyle() + separator + font.getSize();
 			GlyphPage glyphPage = glyphPageMap.get(fontKey);
 			Rect rect = null;
 			if (glyphPage == null || (rect = glyphPage.addChar(ch)) == null) {
