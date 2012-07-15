@@ -159,7 +159,6 @@ public class Texture {
 		p.stopPaint();
 		int rgba = buffer.getInt();
 		Color c = Color.colorFromRGBA(rgba);
-		System.out.println(c);
 		return c;
 	}
 

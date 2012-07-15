@@ -34,7 +34,7 @@ function clsSceneTitle:onStart()
   --背景大图 
   self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   if Dictionary.config.titleImg then
-    self.bgLayer.image=Image:getImage(Dictionary.config.titleImg)
+    self.bgLayer.image=smTextureFactory:loadTexture(Dictionary.config.titleImg)
   end
   --主菜单
   self.menu=clsUITable:standardMenu(screenWidth/2,screenHeight-120,200,120,self.menuItems)

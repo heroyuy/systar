@@ -426,7 +426,7 @@ public class Painter {
 	 * 还原状态
 	 */
 	private void restore() {
-		System.out.println(this + " restore");
+//		System.out.println(this + " restore");
 		// (1)视口变换
 		glPopAttrib();
 		// (2)投影变换
@@ -443,7 +443,7 @@ public class Painter {
 	 * 保存状态
 	 */
 	private void save() {
-		System.out.println(this + " save");
+//		System.out.println(this + " save");
 		// (1)视口变换
 		glPushAttrib(GL_VIEWPORT_BIT);
 		// (2)投影变换

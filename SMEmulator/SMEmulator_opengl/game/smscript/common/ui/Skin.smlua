@@ -94,7 +94,7 @@ function Skin:createFrame(width,height)
 end
 
 function Skin:createBgWithFrame(width,height)
-  local img=Image:createImage(width,height)
+  local img=smTextureFactory:createTexture(width,height)
   local painter=img:getPainter()
   local bg=self:createBg(width-8,height-8)
   local frame=self:createFrame(width,height)
