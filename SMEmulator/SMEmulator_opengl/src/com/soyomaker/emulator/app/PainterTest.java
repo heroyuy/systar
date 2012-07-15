@@ -48,9 +48,9 @@ public class PainterTest {
 		}
 		painter.setColor(Color.WHITE);
 		// 再次绘图
-//		painter.clipRect(240, 160, 480, 320);
-//		painter.drawTexture(title, 10, 10);
-//		painter.clipRect(0, 0, 960, 640);
+		// painter.clipRect(240, 160, 480, 320);
+		// painter.drawTexture(title, 10, 10);
+		// painter.clipRect(0, 0, 960, 640);
 		// 再次绘制字符串
 		painter.setColor(Color.BLUE);
 		painter.drawString("我是123wp_g4", 500, 500);
