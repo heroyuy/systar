@@ -155,7 +155,7 @@ function clsUILayer:paintLayer(painter)
     painter:fillRect(0, 0, self.width, self.height)
   end
   if self.image then
-    painter:drawTexture(self.image, 0, 0)
+    painter:drawTexture(self.image, 0, 0,UIConst.anchor.LT)
   end
 end
 

@@ -44,7 +44,7 @@ public class PainterTest {
 		painter.fillRect(new Rect(150, 250, 200, 300));
 		// 绘制纹理
 		for (int i = 0; i < list.size(); i++) {
-			painter.drawTexture(list.get(i), i * 10, i * 10);
+			painter.drawTexture(list.get(i), i * 10, i * 10, Painter.LT);
 		}
 		painter.setColor(Color.WHITE);
 		// 再次绘图

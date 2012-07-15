@@ -43,6 +43,43 @@ import com.soyomaker.emulator.ui.font.GlyphPainter;
 public class Painter {
 
 	/**
+	 * 锚点：水平左对齐，竖向顶对齐
+	 */
+	public static final int LT = 0;
+	/**
+	 * 锚点：水平左对齐，竖向居中对齐
+	 */
+	public static final int LV = 1;
+	/**
+	 * 锚点：水平左对齐，竖向底对齐
+	 */
+	public static final int LB = 2;
+	/**
+	 * 锚点：水平居中对齐，竖向顶对齐
+	 */
+	public static final int HT = 3;
+	/**
+	 * 锚点：水平居中对齐，竖向居中对齐
+	 */
+	public static final int HV = 4;
+	/**
+	 * 锚点：水平居中对齐，竖向底对齐
+	 */
+	public static final int HB = 5;
+	/**
+	 * 锚点：水平右对齐，竖向顶对齐
+	 */
+	public static final int RT = 6;
+	/**
+	 * 锚点：水平右对齐，竖向居中对齐
+	 */
+	public static final int RV = 7;
+	/**
+	 * 锚点：水平右对齐，竖向底对齐
+	 */
+	public static final int RB = 8;
+
+	/**
 	 * 系统帧缓冲ID
 	 */
 	private static final int SYSTEM_FRAMEBUFFER_ID = 0;
@@ -81,7 +118,7 @@ public class Painter {
 	 */
 	private static void popPainter() {
 		curPainter = painterStack.pop();
-//		System.out.println(curPainter + " 出栈");
+		// System.out.println(curPainter + " 出栈");
 		// 切换painter
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, curPainter.frameBufferID);
 		// (1)视口变换
@@ -101,7 +138,7 @@ public class Painter {
 	 * 保存状态
 	 */
 	private static void pushPainter() {
-//		System.out.println(curPainter + " 入栈");
+		// System.out.println(curPainter + " 入栈");
 		painterStack.push(curPainter);
 		// (1)视口变换
 		glPushAttrib(GL_VIEWPORT_BIT);
@@ -289,9 +326,11 @@ public class Painter {
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
 	 */
-	public void drawTexture(Texture texture, float x, float y) {
-		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y);
+	public void drawTexture(Texture texture, float x, float y, int anchor) {
+		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y, anchor);
 	}
 
 	/**
@@ -311,8 +350,13 @@ public class Painter {
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
 	 */
-	public void drawTexture(Texture texture, float dx, float dy, float width, float height, float x, float y) {
+	public void drawTexture(Texture texture, float dx, float dy, float width, float height, float x, float y, int anchor) {
+		float[] xy = convert(x, y, width, height, anchor);
+		x = xy[0];
+		y = xy[1];
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 		glBegin(GL_QUADS);
@@ -341,9 +385,11 @@ public class Painter {
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
 	 */
-	public void drawTexture(Texture texture, Rect rect, float x, float y) {
-		this.drawTexture(texture, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), x, y);
+	public void drawTexture(Texture texture, Rect rect, float x, float y, int anchor) {
+		this.drawTexture(texture, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), x, y, anchor);
 	}
 
 	/**
@@ -574,6 +620,74 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
+	}
+
+	/**
+	 * 坐标转换
+	 * 
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 * @param anchor
+	 *            锚点
+	 * @return 新的坐标
+	 */
+	private float[] convert(float x, float y, float width, float height, int anchor) {
+		float[] xy = { 0, 0 };
+		switch (anchor) {
+		case Painter.LT: {
+			xy[0] = x;
+			xy[1] = y;
+		}
+			break;
+		case Painter.LV: {
+			xy[0] = x;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.LB: {
+			xy[0] = x;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.HT: {
+			xy[0] = x - width / 2;
+			xy[1] = y;
+		}
+			break;
+		case Painter.HV: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.HB: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.RT: {
+
+			xy[0] = x - width;
+			xy[1] = y;
+		}
+			break;
+		case Painter.RV: {
+			xy[0] = x - width;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.RB: {
+			xy[0] = x - width;
+			xy[1] = y - height;
+		}
+			break;
+		}
+		return xy;
 	}
 
 }

@@ -65,7 +65,7 @@ function Skin:createBody(width,height)
   painter:startPaint()
   local num=math.ceil(height/2)
   for i=1,num do
-    painter:drawTexture(img,0,(i-1)*2)
+    painter:drawTexture(img,0,(i-1)*2,UIConst.anchor.LT)
   end
   painter:stopPaint()
   return imgRes
@@ -77,22 +77,22 @@ function Skin:createFrame(width,height)
   painter:startPaint()
   --四个角
     --左上
-    painter:drawTexture(self.frame[1],0,0)
+    painter:drawTexture(self.frame[1],0,0,UIConst.anchor.LT)
     --右上
-    painter:drawTexture(self.frame[3],width,0)
+    painter:drawTexture(self.frame[3],width,0,UIConst.anchor.RT)
     --左下
-    painter:drawTexture(self.frame[6],0,height)
+    painter:drawTexture(self.frame[6],0,height,UIConst.anchor.LB)
     --右下
-    painter:drawTexture(self.frame[8],width,height)
+    painter:drawTexture(self.frame[8],width,height,UIConst.anchor.RB)
   --四条边
     --上
-    painter:drawTexture(self.frame[2]:scaleTexture(width-2*16,16),16,0)
+    painter:drawTexture(self.frame[2]:scaleTexture(width-2*16,16),16,0,UIConst.anchor.LT)
     --左
-    painter:drawTexture(self.frame[4]:scaleTexture(16,height-2*16),0,16)
+    painter:drawTexture(self.frame[4]:scaleTexture(16,height-2*16),0,16,UIConst.anchor.LT)
     --右
-    painter:drawTexture(self.frame[5]:scaleTexture(16,height-2*16),width,16)
+    painter:drawTexture(self.frame[5]:scaleTexture(16,height-2*16),width,16,UIConst.anchor.RT)
     --下
-    painter:drawTexture(self.frame[7]:scaleTexture(width-2*16,16),16,height)
+    painter:drawTexture(self.frame[7]:scaleTexture(width-2*16,16),16,height,UIConst.anchor.LB)
   painter:stopPaint()
   return img
 end
@@ -103,8 +103,8 @@ function Skin:createBgWithFrame(width,height)
   painter:startPaint()
   local bg=self:createBg(width-8,height-8)
   local frame=self:createFrame(width,height)
-  painter:drawTexture(bg,4,4)
-  painter:drawTexture(frame,0,0)
+  painter:drawTexture(bg,4,4,UIConst.anchor.LT)
+  painter:drawTexture(frame,0,0,UIConst.anchor.LT)
   painter:stopPaint()
   return img
 end
@@ -114,24 +114,24 @@ function Skin:createSelectedBg(width,height)
   local painter=img:getPainter()
   --四个角
     --左上
-    painter:drawTexture(self.selectedBg[1],0,0)
+    painter:drawTexture(self.selectedBg[1],0,0,UIConst.anchor.LT)
     --右上
-    painter:drawTexture(self.selectedBg[3],width,0)
+    painter:drawTexture(self.selectedBg[3],width,0,UIConst.anchor.RT)
     --左下
-    painter:drawTexture(self.selectedBg[7],0,height)
+    painter:drawTexture(self.selectedBg[7],0,height,UIConst.anchor.LB)
     --右下
-    painter:drawTexture(self.selectedBg[9],width,height)
+    painter:drawTexture(self.selectedBg[9],width,height,UIConst.anchor.RB)
   --四条边
     --上
-    painter:drawTexture(self.selectedBg[2]:scaleTexture(width-2*8,8),8,0)
+    painter:drawTexture(self.selectedBg[2]:scaleTexture(width-2*8,8),8,0,UIConst.anchor.LT)
     --左
-    painter:drawTexture(self.selectedBg[4]:scaleTexture(8,height-2*8),0,8)
+    painter:drawTexture(self.selectedBg[4]:scaleTexture(8,height-2*8),0,8,UIConst.anchor.LT)
     --右
-    painter:drawTexture(self.selectedBg[6]:scaleTexture(8,height-2*8),width,8)
+    painter:drawTexture(self.selectedBg[6]:scaleTexture(8,height-2*8),width,8,UIConst.anchor.RT)
     --下
-    painter:drawTexture(self.selectedBg[8]:scaleTexture(width-2*8,8),8,height)
+    painter:drawTexture(self.selectedBg[8]:scaleTexture(width-2*8,8),8,height,UIConst.anchor.LB)
   --中间
-    painter:drawTexture(self.selectedBg[5]:scaleTexture(width-2*8,height-2*8),8,8)
+    painter:drawTexture(self.selectedBg[5]:scaleTexture(width-2*8,height-2*8),8,8,UIConst.anchor.LT)
   return img
 end
 

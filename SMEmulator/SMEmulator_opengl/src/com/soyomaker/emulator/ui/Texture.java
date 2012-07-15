@@ -185,7 +185,7 @@ public class Texture {
 		Painter p = texture.getPainter();
 		p.startPaint();
 		p.scale(1.0f * width / this.getWidth(), 1.0f * height / this.getHeight(), 0, 0);
-		p.drawTexture(this, 0, 0);
+		p.drawTexture(this, 0, 0, Painter.LT);
 		p.stopPaint();
 		return texture;
 	}
@@ -227,7 +227,7 @@ public class Texture {
 		Texture texture = new Texture(width, height);
 		Painter p = texture.getPainter();
 		p.startPaint();
-		p.drawTexture(this, x, y, width, height, 0, 0);
+		p.drawTexture(this, x, y, width, height, 0, 0, Painter.LT);
 		p.stopPaint();
 		return texture;
 	}
