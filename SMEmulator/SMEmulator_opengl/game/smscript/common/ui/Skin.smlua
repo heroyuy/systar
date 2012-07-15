@@ -12,7 +12,7 @@ Skin.cursorAnimateAction=nil
 function Skin:init(skinPath)
   local img=smTextureFactory:loadTexture(skinPath)
   self.bg=img:subTexture(0,0,64,64)
-  self.body=img:subTexture(0,64,64,64)
+  self.body=img:subTexture(0,64,64,2)
   
   self.frame[1]=img:subTexture(64,0,16,16)   --左上
   self.frame[2]=img:subTexture(80,0,32,16)   --上
@@ -58,8 +58,7 @@ function Skin:createBg(width,height)
 end
 
 function Skin:createBody(width,height)
-  local img=self.body:subTexture(0,0,64,2)
-  img=img:scaleTexture(width,2)
+  local img=self.body:scaleTexture(width,2)
   local imgRes=smTextureFactory:createTexture(width,height)
   local painter=imgRes:getPainter()
   painter:startPaint()

@@ -106,7 +106,7 @@ function clsSceneTitle:itemSelected(menu,index)
     --local callback=Action:newCallbackAction(self,"onCall",12)
     --self.bgLayer:runAction(callback)
     --[animate]
-    local images={Image:getImage("/image/title/001-Title01.jpg"),self.bgLayer.image}
+    local images={smTextureFactory:loadTexture("/image/title/001-Title01.jpg"),self.bgLayer.image}
     local animate=Action:newAnimateAction(images,100)
     local s=Action:newSequenceAction(-1,animate)
     self.bgLayer:runAction(s)
