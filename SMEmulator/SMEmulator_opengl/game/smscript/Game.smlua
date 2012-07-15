@@ -44,15 +44,15 @@ end
 --更新model  lua层不应该调用
 function Game:onUpdate()
   --更新数据模型
-  --GameData:update()
+  GameData:update()
   --更新任务调度器
-  --Scheduler:update()
+  Scheduler:update()
   --更新动作播放器
-  --ActionPlayer:update()
+  ActionPlayer:update()
   --更新场景
-  --if self.curScene then
-  --  self.curScene:update()
-  --end
+  if self.curScene then
+    self.curScene:update()
+  end
 end
 
 --绘制屏幕  lua层不应该调用
