@@ -92,7 +92,7 @@ function clsSceneMap:changeMap(map)
   self.aStar=clsAStar:new(map.areas)
   --预加载地图图集
   for _,v in pairs(GameData.curMap.tilesets) do
-    Image:loadImage(v.path)
+    smTextureFactory:loadTexture(v.path)
   end
   --加载背景
   local bgLayers=clsList:new()

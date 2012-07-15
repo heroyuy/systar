@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.glClear;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -82,6 +84,23 @@ public class Game {
 	}
 
 	private void dealEvent() {
+		while (Mouse.next()) {
+			double x = Mouse.getX();
+			double y = getHeight() - Mouse.getY();
+			if (Mouse.getEventButtonState()) {
+				if (Mouse.isButtonDown(0)) {
+					luaAdapter.onTouch(new Event(x, y, Event.EVENT_TYPE_DOWN));
+				}
+			} else {
+				if (Mouse.isButtonDown(0)) {
+					luaAdapter.onTouch(new Event(x, y, Event.EVENT_TYPE_MOVE));
+				}
+				if (Mouse.getEventButton() != -1) {
+					luaAdapter.onTouch(new Event(x, y, Event.EVENT_TYPE_UP));
+				}
+			}
+
+		}
 	}
 
 	private void paintView() {
