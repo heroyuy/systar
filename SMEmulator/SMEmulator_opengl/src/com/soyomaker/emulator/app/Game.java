@@ -21,11 +21,13 @@ public class Game {
 		new Game().start();
 	}
 
-	// private LuaAdapter luaAdapter = null;
+	private LuaAdapter luaAdapter = null;
 
 	private PainterTest pt = null;
 
 	private long t = 0;
+
+	private boolean test = false;
 
 	private Game() {// initialize the window beforehand
 		int width = getWidth();
@@ -52,11 +54,10 @@ public class Game {
 		Painter.systemPainter().setViewPort(new Rect(0, 0, width, height));
 		// 启用系统画笔
 		Painter.systemPainter().startPaint();
-		// TODO test
-		pt = new PainterTest();
-	}
+		if (test) {
+			pt = new PainterTest();
+		}
 
-	private void dealEvent() {
 	}
 
 	public int getHeight() {
@@ -80,6 +81,9 @@ public class Game {
 		return GameInfo.getInstance().getWidth();
 	}
 
+	private void dealEvent() {
+	}
+
 	private void paintView() {
 		// 设置模型变换
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -88,8 +92,12 @@ public class Game {
 		// 清屏
 		glClear(GL11.GL_COLOR_BUFFER_BIT);
 		// 游戏绘制
-		// luaAdapter.paint(painter);
-		pt.test(Painter.systemPainter());
+		if (test) {
+			pt.test(Painter.systemPainter());
+		} else {
+			luaAdapter.paint(Painter.systemPainter());
+		}
+
 	}
 
 	private void showDebugInfo() {
@@ -110,9 +118,10 @@ public class Game {
 		painter.setColor(Color.WHITE);
 		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - painter.getTextSize() - 10);
-		// String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
-		// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
-		// getHeight() - painter.getTextSize() - 10);
+		if (!test) {
+			String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
+			painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr), getHeight() - painter.getTextSize() - 10);
+		}
 		t = getTime();
 	}
 
@@ -125,9 +134,11 @@ public class Game {
 	}
 
 	private void start() {
-		// luaAdapter = new LuaAdapter(this);
+		if (!test) {
+			luaAdapter = new LuaAdapter(this);
+			luaAdapter.onStart();
+		}
 		t = getTime();
-		// luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {
 			// 处理事件
 			dealEvent();
@@ -141,11 +152,15 @@ public class Game {
 			Display.update();
 
 		}
-		// luaAdapter.onStop();
+		if (!test) {
+			luaAdapter.onStop();
+		}
 		Display.destroy();
 	}
 
 	private void updateModel() {
-		// luaAdapter.update();
+		if (!test) {
+			luaAdapter.update();
+		}
 	}
 }

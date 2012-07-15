@@ -15,23 +15,18 @@ public class PainterTest {
 	private Texture title = new Texture("game/image/title/001-Title01.jpg");
 
 	public PainterTest() {
-		list.add(new Texture("game/image/face/关平.png"));
-		list.add(new Texture("game/image/title/title.png"));
-		list.add(new Texture("game/image/battle/forest_autumn.png"));
-		list.add(new Texture("game/image/battle/forest_winter.png"));
-		list.add(new Texture("game/image/battle/hill_spring.png"));
-
-		for (int i = 1; i < 49; i++) {
-			String name = "game/image/tileset/" + i + "号墙壁.png";
-			list.add(new Texture(name));
-		}
-		Painter p = title.getPainter();
-		p.startPaint();
-		p.setColor(Color.NULL);
-		p.fillRect(240, 160, 200, 100);
-		p.setColor(Color.BLUE);
-		p.drawString("FBO测试", 480, 320);
-		p.stopPaint();
+		// list.add(new Texture("game/image/face/关平.png"));
+		// list.add(new Texture("game/image/title/title.png"));
+		// list.add(new Texture("game/image/battle/forest_autumn.png"));
+		// list.add(new Texture("game/image/battle/forest_winter.png"));
+		// list.add(new Texture("game/image/battle/hill_spring.png"));
+		//
+		// for (int i = 1; i < 49; i++) {
+		// String name = "game/image/tileset/" + i + "号墙壁.png";
+		// list.add(new Texture(name));
+		// }
+		Texture subTitle = title.subTexture(480, 320, 480, 320);
+		list.add(subTitle);
 	}
 
 	public void test(Painter painter) {

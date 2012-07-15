@@ -342,6 +342,10 @@ public class Painter {
 		font = new Font(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, size);
 	}
 
+	public void setViewPort(Rect viewPort) {
+		this.viewPort = viewPort;
+	}
+
 	/**
 	 * 开始绘制
 	 */
@@ -402,6 +406,10 @@ public class Painter {
 		return GlyphPainter.stringWidth(str, font);
 	}
 
+	public String toString() {
+		return "painter[" + this.frameBufferID + "]";
+	}
+
 	/**
 	 * 平移
 	 * 
@@ -412,10 +420,6 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
-	}
-
-	public void setViewPort(Rect viewPort) {
-		this.viewPort = viewPort;
 	}
 
 	/**
@@ -450,10 +454,6 @@ public class Painter {
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		// (3)颜色 [注：颜色保存在对象color中]
-	}
-
-	public String toString() {
-		return "painter[" + this.frameBufferID + "]";
 	}
 
 }

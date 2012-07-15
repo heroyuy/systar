@@ -24,17 +24,6 @@ public class GlyphPainter {
 	private static Graphics gTemp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
 
 	/**
-	 * 获取字符的key
-	 * 
-	 * @param ch
-	 *            字符
-	 * @return key
-	 */
-	private static String charKey(char ch) {
-		return ch + "";
-	}
-
-	/**
 	 * 测量字符的宽度
 	 * 
 	 * @param ch
@@ -59,6 +48,30 @@ public class GlyphPainter {
 	}
 
 	/**
+	 * 测量字符串的宽度
+	 * 
+	 * @param str
+	 *            字符串
+	 * @param font
+	 *            字体
+	 * @return 指定字体的字符串的宽度
+	 */
+	public static int stringWidth(String str, Font font) {
+		return gTemp.getFontMetrics(font).stringWidth(str);
+	}
+
+	/**
+	 * 获取字符的key
+	 * 
+	 * @param ch
+	 *            字符
+	 * @return key
+	 */
+	private static String charKey(char ch) {
+		return ch + "";
+	}
+
+	/**
 	 * 获取字体的key
 	 * 
 	 * @param font
@@ -70,19 +83,6 @@ public class GlyphPainter {
 		String separator = "|";
 		String fontKey = font.getName() + separator + font.getStyle() + separator + font.getSize();
 		return fontKey;
-	}
-
-	/**
-	 * 测量字符串的宽度
-	 * 
-	 * @param str
-	 *            字符串
-	 * @param font
-	 *            字体
-	 * @return 指定字体的字符串的宽度
-	 */
-	public static int stringWidth(String str, Font font) {
-		return gTemp.getFontMetrics(font).stringWidth(str);
 	}
 
 	/**

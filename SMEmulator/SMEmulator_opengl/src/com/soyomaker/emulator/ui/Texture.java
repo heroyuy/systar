@@ -135,12 +135,20 @@ public class Texture {
 	}
 
 	/**
-	 * 获取纹理的ID
+	 * 获取纹理的画笔
 	 * 
-	 * @return 纹理的ID
+	 * @return 画笔
 	 */
-	protected int getTextureID() {
-		return textureID;
+	public Painter getPainter() {
+		if (this.frameBufferID == 0 || this.painter == null) {
+			this.frameBufferID = glGenFramebuffersEXT();
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
+			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.textureID, 0);
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+			this.painter = new Painter(this.frameBufferID);
+			this.painter.setViewPort(new Rect(0, 0, this.width, this.height));
+		}
+		return this.painter;
 	}
 
 	/**
@@ -150,28 +158,6 @@ public class Texture {
 	 */
 	public int getWidth() {
 		return width;
-	}
-
-	private void initWithBufferedImage(BufferedImage image) {
-		// 纹理有效高度
-		this.width = image.getWidth();
-		this.height = image.getHeight();
-		// 创建纹理
-		this.textureID = GL11.glGenTextures();
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-		if (GLContext.getCapabilities().GL_EXT_texture_mirror_clamp) {
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S,
-					EXTTextureMirrorClamp.GL_MIRROR_CLAMP_TO_EDGE_EXT);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T,
-					EXTTextureMirrorClamp.GL_MIRROR_CLAMP_TO_EDGE_EXT);
-		} else {
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
-		}
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.width, this.height, 0, GL11.GL_RGBA,
-				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
 	}
 
 	/**
@@ -195,20 +181,56 @@ public class Texture {
 	}
 
 	/**
-	 * 获取纹理的画笔
+	 * 子纹理
 	 * 
-	 * @return 画笔
+	 * @param x
+	 *            区域x坐标
+	 * @param y
+	 *            区域y坐标
+	 * @param width
+	 *            区域宽度
+	 * @param height
+	 *            区域高度
+	 * @return
 	 */
-	public Painter getPainter() {
-		if (this.frameBufferID == 0 || this.painter == null) {
-			this.frameBufferID = glGenFramebuffersEXT();
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
-			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.textureID, 0);
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-			this.painter = new Painter(this.frameBufferID);
-			this.painter.setViewPort(new Rect(0, 0, this.width, this.height));
+	public Texture subTexture(int x, int y, int width, int height) {
+		Texture texture = new Texture(width, height);
+		Painter p = texture.getPainter();
+		p.startPaint();
+		p.drawTexture(this, x, y, width, height, 0, 0);
+		p.stopPaint();
+		return texture;
+	}
+
+	/**
+	 * 获取纹理的ID
+	 * 
+	 * @return 纹理的ID
+	 */
+	protected int getTextureID() {
+		return textureID;
+	}
+
+	private void initWithBufferedImage(BufferedImage image) {
+		// 纹理有效高度
+		this.width = image.getWidth();
+		this.height = image.getHeight();
+		// 创建纹理
+		this.textureID = GL11.glGenTextures();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureID);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		if (GLContext.getCapabilities().GL_EXT_texture_mirror_clamp) {
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S,
+					EXTTextureMirrorClamp.GL_MIRROR_CLAMP_TO_EDGE_EXT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T,
+					EXTTextureMirrorClamp.GL_MIRROR_CLAMP_TO_EDGE_EXT);
+		} else {
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 		}
-		return this.painter;
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.width, this.height, 0, GL11.GL_RGBA,
+				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
 	}
 
 }

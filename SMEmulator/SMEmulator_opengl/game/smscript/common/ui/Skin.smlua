@@ -11,37 +11,37 @@ Skin.cursorAnimateAction=nil
 
 function Skin:init(skinPath)
   local img=smTextureFactory:loadTexture(skinPath)
-  self.bg=img:clip(0,0,64,64)
-  self.body=img:clip(0,64,64,64)
+  self.bg=img:subTexture(0,0,64,64)
+  self.body=img:subTexture(0,64,64,64)
   
-  self.frame[1]=img:clip(64,0,16,16)   --左上
-  self.frame[2]=img:clip(80,0,32,16)   --上
-  self.frame[3]=img:clip(112,0,16,16)  --右上
-  self.frame[4]=img:clip(64,16,16,32)  --左
-  self.frame[5]=img:clip(112,16,16,32) --右
-  self.frame[6]=img:clip(64,48,16,16)  --左下
-  self.frame[7]=img:clip(80,48,32,16)  --下
-  self.frame[8]=img:clip(112,48,16,16) --右下
+  self.frame[1]=img:subTexture(64,0,16,16)   --左上
+  self.frame[2]=img:subTexture(80,0,32,16)   --上
+  self.frame[3]=img:subTexture(112,0,16,16)  --右上
+  self.frame[4]=img:subTexture(64,16,16,32)  --左
+  self.frame[5]=img:subTexture(112,16,16,32) --右
+  self.frame[6]=img:subTexture(64,48,16,16)  --左下
+  self.frame[7]=img:subTexture(80,48,32,16)  --下
+  self.frame[8]=img:subTexture(112,48,16,16) --右下
   
-  self.arrow[1]=img:clip(88,16,16,8)   --上
-  self.arrow[2]=img:clip(80,24,8,16)   --下
-  self.arrow[3]=img:clip(88,40,16,8)   --左
-  self.arrow[4]=img:clip(104,24,8,16)  --右
+  self.arrow[1]=img:subTexture(88,16,16,8)   --上
+  self.arrow[2]=img:subTexture(80,24,8,16)   --下
+  self.arrow[3]=img:subTexture(88,40,16,8)   --左
+  self.arrow[4]=img:subTexture(104,24,8,16)  --右
   
-  self.selectedBg[1] = img:clip(64,64,8,8)   --左上
-  self.selectedBg[2] = img:clip(72,64,16,8)  --上
-  self.selectedBg[3] = img:clip(88,64,8,8)   --右上
-  self.selectedBg[4] = img:clip(64,72,8,16)  --左
-  self.selectedBg[5] = img:clip(72,72,16,16) --中
-  self.selectedBg[6] = img:clip(88,72,8,16)  --右
-  self.selectedBg[7] = img:clip(64,88,8,8)   --左下
-  self.selectedBg[8] = img:clip(72,88,16,8)  --下
-  self.selectedBg[9] = img:clip(88,88,8,8)   --右下
+  self.selectedBg[1] = img:subTexture(64,64,8,8)   --左上
+  self.selectedBg[2] = img:subTexture(72,64,16,8)  --上
+  self.selectedBg[3] = img:subTexture(88,64,8,8)   --右上
+  self.selectedBg[4] = img:subTexture(64,72,8,16)  --左
+  self.selectedBg[5] = img:subTexture(72,72,16,16) --中
+  self.selectedBg[6] = img:subTexture(88,72,8,16)  --右
+  self.selectedBg[7] = img:subTexture(64,88,8,8)   --左下
+  self.selectedBg[8] = img:subTexture(72,88,16,8)  --下
+  self.selectedBg[9] = img:subTexture(88,88,8,8)   --右下
   
-  self.cursor[1]=img:clip(96,64,16,16)   --左上
-  self.cursor[2]=img:clip(112,64,16,16)  --右上
-  self.cursor[3]=img:clip(96,80,16,16)   --左下
-  self.cursor[4]=img:clip(112,80,16,16)   --右下
+  self.cursor[1]=img:subTexture(96,64,16,16)   --左上
+  self.cursor[2]=img:subTexture(112,64,16,16)  --右上
+  self.cursor[3]=img:subTexture(96,80,16,16)   --左下
+  self.cursor[4]=img:subTexture(112,80,16,16)   --右下
   local animate=Action:newAnimateAction(self.cursor,100)
   self.cursorAnimateAction=Action:newSequenceAction(-1,animate)
   
@@ -59,7 +59,7 @@ function Skin:createBg(width,height)
 end
 
 function Skin:createBody(width,height)
-  local img=self.body:clip(0,0,64,2)
+  local img=self.body:subTexture(0,0,64,2)
   img=img:scale(width,2)
   local imgRes=Image:createImage(width,height)
   local painter=imgRes:getPainter()
