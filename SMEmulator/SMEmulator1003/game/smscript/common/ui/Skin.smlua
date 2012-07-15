@@ -12,7 +12,7 @@ Skin.cursorAnimateAction=nil
 function Skin:init(skinPath)
   local img=Image:getImage(skinPath)
   self.bg=img:clip(0,0,64,64)
-  self.body=img:clip(0,64,64,64)
+  self.body=img:clip(0,64,64,2)
   
   self.frame[1]=img:clip(64,0,16,16)   --左上
   self.frame[2]=img:clip(80,0,32,16)   --上
@@ -59,8 +59,7 @@ function Skin:createBg(width,height)
 end
 
 function Skin:createBody(width,height)
-  local img=self.body:clip(0,0,64,2)
-  img=img:scale(width,2)
+  local img=self.body:scale(width,2)
   local imgRes=Image:createImage(width,height)
   local painter=imgRes:getPainter()
   local num=math.ceil(height/2)
