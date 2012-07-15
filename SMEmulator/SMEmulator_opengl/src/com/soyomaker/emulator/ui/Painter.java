@@ -178,39 +178,6 @@ public class Painter {
 
 	private float[] tint = new float[] { 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f };// 当前变色参数
 
-	public float[] getTint() {
-		return new float[] { tint[0], tint[1], tint[2], tint[3], tint[4], tint[5] };
-	}
-
-	public void setTint(float[] tint) {
-		this.tint = tint;
-	}
-
-	/**
-	 * 变色
-	 * 
-	 * @param sr
-	 *            red分量缩放系数
-	 * @param sg
-	 *            green分量缩放系数
-	 * @param sb
-	 *            blue分量缩放系数
-	 * @param tr
-	 *            red分量偏移值
-	 * @param tg
-	 *            green分量偏移值
-	 * @param tb
-	 *            blue分量偏移值
-	 */
-	public void tint(float sr, float sg, float sb, float tr, float tg, float tb) {
-		tint[0] *= sr;
-		tint[1] *= sg;
-		tint[2] *= sb;
-		tint[3] += tr;
-		tint[4] += tg;
-		tint[5] += tb;
-	}
-
 	/**
 	 * 字形绘制委托
 	 */
@@ -326,22 +293,6 @@ public class Painter {
 	 * 
 	 * @param texture2D
 	 *            要绘制的2D纹理
-	 * @param x
-	 *            绘制的位置的 x 坐标
-	 * @param y
-	 *            绘制的位置的 y 坐标
-	 * @param anchor
-	 *            锚点
-	 */
-	public void drawTexture(Texture texture, float x, float y, int anchor) {
-		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y, anchor);
-	}
-
-	/**
-	 * 绘制2D纹理
-	 * 
-	 * @param texture2D
-	 *            要绘制的2D纹理
 	 * @param dx
 	 *            绘制区域在纹理上的x坐标
 	 * @param dy
@@ -376,6 +327,22 @@ public class Painter {
 		glVertex2f(x, y + height);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
+	}
+
+	/**
+	 * 绘制2D纹理
+	 * 
+	 * @param texture2D
+	 *            要绘制的2D纹理
+	 * @param x
+	 *            绘制的位置的 x 坐标
+	 * @param y
+	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
+	 */
+	public void drawTexture(Texture texture, float x, float y, int anchor) {
+		this.drawTexture(texture, 0, 0, texture.getWidth(), texture.getHeight(), x, y, anchor);
 	}
 
 	/**
@@ -452,6 +419,10 @@ public class Painter {
 	 */
 	public int getTextSize() {
 		return font.getSize();
+	}
+
+	public float[] getTint() {
+		return new float[] { tint[0], tint[1], tint[2], tint[3], tint[4], tint[5] };
 	}
 
 	/**
@@ -564,6 +535,10 @@ public class Painter {
 		font = new Font(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, size);
 	}
 
+	public void setTint(float[] tint) {
+		this.tint = tint;
+	}
+
 	public void setViewPort(Rect viewPort) {
 		this.viewPort = viewPort;
 	}
@@ -608,6 +583,31 @@ public class Painter {
 	 */
 	public int stringWidth(String str) {
 		return GlyphPainter.stringWidth(str, font);
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param sr
+	 *            red分量缩放系数
+	 * @param sg
+	 *            green分量缩放系数
+	 * @param sb
+	 *            blue分量缩放系数
+	 * @param tr
+	 *            red分量偏移值
+	 * @param tg
+	 *            green分量偏移值
+	 * @param tb
+	 *            blue分量偏移值
+	 */
+	public void tint(float sr, float sg, float sb, float tr, float tg, float tb) {
+		tint[0] *= sr;
+		tint[1] *= sg;
+		tint[2] *= sb;
+		tint[3] += tr;
+		tint[4] += tg;
+		tint[5] += tb;
 	}
 
 	public String toString() {
