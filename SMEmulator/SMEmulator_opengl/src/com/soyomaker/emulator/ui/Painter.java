@@ -329,7 +329,7 @@ public class Painter {
 	 */
 	public void setColor(Color color) {
 		this.color = color;
-		glColor3f(1.0f * color.getRed() / 255, 1.0f * color.getGreen() / 255, 1.0f * color.getBlue() / 255);
+		glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 
 	/**
@@ -436,8 +436,7 @@ public class Painter {
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 		// (3)颜色
-		glColor3f(1.0f * this.color.getRed() / 255, 1.0f * this.color.getGreen() / 255,
-				1.0f * this.color.getBlue() / 255);
+		glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 
 	/**
