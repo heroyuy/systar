@@ -116,9 +116,8 @@ end
 
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
-  print("clsUILayer:paint")
   painter:pushTransform()
-  local composite=painter:getComposite()
+  local alphaStore=painter:getAlpha()
   local tint=painter:getTint()
   --(1)处理alpha
   if self.alpha~=1 then
@@ -134,9 +133,9 @@ function clsUILayer:paint(painter)
     painter:rotate(self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
   --(4)处理flip
-  if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
-    painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
-  end
+  --if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
+    --painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
+  --end
   --(5)处理变色
   painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
   --绘制自身
@@ -145,8 +144,8 @@ function clsUILayer:paint(painter)
   self:paintChildren(painter)
   --还原特效变换
   painter:setTint(tint)
-  painter:setComposite(composite)
-  painter:popTransform
+  painter:setAlpha(alphaStore)
+  painter:popTransform()
 end
 
 --绘制自身（lua层不应该调用此方法）
@@ -156,7 +155,7 @@ function clsUILayer:paintLayer(painter)
     painter:fillRect(0, 0, self.width, self.height)
   end
   if self.image then
-    painter:drawImage(self.image, 0, 0, 0)
+    painter:drawTexture(self.image, 0, 0)
   end
 end
 
@@ -166,21 +165,19 @@ function clsUILayer:paintChildren(painter)
     if layer.visibility and layer.alpha~=0 then
       --设置坐标系
       local x,y=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
-      painter:setBasePoint(x,y)
+      painter:translate(x,y)
       --设置裁剪区
-      local clip=nil;
       if layer.clipBounds then
-        clip=painter:getClip()
         painter:clipRect(0,0,layer.width,layer.height)
       end
       --绘制子Layer
       layer:paint(painter)
       --还原裁剪区
       if layer.clipBounds then
-        painter:forceClip(clip)
+        painter:clipRect(0,0,self.width,self.height)
       end
       --还原坐标系
-      painter:setBasePoint(-x,-y)
+      painter:translate(-x,-y)
     end
   end
       

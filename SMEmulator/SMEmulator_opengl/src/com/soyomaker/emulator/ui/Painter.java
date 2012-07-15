@@ -81,7 +81,7 @@ public class Painter {
 	 */
 	private static void popPainter() {
 		curPainter = painterStack.pop();
-		System.out.println(curPainter + " 出栈");
+//		System.out.println(curPainter + " 出栈");
 		// 切换painter
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, curPainter.frameBufferID);
 		// (1)视口变换
@@ -101,7 +101,7 @@ public class Painter {
 	 * 保存状态
 	 */
 	private static void pushPainter() {
-		System.out.println(curPainter + " 入栈");
+//		System.out.println(curPainter + " 入栈");
 		painterStack.push(curPainter);
 		// (1)视口变换
 		glPushAttrib(GL_VIEWPORT_BIT);
@@ -130,9 +130,50 @@ public class Painter {
 	private Color color = null;
 
 	/**
+	 * 画笔的alpha
+	 */
+	private float alpha = 1.0f;
+
+	/**
 	 * 画笔的字体
 	 */
 	private Font font = null;
+
+	private float[] tint = new float[] { 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f };// 当前变色参数
+
+	public float[] getTint() {
+		return new float[] { tint[0], tint[1], tint[2], tint[3], tint[4], tint[5] };
+	}
+
+	public void setTint(float[] tint) {
+		this.tint = tint;
+	}
+
+	/**
+	 * 变色
+	 * 
+	 * @param sr
+	 *            red分量缩放系数
+	 * @param sg
+	 *            green分量缩放系数
+	 * @param sb
+	 *            blue分量缩放系数
+	 * @param tr
+	 *            red分量偏移值
+	 * @param tg
+	 *            green分量偏移值
+	 * @param tb
+	 *            blue分量偏移值
+	 * @return RescaleOp对象
+	 */
+	public void tint(float sr, float sg, float sb, float tr, float tg, float tb) {
+		tint[0] *= sr;
+		tint[1] *= sg;
+		tint[2] *= sb;
+		tint[3] += tr;
+		tint[4] += tg;
+		tint[5] += tb;
+	}
 
 	/**
 	 * 字形绘制委托
@@ -337,6 +378,15 @@ public class Painter {
 	}
 
 	/**
+	 * 获取画笔的alpha
+	 * 
+	 * @return alpha值
+	 */
+	public float getAlpha() {
+		return alpha;
+	}
+
+	/**
 	 * 获取当前画笔颜色
 	 * 
 	 * @return 当前画笔颜色
@@ -424,6 +474,16 @@ public class Painter {
 	}
 
 	/**
+	 * 设置画笔的alpha
+	 * 
+	 * @param alpha
+	 *            alpha值
+	 */
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
+	}
+
+	/**
 	 * 设置画笔颜色
 	 * 
 	 * @param color
@@ -432,6 +492,16 @@ public class Painter {
 	public void setColor(Color color) {
 		this.color = color;
 		glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+	}
+
+	/**
+	 * 设置画笔颜色
+	 * 
+	 * @param color
+	 *            颜色
+	 */
+	public void setColor(String argbString) {
+		this.setColor(Color.colorFromARGB(argbString));
 	}
 
 	/**

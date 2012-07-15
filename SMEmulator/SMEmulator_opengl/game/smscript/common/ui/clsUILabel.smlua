@@ -41,13 +41,13 @@ function clsUILabel:paintLayer(painter)
     end
     if self.alignment==clsUILabel.ALIGN_LEFT then
       --左对齐
-      painter:drawString(self.text, 0, self.height/2, UIConst.anchor.LV)
+      painter:drawString(self.text, 0, self.height/2)
     elseif self.alignment==clsUILabel.ALIGN_CENTER then
       --居中
-      painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
+      painter:drawString(self.text, self.width/2, self.height/2)
     else
       --右对齐
-      painter:drawString(self.text, self.width, self.height/2, UIConst.anchor.RV)
+      painter:drawString(self.text, self.width, self.height/2)
     end
   end
 end
