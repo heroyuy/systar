@@ -34,7 +34,7 @@ public class Glyph {
 		// 创建显示列表
 		this.displayListID = GL11.glGenLists(1);
 		GL11.glNewList(this.displayListID, GL11.GL_COMPILE);
-		Painter.getInstance().drawTexture(glyphPage.getTexture(), rect, 0, 0);
+		Painter.systemPainter().drawTexture(glyphPage.getTexture(), rect, 0, 0);
 		GL11.glEndList();
 	}
 

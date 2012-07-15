@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.soyomaker.emulator.ui.Color;
 import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.ui.Rect;
 import com.soyomaker.emulator.utils.SMLog;
 
 public class Game {
@@ -22,8 +23,6 @@ public class Game {
 
 	// private LuaAdapter luaAdapter = null;
 
-	private Painter painter = Painter.getInstance();
-
 	private PainterTest pt = null;
 
 	private long t = 0;
@@ -31,7 +30,6 @@ public class Game {
 	private Game() {// initialize the window beforehand
 		int width = getWidth();
 		int height = getHeight();
-
 		try {
 			Display.setDisplayMode(new DisplayMode(width, height));
 			Display.create();
@@ -48,14 +46,14 @@ public class Game {
 		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		// 视口
-		GL11.glViewport(0, 0, width, height);
-		// 设置投影变换
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		// 重置投影矩阵
-		GL11.glLoadIdentity();
-		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在右上角）
-		GL11.glOrtho(0, width, height, 0, 1, -1);
+		// 设置游戏路径
+		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
+		// 设置系统画笔的起始视口
+		Painter.systemPainter().setViewPort(new Rect(0, 0, width, height));
+		// 启用系统画笔
+		Painter.systemPainter().startPaint();
+		// TODO test
+		pt = new PainterTest();
 	}
 
 	private void dealEvent() {
@@ -88,10 +86,10 @@ public class Game {
 		// 重置矩阵
 		GL11.glLoadIdentity();
 		// 清屏
-		glClear(GL11.GL_COLOR_BUFFER_BIT );
+		glClear(GL11.GL_COLOR_BUFFER_BIT);
 		// 游戏绘制
 		// luaAdapter.paint(painter);
-		pt.test(painter);
+		pt.test(Painter.systemPainter());
 	}
 
 	private void showDebugInfo() {
@@ -108,6 +106,7 @@ public class Game {
 			}
 		}
 		// 显示FPS和内存
+		Painter painter = Painter.systemPainter();
 		painter.setColor(Color.WHITE);
 		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - painter.getTextSize() - 10);
@@ -126,10 +125,7 @@ public class Game {
 	}
 
 	private void start() {
-		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// luaAdapter = new LuaAdapter(this);
-		painter.reset();
-		pt = new PainterTest();
 		t = getTime();
 		// luaAdapter.onStart();
 		while (!Display.isCloseRequested()) {

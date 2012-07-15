@@ -1,27 +1,8 @@
 package com.soyomaker.emulator.ui;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_POLYGON;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glScaled;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
@@ -34,7 +15,12 @@ import com.soyomaker.emulator.ui.font.GlyphPainter;
  */
 public class Painter {
 
-	private static Painter instance = new Painter();
+	/**
+	 * 系统帧缓冲ID
+	 */
+	private static final int SYSTEM_FRAMEBUFFER_ID = 0;
+
+	private static Painter systemPainter = null;
 
 	/** default font name is "黑体" */
 	public static final String DEFAULT_FONT_NAME = "黑体";
@@ -46,12 +32,35 @@ public class Painter {
 	/** default color is white */
 	public static final Color DEFAULT_COLOR = Color.WHITE;
 
-	public static Painter getInstance() {
-		return instance;
+	/**
+	 * 当前画笔
+	 */
+	private static Painter curPainter = null;
+
+	public static Painter systemPainter() {
+		if (systemPainter == null) {
+			systemPainter = new Painter(SYSTEM_FRAMEBUFFER_ID);
+		}
+		return systemPainter;
 	}
 
+	/**
+	 * 画笔对应的帧缓冲
+	 */
+	private int frameBufferID = 0;
+	/**
+	 * 画笔的的初始视口
+	 */
+	private Rect viewPort = null;
+
+	/**
+	 * 画笔的颜色
+	 */
 	private Color color = null;
 
+	/**
+	 * 画笔的字体
+	 */
 	private Font font = null;
 
 	/**
@@ -59,8 +68,15 @@ public class Painter {
 	 */
 	private GlyphPainter glyphPainter = new GlyphPainter();
 
-	private Painter() {
+	/**
+	 * 初始化标识
+	 */
+	private boolean unInit = true;
 
+	public Painter(int frameBufferID) {
+		this.frameBufferID = frameBufferID;
+		this.setTextSize(DEFAULT_FONT_SIZE);
+		this.setColor(DEFAULT_COLOR);
 	}
 
 	/**
@@ -75,15 +91,16 @@ public class Painter {
 	 * @param height
 	 *            区域高度
 	 */
-	public void clipRect(int x, int y, int width, int height) {
+	public void clipRect(float x, float y, float width, float height) {
+		y = this.viewPort.getHeight() - y - height;
 		// 视口
-		glViewport(x, y, width, height);
+		glViewport((int) x, (int) y, (int) width, (int) height);
 		// 设置投影变换
 		glMatrixMode(GL_PROJECTION);
 		// 重置投影矩阵
 		glLoadIdentity();
 		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在左上角）
-		glOrtho(x, x + width, y + height, y, 1, -1);
+		glOrtho(0, width, height, 0, 1, -1);
 		// 设置模型变换
 		glMatrixMode(GL_MODELVIEW);
 	}
@@ -268,14 +285,6 @@ public class Painter {
 	}
 
 	/**
-	 * 重置画笔
-	 */
-	public void reset() {
-		this.setTextSize(DEFAULT_FONT_SIZE);
-		this.setColor(DEFAULT_COLOR);
-	}
-
-	/**
 	 * 旋转
 	 * 
 	 * @param angle
@@ -335,6 +344,49 @@ public class Painter {
 	}
 
 	/**
+	 * 开始绘制
+	 */
+	public void startPaint() {
+		if (curPainter == this) {
+			// 已经开始
+			return;
+		}
+		if (curPainter != null) {
+			// 当前painter保存状态
+			curPainter.save();
+		}
+		// 切换painter
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
+		if (this.unInit) {
+			// 初始化
+			this.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
+					this.viewPort.getHeight());
+			this.unInit = false;
+		} else {
+			// 还原状态
+			this.restore();
+		}
+		// 设置当前painter
+		curPainter = this;
+	}
+
+	/**
+	 * 停止绘制
+	 */
+	public void stopPaint() {
+		if (curPainter == systemPainter) {
+			// 系统painter不能停止
+			return;
+		}
+		if (curPainter != this) {
+			// 非当前painter，不需要停止
+			return;
+		}
+		// 切换到系统painter
+		systemPainter.startPaint();
+	}
+
+	/**
 	 * 获取字符串的宽度
 	 * 
 	 * @param str
@@ -356,4 +408,41 @@ public class Painter {
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
 	}
+
+	public void setViewPort(Rect viewPort) {
+		this.viewPort = viewPort;
+	}
+
+	/**
+	 * 还原状态
+	 */
+	private void restore() {
+		// (1)视口变换
+		glPopAttrib();
+		// (2)投影变换
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		// (2)视图变换和模型变换
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		// (3)颜色
+		glColor3f(1.0f * this.color.getRed() / 255, 1.0f * this.color.getGreen() / 255,
+				1.0f * this.color.getBlue() / 255);
+	}
+
+	/**
+	 * 保存状态
+	 */
+	private void save() {
+		// (1)视口变换
+		glPushAttrib(GL_VIEWPORT_BIT);
+		// (2)投影变换
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		// (2)视图变换和模型变换
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		// (3)颜色 [注：颜色保存在对象color中]
+	}
+
 }
