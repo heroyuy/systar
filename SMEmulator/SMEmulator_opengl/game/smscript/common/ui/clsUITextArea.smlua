@@ -51,6 +51,7 @@ function clsUITextArea:drawPage()
   --(1)创建缓冲图
   self.image=Image:createImage(self.width,self.height)
   local painter=self.image:getPainter()
+  painter:startPaint()
   --(2)设置属性
   painter:setColor(self.textColor)
   if self.textSize>0 then
@@ -94,6 +95,7 @@ function clsUITextArea:drawPage()
     end
     self.rowIndex=self.rowIndex+1
   end
+  painter:stopPaint()
 end
 
 --解析功能字符串  <...>[...]

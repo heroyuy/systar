@@ -111,6 +111,7 @@ end
 function Skin:createSelectedBg(width,height)
   local img=smTextureFactory:createTexture(width,height)
   local painter=img:getPainter()
+  painter:startPaint()
   --四个角
     --左上
     painter:drawTexture(self.selectedBg[1],0,0,UIConst.anchor.LT)
@@ -131,6 +132,7 @@ function Skin:createSelectedBg(width,height)
     painter:drawTexture(self.selectedBg[8]:scaleTexture(width-2*8,8),8,height,UIConst.anchor.LB)
   --中间
     painter:drawTexture(self.selectedBg[5]:scaleTexture(width-2*8,height-2*8),8,8,UIConst.anchor.LT)
+  painter:stopPaint()
   return img
 end
 
