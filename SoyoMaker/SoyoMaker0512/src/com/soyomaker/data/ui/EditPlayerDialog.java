@@ -138,10 +138,6 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     jLabel5 = new javax.swing.JLabel();
     playerMaxLevTextField = new javax.swing.JTextField();
     jPanel7 = new javax.swing.JPanel();
-    maxHpPanel = new javax.swing.JPanel();
-    jLabel6 = new javax.swing.JLabel();
-    maxSpPanel = new javax.swing.JPanel();
-    jLabel7 = new javax.swing.JLabel();
     strePanel = new javax.swing.JPanel();
     jLabel8 = new javax.swing.JLabel();
     bodyPanel = new javax.swing.JPanel();
@@ -160,6 +156,10 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     okButton = new javax.swing.JButton();
     playerVocationComboBox = new javax.swing.JComboBox();
     applyButton = new javax.swing.JButton();
+    jLabel15 = new javax.swing.JLabel();
+    jComboBox1 = new javax.swing.JComboBox();
+    jLabel16 = new javax.swing.JLabel();
+    jTextField1 = new javax.swing.JTextField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EditPlayerDialog.class);
@@ -341,64 +341,6 @@ public class EditPlayerDialog extends javax.swing.JDialog {
 
     jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("成长曲线"));
     jPanel7.setName("jPanel7"); // NOI18N
-
-    maxHpPanel.setBackground(new java.awt.Color(255, 255, 255));
-    maxHpPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    maxHpPanel.setName("maxHpPanel"); // NOI18N
-    maxHpPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            maxHpPanelMouseClicked(evt);
-        }
-    });
-
-    jLabel6.setText("点击设置最大生命值");
-    jLabel6.setName("jLabel6"); // NOI18N
-
-    javax.swing.GroupLayout maxHpPanelLayout = new javax.swing.GroupLayout(maxHpPanel);
-    maxHpPanel.setLayout(maxHpPanelLayout);
-    maxHpPanelLayout.setHorizontalGroup(
-        maxHpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(maxHpPanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-            .addContainerGap())
-    );
-    maxHpPanelLayout.setVerticalGroup(
-        maxHpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(maxHpPanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel6)
-            .addContainerGap(80, Short.MAX_VALUE))
-    );
-
-    maxSpPanel.setBackground(new java.awt.Color(255, 255, 255));
-    maxSpPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    maxSpPanel.setName("maxSpPanel"); // NOI18N
-    maxSpPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            maxSpPanelMouseClicked(evt);
-        }
-    });
-
-    jLabel7.setText("点击设置最大魔法值");
-    jLabel7.setName("jLabel7"); // NOI18N
-
-    javax.swing.GroupLayout maxSpPanelLayout = new javax.swing.GroupLayout(maxSpPanel);
-    maxSpPanel.setLayout(maxSpPanelLayout);
-    maxSpPanelLayout.setHorizontalGroup(
-        maxSpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(maxSpPanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-            .addContainerGap())
-    );
-    maxSpPanelLayout.setVerticalGroup(
-        maxSpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(maxSpPanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel7)
-            .addContainerGap(80, Short.MAX_VALUE))
-    );
 
     strePanel.setBackground(new java.awt.Color(255, 255, 255));
     strePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -611,14 +553,11 @@ public class EditPlayerDialog extends javax.swing.JDialog {
             .addContainerGap()
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(dexPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(intePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(maxHpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(intePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(maxSpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(expPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(expPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(strePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -630,16 +569,13 @@ public class EditPlayerDialog extends javax.swing.JDialog {
             .addContainerGap())
     );
 
-    jPanel7Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {agilPanel, bodyPanel, dexPanel, expPanel, intePanel, luckPanel, maxHpPanel, maxSpPanel, strePanel});
+    jPanel7Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {agilPanel, bodyPanel, dexPanel, expPanel, intePanel, luckPanel, strePanel});
 
     jPanel7Layout.setVerticalGroup(
         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel7Layout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(maxHpPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(maxSpPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(strePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(strePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(intePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -653,7 +589,7 @@ public class EditPlayerDialog extends javax.swing.JDialog {
             .addContainerGap(20, Short.MAX_VALUE))
     );
 
-    jPanel7Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {agilPanel, bodyPanel, dexPanel, expPanel, intePanel, luckPanel, maxHpPanel, maxSpPanel, strePanel});
+    jPanel7Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {agilPanel, bodyPanel, dexPanel, expPanel, intePanel, luckPanel, strePanel});
 
     closeButton.setText("关闭");
     closeButton.setName("closeButton"); // NOI18N
@@ -681,6 +617,18 @@ public class EditPlayerDialog extends javax.swing.JDialog {
         }
     });
 
+    jLabel15.setText("属性");
+    jLabel15.setName("jLabel15"); // NOI18N
+
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jComboBox1.setName("jComboBox1"); // NOI18N
+
+    jLabel16.setText("攻击距离");
+    jLabel16.setName("jLabel16"); // NOI18N
+
+    jTextField1.setText("0");
+    jTextField1.setName("jTextField1"); // NOI18N
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -706,9 +654,20 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                                 .addComponent(playerVocationComboBox, 0, 233, Short.MAX_VALUE)
                                 .addComponent(playerStartLevTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel2)
-                            .addGap(10, 10, 10)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel16)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -717,7 +676,7 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 555, Short.MAX_VALUE)
+                    .addGap(18, 18, 18)
                     .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
     );
@@ -738,31 +697,37 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(playerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(playerVocationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(playerStartLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(playerMaxLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(applyButton)))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(playerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(playerVocationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(playerStartLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(playerMaxLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(applyButton)
+                                .addComponent(jLabel16)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(closeButton)
-                .addComponent(okButton)))
+                .addComponent(okButton))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel1, jPanel3});
@@ -818,18 +783,6 @@ public class EditPlayerDialog extends javax.swing.JDialog {
             playerBattleImgPanel.updateUI();
         }
     }//GEN-LAST:event_battleImgSetButtonActionPerformed
-
-    private void maxHpPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maxHpPanelMouseClicked
-        // TODO add your handling code here:
-        PlayerPowerDialog ped = new PlayerPowerDialog(this, true, player, Player.MAXHP);
-        ped.setVisible(true);
-    }//GEN-LAST:event_maxHpPanelMouseClicked
-
-    private void maxSpPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maxSpPanelMouseClicked
-        // TODO add your handling code here:
-        PlayerPowerDialog ped = new PlayerPowerDialog(this, true, player, Player.MAXSP);
-        ped.setVisible(true);
-    }//GEN-LAST:event_maxSpPanelMouseClicked
 
     private void strePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_strePanelMouseClicked
         // TODO add your handling code here:
@@ -889,18 +842,19 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     private javax.swing.JPanel expPanel;
     private javax.swing.JButton headImgSetButton;
     private javax.swing.JPanel intePanel;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -908,12 +862,11 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel luckPanel;
-    private javax.swing.JPanel maxHpPanel;
-    private javax.swing.JPanel maxSpPanel;
     private javax.swing.JButton okButton;
     private javax.swing.JPanel playerBattleImgPanel;
     private javax.swing.JPanel playerCharImgPanel;

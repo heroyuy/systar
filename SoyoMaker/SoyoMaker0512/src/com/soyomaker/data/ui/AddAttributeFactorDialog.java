@@ -31,9 +31,13 @@ public class AddAttributeFactorDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
-        for (Attribute attr : config.system.attributes) {
-            attributeComboBox.addItem(attr.name);
+        if (AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG).length != 0) {
+            Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
+            if (config != null) {
+                for (Attribute attr : config.system.attributes) {
+                    attributeComboBox.addItem(attr.name);
+                }
+            }
         }
     }
     private AttributeFactor factor;

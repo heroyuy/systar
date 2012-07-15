@@ -4,8 +4,6 @@
  */
 package com.soyomaker.data.model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Administrator
@@ -13,45 +11,37 @@ import java.util.ArrayList;
 public class Player extends Model {
 
     /**
-     *
-     */
-    public static final int MAXHP = 0;
-    /**
-     *
-     */
-    public static final int MAXSP = 1;
-    /**
      * 
      */
-    public static final int STRE = 2;
+    public static final int STRE = 0;
     /**
      *
      */
-    public static final int INTE = 3;
+    public static final int INTE = 1;
     /**
      *
      */
-    public static final int AGIL = 4;
+    public static final int AGIL = 2;
     /**
      *
      */
-    public static final int DEX = 5;
+    public static final int DEX = 3;
     /**
      *
      */
-    public static final int BODY = 6;
+    public static final int BODY = 4;
     /**
      *
      */
-    public static final int LUCK = 7;
+    public static final int LUCK = 5;
     /**
      *
      */
-    public static final int EXP = 8;
+    public static final int EXP = 6;
     /**
      *
      */
-    public static final String[] types = {"最大生命值", "最大魔法值", "力量", "敏捷", "智力", "灵巧", "体力", "幸运", "经验值"};
+    public static final String[] types = {"力量", "敏捷", "智力", "灵巧", "体力", "幸运", "经验值"};
 
     @Override
     public String toString() {
@@ -89,6 +79,8 @@ public class Player extends Model {
      *  职业编号
      */
     public int vocationIndex = -1;
+    public int attributeId = -1;
+    public int attackDistance = 0;
 
     /**
      *
@@ -119,14 +111,6 @@ public class Player extends Model {
     /**
      *
      */
-    public Power maxHpPower = new Power();
-    /**
-     *
-     */
-    public Power maxSpPower = new Power();
-    /**
-     *
-     */
     public Power strePower = new Power();
     /**
      *
@@ -148,40 +132,4 @@ public class Player extends Model {
      *
      */
     public Power luckPower = new Power();
-//    /**
-//     *  经验值列表
-//     */
-//    public ArrayList<Integer> exps = new ArrayList<Integer>();
-//    /**
-//     *  最大生命值列表
-//     */
-//    public ArrayList<Integer> maxHps = new ArrayList<Integer>();
-//    /**
-//     *  最大魔法值列表
-//     */
-//    public ArrayList<Integer> maxSps = new ArrayList<Integer>();
-//    /**
-//     * 力量列表
-//     */
-//    public ArrayList<Integer> stres = new ArrayList<Integer>();
-//    /**
-//     * 智力列表
-//     */
-//    public ArrayList<Integer> intes = new ArrayList<Integer>();
-//    /**
-//     * 敏捷列表
-//     */
-//    public ArrayList<Integer> agils = new ArrayList<Integer>();
-//    /**
-//     * 灵巧列表
-//     */
-//    public ArrayList<Integer> dexs = new ArrayList<Integer>();
-//    /**
-//     * 体力列表
-//     */
-//    public ArrayList<Integer> bodys = new ArrayList<Integer>();
-//    /**
-//     * 幸运列表
-//     */
-//    public ArrayList<Integer> lucks = new ArrayList<Integer>();
 }

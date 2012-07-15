@@ -13,12 +13,10 @@ package com.soyomaker.data.ui;
 import com.soyomaker.AppData;
 import com.soyomaker.model.map.Map;
 import com.soyomaker.data.DataManager;
-import com.soyomaker.data.model.Attribute;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.ConfigAttributeTableModel;
 import com.soyomaker.data.model.ConfigPlayerTableModel;
 import com.soyomaker.data.model.Model;
-import com.soyomaker.data.model.Player;
 import com.soyomaker.model.animation.Animation;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -233,10 +231,6 @@ public class ConfigPanel extends javax.swing.JPanel {
         }
         config.system.attributes.clear();
         for (int i = 0; i < conf.system.attributes.size(); i++) {
-//            Attribute attr = new Attribute();
-//            attr.id = i;
-//            attr.name = configAttributeTable.getModel().getValueAt(i, 1).toString();
-//            attr.description = configAttributeTable.getModel().getValueAt(i, 2).toString();
             config.system.attributes.add(conf.system.attributes.get(i));
         }
 
@@ -1469,9 +1463,6 @@ public class ConfigPanel extends javax.swing.JPanel {
         ConfigAttributeDialog cad = new ConfigAttributeDialog(this, true);
         cad.setVisible(true);
         if (cad.getAttribute() != null) {
-//            System.out.println(cad.getAttribute().factors.size());
-//            Attribute attr = cad.getAttribute();
-//            attr.id = conf.system.attributes.size();
             conf.system.attributes.add(cad.getAttribute());
             configAttributeTable.updateUI();
         }

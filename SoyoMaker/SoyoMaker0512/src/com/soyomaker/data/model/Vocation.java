@@ -21,11 +21,6 @@ public class Vocation extends Model {
      */
     public String name = "";
     /**
-     * 可以装备列表
-     *
-     */
-    public ArrayList<Equip> equips = new ArrayList<Equip>();
-    /**
      * 可以物品列表
      *
      */
@@ -35,12 +30,4 @@ public class Vocation extends Model {
      * 
      */
     public ArrayList<Skill> skills = new ArrayList<Skill>();
-    /**
-     *
-     */
-    public ArrayList<Attribute> attrs = new ArrayList<Attribute>();
-    /**
-     *
-     */
-    public ArrayList<Buff> status = new ArrayList<Buff>();
 }

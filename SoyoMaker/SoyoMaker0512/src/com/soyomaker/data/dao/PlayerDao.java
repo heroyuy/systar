@@ -82,16 +82,6 @@ public class PlayerDao extends Dao<Player> {
             player.luckPower.c = dis.readInt();
             player.luckPower.d = dis.readInt();
 
-            player.maxHpPower.a = dis.readInt();
-            player.maxHpPower.b = dis.readInt();
-            player.maxHpPower.c = dis.readInt();
-            player.maxHpPower.d = dis.readInt();
-
-            player.maxSpPower.a = dis.readInt();
-            player.maxSpPower.b = dis.readInt();
-            player.maxSpPower.c = dis.readInt();
-            player.maxSpPower.d = dis.readInt();
-
             player.strePower.a = dis.readInt();
             player.strePower.b = dis.readInt();
             player.strePower.c = dis.readInt();
@@ -156,16 +146,6 @@ public class PlayerDao extends Dao<Player> {
                 dos.writeInt(player.luckPower.c);
                 dos.writeInt(player.luckPower.d);
 
-                dos.writeInt(player.maxHpPower.a);
-                dos.writeInt(player.maxHpPower.b);
-                dos.writeInt(player.maxHpPower.c);
-                dos.writeInt(player.maxHpPower.d);
-
-                dos.writeInt(player.maxSpPower.a);
-                dos.writeInt(player.maxSpPower.b);
-                dos.writeInt(player.maxSpPower.c);
-                dos.writeInt(player.maxSpPower.d);
-
                 dos.writeInt(player.strePower.a);
                 dos.writeInt(player.strePower.b);
                 dos.writeInt(player.strePower.c);
@@ -195,6 +175,10 @@ public class PlayerDao extends Dao<Player> {
             lt.addNode("name", player.name);
             lt.addNode("\n");
             lt.addNode("intro", player.intro);
+            lt.addNode("\n");
+            lt.addNode("attackDistance", player.attackDistance);
+            lt.addNode("\n");
+            lt.addNode("attributeId", player.attributeId);
             lt.addNode("\n");
             if (player.headImg == null || player.headImg.equals("")) {
                 lt.addNode("headImg", "nil");
@@ -229,18 +213,6 @@ public class PlayerDao extends Dao<Player> {
                 exps.addNode(player.expPower.a * j + player.expPower.b * j * j + player.expPower.c * j * j * j + player.expPower.d);
             }
             lt.addNode("expList", exps);
-            lt.addNode("\n");
-            LuaTable maxHps = new LuaTable();
-            for (int j = 0; j < player.maxLev; j++) {
-                maxHps.addNode(player.maxHpPower.a * j + player.maxHpPower.b * j * j + player.maxHpPower.c * j * j * j + player.maxHpPower.d);
-            }
-            lt.addNode("maxHpList", maxHps);
-            lt.addNode("\n");
-            LuaTable maxSps = new LuaTable();
-            for (int j = 0; j < player.maxLev; j++) {
-                maxSps.addNode(player.maxSpPower.a * j + player.maxSpPower.b * j * j + player.maxSpPower.c * j * j * j + player.maxSpPower.d);
-            }
-            lt.addNode("maxSpList", maxSps);
             lt.addNode("\n");
             LuaTable strs = new LuaTable();
             for (int j = 0; j < player.maxLev; j++) {

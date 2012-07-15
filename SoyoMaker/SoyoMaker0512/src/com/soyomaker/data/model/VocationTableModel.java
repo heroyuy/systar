@@ -15,10 +15,10 @@ import javax.swing.table.AbstractTableModel;
 public class VocationTableModel extends AbstractTableModel {
 
     private static final String COLUMN_NAME[] = {
-        "ID", "名称", "可用装备数", "可用物品数", "可用技能数", "可用属性数", "可用状态数"
+        "ID", "名称", "可用物品数", "可用技能数"
     };
     private static final Class COLUMN_CLASS[] = {
-        Integer.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+        Integer.class, String.class, Integer.class, Integer.class
     };
     private DataManager data = AppData.getInstance().getCurProject().getDataManager();
 
@@ -67,15 +67,9 @@ public class VocationTableModel extends AbstractTableModel {
                 case 1:
                     return vocation.name;
                 case 2:
-                    return vocation.equips.size();
-                case 3:
                     return vocation.items.size();
-                case 4:
+                case 3:
                     return vocation.skills.size();
-                case 5:
-                    return vocation.attrs.size();
-                case 6:
-                    return vocation.status.size();
             }
         }
         return null;

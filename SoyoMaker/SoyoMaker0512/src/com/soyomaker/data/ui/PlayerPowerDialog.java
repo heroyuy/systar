@@ -37,18 +37,6 @@ public class PlayerPowerDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         label.setText("公式：" + Player.types[type] + " = a * lev + b * lev * lev + c * lev * lev * lev + d");
         switch (type) {
-            case Player.MAXHP:
-                aSlider.setValue(player.maxHpPower.a);
-                bSlider.setValue(player.maxHpPower.b);
-                cSlider.setValue(player.maxHpPower.c);
-                dSlider.setValue(player.maxHpPower.d);
-                break;
-            case Player.MAXSP:
-                aSlider.setValue(player.maxSpPower.a);
-                bSlider.setValue(player.maxSpPower.b);
-                cSlider.setValue(player.maxSpPower.c);
-                dSlider.setValue(player.maxSpPower.d);
-                break;
             case Player.STRE:
                 aSlider.setValue(player.strePower.a);
                 bSlider.setValue(player.strePower.b);
@@ -401,18 +389,6 @@ public class PlayerPowerDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         switch (type) {
-            case Player.MAXHP:
-                player.maxHpPower.a = aSlider.getValue();
-                player.maxHpPower.b = bSlider.getValue();
-                player.maxHpPower.c = cSlider.getValue();
-                player.maxHpPower.d = dSlider.getValue();
-                break;
-            case Player.MAXSP:
-                player.maxSpPower.a = aSlider.getValue();
-                player.maxSpPower.b = bSlider.getValue();
-                player.maxSpPower.c = cSlider.getValue();
-                player.maxSpPower.d = dSlider.getValue();
-                break;
             case Player.STRE:
                 player.strePower.a = aSlider.getValue();
                 player.strePower.b = bSlider.getValue();
