@@ -44,8 +44,7 @@ function Skin:init(skinPath)
   self.cursor[4]=img:subTexture(112,80,16,16)   --右下
   local animate=Action:newAnimateAction(self.cursor,100)
   self.cursorAnimateAction=Action:newSequenceAction(-1,animate)
-  
-  --字色，先行后列
+  --字色，行主序
   for i=1,4 do
    for j=1,8 do
      self.colors[i.."_"..j]=img:getRGB(64+(j-1)*8+4, 96+(i-1)*8+4)

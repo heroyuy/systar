@@ -151,6 +151,18 @@ public class Texture {
 		return this.painter;
 	}
 
+	public Color getRGB(int x, int y) {
+		Painter p = this.getPainter();
+		p.startPaint();
+		ByteBuffer buffer = ByteBuffer.allocateDirect(4);
+		GL11.glReadPixels(x, y, 1, 1, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+		p.stopPaint();
+		int rgba = buffer.getInt();
+		Color c = Color.colorFromRGBA(rgba);
+		System.out.println(c);
+		return c;
+	}
+
 	/**
 	 * 获取纹理有效宽度
 	 * 

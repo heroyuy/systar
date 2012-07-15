@@ -35,7 +35,7 @@ public class PainterTest {
 		painter.drawLine(100, 100, 250, 250);
 		painter.drawLine(100, 250, 250, 100);
 		// 绘制字符串
-		painter.setColor(new Color("0xff00ff00"));
+		painter.setColor(Color.colorFromARGB("0xff00ff00"));
 		painter.drawString("我是中国人", 100, 100);
 		// 绘制rect
 		painter.drawRect(new Rect(100, 200, 300, 400));

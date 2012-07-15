@@ -10,100 +10,123 @@ public class Color {
 	/**
 	 * 透明
 	 */
-	public static Color NULL = new Color(0x00000000);
+	public static Color NULL = colorFromARGB(0x00000000);
 
 	/**
 	 * 黑色
 	 */
-	public static Color BLACK = new Color(0xff000000);
+	public static Color BLACK = colorFromARGB(0xff000000);
 
 	/**
 	 * 蓝色
 	 */
-	public static Color BLUE = new Color(0xff0000ff);
+	public static Color BLUE = colorFromARGB(0xff0000ff);
 	/**
 	 * 青色
 	 */
-	public static Color CYAN = new Color(0xff00ffff);
+	public static Color CYAN = colorFromARGB(0xff00ffff);
 	/**
 	 * 深灰色
 	 */
-	public static Color DKGRAY = new Color(0xff444444);
+	public static Color DKGRAY = colorFromARGB(0xff444444);
 	/**
 	 * 灰色
 	 */
-	public static Color GRAY = new Color(0xff888888);
+	public static Color GRAY = colorFromARGB(0xff888888);
 	/**
 	 * 绿色
 	 */
-	public static Color GREEN = new Color(0xff00ff00);
+	public static Color GREEN = colorFromARGB(0xff00ff00);
 	/**
 	 * 浅灰色
 	 */
-	public static Color LTGRAY = new Color(0xffcccccc);
+	public static Color LTGRAY = colorFromARGB(0xffcccccc);
 	/**
 	 * 洋红色
 	 */
-	public static Color MAGENTA = new Color(0xffff00ff);
+	public static Color MAGENTA = colorFromARGB(0xffff00ff);
 	/**
 	 * 红色
 	 */
-	public static Color RED = new Color(0xffff0000);
+	public static Color RED = colorFromARGB(0xffff0000);
 	/**
 	 * 白色
 	 */
-	public static Color WHITE = new Color(0xffffffff);
+	public static Color WHITE = colorFromARGB(0xffffffff);
 	/**
 	 * 黄色
 	 */
-	public static Color YELLOW = new Color(0xffffff00);
+	public static Color YELLOW = colorFromARGB(0xffffff00);
 
-	private int argb = 0;
-
-	/**
-	 * 创建Color对象
-	 * 
-	 * @param argb
-	 *            argb值
-	 */
-	public Color(int argb) {
-		this.argb = argb;
+	public static Color colorFromARGB(int argb) {
+		float a = (argb >>> 24) / 255.0f;
+		float r = ((argb & 0x00ff0000) >>> 16) / 255.0f;
+		float g = ((argb & 0x0000ff00) >>> 8) / 255.0f;
+		float b = (argb & 0x000000ff) / 255.0f;
+		return new Color(r, g, b, a);
 	}
 
-	/**
-	 * 创建Color对象
-	 * 
-	 * @param a
-	 *            alpha分量
-	 * @param r
-	 *            red分量
-	 * @param g
-	 *            green分量
-	 * @param b
-	 *            blue分量
-	 */
-	public Color(int a, int r, int g, int b) {
-		this.argb = (a << 24) + (r << 16) + (g << 8) + b;
-	}
-
-	/**
-	 * 创建Color对象
-	 * 
-	 * @param colorString
-	 *            颜色字符串，格式为 #ffffffff 或者0xffffffff
-	 */
-	public Color(String colorString) {
+	public static Color colorFromARGB(String argbString) {
 		int offset = 0;
-		if (colorString.startsWith("#")) {
+		if (argbString.startsWith("#")) {
 			offset = 1;
 		} else {
 			offset = 2;
 		}
-		int a = Integer.parseInt(colorString.substring(0 + offset, 2 + offset), 16);
-		int r = Integer.parseInt(colorString.substring(2 + offset, 4 + offset), 16);
-		int g = Integer.parseInt(colorString.substring(4 + offset, 6 + offset), 16);
-		int b = Integer.parseInt(colorString.substring(6 + offset, 8 + offset), 16);
-		this.argb = (a << 24) + (r << 16) + (g << 8) + b;
+		float a = Integer.parseInt(argbString.substring(0 + offset, 2 + offset), 16) / 255.f;
+		float r = Integer.parseInt(argbString.substring(2 + offset, 4 + offset), 16) / 255.f;
+		float g = Integer.parseInt(argbString.substring(4 + offset, 6 + offset), 16) / 255.f;
+		float b = Integer.parseInt(argbString.substring(6 + offset, 8 + offset), 16) / 255.f;
+		return new Color(r, g, b, a);
+	}
+
+	public static Color colorFromRGBA(int rgba) {
+		float r = (rgba >>> 24) / 255.0f;
+		float g = ((rgba & 0x00ff0000) >>> 16) / 255.0f;
+		float b = ((rgba & 0x0000ff00) >>> 8) / 255.0f;
+		float a = (rgba & 0x000000ff) / 255.0f;
+		return new Color(r, g, b, a);
+	}
+
+	public static Color colorFromRGBA(String rgbaString) {
+		int offset = 0;
+		if (rgbaString.startsWith("#")) {
+			offset = 1;
+		} else {
+			offset = 2;
+		}
+		float r = Integer.parseInt(rgbaString.substring(0 + offset, 2 + offset), 16) / 255.f;
+		float g = Integer.parseInt(rgbaString.substring(2 + offset, 4 + offset), 16) / 255.f;
+		float b = Integer.parseInt(rgbaString.substring(4 + offset, 6 + offset), 16) / 255.f;
+		float a = Integer.parseInt(rgbaString.substring(6 + offset, 8 + offset), 16) / 255.f;
+		return new Color(r, g, b, a);
+	}
+
+	/**
+	 * red分量
+	 */
+	private float red = 0.0f;
+
+	/**
+	 * green分量
+	 */
+	private float green = 0.0f;
+
+	/**
+	 * blue分量
+	 */
+	private float blue = 0.0f;
+
+	/**
+	 * alpha分量
+	 */
+	private float alpha = 0.0f;
+
+	public Color(float r, float g, float b, float a) {
+		this.red = r;
+		this.green = g;
+		this.blue = b;
+		this.alpha = a;
 	}
 
 	/**
@@ -111,17 +134,8 @@ public class Color {
 	 * 
 	 * @return 颜色值的alpha分量
 	 */
-	public int getAlpha() {
-		return argb >>> 24;
-	}
-
-	/**
-	 * 获取argb值
-	 * 
-	 * @return argb值
-	 */
-	public int getArgb() {
-		return argb;
+	public float getAlpha() {
+		return this.alpha;
 	}
 
 	/**
@@ -129,8 +143,8 @@ public class Color {
 	 * 
 	 * @return 颜色值的蓝色分量
 	 */
-	public int getBlue() {
-		return argb & 0x000000ff;
+	public float getBlue() {
+		return this.blue;
 	}
 
 	/**
@@ -138,8 +152,8 @@ public class Color {
 	 * 
 	 * @return 颜色值的绿色分量
 	 */
-	public int getGreen() {
-		return (argb & 0x0000ff00) >>> 8;
+	public float getGreen() {
+		return this.green;
 	}
 
 	/**
@@ -147,11 +161,11 @@ public class Color {
 	 * 
 	 * @return 颜色值的红色分量
 	 */
-	public int getRed() {
-		return (argb & 0x00ff0000) >>> 16;
+	public float getRed() {
+		return this.red;
 	}
 
 	public String toString() {
-		return "0x" + Integer.toHexString(argb);
+		return "(r=" + this.red + " g=" + this.green + " b=" + this.blue + " a=" + this.alpha + ")";
 	}
 }
