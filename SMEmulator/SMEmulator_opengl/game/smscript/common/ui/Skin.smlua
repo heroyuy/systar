@@ -62,6 +62,8 @@ function Skin:createBody(width,height)
   local imgRes=smTextureFactory:createTexture(width,height)
   local painter=imgRes:getPainter()
   painter:startPaint()
+  --painter:setColor("0xffaabbcc");
+  --painter:fillRect(0,0,180,100)
   local num=math.ceil(height/2)
   for i=1,num do
     painter:drawTexture(img,0,(i-1)*2,UIConst.anchor.LT)

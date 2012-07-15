@@ -254,4 +254,7 @@ public class Texture {
 				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
 	}
 
+	public String toString() {
+		return "texture[" + this.textureID + "]{w=" + this.getWidth() + " h=" + this.getHeight() + "}";
+	}
 }
