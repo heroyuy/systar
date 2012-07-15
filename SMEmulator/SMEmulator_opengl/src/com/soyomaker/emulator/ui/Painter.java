@@ -68,11 +68,6 @@ public class Painter {
 	 */
 	private GlyphPainter glyphPainter = new GlyphPainter();
 
-	/**
-	 * 初始化标识
-	 */
-	private boolean unInit = true;
-
 	public Painter(int frameBufferID) {
 		this.frameBufferID = frameBufferID;
 		this.setTextSize(DEFAULT_FONT_SIZE);
@@ -100,7 +95,11 @@ public class Painter {
 		// 重置投影矩阵
 		glLoadIdentity();
 		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在左上角）
-		glOrtho(x, x + width, y + height, y, 1, -1);
+		if (this.frameBufferID == SYSTEM_FRAMEBUFFER_ID) {
+			glOrtho(x, x + width, y + height, y, 1, -1);
+		} else {
+			glOrtho(x, x + width, y, y + height, 1, -1);
+		}
 		// 设置模型变换
 		glMatrixMode(GL_MODELVIEW);
 	}
@@ -348,23 +347,29 @@ public class Painter {
 	 */
 	public void startPaint() {
 		if (curPainter == this) {
-			// 已经开始
+			System.out.println("painter已经开始");
 			return;
-		}
-		if (curPainter != null) {
-			// 当前painter保存状态
-			curPainter.save();
 		}
 		// 切换painter
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
-		if (this.unInit) {
-			// 初始化
+		if (this != systemPainter) {
+			// 非系统painter开始，则
+			// (1) 保存系统painter
+			systemPainter.save();
+			// (2) 初始化painter
 			this.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
 					this.viewPort.getHeight());
-			this.unInit = false;
 		} else {
-			// 还原状态
-			this.restore();
+			// 系统painter开始，则
+			if (curPainter == null) {
+				// 初始化painter
+				systemPainter.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
+						this.viewPort.getHeight());
+			} else {
+				// 还原
+				systemPainter.restore();
+			}
+
 		}
 		// 设置当前painter
 		curPainter = this;
@@ -374,12 +379,12 @@ public class Painter {
 	 * 停止绘制
 	 */
 	public void stopPaint() {
-		if (curPainter == systemPainter) {
-			// 系统painter不能停止
+		if (this == systemPainter) {
+			System.out.println("系统painter不能停止");
 			return;
 		}
-		if (curPainter != this) {
-			// 非当前painter，不需要停止
+		if (this != curPainter) {
+			System.out.println("非当前painter，不需要停止");
 			return;
 		}
 		// 切换到系统painter
@@ -417,12 +422,13 @@ public class Painter {
 	 * 还原状态
 	 */
 	private void restore() {
+		System.out.println(this + " restore");
 		// (1)视口变换
 		glPopAttrib();
 		// (2)投影变换
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
-		// (2)视图变换和模型变换
+		// (2)模型变换和视图变换
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 		// (3)颜色
@@ -434,15 +440,20 @@ public class Painter {
 	 * 保存状态
 	 */
 	private void save() {
+		System.out.println(this + " save");
 		// (1)视口变换
 		glPushAttrib(GL_VIEWPORT_BIT);
 		// (2)投影变换
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
-		// (2)视图变换和模型变换
+		// (2)模型变换和视图变换
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		// (3)颜色 [注：颜色保存在对象color中]
+	}
+
+	public String toString() {
+		return "painter[" + this.frameBufferID + "]";
 	}
 
 }

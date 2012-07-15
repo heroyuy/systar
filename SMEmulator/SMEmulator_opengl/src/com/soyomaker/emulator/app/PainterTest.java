@@ -25,18 +25,14 @@ public class PainterTest {
 		// String name = "game/image/tileset/" + i + "号墙壁.png";
 		// list.add(new Texture(name));
 		// }
-		// Painter p = title.getPainter();
-		// p.startPaint();
-		// p.setColor(Color.CYAN);
-		// p.fillRect(10, 10, 200, 100);
-		// p.setColor(Color.BLUE);
-		// p.drawString("FBO测试", 0, 0);
-		// p.stopPaint();
+		Painter p = title.getPainter();
+		p.startPaint();
+		p.setColor(Color.CYAN);
+		p.fillRect(10, 10, 200, 100);
+		p.setColor(Color.BLUE);
+		p.drawString("FBO测试", 0, 0);
+		p.stopPaint();
 	}
-
-	int t = 0;
-	Rect[] rects = new Rect[] { new Rect(0, 0, 480, 320), new Rect(480, 0, 480, 320), new Rect(480, 320, 480, 320),
-			new Rect(0, 320, 480, 320) };
 
 	public void test(Painter painter) {
 		// 绘制直线
@@ -57,11 +53,7 @@ public class PainterTest {
 		}
 		painter.setColor(Color.WHITE);
 		// 再次绘图
-		Rect rect = rects[t / 10 % 4];
-		painter.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 		painter.drawTexture(title, 0, 0);
-		painter.clipRect(0, 0, 960, 640);
-		t++;
 		// 再次绘制字符串
 		painter.setColor(Color.BLUE);
 		painter.drawString("我是123wp_g4", 500, 500);
