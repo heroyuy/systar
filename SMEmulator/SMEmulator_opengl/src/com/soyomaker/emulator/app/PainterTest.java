@@ -12,7 +12,9 @@ public class PainterTest {
 
 	private List<Texture> list = new ArrayList<Texture>();
 
-	private Texture title = new Texture("game/image/title/001-Title01.jpg");
+	private Texture title = new Texture("game/image/title/title.png");
+	private Texture skin = new Texture("game/image/skin/Window.png");
+	private Texture body = null;
 
 	public PainterTest() {
 		// list.add(new Texture("game/image/face/关平.png"));
@@ -25,8 +27,7 @@ public class PainterTest {
 		// String name = "game/image/tileset/" + i + "号墙壁.png";
 		// list.add(new Texture(name));
 		// }
-		Texture scaleTitle = title.scaleTexture(640, 320);
-		list.add(scaleTitle);
+		body = skin.subTexture(0, 64, 64, 2);
 	}
 
 	public void test(Painter painter) {
@@ -47,6 +48,9 @@ public class PainterTest {
 			painter.drawTexture(list.get(i), i * 10, i * 10, Painter.LT);
 		}
 		painter.setColor(Color.WHITE);
+		painter.drawTexture(title, 0, 0, Painter.LT);
+		painter.drawTexture(skin, 0, 0, Painter.LT);
+		painter.drawTexture(body, 128, 0, Painter.LT);
 		// 再次绘图
 		// painter.clipRect(240, 160, 480, 320);
 		// painter.drawTexture(title, 10, 10);
