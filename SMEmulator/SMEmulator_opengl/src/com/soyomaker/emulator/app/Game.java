@@ -27,7 +27,7 @@ public class Game {
 
 	private long t = 0;
 
-	private boolean test = false;
+	private boolean test = true;
 
 	private Game() {// initialize the window beforehand
 		int width = getWidth();

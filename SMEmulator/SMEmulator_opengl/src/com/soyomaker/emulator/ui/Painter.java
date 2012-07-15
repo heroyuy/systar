@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
+import java.util.Stack;
 
 import com.soyomaker.emulator.ui.font.GlyphPainter;
 
@@ -37,6 +38,11 @@ public class Painter {
 	 */
 	private static Painter curPainter = null;
 
+	/**
+	 * 画笔栈
+	 */
+	private static Stack<Painter> painterStack = new Stack<Painter>();
+
 	public static Painter systemPainter() {
 		if (systemPainter == null) {
 			systemPainter = new Painter(SYSTEM_FRAMEBUFFER_ID);
@@ -45,9 +51,48 @@ public class Painter {
 	}
 
 	/**
+	 * 还原状态
+	 */
+	private static void popPainter() {
+		curPainter = painterStack.pop();
+		System.out.println(curPainter + " 出栈");
+		// 切换painter
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, curPainter.frameBufferID);
+		// (1)视口变换
+		glPopAttrib();
+		// (2)投影变换
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		// (2)模型变换和视图变换
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		// (3)颜色
+		glColor4f(curPainter.color.getRed(), curPainter.color.getGreen(), curPainter.color.getBlue(),
+				curPainter.color.getAlpha());
+	}
+
+	/**
+	 * 保存状态
+	 */
+	private static void pushPainter() {
+		System.out.println(curPainter + " 入栈");
+		painterStack.push(curPainter);
+		// (1)视口变换
+		glPushAttrib(GL_VIEWPORT_BIT);
+		// (2)投影变换
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		// (2)模型变换和视图变换
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		// (3)颜色 [注：颜色保存在对象color中]
+	}
+
+	/**
 	 * 画笔对应的帧缓冲
 	 */
 	private int frameBufferID = 0;
+
 	/**
 	 * 画笔的的初始视口
 	 */
@@ -350,49 +395,31 @@ public class Painter {
 	 * 开始绘制
 	 */
 	public void startPaint() {
+		// 检测是否重复启动
 		if (curPainter == this) {
 			System.out.println("painter已经开始");
 			return;
 		}
-		// 切换painter
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBufferID);
-		if (this != systemPainter) {
-			// 非系统painter开始，则
-			// (1) 保存系统painter
-			systemPainter.save();
-			// (2) 初始化painter
-			this.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
-					this.viewPort.getHeight());
-		} else {
-			// 系统painter开始，则
-			if (curPainter == null) {
-				// 初始化painter
-				systemPainter.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
-						this.viewPort.getHeight());
-			} else {
-				// 还原
-				systemPainter.restore();
-			}
-
+		if (curPainter != null) {
+			// 当前painter入栈
+			Painter.pushPainter();
 		}
-		// 设置当前painter
 		curPainter = this;
+		// 切换painter
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, curPainter.frameBufferID);
+		curPainter.clipRect(this.viewPort.getX(), this.viewPort.getY(), this.viewPort.getWidth(),
+				this.viewPort.getHeight());
 	}
 
 	/**
 	 * 停止绘制
 	 */
 	public void stopPaint() {
-		if (this == systemPainter) {
-			System.out.println("系统painter不能停止");
-			return;
-		}
 		if (this != curPainter) {
-			System.out.println("非当前painter，不需要停止");
+			System.out.println("非当前painter，不能执行停止操作");
 			return;
 		}
-		// 切换到系统painter
-		systemPainter.startPaint();
+		Painter.popPainter();
 	}
 
 	/**
@@ -420,39 +447,6 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		glTranslated(tx, ty, 0);
-	}
-
-	/**
-	 * 还原状态
-	 */
-	private void restore() {
-//		System.out.println(this + " restore");
-		// (1)视口变换
-		glPopAttrib();
-		// (2)投影变换
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		// (2)模型变换和视图变换
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		// (3)颜色
-		glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-	}
-
-	/**
-	 * 保存状态
-	 */
-	private void save() {
-//		System.out.println(this + " save");
-		// (1)视口变换
-		glPushAttrib(GL_VIEWPORT_BIT);
-		// (2)投影变换
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		// (2)模型变换和视图变换
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		// (3)颜色 [注：颜色保存在对象color中]
 	}
 
 }
