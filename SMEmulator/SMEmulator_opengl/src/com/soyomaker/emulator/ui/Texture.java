@@ -213,6 +213,16 @@ public class Texture {
 		return texture;
 	}
 
+	public Texture scaleTexture(int width, int height) {
+		Texture texture = new Texture(width, height);
+		Painter p = texture.getPainter();
+		p.startPaint();
+		p.scale(1.0f * width / this.getWidth(), 1.0f * height / this.getHeight(), 0, 0);
+		p.drawTexture(this, 0, 0);
+		p.stopPaint();
+		return texture;
+	}
+
 	/**
 	 * 获取纹理的ID
 	 * 

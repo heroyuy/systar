@@ -116,6 +116,7 @@ end
 
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
+  print("clsUILayer:paint")
   local affineTransform=painter:getTransform()
   local composite=painter:getComposite()
   local tint=painter:getTint()

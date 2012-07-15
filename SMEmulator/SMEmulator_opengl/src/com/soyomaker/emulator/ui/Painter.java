@@ -367,6 +367,23 @@ public class Painter {
 	}
 
 	/**
+	 * 缩放
+	 * 
+	 * @param scaleX
+	 *            x方向缩放系数
+	 * @param scaleY
+	 *            y方向缩放系数
+	 * @param x
+	 *            缩放原点的x坐标
+	 * @param y
+	 *            缩放原点的y坐标
+	 */
+	public void scale(double scaleX, double scaleY, double x, double y) {
+		this.translate((1 - scaleX) * x, (1 - scaleY) * y);
+		glScaled(scaleX, scaleY, 1);
+	}
+
+	/**
 	 * 设置画笔颜色
 	 * 
 	 * @param color

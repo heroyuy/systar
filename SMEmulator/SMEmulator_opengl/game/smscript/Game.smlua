@@ -33,12 +33,12 @@ end
 
 --触屏事件  lua层不应该调用
 function Game:onTouch(event)
-  --GameLayer:dispatchEvent(event)
+  GameLayer:dispatchEvent(event)
 end
 
 --输入事件  lua层不应该调用
 function Game:onInput(value)
-  --GameLayer:onInput(value)
+  GameLayer:onInput(value)
 end
 
 --更新model  lua层不应该调用
@@ -57,7 +57,7 @@ end
 
 --绘制屏幕  lua层不应该调用
 function Game:onPaint(painter)
-  --GameLayer:paint(painter)
+  GameLayer:paint(painter)
 end
 
 --退出  lua层不应该调用
