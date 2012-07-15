@@ -15,7 +15,7 @@ public class PainterTest {
 	private Texture title = new Texture("game/image/title/001-Title01.jpg");
 
 	public PainterTest() {
-		// list.add(new Texture("game/image/face/关平.png"));
+		list.add(new Texture("game/image/face/关平.png"));
 		// list.add(new Texture("game/image/title/title.png"));
 		// list.add(new Texture("game/image/battle/forest_autumn.png"));
 		// list.add(new Texture("game/image/battle/forest_winter.png"));
@@ -33,6 +33,10 @@ public class PainterTest {
 		// p.drawString("FBO测试", 0, 0);
 		// p.stopPaint();
 	}
+
+	int t = 0;
+	Rect[] rects = new Rect[] { new Rect(0, 0, 480, 320), new Rect(480, 0, 480, 320), new Rect(480, 320, 480, 320),
+			new Rect(0, 320, 480, 320) };
 
 	public void test(Painter painter) {
 		// 绘制直线
@@ -53,9 +57,11 @@ public class PainterTest {
 		}
 		painter.setColor(Color.WHITE);
 		// 再次绘图
-		 painter.clipRect(240, 160, 480, 320);
+		Rect rect = rects[t / 10 % 4];
+		painter.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 		painter.drawTexture(title, 0, 0);
-		 painter.clipRect(0, 0, 960, 640);
+		painter.clipRect(0, 0, 960, 640);
+		t++;
 		// 再次绘制字符串
 		painter.setColor(Color.BLUE);
 		painter.drawString("我是123wp_g4", 500, 500);

@@ -92,15 +92,15 @@ public class Painter {
 	 *            区域高度
 	 */
 	public void clipRect(float x, float y, float width, float height) {
-		y = this.viewPort.getHeight() - y - height;
+		float ty = this.viewPort.getHeight() - y - height;
 		// 视口
-		glViewport((int) x, (int) y, (int) width, (int) height);
+		glViewport((int) x, (int) ty, (int) width, (int) height);
 		// 设置投影变换
 		glMatrixMode(GL_PROJECTION);
 		// 重置投影矩阵
 		glLoadIdentity();
 		// 转换坐标系（opengl坐标原点在左下角，转换为java坐标系，原点在左上角）
-		glOrtho(0, width, height, 0, 1, -1);
+		glOrtho(x, x + width, y + height, y, 1, -1);
 		// 设置模型变换
 		glMatrixMode(GL_MODELVIEW);
 	}
