@@ -201,7 +201,6 @@ public class Painter {
 	 *            green分量偏移值
 	 * @param tb
 	 *            blue分量偏移值
-	 * @return RescaleOp对象
 	 */
 	public void tint(float sr, float sg, float sb, float tr, float tg, float tb) {
 		tint[0] *= sr;
@@ -312,8 +311,13 @@ public class Painter {
 	 *            绘制的位置的 x 坐标
 	 * @param y
 	 *            绘制的位置的 y 坐标
+	 * @param anchor
+	 *            锚点
 	 */
-	public void drawString(String str, float x, float y) {
+	public void drawString(String str, float x, float y, int anchor) {
+		float[] xy = convert(x, y, stringWidth(str), getTextSize(), anchor);
+		x = xy[0];
+		y = xy[1];
 		glyphPainter.drawString(str, x, y, font);
 	}
 

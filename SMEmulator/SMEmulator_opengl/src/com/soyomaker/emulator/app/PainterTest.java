@@ -36,7 +36,7 @@ public class PainterTest {
 		painter.drawLine(100, 250, 250, 100);
 		// 绘制字符串
 		painter.setColor(Color.colorFromARGB("0xff00ff00"));
-		painter.drawString("我是中国人", 100, 100);
+		painter.drawString("我是中国人", 100, 100, Painter.LT);
 		// 绘制rect
 		painter.drawRect(new Rect(100, 200, 300, 400));
 		// 填充rect
@@ -53,7 +53,7 @@ public class PainterTest {
 		// painter.clipRect(0, 0, 960, 640);
 		// 再次绘制字符串
 		painter.setColor(Color.BLUE);
-		painter.drawString("我是123wp_g4", 500, 500);
+		painter.drawString("我是123wp_g4", 500, 500, Painter.LT);
 	}
 
 }
