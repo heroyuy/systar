@@ -126,15 +126,6 @@ public class Texture {
 	}
 
 	/**
-	 * 获取纹理有效高度
-	 * 
-	 * @return 纹理有效高度
-	 */
-	public int getHeight() {
-		return height;
-	}
-
-	/**
 	 * 清除图像
 	 * 
 	 * @param x
@@ -147,6 +138,7 @@ public class Texture {
 	 *            高度
 	 */
 	public void clear(int x, int y, int width, int height) {
+		// TODO 改进
 		ByteBuffer buffer = ByteBuffer.allocateDirect(width * height);
 		this.setData(buffer, x, y, width, height);
 	}
@@ -168,7 +160,16 @@ public class Texture {
 	 *            指定点y坐标
 	 */
 	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight, int x, int y) {
-		System.out.println("copyArea");
+		// TODO 实现
+	}
+
+	/**
+	 * 获取纹理有效高度
+	 * 
+	 * @return 纹理有效高度
+	 */
+	public int getHeight() {
+		return height;
 	}
 
 	/**
@@ -269,6 +270,26 @@ public class Texture {
 		return texture;
 	}
 
+	/**
+	 * 变色处理
+	 * 
+	 * @param red
+	 *            红色分量
+	 * @param green
+	 *            绿色分量
+	 * @param blue
+	 *            蓝色分量
+	 * @return 变色处理后的图像
+	 */
+	public Texture tone(float red, float green, float blue) {
+		// TODO 实现
+		return this;
+	}
+
+	public String toString() {
+		return "texture[" + this.textureID + "]{w=" + this.getWidth() + " h=" + this.getHeight() + "}";
+	}
+
 	private void initWithBufferedImage(BufferedImage image) {
 		// 纹理有效高度
 		this.width = image.getWidth();
@@ -289,9 +310,5 @@ public class Texture {
 		}
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.width, this.height, 0, GL11.GL_RGBA,
 				GL11.GL_UNSIGNED_BYTE, Texture.imageToByteBuffer(image));
-	}
-
-	public String toString() {
-		return "texture[" + this.textureID + "]{w=" + this.getWidth() + " h=" + this.getHeight() + "}";
 	}
 }
