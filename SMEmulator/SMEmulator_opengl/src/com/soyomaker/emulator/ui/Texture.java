@@ -103,6 +103,7 @@ public class Texture {
 	 *            纹理高度
 	 */
 	public Texture(int width, int height) {
+		System.out.println("create->w:"+width+" h:"+height);
 		initWithBufferedImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
 	}
 
