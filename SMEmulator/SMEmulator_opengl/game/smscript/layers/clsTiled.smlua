@@ -119,6 +119,7 @@ function clsTiled:refreshBuffer(rect,clearFlag)
        rect.colNum*self.map.cellWidth,rect.rowNum*self.map.cellHeight)
   end
   --绘制
+  print("绘制")
   self.bufferedPainter:startPaint()
   for i=1,table.getn(self.layers) do
     local layer=self.layers[i]
@@ -145,4 +146,5 @@ function clsTiled:refreshBuffer(rect,clearFlag)
     end
   end
   self.bufferedPainter:stopPaint()
+  print("refreshBuffer-end")
 end

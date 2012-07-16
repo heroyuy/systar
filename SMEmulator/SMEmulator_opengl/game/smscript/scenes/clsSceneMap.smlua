@@ -87,14 +87,16 @@ end
 
 --切换地图
 function clsSceneMap:changeMap(map)
-  local t0=Game:getTime()
+  print("changeMap-start")
   GameData.curMap=map
   self.aStar=clsAStar:new(map.areas)
   --预加载地图图集
+  print("预加载地图图集")
   for _,v in pairs(GameData.curMap.tilesets) do
     smTextureFactory:loadTexture(v.path)
   end
   --加载背景
+  print("加载背景")
   local bgLayers=clsList:new()
   for i=1,table.getn(GameData.curMap.layers) do
     local layer=GameData.curMap.layers[i]
@@ -105,8 +107,10 @@ function clsSceneMap:changeMap(map)
   local viewport=self:checkViewport()
   self.mapBgLayer:init(map.id,bgLayers,viewport)
   --精灵层移除所有sprite
+  print("精灵层移除所有sprite")
   self.spriteLayer:clear()
     --玩家
+    print("玩家")
     local playerSprite=clsSprite:new(self.curPlayer.charImg,
        self.curPlayer.charImg:getWidth()/4,self.curPlayer.charImg:getHeight()/4)
     playerSprite.tag=self.curPlayer.id
@@ -116,6 +120,7 @@ function clsSceneMap:changeMap(map)
     playerSprite:refresh()
     self.spriteLayer:addChild(playerSprite)
     --NPC
+    print("NPC")
     for k,v in pairs(GameData.curMap.npcs) do
       local npc=GameData:getNPC(v)
       local npcSprite=clsSprite:new(npc.charImg,
@@ -129,6 +134,7 @@ function clsSceneMap:changeMap(map)
     end
   self.spriteLayer:sortChildren()
   --加载前景
+  print("加载前景")
   local fgLayers=clsList:new()
   for i=1,table.getn(GameData.curMap.layers) do
     local layer=GameData.curMap.layers[i]
@@ -142,6 +148,7 @@ function clsSceneMap:changeMap(map)
   else
     self.mapFgLayer.visibility=false
   end
+  print("changeMap-end")
 end
 
 --地图点击事件
