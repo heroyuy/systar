@@ -23,9 +23,6 @@ function clsSprite:new(spriteImage,frameWidth,frameHeight)
   local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
   setmetatable(self,clsSprite)
   self.anchor={0.5,1}
-  if type(spriteImage)=="string" then
-    spriteImage=spriteImage:getspriteImage(spriteImage)
-  end
   self.spriteImage=spriteImage
   self.colNum=spriteImage:getWidth()/frameWidth
   self.rowNum=spriteImage:getHeight()/frameHeight
@@ -34,5 +31,5 @@ end
 
 --更新Sprite
 function clsSprite:refresh()
-  self.image=self.spriteImage:getSubImage(self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height)
+  self.image=self.spriteImage:subTexture(self.frameIndex%self.colNum*self.width,math.floor(self.frameIndex/self.rowNum)*self.height,self.width,self.height)
 end

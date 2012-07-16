@@ -27,7 +27,7 @@ function clsDialog:new(name,content,bustPath,position)
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustImg=Image:getImage(bustPath)
+  local bustImg=smTextureFactory:loadTexture(bustPath)
   local bustLayer=clsUILayer:new(0,self.height-bustImg:getHeight(),bustImg:getWidth(),bustImg:getHeight())
   bustLayer.anchor={0,0}
   bustLayer.image=bustImg

@@ -53,7 +53,7 @@ function clsSceneBattle:new()
   setmetatable(self,clsSceneBattle)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --背景层
-  local bgImage=Image:getImage(GameData.battle.bg)
+  local bgImage=smTextureFactory:loadTexture(GameData.battle.bg)
   self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,bgImage:getWidth(),bgImage:getHeight())
   self.bgLayer.image=bgImage
   GameLayer:addChildToScene(self.bgLayer)

@@ -48,7 +48,7 @@ function clsBag:new()
     self.equipButtonList[i]=clsUIButton:new(equipBgLayer.width/2,equipBgLayer.height/2,cw,ch)
     local itemCell=GameData.playerTroop:itemAt(i)
     local itemDict=Dictionary.items[itemCell.id]
-    self.equipButtonList[i].normalImage=Image:getImage(itemDict.icon)
+    self.equipButtonList[i].normalImage=smTextureFactory:loadTexture(itemDict.icon)
     equipBgLayer:addChild(self.equipButtonList[i])
     self:addChild(equipBgLayer)
   end
@@ -97,7 +97,7 @@ function clsBag:cellLayerAtIndex(table,cellLayer,i)
   if itemCell then
     local itemDict=Dictionary.items[itemCell.id]
     local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
-    layerIcon.image=Image:getImage(itemDict.icon)
+    layerIcon.image=smTextureFactory:loadTexture(itemDict.icon)
     layerIcon.enabled=false
     cellLayer:addChild(layerIcon)
   end

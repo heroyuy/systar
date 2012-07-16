@@ -19,7 +19,7 @@ function clsPlayerInfo:new(x,y,width,height,player)
   setmetatable(self,clsPlayerInfo)
   self.player=player
   --背景
-  self.image=Image:getImage(Dictionary.config.skins.playerInfo)
+  self.image=smTextureFactory:loadTexture(Dictionary.config.skins.playerInfo)
   --头像
   self.headLayer=clsUILayer:new(10,10,64,64)
   self.headLayer.anchor={0,0}

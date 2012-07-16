@@ -28,7 +28,7 @@ function GameData.battle:initEnemyTroop()
     enemy.desc=enemyDict.intro
     enemy.actionImgName=enemyDict.actionImg
     if enemy.actionImgName then
-      enemy.actionImg=Image:getImage(enemy.actionImgName)
+      enemy.actionImg=smTextureFactory:loadTexture(enemy.actionImgName)
     end
     enemy.lev=enemyDict.lev
     enemy.str=enemyDict.str
