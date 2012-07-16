@@ -53,9 +53,7 @@ function clsUIButton:paintLayer(painter)
   if self.image==nil then
     self.image=self.normalImage
   end
-  print("clsUIButton:paintLayer----")
   smLog:info(self.image)
-  print("clsUIButton:paintLayer====")
   --调用父类绘制方法
   self:paintLayerF(painter)
 end
