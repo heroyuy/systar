@@ -52,7 +52,7 @@ end
 --绘制自身
 function clsTiled:paintLayer(painter)
   --绘图
-  painter:drawImage(self.image,self.viewport.x-self.bufferCol*self.map.cellWidth,self.viewport.y-self.bufferRow*self.map.cellHeight,
+  painter:drawTexture(self.image,self.viewport.x-self.bufferCol*self.map.cellWidth,self.viewport.y-self.bufferRow*self.map.cellHeight,
      self.viewport.width,self.viewport.height,0,0,UIConst.anchor.LT)
 end
 
@@ -119,6 +119,7 @@ function clsTiled:refreshBuffer(rect,clearFlag)
        rect.colNum*self.map.cellWidth,rect.rowNum*self.map.cellHeight)
   end
   --绘制
+  self.bufferedPainter:startPaint()
   for i=1,table.getn(self.layers) do
     local layer=self.layers[i]
     for j=rect.row,rect.row+rect.rowNum-1 do
@@ -136,12 +137,12 @@ function clsTiled:refreshBuffer(rect,clearFlag)
             local imgColNum=image:getWidth()/self.map.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.map.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.map.cellWidth
-            self.bufferedPainter:drawImage(image,imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
+            self.bufferedPainter:drawTexture(image,imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
                  k*self.map.cellWidth,j*self.map.cellHeight,UIConst.anchor.LT)
-            Image:releaseImage(path)
           end
         end
       end
     end
   end
+  self.bufferedPainter:stopPaint()
 end

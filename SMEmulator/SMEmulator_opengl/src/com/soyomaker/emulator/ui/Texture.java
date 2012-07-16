@@ -135,6 +135,43 @@ public class Texture {
 	}
 
 	/**
+	 * 清除图像
+	 * 
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 */
+	public void clear(int x, int y, int width, int height) {
+		ByteBuffer buffer = ByteBuffer.allocateDirect(width * height);
+		this.setData(buffer, x, y, width, height);
+	}
+
+	/**
+	 * 将图像的源区域拷贝到指定点
+	 * 
+	 * @param srcX
+	 *            源区域x坐标
+	 * @param srcY
+	 *            源区域y坐标
+	 * @param srcWidth
+	 *            源区域宽度
+	 * @param srcHeight
+	 *            源区域高度
+	 * @param x
+	 *            指定点x坐标
+	 * @param y
+	 *            指定点y坐标
+	 */
+	public void copyArea(int srcX, int srcY, int srcWidth, int srcHeight, int x, int y) {
+		System.out.println("copyArea");
+	}
+
+	/**
 	 * 获取纹理的画笔
 	 * 
 	 * @return 画笔

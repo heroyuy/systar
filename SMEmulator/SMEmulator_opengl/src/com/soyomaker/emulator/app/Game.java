@@ -136,14 +136,12 @@ public class Game {
 		}
 		// 显示FPS和内存
 		Painter painter = Painter.systemPainter();
-		painter.setColor(Color.WHITE);
+		painter.setColor(Color.CYAN);
 		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - 10, Painter.LB);
 		if (!test) {
-			// String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() +
-			// "K";
-			// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
-			// getHeight() - painter.getTextSize() - 10);
+			String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
+			painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr), getHeight() - 10, Painter.LB);
 		}
 		t = getTime();
 	}

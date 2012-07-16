@@ -314,6 +314,8 @@ public class Painter {
 		y = xy[1];
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+		Color c = this.getColor();
+		this.setColor(Color.WHITE);
 		glBegin(GL_QUADS);
 		float tw = texture.getWidth();
 		float th = texture.getHeight();
@@ -326,6 +328,7 @@ public class Painter {
 		glTexCoord2f(dx / tw, (dy + height) / th);
 		glVertex2f(x, y + height);
 		glEnd();
+		this.setColor(c);
 		glDisable(GL_TEXTURE_2D);
 	}
 
