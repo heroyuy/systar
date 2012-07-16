@@ -4,7 +4,7 @@ help="游戏帮助",
 about="游戏说明",
 gold="金币",
 skins={
-frame="/image/skin/Window3.png",
+frame="/image/skin/Window1.png",
 playerInfo="/image/skin/PlayerInfo.png",
 inputDialog="/image/skin/input.png"
 },
