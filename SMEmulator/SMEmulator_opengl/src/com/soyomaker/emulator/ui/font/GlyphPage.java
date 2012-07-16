@@ -61,7 +61,7 @@ public class GlyphPage {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setFont(this.font);
 			g.setColor(Color.white);
-			g.drawString(ch + "", 0, charImage.getHeight() - g.getFontMetrics().getDescent());
+			g.drawString(ch + "", 0, this.font.getSize() - g.getFontMetrics().getDescent());
 			this.texture.setData(Texture.imageToByteBuffer(charImage), (int) rect.getX(), (int) rect.getY(),
 					(int) rect.getWidth(), (int) rect.getHeight());
 			g.dispose();

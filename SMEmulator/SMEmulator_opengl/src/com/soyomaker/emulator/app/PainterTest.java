@@ -27,7 +27,7 @@ public class PainterTest {
 		// String name = "game/image/tileset/" + i + "号墙壁.png";
 		// list.add(new Texture(name));
 		// }
-		body = skin.subTexture(0, 64, 64, 2);
+		body = skin.subTexture(0, 0, 128, 128);
 	}
 
 	public void test(Painter painter) {

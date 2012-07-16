@@ -29,7 +29,7 @@ public class Game {
 
 	private long t = 0;
 
-	private boolean test = true;
+	private boolean test = false;
 
 	private Game() {// initialize the window beforehand
 		int width = getWidth();
@@ -49,7 +49,7 @@ public class Game {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
-		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		// 设置游戏路径
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// 设置系统画笔的起始视口
