@@ -8,6 +8,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
 
 import com.soyomaker.emulator.ui.Color;
 import com.soyomaker.emulator.ui.Painter;
@@ -28,7 +31,7 @@ public class Game {
 
 	private long t = 0;
 
-	private boolean test = false;
+	private boolean test = true;
 
 	private Game() {// initialize the window beforehand
 		int width = getWidth();
@@ -48,7 +51,7 @@ public class Game {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 		// 设置游戏路径
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// 设置系统画笔的起始视口
