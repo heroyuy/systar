@@ -36,6 +36,7 @@ public class Game {
 		int height = getHeight();
 		try {
 			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setTitle("SMEmulator_vOpengl");
 			Display.create();
 			Display.setVSyncEnabled(true);
 		} catch (LWJGLException e) {
@@ -49,7 +50,8 @@ public class Game {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		// 启用混合
 		GL11.glEnable(GL11.GL_BLEND);
-		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE,
+				GL11.GL_ONE_MINUS_SRC_ALPHA);
 		// 设置游戏路径
 		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		// 设置系统画笔的起始视口
