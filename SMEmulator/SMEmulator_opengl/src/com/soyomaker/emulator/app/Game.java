@@ -140,8 +140,10 @@ public class Game {
 		String fpsStr = "FPS:" + GameInfo.getInstance().getActualFps();
 		painter.drawString(fpsStr, 10, getHeight() - 10, Painter.LB);
 		if (!test) {
-//			String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() + "K";
-//			painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr), getHeight() - 10, Painter.LB);
+			// String memoryStr = " LuaMemory:" + luaAdapter.getLuaMemory() +
+			// "K";
+			// painter.drawString(memoryStr, 20 + painter.stringWidth(fpsStr),
+			// getHeight() - 10, Painter.LB);
 		}
 		t = getTime();
 	}
