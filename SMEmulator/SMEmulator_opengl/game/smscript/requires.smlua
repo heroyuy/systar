@@ -21,8 +21,8 @@ require("UIConst")
 require("Skin")
 require("clsUILayer")
 require("clsUILabel")
-require("clsUITextArea")
 require("clsUIButton")
+require("clsUITextArea")
 require("clsUITable")
 
 --common\util

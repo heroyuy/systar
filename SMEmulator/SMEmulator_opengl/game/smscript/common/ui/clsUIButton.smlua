@@ -6,11 +6,11 @@
 
 --类结构定义
 clsUIButton={}
-setmetatable(clsUIButton,clsUILayer)
+setmetatable(clsUIButton,clsUILabel)
 clsUIButton.__index=clsUIButton
 
 --重定向需要覆盖的父类方法
-clsUIButton.paintLayerF=clsUIButton.paintLayer
+clsUIButton.paintLayerFF=clsUIButton.paintLayer
 
 --字段
 clsUIButton.STATE_NORMAL=0                			--普通状态
@@ -21,13 +21,12 @@ clsUIButton.highlightImage=nil             			--高亮时图片
 clsUIButton.normalImage=nil               			--普通时图片
 
 clsUIButton.buttonState=clsUIButton.STATE_NORMAL	--按钮状态
-clsUIButton.label=nil								--按钮上用于显示文字的标签
 clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
 
 --构造器
 function clsUIButton:standardButton(x,y,width,height,title)
   local button=clsUIButton:new(x,y,width,height)
-  button.label.text=title
+  button.text=title
   button.normalImage=Skin:createBody(button.width,button.height)
   button.highlightImage=Skin:createSelectedBg(button.width,button.height)
   return button
@@ -35,10 +34,9 @@ end
 
 --构造器
 function clsUIButton:new(x,y,width,height)
-  local self = clsUILayer:new(x,y,width,height)
+  local self = clsUILabel:new(x,y,width,height)
   setmetatable(self,clsUIButton)
-  self.label=clsUILabel:new(self.width/2,self.height/2,self.width,self.height)
-  self:addChild(self.label)
+  self.enabled=true
   return self
 end
 
@@ -54,7 +52,7 @@ function clsUIButton:paintLayer(painter)
     self.image=self.normalImage
   end
   --调用父类绘制方法
-  self:paintLayerF(painter)
+  self:paintLayerFF(painter)
 end
 
 --处理触屏事件（lua层不应该调用此方法）
