@@ -116,36 +116,64 @@ end
 
 --绘制Layer（lua层不应该调用此方法）
 function clsUILayer:paint(painter)
-  local affineTransform=painter:getTransform()
-  local composite=painter:getComposite()
-  local tint=painter:getTint()
-  --(1)处理alpha
-  if self.alpha~=1 then
+  --(1)分类标志计算
+  --(a)是否有alpha变换
+  local alphaStatus=self.alpha~=1
+  --(b)是否有仿射变换
+  local scaleStatus=self.scale~=1
+  local rotateStatus=math.mod(self.rotate,360)~=0
+  local flipStatus=math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0
+  local transformStatus=scaleStatus or rotateStatus or flipStatus
+  --(c)是否有变色
+  local tintStatus=self.tint[1]~=1 or self.tint[2]~=1 or self.tint[3]~=1 or self.tint[4]~=0 or self.tint[5]~=0 or self.tint[6]~=0
+  --(2)分类状态备份
+  local composite=nil
+  if alphaStatus then
+    composite=painter:getComposite()
+  end
+  local affineTransform=nil
+  if transformStatus then
+    affineTransform=painter:getTransform()
+  end
+  local tint=nil
+  if tintStatus then
+    tint=painter:getTint()
+  end
+  --(3)处理alpha
+  if alphaStatus then
     local alpha=painter:getAlpha()
     painter:setAlpha(alpha*self.alpha)
   end
-  --(2)处理scale
-  if self.scale~=1 then
+  --(4)处理scale
+  if scaleStatus then
     painter:scale(self.scale,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
-  --(3)处理rotate
-  if math.mod(self.rotate,360)~=0 then
+  --(5)处理rotate
+  if rotateStatus then
     painter:rotate(self.rotate,self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
-  --(4)处理flip
-  if math.mod(self.flip[1],360)~=0 or math.mod(self.flip[2],360)~=0 then
+  --(6)处理flip
+  if flipStatus then
     painter:flip(self.flip[1],self.flip[2],self.anchor[1]*self.width,self.anchor[2]*self.height)
   end
-  --(5)处理变色
-  painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
-  --绘制自身
+  --(7)处理变色
+  if tintStatus then
+    painter:tint(self.tint[1],self.tint[2],self.tint[3],self.tint[4],self.tint[5],self.tint[6])
+  end
+  --(8)绘制自身
   self:paintLayer(painter)
-  --绘制子Layer
+  --(9)绘制子Layer
   self:paintChildren(painter)
-  --还原特效变换
-  painter:setTint(tint)
-  painter:setComposite(composite)
-  painter:setTransform(affineTransform)
+  --(10)还原特效变换
+  if tintStatus then
+    painter:setTint(tint)
+  end
+  if transformStatus then
+    painter:setTransform(affineTransform)
+  end
+  if alphaStatus then
+    painter:setComposite(composite)
+  end
 end
 
 --绘制自身（lua层不应该调用此方法）
