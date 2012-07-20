@@ -193,7 +193,9 @@ function clsUILayer:paintChildren(painter)
     if layer.visibility and layer.alpha~=0 then
       --设置坐标系
       local x,y=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
-      painter:setBasePoint(x,y)
+      if x~=0 or y~=0 then
+        painter:setBasePoint(x,y)
+      end
       --设置裁剪区
       local clip=nil;
       if layer.clipBounds then
@@ -207,7 +209,9 @@ function clsUILayer:paintChildren(painter)
         painter:forceClip(clip)
       end
       --还原坐标系
-      painter:setBasePoint(-x,-y)
+      if x~=0 or y~=0 then
+        painter:setBasePoint(-x,-y)
+      end
     end
   end
       
