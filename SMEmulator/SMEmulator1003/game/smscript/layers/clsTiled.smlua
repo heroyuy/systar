@@ -39,7 +39,7 @@ function clsTiled:init(mapId,layers,viewport)
   self.bufferColNum=(math.ceil(self.width/self.map.cellWidth)+self.bufferBound)
   self.bufferRowNum=(math.ceil(self.height/self.map.cellHeight)+self.bufferBound)
   --创建缓冲
-  self.image=Image:createImage(self.bufferColNum*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight)
+  self.image=smImageFactory:createImage(self.bufferColNum*self.map.cellWidth,self.bufferRowNum*self.map.cellHeight)
   self.bufferedPainter=self.image:getPainter()
   --根据当前视口计算缓冲区起始行、列号
   self.bufferCol=math.floor(self.viewport.x/self.map.cellWidth)
@@ -132,13 +132,12 @@ function clsTiled:refreshBuffer(rect,clearFlag)
           local tiledIndex=cell[2]
           if imageSetId~=-1 then
             local path=self.map.tilesets[imageSetId].path
-            local image=Image:getImage(path)
+            local image=smImageFactory:loadImage(path)
             local imgColNum=image:getWidth()/self.map.cellWidth
             local imgsx=math.mod(tiledIndex,imgColNum)*self.map.cellWidth
             local imgsy=math.floor(tiledIndex/imgColNum)*self.map.cellWidth
             self.bufferedPainter:drawImage(image,imgsx,imgsy,self.map.cellWidth,self.map.cellHeight,
                  k*self.map.cellWidth,j*self.map.cellHeight,UIConst.anchor.LT)
-            Image:releaseImage(path)
           end
         end
       end

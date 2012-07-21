@@ -49,7 +49,7 @@ end
 --绘制
 function clsUITextArea:drawPage()
   --(1)创建缓冲图
-  self.image=Image:createImage(self.width,self.height)
+  self.image=smImageFactory:createImage(self.width,self.height)
   local painter=self.image:getPainter()
   --(2)设置属性
   painter:setColor(self.textColor)

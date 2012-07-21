@@ -69,7 +69,7 @@ public class InputDialog extends JPanel {
 		super.paintComponent(g);
 		Painter p = new Painter((Graphics2D) g);
 		String inputImage = GameInfo.getInstance().getGamePath() + "/image/skin/input.png";
-		Image img = ImageFactory.getInstance().createImage(inputImage);
+		Image img = ImageFactory.getInstance().loadImage(inputImage);
 		p.drawImage(img, 0, 0, Painter.LT);
 	}
 

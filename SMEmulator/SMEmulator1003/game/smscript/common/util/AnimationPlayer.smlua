@@ -71,7 +71,7 @@ function AnimationPlayer:atachToLayer(layer)
           local clipDict=Dictionary.animationRes.clips[index]
           --绘制
           local path=Dictionary.animationRes.imagesets[clipDict.imageId].path
-          painter:drawImage(Image:getImage(path),clipDict.x,clipDict.y,clipDict.width,clipDict.height,x,y,UIConst.anchor.HV)
+          painter:drawImage(smImageFactory:loadImage(path),clipDict.x,clipDict.y,clipDict.width,clipDict.height,x,y,UIConst.anchor.HV)
         end
       else
         --未找到合适的帧，说明动画已经结束
@@ -89,7 +89,7 @@ function AnimationPlayer:play(id,x,y)
   for _,imageId in ipairs(imageIds) do
     --加载动画图集
     local path=Dictionary.animationRes.imagesets[imageId].path
-    Image:loadImage(path)
+    smImageFactory:loadImage(path)
   end
 end
 

@@ -56,15 +56,15 @@ function GameData:newGame()
     player.desc=playerDict.intro
     player.headImgName=playerDict.headImg
     if player.headImgName then
-      player.headImg=Image:getImage(player.headImgName)
+      player.headImg=smImageFactory:loadImage(player.headImgName)
     end
     player.charImgName=playerDict.charImg
     if player.charImgName then
-      player.charImg=Image:getImage(player.charImgName)
+      player.charImg=smImageFactory:loadImage(player.charImgName)
     end
     player.actionImgName=playerDict.actionImg
     if player.actionImgName then
-      player.actionImg=Image:getImage(player.actionImgName)
+      player.actionImg=smImageFactory:loadImage(player.actionImgName)
     end
     player.vocationId=playerDict.vocationId
     player.level=1
@@ -135,11 +135,11 @@ function GameData:getNPC(id)
     npc.name=npcDict.name
     npc.charImgName=npcDict.charImg
     if npc.charImgName then
-      npc.charImg=Image:getImage(npc.charImgName)
+      npc.charImg=smImageFactory:loadImage(npc.charImgName)
     end
     npc.headImgName=npcDict.headImg
     if npc.headImgName then
-      npc.headImg=Image:getImage(npc.headImgName)
+      npc.headImg=smImageFactory:loadImage(npc.headImgName)
     end
     npc.face=npcDict.face
     npc.moveType=npcDict.moveType

@@ -23,7 +23,7 @@ clsBag.buttonThrow=nil			--丢弃
 function clsBag:new()
   local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBag)
-  self.image=Skin:createBgWithFrame(self.width,self.height)
+  self.image=smImageFactory:loadImage(Skin.BG_WINDOW)
   self.equipButtonList={}
   local gap=10
   local w=(self.width-3*gap)/2
@@ -48,7 +48,7 @@ function clsBag:new()
     self.equipButtonList[i]=clsUIButton:new(equipBgLayer.width/2,equipBgLayer.height/2,cw,ch)
     local itemCell=GameData.playerTroop:itemAt(i)
     local itemDict=Dictionary.items[itemCell.id]
-    self.equipButtonList[i].normalImage=Image:getImage(itemDict.icon)
+    self.equipButtonList[i].normalImage=smImageFactory:loadImage(itemDict.icon)
     equipBgLayer:addChild(self.equipButtonList[i])
     self:addChild(equipBgLayer)
   end
@@ -97,7 +97,7 @@ function clsBag:cellLayerAtIndex(table,cellLayer,i)
   if itemCell then
     local itemDict=Dictionary.items[itemCell.id]
     local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
-    layerIcon.image=Image:getImage(itemDict.icon)
+    layerIcon.image=smImageFactory:loadImage(itemDict.icon)
     layerIcon.enabled=false
     cellLayer:addChild(layerIcon)
   end
