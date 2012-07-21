@@ -22,6 +22,7 @@ clsBag.buttonThrow=nil			--丢弃
 function clsBag:new()
   local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBag)
+  self.autoClose=true
   self.image=Skin.BG_WINDOW
   self.equipButtonList={}
   local gap=10						--间距

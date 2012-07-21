@@ -1,5 +1,5 @@
 --[[
-  description:游戏层管理器。从下至上依次是：场景渲染层(地图背景层、精灵层、地图前景层)、动画层、弹出对话层
+  description:游戏层管理器。从下至上依次是：场景渲染层(地图背景层、精灵层、地图前景层)、辅助对话框层、动画层
   author:wp_g4
   date:2012/04/29
 --]]
@@ -10,8 +10,8 @@ GameLayer={}
 --字段
 GameLayer.rootLayer=nil				--根层 。不可以直接在这一层上添加元素
 GameLayer.sceneLayer=nil			--场景渲染层。场景的所有元素应加在这一层上
+GameLayer.dialogLayer=nil			--辅助对话框层。仅用于显示对话框等
 GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事件
-GameLayer.eventLayer=nil			--事件层。仅用于显示对话框等
 
 GameLayer.inputDelegate=nil			--输入框事件委托
 GameLayer.inputCallback=nil			--输入框回调方法
@@ -25,16 +25,15 @@ function GameLayer:init()
   self.sceneLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   --动画层
   self.animationLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  self.animationLayer.enabled=false				--永不接收事件
+  self.animationLayer.enabled=false				--不接收事件
   AnimationPlayer:atachToLayer(self.animationLayer)
-  --事件层
-  self.eventLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  self.eventLayer.enabled=false					--需要时接收事件
-  self.eventLayer.visibility=false				--需要时显示
+  --辅助对话框层
+  self.dialogLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.dialogLayer.penetrable=true				--穿透的
   
   self.rootLayer:addChild(self.sceneLayer)
+  self.rootLayer:addChild(self.dialogLayer)
   self.rootLayer:addChild(self.animationLayer)
-  self.rootLayer:addChild(self.eventLayer)
 end
 
 --分发事件
@@ -56,9 +55,7 @@ end
 function GameLayer:clear()
   self.sceneLayer:clear()
   self.animationLayer:clear()
-  self.eventLayer:clear()
-  self.eventLayer.enabled=false					--需要时接收事件
-  self.eventLayer.visibility=false				--需要时显示
+  self.dialogLayer:clear()
 end
 
 --向场景上添加元件
@@ -71,31 +68,31 @@ function GameLayer:removeChildFromSceneLayer(layer)
   self.sceneLayer:removeChild(layer)
 end
 
---从事件层上移除元件
-function GameLayer:removeChildFromEventLayer(layer)
-  self.eventLayer:removeChild(layer)
-  if table.getn(self.eventLayer.children)==0 then
-    self.eventLayer.enabled=false
-    self.eventLayer.visibility=false
+--从辅助对话框层上移除元件
+function GameLayer:removeChildFromdialogLayer(layer)
+  self.dialogLayer:removeChild(layer)
+  if table.getn(self.dialogLayer.children)==0 then
+    self.dialogLayer.enabled=false
+    self.dialogLayer.visibility=false
   end
 end
 
 --显示普通对话框
 function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
-  local eventLayer=self.eventLayer
+  local dialogLayer=self.dialogLayer
   local delegate={}
   function delegate:dialogEnd()
-    eventLayer:clear()
-    eventLayer.enabled=false
-    eventLayer.visibility=false
+    dialogLayer:clear()
+    dialogLayer.enabled=false
+    dialogLayer.visibility=false
     callFunction(target,callback)
   end
   local normalDialog=clsDialog:new(name,content,bustPath,position)
   normalDialog.delegate=delegate
   normalDialog.callback=delegate.dialogEnd
-  eventLayer.enabled=true
-  eventLayer.visibility=true
-  eventLayer:addChild(normalDialog)
+  dialogLayer.enabled=true
+  dialogLayer.visibility=true
+  dialogLayer:addChild(normalDialog)
 end
 
 --显示输入框
@@ -110,18 +107,18 @@ end
 
 --显示选项对话框
 function GameLayer:showOptionDialog(options,target,callback)
-  local eventLayer=self.eventLayer
+  local dialogLayer=self.dialogLayer
   local delegate={}
   function delegate:onSelected(index)
-    eventLayer:clear()
-    eventLayer.enabled=false
-    eventLayer.visibility=false
+    dialogLayer:clear()
+    dialogLayer.enabled=false
+    dialogLayer.visibility=false
     callFunction(target,callback,index)
   end
   local optionDialog=clsOption:new(options)
   optionDialog.delegate=delegate
   optionDialog.callback=delegate.onSelected
-  eventLayer.enabled=true
-  eventLayer.visibility=true
-  eventLayer:addChild(optionDialog)
+  dialogLayer.enabled=true
+  dialogLayer.visibility=true
+  dialogLayer:addChild(optionDialog)
 end
