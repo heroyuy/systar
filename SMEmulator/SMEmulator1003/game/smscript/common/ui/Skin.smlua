@@ -1,9 +1,9 @@
 Skin={}
 
 --常量
-Skin.BG_WINDOW="image/skin/bg_window.png"
-Skin.BG_HALF="image/skin/bg_half.png"
-Skin.BG_CELL="image/skin/bg_cell.png"
+Skin.BG_WINDOW=nil
+Skin.BG_HALF=nil
+Skin.BG_CELL=nil
 
 Skin.bg=nil
 Skin.body=nil
@@ -15,6 +15,9 @@ Skin.colors={}
 Skin.cursorAnimateAction=nil
 
 function Skin:init(skinPath)
+  self.BG_WINDOW=smImageFactory:loadImage("image/skin/bg_window.png")
+  self.BG_HALF=smImageFactory:loadImage("image/skin/bg_half.png")
+  self.BG_CELL=smImageFactory:loadImage("image/skin/bg_cell.png")
   local img=smImageFactory:loadImage(skinPath)
   self.bg=img:clip(0,0,64,64)
   self.body=img:clip(0,64,64,2)
