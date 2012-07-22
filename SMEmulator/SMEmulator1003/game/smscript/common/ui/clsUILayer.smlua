@@ -27,7 +27,6 @@ clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true             	--是否可见
 clsUILayer.enabled = true                 	--是否接收事件
 clsUILayer.penetrable = false               --是否可穿透(即自身不处理事件，但子layer处理事件)
-clsUILayer.autoClose = false                --是否自动关闭(自动关闭是指事件发生在layer的父layer上时,自动从父layer中移除)
 clsUILayer.clipBounds=false              	--是否裁剪区域
 clsUILayer.delegate=nil                    	--事件委托
 clsUILayer.callback="layerTapped"			--回调方法
@@ -272,21 +271,6 @@ function clsUILayer:stopAllAction()
   ActionPlayer:stopActionForTarget(self)
 end
 
---点击测试(true表示处理事件，false表示不处理事件)
-function clsUILayer:hitTest()
-  --检查子layer的自动关闭属性
-  local target={}
-  for i,layer in ipairs(self.children) do
-    if layer.autoClose then
-      table.insert(target,layer)
-    end
-  end
-  for i,layer in ipairs(target) do
-    layer:removeFromParent()
-  end 
-  return not self.penetrable
-end
-
 --搜索焦点子组件，没有则返回nil（lua层不应该调用此方法）
 function clsUILayer:searchFocusLayer(x,y)
   local focus = nil
@@ -296,7 +280,7 @@ function clsUILayer:searchFocusLayer(x,y)
     if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
       local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
-      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height and layer:hitTest() then
+      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height and (not layer.penetrable) then
         --命中
         focus = layer
         break

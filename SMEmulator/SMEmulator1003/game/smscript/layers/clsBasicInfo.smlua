@@ -10,99 +10,67 @@ setmetatable(clsBasicInfo,clsUILayer)
 clsBasicInfo.__index=clsBasicInfo
 
 --字段
-clsBasicInfo.index=1				--当前显示的player的序号
-clsBasicInfo.imageHead=nil		--头像
-clsBasicInfo.labelLev=nil		--Lev
-clsBasicInfo.labelExp=nil		--Exp
+clsBasicInfo.imageHead=nil			--头像
+clsBasicInfo.labelLev=nil			--Lev
 clsBasicInfo.labelHp=nil			--HP
 clsBasicInfo.labelSp=nil			--SP
 
 clsBasicInfo.propertyList={"str","agi","int","dex","vit","luck",
-							  "hpr","spr","atk","def","matk","mdef",
-							  "hit","flee","aspd","mspd","cri","sta"}
+							"atk","def","matk","mdef","hit","flee",
+							"aspd","mspd","cri","sta"}
 
 --构造器
-function clsBasicInfo:new()
+function clsBasicInfo:new(player)
   local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBasicInfo)
-  self.image=Skin:createBgWithFrame(self.width,self.height)
-  --切换菜单
-  local menuItems={}
-  for _,player in ipairs(GameData.playerTroop.players) do
-    table.insert(menuItems,player.name)
-  end
-  local h,gap=36,10
-  local menu=clsUITable:standardMenu(gap,gap,self.width-2*gap,h,menuItems,table.getn(menuItems))
-  menu.anchor={0,0}
-  menu.gap={5,5,5,5,5,5}
-  menu.image=Skin:createBg(menu.width,menu.height)
-  menu.delegate=self
-  menu:refresh()
-  self:addChild(menu)
+  self.image=Skin.BG_WINDOW
+  local btnClose=clsUIButton:new(Game:getWidth()/2-32-2,2,32,32)
+  btnClose.anchor={0,0}
+  btnClose.normalImage=Skin.BUTTON_CLOSE
+  self:addChild(btnClose)
+  local y,gap=50,10
   --头像
   local headW,headH=64,64
-  self.imageHead=clsUILayer:new(2*gap,h+2*gap,headW,headH)
+  self.imageHead=clsUILayer:new(2*gap,y,headW,headH)
   self.imageHead.anchor={0,0}
+  self.imageHead.image=player.headImg
   self:addChild(self.imageHead)
-  --Lev Exp HP SP
+  --Lev HP SP
   local labelW,labelH=120,24
-  self.labelLev=clsUILabel:new(headW+4*gap,h+2*gap,labelW,labelH)
+  self.labelLev=clsUILabel:new(2*gap+headW+2*gap,y,2*labelW/3,labelH)
   self.labelLev.anchor={0,0}
   self.labelLev.alignment=clsUILabel.ALIGN_LEFT
+  self.labelLev.text=Dictionary.config.level..":"..player.level
   self:addChild(self.labelLev)
-  self.labelExp=clsUILabel:new(headW+labelW+5*gap,h+2*gap,labelW,labelH)
-  self.labelExp.anchor={0,0}
-  self.labelExp.alignment=clsUILabel.ALIGN_LEFT
-  self:addChild(self.labelExp)
-  self.labelHp=clsUILabel:new(headW+4*gap,h+labelH+3*gap,labelW,labelH)
+  self.labelHp=clsUILabel:new(2*gap+headW+2*gap+(2*labelW/3+gap),y,labelW,labelH)
   self.labelHp.anchor={0,0}
   self.labelHp.alignment=clsUILabel.ALIGN_LEFT
+  self.labelHp.text=Dictionary.config.hp..":"..player.hp.."/"..player:getProperty(clsCharacter.HP)
   self:addChild(self.labelHp)
-  self.labelSp=clsUILabel:new(headW+labelW+5*gap,h+labelH+3*gap,labelW,labelH)
+  self.labelSp=clsUILabel:new(2*gap+headW+2*gap+(2*labelW/3+gap)+(labelW+gap),y,labelW,labelH)
   self.labelSp.anchor={0,0}
   self.labelSp.alignment=clsUILabel.ALIGN_LEFT
+  self.labelSp.text=Dictionary.config.sp..":"..player.sp.."/"..player:getProperty(clsCharacter.SP)
   self:addChild(self.labelSp)
+  --装备
+  local cw,ch=32,32 --单元格尺寸
+  for i=1,6 do
+    local equipCell=clsUILayer:new(2*gap+headW+2*gap+(i-1)*(cw+gap),y+cw,cw,ch)
+    equipCell.anchor={0,0}
+    equipCell.image=Skin.BG_CELL
+    local iconButton=clsUIButton:new(equipCell.width/2,equipCell.height/2,cw,ch)
+    equipCell:addChild(iconButton)
+    self:addChild(equipCell)
+  end
   --Propertys
-  local num=5
+  local num=4
   local labelW=(self.width-(num+3)*gap)/num
   for i,v in ipairs(self.propertyList) do
-    local label=clsUILabel:new(2*gap+(math.mod(i-1,num))*(labelW+gap),h+4*gap+headH+(math.floor((i-1)/num))*(labelH+2*gap),labelW,labelH)
+    local label=clsUILabel:new(2*gap+(math.mod(i-1,num))*(labelW+gap),y+4*gap+headH+(math.floor((i-1)/num))*(labelH+gap),labelW,labelH)
     label.anchor={0,0}
     label.alignment=clsUILabel.ALIGN_LEFT
-    label.tag=v
+    label.text=Dictionary.config[v]..":"..player:getProperty(v)
     self:addChild(label)
   end
-  self:refresh()
   return self
-end
-
-function clsBasicInfo:refresh()
-  local player=GameData.playerTroop.players[self.index]
-  --头像
-  self.imageHead.image=player.headImg
-  --Lev
-  self.labelLev.text=Dictionary.config.level..":"..player.level
-  --Exp
-  self.labelExp.text=Dictionary.config.exp..":"..player.exp.."/"..player.nextExp
-  --HP
-  self.labelHp.text=Dictionary.config.hp..":"..player.hp.."/"..player:getProperty(clsCharacter.HP)
-  --SP
-  self.labelSp.text=Dictionary.config.sp..":"..player.sp.."/"..player:getProperty(clsCharacter.SP)
-  --Propertys
-  for i,v in ipairs(self.propertyList) do
-    local label=self:childWithTag(v)
-    label.text=Dictionary.config[v]..":"..player:getProperty(v)
-  end
-end
-
-function clsBasicInfo:itemSelected(menu,index)
-  if self.index~=index then
-    self.index=index
-    self:refresh()
-  end
-end
-
-function clsBasicInfo:onTouch(event)
-  --不做任何处理
-  self:removeFromParent()
 end

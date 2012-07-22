@@ -15,7 +15,7 @@ clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
 clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
 
 --字段
-clsSceneMap.menuItems={"状态","物品","技能","装备","存档","退出"}
+clsSceneMap.menuItems={"属性","背包","技能","队伍","存档","退出"}
 clsSceneMap.mapBgLayer=nil     		--背景
 clsSceneMap.mapFgLayer=nil    		--前景
 clsSceneMap.spriteLayer=nil    		--精灵层
@@ -235,7 +235,7 @@ function clsSceneMap:itemSelected(menu,index)
   self.menu.visibility=false
   if index==1 then
     --状态
-    local basicInfo=clsBasicInfo:new()
+    local basicInfo=clsBasicInfo:new(self.curPlayer)
     GameLayer:addChildToScene(basicInfo)
   elseif index==2 then
     --物品
