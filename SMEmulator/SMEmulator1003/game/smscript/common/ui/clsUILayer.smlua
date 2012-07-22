@@ -26,7 +26,6 @@ clsUILayer.tint=nil							--相对调色值{sr,sg,sb,tr,tg,tb}
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true             	--是否可见
 clsUILayer.enabled = true                 	--是否接收事件
-clsUILayer.penetrable = false               --是否可穿透(即自身不处理事件，但子layer处理事件)
 clsUILayer.clipBounds=false              	--是否裁剪区域
 clsUILayer.delegate=nil                    	--事件委托
 clsUILayer.callback="layerTapped"			--回调方法
@@ -280,7 +279,7 @@ function clsUILayer:searchFocusLayer(x,y)
     if layer.visibility and layer.alpha~=0 and layer.enabled then
       --子Layer可见并且可以接收事件
       local lx,ly=layer.x-layer.anchor[1]*layer.width,layer.y-layer.anchor[2]*layer.height
-      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height and (not layer.penetrable) then
+      if x >=lx and x <= lx + layer.width and y >= ly and y <= ly + layer.height then
         --命中
         focus = layer
         break

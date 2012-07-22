@@ -9,8 +9,7 @@ GameLayer={}
 
 --字段
 GameLayer.rootLayer=nil				--根层 。不可以直接在这一层上添加元素
-GameLayer.sceneLayer=nil			--场景渲染层。场景的所有元素应加在这一层上
-GameLayer.dialogLayer=nil			--辅助对话框层。仅用于显示对话框等
+GameLayer.sceneLayer=nil			--场景层。场景的所有元素应加在这一层上
 GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事件
 
 GameLayer.inputDelegate=nil			--输入框事件委托
@@ -23,16 +22,11 @@ function GameLayer:init()
   self.rootLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   --场景层
   self.sceneLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.rootLayer:addChild(self.sceneLayer)
   --动画层
   self.animationLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   self.animationLayer.enabled=false				--不接收事件
   AnimationPlayer:atachToLayer(self.animationLayer)
-  --辅助对话框层
-  self.dialogLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  self.dialogLayer.penetrable=true				--穿透的
-  
-  self.rootLayer:addChild(self.sceneLayer)
-  self.rootLayer:addChild(self.dialogLayer)
   self.rootLayer:addChild(self.animationLayer)
 end
 
@@ -55,7 +49,6 @@ end
 function GameLayer:clear()
   self.sceneLayer:clear()
   self.animationLayer:clear()
-  self.dialogLayer:clear()
 end
 
 --向场景上添加元件
@@ -64,17 +57,8 @@ function GameLayer:addChildToScene(layer)
 end
 
 --从场景上移除元件
-function GameLayer:removeChildFromSceneLayer(layer)
+function GameLayer:removeChildFromScene(layer)
   self.sceneLayer:removeChild(layer)
-end
-
---从辅助对话框层上移除元件
-function GameLayer:removeChildFromdialogLayer(layer)
-  self.dialogLayer:removeChild(layer)
-  if table.getn(self.dialogLayer.children)==0 then
-    self.dialogLayer.enabled=false
-    self.dialogLayer.visibility=false
-  end
 end
 
 --显示普通对话框
