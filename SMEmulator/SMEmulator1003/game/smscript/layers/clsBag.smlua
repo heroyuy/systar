@@ -23,6 +23,13 @@ function clsBag:new()
   local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
   setmetatable(self,clsBag)
   self.image=Skin.BG_WINDOW
+  self.image=Skin.BG_WINDOW
+  local btnClose=clsUIButton:new(Game:getWidth()/2-32-2,2,32,32)
+  btnClose.anchor={0,0}
+  btnClose.normalImage=Skin.BUTTON_CLOSE
+  btnClose.delegate=self
+  btnClose.callback="buttonCloseTapped"
+  self:addChild(btnClose)
   self.equipButtonList={}
   local gap=10						--间距
   local w=(self.width-4*gap)/2		--分区宽度
@@ -75,4 +82,8 @@ function clsBag:cellLayerAtIndex(table,cellLayer,i)
     layerIcon.enabled=false
     cellLayer:addChild(layerIcon)
   end
+end
+
+function clsBag:buttonCloseTapped()
+  self:removeFromParent()
 end

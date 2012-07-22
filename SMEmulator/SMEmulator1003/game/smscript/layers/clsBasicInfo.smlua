@@ -27,6 +27,8 @@ function clsBasicInfo:new(player)
   local btnClose=clsUIButton:new(Game:getWidth()/2-32-2,2,32,32)
   btnClose.anchor={0,0}
   btnClose.normalImage=Skin.BUTTON_CLOSE
+  btnClose.delegate=self
+  btnClose.callback="buttonCloseTapped"
   self:addChild(btnClose)
   local y,gap=50,10
   --头像
@@ -73,4 +75,8 @@ function clsBasicInfo:new(player)
     self:addChild(label)
   end
   return self
+end
+
+function clsBasicInfo:buttonCloseTapped()
+  self:removeFromParent()
 end

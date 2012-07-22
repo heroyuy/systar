@@ -54,6 +54,7 @@ clsCharacter.sp=0 --SP值
 clsCharacter.exp=0 --经验值
 clsCharacter.nextExp=0 --升到下一级需要的经验值
 clsCharacter.money=0 --金钱
+clsCharacter.equipList=nil  --装备列表[头盔	饰品	武器	盾牌	铠甲	战靴]
 
 clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
 clsCharacter.moveSequence=nil				--角色当前移动序列
@@ -76,6 +77,7 @@ function clsCharacter:new()
 	local self = clsModel:new()
 	setmetatable(self,clsCharacter)
 	self.moveSequence=clsQueue:new()
+	self.equipList={}
 	return self
 end
 
