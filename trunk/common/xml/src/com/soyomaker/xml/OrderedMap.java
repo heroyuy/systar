@@ -17,10 +17,10 @@ import java.util.Map;
  */
 public class OrderedMap<K, V> {
 
-	/**键表*/
+	/** 键表 */
 	private Collection<K> keyList = new LinkedList<K>();
 
-	/**key-value映射*/
+	/** key-value映射 */
 	private Map<K, V> dataMap = new HashMap<K, V>();
 
 	/**

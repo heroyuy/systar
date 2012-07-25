@@ -2,7 +2,6 @@ package com.soyomaker.xml.test;
 
 import com.soyomaker.xml.XMLObject;
 
-
 public class XMLCreateTest {
 
 	/**
