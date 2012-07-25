@@ -43,7 +43,7 @@ public class XMLParser {
 		xmlObject = parse(doc.getDocumentElement());
 		return xmlObject;
 	}
-	
+
 	/**
 	 * 将指定的输入流解析为XMLObject对象
 	 * 
@@ -124,7 +124,7 @@ public class XMLParser {
 	/**
 	 * 私有构造，XMLParser不可实例化
 	 */
-	private XMLParser(){
-		
+	private XMLParser() {
+
 	}
 }

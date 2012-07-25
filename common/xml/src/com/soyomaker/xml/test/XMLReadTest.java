@@ -15,7 +15,8 @@ public class XMLReadTest {
 	public static void main(String[] args) {
 		try {
 			XMLObject xmlObject = XMLParser.parse(new File("xml/xml1.xml"));
-			System.out.println(xmlObject.getChild("controls").getChild("control",0).toString());
+			System.out.println(xmlObject.getChild("controls")
+					.getChild("control", 0).toString());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
