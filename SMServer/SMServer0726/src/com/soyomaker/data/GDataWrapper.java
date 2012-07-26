@@ -1,10 +1,10 @@
 package com.soyomaker.data;
 
-public class GUDataWrapper {
-	private GUDataType typeId;
+public class GDataWrapper {
+	private GDataType typeId;
 	private Object object;
 
-	public GUDataWrapper(GUDataType typeId, Object object) {
+	public GDataWrapper(GDataType typeId, Object object) {
 		this.typeId = typeId;
 		this.object = object;
 	}
@@ -13,7 +13,7 @@ public class GUDataWrapper {
 		return object;
 	}
 
-	public GUDataType getTypeId() {
+	public GDataType getTypeId() {
 		return typeId;
 	}
 

@@ -78,11 +78,11 @@ public class JsonSerializer {
 		Iterator<String> iterator = object.getKeys().iterator();
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
-			GUDataWrapper dataWrapper = object.get(key);
-			GUDataType dataType = dataWrapper.getTypeId();
-			if (dataType == GUDataType.OBJECT) {
+			GDataWrapper dataWrapper = object.get(key);
+			GDataType dataType = dataWrapper.getTypeId();
+			if (dataType == GDataType.OBJECT) {
 				map.put(key, object2map((IGObject) dataWrapper.getObject()));
-			} else if (dataType == GUDataType.OBJECT_ARRAY) {
+			} else if (dataType == GDataType.OBJECT_ARRAY) {
 				Collection<Map<String, Object>> c = new ArrayList<Map<String, Object>>();
 				@SuppressWarnings("unchecked")
 				Collection<IGObject> data = (Collection<IGObject>) dataWrapper.getObject();

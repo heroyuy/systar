@@ -11,15 +11,15 @@ import java.util.Map;
 import com.soyomaker.util.LangUtil;
 import com.soyomaker.util.Log4JUtil;
 
-public enum GUDataType {
+public enum GDataType {
 	BOOL(0), BYTE(1), SHORT(2), INT(3), LONG(4), FLOAT(5), DOUBLE(6), STRING(7), OBJECT(8), BOOL_ARRAY(9), BYTE_ARRAY(10), SHORT_ARRAY(11), INT_ARRAY(
 			12), LONG_ARRAY(13), FLOAT_ARRAY(14), DOUBLE_ARRAY(15), STRING_ARRAY(16), OBJECT_ARRAY(17);
 
-	private static Map<GUDataType, String> typeNameMap = new HashMap<GUDataType, String>();
+	private static Map<GDataType, String> typeNameMap = new HashMap<GDataType, String>();
 
-	private static Map<GUDataType, Object> typeDefaultMap = new HashMap<GUDataType, Object>();
+	private static Map<GDataType, Object> typeDefaultMap = new HashMap<GDataType, Object>();
 
-	private static Map<GUDataType, Integer> typeSQLMap = new HashMap<GUDataType, Integer>();
+	private static Map<GDataType, Integer> typeSQLMap = new HashMap<GDataType, Integer>();
 
 	static {
 		typeNameMap.put(BOOL, "bool");
@@ -80,8 +80,8 @@ public enum GUDataType {
 		typeSQLMap.put(STRING_ARRAY, Types.BLOB);
 	}
 
-	public static GUDataType fromTypeId(int typeId) {
-		for (GUDataType item : GUDataType.values()) {
+	public static GDataType fromTypeId(int typeId) {
+		for (GDataType item : GDataType.values()) {
 			if (item.getTypeID() == typeId) {
 				return item;
 			}
@@ -89,8 +89,8 @@ public enum GUDataType {
 		throw new IllegalArgumentException("Unknown typeId for SFSDataType");
 	}
 
-	public static GUDataType fromTypeName(String typeName) {
-		for (GUDataType type : typeNameMap.keySet()) {
+	public static GDataType fromTypeName(String typeName) {
+		for (GDataType type : typeNameMap.keySet()) {
 			String name = typeNameMap.get(type);
 			if (name != null && name.equalsIgnoreCase(typeName)) {
 				return type;
@@ -101,7 +101,7 @@ public enum GUDataType {
 
 	private int typeID;
 
-	GUDataType(int id) {
+	GDataType(int id) {
 		this.setTypeID(id);
 	}
 

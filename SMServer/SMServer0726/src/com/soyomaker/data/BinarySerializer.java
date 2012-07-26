@@ -23,44 +23,44 @@ public class BinarySerializer {
 		return baos.toByteArray();
 	}
 
-	private static GUDataWrapper readGUDataWrapper(DataInputStream dis) throws IOException {
-		GUDataWrapper dataWrapper = null;
+	private static GDataWrapper readGUDataWrapper(DataInputStream dis) throws IOException {
+		GDataWrapper dataWrapper = null;
 		// (1) 类型
 		byte typeId = dis.readByte();
-		GUDataType dataType = GUDataType.fromTypeId(typeId);
+		GDataType dataType = GDataType.fromTypeId(typeId);
 		// (2) 值
 		switch (dataType) {
 		case BOOL:
 			boolean v1 = dis.readBoolean();
-			dataWrapper = new GUDataWrapper(dataType, v1);
+			dataWrapper = new GDataWrapper(dataType, v1);
 			break;
 		case BYTE:
 			byte v2 = dis.readByte();
-			dataWrapper = new GUDataWrapper(dataType, v2);
+			dataWrapper = new GDataWrapper(dataType, v2);
 			break;
 		case SHORT:
 			short v3 = dis.readShort();
-			dataWrapper = new GUDataWrapper(dataType, v3);
+			dataWrapper = new GDataWrapper(dataType, v3);
 			break;
 		case INT:
 			int v4 = dis.readInt();
-			dataWrapper = new GUDataWrapper(dataType, v4);
+			dataWrapper = new GDataWrapper(dataType, v4);
 			break;
 		case LONG:
 			long v5 = dis.readLong();
-			dataWrapper = new GUDataWrapper(dataType, v5);
+			dataWrapper = new GDataWrapper(dataType, v5);
 			break;
 		case FLOAT:
 			float v6 = dis.readFloat();
-			dataWrapper = new GUDataWrapper(dataType, v6);
+			dataWrapper = new GDataWrapper(dataType, v6);
 			break;
 		case DOUBLE:
 			double v7 = dis.readDouble();
-			dataWrapper = new GUDataWrapper(dataType, v7);
+			dataWrapper = new GDataWrapper(dataType, v7);
 			break;
 		case STRING:
 			String v8 = dis.readUTF();
-			dataWrapper = new GUDataWrapper(dataType, v8);
+			dataWrapper = new GDataWrapper(dataType, v8);
 			break;
 		case BOOL_ARRAY:
 			int s1 = dis.readShort();
@@ -68,7 +68,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s1; i1++) {
 				v9.add(dis.readBoolean());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v9);
+			dataWrapper = new GDataWrapper(dataType, v9);
 			break;
 		case BYTE_ARRAY:
 			int s2 = dis.readShort();
@@ -76,7 +76,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s2; i1++) {
 				v10.add(dis.readByte());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v10);
+			dataWrapper = new GDataWrapper(dataType, v10);
 			break;
 		case SHORT_ARRAY:
 			int s3 = dis.readShort();
@@ -84,7 +84,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s3; i1++) {
 				v11.add(dis.readShort());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v11);
+			dataWrapper = new GDataWrapper(dataType, v11);
 			break;
 		case INT_ARRAY:
 			int s4 = dis.readShort();
@@ -92,7 +92,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s4; i1++) {
 				v12.add(dis.readInt());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v12);
+			dataWrapper = new GDataWrapper(dataType, v12);
 			break;
 		case LONG_ARRAY:
 			int s5 = dis.readShort();
@@ -100,7 +100,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s5; i1++) {
 				v13.add(dis.readShort());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v13);
+			dataWrapper = new GDataWrapper(dataType, v13);
 			break;
 		case FLOAT_ARRAY:
 			int s6 = dis.readShort();
@@ -108,7 +108,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s6; i1++) {
 				v15.add(dis.readFloat());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v15);
+			dataWrapper = new GDataWrapper(dataType, v15);
 			break;
 		case DOUBLE_ARRAY:
 			int s7 = dis.readShort();
@@ -116,7 +116,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s7; i1++) {
 				v16.add(dis.readDouble());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v16);
+			dataWrapper = new GDataWrapper(dataType, v16);
 			break;
 		case STRING_ARRAY:
 			int s8 = dis.readShort();
@@ -124,11 +124,11 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s8; i1++) {
 				v14.add(dis.readUTF());
 			}
-			dataWrapper = new GUDataWrapper(dataType, v14);
+			dataWrapper = new GDataWrapper(dataType, v14);
 			break;
 		case OBJECT:
 			GObject v17 = readGUObject(dis);
-			dataWrapper = new GUDataWrapper(dataType, v17);
+			dataWrapper = new GDataWrapper(dataType, v17);
 			break;
 		case OBJECT_ARRAY:
 			int s10 = dis.readShort();
@@ -137,7 +137,7 @@ public class BinarySerializer {
 				GObject v19 = readGUObject(dis);
 				v18.add(v19);
 			}
-			dataWrapper = new GUDataWrapper(dataType, v18);
+			dataWrapper = new GDataWrapper(dataType, v18);
 			break;
 		}
 		return dataWrapper;
@@ -160,7 +160,7 @@ public class BinarySerializer {
 		return object;
 	}
 
-	private static void writeGUDataWrapper(GUDataWrapper dataWrapper, DataOutputStream dos) throws IOException {
+	private static void writeGUDataWrapper(GDataWrapper dataWrapper, DataOutputStream dos) throws IOException {
 
 		// (1) 类型
 		dos.writeByte(dataWrapper.getTypeId().getTypeID());

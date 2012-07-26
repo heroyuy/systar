@@ -2,7 +2,7 @@ package com.soyomaker.model.typeHelper;
 
 import org.dom4j.Element;
 
-import com.soyomaker.data.GUDataType;
+import com.soyomaker.data.GDataType;
 
 /**
  * 数据类型的描述
@@ -15,14 +15,14 @@ public class PropertyHelper {
 		PropertyHelper map = new PropertyHelper();
 		map.setFieldName(e.attributeValue("name"));
 		map.setColumnName(e.attributeValue("column"));
-		map.setType(GUDataType.fromTypeName(e.attributeValue("type")));
+		map.setType(GDataType.fromTypeName(e.attributeValue("type")));
 		return map;
 	}
 
 	private String fieldName;
 	private String columnName;
 
-	private GUDataType type;
+	private GDataType type;
 
 	public String getColumnName() {
 		return columnName;
@@ -32,7 +32,7 @@ public class PropertyHelper {
 		return fieldName;
 	}
 
-	public GUDataType getType() {
+	public GDataType getType() {
 		return type;
 	}
 
@@ -44,7 +44,7 @@ public class PropertyHelper {
 		this.fieldName = fieldName;
 	}
 
-	public void setType(GUDataType type) {
+	public void setType(GDataType type) {
 		this.type = type;
 	}
 }

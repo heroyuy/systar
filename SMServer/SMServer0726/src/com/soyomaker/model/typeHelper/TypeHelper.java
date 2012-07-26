@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import com.soyomaker.data.GUDataType;
-import com.soyomaker.data.GUDataWrapper;
+import com.soyomaker.data.GDataType;
+import com.soyomaker.data.GDataWrapper;
 import com.soyomaker.model.DataValue;
 
 public class TypeHelper {
@@ -15,7 +15,7 @@ public class TypeHelper {
 		TypeHelper m = new TypeHelper();
 		m.setName(e.attributeValue("name"));
 		m.setKeyColumn(e.attributeValue("keyColumn"));
-		m.setKeyType(GUDataType.fromTypeName(e.attributeValue("keyType")));
+		m.setKeyType(GDataType.fromTypeName(e.attributeValue("keyType")));
 
 		@SuppressWarnings("unchecked")
 		Iterator<Element> props = e.elementIterator();
@@ -28,7 +28,7 @@ public class TypeHelper {
 
 	private String name;
 	private String keyColumn;
-	private GUDataType keyType;
+	private GDataType keyType;
 
 	private List<PropertyHelper> props = new ArrayList<PropertyHelper>();
 
@@ -44,8 +44,8 @@ public class TypeHelper {
 		DataValue e = new DataValue();
 		e.setType(name);
 		for (PropertyHelper ph : props) {
-			GUDataType dataType = ph.getType();
-			e.put(ph.getFieldName(), new GUDataWrapper(dataType, dataType.getDefault()));
+			GDataType dataType = ph.getType();
+			e.put(ph.getFieldName(), new GDataWrapper(dataType, dataType.getDefault()));
 		}
 		return e;
 	}
@@ -58,7 +58,7 @@ public class TypeHelper {
 		return keyColumn;
 	}
 
-	public GUDataType getKeyType() {
+	public GDataType getKeyType() {
 		return keyType;
 	}
 
@@ -95,7 +95,7 @@ public class TypeHelper {
 		this.keyColumn = keyColumn;
 	}
 
-	public void setKeyType(GUDataType keyType) {
+	public void setKeyType(GDataType keyType) {
 		this.keyType = keyType;
 	}
 

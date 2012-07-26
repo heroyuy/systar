@@ -6,7 +6,7 @@ import java.util.Set;
 public interface IGObject {
 
 	// 以下为getter方法
-	public abstract GUDataWrapper get(String key);
+	public abstract GDataWrapper get(String key);
 
 	public abstract Boolean getBool(String key);
 
@@ -49,7 +49,7 @@ public interface IGObject {
 	public abstract String getType();
 
 	// 以下为setter方法
-	public abstract void put(String key, GUDataWrapper wrappedObject);
+	public abstract void put(String key, GDataWrapper wrappedObject);
 
 	public abstract void putBool(String key, boolean value);
 

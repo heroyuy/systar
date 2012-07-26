@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Set;
 
-import com.soyomaker.data.GUDataWrapper;
+import com.soyomaker.data.GDataWrapper;
 import com.soyomaker.data.GObject;
 import com.soyomaker.data.IGObject;
 
@@ -52,7 +52,7 @@ public class DataValue implements IGObject {
 		}
 	}
 
-	public GUDataWrapper get(String key) {
+	public GDataWrapper get(String key) {
 		onGetData();
 		return dataHolder.get(key);
 	}
@@ -194,7 +194,7 @@ public class DataValue implements IGObject {
 		locked = true;
 	}
 
-	public void put(String key, GUDataWrapper wrappedObject) {
+	public void put(String key, GDataWrapper wrappedObject) {
 		if (!locked) {
 			dataHolder.put(key, wrappedObject);
 			onPutData();

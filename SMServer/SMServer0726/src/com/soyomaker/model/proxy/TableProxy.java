@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.GUDataType;
-import com.soyomaker.data.GUDataWrapper;
+import com.soyomaker.data.GDataType;
+import com.soyomaker.data.GDataWrapper;
 import com.soyomaker.data.GObject;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
@@ -68,13 +68,13 @@ public class TableProxy extends AbstractBean implements IDataProxy {
 								String colName = meta.getColumnName(i);
 
 								if (colName.equalsIgnoreCase(typeHelper.getKeyColumn())) {
-									GUDataType type = typeHelper.getKeyType();
+									GDataType type = typeHelper.getKeyType();
 									e.setKey(type.getValueFromResultSet(rs, i));
 								} else {
 									PropertyHelper ph = typeHelper.getPropertyHelperByColumnName(colName);
 									if (ph != null) {
-										GUDataType type = ph.getType();
-										e.put(ph.getFieldName(), new GUDataWrapper(type, type.getValueFromResultSet(rs, i)));
+										GDataType type = ph.getType();
+										e.put(ph.getFieldName(), new GDataWrapper(type, type.getValueFromResultSet(rs, i)));
 									}
 								}
 							}
@@ -125,13 +125,13 @@ public class TableProxy extends AbstractBean implements IDataProxy {
 						for (int i = 1; i <= meta.getColumnCount(); i++) {
 							String colName = meta.getColumnName(i);
 							if (colName.equalsIgnoreCase(typeHelper.getKeyColumn())) {
-								GUDataType type = typeHelper.getKeyType();
+								GDataType type = typeHelper.getKeyType();
 								e.setKey(type.getValueFromResultSet(rs, i));
 							} else {
 								PropertyHelper ph = typeHelper.getPropertyHelperByColumnName(colName);
 								if (ph != null) {
-									GUDataType type = ph.getType();
-									e.put(ph.getFieldName(), new GUDataWrapper(type, type.getValueFromResultSet(rs, i)));
+									GDataType type = ph.getType();
+									e.put(ph.getFieldName(), new GDataWrapper(type, type.getValueFromResultSet(rs, i)));
 								}
 							}
 						}
