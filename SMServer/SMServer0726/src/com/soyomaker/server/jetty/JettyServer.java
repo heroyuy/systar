@@ -24,7 +24,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
 import com.soyomaker.data.GObject;
 import com.soyomaker.data.IGObject;
-import com.soyomaker.server.mina.CodecConst;
+import com.soyomaker.server.PackageConst;
 
 /**
  * JettyServer
@@ -155,8 +155,8 @@ public class JettyServer extends AbstractBean implements IService {
 		}
 		// (4) 反馈消息给客户端
 		GObject packSend = new GObject();
-		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
-		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, list);
+		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
+		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, list);
 		OutputStream os = response.getOutputStream();
 		DataOutputStream dos = new DataOutputStream(os);
 		data = packSend.toBinary();

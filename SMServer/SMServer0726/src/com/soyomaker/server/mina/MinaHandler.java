@@ -9,6 +9,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.IGObject;
+import com.soyomaker.server.PackageConst;
 import com.soyomaker.server.handler.IRequestHandlerFactory;
 import com.soyomaker.server.session.GUSession;
 
@@ -47,9 +48,9 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 			log.debug("Mina收到包:" + message);
 			GUSession s = new GUSession(session);
 			String type = message.getType();
-			if (type.equals(CodecConst.PACKAGE_TYPE_NAME)) {
+			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
-				Collection<IGObject> c = message.getObjectArray(CodecConst.PACKAGE_ARRAY_KEY);
+				Collection<IGObject> c = message.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (IGObject msg : c) {
 					handlerFactory.handleMessage(s, msg);
 				}

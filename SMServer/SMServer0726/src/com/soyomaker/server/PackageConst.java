@@ -1,4 +1,4 @@
-package com.soyomaker.server.mina;
+package com.soyomaker.server;
 
 /**
  * 包含在Encode和Decode时候要用到的常量。
@@ -6,9 +6,7 @@ package com.soyomaker.server.mina;
  * @author zhangjun
  * 
  */
-public class CodecConst {
-	// public static final long GDOBJECT_TYPE_ID = 4671171336159637860L;
-	// public static final long GDARRAY_TYPE_ID = 2478785576150222925L;
+public class PackageConst {
 
 	/**
 	 * 包的类型
