@@ -3,9 +3,7 @@ package com.soyomaker.data;
 import java.util.Collection;
 import java.util.Set;
 
-public interface IGUObject {
-
-	public abstract void clear();
+public interface IGObject {
 
 	// 以下为getter方法
 	public abstract GUDataWrapper get(String key);
@@ -36,9 +34,9 @@ public interface IGUObject {
 
 	public abstract Collection<Long> getLongArray(String key);
 
-	public abstract IGUObject getObject(String key);
+	public abstract IGObject getObject(String key);
 
-	public abstract Collection<IGUObject> getObjectArray(String key);
+	public abstract Collection<IGObject> getObjectArray(String key);
 
 	public abstract Short getShort(String key);
 
@@ -77,9 +75,9 @@ public interface IGUObject {
 
 	public abstract void putLongArray(String key, Collection<Long> value);
 
-	public abstract void putObject(String key, IGUObject value);
+	public abstract void putObject(String key, IGObject value);
 
-	public abstract void putObjectArray(String key, Collection<IGUObject> value);
+	public abstract void putObjectArray(String key, Collection<IGObject> value);
 
 	public abstract void putShort(String key, short value);
 
@@ -89,13 +87,13 @@ public interface IGUObject {
 
 	public abstract void putStringArray(String key, Collection<String> value);
 
-	public abstract void putValues(IGUObject obj);
-
 	public abstract void remove(String key);
 
 	public abstract void setType(String type);
 
 	public abstract int size();
+
+	public abstract void clear();
 
 	public abstract byte[] toBinary();
 

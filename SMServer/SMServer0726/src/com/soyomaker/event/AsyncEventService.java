@@ -5,11 +5,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 
 public class AsyncEventService extends AbstractBean implements IEventService {
-	private ArrayBlockingQueue<GUObject> msgQueue;
+	private ArrayBlockingQueue<GObject> msgQueue;
 	private ExecutorService executors;
 	private boolean dispatchThreadRunFlag = true;
 	private Thread dispatchThread;
@@ -20,11 +20,11 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 	private EventHandlerFactory handlerFactory = null;
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 
 	}
 
-	public void fireEvent(GUObject e) {
+	public void fireEvent(GObject e) {
 		try {
 			msgQueue.put(e);
 		} catch (InterruptedException e1) {
@@ -45,7 +45,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 	};
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		return null;
 	}
 
@@ -68,7 +68,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 
 	@Override
 	public void start() {
-		msgQueue = new ArrayBlockingQueue<GUObject>(queueSize);
+		msgQueue = new ArrayBlockingQueue<GObject>(queueSize);
 		executors = Executors.newFixedThreadPool(dispatchThreadCount);
 		startDispathThread();
 	}
@@ -80,7 +80,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 
 	private void handleEvent() {
 		while (dispatchThreadRunFlag) {
-			final GUObject e = (GUObject) msgQueue.poll();
+			final GObject e = (GObject) msgQueue.poll();
 			executors.execute(new Runnable() {
 				@Override
 				public void run() {

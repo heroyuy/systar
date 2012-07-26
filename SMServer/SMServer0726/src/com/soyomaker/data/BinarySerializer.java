@@ -11,12 +11,12 @@ import java.util.Collection;
 public class BinarySerializer {
 	private static int BUFFER_SIZE = 1024;
 
-	public static GUObject binary2object(byte[] bs) throws IOException {
+	public static GObject binary2object(byte[] bs) throws IOException {
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bs));
 		return readGUObject(dis);
 	}
 
-	public static byte[] object2binary(IGUObject object) throws IOException {
+	public static byte[] object2binary(IGObject object) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFFER_SIZE);
 		DataOutputStream dos = new DataOutputStream(baos);
 		writeIGUObject(dos, object);
@@ -127,14 +127,14 @@ public class BinarySerializer {
 			dataWrapper = new GUDataWrapper(dataType, v14);
 			break;
 		case OBJECT:
-			GUObject v17 = readGUObject(dis);
+			GObject v17 = readGUObject(dis);
 			dataWrapper = new GUDataWrapper(dataType, v17);
 			break;
 		case OBJECT_ARRAY:
 			int s10 = dis.readShort();
 			Collection v18 = new ArrayList();
 			for (int i2 = 0; i2 < s10; i2++) {
-				GUObject v19 = readGUObject(dis);
+				GObject v19 = readGUObject(dis);
 				v18.add(v19);
 			}
 			dataWrapper = new GUDataWrapper(dataType, v18);
@@ -143,8 +143,8 @@ public class BinarySerializer {
 		return dataWrapper;
 	}
 
-	private static GUObject readGUObject(DataInputStream dis) throws IOException {
-		GUObject object = new GUObject();
+	private static GObject readGUObject(DataInputStream dis) throws IOException {
+		GObject object = new GObject();
 		// (1) 类型
 		String type = dis.readUTF();
 		object.setType(type);
@@ -248,20 +248,20 @@ public class BinarySerializer {
 			}
 			break;
 		case OBJECT:
-			IGUObject obj = (IGUObject) v;
+			IGObject obj = (IGObject) v;
 			writeIGUObject(dos, obj);
 			break;
 		case OBJECT_ARRAY:
-			Collection<IGUObject> v9 = (Collection<IGUObject>) v;
+			Collection<IGObject> v9 = (Collection<IGObject>) v;
 			dos.writeShort(v9.size());
-			for (IGUObject obj2 : v9) {
+			for (IGObject obj2 : v9) {
 				writeIGUObject(dos, obj2);
 			}
 			break;
 		}
 	}
 
-	private static void writeIGUObject(DataOutputStream dos, IGUObject object) throws IOException {
+	private static void writeIGUObject(DataOutputStream dos, IGObject object) throws IOException {
 		// (1)类型
 		dos.writeUTF(object.getType());
 		// (2)数量

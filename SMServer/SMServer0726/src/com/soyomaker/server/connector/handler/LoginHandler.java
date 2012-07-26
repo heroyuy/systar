@@ -1,7 +1,7 @@
 package com.soyomaker.server.connector.handler;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.GUSession;
 
 public class LoginHandler extends AbstractBean implements ILoginHandler {
@@ -17,7 +17,7 @@ public class LoginHandler extends AbstractBean implements ILoginHandler {
 	}
 
 	@Override
-	public long login(GUSession session, IGUObject obj) {
+	public long login(GUSession session, IGObject obj) {
 		// TODO 简单的一个登录验证实现
 		id++;
 		return id;

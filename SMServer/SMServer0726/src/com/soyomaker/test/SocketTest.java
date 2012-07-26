@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.mina.CodecConst;
 
 /**
@@ -21,12 +21,12 @@ import com.soyomaker.server.connector.mina.CodecConst;
 public class SocketTest {
 
 	public static void main(String[] args) {
-		GUObject msg = new GUObject();
+		GObject msg = new GObject();
 		msg.setType("test");
 		msg.putString("hello", "server");
-		Collection<IGUObject> c = new ArrayList<IGUObject>();
+		Collection<IGObject> c = new ArrayList<IGObject>();
 		c.add(msg);
-		GUObject packSend = new GUObject();
+		GObject packSend = new GObject();
 		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, c);
 		try {
@@ -42,7 +42,7 @@ public class SocketTest {
 			int len = dis.readInt();
 			byte[] bytes = new byte[len];
 			dis.read(bytes);
-			IGUObject resMsg = GUObject.createFromBytes(bytes);
+			IGObject resMsg = GObject.createFromBytes(bytes);
 			System.out.println("socket收到:"+resMsg);
 			dis.close();
 			is.close();

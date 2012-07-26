@@ -8,17 +8,18 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-public class GUObject implements IGUObject {
-	public static IGUObject createFromBytes(byte[] bytes) {
+public class GObject implements IGObject {
+	public static IGObject createFromBytes(byte[] bytes) {
 		try {
 			return BinarySerializer.binary2object(bytes);
 		} catch (IOException e) {
-			Logger.getLogger(GUObject.class).error("Cann't create GUObject from byte array.");
+			Logger.getLogger(GObject.class).error(
+					"Cann't create GUObject from byte array.");
 			return null;
 		}
 	}
 
-	public static IGUObject createFromJson(String jsonStr) {
+	public static IGObject createFromJson(String jsonStr) {
 		return JsonSerializer.json2object(jsonStr);
 	}
 
@@ -239,23 +240,23 @@ public class GUObject implements IGUObject {
 	 * @see com.gudigital.core.IGUObject#getObject(java.lang.String)
 	 */
 	@Override
-	public IGUObject getObject(String key) {
+	public IGObject getObject(String key) {
 		GUDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (IGUObject) o.getObject();
+			return (IGObject) o.getObject();
 	}
 
 	@Override
-	public Collection<IGUObject> getObjectArray(String key) {
+	public Collection<IGObject> getObjectArray(String key) {
 		GUDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (Collection<IGUObject>) o.getObject();
+			return (Collection<IGObject>) o.getObject();
 	}
 
 	/*
@@ -470,11 +471,11 @@ public class GUObject implements IGUObject {
 	 * com.gudigital.core.IGUObject)
 	 */
 	@Override
-	public void putObject(String key, IGUObject value) {
+	public void putObject(String key, IGObject value) {
 		putObj(key, value, GUDataType.OBJECT);
 	}
 
-	public void putObjectArray(String key, Collection<IGUObject> value) {
+	public void putObjectArray(String key, Collection<IGObject> value) {
 		putObj(key, value, GUDataType.OBJECT_ARRAY);
 	}
 
@@ -523,14 +524,6 @@ public class GUObject implements IGUObject {
 		putObj(key, value, GUDataType.STRING_ARRAY);
 	}
 
-	@Override
-	public void putValues(IGUObject obj) {
-		for (String key : obj.getKeys()) {
-			GUDataWrapper wrapper = obj.get(key);
-			this.put(key, wrapper);
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -569,7 +562,8 @@ public class GUObject implements IGUObject {
 		try {
 			return BinarySerializer.object2binary(this);
 		} catch (IOException e) {
-			Logger.getLogger(getClass()).error("Cann't serialize GUObject to byte array.");
+			Logger.getLogger(getClass()).error(
+					"Cann't serialize GUObject to byte array.");
 			return new byte[0];
 		}
 	}
@@ -596,13 +590,16 @@ public class GUObject implements IGUObject {
 
 	private void putObj(String key, Object value, GUDataType typeId) {
 		if (key == null)
-			throw new IllegalArgumentException("GUObject requires a non-null key for a 'put' operation!");
+			throw new IllegalArgumentException(
+					"GUObject requires a non-null key for a 'put' operation!");
 
 		if (key.length() > 255)
-			throw new IllegalArgumentException("GUObject keys must be less than 255 characters!");
+			throw new IllegalArgumentException(
+					"GUObject keys must be less than 255 characters!");
 
 		if (value == null)
-			throw new IllegalArgumentException("GUObject requires a non-null value!");
+			throw new IllegalArgumentException(
+					"GUObject requires a non-null value!");
 
 		if (value instanceof GUDataWrapper)
 			dataHolder.put(key, (GUDataWrapper) value);

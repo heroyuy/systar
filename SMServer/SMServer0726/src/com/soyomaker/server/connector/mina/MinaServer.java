@@ -9,7 +9,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 
 public class MinaServer extends AbstractBean implements IService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
@@ -18,13 +18,13 @@ public class MinaServer extends AbstractBean implements IService {
 	private int port = 9090;
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soyomaker.data.GUObject;
+import com.soyomaker.data.GObject;
 
 public class EventHandlerFactory {
 	private Map<String, List<IEventHandler>> handlerMap = new HashMap<String, List<IEventHandler>>();
@@ -28,7 +28,7 @@ public class EventHandlerFactory {
 		handlers.add(handler);
 	}
 
-	public void handleMessage(GUObject event) {
+	public void handleMessage(GObject event) {
 		String type = event.getType();
 		List<IEventHandler> handlers = handlerMap.get(type);
 		if (handlers != null) {

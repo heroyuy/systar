@@ -9,7 +9,7 @@ import java.util.List;
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.GUDataType;
 import com.soyomaker.data.GUDataWrapper;
-import com.soyomaker.data.GUObject;
+import com.soyomaker.data.GObject;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.dataSource.GUDataSource;
@@ -31,7 +31,7 @@ public class TableProxy extends AbstractBean implements IDataProxy {
 
 		DataValue e = new DataValue();
 		e.setKey(key);
-		e.setValue(new GUObject());
+		e.setValue(new GObject());
 
 		QueryParams params = (QueryParams) key;
 		int i = SQLUtil.execute(dataSource, insertStatement, params);

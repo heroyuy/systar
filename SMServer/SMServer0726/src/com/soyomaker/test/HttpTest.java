@@ -11,8 +11,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.mina.CodecConst;
 
 /**
@@ -29,12 +29,12 @@ public class HttpTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GUObject msg = new GUObject();
+		GObject msg = new GObject();
 		msg.setType("test");
 		msg.putString("hello", "server");
-		Collection<IGUObject> c = new ArrayList<IGUObject>();
+		Collection<IGObject> c = new ArrayList<IGObject>();
 		c.add(msg);
-		GUObject packSend = new GUObject();
+		GObject packSend = new GObject();
 		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, c);
 		System.out.println("HttpTest发出:" + packSend);
@@ -61,7 +61,7 @@ public class HttpTest {
 			}
 			data = bos.toByteArray();
 			bos.close();
-			IGUObject resMsg = GUObject.createFromBytes(data);
+			IGObject resMsg = GObject.createFromBytes(data);
 			System.out.println("HttpTest收到包:" + len + " ->" + resMsg);
 			connection.disconnect();
 			dis.close();

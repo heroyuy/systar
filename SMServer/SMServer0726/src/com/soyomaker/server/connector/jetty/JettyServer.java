@@ -22,8 +22,8 @@ import org.mortbay.jetty.servlet.ServletHolder;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.mina.CodecConst;
 
 /**
@@ -68,11 +68,11 @@ public class JettyServer extends AbstractBean implements IService {
 	private Logger log = Logger.getLogger(JettyServer.class);
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 	}
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		return null;
 	}
 
@@ -136,9 +136,9 @@ public class JettyServer extends AbstractBean implements IService {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// (1) 检查list是否存在
 		@SuppressWarnings("unchecked")
-		List<IGUObject> list = (List<IGUObject>) request.getSession().getAttribute("messages");
+		List<IGObject> list = (List<IGObject>) request.getSession().getAttribute("messages");
 		if (list == null) {
-			list = new ArrayList<IGUObject>();
+			list = new ArrayList<IGObject>();
 			request.getSession().setAttribute("messages", list);
 		}
 		// (2) 取收到的消息
@@ -151,10 +151,10 @@ public class JettyServer extends AbstractBean implements IService {
 		in.close();
 		// (3) 转换为GUObject并处理
 		if (data.length > 2) {
-			jettyHandler.messageReceived(request.getSession(), GUObject.createFromBytes(data));
+			jettyHandler.messageReceived(request.getSession(), GObject.createFromBytes(data));
 		}
 		// (4) 反馈消息给客户端
-		GUObject packSend = new GUObject();
+		GObject packSend = new GObject();
 		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, list);
 		OutputStream os = response.getOutputStream();

@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import javax.sql.DataSource;
 
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.exception.GUException;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.dataSource.IGUDataSource;
@@ -83,7 +83,7 @@ public class SQLUtil {
 			return Types.DOUBLE;
 		if (o instanceof String)
 			return Types.VARCHAR;
-		if (o instanceof IGUObject)
+		if (o instanceof IGObject)
 			return Types.BLOB;
 		throw new GUException("Cann't get SQL type for object " + o);
 	}

@@ -7,7 +7,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.BeanFactory;
 import com.soyomaker.application.IBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.model.dataSource.GUDataSource;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.DirectDataset;
@@ -38,11 +38,11 @@ public class Model extends AbstractBean implements IService {
 	private String mapFile = null;
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 	}
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		return null;
 	}
 

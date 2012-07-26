@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.GUSession;
 import com.soyomaker.server.session.PlayerSession;
 import com.soyomaker.server.session.PlayerSessionManager;
@@ -80,7 +80,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 	 * (com.gudigital.server.connector.GUSession, com.gudigital.core.IGUObject)
 	 */
 	@Override
-	public void handleMessage(GUSession session, IGUObject obj) {
+	public void handleMessage(GUSession session, IGObject obj) {
 		log.debug("RequestHandlerFactory处理包:" + obj);
 		PlayerSession playerSession = session.getPlayerSession();
 		if (playerSession == null) { // 用户是未登录状态

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.dataSource.IGUDataSource;
@@ -28,7 +28,7 @@ public class QueryProxy extends AbstractBean implements IDataProxy {
 
 	@Override
 	public DataValue get(Object key) {
-		final List<IGUObject> rows = new ArrayList<IGUObject>();
+		final List<IGObject> rows = new ArrayList<IGObject>();
 
 		if (key instanceof QueryParams) {
 			QueryParams params = (QueryParams) key;
@@ -74,7 +74,7 @@ public class QueryProxy extends AbstractBean implements IDataProxy {
 	public void write(DataValue data) {
 	}
 
-	private void addElement(List<IGUObject> elements, ResultSet resultSet) {
+	private void addElement(List<IGObject> elements, ResultSet resultSet) {
 		DataValue element = new DataValue();
 		element.loadFromResultSet(resultSet);
 		elements.add(element);

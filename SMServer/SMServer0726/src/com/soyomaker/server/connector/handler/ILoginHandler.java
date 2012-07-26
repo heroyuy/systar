@@ -1,6 +1,6 @@
 package com.soyomaker.server.connector.handler;
 
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.GUSession;
 
 public interface ILoginHandler {
@@ -11,6 +11,6 @@ public interface ILoginHandler {
 	 * @param obj
 	 * @return 用户ID
 	 */
-	public long login(GUSession session, IGUObject obj);
+	public long login(GUSession session, IGObject obj);
 
 }

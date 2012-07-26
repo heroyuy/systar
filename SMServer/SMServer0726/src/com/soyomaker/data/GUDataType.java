@@ -53,8 +53,8 @@ public enum GUDataType {
 		typeDefaultMap.put(INT_ARRAY, new ArrayList<Integer>());
 		typeDefaultMap.put(LONG, 0l);
 		typeDefaultMap.put(LONG_ARRAY, new ArrayList<Long>());
-		typeDefaultMap.put(OBJECT, new GUObject());
-		typeDefaultMap.put(OBJECT_ARRAY, new ArrayList<IGUObject>());
+		typeDefaultMap.put(OBJECT, new GObject());
+		typeDefaultMap.put(OBJECT_ARRAY, new ArrayList<IGObject>());
 		typeDefaultMap.put(SHORT, (short) 0);
 		typeDefaultMap.put(SHORT_ARRAY, new ArrayList<Short>());
 		typeDefaultMap.put(STRING, "");

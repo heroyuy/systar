@@ -2,7 +2,7 @@ package com.soyomaker.server.connector.handler;
 
 import java.util.Map;
 
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.GUSession;
 import com.soyomaker.server.session.PlayerSessionManager;
 
@@ -16,7 +16,7 @@ public interface IRequestHandlerFactory {
 
 	public abstract PlayerSessionManager getPlayerSessionManager();
 
-	public abstract void handleMessage(GUSession session, IGUObject obj);
+	public abstract void handleMessage(GUSession session, IGObject obj);
 
 	public abstract void registerRequestHandler(String key, IRequestHandler reqHandler);
 

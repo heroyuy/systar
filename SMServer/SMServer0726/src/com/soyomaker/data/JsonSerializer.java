@@ -11,13 +11,13 @@ import net.sf.json.JSONObject;
 
 public class JsonSerializer {
 
-	public static GUObject json2object(String jsonStr) {
+	public static GObject json2object(String jsonStr) {
 		JSONObject jsonObject = JSONObject.fromObject(jsonStr);
 		return jsonObject2GUObject(jsonObject);
 
 	}
 
-	public static String object2json(IGUObject object) {
+	public static String object2json(IGObject object) {
 		Map<String, Object> map = object2map(object);
 		return JSONObject.fromObject(map).toString();
 	}
@@ -28,8 +28,8 @@ public class JsonSerializer {
 	 * @param jsnObj
 	 * @return
 	 */
-	private static GUObject jsonObject2GUObject(JSONObject jsonObject) {
-		GUObject resObj = new GUObject();
+	private static GObject jsonObject2GUObject(JSONObject jsonObject) {
+		GObject resObj = new GObject();
 		Iterator<?> iterator = jsonObject.keys();
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
@@ -73,7 +73,7 @@ public class JsonSerializer {
 	 * @param object
 	 * @return
 	 */
-	private static Map<String, Object> object2map(IGUObject object) {
+	private static Map<String, Object> object2map(IGObject object) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Iterator<String> iterator = object.getKeys().iterator();
 		while (iterator.hasNext()) {
@@ -81,12 +81,12 @@ public class JsonSerializer {
 			GUDataWrapper dataWrapper = object.get(key);
 			GUDataType dataType = dataWrapper.getTypeId();
 			if (dataType == GUDataType.OBJECT) {
-				map.put(key, object2map((IGUObject) dataWrapper.getObject()));
+				map.put(key, object2map((IGObject) dataWrapper.getObject()));
 			} else if (dataType == GUDataType.OBJECT_ARRAY) {
 				Collection<Map<String, Object>> c = new ArrayList<Map<String, Object>>();
 				@SuppressWarnings("unchecked")
-				Collection<IGUObject> data = (Collection<IGUObject>) dataWrapper.getObject();
-				for (IGUObject iguObj : data) {
+				Collection<IGObject> data = (Collection<IGObject>) dataWrapper.getObject();
+				for (IGObject iguObj : data) {
 					c.add(object2map(iguObj));
 				}
 				map.put(key, c);
@@ -104,7 +104,7 @@ public class JsonSerializer {
 	 * @param resObj
 	 * @param jsonArray
 	 */
-	private static void putJSONArrayInGUObject(String key, GUObject resObj, JSONArray jsonArray) {
+	private static void putJSONArrayInGUObject(String key, GObject resObj, JSONArray jsonArray) {
 		if (!jsonArray.isEmpty()) {
 			Object value = jsonArray.get(0);
 			if (value instanceof Integer) {
@@ -123,7 +123,7 @@ public class JsonSerializer {
 				resObj.putStringArray(key, JSONArray.toCollection(jsonArray));
 				// JSON Object
 			} else if (value instanceof JSONObject) {
-				Collection<IGUObject> c = new ArrayList<IGUObject>();
+				Collection<IGObject> c = new ArrayList<IGObject>();
 				int size = jsonArray.size();
 				for (int i = 0; i < size; i++) {
 					c.add(jsonObject2GUObject((JSONObject) jsonArray.get(i)));

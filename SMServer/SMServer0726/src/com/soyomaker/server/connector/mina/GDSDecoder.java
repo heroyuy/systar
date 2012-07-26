@@ -6,8 +6,8 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.apache.mina.filter.codec.demux.MessageDecoderAdapter;
 import org.apache.mina.filter.codec.demux.MessageDecoderResult;
 
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 
 /**
  * 解码器。包结构：包长(int) 包体(byte[])
@@ -37,7 +37,7 @@ public class GDSDecoder extends MessageDecoderAdapter {
 		int size = buf.getInt();
 		byte[] bs = new byte[size];
 		buf.get(bs);
-		IGUObject msg = GUObject.createFromBytes(bs);
+		IGObject msg = GObject.createFromBytes(bs);
 		out.write(msg);
 		return MessageDecoderResult.OK;
 

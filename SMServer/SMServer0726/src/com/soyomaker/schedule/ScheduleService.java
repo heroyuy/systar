@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 
 public class ScheduleService extends AbstractBean implements IService {
 	List<ScheduleTask> tasks = new ArrayList<ScheduleTask>();
@@ -22,11 +22,11 @@ public class ScheduleService extends AbstractBean implements IService {
 	}
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 	}
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		return null;
 	}
 

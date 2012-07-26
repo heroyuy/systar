@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.Set;
 
 import com.soyomaker.data.GUDataWrapper;
-import com.soyomaker.data.GUObject;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.GObject;
+import com.soyomaker.data.IGObject;
 
-public class DataValue implements IGUObject {
+public class DataValue implements IGObject {
 	/**
 	 * 主键，不要随意设置主键。
 	 */
@@ -17,7 +17,7 @@ public class DataValue implements IGUObject {
 	/**
 	 * 数据内容
 	 */
-	private IGUObject dataHolder;
+	private IGObject dataHolder;
 
 	/**
 	 * 版本号，每一次修改数据项都会导致版本号增加
@@ -39,7 +39,7 @@ public class DataValue implements IGUObject {
 	private boolean locked;
 
 	public DataValue() {
-		dataHolder = new GUObject();
+		dataHolder = new GObject();
 		version = 1;
 		lastModifyTime = System.currentTimeMillis();
 	}
@@ -137,13 +137,13 @@ public class DataValue implements IGUObject {
 	}
 
 	@Override
-	public IGUObject getObject(String key) {
+	public IGObject getObject(String key) {
 		onGetData();
 		return dataHolder.getObject(key);
 	}
 
 	@Override
-	public Collection<IGUObject> getObjectArray(String key) {
+	public Collection<IGObject> getObjectArray(String key) {
 		return dataHolder.getObjectArray(key);
 	}
 
@@ -174,7 +174,7 @@ public class DataValue implements IGUObject {
 		return dataHolder.getType();
 	}
 
-	public IGUObject getValue() {
+	public IGObject getValue() {
 		return dataHolder;
 	}
 
@@ -285,7 +285,7 @@ public class DataValue implements IGUObject {
 		}
 	}
 
-	public void putObject(String key, IGUObject v) {
+	public void putObject(String key, IGObject v) {
 		if (!locked) {
 			dataHolder.putObject(key, v);
 			onPutData();
@@ -293,7 +293,7 @@ public class DataValue implements IGUObject {
 	}
 
 	@Override
-	public void putObjectArray(String key, Collection<IGUObject> value) {
+	public void putObjectArray(String key, Collection<IGObject> value) {
 		dataHolder.putObjectArray(key, value);
 	}
 
@@ -330,14 +330,6 @@ public class DataValue implements IGUObject {
 	}
 
 	@Override
-	public void putValues(IGUObject obj) {
-		if (!locked) {
-			dataHolder.putValues(obj);
-			onPutData();
-		}
-	}
-
-	@Override
 	public void remove(String key) {
 		if (!locked) {
 			dataHolder.remove(key);
@@ -359,7 +351,7 @@ public class DataValue implements IGUObject {
 		dataHolder.setType(type);
 	}
 
-	public void setValue(IGUObject value) {
+	public void setValue(IGObject value) {
 		onPutData();
 		this.dataHolder = value;
 	}

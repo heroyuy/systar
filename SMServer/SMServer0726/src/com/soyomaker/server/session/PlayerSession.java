@@ -2,7 +2,7 @@ package com.soyomaker.server.session;
 
 import java.util.Date;
 
-import com.soyomaker.data.GUObject;
+import com.soyomaker.data.GObject;
 import com.soyomaker.server.connector.GUSession;
 
 /**
@@ -15,7 +15,7 @@ import com.soyomaker.server.connector.GUSession;
 public class PlayerSession {
 	private long playerId;
 	private Date loginTime;
-	private GUObject palyerVars = new GUObject();
+	private GObject palyerVars = new GObject();
 
 	private GUSession session;
 
@@ -23,7 +23,7 @@ public class PlayerSession {
 		return loginTime;
 	}
 
-	public GUObject getPalyerVars() {
+	public GObject getPalyerVars() {
 		return palyerVars;
 	}
 
@@ -39,7 +39,7 @@ public class PlayerSession {
 		this.loginTime = loginTime;
 	}
 
-	public void setPalyerVars(GUObject palyerVars) {
+	public void setPalyerVars(GObject palyerVars) {
 		this.palyerVars = palyerVars;
 	}
 

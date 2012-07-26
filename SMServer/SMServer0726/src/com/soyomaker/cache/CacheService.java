@@ -4,19 +4,19 @@ import net.sf.ehcache.CacheManager;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 
 public class CacheService extends AbstractBean implements IService {
 	private CacheManager cacheManager = new CacheManager();
 
 	@Override
-	public void doCommand(IGUObject command) {
+	public void doCommand(IGObject command) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public IGUObject getStatus() {
+	public IGObject getStatus() {
 		// TODO Auto-generated method stub
 		return null;
 	}

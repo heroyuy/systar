@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.session.PlayerSession;
 
 /**
@@ -68,10 +68,10 @@ public class GUSession {
 		}
 	}
 
-	public void sendMessage(IGUObject msg) {
+	public void sendMessage(IGObject msg) {
 		if (type == GUSessionType.HTTP_SESSION) {
 			@SuppressWarnings("unchecked")
-			List<IGUObject> msgs = (List<IGUObject>) httpSession.getAttribute("messages");
+			List<IGObject> msgs = (List<IGObject>) httpSession.getAttribute("messages");
 			msgs.add(msg);
 		} else if (type == GUSessionType.MINA_SESSION) {
 			minaSession.write(msg);

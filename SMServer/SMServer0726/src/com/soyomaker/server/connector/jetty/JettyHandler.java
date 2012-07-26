@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.IGUObject;
+import com.soyomaker.data.IGObject;
 import com.soyomaker.server.connector.GUSession;
 import com.soyomaker.server.connector.handler.IRequestHandlerFactory;
 import com.soyomaker.server.connector.mina.CodecConst;
@@ -34,15 +34,15 @@ public class JettyHandler extends AbstractBean {
 		handlerFactory = (IRequestHandlerFactory) this.getBeanFactory().getBean(this.getParam("handlerFactory"));
 	}
 
-	public void messageReceived(HttpSession session, IGUObject message) {
+	public void messageReceived(HttpSession session, IGObject message) {
 		if (message != null) {
 			log.debug("Jetty收到包:" + message);
 			GUSession s = new GUSession(session);
 			String type = message.getType();
 			if (type.equals(CodecConst.PACKAGE_TYPE_NAME)) {
 				// 多包
-				Collection<IGUObject> c = message.getObjectArray(CodecConst.PACKAGE_ARRAY_KEY);
-				for (IGUObject msg : c) {
+				Collection<IGObject> c = message.getObjectArray(CodecConst.PACKAGE_ARRAY_KEY);
+				for (IGObject msg : c) {
 					handlerFactory.handleMessage(s, msg);
 				}
 			} else {

@@ -1,6 +1,6 @@
 package com.soyomaker.event;
 
-import com.soyomaker.data.GUObject;
+import com.soyomaker.data.GObject;
 
 public interface IEventHandler {
 	/**
@@ -9,5 +9,5 @@ public interface IEventHandler {
 	 * @param event
 	 * @return true继续执行其他消息处理类；false消息处理链
 	 */
-	public boolean handleEvent(GUObject event);
+	public boolean handleEvent(GObject event);
 }
