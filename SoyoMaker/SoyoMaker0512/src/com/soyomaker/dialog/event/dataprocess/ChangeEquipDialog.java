@@ -11,7 +11,7 @@
 package com.soyomaker.dialog.event.dataprocess;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.model.Equip;
+import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.dialog.AbCommandDialog;
@@ -37,40 +37,40 @@ public class ChangeEquipDialog extends AbCommandDialog {
         for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.PLAYER); i++) {
             playerComboBox.addItem((Player) AppData.getInstance().getCurProject().getDataManager().getModels(Model.PLAYER)[i]);
         }
-        Equip[] equips = (Equip[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP);
+        Item[] equips = (Item[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM);
         helmComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.HELM) {
+            if (equips[i].type == Item.HELM) {
                 helmComboBox.addItem(equips[i]);
             }
         }
         jewelryComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.JEWELRY) {
+            if (equips[i].type == Item.JEWELRY) {
                 jewelryComboBox.addItem(equips[i]);
             }
         }
         weaponComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.WEAPON) {
+            if (equips[i].type == Item.WEAPON) {
                 weaponComboBox.addItem(equips[i]);
             }
         }
         shieldComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.SHIELD) {
+            if (equips[i].type == Item.SHIELD) {
                 shieldComboBox.addItem(equips[i]);
             }
         }
         armourComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.ARMOUR) {
+            if (equips[i].type == Item.ARMOUR) {
                 armourComboBox.addItem(equips[i]);
             }
         }
         bootsComboBox.addItem("无");
         for (int i = 0; i < equips.length; i++) {
-            if (equips[i].equipType == Equip.BOOTS) {
+            if (equips[i].type == Item.BOOTS) {
                 bootsComboBox.addItem(equips[i]);
             }
         }
@@ -267,57 +267,57 @@ public class ChangeEquipDialog extends AbCommandDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        Equip[] equips = new Equip[6];
+        Item[] equips = new Item[6];
         if (helmCheckBox.isSelected()) {
             if (!helmComboBox.getSelectedItem().toString().equals("无")) {
-                equips[0] = (Equip) helmComboBox.getSelectedItem();
+                equips[0] = (Item) helmComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[0] = equip;
             }
         }
         if (jewelryCheckBox.isSelected()) {
             if (!jewelryComboBox.getSelectedItem().toString().equals("无")) {
-                equips[5] = (Equip) jewelryComboBox.getSelectedItem();
+                equips[5] = (Item) jewelryComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[5] = equip;
             }
         }
         if (weaponCheckBox.isSelected()) {
             if (!weaponComboBox.getSelectedItem().toString().equals("无")) {
-                equips[2] = (Equip) weaponComboBox.getSelectedItem();
+                equips[2] = (Item) weaponComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[2] = equip;
             }
         }
         if (shieldCheckBox.isSelected()) {
             if (!shieldComboBox.getSelectedItem().toString().equals("无")) {
-                equips[1] = (Equip) shieldComboBox.getSelectedItem();
+                equips[1] = (Item) shieldComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[1] = equip;
             }
         }
         if (armourCheckBox.isSelected()) {
             if (!armourComboBox.getSelectedItem().toString().equals("无")) {
-                equips[3] = (Equip) armourComboBox.getSelectedItem();
+                equips[3] = (Item) armourComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[3] = equip;
             }
         }
         if (bootsCheckBox.isSelected()) {
             if (!bootsComboBox.getSelectedItem().toString().equals("无")) {
-                equips[4] = (Equip) bootsComboBox.getSelectedItem();
+                equips[4] = (Item) bootsComboBox.getSelectedItem();
             } else {
-                Equip equip = new Equip();
+                Item equip = new Item();
                 equip.setIndex(-2);//-2表示删除
                 equips[4] = equip;
             }
@@ -340,7 +340,6 @@ public class ChangeEquipDialog extends AbCommandDialog {
         mCommand.addParameter("" + ((Player) playerComboBox.getSelectedItem()).getIndex());
         mCommand.addParameter(sb.toString());
         System.out.println(mCommand);
-//        sd.insertScriptData(sd.npcPane.eventTable.getSelectedRow(), "globalData.proxy:operatePlayerEquip(" + sb.toString() + ")");
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

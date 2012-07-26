@@ -33,23 +33,19 @@ public class Model implements Serializable {
     /**
      *
      */
-    public static final int EQUIP = 4;
+    public static final int VOCATION = 4;
     /**
      *
      */
-    public static final int VOCATION = 5;
+    public static final int PLAYER = 5;
     /**
      *
      */
-    public static final int PLAYER = 6;
+    public static final int ENEMY = 6;
     /**
      *
      */
-    public static final int ENEMY = 7;
-    /**
-     *
-     */
-    public static final int ENEMYTROOP = 8;
+    public static final int ENEMYTROOP = 7;
     private int index = -1;
 
     /**

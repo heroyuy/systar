@@ -28,10 +28,10 @@ public class Condition {
      * 条件类型
      */
     public int conditionType;
-    /**
-     * 条件名称
-     */
-    public String conditionName = "";
+//    /**
+//     * 条件名称
+//     */
+//    public String conditionName = "";
     /**
      * 参数列表
      */

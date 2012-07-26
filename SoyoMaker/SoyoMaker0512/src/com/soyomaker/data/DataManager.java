@@ -20,7 +20,6 @@ import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -50,7 +49,6 @@ public class DataManager {
         Buff.class,
         Skill.class,
         Item.class,
-        Equip.class,
         Vocation.class,
         Player.class,
         Enemy.class,
@@ -546,38 +544,6 @@ public class DataManager {
      *
      * @param layer
      */
-    protected void fireEquipAdded(Equip layer) {
-        Iterator iterator = dataChangeListeners.iterator();
-        DataChangedEvent event = null;
-
-        while (iterator.hasNext()) {
-            if (event == null) {
-                event = new DataChangedEvent(this);
-            }
-            ((DataChangeListener) iterator.next()).equipAdded(event, layer);
-        }
-    }
-
-    /**
-     *
-     * @param index
-     */
-    protected void fireEquipRemoved(int index) {
-        Iterator iterator = dataChangeListeners.iterator();
-        DataChangedEvent event = null;
-
-        while (iterator.hasNext()) {
-            if (event == null) {
-                event = new DataChangedEvent(this);
-            }
-            ((DataChangeListener) iterator.next()).equipRemoved(event, index);
-        }
-    }
-
-    /**
-     *
-     * @param layer
-     */
     protected void fireItemAdded(Item layer) {
         Iterator iterator = dataChangeListeners.iterator();
         DataChangedEvent event = null;
@@ -635,9 +601,6 @@ public class DataManager {
             case Model.ENEMYTROOP:
                 fireEnemyTroopAdded((EnemyTroop) model);
                 break;
-            case Model.EQUIP:
-                fireEquipAdded((Equip) model);
-                break;
             case Model.ITEM:
                 fireItemAdded((Item) model);
                 break;
@@ -666,9 +629,6 @@ public class DataManager {
                 break;
             case Model.ENEMYTROOP:
                 fireEnemyTroopRemoved(index);
-                break;
-            case Model.EQUIP:
-                fireEquipRemoved(index);
                 break;
             case Model.ITEM:
                 fireItemRemoved(index);
@@ -715,12 +675,6 @@ public class DataManager {
                     removeModel(Model.ENEMYTROOP, model.getIndex());
                 }
                 break;
-            case Model.EQUIP:
-                for (int i = 0; i < daos.get(type).getModels(Equip.class).length; i++) {
-                    Model model = daos.get(type).getModels(Equip.class)[i];
-                    removeModel(Model.EQUIP, model.getIndex());
-                }
-                break;
             case Model.ITEM:
                 for (int i = 0; i < daos.get(type).getModels(Item.class).length; i++) {
                     Model model = daos.get(type).getModels(Item.class)[i];
@@ -744,7 +698,6 @@ public class DataManager {
         removeAllModel(Model.ENEMY);
         removeAllModel(Model.PLAYER);
         removeAllModel(Model.VOCATION);
-        removeAllModel(Model.EQUIP);
         removeAllModel(Model.ITEM);
         removeAllModel(Model.SKILL);
         removeAllModel(Model.STATUS);
@@ -812,7 +765,6 @@ public class DataManager {
         daos.get(Model.STATUS).load();
         daos.get(Model.SKILL).load();
         daos.get(Model.ITEM).load();
-        daos.get(Model.EQUIP).load();
         daos.get(Model.VOCATION).load();
         daos.get(Model.PLAYER).load();
         daos.get(Model.CONFIG).load();

@@ -12,10 +12,22 @@ import java.util.ArrayList;
  */
 public class Item extends Model {
 
+    public static final int COMMON = 0;
+    public static final int COST = 1;
+    public static final int HELM = 2;
+    public static final int JEWELRY = 3;
+    public static final int WEAPON = 4;
+    public static final int SHIELD = 5;
+    public static final int ARMOUR = 6;
+    public static final int BOOTS = 7;
+
     @Override
     public String toString() {
         return name + " ID:" + getIndex() + "";
     }
+    /**
+     * 
+     */
     public static final String[] types = {"普通物品", "消耗品", "头盔", "饰品", "武器", "盾牌", "铠甲", "战靴"};
     /**
      * 名称
@@ -41,5 +53,8 @@ public class Item extends Model {
      * 类型
      */
     public int type;
+    /**
+     *
+     */
     public ArrayList<Skill> skillList = new ArrayList<Skill>();
 }

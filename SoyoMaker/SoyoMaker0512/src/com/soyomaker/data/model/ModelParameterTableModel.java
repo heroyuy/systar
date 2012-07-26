@@ -23,10 +23,10 @@ public class ModelParameterTableModel extends AbstractTableModel {
         this.paras = paras;
     }
     private static final String COLUMN_NAME[] = {
-        "能力名称", "修改规则", "参数值"
+        "能力名称", "参数值"
     };
     private static final Class COLUMN_CLASS[] = {
-        String.class, String.class, Integer.class
+        String.class, Integer.class
     };
 
     public int getRowCount() {
@@ -45,7 +45,10 @@ public class ModelParameterTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return true;
+        if (col == 1) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -53,24 +56,15 @@ public class ModelParameterTableModel extends AbstractTableModel {
         super.setValueAt(v, r, c);
         Parameter para = paras.get(r);
         if (para != null) {
-            
             switch (c) {
                 case 0:
-//                    for (int i = 0; i < Parameter.types.length; i++) {
-//                        if (Parameter.types[i].equals(v.toString())) {
-//                            para.type = i;
-//                        }
-//                    }
-                    para.name = v.toString();
-                    break;
-                case 1:
-                    for (int i = 0; i < Parameter.rules.length; i++) {
-                        if (Parameter.rules[i].equals(v.toString())) {
-                            para.rule = i;
+                    for (int i = 0; i < Parameter.types.length; i++) {
+                        if (Parameter.types[i].equals(v.toString())) {
+                            para.type = i;
                         }
                     }
                     break;
-                case 2:
+                case 1:
                     para.value = Integer.parseInt(v.toString());
                     break;
             }
@@ -83,10 +77,8 @@ public class ModelParameterTableModel extends AbstractTableModel {
         if (para != null) {
             switch (columnIndex) {
                 case 0:
-                    return para.name;
+                    return Parameter.types[para.type];
                 case 1:
-                    return Parameter.rules[para.rule];
-                case 2:
                     return para.value;
             }
         }

@@ -23,10 +23,10 @@ public class ModelConditionTableModel extends AbstractTableModel {
         this.conditions = conditions;
     }
     private static final String COLUMN_NAME[] = {
-        "解除条件类型", "解除条件名称", "参数"
+        "解除条件名称", "参数"
     };
     private static final Class COLUMN_CLASS[] = {
-        Integer.class, String.class, Integer.class
+        String.class, Integer.class
     };
 
     public int getRowCount() {
@@ -58,17 +58,13 @@ public class ModelConditionTableModel extends AbstractTableModel {
         if (cond != null) {
             switch (c) {
                 case 0:
-//                    for (int i = 0; i < Condition.statusConditionTypes.length; i++) {
-//                        if (Condition.statusConditionTypes[i].equals(v.toString())) {
-//                            cond.conditionType = i;
-//                        }
-//                    }
-                    cond.conditionType = Integer.parseInt(v.toString());
+                    for (int i = 0; i < Condition.statusConditionTypes.length; i++) {
+                        if (Condition.statusConditionTypes[i].equals(v.toString())) {
+                            cond.conditionType = i;
+                        }
+                    }
                     break;
                 case 1:
-                    cond.conditionName = v.toString();
-                    break;
-                case 2:
                     cond.para = Integer.parseInt(v.toString());
                     break;
             }
@@ -81,10 +77,8 @@ public class ModelConditionTableModel extends AbstractTableModel {
         if (cond != null) {
             switch (columnIndex) {
                 case 0:
-                    return cond.conditionType;
+                    return Condition.statusConditionTypes[cond.conditionType];
                 case 1:
-                    return cond.conditionName;
-                case 2:
                     return cond.para;
             }
         }

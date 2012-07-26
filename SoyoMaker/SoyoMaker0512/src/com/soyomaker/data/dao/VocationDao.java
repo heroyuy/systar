@@ -6,7 +6,6 @@ package com.soyomaker.data.dao;
 
 import com.soyomaker.AppData;
 import com.soyomaker.config.Configuration;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Skill;

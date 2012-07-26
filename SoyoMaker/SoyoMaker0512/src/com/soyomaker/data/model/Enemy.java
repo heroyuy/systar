@@ -24,9 +24,21 @@ public class Enemy extends Model {
      *
      */
     public String intro = "";
+    /**
+     *
+     */
     public int attackDistance = 0;
+    /**
+     *
+     */
     public String attackSound = "";
+    /**
+     *
+     */
     public String onAttackSound = "";
+    /**
+     *
+     */
     public String deadSound = "";
     /**
      * 行走图
@@ -72,11 +84,23 @@ public class Enemy extends Model {
      * 金币
      */
     public int money;
+    /**
+     *
+     */
     public int attributeId = -1;
 
+    /**
+     *
+     */
     public static class ItemInfo {
 
+        /**
+         *
+         */
         public Item item;
+        /**
+         *
+         */
         public int rate;
     }
     /**

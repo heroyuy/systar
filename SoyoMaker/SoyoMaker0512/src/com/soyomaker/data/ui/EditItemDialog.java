@@ -10,20 +10,10 @@
  */
 package com.soyomaker.data.ui;
 
-import com.soyomaker.AppData;
 import com.soyomaker.data.DataManager;
-import com.soyomaker.data.model.Cost;
-import com.soyomaker.data.model.Effect;
-import com.soyomaker.data.model.Factor;
 import com.soyomaker.data.model.Item;
-import com.soyomaker.data.model.ModelCostTableModel;
-import com.soyomaker.data.model.ModelEffectTableModel;
-import com.soyomaker.data.model.ModelFactorTableModel;
-import com.soyomaker.data.model.ModelAttributeTableModel;
-import com.soyomaker.data.model.ModelStatusTableModel;
-import com.soyomaker.model.animation.Animation;
+import com.soyomaker.data.model.ModelSkillTableModel;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,11 +28,7 @@ public class EditItemDialog extends javax.swing.JDialog {
      */
     public EditItemDialog(ItemPanel parent, boolean modal, Item item) {
         setModal(modal);
-//        ictm = new ModelCostTableModel(item.costs);
-//        ietm = new ModelEffectTableModel(item.effects);
-//        iftm = new ModelFactorTableModel(item.factors);
-//        matm = new ModelAttributeTableModel(item.attributes);
-//        mstm = new ModelStatusTableModel(item.status);
+        mstm = new ModelSkillTableModel(item.skillList);
         initComponents();
         setLocationRelativeTo(null);
         itemIcons = DataManager.listItemIconName();
@@ -50,33 +36,11 @@ public class EditItemDialog extends javax.swing.JDialog {
         for (int i = 0; i < itemIcons.length; i++) {
             itemIconComboBox.addItem(itemIcons[i]);
         }
-//        itemSounds = DataManager.listSoundName();
-//        itemMenuSoundComboBox.addItem("");
-//        for (int i = 0; i < itemSounds.length; i++) {
-//            itemMenuSoundComboBox.addItem(itemSounds[i]);
-//        }
-//        itemUserAniComboBox.addItem("");
-//        java.util.Iterator it = AppData.getInstance().getCurProject().getAnimations().entrySet().iterator();
-//        while (it.hasNext()) {
-//            java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-//            itemUserAniComboBox.addItem(((Animation) entry.getValue()));
-//        }
-//        java.util.Iterator it1 = AppData.getInstance().getCurProject().getAnimations().entrySet().iterator();
-//        itemTargetAniComboBox.addItem("");
-//        while (it1.hasNext()) {
-//            java.util.Map.Entry entry = (java.util.Map.Entry) it1.next();
-//            itemTargetAniComboBox.addItem(((Animation) entry.getValue()));
-//        }
         setItem(item);
     }
+    private ModelSkillTableModel mstm;
     private ImageIcon[] itemIcons;
-//    private String[] itemSounds;
     private Item item;
-//    private ModelCostTableModel ictm;
-//    private ModelEffectTableModel ietm;
-//    private ModelFactorTableModel iftm;
-//    private ModelAttributeTableModel matm;
-//    private ModelStatusTableModel mstm;
 
     private void setItem(Item item) {
         this.item = item;
@@ -90,13 +54,7 @@ public class EditItemDialog extends javax.swing.JDialog {
         }
         itemLevTextField.setText(item.lev + "");
         itemTypeComboBox.setSelectedIndex(item.type);
-//        itemLimitComboBox.setSelectedIndex(item.limit);
-//        itemUserAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(item.userAniIndex));
-//        itemTargetAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(item.targetAniIndex));
-//        itemEventComboBox.setSelectedIndex(item.eventIndex);
-//        itemMenuSoundComboBox.setSelectedItem(item.menuUseSound);
         itemPriceTextField.setText(item.price + "");
-//        itemUseableCheckBox.setSelected(item.consumable);
     }
 
     /** This method is called from within the constructor to
@@ -201,6 +159,11 @@ public class EditItemDialog extends javax.swing.JDialog {
         addSkillButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addSkillButton.setName("addSkillButton"); // NOI18N
         addSkillButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addSkillButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSkillButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(addSkillButton);
 
         removeSkillButton.setText("删除技能");
@@ -208,21 +171,16 @@ public class EditItemDialog extends javax.swing.JDialog {
         removeSkillButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removeSkillButton.setName("removeSkillButton"); // NOI18N
         removeSkillButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        removeSkillButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeSkillButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(removeSkillButton);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        skillTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        skillTable.setModel(mstm);
         skillTable.setName("skillTable"); // NOI18N
         jScrollPane1.setViewportView(skillTable);
 
@@ -261,16 +219,16 @@ public class EditItemDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel4))
-                        .addGap(10, 10, 10)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itemPriceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                            .addComponent(itemLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemIconComboBox, 0, 177, Short.MAX_VALUE)
                             .addComponent(itemTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(itemIconComboBox, 0, 177, Short.MAX_VALUE)))
+                            .addComponent(itemPriceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(itemLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,14 +257,14 @@ public class EditItemDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(itemTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(itemLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(itemPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(itemPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -329,21 +287,7 @@ public class EditItemDialog extends javax.swing.JDialog {
         item.icon = itemIconComboBox.getSelectedItem().toString();
         item.lev = Integer.parseInt(itemLevTextField.getText());
         item.type = itemTypeComboBox.getSelectedIndex();
-//        item.limit = itemLimitComboBox.getSelectedIndex();
-//        if (itemUserAniComboBox.getSelectedItem() == null || itemUserAniComboBox.getSelectedItem().toString().equals("")) {
-//            item.userAniIndex = -1;
-//        } else {
-//            item.userAniIndex = ((Animation) itemUserAniComboBox.getSelectedItem()).getIndex();
-//        }
-//        if (itemTargetAniComboBox.getSelectedItem() == null || itemTargetAniComboBox.getSelectedItem().toString().equals("")) {
-//            item.targetAniIndex = -1;
-//        } else {
-//            item.targetAniIndex = ((Animation) itemTargetAniComboBox.getSelectedItem()).getIndex();
-//        }
-//        item.eventIndex = itemEventComboBox.getSelectedIndex();
-//        item.menuUseSound = itemMenuSoundComboBox.getSelectedItem().toString();
         item.price = Integer.parseInt(itemPriceTextField.getText());
-//        item.consumable = itemUseableCheckBox.isSelected();
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -351,6 +295,24 @@ public class EditItemDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void addSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSkillButtonActionPerformed
+        // TODO add your handling code here:
+        AddModelSkillDialog etd = new AddModelSkillDialog(this, true);
+        etd.setVisible(true);
+        if (etd.getSkill() != null) {
+            item.skillList.add(etd.getSkill());
+            skillTable.updateUI();
+        }
+    }//GEN-LAST:event_addSkillButtonActionPerformed
+
+    private void removeSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSkillButtonActionPerformed
+        // TODO add your handling code here:
+        if (skillTable.getSelectedRow() >= 0 && skillTable.getSelectedRow() < item.skillList.size()) {
+            item.skillList.remove(skillTable.getSelectedRow());
+            skillTable.updateUI();
+        }
+    }//GEN-LAST:event_removeSkillButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSkillButton;
     private javax.swing.JButton closeButton;

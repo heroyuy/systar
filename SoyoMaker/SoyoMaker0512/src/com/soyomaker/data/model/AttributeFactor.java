@@ -10,6 +10,12 @@ package com.soyomaker.data.model;
  */
 public class AttributeFactor {
 
+    /**
+     *
+     */
     public int targetId = -1;
+    /**
+     *
+     */
     public int value = 0;
 }

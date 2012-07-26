@@ -132,6 +132,10 @@ public class AddModelBuffDialog extends javax.swing.JDialog {
         return status;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRate() {
         return rate;
     }

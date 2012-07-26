@@ -12,6 +12,8 @@ package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
 import com.soyomaker.data.DataManager;
+import com.soyomaker.data.model.Config;
+import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.ModelEffectTableModel;
 import com.soyomaker.data.model.ModelStatusTableModel;
 import com.soyomaker.data.model.Skill;
@@ -42,11 +44,6 @@ public class EditSkillDialog extends javax.swing.JDialog {
         for (int i = 0; i < skillIcons.length; i++) {
             skillIconComboBox.addItem(skillIcons[i]);
         }
-//        skillSounds = DataManager.listSoundName();
-//        skillAttributeComboBox.addItem("");
-//        for (int i = 0; i < skillSounds.length; i++) {
-//            skillAttributeComboBox.addItem(skillSounds[i]);
-//        }
         skillUserAniComboBox.addItem("");
         java.util.Iterator it = AppData.getInstance().getCurProject().getAnimations().entrySet().iterator();
         while (it.hasNext()) {
@@ -59,10 +56,14 @@ public class EditSkillDialog extends javax.swing.JDialog {
             java.util.Map.Entry entry = (java.util.Map.Entry) it1.next();
             skillTargetAniComboBox.addItem(((Animation) entry.getValue()));
         }
+        skillAttributeComboBox.addItem("");
+        Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
+        for (int i = 0; i < config.system.attributes.size(); i++) {
+            skillAttributeComboBox.addItem(config.system.attributes.get(i));
+        }
         setSkill(skill);
     }
     private ImageIcon[] skillIcons;
-//    private String[] skillSounds;
     private Skill skill;
     private ModelEffectTableModel ietm;
     private ModelStatusTableModel mstm;
@@ -83,7 +84,9 @@ public class EditSkillDialog extends javax.swing.JDialog {
         skillUserAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(skill.userAniIndex));
         skillTargetAniComboBox.setSelectedItem((Animation) AppData.getInstance().getCurProject().getAnimation(skill.targetAniIndex));
         skillEventComboBox.setSelectedIndex(skill.eventIndex);
-        skillAttributeComboBox.setSelectedItem(skill.attributeId);
+        skillAttributeComboBox.setSelectedIndex(skill.attributeId);
+        atkDistanceTextField.setText("" + skill.attackDistance);
+        costSpTextField.setText("" + skill.sp);
     }
 
     /** This method is called from within the constructor to
@@ -133,9 +136,9 @@ public class EditSkillDialog extends javax.swing.JDialog {
         addEffectButton = new javax.swing.JButton();
         removeEffectButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        atkDistanceTextField = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        costSpTextField = new javax.swing.JTextField();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -340,12 +343,12 @@ public class EditSkillDialog extends javax.swing.JDialog {
         jLabel11.setText("攻击距离");
         jLabel11.setName("jLabel11"); // NOI18N
 
-        jTextField1.setName("jTextField1"); // NOI18N
+        atkDistanceTextField.setName("atkDistanceTextField"); // NOI18N
 
         jLabel12.setText("消耗Sp");
         jLabel12.setName("jLabel12"); // NOI18N
 
-        jTextField2.setName("jTextField2"); // NOI18N
+        costSpTextField.setName("costSpTextField"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -405,8 +408,8 @@ public class EditSkillDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel12))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))))
+                                    .addComponent(costSpTextField)
+                                    .addComponent(atkDistanceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
 
@@ -468,11 +471,11 @@ public class EditSkillDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(atkDistanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(costSpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -502,7 +505,9 @@ public class EditSkillDialog extends javax.swing.JDialog {
             skill.targetAniIndex = ((Animation) skillTargetAniComboBox.getSelectedItem()).getIndex();
         }
         skill.eventIndex = skillEventComboBox.getSelectedIndex();
-        skill.attributeId = Integer.parseInt(skillAttributeComboBox.getSelectedItem().toString());
+        skill.attributeId = skillAttributeComboBox.getSelectedIndex();
+        skill.attackDistance = Integer.parseInt(atkDistanceTextField.getText());
+        skill.sp = Integer.parseInt(costSpTextField.getText());
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -539,11 +544,12 @@ public class EditSkillDialog extends javax.swing.JDialog {
             statusTable.updateUI();
         }
     }//GEN-LAST:event_removeStatusButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEffectButton;
     private javax.swing.JButton addStatusButton;
+    private javax.swing.JTextField atkDistanceTextField;
     private javax.swing.JButton closeButton;
+    private javax.swing.JTextField costSpTextField;
     private javax.swing.JTable effectTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -564,8 +570,6 @@ public class EditSkillDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JButton okButton;

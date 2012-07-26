@@ -11,6 +11,7 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
+import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Vocation;
@@ -52,6 +53,13 @@ public class EditPlayerDialog extends javax.swing.JDialog {
             playerVocationComboBox.addItem((Vocation) AppData.getInstance().getCurProject().getDataManager().getModels(Model.VOCATION)[i]);
         }
         playerVocationComboBox.setSelectedIndex(player.vocationIndex + 1);
+        attributeComboBox.addItem("");
+        Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
+        for (int i = 0; i < config.system.attributes.size(); i++) {
+            attributeComboBox.addItem(config.system.attributes.get(i));
+        }
+        attributeComboBox.setSelectedIndex(player.attributeId);
+        atkDistanceTextField.setText(player.attackDistance + "");
     }
 
     /** This method is called from within the constructor to
@@ -157,9 +165,9 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     playerVocationComboBox = new javax.swing.JComboBox();
     applyButton = new javax.swing.JButton();
     jLabel15 = new javax.swing.JLabel();
-    jComboBox1 = new javax.swing.JComboBox();
+    attributeComboBox = new javax.swing.JComboBox();
     jLabel16 = new javax.swing.JLabel();
-    jTextField1 = new javax.swing.JTextField();
+    atkDistanceTextField = new javax.swing.JTextField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EditPlayerDialog.class);
@@ -620,14 +628,13 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     jLabel15.setText("属性");
     jLabel15.setName("jLabel15"); // NOI18N
 
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-    jComboBox1.setName("jComboBox1"); // NOI18N
+    attributeComboBox.setName("attributeComboBox"); // NOI18N
 
     jLabel16.setText("攻击距离");
     jLabel16.setName("jLabel16"); // NOI18N
 
-    jTextField1.setText("0");
-    jTextField1.setName("jTextField1"); // NOI18N
+    atkDistanceTextField.setText("0");
+    atkDistanceTextField.setName("atkDistanceTextField"); // NOI18N
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -658,7 +665,7 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel16)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(atkDistanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -667,7 +674,7 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                        .addComponent(attributeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -713,14 +720,14 @@ public class EditPlayerDialog extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addComponent(playerStartLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel15)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(attributeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(playerMaxLevTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(applyButton)
                                 .addComponent(jLabel16)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(atkDistanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -744,8 +751,10 @@ public class EditPlayerDialog extends javax.swing.JDialog {
         if (playerVocationComboBox.getSelectedItem() == null || playerVocationComboBox.getSelectedItem().toString().equals("")) {
             player.vocationIndex = -1;
         } else {
-            player.vocationIndex = playerVocationComboBox.getSelectedIndex() - 1;
+            player.vocationIndex = ((Vocation) playerVocationComboBox.getSelectedItem()).getIndex();
         }
+        player.attributeId = attributeComboBox.getSelectedIndex();
+        player.attackDistance = Integer.parseInt(atkDistanceTextField.getText());
         dispose();
 }//GEN-LAST:event_okButtonActionPerformed
 
@@ -830,10 +839,11 @@ public class EditPlayerDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         player.maxLev = Integer.parseInt(playerMaxLevTextField.getText());
     }//GEN-LAST:event_applyButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel agilPanel;
     private javax.swing.JButton applyButton;
+    private javax.swing.JTextField atkDistanceTextField;
+    private javax.swing.JComboBox attributeComboBox;
     private javax.swing.JButton battleImgSetButton;
     private javax.swing.JPanel bodyPanel;
     private javax.swing.JButton charImgSetButton;
@@ -842,7 +852,6 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     private javax.swing.JPanel expPanel;
     private javax.swing.JButton headImgSetButton;
     private javax.swing.JPanel intePanel;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -862,7 +871,6 @@ public class EditPlayerDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;

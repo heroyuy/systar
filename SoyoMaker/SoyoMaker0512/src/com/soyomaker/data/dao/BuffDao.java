@@ -58,8 +58,6 @@ public class BuffDao extends Dao<Buff> {
             for (int j = 0; j < paraN; j++) {
                 Parameter para = new Parameter();
                 para.type = dis.readInt();
-                para.name = dis.readUTF();
-                para.rule = dis.readInt();
                 para.value = dis.readInt();
                 status.paras.add(para);
             }
@@ -67,7 +65,7 @@ public class BuffDao extends Dao<Buff> {
             for (int j = 0; j < conN; j++) {
                 Condition cond = new Condition();
                 cond.conditionType = dis.readInt();
-                cond.conditionName = dis.readUTF();
+//                cond.conditionName = dis.readUTF();
                 cond.para = dis.readInt();
                 status.conds.add(cond);
             }
@@ -116,16 +114,29 @@ public class BuffDao extends Dao<Buff> {
             }
             for (int j = 0; j < statu.paras.size(); j++) {
                 LuaTable rc = new LuaTable();
-                rc.addNode("paramType", statu.paras.get(j).type + 1);
-                rc.addNode("paramName", statu.paras.get(j).name);
-                rc.addNode("paramRule", statu.paras.get(j).rule);
-                rc.addNode("paramValue", statu.paras.get(j).value);
+                rc.addNode("name", Parameter.types[statu.paras.get(j).type]);
+                rc.addNode("value", statu.paras.get(j).value);
                 pas.addNode("[" + (statu.paras.get(j).type + 1) + "]", rc);
                 if (j != statu.paras.size() - 1) {
                     pas.addNode("\n");
                 }
             }
             lt.addNode("datas", pas);
+            lt.addNode("\n");
+            LuaTable cons = new LuaTable();
+            if (!statu.conds.isEmpty()) {
+                cons.addNode("\n");
+            }
+            for (int j = 0; j < statu.conds.size(); j++) {
+                LuaTable rc = new LuaTable();
+                rc.addNode("conditionType", Parameter.types[statu.conds.get(j).conditionType]);
+                rc.addNode("value", statu.conds.get(j).para);
+                cons.addNode("[" + (statu.conds.get(j).conditionType + 1) + "]", rc);
+                if (j != statu.conds.size() - 1) {
+                    cons.addNode("\n");
+                }
+            }
+            lt.addNode("conditions", cons);
             lt.addNode("\n");
             lts.addNode("[" + (Configuration.Prefix.STATUS_MASK + statu.getIndex() + 1) + "]", lt);
             if (i != size() - 1) {
@@ -169,15 +180,13 @@ public class BuffDao extends Dao<Buff> {
                 for (int j = 0; j < statu.paras.size(); j++) {
                     Parameter para = statu.paras.get(j);
                     dos.writeInt(para.type);
-                    dos.writeUTF(para.name);
-                    dos.writeInt(para.rule);
                     dos.writeInt(para.value);
                 }
                 dos.writeInt(statu.conds.size());
                 for (int j = 0; j < statu.conds.size(); j++) {
                     Condition cond = statu.conds.get(j);
                     dos.writeInt(cond.conditionType);
-                    dos.writeUTF(cond.conditionName);
+//                    dos.writeUTF(cond.conditionName);
                     dos.writeInt(cond.para);
                 }
             }

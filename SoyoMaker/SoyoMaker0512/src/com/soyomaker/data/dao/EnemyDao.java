@@ -7,16 +7,11 @@ package com.soyomaker.data.dao;
 import com.soyomaker.AppData;
 import com.soyomaker.config.Configuration;
 import com.soyomaker.data.model.Action;
-import com.soyomaker.data.model.Attribute;
 import com.soyomaker.data.model.Condition;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.Enemy.ItemInfo;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
-import com.soyomaker.data.model.Buff;
-import com.soyomaker.data.model.Treasure;
-import com.soyomaker.infomation.SoftInformation;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
@@ -48,7 +43,6 @@ public class EnemyDao extends Dao<Enemy> {
         DataInputStream dis = null;
         FileInputStream fis = null;
         File f = null;
-//        try {
         f = new File(AppData.getInstance().getCurProject().getPath() + "/softdata/enemy.gat");
         fis = new FileInputStream(f);
         dis = new DataInputStream(fis);
@@ -61,6 +55,10 @@ public class EnemyDao extends Dao<Enemy> {
             enemy.intro = dis.readUTF();
             enemy.charImg = dis.readUTF();
             enemy.actionImg = dis.readUTF();
+            enemy.attackDistance = dis.readInt();
+            enemy.attackSound = dis.readUTF();
+            enemy.onAttackSound = dis.readUTF();
+            enemy.deadSound = dis.readUTF();
             enemy.lev = dis.readInt();
             enemy.stre = dis.readInt();
             enemy.inte = dis.readInt();
@@ -130,6 +128,23 @@ public class EnemyDao extends Dao<Enemy> {
             } else {
                 lt.addNode("actionImg", "/image/battler/" + enemy.charImg);
             }
+            if (enemy.attackSound == null || enemy.attackSound.equals("")) {
+                lt.addNode("attackSound", "nil");
+            } else {
+                lt.addNode("attackSound", "/audio/sound/" + enemy.attackSound);
+            }
+            if (enemy.onAttackSound == null || enemy.onAttackSound.equals("")) {
+                lt.addNode("onAttackSound", "nil");
+            } else {
+                lt.addNode("onAttackSound", "/audio/sound/" + enemy.onAttackSound);
+            }
+            if (enemy.deadSound == null || enemy.deadSound.equals("")) {
+                lt.addNode("deadSound", "nil");
+            } else {
+                lt.addNode("deadSound", "/audio/sound/" + enemy.deadSound);
+            }
+            lt.addNode("\n");
+            lt.addNode("attackDistance", enemy.attackDistance);
             lt.addNode("\n");
             lt.addNode("lev", enemy.lev);
             lt.addNode("\n");
@@ -233,6 +248,10 @@ public class EnemyDao extends Dao<Enemy> {
                 dos.writeUTF(enemy.intro);
                 dos.writeUTF(enemy.charImg);
                 dos.writeUTF(enemy.actionImg);
+                dos.writeInt(enemy.attackDistance);
+                dos.writeUTF(enemy.attackSound);
+                dos.writeUTF(enemy.onAttackSound);
+                dos.writeUTF(enemy.deadSound);
                 dos.writeInt(enemy.lev);
                 dos.writeInt(enemy.stre);
                 dos.writeInt(enemy.inte);

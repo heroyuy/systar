@@ -25,11 +25,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="dataTabbedPane" alignment="0" pref="854" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="338" max="32767" attributes="0"/>
+              <EmptySpace pref="538" max="32767" attributes="0"/>
               <Component id="okButton" linkSize="1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="applyButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="closeButton" linkSize="1" min="-2" pref="90" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -37,12 +39,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="dataTabbedPane" min="-2" pref="570" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="closeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="closeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="applyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,6 +74,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="applyButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x5e94;&#x7528;"/>
+        <Property name="name" type="java.lang.String" value="applyButton" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applyButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

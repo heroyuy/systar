@@ -11,13 +11,11 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.DataManager;
 import com.soyomaker.data.listener.DataChangeListener;
 import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -27,7 +25,6 @@ import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.widget.JTabelComboBoxRender;
 import com.soyomaker.widget.JTableComboBoxEditor;
-import javax.swing.ImageIcon;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -60,18 +57,6 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
      */
     public void refresh() {
     }
-
-//    private ImageIcon[] listFileName(String path) {
-//
-//        File f = new File(AppData.getInstance().getCurProject().getPath() + File.separator + path);
-//        String[] s = f.list();
-//        ImageIcon[] ii = new ImageIcon[s.length];
-//        for (int i = 0; i < s.length; i++) {
-//            ii[i] = new ImageIcon(AppData.getInstance().getCurProject().getPath() + File.separator + path + File.separator
-//                    + s[i], s[i]);
-//        }
-//        return ii;
-//    }
     private SkillTableModel skillTableModel = new SkillTableModel();
 
     /** This method is called from within the constructor to
@@ -160,6 +145,7 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.SKILL, skill);
         EditSkillDialog eid = new EditSkillDialog(this, true, skill);
         eid.setVisible(true);
+        skillTable.updateUI();
     }//GEN-LAST:event_addSkillButtonActionPerformed
 
     private void editSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSkillButtonActionPerformed
@@ -171,6 +157,7 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
         Skill skill = (Skill) AppData.getInstance().getCurProject().getDataManager().getModels(Model.SKILL)[id];
         EditSkillDialog eid = new EditSkillDialog(this, true, skill);
         eid.setVisible(true);
+        skillTable.updateUI();
     }//GEN-LAST:event_editSkillButtonActionPerformed
 
     private void removeSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSkillButtonActionPerformed
@@ -229,12 +216,6 @@ public class SkillPanel extends javax.swing.JPanel implements DataChangeListener
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

@@ -8,6 +8,7 @@ import com.soyomaker.AppData;
 import com.soyomaker.config.Configuration;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
+import com.soyomaker.data.model.Skill;
 import com.soyomaker.log.LogPrinter;
 import com.soyomaker.log.LogPrinterFactory;
 import com.soyomaker.lua.LuaFileUtil;
@@ -55,6 +56,11 @@ public class ItemDao extends Dao<Item> {
             item.lev = dis.readInt();
             item.type = dis.readInt();
             item.price = dis.readInt();
+            int skillN = dis.readInt();
+            for (int j = 0; j < skillN; j++) {
+                Skill skill = (Skill) AppData.getInstance().getCurProject().getDataManager().getModel(Model.SKILL, dis.readInt());
+                item.skillList.add(skill);
+            }
             AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ITEM, item);
         }
         dis.close();
@@ -82,6 +88,10 @@ public class ItemDao extends Dao<Item> {
                 dos.writeInt(item.lev);
                 dos.writeInt(item.type);
                 dos.writeInt(item.price);
+                dos.writeInt(item.skillList.size());
+                for (int j = 0; j < item.skillList.size(); j++) {
+                    dos.writeInt(item.skillList.get(j).getIndex());
+                }
             }
             dos.close();
             fos.close();

@@ -394,6 +394,8 @@ public class EditBuffDialog extends javax.swing.JDialog {
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel2, jPanel3});
 
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {statusAniComboBox, statusIconComboBox, statusKindComboBox, statusLastTypeComboBox, statusLastValueTextField, statusLevTextField});
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -408,7 +410,7 @@ public class EditBuffDialog extends javax.swing.JDialog {
         } else {
             status.aniIndex = ((Animation) statusAniComboBox.getSelectedItem()).getIndex();
         }
-        status.type = statusKindComboBox.getSelectedIndex();
+        status.limitType = statusKindComboBox.getSelectedIndex();
         status.type = statusLastTypeComboBox.getSelectedIndex();
         status.typeParam = Integer.parseInt(statusLastValueTextField.getText());
         dispose();

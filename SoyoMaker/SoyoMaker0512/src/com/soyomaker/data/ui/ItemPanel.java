@@ -11,13 +11,11 @@
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.DataManager;
 import com.soyomaker.data.listener.DataChangeListener;
 import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.ItemTableModel;
 import com.soyomaker.data.model.Model;
@@ -27,7 +25,6 @@ import com.soyomaker.data.model.Buff;
 import com.soyomaker.data.model.Vocation;
 import com.soyomaker.widget.JTabelComboBoxRender;
 import com.soyomaker.widget.JTableComboBoxEditor;
-import javax.swing.ImageIcon;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -42,13 +39,6 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
         initComponents();
         AppData.getInstance().getCurProject().getDataManager().addDataChangeListener(this);
         TableColumnModel tcm = itemTable.getColumnModel();
-//        ImageIcon[] itemIcons = DataManager.listItemIconName();
-//        TableColumn iconC = tcm.getColumn(3);
-//        JTabelComboBoxRender strI = new JTabelComboBoxRender(itemIcons);
-//        JTableComboBoxEditor steI = new JTableComboBoxEditor(itemIcons);
-//        iconC.setCellRenderer(strI);
-//        iconC.setCellEditor(steI);
-
         TableColumn targetC = tcm.getColumn(5);
         JTabelComboBoxRender strT = new JTabelComboBoxRender(Item.types);
         JTableComboBoxEditor steT = new JTableComboBoxEditor(Item.types);
@@ -149,6 +139,7 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ITEM, item);
         EditItemDialog eid = new EditItemDialog(this, true, item);
         eid.setVisible(true);
+        itemTable.updateUI();
     }//GEN-LAST:event_addItemButtonActionPerformed
 
     private void editItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemButtonActionPerformed
@@ -160,6 +151,7 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
         Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[id];
         EditItemDialog eid = new EditItemDialog(this, true, item);
         eid.setVisible(true);
+        itemTable.updateUI();
     }//GEN-LAST:event_editItemButtonActionPerformed
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
@@ -216,12 +208,6 @@ public class ItemPanel extends javax.swing.JPanel implements DataChangeListener 
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

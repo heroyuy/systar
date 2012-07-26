@@ -66,6 +66,7 @@ public class SkillDao extends Dao<Skill> {
             skill.attackDistance = dis.readInt();
             skill.attributeId = dis.readInt();
             skill.eventIndex = dis.readInt();
+            skill.sp = dis.readInt();
             int effectN = dis.readInt();
             for (int j = 0; j < effectN; j++) {
                 Effect effect = new Effect();
@@ -133,6 +134,8 @@ public class SkillDao extends Dao<Skill> {
             lt.addNode("attackDistance", skill.attackDistance);
             lt.addNode("\n");
             lt.addNode("attributeId", Configuration.Prefix.ATTRIBUTE_MASK + skill.attributeId + 1);
+            lt.addNode("\n");
+            lt.addNode("sp", skill.sp);
             lt.addNode("\n");
             LuaTable efs = new LuaTable();
             if (!skill.effects.isEmpty()) {
@@ -205,6 +208,7 @@ public class SkillDao extends Dao<Skill> {
                 dos.writeInt(skill.attackDistance);
                 dos.writeInt(skill.attributeId);
                 dos.writeInt(skill.eventIndex);
+                dos.writeInt(skill.sp);
                 dos.writeInt(skill.effects.size());
                 for (int j = 0; j < skill.effects.size(); j++) {
                     dos.writeInt(skill.effects.get(j).effectType);

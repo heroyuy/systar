@@ -17,7 +17,6 @@ import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -131,6 +130,7 @@ public class PlayerPanel extends javax.swing.JPanel implements DataChangeListene
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.PLAYER, player);
         EditPlayerDialog eid = new EditPlayerDialog(this, true, player);
         eid.setVisible(true);
+        playerTable.updateUI();
     }//GEN-LAST:event_addPlayerButtonActionPerformed
 
     private void editPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editPlayerButtonActionPerformed
@@ -140,16 +140,9 @@ public class PlayerPanel extends javax.swing.JPanel implements DataChangeListene
             return;
         }
         Player player = (Player) AppData.getInstance().getCurProject().getDataManager().getModels(Model.PLAYER)[id];
-//        //测试
-//        for (int i = 0; i < player.maxLev; i++) {
-//            player.maxHps.add(i, i);
-//        }
-//        for (int i = 0; i < player.maxLev; i++) {
-//            player.maxSps.add(i, i);
-//        }
-
         EditPlayerDialog eid = new EditPlayerDialog(this, true, player);
         eid.setVisible(true);
+        playerTable.updateUI();
     }//GEN-LAST:event_editPlayerButtonActionPerformed
 
     private void removePlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlayerButtonActionPerformed
@@ -208,12 +201,6 @@ public class PlayerPanel extends javax.swing.JPanel implements DataChangeListene
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

@@ -17,7 +17,6 @@ import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
 import com.soyomaker.data.model.EnemyTroopTableModel;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -130,6 +129,7 @@ public class EnemyTroopPanel extends javax.swing.JPanel implements DataChangeLis
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMYTROOP, enemyTroop);
         EditEnemyTroopDialog eid = new EditEnemyTroopDialog(this, true, enemyTroop);
         eid.setVisible(true);
+        enemyTroopTable.updateUI();
     }//GEN-LAST:event_addEnemyTroopButtonActionPerformed
 
     private void removeEnemyTroopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnemyTroopButtonActionPerformed
@@ -150,6 +150,7 @@ public class EnemyTroopPanel extends javax.swing.JPanel implements DataChangeLis
         EnemyTroop enemyTroop = (EnemyTroop) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ENEMYTROOP)[id];
         EditEnemyTroopDialog eid = new EditEnemyTroopDialog(this, true, enemyTroop);
         eid.setVisible(true);
+        enemyTroopTable.updateUI();
     }//GEN-LAST:event_editEnemyTroopButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEnemyTroopButton;
@@ -199,12 +200,6 @@ public class EnemyTroopPanel extends javax.swing.JPanel implements DataChangeLis
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
         enemyTroopTable.updateUI();
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

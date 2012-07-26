@@ -13,9 +13,9 @@ package com.soyomaker.data.ui;
 import com.soyomaker.AppData;
 import com.soyomaker.data.model.Action;
 import com.soyomaker.data.model.Condition;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
+import com.soyomaker.data.model.Skill;
 
 /**
  *
@@ -461,8 +461,8 @@ public class AddModelActionDialog extends javax.swing.JDialog {
                 break;
             case Action.USE_SKILL:
                 actionParaComboBox.setEnabled(true);
-                for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.EQUIP); i++) {
-                    actionParaComboBox.addItem((Equip) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP)[i]);
+                for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.SKILL); i++) {
+                    actionParaComboBox.addItem((Skill) AppData.getInstance().getCurProject().getDataManager().getModels(Model.SKILL)[i]);
                 }
                 break;
             default:

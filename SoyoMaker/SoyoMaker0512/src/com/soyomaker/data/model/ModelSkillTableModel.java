@@ -4,7 +4,6 @@
  */
 package com.soyomaker.data.model;
 
-import com.soyomaker.AppData;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,26 +11,26 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Administrator
  */
-public class ModelEquipTableModel extends AbstractTableModel {
+public class ModelSkillTableModel extends AbstractTableModel {
 
-    private ArrayList<Equip> equips;
+    private ArrayList<Skill> treas;
 
     /**
      *
-     * @param equips
+     * @param status
      */
-    public ModelEquipTableModel(ArrayList<Equip> equips) {
-        this.equips = equips;
+    public ModelSkillTableModel(ArrayList<Skill> status) {
+        this.treas = status;
     }
     private static final String COLUMN_NAME[] = {
-        "装备名称", "掉落率"
+        "技能名称"
     };
     private static final Class COLUMN_CLASS[] = {
-        String.class, Integer.class
+        String.class
     };
 
     public int getRowCount() {
-        return equips.size();
+        return treas.size();
     }
 
     @Override
@@ -54,29 +53,18 @@ public class ModelEquipTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object v, int r, int c) {
-        Equip attr = equips.get(r);
-        if (attr != null) {
-            switch (c) {
-                case 0:
-                    attr.name = v.toString();
-                    break;
-                case 1:
-                    attr.rate = Integer.parseInt(v.toString());
-                    break;
-            }
+        switch (c) {
+            case 0:
+                treas.get(r).name = v.toString();
+                break;
         }
         this.fireTableCellUpdated(r, c);
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Equip attr = equips.get(rowIndex);
-        if (attr != null) {
-            switch (columnIndex) {
-                case 0:
-                    return attr.name;
-                case 1:
-                    return attr.rate;
-            }
+        switch (columnIndex) {
+            case 0:
+                return treas.get(rowIndex).name;
         }
         return null;
     }

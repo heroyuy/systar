@@ -53,6 +53,8 @@ public class PlayerDao extends Dao<Player> {
             player.vocationIndex = dis.readInt();
             player.startLev = dis.readInt();
             player.maxLev = dis.readInt();
+            player.attackDistance = dis.readInt();
+            player.attributeId = dis.readInt();
             player.agilPower.a = dis.readInt();
             player.agilPower.b = dis.readInt();
             player.agilPower.c = dis.readInt();
@@ -115,7 +117,8 @@ public class PlayerDao extends Dao<Player> {
                 dos.writeInt(player.vocationIndex);
                 dos.writeInt(player.startLev);
                 dos.writeInt(player.maxLev);
-
+                dos.writeInt(player.attackDistance);
+                dos.writeInt(player.attributeId);
                 dos.writeInt(player.agilPower.a);
                 dos.writeInt(player.agilPower.b);
                 dos.writeInt(player.agilPower.c);

@@ -35,7 +35,10 @@ public class ItemDialog extends AbCommandDialog {
         initComponents();
         setLocationRelativeTo(null);
         for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.ITEM); i++) {
-            itemComboBox.addItem((Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[i]);
+            Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[i];
+            if (item.type == Item.COMMON || item.type == Item.COST) {
+                itemComboBox.addItem((Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[i]);
+            }
         }
     }
     private ScriptDialog sd;
@@ -274,7 +277,6 @@ public class ItemDialog extends AbCommandDialog {
         constTextField.setEnabled(false);
         varComboBox.setEnabled(true);
     }//GEN-LAST:event_varRadioButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton addRadioButton;
     private javax.swing.ButtonGroup buttonGroup1;

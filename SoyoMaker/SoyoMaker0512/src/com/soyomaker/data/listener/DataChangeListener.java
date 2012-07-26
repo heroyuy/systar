@@ -7,7 +7,6 @@ package com.soyomaker.data.listener;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Player;
 import com.soyomaker.data.model.Skill;
@@ -111,20 +110,6 @@ public interface DataChangeListener extends EventListener {
      * @param id
      */
     public void enemyTroopRemoved(DataChangedEvent sce, int id);
-
-    /**
-     *
-     * @param sce
-     * @param equip
-     */
-    public void equipAdded(DataChangedEvent sce, Equip equip);
-
-    /**
-     *
-     * @param sce
-     * @param id
-     */
-    public void equipRemoved(DataChangedEvent sce, int id);
 
     /**
      *

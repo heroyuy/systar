@@ -4,34 +4,36 @@
  */
 
 /*
- * EnemyTreasureDialog.java
+ * AddModelSkillDialog.java
  *
- * Created on 2011-10-8, 22:24:37
+ * Created on 2012-7-19, 23:00:43
  */
 package com.soyomaker.data.ui;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
+import com.soyomaker.data.model.Skill;
 
 /**
  *
  * @author Administrator
  */
-public class AddModelTreasureDialog extends javax.swing.JDialog {
+public class AddModelSkillDialog extends javax.swing.JDialog {
 
-    /** Creates new form EnemyTreasureDialog
-     * @param parent
-     * @param modal
-     */
-    public AddModelTreasureDialog(javax.swing.JDialog parent, boolean modal) {
+    /** Creates new form AddModelSkillDialog */
+    public AddModelSkillDialog(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        Item[] items = (Item[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM);
-        for (int i = 0; i < items.length; i++) {
-            itemComboBox.addItem(items[i]);
+        Skill[] skills = (Skill[]) AppData.getInstance().getCurProject().getDataManager().getModels(Model.SKILL);
+        for (int i = 0; i < skills.length; i++) {
+            skillComboBox.addItem(skills[i]);
         }
+    }
+    private Skill skill;
+
+    public Skill getSkill() {
+        return skill;
     }
 
     /** This method is called from within the constructor to
@@ -43,20 +45,18 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        itemComboBox = new javax.swing.JComboBox();
+        skillComboBox = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
         cancleButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        rateTextField = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(AddModelTreasureDialog.class);
-        setTitle(resourceMap.getString("title")); // NOI18N
-        setResizable(false);
+        setTitle("添加技能");
 
-        itemComboBox.setName("itemComboBox"); // NOI18N
+        skillComboBox.setName("skillComboBox"); // NOI18N
+
+        jLabel2.setText("技能");
+        jLabel2.setName("jLabel2"); // NOI18N
 
         okButton.setText("确定");
         okButton.setName("okButton"); // NOI18N
@@ -74,15 +74,6 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("掉落率");
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        rateTextField.setText("0");
-        rateTextField.setName("rateTextField"); // NOI18N
-
-        jLabel2.setText("宝物");
-        jLabel2.setName("jLabel2"); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,13 +86,9 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                         .addComponent(cancleButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                        .addComponent(jLabel2)
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rateTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(itemComboBox, 0, 173, Short.MAX_VALUE))))
+                        .addComponent(skillComboBox, 0, 185, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -109,60 +96,34 @@ public class AddModelTreasureDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(skillComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(cancleButton))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private Item trea;
-    private int rate;
-
-    /**
-     *
-     * @return
-     */
-    public Item getItem() {
-        return trea;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getRate() {
-        return rate;
-    }
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        if (itemComboBox.getSelectedIndex() != -1) {
-            trea = (Item) itemComboBox.getSelectedItem();
-            rate = Integer.parseInt(rateTextField.getText());
+        if (skillComboBox.getSelectedIndex() != -1) {
+            skill = (Skill) skillComboBox.getSelectedItem();
         }
         dispose();
-    }//GEN-LAST:event_okButtonActionPerformed
+}//GEN-LAST:event_okButtonActionPerformed
 
     private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_cancleButtonActionPerformed
+}//GEN-LAST:event_cancleButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancleButton;
-    private javax.swing.JComboBox itemComboBox;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton okButton;
-    private javax.swing.JTextField rateTextField;
+    private javax.swing.JComboBox skillComboBox;
     // End of variables declaration//GEN-END:variables
 }

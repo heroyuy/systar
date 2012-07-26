@@ -17,7 +17,7 @@ public class AttributeFactorTableModel extends AbstractTableModel {
 
     /**
      *
-     * @param config
+     * @param attr
      */
     public AttributeFactorTableModel(Attribute attr) {
         this.attribute = attr;

@@ -16,7 +16,6 @@ import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -140,6 +139,7 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.STATUS, status);
         EditBuffDialog eid = new EditBuffDialog(this, true, status);
         eid.setVisible(true);
+        statusTable.updateUI();
     }//GEN-LAST:event_addStatusButtonActionPerformed
 
     private void editStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusButtonActionPerformed
@@ -151,6 +151,7 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
         Buff status = (Buff) AppData.getInstance().getCurProject().getDataManager().getModels(Model.STATUS)[id];
         EditBuffDialog eid = new EditBuffDialog(this, true, status);
         eid.setVisible(true);
+        statusTable.updateUI();
     }//GEN-LAST:event_editStatusButtonActionPerformed
 
     private void removeStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStatusButtonActionPerformed
@@ -209,12 +210,6 @@ public class StatusPanel extends javax.swing.JPanel implements DataChangeListene
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

@@ -17,7 +17,6 @@ import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTableModel;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -140,6 +139,7 @@ public class EnemyPanel extends javax.swing.JPanel implements DataChangeListener
         Enemy enemy = (Enemy) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ENEMY)[id];
         EditEnemyDialog eid = new EditEnemyDialog(this, true, enemy);
         eid.setVisible(true);
+        enemyTable.updateUI();
     }//GEN-LAST:event_editEnemyButtonActionPerformed
 
     private void addEnemyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnemyButtonActionPerformed
@@ -149,6 +149,7 @@ public class EnemyPanel extends javax.swing.JPanel implements DataChangeListener
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.ENEMY, enemy);
         EditEnemyDialog eid = new EditEnemyDialog(this, true, enemy);
         eid.setVisible(true);
+        enemyTable.updateUI();
     }//GEN-LAST:event_addEnemyButtonActionPerformed
     private EnemyTableModel etm = new EnemyTableModel();
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -199,12 +200,6 @@ public class EnemyPanel extends javax.swing.JPanel implements DataChangeListener
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

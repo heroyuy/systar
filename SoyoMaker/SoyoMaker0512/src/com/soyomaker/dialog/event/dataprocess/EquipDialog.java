@@ -11,7 +11,7 @@
 package com.soyomaker.dialog.event.dataprocess;
 
 import com.soyomaker.AppData;
-import com.soyomaker.data.model.Equip;
+import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.dialog.AbCommandDialog;
 import com.soyomaker.dialog.ScriptDialog;
@@ -34,8 +34,11 @@ public class EquipDialog extends AbCommandDialog {
         sd = parent;
         initComponents();
         setLocationRelativeTo(null);
-        for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.EQUIP); i++) {
-            equipComboBox.addItem((Equip) AppData.getInstance().getCurProject().getDataManager().getModels(Model.EQUIP)[i]);
+        for (int i = 0; i < AppData.getInstance().getCurProject().getDataManager().size(Model.ITEM); i++) {
+            Item item = (Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[i];
+            if (item.type != Item.COMMON && item.type != Item.COST) {
+                equipComboBox.addItem((Item) AppData.getInstance().getCurProject().getDataManager().getModels(Model.ITEM)[i]);
+            }
         }
     }
     private ScriptDialog sd;
@@ -240,7 +243,7 @@ public class EquipDialog extends AbCommandDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         mCommand = CommandFactory.createCommand(mTypeId);
-        mCommand.addParameter("" + ((Equip) equipComboBox.getSelectedItem()).getIndex());
+        mCommand.addParameter("" + ((Item) equipComboBox.getSelectedItem()).getIndex());
         if (addRadioButton.isSelected()) {
             if (constRadioButton.isSelected()) {
                 mCommand.addParameter("1");
@@ -274,7 +277,6 @@ public class EquipDialog extends AbCommandDialog {
         // TODO add your handling code here:
         this.dispose();
 }//GEN-LAST:event_cancleButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton addRadioButton;
     private javax.swing.ButtonGroup buttonGroup1;

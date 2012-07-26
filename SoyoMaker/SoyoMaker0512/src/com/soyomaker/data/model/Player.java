@@ -79,7 +79,13 @@ public class Player extends Model {
      *  职业编号
      */
     public int vocationIndex = -1;
+    /**
+     *
+     */
     public int attributeId = -1;
+    /**
+     *
+     */
     public int attackDistance = 0;
 
     /**

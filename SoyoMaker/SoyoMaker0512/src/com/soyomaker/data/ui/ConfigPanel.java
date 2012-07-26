@@ -37,7 +37,6 @@ public class ConfigPanel extends javax.swing.JPanel {
             return;
         }
         Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
-
         configHpTextField.setText(config.term.hp);
         configSpTextField.setText(config.term.sp);
         configStreTextField.setText(config.term.stre);
@@ -1524,7 +1523,6 @@ public class ConfigPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 //        JOptionPane.showMessageDialog(this, "暂未开放此功能！", "提示", JOptionPane.INFORMATION_MESSAGE);
         if (configAttributeTable.getSelectedRow() >= 0 && configAttributeTable.getSelectedRow() < conf.system.attributes.size()) {
-//            conf.system.attributes.remove(configAttributeTable.getSelectedRow());
             ConfigAttributeDialog cad = new ConfigAttributeDialog(this, true);
             cad.setAttribute(conf.system.attributes.get(configAttributeTable.getSelectedRow()));
             cad.setVisible(true);

@@ -13,7 +13,6 @@ package com.soyomaker.dialog;
 import com.soyomaker.data.ui.ConfigPanel;
 import com.soyomaker.data.ui.EnemyPanel;
 import com.soyomaker.data.ui.EnemyTroopPanel;
-//import com.soyomaker.data.ui.EquipPanel;
 import com.soyomaker.data.ui.ItemPanel;
 import com.soyomaker.data.ui.PlayerPanel;
 import com.soyomaker.data.ui.SkillPanel;
@@ -46,7 +45,6 @@ public class DataEditorDialog extends javax.swing.JDialog {
         enemyTroopPanel.refresh();
         itemPanel.refresh();
         playerPanel.refresh();
-//        equipPanel.refresh();
         statusPanel.refresh();
         vocationPanel.refresh();
     }
@@ -56,7 +54,6 @@ public class DataEditorDialog extends javax.swing.JDialog {
     private EnemyTroopPanel enemyTroopPanel;
     private ItemPanel itemPanel;
     private PlayerPanel playerPanel;
-//    private EquipPanel equipPanel;
     private StatusPanel statusPanel;
     private VocationPanel vocationPanel;
 
@@ -68,14 +65,12 @@ public class DataEditorDialog extends javax.swing.JDialog {
         enemyTroopPanel = new EnemyTroopPanel();
         itemPanel = new ItemPanel();
         playerPanel = new PlayerPanel();
-//        equipPanel = new EquipPanel();
         statusPanel = new StatusPanel();
         vocationPanel = new VocationPanel();
         dataTabbedPane.add("角色", playerPanel);
         dataTabbedPane.add("职业", vocationPanel);
         dataTabbedPane.add("技能", skillPanel);
         dataTabbedPane.add("物品", itemPanel);
-//        dataTabbedPane.add("装备", equipPanel);
         dataTabbedPane.add("敌人", enemyPanel);
         dataTabbedPane.add("队伍", enemyTroopPanel);
         dataTabbedPane.add("Buff", statusPanel);
@@ -94,6 +89,7 @@ public class DataEditorDialog extends javax.swing.JDialog {
         dataTabbedPane = new javax.swing.JTabbedPane();
         closeButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("数据编辑器");
@@ -116,30 +112,41 @@ public class DataEditorDialog extends javax.swing.JDialog {
             }
         });
 
+        applyButton.setText("应用");
+        applyButton.setName("applyButton"); // NOI18N
+        applyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dataTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 854, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
+                .addContainerGap(538, Short.MAX_VALUE)
                 .addComponent(okButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(applyButton)
+                .addGap(18, 18, 18)
                 .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(326, 326, 326))
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {closeButton, okButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {applyButton, closeButton, okButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(dataTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okButton)
-                    .addComponent(closeButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(closeButton)
+                    .addComponent(applyButton)
+                    .addComponent(okButton))
+                .addContainerGap())
         );
 
         pack();
@@ -155,10 +162,16 @@ public class DataEditorDialog extends javax.swing.JDialog {
         save();
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
+
+    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        // TODO add your handling code here:
+        save();
+    }//GEN-LAST:event_applyButtonActionPerformed
     private void save() {
         configPanel.save();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton applyButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JTabbedPane dataTabbedPane;
     private javax.swing.JButton okButton;

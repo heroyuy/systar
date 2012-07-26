@@ -16,6 +16,7 @@ import com.soyomaker.data.model.AttributeFactor;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Model;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,17 +32,17 @@ public class AddAttributeFactorDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        if (AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG).length != 0) {
-            Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
-            if (config != null) {
-                for (Attribute attr : config.system.attributes) {
-                    attributeComboBox.addItem(attr.name);
-                }
-            }
+        Config config = (Config) AppData.getInstance().getCurProject().getDataManager().getModels(Model.CONFIG)[0];
+        for (Attribute attr : config.system.attributes) {
+            attributeComboBox.addItem(attr.name);
         }
     }
     private AttributeFactor factor;
 
+    /**
+     *
+     * @return
+     */
     public AttributeFactor getAttributeFactor() {
         return factor;
     }
@@ -137,7 +138,14 @@ public class AddAttributeFactorDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         factor = new AttributeFactor();
         factor.targetId = attributeComboBox.getSelectedIndex();
-        factor.value = Integer.parseInt(factorTextField.getText());
+        int value = 0;
+        try {
+            value = Integer.parseInt(factorTextField.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "相克系数不合法", "警告", value);
+            return;
+        }
+        factor.value = value;
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 

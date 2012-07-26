@@ -16,7 +16,6 @@ import com.soyomaker.data.listener.DataChangedEvent;
 import com.soyomaker.data.model.Config;
 import com.soyomaker.data.model.Enemy;
 import com.soyomaker.data.model.EnemyTroop;
-import com.soyomaker.data.model.Equip;
 import com.soyomaker.data.model.Item;
 import com.soyomaker.data.model.Model;
 import com.soyomaker.data.model.Player;
@@ -130,6 +129,7 @@ public class VocationPanel extends javax.swing.JPanel implements DataChangeListe
         AppData.getInstance().getCurProject().getDataManager().saveModel(Model.VOCATION, vocation);
         EditVocationDialog eid = new EditVocationDialog(this, true, vocation);
         eid.setVisible(true);
+        vocationTable.updateUI();
     }//GEN-LAST:event_addVocationButtonActionPerformed
 
     private void editVocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVocationButtonActionPerformed
@@ -141,6 +141,7 @@ public class VocationPanel extends javax.swing.JPanel implements DataChangeListe
         Vocation vocation = (Vocation) AppData.getInstance().getCurProject().getDataManager().getModels(Model.VOCATION)[id];
         EditVocationDialog eid = new EditVocationDialog(this, true, vocation);
         eid.setVisible(true);
+        vocationTable.updateUI();
     }//GEN-LAST:event_editVocationButtonActionPerformed
 
     private void removeVocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeVocationButtonActionPerformed
@@ -199,12 +200,6 @@ public class VocationPanel extends javax.swing.JPanel implements DataChangeListe
     }
 
     public void enemyTroopRemoved(DataChangedEvent sce, int id) {
-    }
-
-    public void equipAdded(DataChangedEvent sce, Equip equip) {
-    }
-
-    public void equipRemoved(DataChangedEvent sce, int id) {
     }
 
     public void itemAdded(DataChangedEvent sce, Item item) {

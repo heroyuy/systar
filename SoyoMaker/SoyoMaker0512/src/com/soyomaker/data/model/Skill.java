@@ -66,6 +66,9 @@ public class Skill extends Model {
      * 公共事件编号
      */
     public int eventIndex = -1;
+    /**
+     *
+     */
     public int attributeId = -1;
 
     @Override
@@ -81,9 +84,18 @@ public class Skill extends Model {
      */
     public ArrayList<BuffInfo> status = new ArrayList<BuffInfo>();
 
+    /**
+     *
+     */
     public static class BuffInfo {
 
+        /**
+         *
+         */
         public Buff buff;
+        /**
+         *
+         */
         public int rate;//状态有效度
     }
 }
