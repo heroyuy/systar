@@ -49,7 +49,6 @@ public class BeanFactory {
 
 	public void initBeansWithConfig(String file) {
 		try {
-			System.out.println(file);
 			XMLObject xmlObject = XMLParser.parse(new File(file));
 			for (XMLObject beanXMLObject : xmlObject.getChildList()) {
 				String name = beanXMLObject.getName();
@@ -60,7 +59,8 @@ public class BeanFactory {
 				IBean bean = beanMap.get(name);
 				bean.setBeanFactory(this);
 				for (String param : beanXMLObject.getAttributeList()) {
-					bean.getParams().put(param, beanXMLObject.getAttribute(param));
+					bean.getParams().put(param,
+							beanXMLObject.getAttribute(param));
 				}
 				beanMap.put(name, (IBean) bean);
 
