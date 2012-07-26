@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import com.soyomaker.data.GObject;
 import com.soyomaker.data.IGObject;
-import com.soyomaker.server.connector.mina.CodecConst;
+import com.soyomaker.server.mina.CodecConst;
 
 /**
  * HttpTestClient

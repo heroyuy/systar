@@ -5,15 +5,15 @@ import org.apache.log4j.PropertyConfigurator;
 import com.soyomaker.application.BeanFactory;
 import com.soyomaker.application.IBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.server.connector.handler.ILoginHandler;
-import com.soyomaker.server.connector.handler.IRequestHandler;
-import com.soyomaker.server.connector.handler.IRequestHandlerFactory;
-import com.soyomaker.server.connector.handler.LoginHandler;
-import com.soyomaker.server.connector.handler.RequestHandlerFactory;
-import com.soyomaker.server.connector.jetty.JettyHandler;
-import com.soyomaker.server.connector.jetty.JettyServer;
-import com.soyomaker.server.connector.mina.MinaHandler;
-import com.soyomaker.server.connector.mina.MinaServer;
+import com.soyomaker.server.handler.ILoginHandler;
+import com.soyomaker.server.handler.IRequestHandler;
+import com.soyomaker.server.handler.IRequestHandlerFactory;
+import com.soyomaker.server.handler.LoginHandler;
+import com.soyomaker.server.handler.RequestHandlerFactory;
+import com.soyomaker.server.jetty.JettyHandler;
+import com.soyomaker.server.jetty.JettyServer;
+import com.soyomaker.server.mina.MinaHandler;
+import com.soyomaker.server.mina.MinaServer;
 import com.soyomaker.server.session.PlayerSessionManager;
 
 public class GameServer {

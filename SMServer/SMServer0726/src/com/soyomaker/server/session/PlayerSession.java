@@ -3,7 +3,6 @@ package com.soyomaker.server.session;
 import java.util.Date;
 
 import com.soyomaker.data.GObject;
-import com.soyomaker.server.connector.GUSession;
 
 /**
  * 玩家会话。玩家会话是从用户login开始，到logout（或者断开物理连接）结束。 这是一个逻辑的过程，而不是物理上的。
