@@ -38,11 +38,12 @@ public class SocketTest {
 			dos.writeInt(dataSent.length);
 			dos.write(dataSent);
 			dos.flush();
+			System.out.println("socket发出:"+dataSent);
 			int len = dis.readInt();
 			byte[] bytes = new byte[len];
 			dis.read(bytes);
 			IGUObject resMsg = GUObject.createFromBytes(bytes);
-			System.out.println(resMsg);
+			System.out.println("socket收到:"+resMsg);
 			dis.close();
 			is.close();
 			dos.close();
