@@ -1,6 +1,6 @@
 package com.soyomaker.application;
 
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 
 /**
  * 服务模块

@@ -1,4 +1,4 @@
-package com.soyomaker.core;
+package com.soyomaker.data;
 
 import java.util.ArrayList;
 import java.util.Collection;

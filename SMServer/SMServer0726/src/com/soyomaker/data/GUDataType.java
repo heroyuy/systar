@@ -1,4 +1,4 @@
-package com.soyomaker.core;
+package com.soyomaker.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.apache.mina.filter.codec.demux.MessageEncoder;
 
-import com.soyomaker.core.GUObject;
+import com.soyomaker.data.GUObject;
 
 /**
  * 编码器。包结构：包长(int) 包体(byte[])

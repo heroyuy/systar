@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import com.soyomaker.core.GUDataType;
-import com.soyomaker.core.GUDataWrapper;
+import com.soyomaker.data.GUDataType;
+import com.soyomaker.data.GUDataWrapper;
 import com.soyomaker.model.DataValue;
 
 public class TypeHelper {

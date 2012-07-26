@@ -8,7 +8,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.connector.GUSession;
 import com.soyomaker.server.connector.handler.IRequestHandlerFactory;
 

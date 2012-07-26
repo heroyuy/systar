@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.dataSource.IGUDataSource;

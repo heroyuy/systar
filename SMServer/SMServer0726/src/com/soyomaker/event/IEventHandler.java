@@ -1,6 +1,6 @@
 package com.soyomaker.event;
 
-import com.soyomaker.core.GUObject;
+import com.soyomaker.data.GUObject;
 
 public interface IEventHandler {
 	/**

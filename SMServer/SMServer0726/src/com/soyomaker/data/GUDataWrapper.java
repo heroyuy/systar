@@ -1,4 +1,4 @@
-package com.soyomaker.core;
+package com.soyomaker.data;
 
 public class GUDataWrapper {
 	private GUDataType typeId;

@@ -2,7 +2,7 @@ package com.soyomaker.server.connector.handler;
 
 import java.util.Map;
 
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.connector.GUSession;
 import com.soyomaker.server.session.PlayerSessionManager;
 

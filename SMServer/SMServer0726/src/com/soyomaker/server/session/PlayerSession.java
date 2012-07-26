@@ -2,7 +2,7 @@ package com.soyomaker.server.session;
 
 import java.util.Date;
 
-import com.soyomaker.core.GUObject;
+import com.soyomaker.data.GUObject;
 import com.soyomaker.server.connector.GUSession;
 
 /**

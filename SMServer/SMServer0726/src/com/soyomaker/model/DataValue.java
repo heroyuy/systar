@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Set;
 
-import com.soyomaker.core.GUDataWrapper;
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUDataWrapper;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 
 public class DataValue implements IGUObject {
 	/**

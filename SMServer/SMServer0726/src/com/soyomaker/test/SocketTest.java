@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.connector.mina.CodecConst;
 
 /**

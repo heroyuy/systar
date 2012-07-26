@@ -5,8 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 
 public class AsyncEventService extends AbstractBean implements IEventService {
 	private ArrayBlockingQueue<GUObject> msgQueue;

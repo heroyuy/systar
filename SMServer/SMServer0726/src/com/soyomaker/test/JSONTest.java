@@ -3,8 +3,8 @@ package com.soyomaker.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 
 public class JSONTest {
 

@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import javax.sql.DataSource;
 
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.exception.GUException;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.dataSource.IGUDataSource;

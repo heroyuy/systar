@@ -6,8 +6,8 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.apache.mina.filter.codec.demux.MessageDecoderAdapter;
 import org.apache.mina.filter.codec.demux.MessageDecoderResult;
 
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 
 /**
  * 解码器。包结构：包长(int) 包体(byte[])

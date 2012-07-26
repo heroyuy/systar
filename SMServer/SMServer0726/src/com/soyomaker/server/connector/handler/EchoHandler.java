@@ -1,7 +1,7 @@
 package com.soyomaker.server.connector.handler;
 
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.connector.GUSession;
 
 public class EchoHandler implements IRequestHandler {

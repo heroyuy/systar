@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.core.GUDataType;
-import com.soyomaker.core.GUDataWrapper;
-import com.soyomaker.core.GUObject;
+import com.soyomaker.data.GUDataType;
+import com.soyomaker.data.GUDataWrapper;
+import com.soyomaker.data.GUObject;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.dataSource.GUDataSource;

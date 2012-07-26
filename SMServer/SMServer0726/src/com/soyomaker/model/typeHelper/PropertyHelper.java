@@ -2,7 +2,7 @@ package com.soyomaker.model.typeHelper;
 
 import org.dom4j.Element;
 
-import com.soyomaker.core.GUDataType;
+import com.soyomaker.data.GUDataType;
 
 /**
  * 数据类型的描述

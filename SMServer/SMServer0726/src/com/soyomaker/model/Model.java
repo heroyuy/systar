@@ -7,7 +7,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.BeanFactory;
 import com.soyomaker.application.IBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.model.dataSource.GUDataSource;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.DirectDataset;

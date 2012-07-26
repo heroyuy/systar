@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 
 public class ScheduleService extends AbstractBean implements IService {
 	List<ScheduleTask> tasks = new ArrayList<ScheduleTask>();

@@ -22,8 +22,8 @@ import org.mortbay.jetty.servlet.ServletHolder;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.core.GUObject;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.GUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.connector.mina.CodecConst;
 
 /**

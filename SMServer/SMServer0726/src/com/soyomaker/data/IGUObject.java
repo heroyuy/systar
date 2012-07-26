@@ -1,4 +1,4 @@
-package com.soyomaker.core;
+package com.soyomaker.data;
 
 import java.util.Collection;
 import java.util.Set;

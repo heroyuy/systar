@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 import com.soyomaker.server.session.PlayerSession;
 
 /**

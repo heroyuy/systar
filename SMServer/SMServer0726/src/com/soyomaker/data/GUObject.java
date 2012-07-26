@@ -1,4 +1,4 @@
-package com.soyomaker.core;
+package com.soyomaker.data;
 
 import java.io.IOException;
 import java.util.Collection;

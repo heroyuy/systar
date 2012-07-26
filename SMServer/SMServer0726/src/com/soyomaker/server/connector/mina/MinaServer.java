@@ -9,7 +9,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.core.IGUObject;
+import com.soyomaker.data.IGUObject;
 
 public class MinaServer extends AbstractBean implements IService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
