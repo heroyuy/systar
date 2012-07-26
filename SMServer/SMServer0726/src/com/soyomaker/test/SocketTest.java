@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import com.soyomaker.data.GObject;
 import com.soyomaker.data.IGObject;
-import com.soyomaker.server.mina.CodecConst;
+import com.soyomaker.server.PackageConst;
 
 /**
  * SocketTestClient
@@ -27,8 +27,8 @@ public class SocketTest {
 		Collection<IGObject> c = new ArrayList<IGObject>();
 		c.add(msg);
 		GObject packSend = new GObject();
-		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
-		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, c);
+		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
+		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		try {
 			Socket socket = new Socket("127.0.0.1", 8080);
 			InputStream is = socket.getInputStream();

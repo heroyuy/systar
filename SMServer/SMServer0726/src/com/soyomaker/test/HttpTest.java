@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import com.soyomaker.data.GObject;
 import com.soyomaker.data.IGObject;
-import com.soyomaker.server.mina.CodecConst;
+import com.soyomaker.server.PackageConst;
 
 /**
  * HttpTestClient
@@ -35,8 +35,8 @@ public class HttpTest {
 		Collection<IGObject> c = new ArrayList<IGObject>();
 		c.add(msg);
 		GObject packSend = new GObject();
-		packSend.setType(CodecConst.PACKAGE_TYPE_NAME);
-		packSend.putObjectArray(CodecConst.PACKAGE_ARRAY_KEY, c);
+		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
+		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		System.out.println("HttpTest发出:" + packSend);
 		try {
 			URL url = new URL(SERVER_IP);
