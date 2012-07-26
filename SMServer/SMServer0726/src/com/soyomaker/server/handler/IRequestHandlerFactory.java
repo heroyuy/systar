@@ -12,7 +12,7 @@ public interface IRequestHandlerFactory {
 
 	public abstract Map<String, IRequestHandler> getHandlers();
 
-	public abstract ILoginHandler getLoginHandler();
+	public abstract LoginHandler getLoginHandler();
 
 	public abstract PlayerSessionManager getPlayerSessionManager();
 
@@ -22,7 +22,7 @@ public interface IRequestHandlerFactory {
 
 	public abstract void setDefaultHandler(IRequestHandler defaultHandler);
 
-	public abstract void setLoginHandler(ILoginHandler handler);
+	public abstract void setLoginHandler(LoginHandler handler);
 
 	public abstract void setPlayerSessionManager(PlayerSessionManager playerSessionManager);
 

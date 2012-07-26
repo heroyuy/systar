@@ -21,7 +21,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 
 	private Map<String, IRequestHandler> handlers = new HashMap<String, IRequestHandler>();
 	private IRequestHandler defaultHandler;
-	private ILoginHandler loginHandler;
+	private LoginHandler loginHandler;
 	private PlayerSessionManager playerSessionManager;
 
 	private Logger log = Logger.getLogger(RequestHandlerFactory.class);
@@ -57,7 +57,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 	 * ()
 	 */
 	@Override
-	public ILoginHandler getLoginHandler() {
+	public LoginHandler getLoginHandler() {
 		return loginHandler;
 	}
 
@@ -106,7 +106,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 	@Override
 	public void initialize() {
 		playerSessionManager = (PlayerSessionManager) getBeanFactory().getBean("sessionManager");
-		loginHandler = (ILoginHandler) getBeanFactory().getBean("loginHandler");
+		loginHandler = (LoginHandler) getBeanFactory().getBean("loginHandler");
 	}
 
 	/*
@@ -144,7 +144,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 	 * (com.gudigital.server.connector.handler.ILoginHandler)
 	 */
 	@Override
-	public void setLoginHandler(ILoginHandler handler) {
+	public void setLoginHandler(LoginHandler handler) {
 		this.loginHandler = handler;
 	}
 

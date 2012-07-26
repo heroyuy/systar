@@ -5,7 +5,6 @@ import org.apache.log4j.PropertyConfigurator;
 import com.soyomaker.application.BeanFactory;
 import com.soyomaker.application.IBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.server.handler.ILoginHandler;
 import com.soyomaker.server.handler.IRequestHandler;
 import com.soyomaker.server.handler.IRequestHandlerFactory;
 import com.soyomaker.server.handler.LoginHandler;
@@ -42,7 +41,8 @@ public class GameServer {
 		beanFactory.addBean("minaHandler", MinaHandler.class);
 		beanFactory.addBean("httpServer", JettyServer.class);
 		beanFactory.addBean("jettyHandler", JettyHandler.class);
-		beanFactory.addBean("requestHandlerFactory", RequestHandlerFactory.class);
+		beanFactory.addBean("requestHandlerFactory",
+				RequestHandlerFactory.class);
 		beanFactory.addBean("loginHandler", LoginHandler.class);
 		beanFactory.addBean("sessionManager", PlayerSessionManager.class);
 		// beanFactory.addBean("model", Model.class);
@@ -60,15 +60,12 @@ public class GameServer {
 
 		beanFactory.initBeansWithConfig(configFiles);
 
-		reqHandlerFactory = (IRequestHandlerFactory) beanFactory.getBean("requestHandlerFactory");
+		reqHandlerFactory = (IRequestHandlerFactory) beanFactory
+				.getBean("requestHandlerFactory");
 	}
 
 	public void registerReqHandler(String key, IRequestHandler reqHandler) {
 		reqHandlerFactory.registerRequestHandler(key, reqHandler);
-	}
-
-	public void setLoginHandler(ILoginHandler loginHandler) {
-		reqHandlerFactory.setLoginHandler(loginHandler);
 	}
 
 	public void start() {
