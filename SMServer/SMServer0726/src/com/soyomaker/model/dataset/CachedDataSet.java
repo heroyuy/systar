@@ -46,7 +46,8 @@ public class CachedDataSet extends AbstractBean implements IDataSet {
 
 	@Override
 	public void initialize() {
-		dataProxy = (IDataProxy) this.getBeanFactory().getBean(this.getParam("dataProxy"));
+		dataProxy = (IDataProxy) this.getBeanFactory().getBean(
+				this.getParam("dataProxy"));
 	}
 
 	@Override
@@ -64,11 +65,6 @@ public class CachedDataSet extends AbstractBean implements IDataSet {
 			}
 		}
 		return r;
-	}
-
-	@Override
-	public List<DataValue> queryAll() {
-		return null;
 	}
 
 	@Override

@@ -14,8 +14,6 @@ public interface IDataProxy {
 
 	public void inistialize();
 
-	public List<DataValue> loadAll();
-
 	public List<DataValue> query(ICriteria c);
 
 	public void write(DataValue data);

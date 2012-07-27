@@ -41,11 +41,6 @@ public interface IDataSet {
 	public List<DataValue> query(ICriteria criteria);
 
 	/**
-	 * 查询全部数据
-	 */
-	public List<DataValue> queryAll();
-
-	/**
 	 * 从数据集中删除数据，是永久删除
 	 * 
 	 * @param key

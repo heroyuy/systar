@@ -79,7 +79,7 @@ public class JsonSerializer {
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
 			GDataWrapper dataWrapper = object.get(key);
-			GDataType dataType = dataWrapper.getTypeId();
+			GDataType dataType = dataWrapper.getDataType();
 			if (dataType == GDataType.OBJECT) {
 				map.put(key, object2map((IGObject) dataWrapper.getObject()));
 			} else if (dataType == GDataType.OBJECT_ARRAY) {

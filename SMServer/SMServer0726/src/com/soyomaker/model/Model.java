@@ -12,9 +12,7 @@ import com.soyomaker.model.dataSource.GUDataSource;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.DirectDataset;
 import com.soyomaker.model.dataset.IDataSet;
-import com.soyomaker.model.dataset.ReadonlyDataset;
 import com.soyomaker.model.proxy.IDataProxy;
-import com.soyomaker.model.typeHelper.TypeHelperFactory;
 
 public class Model extends AbstractBean implements IService {
 	private BeanFactory beanFactory = new BeanFactory();
@@ -51,13 +49,9 @@ public class Model extends AbstractBean implements IService {
 		flushPeriod = this.getIntParam("flushPeriod", flushPeriod);
 		configFile = this.getParam("config");
 
-		beanFactory.addBean("typeHelpers", TypeHelperFactory.class);
-
 		beanFactory.addBean("dataSource", GUDataSource.class);
 
 		beanFactory.addBean("dataset:direct", DirectDataset.class);
-
-		beanFactory.addBean("dataset:readonly", ReadonlyDataset.class);
 
 		beanFactory.initBeansWithConfig(configFile);
 

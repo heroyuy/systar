@@ -1,11 +1,11 @@
 package com.soyomaker.data;
 
 public class GDataWrapper {
-	private GDataType typeId;
+	private GDataType dataType;
 	private Object object;
 
 	public GDataWrapper(GDataType typeId, Object object) {
-		this.typeId = typeId;
+		this.dataType = typeId;
 		this.object = object;
 	}
 
@@ -13,11 +13,11 @@ public class GDataWrapper {
 		return object;
 	}
 
-	public GDataType getTypeId() {
-		return typeId;
+	public GDataType getDataType() {
+		return dataType;
 	}
 
 	public String toString() {
-		return typeId + "(" + object.toString() + ")";
+		return dataType + "(" + object.toString() + ")";
 	}
 }

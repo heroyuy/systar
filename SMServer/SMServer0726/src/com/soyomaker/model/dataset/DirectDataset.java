@@ -21,7 +21,8 @@ public class DirectDataset extends AbstractBean implements IDataSet {
 
 	@Override
 	public void initialize() {
-		proxy = (IDataProxy) this.getBeanFactory().getBean(this.getParam("proxy"));
+		proxy = (IDataProxy) this.getBeanFactory().getBean(
+				this.getParam("proxy"));
 	}
 
 	@Override
@@ -32,11 +33,6 @@ public class DirectDataset extends AbstractBean implements IDataSet {
 	@Override
 	public List<DataValue> query(ICriteria criteria) {
 		return proxy.query(criteria);
-	}
-
-	@Override
-	public List<DataValue> queryAll() {
-		return proxy.loadAll();
 	}
 
 	@Override

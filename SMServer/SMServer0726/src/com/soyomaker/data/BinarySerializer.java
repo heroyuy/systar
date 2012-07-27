@@ -23,7 +23,8 @@ public class BinarySerializer {
 		return baos.toByteArray();
 	}
 
-	private static GDataWrapper readGUDataWrapper(DataInputStream dis) throws IOException {
+	private static GDataWrapper readGUDataWrapper(DataInputStream dis)
+			throws IOException {
 		GDataWrapper dataWrapper = null;
 		// (1) 类型
 		byte typeId = dis.readByte();
@@ -160,13 +161,14 @@ public class BinarySerializer {
 		return object;
 	}
 
-	private static void writeGUDataWrapper(GDataWrapper dataWrapper, DataOutputStream dos) throws IOException {
+	private static void writeGUDataWrapper(GDataWrapper dataWrapper,
+			DataOutputStream dos) throws IOException {
 
 		// (1) 类型
-		dos.writeByte(dataWrapper.getTypeId().getTypeID());
+		dos.writeByte(dataWrapper.getDataType().getType());
 		// (2) 值
 		Object v = dataWrapper.getObject();
-		switch (dataWrapper.getTypeId()) {
+		switch (dataWrapper.getDataType()) {
 		case BOOL:
 			dos.writeBoolean((Boolean) v);
 			break;
@@ -261,7 +263,8 @@ public class BinarySerializer {
 		}
 	}
 
-	private static void writeIGUObject(DataOutputStream dos, IGObject object) throws IOException {
+	private static void writeIGUObject(DataOutputStream dos, IGObject object)
+			throws IOException {
 		// (1)类型
 		dos.writeUTF(object.getType());
 		// (2)数量
