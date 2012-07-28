@@ -10,29 +10,22 @@ import java.util.Map;
  * 
  */
 public abstract class AbstractBean implements IBean {
-	private BeanFactory beanFactory;
+
 	private Map<String, String> params = new HashMap<String, String>();
-
-	@Override
-	public BeanFactory getBeanFactory() {
-		return beanFactory;
-	}
-
-	@Override
-	public int getIntParam(String name, int defValue) {
-		String s = getParam(name);
-		try {
-			if (s != null) {
-				return Integer.parseInt(s);
-			}
-		} catch (Exception e) {
-		}
-		return defValue;
-	}
 
 	@Override
 	public String getParam(String name) {
 		return params.get(name);
+	}
+
+	public int getIntParam(String name, int defaultValue) {
+		String param = this.getParam(name);
+		int value = defaultValue;
+		try {
+			value = Integer.parseInt(param);
+		} catch (Exception e) {
+		}
+		return value;
 	}
 
 	@Override
@@ -43,12 +36,7 @@ public abstract class AbstractBean implements IBean {
 	public abstract void initialize();
 
 	@Override
-	public void setBeanFactory(BeanFactory factory) {
-		beanFactory = factory;
-	}
-
-	@Override
-	public void setParam(String name, String value) {
+	public void putParam(String name, String value) {
 		params.put(name, value);
 	}
 }

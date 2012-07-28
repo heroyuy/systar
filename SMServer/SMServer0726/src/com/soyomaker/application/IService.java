@@ -1,6 +1,5 @@
 package com.soyomaker.application;
 
-import com.soyomaker.data.ISMObject;
 
 /**
  * 服务模块
