@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import com.soyomaker.data.SMObject;
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.net.PackageConst;
+import com.soyomaker.net.mina.PackageConst;
 
 /**
  * SocketTestClient

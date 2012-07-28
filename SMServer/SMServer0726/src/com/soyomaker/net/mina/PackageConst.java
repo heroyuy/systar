@@ -1,4 +1,4 @@
-package com.soyomaker.net;
+package com.soyomaker.net.mina;
 
 /**
  * 包含在Encode和Decode时候要用到的常量。
