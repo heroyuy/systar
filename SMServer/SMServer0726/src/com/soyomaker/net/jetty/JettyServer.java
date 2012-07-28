@@ -77,8 +77,7 @@ public class JettyServer extends AbstractBean implements IService {
 	 */
 	public void initialize() {
 		port = getIntParam("port", 9091);
-		jettyHandler = (JettyHandler) this.getBeanFactory().getBean(
-				this.getParam("handler"));
+		jettyHandler = new JettyHandler();
 	}
 
 	/**

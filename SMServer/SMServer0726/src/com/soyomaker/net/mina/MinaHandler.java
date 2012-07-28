@@ -9,9 +9,8 @@ import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
+import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PackageConst;
-import com.soyomaker.net.handler.IRequestHandlerFactory;
-import com.soyomaker.net.session.SMSession;
 
 /**
  * Mina所使用的IoHandler的实现。
@@ -23,21 +22,15 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 
 	private Logger log = Logger.getLogger(MinaHandler.class);
 
-	private IRequestHandlerFactory handlerFactory;
-
 	@Override
-	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
+	public void exceptionCaught(IoSession session, Throwable cause)
+			throws Exception {
 		// log.error("exceptionCaught");
 		cause.printStackTrace();
 	}
 
-	public IRequestHandlerFactory getHandlerFactory() {
-		return handlerFactory;
-	}
-
 	@Override
 	public void initialize() {
-		handlerFactory = (IRequestHandlerFactory) this.getBeanFactory().getBean(this.getParam("handlerFactory"));
 	}
 
 	@Override
@@ -46,17 +39,17 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 		if (obj instanceof ISMObject) {
 			ISMObject message = (ISMObject) obj;
 			log.debug("Mina收到包:" + message);
-			SMSession s = new SMSession(session);
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
-				Collection<ISMObject> c = message.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
+				Collection<ISMObject> c = message
+						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (ISMObject msg : c) {
-					handlerFactory.handleMessage(s, msg);
+					NetTransceiver.getInstance().dispatchMessage(msg);
 				}
 			} else {
 				// 单包
-				handlerFactory.handleMessage(s, message);
+				NetTransceiver.getInstance().dispatchMessage(message);
 			}
 		}
 	}
@@ -77,7 +70,8 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 	}
 
 	@Override
-	public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+	public void sessionIdle(IoSession session, IdleStatus status)
+			throws Exception {
 		// log.debug("sessionIdle");
 	}
 
@@ -85,9 +79,4 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 	public void sessionOpened(IoSession session) throws Exception {
 		log.debug("sessionOpened");
 	}
-
-	public void setHandlerFactory(IRequestHandlerFactory handlerFactory) {
-		this.handlerFactory = handlerFactory;
-	}
-
 }

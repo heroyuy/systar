@@ -8,9 +8,8 @@ import org.apache.log4j.Logger;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
+import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PackageConst;
-import com.soyomaker.net.handler.IRequestHandlerFactory;
-import com.soyomaker.net.session.SMSession;
 
 /**
  * Jetty所使用的MessageHandler
@@ -20,40 +19,29 @@ import com.soyomaker.net.session.SMSession;
  */
 public class JettyHandler extends AbstractBean {
 
-	private IRequestHandlerFactory handlerFactory;
-
 	private Logger log = Logger.getLogger(JettyHandler.class);
-
-	public IRequestHandlerFactory getHandlerFactory() {
-		return handlerFactory;
-	}
 
 	@Override
 	public void initialize() {
-		handlerFactory = (IRequestHandlerFactory) this.getBeanFactory().getBean(this.getParam("handlerFactory"));
 	}
 
 	public void messageReceived(HttpSession session, ISMObject message) {
 		if (message != null) {
 			log.debug("Jetty收到包:" + message);
-			SMSession s = new SMSession(session);
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
-				Collection<ISMObject> c = message.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
+				Collection<ISMObject> c = message
+						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (ISMObject msg : c) {
-					handlerFactory.handleMessage(s, msg);
+					NetTransceiver.getInstance().dispatchMessage(msg);
 				}
 			} else {
 				// 单包
-				handlerFactory.handleMessage(s, message);
+				NetTransceiver.getInstance().dispatchMessage(message);
 			}
 
 		}
-	}
-
-	public void setHandlerFactory(IRequestHandlerFactory handlerFactory) {
-		this.handlerFactory = handlerFactory;
 	}
 
 }

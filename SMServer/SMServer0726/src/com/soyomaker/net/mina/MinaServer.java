@@ -29,9 +29,7 @@ public class MinaServer extends AbstractBean implements IService {
 			ProtocolCodecFactory codecFactory = new GDSCodecFactory();
 			acceptor.getFilterChain().addLast("codec",
 					new ProtocolCodecFilter(codecFactory));
-			MinaHandler minaHandler = (MinaHandler) this.getBeanFactory()
-					.getBean(this.getParam("handler"));
-			acceptor.setHandler(minaHandler);
+			acceptor.setHandler(new MinaHandler());
 
 			acceptor.bind(new InetSocketAddress(port));
 		} catch (Exception e) {
