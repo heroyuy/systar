@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<NetTransceiver>
+	<NetServices>
+		<NetService name="socket" class="com.soyomaker.net.mina.MinaServer"
+			port="8080" readBufferSize="100000" />
+		<NetService name="http" class="com.soyomaker.net.jetty.JettyServer"
+			port="8081" />
+	</NetServices>
+	<protocols>
+		<protocol type="101001" NetService="socket" handler=""/>
+	</protocols>
+</NetTransceiver>
