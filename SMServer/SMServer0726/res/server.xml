@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<beans>
+	<socketServer port="8080" readBufferSize="100000" handler="minaHandler" />
+
+	<minaHandler handlerFactory="requestHandlerFactory" />
+
+	<httpServer port="8081" handler="jettyHandler" />
+
+	<jettyHandler handlerFactory="requestHandlerFactory" />
+
+	<requestHandlerFactory sessionManager="sessionManager"
+		loginHandler="loginHandler" />
+
+
+
+	<!--<model type="default" name="model" flushPeriod="1800000" config="model.xml" 
+		/> <eventService type="sync" name="eventService" /> <scheduleService type="default" 
+		name="scheduleService" threadPoolSize="20" /> <datasource type="dbcp" name="datasource" 
+		driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:33333/javatest" 
+		username="root" password="11" maxActive="20" maxIdle="8" minIdle="5" /> <typeFactory 
+		type="typeFactory" name="typeFactory" config="dataMap.xml" /> <playerProxy 
+		type="table" name="playerProxy" tableName="tbl_player" typeFactory="typeFactory" 
+		typeName="player" dataSource="datasource" /> <playerDataSet type="player_dataSet" 
+		name="playerDataSet" proxy="playerProxy" /> -->
+
+</beans>

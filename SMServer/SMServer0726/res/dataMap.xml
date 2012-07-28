@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataMaps>
+	<dataType name="player" keyColumn="player_id" keyType="long">
+		<field name="name" column="name" type="string" />
+		<field name="level" column="level" type="int" />
+	</dataType>
+</dataMaps>
