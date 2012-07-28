@@ -4,10 +4,11 @@
 	<NetServices>
 		<NetService name="socket" class="com.soyomaker.net.mina.MinaServer"
 			port="8080" readBufferSize="100000" />
-		<NetService name="http" class="com.soyomaker.net.jetty.JettyServer"
-			port="8081" />
 	</NetServices>
 	<protocols>
-		<protocol type="101001" NetService="socket" handler=""/>
+		<protocol id="101001" NetService="socket"
+			handler="com.soyomaker.handlers.login.RegisterHandler" needLogin="false" />
+		<protocol id="101002" NetService="socket"
+			handler="com.soyomaker.handlers.login.LoginHandler" needLogin="false" />
 	</protocols>
 </NetTransceiver>

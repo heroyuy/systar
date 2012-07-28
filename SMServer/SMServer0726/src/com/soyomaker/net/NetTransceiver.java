@@ -1,5 +1,8 @@
 package com.soyomaker.net;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.net.session.PlayerSession;
 
@@ -13,6 +16,10 @@ public class NetTransceiver {
 
 	private static NetTransceiver instance = new NetTransceiver();
 
+	private Map<String, INetService> netServiceMap = new HashMap<String, INetService>();
+
+	private Map<String, Protocol> protocolMap = new HashMap<String, Protocol>();
+
 	public static NetTransceiver getInstance() {
 		return instance;
 	}
@@ -22,7 +29,7 @@ public class NetTransceiver {
 	}
 
 	public void config(String configFile) {
-
+		
 	}
 
 	/**
