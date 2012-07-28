@@ -10,9 +10,9 @@ import com.soyomaker.application.IService;
 
 public class PlayerSessionManager extends AbstractBean implements IService {
 	private Map<Long, PlayerSession> playerSessions = new HashMap<Long, PlayerSession>();
-	private List<ISessionListener> sessionListeners = new ArrayList<ISessionListener>();
+	private List<SessionListener> sessionListeners = new ArrayList<SessionListener>();
 
-	public void addSessionListener(ISessionListener listener) {
+	public void addSessionListener(SessionListener listener) {
 		sessionListeners.add(listener);
 	}
 
@@ -27,7 +27,7 @@ public class PlayerSessionManager extends AbstractBean implements IService {
 
 		playerSessions.put(playerId, session);
 
-		for (ISessionListener l : sessionListeners) {
+		for (SessionListener l : sessionListeners) {
 			l.onSessionCreated(session);
 		}
 
@@ -48,14 +48,14 @@ public class PlayerSessionManager extends AbstractBean implements IService {
 		PlayerSession s = playerSessions.get(id);
 		if (s != null) {
 			playerSessions.remove(id);
-			for (ISessionListener l : sessionListeners) {
+			for (SessionListener l : sessionListeners) {
 				l.onSessionRemoved(s);
 			}
 			s.getSession();
 		}
 	}
 
-	public void removeSessionListener(ISessionListener listener) {
+	public void removeSessionListener(SessionListener listener) {
 		sessionListeners.remove(listener);
 	}
 

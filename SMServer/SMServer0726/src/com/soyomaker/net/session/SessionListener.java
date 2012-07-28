@@ -6,7 +6,7 @@ package com.soyomaker.net.session;
  * @author wp_g4
  * 
  */
-public interface ISessionListener {
+public interface SessionListener {
 	/**
 	 * 用户会话建立（login）
 	 * 

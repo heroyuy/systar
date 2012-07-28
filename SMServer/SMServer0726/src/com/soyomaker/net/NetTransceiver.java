@@ -1,6 +1,7 @@
 package com.soyomaker.net;
 
 import com.soyomaker.data.ISMObject;
+import com.soyomaker.net.session.PlayerSession;
 
 /**
  * 网络收发器。 负责发送和接收消息.
@@ -29,7 +30,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void sendMessage(ISMObject msg) {
+	public void sendMessage(PlayerSession session, ISMObject msg) {
 
 	}
 
@@ -38,7 +39,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void dispatchMessage(ISMObject msg) {
+	public void dispatchMessage(PlayerSession session, ISMObject msg) {
 
 	}
 
