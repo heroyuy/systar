@@ -1,4 +1,4 @@
-package com.soyomaker.server;
+package com.soyomaker;
 
 import org.apache.log4j.PropertyConfigurator;
 

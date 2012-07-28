@@ -1,8 +1,8 @@
 package com.soyomaker.test;
 
+import com.soyomaker.GameServer;
 import com.soyomaker.model.dataset.DirectDataset;
 import com.soyomaker.model.proxy.QueryParams;
-import com.soyomaker.server.GameServer;
 
 public class TableProxyTest {
 
