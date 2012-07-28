@@ -11,6 +11,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PackageConst;
+import com.soyomaker.net.session.PlayerSession;
 
 /**
  * Mina所使用的IoHandler的实现。
@@ -35,8 +36,13 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 
 	@Override
 	public void messageReceived(IoSession session, Object obj) throws Exception {
-		log.debug("messageReceived");
 		if (obj instanceof ISMObject) {
+			PlayerSession playerSession = (PlayerSession) session
+					.getAttribute("playerSession");
+			if (playerSession == null) {
+				playerSession = new PlayerSession(session);
+				session.setAttribute("playerSession", playerSession);
+			}
 			ISMObject message = (ISMObject) obj;
 			log.debug("Mina收到包:" + message);
 			String type = message.getType();
@@ -45,11 +51,13 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 				Collection<ISMObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (ISMObject msg : c) {
-					NetTransceiver.getInstance().dispatchMessage(msg);
+					NetTransceiver.getInstance().dispatchMessage(playerSession,
+							msg);
 				}
 			} else {
 				// 单包
-				NetTransceiver.getInstance().dispatchMessage(message);
+				NetTransceiver.getInstance().dispatchMessage(playerSession,
+						message);
 			}
 		}
 	}
