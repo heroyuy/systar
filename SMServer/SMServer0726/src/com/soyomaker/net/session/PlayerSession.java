@@ -9,7 +9,7 @@ import org.apache.mina.core.session.IoSession;
  * @author wp_g4
  * 
  */
-public class UserSession {
+public class PlayerSession {
 
 	/**
 	 * 网络层session
@@ -21,7 +21,7 @@ public class UserSession {
 	 */
 	private boolean login = false;
 
-	public UserSession(IoSession ioSession) {
+	public PlayerSession(IoSession ioSession) {
 		this.ioSession = ioSession;
 	}
 
