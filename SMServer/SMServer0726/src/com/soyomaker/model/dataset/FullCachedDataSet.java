@@ -39,8 +39,6 @@ public class FullCachedDataSet extends AbstractBean implements IDataSet {
 
 	@Override
 	public void initialize() {
-		dataProxy = (IDataProxy) this.getBeanFactory().getBean(
-				this.getParam("dataProxy"));
 	}
 
 	@Override

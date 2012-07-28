@@ -21,8 +21,6 @@ public class DirectDataset extends AbstractBean implements IDataSet {
 
 	@Override
 	public void initialize() {
-		proxy = (IDataProxy) this.getBeanFactory().getBean(
-				this.getParam("proxy"));
 	}
 
 	@Override
