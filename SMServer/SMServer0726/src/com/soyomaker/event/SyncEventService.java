@@ -1,28 +1,18 @@
 package com.soyomaker.event;
 
 import com.soyomaker.application.AbstractBean;
-import com.soyomaker.data.GObject;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.SMObject;
+import com.soyomaker.data.ISMObject;
 
 public class SyncEventService extends AbstractBean implements IEventService {
 	private EventHandlerFactory handlerFactory = null;
 
-	@Override
-	public void doCommand(IGObject command) {
-	}
-
-	public void fireEvent(GObject e) {
+	public void fireEvent(SMObject e) {
 		handlerFactory.handleMessage(e);
 	}
 
 	public EventHandlerFactory getHandlerFactory() {
 		return handlerFactory;
-	}
-
-	@Override
-	public IGObject getStatus() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.BeanFactory;
 import com.soyomaker.application.IBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.ISMObject;
 import com.soyomaker.model.dataSource.GUDataSource;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.DirectDataset;
@@ -30,19 +30,6 @@ public class Model extends AbstractBean implements IService {
 	 * Model的配置文件
 	 */
 	private String configFile = null;
-	/**
-	 * 字段映射文件
-	 */
-	private String mapFile = null;
-
-	@Override
-	public void doCommand(IGObject command) {
-	}
-
-	@Override
-	public IGObject getStatus() {
-		return null;
-	}
 
 	@Override
 	public void initialize() {

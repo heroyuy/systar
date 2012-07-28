@@ -1,6 +1,6 @@
 package com.soyomaker.application;
 
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.ISMObject;
 
 /**
  * 服务模块
@@ -9,19 +9,6 @@ import com.soyomaker.data.IGObject;
  * 
  */
 public interface IService {
-	/**
-	 * 向服务发送指令
-	 * 
-	 * @param command
-	 */
-	public void doCommand(IGObject command);
-
-	/**
-	 * 获得服务的状态
-	 * 
-	 * @return
-	 */
-	public IGObject getStatus();
 
 	/**
 	 * 启动服务

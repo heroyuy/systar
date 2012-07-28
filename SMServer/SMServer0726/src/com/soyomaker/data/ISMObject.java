@@ -3,10 +3,10 @@ package com.soyomaker.data;
 import java.util.Collection;
 import java.util.Set;
 
-public interface IGObject {
+public interface ISMObject {
 
 	// 以下为getter方法
-	public abstract GDataWrapper get(String key);
+	public abstract SMDataWrapper get(String key);
 
 	public abstract Boolean getBool(String key);
 
@@ -34,9 +34,9 @@ public interface IGObject {
 
 	public abstract Collection<Long> getLongArray(String key);
 
-	public abstract IGObject getObject(String key);
+	public abstract ISMObject getObject(String key);
 
-	public abstract Collection<IGObject> getObjectArray(String key);
+	public abstract Collection<ISMObject> getObjectArray(String key);
 
 	public abstract Short getShort(String key);
 
@@ -49,7 +49,7 @@ public interface IGObject {
 	public abstract String getType();
 
 	// 以下为setter方法
-	public abstract void put(String key, GDataWrapper wrappedObject);
+	public abstract void put(String key, SMDataWrapper wrappedObject);
 
 	public abstract void putBool(String key, boolean value);
 
@@ -75,9 +75,9 @@ public interface IGObject {
 
 	public abstract void putLongArray(String key, Collection<Long> value);
 
-	public abstract void putObject(String key, IGObject value);
+	public abstract void putObject(String key, ISMObject value);
 
-	public abstract void putObjectArray(String key, Collection<IGObject> value);
+	public abstract void putObjectArray(String key, Collection<ISMObject> value);
 
 	public abstract void putShort(String key, short value);
 

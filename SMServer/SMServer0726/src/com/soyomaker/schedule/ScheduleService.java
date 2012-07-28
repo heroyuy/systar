@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.ISMObject;
 
 public class ScheduleService extends AbstractBean implements IService {
 	List<ScheduleTask> tasks = new ArrayList<ScheduleTask>();
@@ -19,15 +19,6 @@ public class ScheduleService extends AbstractBean implements IService {
 	public void addTask(int delay, int period, Runnable run) {
 		ScheduleTask t = new ScheduleTask(delay, period, run);
 		tasks.add(t);
-	}
-
-	@Override
-	public void doCommand(IGObject command) {
-	}
-
-	@Override
-	public IGObject getStatus() {
-		return null;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.ISMObject;
 
 public class PlayerSessionManager extends AbstractBean implements IService {
 	private Map<Long, PlayerSession> playerSessions = new HashMap<Long, PlayerSession>();
@@ -35,20 +35,8 @@ public class PlayerSessionManager extends AbstractBean implements IService {
 		return session;
 	}
 
-	@Override
-	public void doCommand(IGObject command) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public PlayerSession getPlayerSession(long id) {
 		return playerSessions.get(id);
-	}
-
-	@Override
-	public IGObject getStatus() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

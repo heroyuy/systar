@@ -3,8 +3,8 @@ package com.soyomaker.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.GObject;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.SMObject;
+import com.soyomaker.data.ISMObject;
 
 public class JSONTest {
 
@@ -13,11 +13,11 @@ public class JSONTest {
 	 */
 	public static void main(String[] args) {
 		// 1
-		GObject obj1 = new GObject();
+		SMObject obj1 = new SMObject();
 		obj1.putInt("id", 101001);
 		System.out.println(obj1.toJson());
 		// 2
-		GObject obj2 = new GObject();
+		SMObject obj2 = new SMObject();
 		obj1.putObject("child", obj2);
 		System.out.println(obj1.toJson());
 		// 3
@@ -27,10 +27,10 @@ public class JSONTest {
 		obj1.putIntArray("intArray", c1);
 		System.out.println(obj1.toJson());
 		// 4
-		Collection<IGObject> c2 = new ArrayList<IGObject>();
-		GObject obj3 = new GObject();
+		Collection<ISMObject> c2 = new ArrayList<ISMObject>();
+		SMObject obj3 = new SMObject();
 		obj3.putInt("id", 101002);
-		GObject obj4 = new GObject();
+		SMObject obj4 = new SMObject();
 		obj4.putInt("id", 101003);
 		c2.add(obj3);
 		c2.add(obj4);
@@ -38,7 +38,7 @@ public class JSONTest {
 		System.out.println(obj1.toJson());
 		// ======================================================
 		System.out.println("======================================================");
-		IGObject obj5 = GObject.createFromJson(obj1.toJson());
+		ISMObject obj5 = SMObject.createFromJson(obj1.toJson());
 		System.out.println(obj5.toJson());
 	}
 

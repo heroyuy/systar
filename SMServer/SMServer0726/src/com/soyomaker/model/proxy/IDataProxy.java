@@ -6,9 +6,10 @@ import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 
 public interface IDataProxy {
+
 	public DataValue create(Object key);
 
-	public void delete(Object key);
+	public void remove(Object key);
 
 	public DataValue get(Object key);
 
@@ -16,5 +17,5 @@ public interface IDataProxy {
 
 	public List<DataValue> query(ICriteria c);
 
-	public void write(DataValue data);
+	public void update(DataValue data);
 }

@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Set;
 
-import com.soyomaker.data.GDataWrapper;
-import com.soyomaker.data.GObject;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.SMDataWrapper;
+import com.soyomaker.data.SMObject;
+import com.soyomaker.data.ISMObject;
 
-public class DataValue implements IGObject {
+public class DataValue implements ISMObject {
 	/**
 	 * 主键，不要随意设置主键。
 	 */
@@ -17,7 +17,7 @@ public class DataValue implements IGObject {
 	/**
 	 * 数据内容
 	 */
-	private IGObject dataHolder;
+	private ISMObject dataHolder;
 
 	/**
 	 * 版本号，每一次修改数据项都会导致版本号增加
@@ -39,7 +39,7 @@ public class DataValue implements IGObject {
 	private boolean locked;
 
 	public DataValue() {
-		dataHolder = new GObject();
+		dataHolder = new SMObject();
 		version = 1;
 		lastModifyTime = System.currentTimeMillis();
 	}
@@ -52,7 +52,7 @@ public class DataValue implements IGObject {
 		}
 	}
 
-	public GDataWrapper get(String key) {
+	public SMDataWrapper get(String key) {
 		onGetData();
 		return dataHolder.get(key);
 	}
@@ -137,13 +137,13 @@ public class DataValue implements IGObject {
 	}
 
 	@Override
-	public IGObject getObject(String key) {
+	public ISMObject getObject(String key) {
 		onGetData();
 		return dataHolder.getObject(key);
 	}
 
 	@Override
-	public Collection<IGObject> getObjectArray(String key) {
+	public Collection<ISMObject> getObjectArray(String key) {
 		return dataHolder.getObjectArray(key);
 	}
 
@@ -174,7 +174,7 @@ public class DataValue implements IGObject {
 		return dataHolder.getType();
 	}
 
-	public IGObject getValue() {
+	public ISMObject getValue() {
 		return dataHolder;
 	}
 
@@ -194,7 +194,7 @@ public class DataValue implements IGObject {
 		locked = true;
 	}
 
-	public void put(String key, GDataWrapper wrappedObject) {
+	public void put(String key, SMDataWrapper wrappedObject) {
 		if (!locked) {
 			dataHolder.put(key, wrappedObject);
 			onPutData();
@@ -285,7 +285,7 @@ public class DataValue implements IGObject {
 		}
 	}
 
-	public void putObject(String key, IGObject v) {
+	public void putObject(String key, ISMObject v) {
 		if (!locked) {
 			dataHolder.putObject(key, v);
 			onPutData();
@@ -293,7 +293,7 @@ public class DataValue implements IGObject {
 	}
 
 	@Override
-	public void putObjectArray(String key, Collection<IGObject> value) {
+	public void putObjectArray(String key, Collection<ISMObject> value) {
 		dataHolder.putObjectArray(key, value);
 	}
 
@@ -351,7 +351,7 @@ public class DataValue implements IGObject {
 		dataHolder.setType(type);
 	}
 
-	public void setValue(IGObject value) {
+	public void setValue(ISMObject value) {
 		onPutData();
 		this.dataHolder = value;
 	}

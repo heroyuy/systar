@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.apache.mina.filter.codec.demux.MessageEncoder;
 
-import com.soyomaker.data.GObject;
+import com.soyomaker.data.SMObject;
 
 /**
  * 编码器。包结构：包长(int) 包体(byte[])
@@ -13,9 +13,9 @@ import com.soyomaker.data.GObject;
  * @author zhangjun
  * 
  */
-public class GDObjectEncoder implements MessageEncoder<GObject> {
+public class GDObjectEncoder implements MessageEncoder<SMObject> {
 	@Override
-	public void encode(IoSession arg0, GObject arg1, ProtocolEncoderOutput arg2) throws Exception {
+	public void encode(IoSession arg0, SMObject arg1, ProtocolEncoderOutput arg2) throws Exception {
 		byte[] bs = arg1.toBinary();
 		IoBuffer buf = IoBuffer.allocate(bs.length + 12);
 		buf.setAutoExpand(true);

@@ -27,7 +27,7 @@ public class DirectDataset extends AbstractBean implements IDataSet {
 
 	@Override
 	public void put(Object key, DataValue element) {
-		proxy.write(element);
+		proxy.update(element);
 	}
 
 	@Override
@@ -37,6 +37,6 @@ public class DirectDataset extends AbstractBean implements IDataSet {
 
 	@Override
 	public void remove(Object key) {
-		proxy.delete(key);
+		proxy.remove(key);
 	}
 }

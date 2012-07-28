@@ -8,24 +8,24 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-public class GObject implements IGObject {
-	public static IGObject createFromBytes(byte[] bytes) {
+public class SMObject implements ISMObject {
+	public static ISMObject createFromBytes(byte[] bytes) {
 		try {
 			return BinarySerializer.binary2object(bytes);
 		} catch (IOException e) {
-			Logger.getLogger(GObject.class).error(
+			Logger.getLogger(SMObject.class).error(
 					"Cann't create GUObject from byte array.");
 			return null;
 		}
 	}
 
-	public static IGObject createFromJson(String jsonStr) {
+	public static ISMObject createFromJson(String jsonStr) {
 		return JsonSerializer.json2object(jsonStr);
 	}
 
 	private String type;
 
-	private Map<String, GDataWrapper> dataHolder = new HashMap<String, GDataWrapper>();
+	private Map<String, SMDataWrapper> dataHolder = new HashMap<String, SMDataWrapper>();
 
 	@Override
 	public void clear() {
@@ -35,13 +35,13 @@ public class GObject implements IGObject {
 	// 以下为getter方法
 
 	@Override
-	public GDataWrapper get(String key) {
+	public SMDataWrapper get(String key) {
 		return dataHolder.get(key);
 	}
 
 	@Override
 	public Boolean getBool(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -52,7 +52,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Boolean> getBoolArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -62,7 +62,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public Byte getByte(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -72,7 +72,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public byte[] getByteArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -82,7 +82,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public Double getDouble(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -93,7 +93,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Double> getDoubleArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -103,7 +103,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public Float getFloat(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -114,7 +114,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Float> getFloatArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -124,7 +124,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public Integer getInt(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -135,7 +135,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Integer> getIntArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -150,7 +150,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public Long getLong(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -161,7 +161,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Long> getLongArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -170,29 +170,29 @@ public class GObject implements IGObject {
 	}
 
 	@Override
-	public IGObject getObject(String key) {
-		GDataWrapper o = dataHolder.get(key);
+	public ISMObject getObject(String key) {
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (IGObject) o.getObject();
+			return (ISMObject) o.getObject();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<IGObject> getObjectArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+	public Collection<ISMObject> getObjectArray(String key) {
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (Collection<IGObject>) o.getObject();
+			return (Collection<ISMObject>) o.getObject();
 	}
 
 	@Override
 	public Short getShort(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -203,7 +203,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Short> getShortArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -213,7 +213,7 @@ public class GObject implements IGObject {
 
 	@Override
 	public String getString(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -224,7 +224,7 @@ public class GObject implements IGObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<String> getStringArray(String key) {
-		GDataWrapper o = dataHolder.get(key);
+		SMDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -240,99 +240,99 @@ public class GObject implements IGObject {
 	// 以下为setter方法
 
 	@Override
-	public void put(String key, GDataWrapper wrappedObject) {
+	public void put(String key, SMDataWrapper wrappedObject) {
 		putObj(key, wrappedObject, null);
 	}
 
 	@Override
 	public void putBool(String key, boolean value) {
-		putObj(key, value, GDataType.BOOL);
+		putObj(key, value, SMDataType.BOOL);
 	}
 
 	@Override
 	public void putBoolArray(String key, Collection<Boolean> value) {
-		putObj(key, value, GDataType.BOOL_ARRAY);
+		putObj(key, value, SMDataType.BOOL_ARRAY);
 	}
 
 	@Override
 	public void putByte(String key, byte value) {
-		putObj(key, value, GDataType.BYTE);
+		putObj(key, value, SMDataType.BYTE);
 	}
 
 	@Override
 	public void putByteArray(String key, byte[] value) {
-		putObj(key, value, GDataType.BYTE_ARRAY);
+		putObj(key, value, SMDataType.BYTE_ARRAY);
 	}
 
 	@Override
 	public void putDouble(String key, double value) {
-		putObj(key, value, GDataType.DOUBLE);
+		putObj(key, value, SMDataType.DOUBLE);
 	}
 
 	@Override
 	public void putDoubleArray(String key, Collection<Double> value) {
-		putObj(key, value, GDataType.DOUBLE_ARRAY);
+		putObj(key, value, SMDataType.DOUBLE_ARRAY);
 	}
 
 	@Override
 	public void putFloat(String key, float value) {
-		putObj(key, value, GDataType.FLOAT);
+		putObj(key, value, SMDataType.FLOAT);
 	}
 
 	@Override
 	public void putFloatArray(String key, Collection<Float> value) {
-		putObj(key, value, GDataType.FLOAT_ARRAY);
+		putObj(key, value, SMDataType.FLOAT_ARRAY);
 	}
 
 	@Override
 	public void putInt(String key, int value) {
-		putObj(key, value, GDataType.INT);
+		putObj(key, value, SMDataType.INT);
 	}
 
 	@Override
 	public void putIntArray(String key, Collection<Integer> value) {
-		putObj(key, value, GDataType.INT_ARRAY);
+		putObj(key, value, SMDataType.INT_ARRAY);
 	}
 
 	@Override
 	public void putLong(String key, long value) {
-		putObj(key, value, GDataType.LONG);
+		putObj(key, value, SMDataType.LONG);
 	}
 
 	@Override
 	public void putLongArray(String key, Collection<Long> value) {
-		putObj(key, value, GDataType.LONG_ARRAY);
+		putObj(key, value, SMDataType.LONG_ARRAY);
 	}
 
 	@Override
-	public void putObject(String key, IGObject value) {
-		putObj(key, value, GDataType.OBJECT);
+	public void putObject(String key, ISMObject value) {
+		putObj(key, value, SMDataType.OBJECT);
 	}
 
-	public void putObjectArray(String key, Collection<IGObject> value) {
-		putObj(key, value, GDataType.OBJECT_ARRAY);
+	public void putObjectArray(String key, Collection<ISMObject> value) {
+		putObj(key, value, SMDataType.OBJECT_ARRAY);
 	}
 
 	@Override
 	public void putShort(String key, short value) {
-		putObj(key, value, GDataType.SHORT);
+		putObj(key, value, SMDataType.SHORT);
 	}
 
 	@Override
 	public void putShortArray(String key, Collection<Short> value) {
-		putObj(key, value, GDataType.SHORT_ARRAY);
+		putObj(key, value, SMDataType.SHORT_ARRAY);
 	}
 
 	// 以下为其他方法
 
 	@Override
 	public void putString(String key, String value) {
-		putObj(key, value, GDataType.STRING);
+		putObj(key, value, SMDataType.STRING);
 	}
 
 	@Override
 	public void putStringArray(String key, Collection<String> value) {
-		putObj(key, value, GDataType.STRING_ARRAY);
+		putObj(key, value, SMDataType.STRING_ARRAY);
 	}
 
 	@Override
@@ -376,7 +376,7 @@ public class GObject implements IGObject {
 		return buf.toString();
 	}
 
-	private void putObj(String key, Object value, GDataType typeId) {
+	private void putObj(String key, Object value, SMDataType typeId) {
 		if (key == null)
 			throw new IllegalArgumentException(
 					"GUObject requires a non-null key for a 'put' operation!");
@@ -389,9 +389,9 @@ public class GObject implements IGObject {
 			throw new IllegalArgumentException(
 					"GUObject requires a non-null value!");
 
-		if (value instanceof GDataWrapper)
-			dataHolder.put(key, (GDataWrapper) value);
+		if (value instanceof SMDataWrapper)
+			dataHolder.put(key, (SMDataWrapper) value);
 		else
-			dataHolder.put(key, new GDataWrapper(typeId, value));
+			dataHolder.put(key, new SMDataWrapper(typeId, value));
 	}
 }

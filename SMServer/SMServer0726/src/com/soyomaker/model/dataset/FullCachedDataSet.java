@@ -26,7 +26,7 @@ public class FullCachedDataSet extends AbstractBean implements IDataSet {
 	public void flush() {
 		for (DataValue e : dataHolder.values()) {
 			if (e.isChanged()) {
-				dataProxy.write(e);
+				dataProxy.update(e);
 				e.resetVersion();
 			}
 		}
@@ -61,7 +61,7 @@ public class FullCachedDataSet extends AbstractBean implements IDataSet {
 
 	@Override
 	public void remove(Object key) {
-		dataProxy.delete(key);
+		dataProxy.remove(key);
 		dataHolder.remove(key);
 	}
 

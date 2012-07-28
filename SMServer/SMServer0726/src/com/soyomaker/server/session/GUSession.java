@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.ISMObject;
 
 /**
  * 这是一个复合对象，把各类网络层的Session整合在一起使用。 这个类的作用主要是代理，为底层Session提供统一的接口。
@@ -67,10 +67,10 @@ public class GUSession {
 		}
 	}
 
-	public void sendMessage(IGObject msg) {
+	public void sendMessage(ISMObject msg) {
 		if (type == GUSessionType.HTTP_SESSION) {
 			@SuppressWarnings("unchecked")
-			List<IGObject> msgs = (List<IGObject>) httpSession.getAttribute("messages");
+			List<ISMObject> msgs = (List<ISMObject>) httpSession.getAttribute("messages");
 			msgs.add(msg);
 		} else if (type == GUSessionType.MINA_SESSION) {
 			minaSession.write(msg);

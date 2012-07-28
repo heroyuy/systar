@@ -15,7 +15,7 @@ public class TableProxy extends AbstractBean implements IDataProxy {
 	}
 
 	@Override
-	public void delete(Object key) {
+	public void remove(Object key) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -39,7 +39,7 @@ public class TableProxy extends AbstractBean implements IDataProxy {
 	}
 
 	@Override
-	public void write(DataValue data) {
+	public void update(DataValue data) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,10 +1,10 @@
 package com.soyomaker.data;
 
-public class GDataWrapper {
-	private GDataType dataType;
+public class SMDataWrapper {
+	private SMDataType dataType;
 	private Object object;
 
-	public GDataWrapper(GDataType typeId, Object object) {
+	public SMDataWrapper(SMDataType typeId, Object object) {
 		this.dataType = typeId;
 		this.object = object;
 	}
@@ -13,7 +13,7 @@ public class GDataWrapper {
 		return object;
 	}
 
-	public GDataType getDataType() {
+	public SMDataType getDataType() {
 		return dataType;
 	}
 

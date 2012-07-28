@@ -22,8 +22,8 @@ import org.mortbay.jetty.servlet.ServletHolder;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.GObject;
-import com.soyomaker.data.IGObject;
+import com.soyomaker.data.SMObject;
+import com.soyomaker.data.ISMObject;
 import com.soyomaker.server.PackageConst;
 
 /**
@@ -45,12 +45,16 @@ public class JettyServer extends AbstractBean implements IService {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		public void doGet(HttpServletRequest request,
+				HttpServletResponse response) throws IOException,
+				ServletException {
 			processRequest(request, response);
 		}
 
 		@Override
-		public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		public void doPost(HttpServletRequest request,
+				HttpServletResponse response) throws IOException,
+				ServletException {
 			processRequest(request, response);
 		}
 	}
@@ -68,21 +72,13 @@ public class JettyServer extends AbstractBean implements IService {
 	private Logger log = Logger.getLogger(JettyServer.class);
 
 	@Override
-	public void doCommand(IGObject command) {
-	}
-
-	@Override
-	public IGObject getStatus() {
-		return null;
-	}
-
-	@Override
 	/**
 	 * 初始化
 	 */
 	public void initialize() {
 		port = getIntParam("port", 9091);
-		jettyHandler = (JettyHandler) this.getBeanFactory().getBean(this.getParam("handler"));
+		jettyHandler = (JettyHandler) this.getBeanFactory().getBean(
+				this.getParam("handler"));
 	}
 
 	/**
@@ -133,12 +129,14 @@ public class JettyServer extends AbstractBean implements IService {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void processRequest(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
 		// (1) 检查list是否存在
 		@SuppressWarnings("unchecked")
-		List<IGObject> list = (List<IGObject>) request.getSession().getAttribute("messages");
+		List<ISMObject> list = (List<ISMObject>) request.getSession()
+				.getAttribute("messages");
 		if (list == null) {
-			list = new ArrayList<IGObject>();
+			list = new ArrayList<ISMObject>();
 			request.getSession().setAttribute("messages", list);
 		}
 		// (2) 取收到的消息
@@ -151,10 +149,11 @@ public class JettyServer extends AbstractBean implements IService {
 		in.close();
 		// (3) 转换为GUObject并处理
 		if (data.length > 2) {
-			jettyHandler.messageReceived(request.getSession(), GObject.createFromBytes(data));
+			jettyHandler.messageReceived(request.getSession(),
+					SMObject.createFromBytes(data));
 		}
 		// (4) 反馈消息给客户端
-		GObject packSend = new GObject();
+		SMObject packSend = new SMObject();
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, list);
 		OutputStream os = response.getOutputStream();

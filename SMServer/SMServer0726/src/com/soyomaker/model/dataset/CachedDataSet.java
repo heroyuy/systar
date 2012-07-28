@@ -22,7 +22,7 @@ public class CachedDataSet extends AbstractBean implements IDataSet {
 		for (Entry<Object, DataValue> e : dataHolder.entrySet()) {
 			DataValue value = e.getValue();
 			if (value.isChanged()) {
-				dataProxy.write(value);
+				dataProxy.update(value);
 				value.resetVersion();
 			}
 
@@ -52,7 +52,7 @@ public class CachedDataSet extends AbstractBean implements IDataSet {
 
 	@Override
 	public void put(Object key, DataValue element) {
-		dataProxy.write(element);
+		dataProxy.update(element);
 		dataHolder.put(element.getKey(), element);
 	}
 
@@ -69,7 +69,7 @@ public class CachedDataSet extends AbstractBean implements IDataSet {
 
 	@Override
 	public void remove(Object key) {
-		dataProxy.delete(key);
+		dataProxy.remove(key);
 		dataHolder.remove(key);
 	}
 

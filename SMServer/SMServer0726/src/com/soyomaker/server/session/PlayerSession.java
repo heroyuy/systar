@@ -2,7 +2,7 @@ package com.soyomaker.server.session;
 
 import java.util.Date;
 
-import com.soyomaker.data.GObject;
+import com.soyomaker.data.SMObject;
 
 /**
  * 玩家会话。玩家会话是从用户login开始，到logout（或者断开物理连接）结束。 这是一个逻辑的过程，而不是物理上的。
@@ -14,7 +14,7 @@ import com.soyomaker.data.GObject;
 public class PlayerSession {
 	private long playerId;
 	private Date loginTime;
-	private GObject palyerVars = new GObject();
+	private SMObject palyerVars = new SMObject();
 
 	private GUSession session;
 
@@ -22,7 +22,7 @@ public class PlayerSession {
 		return loginTime;
 	}
 
-	public GObject getPalyerVars() {
+	public SMObject getPalyerVars() {
 		return palyerVars;
 	}
 
@@ -38,7 +38,7 @@ public class PlayerSession {
 		this.loginTime = loginTime;
 	}
 
-	public void setPalyerVars(GObject palyerVars) {
+	public void setPalyerVars(SMObject palyerVars) {
 		this.palyerVars = palyerVars;
 	}
 
