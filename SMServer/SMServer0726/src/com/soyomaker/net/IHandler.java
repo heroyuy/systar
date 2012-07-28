@@ -1,9 +1,9 @@
 package com.soyomaker.net;
 
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.net.session.PlayerSession;
+import com.soyomaker.net.session.UserSession;
 
 public interface IHandler {
 
-	public void handleMessage(PlayerSession playerSession, ISMObject msg);
+	public void handleMessage(UserSession playerSession, ISMObject msg);
 }

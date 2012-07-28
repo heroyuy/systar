@@ -12,12 +12,12 @@ public interface SessionListener {
 	 * 
 	 * @param session
 	 */
-	public void onSessionCreated(PlayerSession session);
+	public void onSessionCreated(UserSession session);
 
 	/**
 	 * 用户会话删除（logout）
 	 * 
 	 * @param session
 	 */
-	public void onSessionRemoved(PlayerSession session);
+	public void onSessionRemoved(UserSession session);
 }
