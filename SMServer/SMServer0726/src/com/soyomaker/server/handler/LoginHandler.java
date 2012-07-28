@@ -2,7 +2,7 @@ package com.soyomaker.server.handler;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.server.session.GUSession;
+import com.soyomaker.server.session.SMSession;
 
 public class LoginHandler extends AbstractBean {
 
@@ -12,7 +12,7 @@ public class LoginHandler extends AbstractBean {
 
 	}
 
-	public long login(GUSession session, ISMObject obj) {
+	public long login(SMSession session, ISMObject obj) {
 		// TODO 简单的一个登录验证实现
 		id++;
 		return id;

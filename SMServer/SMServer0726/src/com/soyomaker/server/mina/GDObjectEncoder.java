@@ -10,7 +10,7 @@ import com.soyomaker.data.SMObject;
 /**
  * 编码器。包结构：包长(int) 包体(byte[])
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class GDObjectEncoder implements MessageEncoder<SMObject> {

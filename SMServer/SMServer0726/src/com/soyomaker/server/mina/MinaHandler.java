@@ -11,12 +11,12 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.server.PackageConst;
 import com.soyomaker.server.handler.IRequestHandlerFactory;
-import com.soyomaker.server.session.GUSession;
+import com.soyomaker.server.session.SMSession;
 
 /**
  * Mina所使用的IoHandler的实现。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class MinaHandler extends AbstractBean implements IoHandler {
@@ -46,7 +46,7 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 		if (obj instanceof ISMObject) {
 			ISMObject message = (ISMObject) obj;
 			log.debug("Mina收到包:" + message);
-			GUSession s = new GUSession(session);
+			SMSession s = new SMSession(session);
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包

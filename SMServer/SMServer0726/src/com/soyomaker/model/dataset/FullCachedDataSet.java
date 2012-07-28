@@ -13,7 +13,7 @@ import com.soyomaker.model.proxy.IDataProxy;
 /**
  * 一次性载入全部数据，并在内存中进行操作的数据集合。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class FullCachedDataSet extends AbstractBean implements IDataSet {

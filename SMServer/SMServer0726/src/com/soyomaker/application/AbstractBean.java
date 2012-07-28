@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * IBean的模板实现。子类可以直接继承这个类，或者copy其中的代码。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public abstract class AbstractBean implements IBean {

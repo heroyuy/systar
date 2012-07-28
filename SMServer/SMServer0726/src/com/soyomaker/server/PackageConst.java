@@ -3,7 +3,7 @@ package com.soyomaker.server;
 /**
  * 包含在Encode和Decode时候要用到的常量。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class PackageConst {

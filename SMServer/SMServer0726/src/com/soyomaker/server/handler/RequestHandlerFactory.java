@@ -7,14 +7,14 @@ import org.apache.log4j.Logger;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.server.session.GUSession;
+import com.soyomaker.server.session.SMSession;
 import com.soyomaker.server.session.PlayerSession;
 import com.soyomaker.server.session.PlayerSessionManager;
 
 /**
  * 处理所有请求的类
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class RequestHandlerFactory extends AbstractBean implements IRequestHandlerFactory {
@@ -80,7 +80,7 @@ public class RequestHandlerFactory extends AbstractBean implements IRequestHandl
 	 * (com.gudigital.server.connector.GUSession, com.gudigital.core.IGUObject)
 	 */
 	@Override
-	public void handleMessage(GUSession session, ISMObject obj) {
+	public void handleMessage(SMSession session, ISMObject obj) {
 		log.debug("RequestHandlerFactory处理包:" + obj);
 		PlayerSession playerSession = session.getPlayerSession();
 		if (playerSession == null) { // 用户是未登录状态

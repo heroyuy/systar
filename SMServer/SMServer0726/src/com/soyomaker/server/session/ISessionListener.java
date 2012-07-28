@@ -3,7 +3,7 @@ package com.soyomaker.server.session;
 /**
  * 玩家会话监听接口，是逻辑层使用的。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public interface ISessionListener {

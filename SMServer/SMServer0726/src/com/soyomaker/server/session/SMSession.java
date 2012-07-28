@@ -11,20 +11,20 @@ import com.soyomaker.data.ISMObject;
 /**
  * 这是一个复合对象，把各类网络层的Session整合在一起使用。 这个类的作用主要是代理，为底层Session提供统一的接口。
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
-public class GUSession {
+public class SMSession {
 	private GUSessionType type;
 	private HttpSession httpSession;
 	private IoSession minaSession;
 
-	public GUSession(HttpSession s) {
+	public SMSession(HttpSession s) {
 		this.type = GUSessionType.HTTP_SESSION;
 		this.httpSession = s;
 	}
 
-	public GUSession(IoSession s) {
+	public SMSession(IoSession s) {
 		this.type = GUSessionType.MINA_SESSION;
 		this.minaSession = s;
 	}

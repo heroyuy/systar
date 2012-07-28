@@ -8,7 +8,7 @@ import com.soyomaker.data.SMObject;
  * 玩家会话。玩家会话是从用户login开始，到logout（或者断开物理连接）结束。 这是一个逻辑的过程，而不是物理上的。
  * 依照不同的底层，类型有：MINA_TYPE, HTTP_TYPE
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public class PlayerSession {
@@ -16,7 +16,7 @@ public class PlayerSession {
 	private Date loginTime;
 	private SMObject palyerVars = new SMObject();
 
-	private GUSession session;
+	private SMSession session;
 
 	public Date getLoginTime() {
 		return loginTime;
@@ -30,7 +30,7 @@ public class PlayerSession {
 		return playerId;
 	}
 
-	public GUSession getSession() {
+	public SMSession getSession() {
 		return session;
 	}
 
@@ -46,7 +46,7 @@ public class PlayerSession {
 		this.playerId = playerId;
 	}
 
-	public void setSession(GUSession session) {
+	public void setSession(SMSession session) {
 		this.session = session;
 	}
 

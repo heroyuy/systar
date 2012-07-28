@@ -10,7 +10,7 @@ import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.server.PackageConst;
 import com.soyomaker.server.handler.IRequestHandlerFactory;
-import com.soyomaker.server.session.GUSession;
+import com.soyomaker.server.session.SMSession;
 
 /**
  * Jetty所使用的MessageHandler
@@ -36,7 +36,7 @@ public class JettyHandler extends AbstractBean {
 	public void messageReceived(HttpSession session, ISMObject message) {
 		if (message != null) {
 			log.debug("Jetty收到包:" + message);
-			GUSession s = new GUSession(session);
+			SMSession s = new SMSession(session);
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包

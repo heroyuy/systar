@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
-import com.soyomaker.data.ISMObject;
 
 public class PlayerSessionManager extends AbstractBean implements IService {
 	private Map<Long, PlayerSession> playerSessions = new HashMap<Long, PlayerSession>();

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 /**
  * 
- * @author zhangjun
+ * @author wp_g4
  */
 public class IOLib {
 

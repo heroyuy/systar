@@ -3,7 +3,7 @@ package com.soyomaker.server.handler;
 import java.util.Map;
 
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.server.session.GUSession;
+import com.soyomaker.server.session.SMSession;
 import com.soyomaker.server.session.PlayerSessionManager;
 
 public interface IRequestHandlerFactory {
@@ -16,7 +16,7 @@ public interface IRequestHandlerFactory {
 
 	public abstract PlayerSessionManager getPlayerSessionManager();
 
-	public abstract void handleMessage(GUSession session, ISMObject obj);
+	public abstract void handleMessage(SMSession session, ISMObject obj);
 
 	public abstract void registerRequestHandler(String key, IRequestHandler reqHandler);
 

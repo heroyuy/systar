@@ -5,7 +5,7 @@ import com.soyomaker.model.DataValue;
 /**
  * 判断条件，检查制定的对象是否符合条件
  * 
- * @author zhangjun
+ * @author wp_g4
  * 
  */
 public interface ICriteria {
