@@ -28,12 +28,6 @@ public abstract class AbstractBean implements IBean {
 		return value;
 	}
 
-	@Override
-	public Map<String, String> getParams() {
-		return params;
-	}
-
-	public abstract void initialize();
 
 	@Override
 	public void putParam(String name, String value) {

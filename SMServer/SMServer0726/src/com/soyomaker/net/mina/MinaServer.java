@@ -7,19 +7,13 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.soyomaker.application.AbstractBean;
 import com.soyomaker.application.IService;
 
-public class MinaServer extends AbstractBean implements IService {
+public class MinaServer implements IService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
 
 	private int readBufferSize = 100000;
 	private int port = 9090;
-
-	public void initialize() {
-		port = getIntParam("port", 9090);
-		readBufferSize = getIntParam("readBufferSize", 100000);
-	}
 
 	public void start() {
 		try {

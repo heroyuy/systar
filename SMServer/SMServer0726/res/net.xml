@@ -2,13 +2,12 @@
 
 <NetTransceiver>
 	<NetServices>
-		<NetService name="socket" class="com.soyomaker.net.mina.MinaServer"
-			port="8080" readBufferSize="100000" />
+		<NetService name="socket" class="com.soyomaker.net.mina.MinaServer" />
 	</NetServices>
-	<protocols>
-		<protocol id="101001" NetService="socket"
+	<Protocols>
+		<Protocol id="101001" netService="socket"
 			handler="com.soyomaker.handlers.login.RegisterHandler" needLogin="false" />
-		<protocol id="101002" NetService="socket"
+		<Protocol id="101002" netService="socket"
 			handler="com.soyomaker.handlers.login.LoginHandler" needLogin="false" />
-	</protocols>
+	</Protocols>
 </NetTransceiver>

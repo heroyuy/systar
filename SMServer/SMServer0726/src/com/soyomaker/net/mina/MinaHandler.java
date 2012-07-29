@@ -7,7 +7,6 @@ import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.application.AbstractBean;
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.session.PlayerSession;
@@ -18,7 +17,7 @@ import com.soyomaker.net.session.PlayerSession;
  * @author wp_g4
  * 
  */
-public class MinaHandler extends AbstractBean implements IoHandler {
+public class MinaHandler implements IoHandler {
 
 	private Logger log = Logger.getLogger(MinaHandler.class);
 
@@ -27,10 +26,6 @@ public class MinaHandler extends AbstractBean implements IoHandler {
 			throws Exception {
 		// log.error("exceptionCaught");
 		cause.printStackTrace();
-	}
-
-	@Override
-	public void initialize() {
 	}
 
 	@Override
