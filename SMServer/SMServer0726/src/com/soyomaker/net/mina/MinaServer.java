@@ -8,14 +8,17 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.soyomaker.application.IService;
+import com.soyomaker.data.ISMObject;
+import com.soyomaker.net.INetService;
+import com.soyomaker.net.PlayerSession;
 
-public class MinaServer implements IService {
+public class MinaServer implements INetService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
 
 	private int readBufferSize = 100000;
 	private int port = 8081;
 
+	@Override
 	public void start() {
 		try {
 			acceptor.setReuseAddress(true);
@@ -35,8 +38,14 @@ public class MinaServer implements IService {
 
 	}
 
+	@Override
 	public void stop() {
 		acceptor.unbind();
+	}
+
+	@Override
+	public void sendMessage(PlayerSession playerSession, ISMObject msg) {
+
 	}
 
 }

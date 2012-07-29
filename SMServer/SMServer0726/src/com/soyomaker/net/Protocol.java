@@ -16,7 +16,7 @@ public class Protocol {
 	/**
 	 * 协议通道
 	 */
-	private String netServiceName = null;
+	private INetService netService = null;
 
 	/**
 	 * 协议处理器
@@ -36,8 +36,8 @@ public class Protocol {
 		return id;
 	}
 
-	public String getNetServiceName() {
-		return netServiceName;
+	public INetService getNetService() {
+		return netService;
 	}
 
 	public boolean isNeedLogin() {
@@ -56,8 +56,8 @@ public class Protocol {
 		this.needLogin = needLogin;
 	}
 
-	public void setNetServiceName(String netServiceName) {
-		this.netServiceName = netServiceName;
+	public void setNetService(INetService netService) {
+		this.netService = netService;
 	}
 
 }

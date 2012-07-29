@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.soyomaker.application.IService;
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
@@ -19,7 +18,7 @@ public class NetTransceiver {
 
 	private static NetTransceiver instance = new NetTransceiver();
 
-	private Map<String, IService> netServiceMap = new HashMap<String, IService>();
+	private Map<String, INetService> netServiceMap = new HashMap<String, INetService>();
 
 	private Map<String, Protocol> protocolMap = new HashMap<String, Protocol>();
 
@@ -40,7 +39,8 @@ public class NetTransceiver {
 				String name = serviceObject.getAttribute("name");
 				String className = serviceObject.getAttribute("class");
 				Class<?> serviceClass = Class.forName(className);
-				IService netService = (IService) serviceClass.newInstance();
+				INetService netService = (INetService) serviceClass
+						.newInstance();
 				netService.start();
 				netServiceMap.put(name, netService);
 			}
@@ -53,7 +53,7 @@ public class NetTransceiver {
 				String needLogin = protocolObject.getAttribute("needLogin");
 				Protocol protocol = new Protocol();
 				protocol.setId(id);
-				protocol.setNetServiceName(netService);
+				protocol.setNetService(netServiceMap.get(netService));
 				if (handlerName != null) {
 					Class<?> handlerClass = Class.forName(handlerName);
 					IHandler handler = (IHandler) handlerClass.newInstance();
