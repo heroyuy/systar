@@ -22,7 +22,7 @@ public class GameServer {
 	public void start() {
 		// (1) 配置log4j
 		PropertyConfigurator.configure(LOG4J_CONFIG);
-		// (2) 启动网络收发器
+		// (2) 配置网络收发器
 		NetTransceiver.getInstance().config(NETTRANSCEIVER_CONFIG);
 	}
 

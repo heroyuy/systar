@@ -13,7 +13,7 @@ public class MinaServer implements IService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
 
 	private int readBufferSize = 100000;
-	private int port = 9090;
+	private int port = 8081;
 
 	public void start() {
 		try {

@@ -42,6 +42,7 @@ public class NetTransceiver {
 				String className = serviceObject.getAttribute("class");
 				Class<?> serviceClass = Class.forName(className);
 				IService netService = (IService) serviceClass.newInstance();
+				netService.start();
 				netServiceMap.put(name, netService);
 			}
 			// 配置协议

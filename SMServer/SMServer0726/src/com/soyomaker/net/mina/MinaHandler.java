@@ -24,7 +24,7 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
 			throws Exception {
-		// log.error("exceptionCaught");
+		log.error("exceptionCaught");
 		cause.printStackTrace();
 	}
 
@@ -63,18 +63,18 @@ public class MinaHandler implements IoHandler {
 
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
-		// log.debug("sessionClosed");
+		log.debug("sessionClosed");
 	}
 
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
-		// log.debug("sessionCreated");
+		log.debug("sessionCreated");
 	}
 
 	@Override
 	public void sessionIdle(IoSession session, IdleStatus status)
 			throws Exception {
-		// log.debug("sessionIdle");
+		log.debug("sessionIdle");
 	}
 
 	@Override

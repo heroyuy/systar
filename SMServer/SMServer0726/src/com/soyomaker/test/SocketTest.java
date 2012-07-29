@@ -30,7 +30,7 @@ public class SocketTest {
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		try {
-			Socket socket = new Socket("127.0.0.1", 8080);
+			Socket socket = new Socket("127.0.0.1", 8081);
 			InputStream is = socket.getInputStream();
 			DataInputStream dis = new DataInputStream(is);
 			DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
