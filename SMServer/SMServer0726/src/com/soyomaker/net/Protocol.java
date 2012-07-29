@@ -1,14 +1,12 @@
 package com.soyomaker.net;
 
-import com.soyomaker.application.AbstractBean;
-
 /**
  * 通信协议
  * 
  * @author wp_g4
  * 
  */
-public class Protocol extends AbstractBean {
+public class Protocol {
 
 	/**
 	 * 协议ID
@@ -40,27 +38,6 @@ public class Protocol extends AbstractBean {
 
 	public String getNetServiceName() {
 		return netServiceName;
-	}
-
-	@Override
-	public void initialize() {
-		this.id = this.getParam("id");
-		this.netServiceName = this.getParam("NetService");
-		String needLogin = this.getParam("needLogin");
-		if (needLogin != null) {
-			this.needLogin = needLogin.equalsIgnoreCase("true") ? true : false;
-		}
-		try {
-			String handlerClassName = this.getParam("handler");
-			Class<?> handlerClass=Class.forName(handlerClassName);
-			this.handler=(IHandler) handlerClass.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public boolean isNeedLogin() {

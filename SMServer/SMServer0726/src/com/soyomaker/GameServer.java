@@ -1,5 +1,6 @@
 package com.soyomaker;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.soyomaker.net.NetTransceiver;
@@ -24,6 +25,7 @@ public class GameServer {
 		PropertyConfigurator.configure(LOG4J_CONFIG);
 		// (2) 配置网络收发器
 		NetTransceiver.getInstance().config(NETTRANSCEIVER_CONFIG);
+		Logger.getLogger(this.getClass()).debug("server start...");
 	}
 
 }

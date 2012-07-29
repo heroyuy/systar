@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.soyomaker.application.IService;
 import com.soyomaker.data.ISMObject;
-import com.soyomaker.net.session.PlayerSession;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
 

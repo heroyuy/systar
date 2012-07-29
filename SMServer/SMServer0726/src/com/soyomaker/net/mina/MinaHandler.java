@@ -9,7 +9,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.session.PlayerSession;
+import com.soyomaker.net.PlayerSession;
 
 /**
  * Mina所使用的IoHandler的实现。

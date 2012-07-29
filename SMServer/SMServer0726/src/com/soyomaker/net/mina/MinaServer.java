@@ -2,6 +2,7 @@ package com.soyomaker.net.mina;
 
 import java.net.InetSocketAddress;
 
+import org.apache.log4j.Logger;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketAcceptor;
@@ -26,6 +27,8 @@ public class MinaServer implements IService {
 			acceptor.setHandler(new MinaHandler());
 
 			acceptor.bind(new InetSocketAddress(port));
+			Logger.getLogger(getClass()).debug(
+					"socket server started on " + port);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

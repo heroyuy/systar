@@ -2,7 +2,7 @@ package com.soyomaker.handlers.login;
 
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.net.IHandler;
-import com.soyomaker.net.session.PlayerSession;
+import com.soyomaker.net.PlayerSession;
 
 public class LoginHandler implements IHandler{
 
