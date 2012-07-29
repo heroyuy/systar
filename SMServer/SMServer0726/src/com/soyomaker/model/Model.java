@@ -1,63 +1,26 @@
 package com.soyomaker.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.soyomaker.common.AbstractBean;
-import com.soyomaker.common.IService;
-import com.soyomaker.model.dataSource.IGUDataSource;
-import com.soyomaker.model.dataset.IDataSet;
 import com.soyomaker.model.proxy.TableProxy;
 
-public class Model extends AbstractBean implements IService {
-	private boolean runFlag = true;
+public class Model {
 
-	private Map<String, IDataSet> datasets = new HashMap<String, IDataSet>();
-	private Map<String, TableProxy> proxies = new HashMap<String, TableProxy>();
-	private Map<String, IGUDataSource> dataSources = new HashMap<String, IGUDataSource>();
+	private static Model instance = new Model();
 
-	/**
-	 * 刷新周期
-	 */
-	private int flushPeriod = 1800000;
-	/**
-	 * Model的配置文件
-	 */
-	private String configFile = null;
-
-	@Override
-	public void initialize() {
+	public static Model getInstance() {
+		return instance;
 	}
 
-	@Override
-	public void start() {
-		Thread thread = new Thread(new Runnable() {
+	private Model() {
 
-			@Override
-			public void run() {
-				while (runFlag) {
-					flush();
-					try {
-						Thread.sleep(flushPeriod);
-					} catch (InterruptedException e) {
-					}
-				}
-			}
-
-		});
-		thread.start();
 	}
 
-	@Override
-	public void stop() {
-		runFlag = false;
-		flush();
+	public void config(String configFile) {
+
 	}
 
-	private void flush() {
-		for (IDataSet ds : datasets.values()) {
-			ds.flush();
-		}
+	public TableProxy getTableProxy(String tableName) {
+		// TODO
+		return null;
 	}
 
 }

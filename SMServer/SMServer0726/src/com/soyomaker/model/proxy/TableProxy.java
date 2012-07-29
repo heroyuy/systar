@@ -2,44 +2,33 @@ package com.soyomaker.model.proxy;
 
 import java.util.List;
 
-import com.soyomaker.model.DataValue;
-import com.soyomaker.model.criteria.ICriteria;
+import com.soyomaker.data.ISMObject;
 
 public class TableProxy {
 
-	public DataValue create(Object key) {
+	public boolean create(ISMObject data) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean remove(Object key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public ISMObject get(Object key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void remove(Object key) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public DataValue get(Object key) {
+	public List<ISMObject> query(String c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void inistialize() {
+	public boolean update(ISMObject data) {
 		// TODO Auto-generated method stub
-
-	}
-
-	public List<DataValue> query(ICriteria c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void update(DataValue data) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void initialize() {
-		// TODO Auto-generated method stub
-
+		return false;
 	}
 
 }
