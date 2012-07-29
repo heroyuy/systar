@@ -2,7 +2,7 @@ package com.soyomaker.model.dataset;
 
 import java.util.List;
 
-import com.soyomaker.application.AbstractBean;
+import com.soyomaker.common.AbstractBean;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.proxy.IDataProxy;

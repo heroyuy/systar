@@ -2,8 +2,8 @@ package com.soyomaker.cache;
 
 import net.sf.ehcache.CacheManager;
 
-import com.soyomaker.application.AbstractBean;
-import com.soyomaker.application.IService;
+import com.soyomaker.common.AbstractBean;
+import com.soyomaker.common.IService;
 import com.soyomaker.data.ISMObject;
 
 public class CacheService extends AbstractBean implements IService {

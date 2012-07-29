@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.soyomaker.application.AbstractBean;
-import com.soyomaker.application.IService;
+import com.soyomaker.common.AbstractBean;
+import com.soyomaker.common.IService;
 import com.soyomaker.data.ISMObject;
 
 public class ScheduleService extends AbstractBean implements IService {

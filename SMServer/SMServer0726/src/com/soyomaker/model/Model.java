@@ -3,8 +3,8 @@ package com.soyomaker.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.soyomaker.application.AbstractBean;
-import com.soyomaker.application.IService;
+import com.soyomaker.common.AbstractBean;
+import com.soyomaker.common.IService;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.IDataSet;
 import com.soyomaker.model.proxy.IDataProxy;

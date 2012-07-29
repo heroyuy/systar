@@ -4,7 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.soyomaker.application.AbstractBean;
+import com.soyomaker.common.AbstractBean;
 import com.soyomaker.data.SMObject;
 import com.soyomaker.data.ISMObject;
 

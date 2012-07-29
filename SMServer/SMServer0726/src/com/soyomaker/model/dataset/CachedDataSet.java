@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.soyomaker.application.AbstractBean;
+import com.soyomaker.common.AbstractBean;
 import com.soyomaker.model.DataValue;
 import com.soyomaker.model.criteria.ICriteria;
 import com.soyomaker.model.proxy.IDataProxy;

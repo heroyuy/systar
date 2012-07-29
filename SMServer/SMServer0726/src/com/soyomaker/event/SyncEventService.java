@@ -1,6 +1,6 @@
 package com.soyomaker.event;
 
-import com.soyomaker.application.AbstractBean;
+import com.soyomaker.common.AbstractBean;
 import com.soyomaker.data.SMObject;
 
 public class SyncEventService extends AbstractBean implements IEventService {

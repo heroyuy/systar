@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
-import com.soyomaker.application.AbstractBean;
+import com.soyomaker.common.AbstractBean;
 import com.soyomaker.util.Log4JUtil;
 
 public class GUDataSource extends AbstractBean implements IGUDataSource {
