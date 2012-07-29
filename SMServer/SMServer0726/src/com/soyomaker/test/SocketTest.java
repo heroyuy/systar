@@ -22,7 +22,7 @@ public class SocketTest {
 
 	public static void main(String[] args) {
 		SMObject msg = new SMObject();
-		msg.setType("test");
+		msg.setType("101001");
 		msg.putString("hello", "server");
 		Collection<ISMObject> c = new ArrayList<ISMObject>();
 		c.add(msg);
@@ -38,7 +38,7 @@ public class SocketTest {
 			dos.writeInt(dataSent.length);
 			dos.write(dataSent);
 			dos.flush();
-			System.out.println("socket发出:"+dataSent);
+			System.out.println("socket发出:"+packSend);
 			int len = dis.readInt();
 			byte[] bytes = new byte[len];
 			dis.read(bytes);

@@ -77,7 +77,20 @@ public class NetTransceiver {
 	 * @param msg
 	 */
 	public void sendMessage(PlayerSession session, ISMObject msg) {
-
+		String id = msg.getType();
+		Protocol protocol = protocolMap.get(id);
+		// (1)检查是否有对应的协议
+		if (protocol == null) {
+			log.debug("unknow protocol message");
+			return;
+		}
+		// (2)检查协议是否有netService处理
+		INetService netService = protocol.getNetService();
+		if (netService == null) {
+			log.debug("no netService for this message");
+			return;
+		}
+		netService.sendMessage(session, msg);
 	}
 
 	/**
