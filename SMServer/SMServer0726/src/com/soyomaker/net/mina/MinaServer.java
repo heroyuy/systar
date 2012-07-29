@@ -45,7 +45,7 @@ public class MinaServer implements INetService {
 
 	@Override
 	public void sendMessage(PlayerSession playerSession, ISMObject msg) {
-
+		playerSession.getIoSession().write(msg);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
@@ -21,6 +23,8 @@ public class NetTransceiver {
 	private Map<String, INetService> netServiceMap = new HashMap<String, INetService>();
 
 	private Map<String, Protocol> protocolMap = new HashMap<String, Protocol>();
+
+	private Logger log = Logger.getLogger(NetTransceiver.class);
 
 	public static NetTransceiver getInstance() {
 		return instance;
@@ -82,7 +86,23 @@ public class NetTransceiver {
 	 * @param msg
 	 */
 	public void dispatchMessage(PlayerSession session, ISMObject msg) {
-
+		String id = msg.getType();
+		Protocol protocol = protocolMap.get(id);
+		// (1)检查是否有对应的协议
+		if (protocol == null) {
+			log.debug("unknow protocol message");
+			return;
+		}
+		// (2)检查协议是否有handler处理
+		IHandler handler = protocol.getHandler();
+		if (handler == null) {
+			log.debug("no handler for this message");
+			return;
+		}
+		// (3)检查协议是否允许
+		if (protocol.isNeedLogin() && !session.isLogin()) {
+			log.debug("protocol [" + protocol.getId() + "] need login");
+		}
+		handler.handleMessage(session, msg);
 	}
-
 }
