@@ -7,13 +7,13 @@ import com.soyomaker.common.AbstractBean;
 import com.soyomaker.common.IService;
 import com.soyomaker.model.dataSource.IGUDataSource;
 import com.soyomaker.model.dataset.IDataSet;
-import com.soyomaker.model.proxy.IDataProxy;
+import com.soyomaker.model.proxy.TableProxy;
 
 public class Model extends AbstractBean implements IService {
 	private boolean runFlag = true;
 
 	private Map<String, IDataSet> datasets = new HashMap<String, IDataSet>();
-	private Map<String, IDataProxy> proxies = new HashMap<String, IDataProxy>();
+	private Map<String, TableProxy> proxies = new HashMap<String, TableProxy>();
 	private Map<String, IGUDataSource> dataSources = new HashMap<String, IGUDataSource>();
 
 	/**
