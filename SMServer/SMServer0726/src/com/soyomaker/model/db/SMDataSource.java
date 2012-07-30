@@ -8,7 +8,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import com.soyomaker.common.AbstractBean;
 import com.soyomaker.util.Log4JUtil;
 
-public class GUDataSource extends AbstractBean {
+public class SMDataSource extends AbstractBean {
 	private BasicDataSource ds = new BasicDataSource();
 
 	public Connection getConnection() {
