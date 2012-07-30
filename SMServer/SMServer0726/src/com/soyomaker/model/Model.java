@@ -18,7 +18,7 @@ public class Model {
 
 	}
 
-	public TableProxy getTableProxy(String tableName) {
+	public TableProxy getTableProxy(String name) {
 		// TODO
 		return null;
 	}
