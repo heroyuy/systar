@@ -1,6 +1,6 @@
 package com.soyomaker.model;
 
-import com.soyomaker.model.proxy.TableProxy;
+import com.soyomaker.model.db.TableProxy;
 
 public class Model {
 

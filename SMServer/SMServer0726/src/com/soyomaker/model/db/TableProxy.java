@@ -1,4 +1,4 @@
-package com.soyomaker.model.proxy;
+package com.soyomaker.model.db;
 
 import java.util.List;
 

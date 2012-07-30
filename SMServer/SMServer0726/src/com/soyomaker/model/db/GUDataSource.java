@@ -1,4 +1,4 @@
-package com.soyomaker.model.dataSource;
+package com.soyomaker.model.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,10 +8,9 @@ import org.apache.commons.dbcp.BasicDataSource;
 import com.soyomaker.common.AbstractBean;
 import com.soyomaker.util.Log4JUtil;
 
-public class GUDataSource extends AbstractBean implements IGUDataSource {
+public class GUDataSource extends AbstractBean {
 	private BasicDataSource ds = new BasicDataSource();
 
-	@Override
 	public Connection getConnection() {
 		try {
 			return ds.getConnection();
