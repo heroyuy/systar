@@ -32,12 +32,27 @@ public class TableProxy {
 		this.name = name;
 	}
 
-	public boolean create(ISMObject data) {
+	public boolean insert(ISMObject data) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public ISMObject get(Object key) {
+	public ISMObject selectByPrimaryKey(int key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ISMObject selectByPrimaryKey(long key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ISMObject selectByPrimaryKey(float key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ISMObject selectByPrimaryKey(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -66,12 +81,12 @@ public class TableProxy {
 		}
 	}
 
-	public List<ISMObject> query(String c) {
+	public List<ISMObject> select(String c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean remove(Object key) {
+	public boolean delete(Object key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -79,6 +94,20 @@ public class TableProxy {
 	public boolean update(ISMObject data) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private String getValue(String key, ISMObject obj) {
+		SMDataType type = fieldMap.get(key);
+		String value = "";
+		switch (type) {
+		case INT:
+
+			break;
+
+		default:
+			break;
+		}
+		return value;
 	}
 
 }
