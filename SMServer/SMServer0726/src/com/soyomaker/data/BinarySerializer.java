@@ -165,10 +165,10 @@ public class BinarySerializer {
 			DataOutputStream dos) throws IOException {
 
 		// (1) 类型
-		dos.writeByte(dataWrapper.getDataType().getType());
+		dos.writeByte(dataWrapper.getType().getType());
 		// (2) 值
-		Object v = dataWrapper.getObject();
-		switch (dataWrapper.getDataType()) {
+		Object v = dataWrapper.getValue();
+		switch (dataWrapper.getType()) {
 		case BOOL:
 			dos.writeBoolean((Boolean) v);
 			break;

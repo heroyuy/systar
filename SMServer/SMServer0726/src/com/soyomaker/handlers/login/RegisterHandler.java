@@ -25,6 +25,7 @@ public class RegisterHandler implements IHandler {
 		}
 		// (2)检查用户名是否已存在
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
+		accountProxy.insert(msg);
 		// (3)添加用户到数据库
 		NetTransceiver.getInstance().sendMessage(playerSession, msg);
 	}

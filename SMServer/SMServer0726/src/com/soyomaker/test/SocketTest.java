@@ -23,7 +23,8 @@ public class SocketTest {
 	public static void main(String[] args) {
 		SMObject msg = new SMObject();
 		msg.setType("101001");
-		msg.putString("hello", "server");
+		msg.putString("username", "wp_g4");
+		msg.putString("password", "2724504");
 		Collection<ISMObject> c = new ArrayList<ISMObject>();
 		c.add(msg);
 		SMObject packSend = new SMObject();
@@ -33,17 +34,18 @@ public class SocketTest {
 			Socket socket = new Socket("127.0.0.1", 8081);
 			InputStream is = socket.getInputStream();
 			DataInputStream dis = new DataInputStream(is);
-			DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+			DataOutputStream dos = new DataOutputStream(
+					socket.getOutputStream());
 			byte[] dataSent = packSend.toBinary();
 			dos.writeInt(dataSent.length);
 			dos.write(dataSent);
 			dos.flush();
-			System.out.println("socket发出:"+packSend);
+			System.out.println("socket发出:" + packSend);
 			int len = dis.readInt();
 			byte[] bytes = new byte[len];
 			dis.read(bytes);
 			ISMObject resMsg = SMObject.createFromBytes(bytes);
-			System.out.println("socket收到:"+resMsg);
+			System.out.println("socket收到:" + resMsg);
 			dis.close();
 			is.close();
 			dos.close();

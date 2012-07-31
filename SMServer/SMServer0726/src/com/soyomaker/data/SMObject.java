@@ -46,7 +46,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Boolean) o.getObject();
+			return (Boolean) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,7 +57,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Boolean>) o.getObject();
+			return (Collection<Boolean>) o.getValue();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Byte) o.getObject();
+			return (Byte) o.getValue();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (byte[]) o.getObject();
+			return (byte[]) o.getValue();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Double) o.getObject();
+			return (Double) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,7 +98,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Double>) o.getObject();
+			return (Collection<Double>) o.getValue();
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Float) o.getObject();
+			return (Float) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -119,7 +119,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Float>) o.getObject();
+			return (Collection<Float>) o.getValue();
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Integer) o.getObject();
+			return (Integer) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -140,7 +140,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Integer>) o.getObject();
+			return (Collection<Integer>) o.getValue();
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Long) o.getObject();
+			return (Long) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -166,7 +166,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Long>) o.getObject();
+			return (Collection<Long>) o.getValue();
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (ISMObject) o.getObject();
+			return (ISMObject) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -187,7 +187,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<ISMObject>) o.getObject();
+			return (Collection<ISMObject>) o.getValue();
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Short) o.getObject();
+			return (Short) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -208,7 +208,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<Short>) o.getObject();
+			return (Collection<Short>) o.getValue();
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (String) o.getObject();
+			return (String) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -229,7 +229,7 @@ public class SMObject implements ISMObject {
 		if (o == null)
 			return null;
 		else
-			return (Collection<String>) o.getObject();
+			return (Collection<String>) o.getValue();
 	}
 
 	@Override

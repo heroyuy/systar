@@ -1,5 +1,6 @@
 package com.soyomaker.model.db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,15 @@ public class TableProxy {
 	}
 
 	public boolean insert(ISMObject data) {
-		// TODO Auto-generated method stub
-		return false;
+		String[] keys = fieldMap.keySet().toArray(new String[0]);
+		String psSql = "insert into" + this.getTableName() + "("
+				+ TableProxy.getKeyColumn(keys) + ")" + " values (?)";
+		List<Object> params = new ArrayList<Object>();
+		for (int i = 0; i < keys.length; i++) {
+			params.add(TableProxy.getValue(keys[i], data));
+		}
+		boolean status = SQLUtil.execute(psSql, params);
+		return status;
 	}
 
 	public ISMObject selectByPrimaryKey(int key) {
@@ -96,18 +104,20 @@ public class TableProxy {
 		return false;
 	}
 
-	private String getValue(String key, ISMObject obj) {
-		SMDataType type = fieldMap.get(key);
-		String value = "";
-		switch (type) {
-		case INT:
+	private static Object getValue(String key, ISMObject obj) {
+		return obj.get(key).getValue();
+	}
 
-			break;
-
-		default:
-			break;
+	private static String getKeyColumn(String[] keys) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < keys.length; i++) {
+			String key = keys[i];
+			sb.append(key);
+			if (i != keys.length - 1) {
+				sb.append(",");
+			}
 		}
-		return value;
+		return sb.toString();
 	}
 
 }

@@ -6,7 +6,7 @@
 	<TableProxies>
 		<TableProxy name="account" table="account" primaryKey="id">
 			<field name="id" type="long" />
-			<field name="userName" type="string" />
+			<field name="username" type="string" />
 			<field name="password" type="string" />
 		</TableProxy>
 	</TableProxies>

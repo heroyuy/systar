@@ -79,19 +79,19 @@ public class JsonSerializer {
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
 			SMDataWrapper dataWrapper = object.get(key);
-			SMDataType dataType = dataWrapper.getDataType();
+			SMDataType dataType = dataWrapper.getType();
 			if (dataType == SMDataType.OBJECT) {
-				map.put(key, object2map((ISMObject) dataWrapper.getObject()));
+				map.put(key, object2map((ISMObject) dataWrapper.getValue()));
 			} else if (dataType == SMDataType.OBJECT_ARRAY) {
 				Collection<Map<String, Object>> c = new ArrayList<Map<String, Object>>();
 				@SuppressWarnings("unchecked")
-				Collection<ISMObject> data = (Collection<ISMObject>) dataWrapper.getObject();
+				Collection<ISMObject> data = (Collection<ISMObject>) dataWrapper.getValue();
 				for (ISMObject iguObj : data) {
 					c.add(object2map(iguObj));
 				}
 				map.put(key, c);
 			} else {
-				map.put(key, dataWrapper.getObject());
+				map.put(key, dataWrapper.getValue());
 			}
 		}
 		return map;

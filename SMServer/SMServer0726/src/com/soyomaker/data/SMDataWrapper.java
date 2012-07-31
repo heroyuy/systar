@@ -1,23 +1,23 @@
 package com.soyomaker.data;
 
 public class SMDataWrapper {
-	private SMDataType dataType;
-	private Object object;
+	private SMDataType type;
+	private Object value;
 
-	public SMDataWrapper(SMDataType typeId, Object object) {
-		this.dataType = typeId;
-		this.object = object;
+	public SMDataWrapper(SMDataType type, Object value) {
+		this.type = type;
+		this.value = value;
 	}
 
-	public Object getObject() {
-		return object;
+	public Object getValue() {
+		return value;
 	}
 
-	public SMDataType getDataType() {
-		return dataType;
+	public SMDataType getType() {
+		return type;
 	}
 
 	public String toString() {
-		return dataType + "(" + object.toString() + ")";
+		return type + "(" + value.toString() + ")";
 	}
 }
