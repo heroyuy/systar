@@ -6,7 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class SQLUtil {
+
+	private static Logger log = Logger.getLogger(SQLUtil.class);
 
 	public static boolean execute(String psSql, List<Object> params) {
 		Connection conn = null;
@@ -26,7 +30,7 @@ public class SQLUtil {
 
 			r = ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.debug(e);
 		}
 		SQLUtil.closeStatement(ps);
 		SQLUtil.closeConnection(conn);

@@ -34,12 +34,18 @@ public class TableProxy {
 	}
 
 	public boolean insert(ISMObject data) {
-		String[] keys = fieldMap.keySet().toArray(new String[0]);
-		String psSql = "insert into" + this.getTableName() + "("
-				+ TableProxy.getKeyColumn(keys) + ")" + " values (?)";
+		List<String> keys = new ArrayList<String>();
+		keys.addAll(fieldMap.keySet());
+		return this.insert(keys, data);
+	}
+
+	public boolean insert(List<String> keys, ISMObject data) {
+		String psSql = "insert into " + this.getTableName() + "("
+				+ TableProxy.getKeyString(keys) + ")" + " values ("
+				+ TableProxy.getMarkString(keys.size()) + ")";
 		List<Object> params = new ArrayList<Object>();
-		for (int i = 0; i < keys.length; i++) {
-			params.add(TableProxy.getValue(keys[i], data));
+		for (int i = 0; i < keys.size(); i++) {
+			params.add(TableProxy.getValue(keys.get(i), data));
 		}
 		boolean status = SQLUtil.execute(psSql, params);
 		return status;
@@ -108,12 +114,23 @@ public class TableProxy {
 		return obj.get(key).getValue();
 	}
 
-	private static String getKeyColumn(String[] keys) {
+	private static String getKeyString(List<String> keys) {
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < keys.length; i++) {
-			String key = keys[i];
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
 			sb.append(key);
-			if (i != keys.length - 1) {
+			if (i != keys.size() - 1) {
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
+	private static String getMarkString(int num) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < num; i++) {
+			sb.append("?");
+			if (i != num - 1) {
 				sb.append(",");
 			}
 		}
