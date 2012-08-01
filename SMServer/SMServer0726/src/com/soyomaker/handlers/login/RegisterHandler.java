@@ -27,8 +27,8 @@ public class RegisterHandler implements IHandler {
 			return;
 		}
 		// (3)检查密码长度
-		if (userName.length() < 3) {
-			this.sendMessage(playerSession, msg.getType(), false, "密码长度不能小于3");
+		if (password.equals("")) {
+			this.sendMessage(playerSession, msg.getType(), false, "密码不能为空");
 			return;
 		}
 		// (4)检查用户名是否已经存在
