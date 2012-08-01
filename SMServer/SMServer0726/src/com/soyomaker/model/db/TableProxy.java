@@ -1,22 +1,27 @@
 package com.soyomaker.model.db;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.data.SMDataType;
+import com.soyomaker.data.SMObject;
 
 public class TableProxy {
 
 	private static final String INT = "int";
 
-	private static final String LONG = "long";
-
 	private static final String FLOAT = "float";
 
 	private static final String STRING = "string";
+
+	private static Logger log = Logger.getLogger(TableProxy.class);
 
 	private Map<String, SMDataType> fieldMap = new HashMap<String, SMDataType>();
 
@@ -51,24 +56,59 @@ public class TableProxy {
 		return status;
 	}
 
-	public ISMObject selectByPrimaryKey(int key) {
-		// TODO Auto-generated method stub
-		return null;
+	public ISMObject selectWherePrimaryKey(Object value) {
+		List<ISMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
+		if (resList.size() > 0) {
+			return resList.get(0);
+		} else {
+			return null;
+		}
 	}
 
-	public ISMObject selectByPrimaryKey(long key) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ISMObject> selectWhere(String key, Object value) {
+		List<String> keys = new ArrayList<String>();
+		keys.add(key);
+		List<Object> values = new ArrayList<Object>();
+		values.add(value);
+		return this.selectWhere(keys, values);
 	}
 
-	public ISMObject selectByPrimaryKey(float key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ISMObject selectByPrimaryKey(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ISMObject> selectWhere(List<String> keys, List<Object> values) {
+		String psSql = "select * from " + this.getTableName() + " where "
+				+ TableProxy.getKeyString(keys) + " = "
+				+ TableProxy.getMarkString(keys.size());
+		final List<ISMObject> resList = new ArrayList<ISMObject>();
+		SQLUtil.query(psSql, values, new IResultSetProcessor() {
+			@Override
+			public void proceResultSet(ResultSet rs) {
+				try {
+					while (rs.next()) {
+						ISMObject obj = new SMObject();
+						for (String key : fieldMap.keySet()) {
+							log.debug("key:"+key);
+							SMDataType type = fieldMap.get(key);
+							switch (type) {
+							case INT:
+								obj.putInt(key, rs.getInt(key));
+								break;
+							case FLOAT:
+								obj.putFloat(key, rs.getFloat(key));
+								break;
+							case STRING:
+								obj.putString(key, rs.getString(key));
+								break;
+							default:
+								break;
+							}
+						}
+						resList.add(obj);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		return resList;
 	}
 
 	public String getName() {
@@ -85,29 +125,12 @@ public class TableProxy {
 
 	public void putField(String name, String type) {
 		if (type.equalsIgnoreCase(INT)) {
-			fieldMap.put(type, SMDataType.INT);
-		} else if (type.equalsIgnoreCase(LONG)) {
-			fieldMap.put(type, SMDataType.LONG);
+			fieldMap.put(name, SMDataType.INT);
 		} else if (type.equalsIgnoreCase(FLOAT)) {
-			fieldMap.put(type, SMDataType.FLOAT);
+			fieldMap.put(name, SMDataType.FLOAT);
 		} else if (type.equalsIgnoreCase(STRING)) {
-			fieldMap.put(type, SMDataType.STRING);
+			fieldMap.put(name, SMDataType.STRING);
 		}
-	}
-
-	public List<ISMObject> select(String c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean delete(Object key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean update(ISMObject data) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	private static Object getValue(String key, ISMObject obj) {

@@ -2,6 +2,7 @@ package com.soyomaker.model.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -35,6 +36,30 @@ public class SQLUtil {
 		SQLUtil.closeStatement(ps);
 		SQLUtil.closeConnection(conn);
 		return r == 1;
+	}
+
+	public static void query(String psSql, List<Object> params,
+			IResultSetProcessor resultSetProcessor) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = SMDataSource.getInstance().getConnection();
+			ps = conn.prepareStatement(psSql);
+
+			if (params != null) {
+				Object[] paramsObjects = params.toArray();
+				for (int i = 0; i < paramsObjects.length; i++) {
+					ps.setObject(i + 1, paramsObjects[i]);
+				}
+			}
+			ResultSet rs = ps.executeQuery();
+			resultSetProcessor.proceResultSet(rs);
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeStatement(ps);
+		closeConnection(conn);
 	}
 
 	private static void closeStatement(Statement stmt) {

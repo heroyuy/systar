@@ -5,7 +5,7 @@
 		maxActive="20" maxIdle="8" minIdle="5" />
 	<TableProxies>
 		<TableProxy name="account" table="account" primaryKey="id">
-			<field name="id" type="long" />
+			<field name="id" type="int" />
 			<field name="username" type="string" />
 			<field name="password" type="string" />
 		</TableProxy>

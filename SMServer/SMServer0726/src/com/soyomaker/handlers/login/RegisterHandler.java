@@ -3,8 +3,6 @@ package com.soyomaker.handlers.login;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.data.SMObject;
 import com.soyomaker.model.Model;
@@ -17,23 +15,45 @@ public class RegisterHandler implements IHandler {
 
 	@Override
 	public void handleMessage(PlayerSession playerSession, ISMObject msg) {
-		Logger log = Logger.getLogger(getClass());
 		String userName = msg.getString("username");
 		String password = msg.getString("password");
-		// (1)检查用户名是否合法
-		if (userName == null || userName.length() < 3) {
+		// (1)检查包是否完整
+		if (userName == null || password == null) {
 			return;
 		}
-		// (2)检查用户名是否已存在
+		// (2)检查用户名长度
+		if (userName.length() < 3) {
+			this.sendMessage(playerSession, msg.getType(), false, "用户名长度不能小于3");
+			return;
+		}
+		// (3)检查密码长度
+		if (userName.length() < 3) {
+			this.sendMessage(playerSession, msg.getType(), false, "密码长度不能小于3");
+			return;
+		}
+		// (4)检查用户名是否已经存在
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
-		// (3)添加用户到数据库
+		List<ISMObject> accountList = accountProxy.selectWhere("username",
+				userName);
+		if (accountList.size() > 0) {
+			this.sendMessage(playerSession, msg.getType(), false, "用户名已存在");
+			return;
+		}
+		// (5)添加用户到数据库
 		List<String> keys = new ArrayList<String>();
 		keys.add("username");
 		keys.add("password");
 		boolean status = accountProxy.insert(keys, msg);
+		this.sendMessage(playerSession, msg.getType(), status, status ? "注册成功"
+				: "注册失败");
+	}
+
+	private void sendMessage(PlayerSession playerSession, String type,
+			boolean status, String message) {
 		ISMObject msgSent = new SMObject();
-		msgSent.setType(msg.getType());
+		msgSent.setType(type);
 		msgSent.putBool("status", status);
+		msgSent.putString("msg", message);
 		NetTransceiver.getInstance().sendMessage(playerSession, msgSent);
 	}
 }

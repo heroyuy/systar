@@ -1,4 +1,4 @@
-package com.soyomaker.util;
+package com.soyomaker.model.db;
 
 import java.sql.ResultSet;
 
