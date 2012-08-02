@@ -33,9 +33,9 @@ public class RegisterHandler implements IHandler {
 		}
 		// (4)检查用户名是否已经存在
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
-		List<ISMObject> accountList = accountProxy.selectWhere("username",
-				userName);
-		if (accountList.size() > 0) {
+		ISMObject account = accountProxy
+				.selectSingleWhere("username", userName);
+		if (account != null) {
 			this.sendMessage(playerSession, msg.getType(), false, "用户名已存在");
 			return;
 		}

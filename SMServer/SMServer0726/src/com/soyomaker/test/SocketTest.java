@@ -40,12 +40,12 @@ public class SocketTest {
 			dos.writeInt(dataSent.length);
 			dos.write(dataSent);
 			dos.flush();
-			System.out.println("socket发出:" + packSend);
+			System.out.println("socket发出:" + packSend.toJson());
 			int len = dis.readInt();
 			byte[] bytes = new byte[len];
 			dis.read(bytes);
 			ISMObject resMsg = SMObject.createFromBytes(bytes);
-			System.out.println("socket收到:" + resMsg);
+			System.out.println("socket收到:" + resMsg.toJson());
 			dis.close();
 			is.close();
 			dos.close();

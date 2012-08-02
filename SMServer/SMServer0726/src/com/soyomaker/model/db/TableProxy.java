@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.soyomaker.data.ISMObject;
 import com.soyomaker.data.SMDataType;
 import com.soyomaker.data.SMObject;
@@ -21,7 +19,32 @@ public class TableProxy {
 
 	private static final String STRING = "string";
 
-	private static Logger log = Logger.getLogger(TableProxy.class);
+	private static String getKeyString(List<String> keys) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
+			sb.append(key);
+			if (i != keys.size() - 1) {
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
+	private static String getMarkString(int num) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < num; i++) {
+			sb.append("?");
+			if (i != num - 1) {
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
+	private static Object getValue(String key, ISMObject obj) {
+		return obj.get(key).getValue();
+	}
 
 	private Map<String, SMDataType> fieldMap = new HashMap<String, SMDataType>();
 
@@ -36,6 +59,18 @@ public class TableProxy {
 		this.primaryKey = primaryKey;
 		this.tableName = tableName;
 		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public String getTableName() {
+		return tableName;
 	}
 
 	public boolean insert(ISMObject data) {
@@ -56,8 +91,18 @@ public class TableProxy {
 		return status;
 	}
 
-	public ISMObject selectWherePrimaryKey(Object value) {
-		List<ISMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
+	public void putField(String name, String type) {
+		if (type.equalsIgnoreCase(INT)) {
+			fieldMap.put(name, SMDataType.INT);
+		} else if (type.equalsIgnoreCase(FLOAT)) {
+			fieldMap.put(name, SMDataType.FLOAT);
+		} else if (type.equalsIgnoreCase(STRING)) {
+			fieldMap.put(name, SMDataType.STRING);
+		}
+	}
+
+	public ISMObject selectSingleWhere(List<String> keys, List<Object> values) {
+		List<ISMObject> resList = this.selectWhere(keys, values);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {
@@ -65,12 +110,13 @@ public class TableProxy {
 		}
 	}
 
-	public List<ISMObject> selectWhere(String key, Object value) {
-		List<String> keys = new ArrayList<String>();
-		keys.add(key);
-		List<Object> values = new ArrayList<Object>();
-		values.add(value);
-		return this.selectWhere(keys, values);
+	public ISMObject selectSingleWhere(String key, Object value) {
+		List<ISMObject> resList = this.selectWhere(key, value);
+		if (resList.size() > 0) {
+			return resList.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	public List<ISMObject> selectWhere(List<String> keys, List<Object> values) {
@@ -85,7 +131,6 @@ public class TableProxy {
 					while (rs.next()) {
 						ISMObject obj = new SMObject();
 						for (String key : fieldMap.keySet()) {
-							log.debug("key:"+key);
 							SMDataType type = fieldMap.get(key);
 							switch (type) {
 							case INT:
@@ -111,53 +156,21 @@ public class TableProxy {
 		return resList;
 	}
 
-	public String getName() {
-		return name;
+	public List<ISMObject> selectWhere(String key, Object value) {
+		List<String> keys = new ArrayList<String>();
+		keys.add(key);
+		List<Object> values = new ArrayList<Object>();
+		values.add(value);
+		return this.selectWhere(keys, values);
 	}
 
-	public String getPrimaryKey() {
-		return primaryKey;
-	}
-
-	public String getTableName() {
-		return tableName;
-	}
-
-	public void putField(String name, String type) {
-		if (type.equalsIgnoreCase(INT)) {
-			fieldMap.put(name, SMDataType.INT);
-		} else if (type.equalsIgnoreCase(FLOAT)) {
-			fieldMap.put(name, SMDataType.FLOAT);
-		} else if (type.equalsIgnoreCase(STRING)) {
-			fieldMap.put(name, SMDataType.STRING);
+	public ISMObject selectWherePrimaryKey(Object value) {
+		List<ISMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
+		if (resList.size() > 0) {
+			return resList.get(0);
+		} else {
+			return null;
 		}
-	}
-
-	private static Object getValue(String key, ISMObject obj) {
-		return obj.get(key).getValue();
-	}
-
-	private static String getKeyString(List<String> keys) {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < keys.size(); i++) {
-			String key = keys.get(i);
-			sb.append(key);
-			if (i != keys.size() - 1) {
-				sb.append(",");
-			}
-		}
-		return sb.toString();
-	}
-
-	private static String getMarkString(int num) {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < num; i++) {
-			sb.append("?");
-			if (i != num - 1) {
-				sb.append(",");
-			}
-		}
-		return sb.toString();
 	}
 
 }
