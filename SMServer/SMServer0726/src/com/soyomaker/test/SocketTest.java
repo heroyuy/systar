@@ -21,6 +21,7 @@ import com.soyomaker.net.mina.PackageConst;
 public class SocketTest {
 
 	public static void main(String[] args) {
+		boolean running = true;
 		SMObject msg = new SMObject();
 		msg.setType("101002");
 		msg.putString("username", "wp_g4");
@@ -41,11 +42,13 @@ public class SocketTest {
 			dos.write(dataSent);
 			dos.flush();
 			System.out.println("socket发出:" + packSend.toJson());
-			int len = dis.readInt();
-			byte[] bytes = new byte[len];
-			dis.read(bytes);
-			ISMObject resMsg = SMObject.createFromBytes(bytes);
-			System.out.println("socket收到:" + resMsg.toJson());
+			while (running) {
+				int len = dis.readInt();
+				byte[] bytes = new byte[len];
+				dis.read(bytes);
+				ISMObject resMsg = SMObject.createFromBytes(bytes);
+				System.out.println("socket收到:" + resMsg.toJson());
+			}
 			dis.close();
 			is.close();
 			dos.close();
