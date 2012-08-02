@@ -7,6 +7,7 @@ import com.soyomaker.model.db.TableProxy;
 import com.soyomaker.net.IHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PlayerSession;
+import com.soyomaker.net.PlayerSessionManager;
 
 public class LoginHandler implements IHandler {
 
@@ -32,9 +33,12 @@ public class LoginHandler implements IHandler {
 			return;
 		}
 		// (4)登录成功
+		int playerId = account.getInt("id");
 		playerSession.setLogin(true);
-		this.sendMessage(playerSession, msg.getType(), true, "登录成功",
-				account.getInt("id"));
+		playerSession.setPlayerId(playerId);
+		PlayerSessionManager.getInstance().putPlayerSession(playerId,
+				playerSession);
+		this.sendMessage(playerSession, msg.getType(), true, "登录成功", playerId);
 	}
 
 	private void sendMessage(PlayerSession playerSession, String type,

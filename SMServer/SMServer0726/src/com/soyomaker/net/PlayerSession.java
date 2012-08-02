@@ -21,6 +21,11 @@ public class PlayerSession {
 	 */
 	private boolean login = false;
 
+	/**
+	 * 玩家id
+	 */
+	private int playerId = -1;
+
 	public PlayerSession(IoSession ioSession) {
 		this.ioSession = ioSession;
 	}
@@ -29,12 +34,26 @@ public class PlayerSession {
 		return ioSession;
 	}
 
+	public int getPlayerId() {
+		return playerId;
+	}
+
 	public boolean isLogin() {
 		return login;
 	}
 
 	public void setLogin(boolean login) {
 		this.login = login;
+	}
+
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
+
+	public void disConnect() {
+		if (this.ioSession != null) {
+			this.ioSession.close(true);
+		}
 	}
 
 }
