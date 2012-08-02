@@ -58,7 +58,7 @@ public class MinaHandler implements IoHandler {
 
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
-		log.debug("Mina发出包::" + message.toString());
+		log.debug("Mina发出包::" + ((ISMObject) message).toJson());
 	}
 
 	@Override
