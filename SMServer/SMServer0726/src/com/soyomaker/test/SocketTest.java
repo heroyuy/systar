@@ -23,8 +23,8 @@ public class SocketTest {
 	public static void main(String[] args) {
 		SMObject msg = new SMObject();
 		msg.setType("101002");
-		msg.putString("username", "wp_g5");
-		msg.putString("password", "272450");
+		msg.putString("username", "wp_g4");
+		msg.putString("password", "2724504");
 		Collection<ISMObject> c = new ArrayList<ISMObject>();
 		c.add(msg);
 		SMObject packSend = new SMObject();
