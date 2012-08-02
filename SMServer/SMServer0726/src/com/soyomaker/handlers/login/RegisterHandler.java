@@ -15,14 +15,14 @@ public class RegisterHandler implements IHandler {
 
 	@Override
 	public void handleMessage(PlayerSession playerSession, ISMObject msg) {
-		String userName = msg.getString("username");
+		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
-		if (userName == null || password == null) {
+		if (username == null || password == null) {
 			return;
 		}
 		// (2)检查用户名长度
-		if (userName.length() < 3) {
+		if (username.length() < 3) {
 			this.sendMessage(playerSession, msg.getType(), false, "用户名长度不能小于3");
 			return;
 		}
@@ -34,7 +34,7 @@ public class RegisterHandler implements IHandler {
 		// (4)检查用户名是否已经存在
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
 		ISMObject account = accountProxy
-				.selectSingleWhere("username", userName);
+				.selectSingleWhere("username", username);
 		if (account != null) {
 			this.sendMessage(playerSession, msg.getType(), false, "用户名已存在");
 			return;

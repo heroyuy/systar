@@ -13,16 +13,16 @@ public class LoginHandler implements IHandler {
 
 	@Override
 	public void handleMessage(PlayerSession playerSession, ISMObject msg) {
-		String userName = msg.getString("username");
+		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
-		if (userName == null || password == null) {
+		if (username == null || password == null) {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
 		ISMObject account = accountProxy
-				.selectSingleWhere("username", userName);
+				.selectSingleWhere("username", username);
 		if (account == null) {
 			this.sendMessage(playerSession, msg.getType(), false, "帐号不存在", -1);
 			return;
