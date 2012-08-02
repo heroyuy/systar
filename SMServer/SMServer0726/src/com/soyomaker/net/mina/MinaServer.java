@@ -16,7 +16,7 @@ public class MinaServer implements INetService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
 
 	private int readBufferSize = 100000;
-	private int port = 8081;
+	private int port = 9090;
 
 	@Override
 	public void start() {
