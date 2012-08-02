@@ -31,7 +31,7 @@ public class SocketTest {
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		try {
-			Socket socket = new Socket("127.0.0.1", 9090);
+			Socket socket = new Socket("ggggeeqg.vicp.net", 9090);
 			InputStream is = socket.getInputStream();
 			DataInputStream dis = new DataInputStream(is);
 			DataOutputStream dos = new DataOutputStream(
