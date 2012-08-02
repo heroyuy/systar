@@ -20,7 +20,7 @@ public class PlayerSessionManager {
 	public synchronized void putPlayerSession(int playerId,
 			PlayerSession playerSession) {
 		PlayerSession ps = this.getPlayerSession(playerId);
-		if (ps != null) {
+		if (ps != null && ps != playerSession) {
 			ps.disConnect();
 			this.removePlayerSession(playerId);
 		}

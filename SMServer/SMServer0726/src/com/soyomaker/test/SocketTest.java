@@ -23,7 +23,7 @@ public class SocketTest {
 	public static void main(String[] args) {
 		boolean running = true;
 		SMObject msg = new SMObject();
-		msg.setType("101002");
+		msg.setType("101005");
 		msg.putString("username", "wp_g4");
 		msg.putString("password", "2724504");
 		Collection<ISMObject> c = new ArrayList<ISMObject>();
