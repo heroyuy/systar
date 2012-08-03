@@ -3,8 +3,8 @@ package com.soyomaker.handlers.login;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameObject;
 import com.soyomaker.model.Model;
 import com.soyomaker.model.db.TableProxy;
 import com.soyomaker.net.IHandler;
@@ -14,7 +14,7 @@ import com.soyomaker.net.PlayerSession;
 public class RegisterHandler implements IHandler {
 
 	@Override
-	public void handleMessage(PlayerSession playerSession, SMObject msg) {
+	public void handleMessage(PlayerSession playerSession, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
@@ -33,7 +33,7 @@ public class RegisterHandler implements IHandler {
 		}
 		// (4)检查用户名是否已经存在
 		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
-		SMObject account = accountProxy
+		GameObject account = accountProxy
 				.selectSingleWhere("username", username);
 		if (account != null) {
 			this.sendMessage(playerSession, msg.getType(), false, "用户名已存在");
@@ -50,7 +50,7 @@ public class RegisterHandler implements IHandler {
 
 	private void sendMessage(PlayerSession playerSession, String type,
 			boolean status, String message) {
-		SMObject msgSent = new SMObject();
+		GameObject msgSent = new GameObject();
 		msgSent.setType(type);
 		msgSent.putBool("status", status);
 		msgSent.putString("msg", message);

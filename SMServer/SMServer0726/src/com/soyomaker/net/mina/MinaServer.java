@@ -8,7 +8,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
 import com.soyomaker.net.INetService;
 import com.soyomaker.net.PlayerSession;
 
@@ -44,7 +44,7 @@ public class MinaServer implements INetService {
 	}
 
 	@Override
-	public void sendMessage(PlayerSession playerSession, SMObject msg) {
+	public void sendMessage(PlayerSession playerSession, GameObject msg) {
 		playerSession.getIoSession().write(msg);
 	}
 

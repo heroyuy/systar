@@ -11,8 +11,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**
@@ -29,12 +29,12 @@ public class HttpTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SMObject msg = new SMObject();
+		GameObject msg = new GameObject();
 		msg.setType("test");
 		msg.putString("hello", "server");
-		Collection<SMObject> c = new ArrayList<SMObject>();
+		Collection<GameObject> c = new ArrayList<GameObject>();
 		c.add(msg);
-		SMObject packSend = new SMObject();
+		GameObject packSend = new GameObject();
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		System.out.println("HttpTest发出:" + packSend);
@@ -61,7 +61,7 @@ public class HttpTest {
 			}
 			data = bos.toByteArray();
 			bos.close();
-			SMObject resMsg = SMObject.createFromBytes(data);
+			GameObject resMsg = GameObject.createFromBytes(data);
 			System.out.println("HttpTest收到包:" + len + " ->" + resMsg);
 			connection.disconnect();
 			dis.close();

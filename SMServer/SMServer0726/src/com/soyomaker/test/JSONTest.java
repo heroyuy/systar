@@ -3,8 +3,8 @@ package com.soyomaker.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameObject;
 
 public class JSONTest {
 
@@ -13,11 +13,11 @@ public class JSONTest {
 	 */
 	public static void main(String[] args) {
 		// 1
-		SMObject obj1 = new SMObject();
+		GameObject obj1 = new GameObject();
 		obj1.putInt("id", 101001);
 		System.out.println(obj1.toJson());
 		// 2
-		SMObject obj2 = new SMObject();
+		GameObject obj2 = new GameObject();
 		obj1.putObject("child", obj2);
 		System.out.println(obj1.toJson());
 		// 3
@@ -27,10 +27,10 @@ public class JSONTest {
 		obj1.putIntArray("intArray", c1);
 		System.out.println(obj1.toJson());
 		// 4
-		Collection<SMObject> c2 = new ArrayList<SMObject>();
-		SMObject obj3 = new SMObject();
+		Collection<GameObject> c2 = new ArrayList<GameObject>();
+		GameObject obj3 = new GameObject();
 		obj3.putInt("id", 101002);
-		SMObject obj4 = new SMObject();
+		GameObject obj4 = new GameObject();
 		obj4.putInt("id", 101003);
 		c2.add(obj3);
 		c2.add(obj4);
@@ -38,7 +38,7 @@ public class JSONTest {
 		System.out.println(obj1.toJson());
 		// ======================================================
 		System.out.println("======================================================");
-		SMObject obj5 = SMObject.createFromJson(obj1.toJson());
+		GameObject obj5 = GameObject.createFromJson(obj1.toJson());
 		System.out.println(obj5.toJson());
 	}
 

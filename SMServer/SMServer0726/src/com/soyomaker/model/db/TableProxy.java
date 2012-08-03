@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMDataType;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameDataType;
+import com.soyomaker.data.GameObject;
 
 public class TableProxy {
 
@@ -42,11 +42,11 @@ public class TableProxy {
 		return sb.toString();
 	}
 
-	private static Object getValue(String key, SMObject obj) {
+	private static Object getValue(String key, GameObject obj) {
 		return obj.get(key).getValue();
 	}
 
-	private Map<String, SMDataType> fieldMap = new HashMap<String, SMDataType>();
+	private Map<String, GameDataType> fieldMap = new HashMap<String, GameDataType>();
 
 	private String primaryKey = null;
 
@@ -73,13 +73,13 @@ public class TableProxy {
 		return tableName;
 	}
 
-	public boolean insert(SMObject data) {
+	public boolean insert(GameObject data) {
 		List<String> keys = new ArrayList<String>();
 		keys.addAll(fieldMap.keySet());
 		return this.insert(keys, data);
 	}
 
-	public boolean insert(List<String> keys, SMObject data) {
+	public boolean insert(List<String> keys, GameObject data) {
 		String psSql = "insert into " + this.getTableName() + "("
 				+ TableProxy.getKeyString(keys) + ")" + " values ("
 				+ TableProxy.getMarkString(keys.size()) + ")";
@@ -93,16 +93,16 @@ public class TableProxy {
 
 	public void putField(String name, String type) {
 		if (type.equalsIgnoreCase(INT)) {
-			fieldMap.put(name, SMDataType.INT);
+			fieldMap.put(name, GameDataType.INT);
 		} else if (type.equalsIgnoreCase(FLOAT)) {
-			fieldMap.put(name, SMDataType.FLOAT);
+			fieldMap.put(name, GameDataType.FLOAT);
 		} else if (type.equalsIgnoreCase(STRING)) {
-			fieldMap.put(name, SMDataType.STRING);
+			fieldMap.put(name, GameDataType.STRING);
 		}
 	}
 
-	public SMObject selectSingleWhere(List<String> keys, List<Object> values) {
-		List<SMObject> resList = this.selectWhere(keys, values);
+	public GameObject selectSingleWhere(List<String> keys, List<Object> values) {
+		List<GameObject> resList = this.selectWhere(keys, values);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {
@@ -110,8 +110,8 @@ public class TableProxy {
 		}
 	}
 
-	public SMObject selectSingleWhere(String key, Object value) {
-		List<SMObject> resList = this.selectWhere(key, value);
+	public GameObject selectSingleWhere(String key, Object value) {
+		List<GameObject> resList = this.selectWhere(key, value);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {
@@ -119,19 +119,19 @@ public class TableProxy {
 		}
 	}
 
-	public List<SMObject> selectWhere(List<String> keys, List<Object> values) {
+	public List<GameObject> selectWhere(List<String> keys, List<Object> values) {
 		String psSql = "select * from " + this.getTableName() + " where "
 				+ TableProxy.getKeyString(keys) + " = "
 				+ TableProxy.getMarkString(keys.size());
-		final List<SMObject> resList = new ArrayList<SMObject>();
+		final List<GameObject> resList = new ArrayList<GameObject>();
 		SQLUtil.query(psSql, values, new IResultSetProcessor() {
 			@Override
 			public void proceResultSet(ResultSet rs) {
 				try {
 					while (rs.next()) {
-						SMObject obj = new SMObject();
+						GameObject obj = new GameObject();
 						for (String key : fieldMap.keySet()) {
-							SMDataType type = fieldMap.get(key);
+							GameDataType type = fieldMap.get(key);
 							switch (type) {
 							case INT:
 								obj.putInt(key, rs.getInt(key));
@@ -156,7 +156,7 @@ public class TableProxy {
 		return resList;
 	}
 
-	public List<SMObject> selectWhere(String key, Object value) {
+	public List<GameObject> selectWhere(String key, Object value) {
 		List<String> keys = new ArrayList<String>();
 		keys.add(key);
 		List<Object> values = new ArrayList<Object>();
@@ -164,8 +164,8 @@ public class TableProxy {
 		return this.selectWhere(keys, values);
 	}
 
-	public SMObject selectWherePrimaryKey(Object value) {
-		List<SMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
+	public GameObject selectWherePrimaryKey(Object value) {
+		List<GameObject> resList = this.selectWhere(this.getPrimaryKey(), value);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {

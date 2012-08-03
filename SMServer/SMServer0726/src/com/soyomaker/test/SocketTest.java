@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**
@@ -22,13 +22,13 @@ public class SocketTest {
 
 	public static void main(String[] args) {
 		boolean running = true;
-		SMObject msg = new SMObject();
+		GameObject msg = new GameObject();
 		msg.setType("101005");
 		msg.putString("username", "wp_g4");
 		msg.putString("password", "2724504");
-		Collection<SMObject> c = new ArrayList<SMObject>();
+		Collection<GameObject> c = new ArrayList<GameObject>();
 		c.add(msg);
-		SMObject packSend = new SMObject();
+		GameObject packSend = new GameObject();
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
 		packSend.putObjectArray(PackageConst.PACKAGE_ARRAY_KEY, c);
 		try {
@@ -46,7 +46,7 @@ public class SocketTest {
 				int len = dis.readInt();
 				byte[] bytes = new byte[len];
 				dis.read(bytes);
-				SMObject resMsg = SMObject.createFromBytes(bytes);
+				GameObject resMsg = GameObject.createFromBytes(bytes);
 				System.out.println("socket收到:" + resMsg.toJson());
 			}
 			dis.close();

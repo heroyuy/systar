@@ -7,7 +7,7 @@ import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PlayerSession;
 
@@ -30,21 +30,21 @@ public class MinaHandler implements IoHandler {
 
 	@Override
 	public void messageReceived(IoSession session, Object obj) throws Exception {
-		if (obj instanceof SMObject) {
+		if (obj instanceof GameObject) {
 			PlayerSession playerSession = (PlayerSession) session
 					.getAttribute("playerSession");
 			if (playerSession == null) {
 				playerSession = new PlayerSession(session);
 				session.setAttribute("playerSession", playerSession);
 			}
-			SMObject message = (SMObject) obj;
+			GameObject message = (GameObject) obj;
 			log.debug("Mina收到包:" + message.toJson());
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
-				Collection<SMObject> c = message
+				Collection<GameObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
-				for (SMObject msg : c) {
+				for (GameObject msg : c) {
 					NetTransceiver.getInstance().dispatchMessage(playerSession,
 							msg);
 				}
@@ -58,7 +58,7 @@ public class MinaHandler implements IoHandler {
 
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
-		log.debug("Mina发出包::" + ((SMObject) message).toJson());
+		log.debug("Mina发出包::" + ((GameObject) message).toJson());
 	}
 
 	@Override

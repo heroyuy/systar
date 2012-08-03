@@ -5,11 +5,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.soyomaker.common.AbstractBean;
-import com.soyomaker.data.SMObject;
-import com.soyomaker.data.SMObject;
+import com.soyomaker.data.GameObject;
+import com.soyomaker.data.GameObject;
 
 public class AsyncEventService extends AbstractBean implements IEventService {
-	private ArrayBlockingQueue<SMObject> msgQueue;
+	private ArrayBlockingQueue<GameObject> msgQueue;
 	private ExecutorService executors;
 	private boolean dispatchThreadRunFlag = true;
 	private Thread dispatchThread;
@@ -19,7 +19,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 
 	private EventHandlerFactory handlerFactory = null;
 
-	public void fireEvent(SMObject e) {
+	public void fireEvent(GameObject e) {
 		try {
 			msgQueue.put(e);
 		} catch (InterruptedException e1) {
@@ -58,7 +58,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 
 	@Override
 	public void start() {
-		msgQueue = new ArrayBlockingQueue<SMObject>(queueSize);
+		msgQueue = new ArrayBlockingQueue<GameObject>(queueSize);
 		executors = Executors.newFixedThreadPool(dispatchThreadCount);
 		startDispathThread();
 	}
@@ -70,7 +70,7 @@ public class AsyncEventService extends AbstractBean implements IEventService {
 
 	private void handleEvent() {
 		while (dispatchThreadRunFlag) {
-			final SMObject e = (SMObject) msgQueue.poll();
+			final GameObject e = (GameObject) msgQueue.poll();
 			executors.execute(new Runnable() {
 				@Override
 				public void run() {

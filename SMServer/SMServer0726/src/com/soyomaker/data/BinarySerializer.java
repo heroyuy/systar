@@ -11,57 +11,57 @@ import java.util.Collection;
 public class BinarySerializer {
 	private static int BUFFER_SIZE = 1024;
 
-	public static SMObject binary2object(byte[] bs) throws IOException {
+	public static GameObject binary2object(byte[] bs) throws IOException {
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bs));
 		return readGUObject(dis);
 	}
 
-	public static byte[] object2binary(SMObject object) throws IOException {
+	public static byte[] object2binary(GameObject object) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFFER_SIZE);
 		DataOutputStream dos = new DataOutputStream(baos);
 		writeIGUObject(dos, object);
 		return baos.toByteArray();
 	}
 
-	private static SMDataWrapper readGUDataWrapper(DataInputStream dis)
+	private static GameDataWrapper readGUDataWrapper(DataInputStream dis)
 			throws IOException {
-		SMDataWrapper dataWrapper = null;
+		GameDataWrapper dataWrapper = null;
 		// (1) 类型
 		byte typeId = dis.readByte();
-		SMDataType dataType = SMDataType.fromTypeId(typeId);
+		GameDataType dataType = GameDataType.fromTypeId(typeId);
 		// (2) 值
 		switch (dataType) {
 		case BOOL:
 			boolean v1 = dis.readBoolean();
-			dataWrapper = new SMDataWrapper(dataType, v1);
+			dataWrapper = new GameDataWrapper(dataType, v1);
 			break;
 		case BYTE:
 			byte v2 = dis.readByte();
-			dataWrapper = new SMDataWrapper(dataType, v2);
+			dataWrapper = new GameDataWrapper(dataType, v2);
 			break;
 		case SHORT:
 			short v3 = dis.readShort();
-			dataWrapper = new SMDataWrapper(dataType, v3);
+			dataWrapper = new GameDataWrapper(dataType, v3);
 			break;
 		case INT:
 			int v4 = dis.readInt();
-			dataWrapper = new SMDataWrapper(dataType, v4);
+			dataWrapper = new GameDataWrapper(dataType, v4);
 			break;
 		case LONG:
 			long v5 = dis.readLong();
-			dataWrapper = new SMDataWrapper(dataType, v5);
+			dataWrapper = new GameDataWrapper(dataType, v5);
 			break;
 		case FLOAT:
 			float v6 = dis.readFloat();
-			dataWrapper = new SMDataWrapper(dataType, v6);
+			dataWrapper = new GameDataWrapper(dataType, v6);
 			break;
 		case DOUBLE:
 			double v7 = dis.readDouble();
-			dataWrapper = new SMDataWrapper(dataType, v7);
+			dataWrapper = new GameDataWrapper(dataType, v7);
 			break;
 		case STRING:
 			String v8 = dis.readUTF();
-			dataWrapper = new SMDataWrapper(dataType, v8);
+			dataWrapper = new GameDataWrapper(dataType, v8);
 			break;
 		case BOOL_ARRAY:
 			int s1 = dis.readShort();
@@ -69,7 +69,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s1; i1++) {
 				v9.add(dis.readBoolean());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v9);
+			dataWrapper = new GameDataWrapper(dataType, v9);
 			break;
 		case BYTE_ARRAY:
 			int s2 = dis.readShort();
@@ -77,7 +77,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s2; i1++) {
 				v10.add(dis.readByte());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v10);
+			dataWrapper = new GameDataWrapper(dataType, v10);
 			break;
 		case SHORT_ARRAY:
 			int s3 = dis.readShort();
@@ -85,7 +85,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s3; i1++) {
 				v11.add(dis.readShort());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v11);
+			dataWrapper = new GameDataWrapper(dataType, v11);
 			break;
 		case INT_ARRAY:
 			int s4 = dis.readShort();
@@ -93,7 +93,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s4; i1++) {
 				v12.add(dis.readInt());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v12);
+			dataWrapper = new GameDataWrapper(dataType, v12);
 			break;
 		case LONG_ARRAY:
 			int s5 = dis.readShort();
@@ -101,7 +101,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s5; i1++) {
 				v13.add(dis.readShort());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v13);
+			dataWrapper = new GameDataWrapper(dataType, v13);
 			break;
 		case FLOAT_ARRAY:
 			int s6 = dis.readShort();
@@ -109,7 +109,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s6; i1++) {
 				v15.add(dis.readFloat());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v15);
+			dataWrapper = new GameDataWrapper(dataType, v15);
 			break;
 		case DOUBLE_ARRAY:
 			int s7 = dis.readShort();
@@ -117,7 +117,7 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s7; i1++) {
 				v16.add(dis.readDouble());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v16);
+			dataWrapper = new GameDataWrapper(dataType, v16);
 			break;
 		case STRING_ARRAY:
 			int s8 = dis.readShort();
@@ -125,27 +125,27 @@ public class BinarySerializer {
 			for (int i1 = 0; i1 < s8; i1++) {
 				v14.add(dis.readUTF());
 			}
-			dataWrapper = new SMDataWrapper(dataType, v14);
+			dataWrapper = new GameDataWrapper(dataType, v14);
 			break;
 		case OBJECT:
-			SMObject v17 = readGUObject(dis);
-			dataWrapper = new SMDataWrapper(dataType, v17);
+			GameObject v17 = readGUObject(dis);
+			dataWrapper = new GameDataWrapper(dataType, v17);
 			break;
 		case OBJECT_ARRAY:
 			int s10 = dis.readShort();
 			Collection v18 = new ArrayList();
 			for (int i2 = 0; i2 < s10; i2++) {
-				SMObject v19 = readGUObject(dis);
+				GameObject v19 = readGUObject(dis);
 				v18.add(v19);
 			}
-			dataWrapper = new SMDataWrapper(dataType, v18);
+			dataWrapper = new GameDataWrapper(dataType, v18);
 			break;
 		}
 		return dataWrapper;
 	}
 
-	private static SMObject readGUObject(DataInputStream dis) throws IOException {
-		SMObject object = new SMObject();
+	private static GameObject readGUObject(DataInputStream dis) throws IOException {
+		GameObject object = new GameObject();
 		// (1) 类型
 		String type = dis.readUTF();
 		object.setType(type);
@@ -161,7 +161,7 @@ public class BinarySerializer {
 		return object;
 	}
 
-	private static void writeGUDataWrapper(SMDataWrapper dataWrapper,
+	private static void writeGUDataWrapper(GameDataWrapper dataWrapper,
 			DataOutputStream dos) throws IOException {
 
 		// (1) 类型
@@ -250,20 +250,20 @@ public class BinarySerializer {
 			}
 			break;
 		case OBJECT:
-			SMObject obj = (SMObject) v;
+			GameObject obj = (GameObject) v;
 			writeIGUObject(dos, obj);
 			break;
 		case OBJECT_ARRAY:
-			Collection<SMObject> v9 = (Collection<SMObject>) v;
+			Collection<GameObject> v9 = (Collection<GameObject>) v;
 			dos.writeShort(v9.size());
-			for (SMObject obj2 : v9) {
+			for (GameObject obj2 : v9) {
 				writeIGUObject(dos, obj2);
 			}
 			break;
 		}
 	}
 
-	private static void writeIGUObject(DataOutputStream dos, SMObject object)
+	private static void writeIGUObject(DataOutputStream dos, GameObject object)
 			throws IOException {
 		// (1)类型
 		dos.writeUTF(object.getType());

@@ -8,24 +8,24 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-public class SMObject {
-	public static SMObject createFromBytes(byte[] bytes) {
+public class GameObject {
+	public static GameObject createFromBytes(byte[] bytes) {
 		try {
 			return BinarySerializer.binary2object(bytes);
 		} catch (IOException e) {
-			Logger.getLogger(SMObject.class).error(
+			Logger.getLogger(GameObject.class).error(
 					"Cann't create GUObject from byte array.");
 			return null;
 		}
 	}
 
-	public static SMObject createFromJson(String jsonStr) {
+	public static GameObject createFromJson(String jsonStr) {
 		return JsonSerializer.json2object(jsonStr);
 	}
 
 	private String type;
 
-	private Map<String, SMDataWrapper> dataHolder = new HashMap<String, SMDataWrapper>();
+	private Map<String, GameDataWrapper> dataHolder = new HashMap<String, GameDataWrapper>();
 
 	public void clear() {
 		dataHolder.clear();
@@ -33,12 +33,12 @@ public class SMObject {
 
 	// 以下为getter方法
 
-	public SMDataWrapper get(String key) {
+	public GameDataWrapper get(String key) {
 		return dataHolder.get(key);
 	}
 
 	public Boolean getBool(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -48,7 +48,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Boolean> getBoolArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -57,7 +57,7 @@ public class SMObject {
 	}
 
 	public Byte getByte(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -66,7 +66,7 @@ public class SMObject {
 	}
 
 	public byte[] getByteArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -75,7 +75,7 @@ public class SMObject {
 	}
 
 	public Double getDouble(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -85,7 +85,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Double> getDoubleArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -94,7 +94,7 @@ public class SMObject {
 	}
 
 	public Float getFloat(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -104,7 +104,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Float> getFloatArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -113,7 +113,7 @@ public class SMObject {
 	}
 
 	public Integer getInt(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -123,7 +123,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Integer> getIntArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -136,7 +136,7 @@ public class SMObject {
 	}
 
 	public Long getLong(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -146,7 +146,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Long> getLongArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -154,27 +154,27 @@ public class SMObject {
 			return (Collection<Long>) o.getValue();
 	}
 
-	public SMObject getObject(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+	public GameObject getObject(String key) {
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (SMObject) o.getValue();
+			return (GameObject) o.getValue();
 	}
 
 	@SuppressWarnings("unchecked")
-	public Collection<SMObject> getObjectArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+	public Collection<GameObject> getObjectArray(String key) {
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
 		else
-			return (Collection<SMObject>) o.getValue();
+			return (Collection<GameObject>) o.getValue();
 	}
 
 	public Short getShort(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -184,7 +184,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Short> getShortArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -193,7 +193,7 @@ public class SMObject {
 	}
 
 	public String getString(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -203,7 +203,7 @@ public class SMObject {
 
 	@SuppressWarnings("unchecked")
 	public Collection<String> getStringArray(String key) {
-		SMDataWrapper o = dataHolder.get(key);
+		GameDataWrapper o = dataHolder.get(key);
 
 		if (o == null)
 			return null;
@@ -217,82 +217,82 @@ public class SMObject {
 
 	// 以下为setter方法
 
-	public void put(String key, SMDataWrapper wrappedObject) {
+	public void put(String key, GameDataWrapper wrappedObject) {
 		putObj(key, wrappedObject, null);
 	}
 
 	public void putBool(String key, boolean value) {
-		putObj(key, value, SMDataType.BOOL);
+		putObj(key, value, GameDataType.BOOL);
 	}
 
 	public void putBoolArray(String key, Collection<Boolean> value) {
-		putObj(key, value, SMDataType.BOOL_ARRAY);
+		putObj(key, value, GameDataType.BOOL_ARRAY);
 	}
 
 	public void putByte(String key, byte value) {
-		putObj(key, value, SMDataType.BYTE);
+		putObj(key, value, GameDataType.BYTE);
 	}
 
 	public void putByteArray(String key, byte[] value) {
-		putObj(key, value, SMDataType.BYTE_ARRAY);
+		putObj(key, value, GameDataType.BYTE_ARRAY);
 	}
 
 	public void putDouble(String key, double value) {
-		putObj(key, value, SMDataType.DOUBLE);
+		putObj(key, value, GameDataType.DOUBLE);
 	}
 
 	public void putDoubleArray(String key, Collection<Double> value) {
-		putObj(key, value, SMDataType.DOUBLE_ARRAY);
+		putObj(key, value, GameDataType.DOUBLE_ARRAY);
 	}
 
 	public void putFloat(String key, float value) {
-		putObj(key, value, SMDataType.FLOAT);
+		putObj(key, value, GameDataType.FLOAT);
 	}
 
 	public void putFloatArray(String key, Collection<Float> value) {
-		putObj(key, value, SMDataType.FLOAT_ARRAY);
+		putObj(key, value, GameDataType.FLOAT_ARRAY);
 	}
 
 	public void putInt(String key, int value) {
-		putObj(key, value, SMDataType.INT);
+		putObj(key, value, GameDataType.INT);
 	}
 
 	public void putIntArray(String key, Collection<Integer> value) {
-		putObj(key, value, SMDataType.INT_ARRAY);
+		putObj(key, value, GameDataType.INT_ARRAY);
 	}
 
 	public void putLong(String key, long value) {
-		putObj(key, value, SMDataType.LONG);
+		putObj(key, value, GameDataType.LONG);
 	}
 
 	public void putLongArray(String key, Collection<Long> value) {
-		putObj(key, value, SMDataType.LONG_ARRAY);
+		putObj(key, value, GameDataType.LONG_ARRAY);
 	}
 
-	public void putObject(String key, SMObject value) {
-		putObj(key, value, SMDataType.OBJECT);
+	public void putObject(String key, GameObject value) {
+		putObj(key, value, GameDataType.OBJECT);
 	}
 
-	public void putObjectArray(String key, Collection<SMObject> value) {
-		putObj(key, value, SMDataType.OBJECT_ARRAY);
+	public void putObjectArray(String key, Collection<GameObject> value) {
+		putObj(key, value, GameDataType.OBJECT_ARRAY);
 	}
 
 	public void putShort(String key, short value) {
-		putObj(key, value, SMDataType.SHORT);
+		putObj(key, value, GameDataType.SHORT);
 	}
 
 	public void putShortArray(String key, Collection<Short> value) {
-		putObj(key, value, SMDataType.SHORT_ARRAY);
+		putObj(key, value, GameDataType.SHORT_ARRAY);
 	}
 
 	// 以下为其他方法
 
 	public void putString(String key, String value) {
-		putObj(key, value, SMDataType.STRING);
+		putObj(key, value, GameDataType.STRING);
 	}
 
 	public void putStringArray(String key, Collection<String> value) {
-		putObj(key, value, SMDataType.STRING_ARRAY);
+		putObj(key, value, GameDataType.STRING_ARRAY);
 	}
 
 	public void remove(String key) {
@@ -331,7 +331,7 @@ public class SMObject {
 		return buf.toString();
 	}
 
-	private void putObj(String key, Object value, SMDataType typeId) {
+	private void putObj(String key, Object value, GameDataType typeId) {
 		if (key == null)
 			throw new IllegalArgumentException(
 					"GUObject requires a non-null key for a 'put' operation!");
@@ -344,9 +344,9 @@ public class SMObject {
 			throw new IllegalArgumentException(
 					"GUObject requires a non-null value!");
 
-		if (value instanceof SMDataWrapper)
-			dataHolder.put(key, (SMDataWrapper) value);
+		if (value instanceof GameDataWrapper)
+			dataHolder.put(key, (GameDataWrapper) value);
 		else
-			dataHolder.put(key, new SMDataWrapper(typeId, value));
+			dataHolder.put(key, new GameDataWrapper(typeId, value));
 	}
 }

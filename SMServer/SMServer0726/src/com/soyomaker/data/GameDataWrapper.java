@@ -1,10 +1,10 @@
 package com.soyomaker.data;
 
-public class SMDataWrapper {
-	private SMDataType type;
+public class GameDataWrapper {
+	private GameDataType type;
 	private Object value;
 
-	public SMDataWrapper(SMDataType type, Object value) {
+	public GameDataWrapper(GameDataType type, Object value) {
 		this.type = type;
 		this.value = value;
 	}
@@ -13,7 +13,7 @@ public class SMDataWrapper {
 		return value;
 	}
 
-	public SMDataType getType() {
+	public GameDataType getType() {
 		return type;
 	}
 
