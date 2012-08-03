@@ -3,8 +3,8 @@ package com.soyomaker.cache;
 import net.sf.ehcache.CacheManager;
 
 import com.soyomaker.common.AbstractBean;
+import com.soyomaker.common.GameObject;
 import com.soyomaker.common.IService;
-import com.soyomaker.data.GameObject;
 
 public class CacheService extends AbstractBean implements IService {
 	private CacheManager cacheManager = new CacheManager();

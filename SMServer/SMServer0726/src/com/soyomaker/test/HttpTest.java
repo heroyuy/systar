@@ -11,8 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.data.GameObject;
-import com.soyomaker.data.GameObject;
+import com.soyomaker.common.GameObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**

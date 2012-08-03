@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soyomaker.data.GameObject;
+import com.soyomaker.common.GameObject;
 
 public class EventHandlerFactory {
 	private Map<String, List<IEventHandler>> handlerMap = new HashMap<String, List<IEventHandler>>();

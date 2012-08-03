@@ -1,6 +1,6 @@
 package com.soyomaker.event;
 
-import com.soyomaker.data.GameObject;
+import com.soyomaker.common.GameObject;
 
 public interface IEventHandler {
 	/**

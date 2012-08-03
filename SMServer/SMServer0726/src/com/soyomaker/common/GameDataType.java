@@ -1,4 +1,4 @@
-package com.soyomaker.data;
+package com.soyomaker.common;
 
 public enum GameDataType {
 	BOOL(0), BYTE(1), SHORT(2), INT(3), LONG(4), FLOAT(5), DOUBLE(6), STRING(7), OBJECT(

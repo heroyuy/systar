@@ -1,4 +1,4 @@
-package com.soyomaker.data;
+package com.soyomaker.common;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

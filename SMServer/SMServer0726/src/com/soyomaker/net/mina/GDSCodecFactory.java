@@ -2,7 +2,7 @@ package com.soyomaker.net.mina;
 
 import org.apache.mina.filter.codec.demux.DemuxingProtocolCodecFactory;
 
-import com.soyomaker.data.GameObject;
+import com.soyomaker.common.GameObject;
 
 public class GDSCodecFactory extends DemuxingProtocolCodecFactory {
 	public GDSCodecFactory() {

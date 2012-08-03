@@ -1,4 +1,4 @@
-package com.soyomaker.data;
+package com.soyomaker.common;
 
 public class GameDataWrapper {
 	private GameDataType type;
