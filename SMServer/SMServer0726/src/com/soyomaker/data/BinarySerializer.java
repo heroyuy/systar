@@ -23,6 +23,7 @@ public class BinarySerializer {
 		return baos.toByteArray();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static GameDataWrapper readGUDataWrapper(DataInputStream dis)
 			throws IOException {
 		GameDataWrapper dataWrapper = null;
@@ -144,7 +145,8 @@ public class BinarySerializer {
 		return dataWrapper;
 	}
 
-	private static GameObject readGUObject(DataInputStream dis) throws IOException {
+	private static GameObject readGUObject(DataInputStream dis)
+			throws IOException {
 		GameObject object = new GameObject();
 		// (1) 类型
 		String type = dis.readUTF();
@@ -161,6 +163,7 @@ public class BinarySerializer {
 		return object;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void writeGUDataWrapper(GameDataWrapper dataWrapper,
 			DataOutputStream dos) throws IOException {
 

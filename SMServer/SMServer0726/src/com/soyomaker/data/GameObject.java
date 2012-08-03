@@ -6,15 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 public class GameObject {
 	public static GameObject createFromBytes(byte[] bytes) {
 		try {
 			return BinarySerializer.binary2object(bytes);
 		} catch (IOException e) {
-			Logger.getLogger(GameObject.class).error(
-					"Cann't create GUObject from byte array.");
+			System.out.println("Cann't create GUObject from byte array.");
 			return null;
 		}
 	}
@@ -311,8 +308,7 @@ public class GameObject {
 		try {
 			return BinarySerializer.object2binary(this);
 		} catch (IOException e) {
-			Logger.getLogger(getClass()).error(
-					"Cann't serialize GUObject to byte array.");
+			System.out.println("Cann't serialize GUObject to byte array.");
 			return new byte[0];
 		}
 	}

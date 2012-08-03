@@ -59,9 +59,10 @@ public class JsonSerializer {
 			}
 			// Unknown type
 			else {
-				throw new IllegalArgumentException(String.format(
-						"Unrecognized DataType while converting JSONObject 2 GUObject. Object: %s, Type: %s", obj, (obj == null) ? "null"
-								: obj.getClass()));
+				throw new IllegalArgumentException(
+						String.format(
+								"Unrecognized DataType while converting JSONObject 2 GUObject. Object: %s, Type: %s",
+								obj, (obj == null) ? "null" : obj.getClass()));
 			}
 		}
 		return resObj;
@@ -85,7 +86,8 @@ public class JsonSerializer {
 			} else if (dataType == GameDataType.OBJECT_ARRAY) {
 				Collection<Map<String, Object>> c = new ArrayList<Map<String, Object>>();
 				@SuppressWarnings("unchecked")
-				Collection<GameObject> data = (Collection<GameObject>) dataWrapper.getValue();
+				Collection<GameObject> data = (Collection<GameObject>) dataWrapper
+						.getValue();
 				for (GameObject iguObj : data) {
 					c.add(object2map(iguObj));
 				}
@@ -104,7 +106,9 @@ public class JsonSerializer {
 	 * @param resObj
 	 * @param jsonArray
 	 */
-	private static void putJSONArrayInGUObject(String key, GameObject resObj, JSONArray jsonArray) {
+	@SuppressWarnings("unchecked")
+	private static void putJSONArrayInGUObject(String key, GameObject resObj,
+			JSONArray jsonArray) {
 		if (!jsonArray.isEmpty()) {
 			Object value = jsonArray.get(0);
 			if (value instanceof Integer) {
@@ -136,9 +140,11 @@ public class JsonSerializer {
 			}
 			// Unknown type
 			else {
-				throw new IllegalArgumentException(String.format(
-						"Unrecognized DataType while converting JSONObject 2 GUObject. Object: %s, Type: %s", value,
-						(value == null) ? "null" : value.getClass()));
+				throw new IllegalArgumentException(
+						String.format(
+								"Unrecognized DataType while converting JSONObject 2 GUObject. Object: %s, Type: %s",
+								value,
+								(value == null) ? "null" : value.getClass()));
 			}
 		} else {
 			resObj.putIntArray(key, new ArrayList<Integer>());
