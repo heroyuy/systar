@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="libs/saint.jar"/>
 	<classpathentry kind="lib" path="libs/com.soyomaker.xml_v1.6.jar"/>
 	<classpathentry kind="lib" path="libs/SoyoMaker.jar"/>
+	<classpathentry kind="lib" path="libs/mina-core-2.0.4.jar"/>
+	<classpathentry kind="lib" path="libs/com.soyomaker.lang.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
