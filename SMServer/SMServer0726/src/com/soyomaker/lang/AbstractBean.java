@@ -1,4 +1,4 @@
-package com.soyomaker.common;
+package com.soyomaker.lang;
 
 import java.util.HashMap;
 import java.util.Map;

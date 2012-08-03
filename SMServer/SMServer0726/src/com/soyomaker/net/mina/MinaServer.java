@@ -8,7 +8,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.INetService;
 import com.soyomaker.net.PlayerSession;
 

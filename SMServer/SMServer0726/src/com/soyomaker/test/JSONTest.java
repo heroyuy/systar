@@ -3,7 +3,7 @@ package com.soyomaker.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 
 public class JSONTest {
 

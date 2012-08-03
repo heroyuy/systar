@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soyomaker.common.GameDataType;
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameDataType;
+import com.soyomaker.lang.GameObject;
 
 public class TableProxy {
 

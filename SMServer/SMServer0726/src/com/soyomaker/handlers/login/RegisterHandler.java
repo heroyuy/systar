@@ -3,7 +3,7 @@ package com.soyomaker.handlers.login;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Model;
 import com.soyomaker.model.db.TableProxy;
 import com.soyomaker.net.IHandler;

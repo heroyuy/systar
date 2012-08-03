@@ -1,7 +1,7 @@
 package com.soyomaker.net;
 
-import com.soyomaker.common.GameObject;
-import com.soyomaker.common.IService;
+import com.soyomaker.lang.GameObject;
+import com.soyomaker.lang.IService;
 
 public interface INetService extends IService {
 

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
 

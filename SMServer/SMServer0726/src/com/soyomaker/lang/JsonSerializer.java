@@ -1,4 +1,4 @@
-package com.soyomaker.common;
+package com.soyomaker.lang;
 
 import java.util.ArrayList;
 import java.util.Collection;

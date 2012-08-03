@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**

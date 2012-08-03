@@ -7,7 +7,7 @@ import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PlayerSession;
 

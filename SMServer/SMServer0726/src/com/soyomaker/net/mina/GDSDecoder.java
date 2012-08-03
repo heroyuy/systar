@@ -6,7 +6,7 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.apache.mina.filter.codec.demux.MessageDecoderAdapter;
 import org.apache.mina.filter.codec.demux.MessageDecoderResult;
 
-import com.soyomaker.common.GameObject;
+import com.soyomaker.lang.GameObject;
 
 /**
  * 解码器。包结构：包长(int) 包体(byte[])
