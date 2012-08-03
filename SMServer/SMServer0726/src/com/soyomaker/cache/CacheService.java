@@ -4,7 +4,7 @@ import net.sf.ehcache.CacheManager;
 
 import com.soyomaker.common.AbstractBean;
 import com.soyomaker.common.IService;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 
 public class CacheService extends AbstractBean implements IService {
 	private CacheManager cacheManager = new CacheManager();

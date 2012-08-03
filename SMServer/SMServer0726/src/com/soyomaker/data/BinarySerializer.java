@@ -16,7 +16,7 @@ public class BinarySerializer {
 		return readGUObject(dis);
 	}
 
-	public static byte[] object2binary(ISMObject object) throws IOException {
+	public static byte[] object2binary(SMObject object) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFFER_SIZE);
 		DataOutputStream dos = new DataOutputStream(baos);
 		writeIGUObject(dos, object);
@@ -250,20 +250,20 @@ public class BinarySerializer {
 			}
 			break;
 		case OBJECT:
-			ISMObject obj = (ISMObject) v;
+			SMObject obj = (SMObject) v;
 			writeIGUObject(dos, obj);
 			break;
 		case OBJECT_ARRAY:
-			Collection<ISMObject> v9 = (Collection<ISMObject>) v;
+			Collection<SMObject> v9 = (Collection<SMObject>) v;
 			dos.writeShort(v9.size());
-			for (ISMObject obj2 : v9) {
+			for (SMObject obj2 : v9) {
 				writeIGUObject(dos, obj2);
 			}
 			break;
 		}
 	}
 
-	private static void writeIGUObject(DataOutputStream dos, ISMObject object)
+	private static void writeIGUObject(DataOutputStream dos, SMObject object)
 			throws IOException {
 		// (1)类型
 		dos.writeUTF(object.getType());

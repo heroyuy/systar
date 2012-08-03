@@ -7,7 +7,7 @@ import org.apache.mina.filter.codec.demux.MessageDecoderAdapter;
 import org.apache.mina.filter.codec.demux.MessageDecoderResult;
 
 import com.soyomaker.data.SMObject;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 
 /**
  * 解码器。包结构：包长(int) 包体(byte[])
@@ -37,7 +37,7 @@ public class GDSDecoder extends MessageDecoderAdapter {
 		int size = buf.getInt();
 		byte[] bs = new byte[size];
 		buf.get(bs);
-		ISMObject msg = SMObject.createFromBytes(bs);
+		SMObject msg = SMObject.createFromBytes(bs);
 		out.write(msg);
 		return MessageDecoderResult.OK;
 

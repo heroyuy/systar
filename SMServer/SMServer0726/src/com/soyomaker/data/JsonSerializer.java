@@ -17,7 +17,7 @@ public class JsonSerializer {
 
 	}
 
-	public static String object2json(ISMObject object) {
+	public static String object2json(SMObject object) {
 		Map<String, Object> map = object2map(object);
 		return JSONObject.fromObject(map).toString();
 	}
@@ -73,7 +73,7 @@ public class JsonSerializer {
 	 * @param object
 	 * @return
 	 */
-	private static Map<String, Object> object2map(ISMObject object) {
+	private static Map<String, Object> object2map(SMObject object) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Iterator<String> iterator = object.getKeys().iterator();
 		while (iterator.hasNext()) {
@@ -81,12 +81,12 @@ public class JsonSerializer {
 			SMDataWrapper dataWrapper = object.get(key);
 			SMDataType dataType = dataWrapper.getType();
 			if (dataType == SMDataType.OBJECT) {
-				map.put(key, object2map((ISMObject) dataWrapper.getValue()));
+				map.put(key, object2map((SMObject) dataWrapper.getValue()));
 			} else if (dataType == SMDataType.OBJECT_ARRAY) {
 				Collection<Map<String, Object>> c = new ArrayList<Map<String, Object>>();
 				@SuppressWarnings("unchecked")
-				Collection<ISMObject> data = (Collection<ISMObject>) dataWrapper.getValue();
-				for (ISMObject iguObj : data) {
+				Collection<SMObject> data = (Collection<SMObject>) dataWrapper.getValue();
+				for (SMObject iguObj : data) {
 					c.add(object2map(iguObj));
 				}
 				map.put(key, c);
@@ -123,7 +123,7 @@ public class JsonSerializer {
 				resObj.putStringArray(key, JSONArray.toCollection(jsonArray));
 				// JSON Object
 			} else if (value instanceof JSONObject) {
-				Collection<ISMObject> c = new ArrayList<ISMObject>();
+				Collection<SMObject> c = new ArrayList<SMObject>();
 				int size = jsonArray.size();
 				for (int i = 0; i < size; i++) {
 					c.add(jsonObject2GUObject((JSONObject) jsonArray.get(i)));

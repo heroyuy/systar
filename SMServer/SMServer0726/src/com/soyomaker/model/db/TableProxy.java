@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 import com.soyomaker.data.SMDataType;
 import com.soyomaker.data.SMObject;
 
@@ -42,7 +42,7 @@ public class TableProxy {
 		return sb.toString();
 	}
 
-	private static Object getValue(String key, ISMObject obj) {
+	private static Object getValue(String key, SMObject obj) {
 		return obj.get(key).getValue();
 	}
 
@@ -73,13 +73,13 @@ public class TableProxy {
 		return tableName;
 	}
 
-	public boolean insert(ISMObject data) {
+	public boolean insert(SMObject data) {
 		List<String> keys = new ArrayList<String>();
 		keys.addAll(fieldMap.keySet());
 		return this.insert(keys, data);
 	}
 
-	public boolean insert(List<String> keys, ISMObject data) {
+	public boolean insert(List<String> keys, SMObject data) {
 		String psSql = "insert into " + this.getTableName() + "("
 				+ TableProxy.getKeyString(keys) + ")" + " values ("
 				+ TableProxy.getMarkString(keys.size()) + ")";
@@ -101,8 +101,8 @@ public class TableProxy {
 		}
 	}
 
-	public ISMObject selectSingleWhere(List<String> keys, List<Object> values) {
-		List<ISMObject> resList = this.selectWhere(keys, values);
+	public SMObject selectSingleWhere(List<String> keys, List<Object> values) {
+		List<SMObject> resList = this.selectWhere(keys, values);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {
@@ -110,8 +110,8 @@ public class TableProxy {
 		}
 	}
 
-	public ISMObject selectSingleWhere(String key, Object value) {
-		List<ISMObject> resList = this.selectWhere(key, value);
+	public SMObject selectSingleWhere(String key, Object value) {
+		List<SMObject> resList = this.selectWhere(key, value);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {
@@ -119,17 +119,17 @@ public class TableProxy {
 		}
 	}
 
-	public List<ISMObject> selectWhere(List<String> keys, List<Object> values) {
+	public List<SMObject> selectWhere(List<String> keys, List<Object> values) {
 		String psSql = "select * from " + this.getTableName() + " where "
 				+ TableProxy.getKeyString(keys) + " = "
 				+ TableProxy.getMarkString(keys.size());
-		final List<ISMObject> resList = new ArrayList<ISMObject>();
+		final List<SMObject> resList = new ArrayList<SMObject>();
 		SQLUtil.query(psSql, values, new IResultSetProcessor() {
 			@Override
 			public void proceResultSet(ResultSet rs) {
 				try {
 					while (rs.next()) {
-						ISMObject obj = new SMObject();
+						SMObject obj = new SMObject();
 						for (String key : fieldMap.keySet()) {
 							SMDataType type = fieldMap.get(key);
 							switch (type) {
@@ -156,7 +156,7 @@ public class TableProxy {
 		return resList;
 	}
 
-	public List<ISMObject> selectWhere(String key, Object value) {
+	public List<SMObject> selectWhere(String key, Object value) {
 		List<String> keys = new ArrayList<String>();
 		keys.add(key);
 		List<Object> values = new ArrayList<Object>();
@@ -164,8 +164,8 @@ public class TableProxy {
 		return this.selectWhere(keys, values);
 	}
 
-	public ISMObject selectWherePrimaryKey(Object value) {
-		List<ISMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
+	public SMObject selectWherePrimaryKey(Object value) {
+		List<SMObject> resList = this.selectWhere(this.getPrimaryKey(), value);
 		if (resList.size() > 0) {
 			return resList.get(0);
 		} else {

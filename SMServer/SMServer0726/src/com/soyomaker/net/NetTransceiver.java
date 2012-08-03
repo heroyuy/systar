@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
 
@@ -76,7 +76,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void sendMessage(PlayerSession session, ISMObject msg) {
+	public void sendMessage(PlayerSession session, SMObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
@@ -98,7 +98,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void dispatchMessage(PlayerSession session, ISMObject msg) {
+	public void dispatchMessage(PlayerSession session, SMObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议

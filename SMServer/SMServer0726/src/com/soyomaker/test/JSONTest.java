@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.soyomaker.data.SMObject;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 
 public class JSONTest {
 
@@ -27,7 +27,7 @@ public class JSONTest {
 		obj1.putIntArray("intArray", c1);
 		System.out.println(obj1.toJson());
 		// 4
-		Collection<ISMObject> c2 = new ArrayList<ISMObject>();
+		Collection<SMObject> c2 = new ArrayList<SMObject>();
 		SMObject obj3 = new SMObject();
 		obj3.putInt("id", 101002);
 		SMObject obj4 = new SMObject();
@@ -38,7 +38,7 @@ public class JSONTest {
 		System.out.println(obj1.toJson());
 		// ======================================================
 		System.out.println("======================================================");
-		ISMObject obj5 = SMObject.createFromJson(obj1.toJson());
+		SMObject obj5 = SMObject.createFromJson(obj1.toJson());
 		System.out.println(obj5.toJson());
 	}
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.soyomaker.data.SMObject;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**
@@ -32,7 +32,7 @@ public class HttpTest {
 		SMObject msg = new SMObject();
 		msg.setType("test");
 		msg.putString("hello", "server");
-		Collection<ISMObject> c = new ArrayList<ISMObject>();
+		Collection<SMObject> c = new ArrayList<SMObject>();
 		c.add(msg);
 		SMObject packSend = new SMObject();
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
@@ -61,7 +61,7 @@ public class HttpTest {
 			}
 			data = bos.toByteArray();
 			bos.close();
-			ISMObject resMsg = SMObject.createFromBytes(data);
+			SMObject resMsg = SMObject.createFromBytes(data);
 			System.out.println("HttpTest收到包:" + len + " ->" + resMsg);
 			connection.disconnect();
 			dis.close();

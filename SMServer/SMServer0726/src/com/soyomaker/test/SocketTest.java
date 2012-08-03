@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.soyomaker.data.SMObject;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 import com.soyomaker.net.mina.PackageConst;
 
 /**
@@ -26,7 +26,7 @@ public class SocketTest {
 		msg.setType("101005");
 		msg.putString("username", "wp_g4");
 		msg.putString("password", "2724504");
-		Collection<ISMObject> c = new ArrayList<ISMObject>();
+		Collection<SMObject> c = new ArrayList<SMObject>();
 		c.add(msg);
 		SMObject packSend = new SMObject();
 		packSend.setType(PackageConst.PACKAGE_TYPE_NAME);
@@ -46,7 +46,7 @@ public class SocketTest {
 				int len = dis.readInt();
 				byte[] bytes = new byte[len];
 				dis.read(bytes);
-				ISMObject resMsg = SMObject.createFromBytes(bytes);
+				SMObject resMsg = SMObject.createFromBytes(bytes);
 				System.out.println("socket收到:" + resMsg.toJson());
 			}
 			dis.close();

@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 import com.soyomaker.common.AbstractBean;
 import com.soyomaker.data.SMObject;
-import com.soyomaker.data.ISMObject;
+import com.soyomaker.data.SMObject;
 
 public class AsyncEventService extends AbstractBean implements IEventService {
 	private ArrayBlockingQueue<SMObject> msgQueue;
