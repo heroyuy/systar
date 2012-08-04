@@ -4,10 +4,10 @@ import com.soyomaker.lang.GameObject;
 
 public interface NetListener {
 
-	public void onMessageReceived(GameObject msg);
-
 	public void onConnected();
 
 	public boolean onDisconnected();
+
+	public void onMessageReceived(GameObject msg);
 
 }

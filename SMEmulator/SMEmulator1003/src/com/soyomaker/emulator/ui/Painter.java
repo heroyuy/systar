@@ -73,22 +73,6 @@ public class Painter {
 	}
 
 	/**
-	 * 根据tint参数构造RescaleOp
-	 * 
-	 * @return RescaleOp对象
-	 */
-	private RescaleOp buildRescaleOp() {
-		if (Math.abs(tint[0] - 1.0f) < 1.0e-2 && Math.abs(tint[1] - 1.0f) < 1.0e-2 && Math.abs(tint[2] - 1.0f) < 1.0e-2
-				&& Math.abs(tint[3] - 0.0f) < 1.0e-2 && Math.abs(tint[4] - 0.0f) < 1.0e-2
-				&& Math.abs(tint[5] - 0.0f) < 1.0e-2) {
-			return null;
-		}
-		float[] scales = new float[] { tint[0], tint[1], tint[2], 1.0f };
-		float[] offsets = new float[] { tint[3], tint[4], tint[5], 1.0f };
-		return new RescaleOp(scales, offsets, null);
-	}
-
-	/**
 	 * 裁剪区域
 	 * 
 	 * @param x
@@ -112,74 +96,6 @@ public class Painter {
 	 */
 	public void clipRect(Rect rect) {
 		graphics.clipRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}
-
-	/**
-	 * 坐标转换
-	 * 
-	 * @param x
-	 *            x坐标
-	 * @param y
-	 *            y坐标
-	 * @param width
-	 *            宽度
-	 * @param height
-	 *            高度
-	 * @param anchor
-	 *            锚点
-	 * @return 新的坐标
-	 */
-	private int[] convert(int x, int y, int width, int height, int anchor) {
-		int[] xy = { 0, 0 };
-		switch (anchor) {
-		case Painter.LT: {
-			xy[0] = x;
-			xy[1] = y;
-		}
-			break;
-		case Painter.LV: {
-			xy[0] = x;
-			xy[1] = y - height / 2;
-		}
-			break;
-		case Painter.LB: {
-			xy[0] = x;
-			xy[1] = y - height;
-		}
-			break;
-		case Painter.HT: {
-			xy[0] = x - width / 2;
-			xy[1] = y;
-		}
-			break;
-		case Painter.HV: {
-			xy[0] = x - width / 2;
-			xy[1] = y - height / 2;
-		}
-			break;
-		case Painter.HB: {
-			xy[0] = x - width / 2;
-			xy[1] = y - height;
-		}
-			break;
-		case Painter.RT: {
-
-			xy[0] = x - width;
-			xy[1] = y;
-		}
-			break;
-		case Painter.RV: {
-			xy[0] = x - width;
-			xy[1] = y - height / 2;
-		}
-			break;
-		case Painter.RB: {
-			xy[0] = x - width;
-			xy[1] = y - height;
-		}
-			break;
-		}
-		return xy;
 	}
 
 	/**
@@ -402,12 +318,12 @@ public class Painter {
 		thetaX = Math.toRadians(thetaX);
 		thetaY = Math.toRadians(thetaY);
 		// x方向
-		AffineTransform atx = new AffineTransform(Math.cos(thetaX), Math.sin(thetaX), 0, 1, (1 - Math.cos(thetaX)) * x,
-				-Math.sin(thetaX) * x);
+		AffineTransform atx = new AffineTransform(Math.cos(thetaX), Math.sin(thetaX), 0, 1, (1 - Math.cos(thetaX)) * x, -Math.sin(thetaX)
+				* x);
 		graphics.transform(atx);
 		// y方向
-		AffineTransform aty = new AffineTransform(1, 0, Math.sin(thetaY), Math.cos(thetaY), -Math.sin(thetaY) * y,
-				(1 - Math.cos(thetaY)) * y);
+		AffineTransform aty = new AffineTransform(1, 0, Math.sin(thetaY), Math.cos(thetaY), -Math.sin(thetaY) * y, (1 - Math.cos(thetaY))
+				* y);
 		graphics.transform(aty);
 		double a = 0.25f;// 椭圆短半轴是长半轴的0.25倍
 		double cosx2 = Math.pow(Math.cos(thetaX), 2);
@@ -715,6 +631,89 @@ public class Painter {
 	 */
 	public void translate(double tx, double ty) {
 		graphics.translate(tx, ty);
+	}
+
+	/**
+	 * 根据tint参数构造RescaleOp
+	 * 
+	 * @return RescaleOp对象
+	 */
+	private RescaleOp buildRescaleOp() {
+		if (Math.abs(tint[0] - 1.0f) < 1.0e-2 && Math.abs(tint[1] - 1.0f) < 1.0e-2 && Math.abs(tint[2] - 1.0f) < 1.0e-2
+				&& Math.abs(tint[3] - 0.0f) < 1.0e-2 && Math.abs(tint[4] - 0.0f) < 1.0e-2 && Math.abs(tint[5] - 0.0f) < 1.0e-2) {
+			return null;
+		}
+		float[] scales = new float[] { tint[0], tint[1], tint[2], 1.0f };
+		float[] offsets = new float[] { tint[3], tint[4], tint[5], 1.0f };
+		return new RescaleOp(scales, offsets, null);
+	}
+
+	/**
+	 * 坐标转换
+	 * 
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 * @param anchor
+	 *            锚点
+	 * @return 新的坐标
+	 */
+	private int[] convert(int x, int y, int width, int height, int anchor) {
+		int[] xy = { 0, 0 };
+		switch (anchor) {
+		case Painter.LT: {
+			xy[0] = x;
+			xy[1] = y;
+		}
+			break;
+		case Painter.LV: {
+			xy[0] = x;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.LB: {
+			xy[0] = x;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.HT: {
+			xy[0] = x - width / 2;
+			xy[1] = y;
+		}
+			break;
+		case Painter.HV: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.HB: {
+			xy[0] = x - width / 2;
+			xy[1] = y - height;
+		}
+			break;
+		case Painter.RT: {
+
+			xy[0] = x - width;
+			xy[1] = y;
+		}
+			break;
+		case Painter.RV: {
+			xy[0] = x - width;
+			xy[1] = y - height / 2;
+		}
+			break;
+		case Painter.RB: {
+			xy[0] = x - width;
+			xy[1] = y - height;
+		}
+			break;
+		}
+		return xy;
 	}
 
 }

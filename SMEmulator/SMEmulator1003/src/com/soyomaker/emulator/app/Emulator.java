@@ -67,6 +67,20 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 		}
 	}
 
+	/**
+	 * 插件启动
+	 */
+	public void start() {
+		if (AppData.getInstance().getCurProject() == null) {
+			JOptionPane.showMessageDialog(this, "请先打开工程");
+		} else {
+			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_SUCCESSFUL);
+			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_FAILURE);
+			AppData.getInstance().buildGame();
+
+		}
+	}
+
 	private void initGame() {
 		try {
 			game = (IGame) Class.forName("com.soyomaker.emulator.app.Game").newInstance();
@@ -123,20 +137,6 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 
 	private void setType(int type) {
 		this.type = type;
-	}
-
-	/**
-	 * 插件启动
-	 */
-	public void start() {
-		if (AppData.getInstance().getCurProject() == null) {
-			JOptionPane.showMessageDialog(this, "请先打开工程");
-		} else {
-			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_SUCCESSFUL);
-			Notifier.getInstance().addObserver(this, EventIdConst.GAME_BUILD_FAILURE);
-			AppData.getInstance().buildGame();
-
-		}
 	}
 
 	/**

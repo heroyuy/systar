@@ -32,14 +32,6 @@ public class GameConfig {
 
 	private String ip = null;
 
-	public String getIp() {
-		return ip;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
 	private int port = 0;
 
 	private String gamePath = null;
@@ -72,6 +64,14 @@ public class GameConfig {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public int getPort() {
+		return port;
 	}
 
 	public int getRatedFPS() {

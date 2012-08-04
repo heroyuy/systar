@@ -35,10 +35,6 @@ public class Image {
 
 	private Painter painter = null;
 
-	private Image() {
-
-	}
-
 	/**
 	 * 根据指定的Image对象创建一个新的Image对象
 	 * 
@@ -84,6 +80,10 @@ public class Image {
 		} catch (IOException ex) {
 			Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}
+
+	private Image() {
+
 	}
 
 	/**
@@ -185,10 +185,6 @@ public class Image {
 		return res;
 	}
 
-	BufferedImage getContent() {
-		return content;
-	}
-
 	/**
 	 * 返回 Image 的高度。
 	 * 
@@ -205,6 +201,10 @@ public class Image {
 	 */
 	public Painter getPainter() {
 		return painter;
+	}
+
+	public Color getRGB(int x, int y) {
+		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
 	}
 
 	//
@@ -243,10 +243,6 @@ public class Image {
 	// }
 	// return image;
 	// }
-
-	public Color getRGB(int x, int y) {
-		return ColorFactory.getInstance().parseInt(content.getRGB(x, y));
-	}
 
 	public Image getSubImage(int x, int y, int w, int h) {
 		Image res = new Image();
@@ -293,8 +289,7 @@ public class Image {
 			tx = (int) (this.getHeight() * Math.sin(radian));
 			ty = 0;
 		} else if (angle > 90 && angle <= 180) {
-			tx = (int) (this.getHeight() * Math.cos(radian - Math.PI / 2) + this.getWidth()
-					* Math.sin(radian - Math.PI / 2));
+			tx = (int) (this.getHeight() * Math.cos(radian - Math.PI / 2) + this.getWidth() * Math.sin(radian - Math.PI / 2));
 			ty = (int) (this.getHeight() * Math.sin(radian - Math.PI / 2));
 		} else if (angle > 180 && angle <= 270) {
 			tx = (int) (this.getWidth() * Math.cos(radian - Math.PI));
@@ -360,5 +355,9 @@ public class Image {
 		RescaleOp rop = new RescaleOp(scales, offsets, null);
 		g2d.drawImage(this.content, rop, 0, 0);
 		return image;
+	}
+
+	BufferedImage getContent() {
+		return content;
 	}
 }
