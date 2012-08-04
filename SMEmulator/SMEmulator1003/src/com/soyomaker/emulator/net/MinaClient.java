@@ -5,14 +5,30 @@ import java.net.InetSocketAddress;
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandler;
+import org.apache.mina.core.session.IdleStatus;
+import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+
+import com.soyomaker.lang.GameObject;
 
 public class MinaClient {
 
 	private String ip = null;
 
 	private int port = 0;
+
+	private NetListener listener = null;
+
+	private IoSession session = null;
+
+	public NetListener getListener() {
+		return listener;
+	}
+
+	public void setListener(NetListener listener) {
+		this.listener = listener;
+	}
 
 	public String getIp() {
 		return ip;
@@ -22,17 +38,10 @@ public class MinaClient {
 		return port;
 	}
 
-	public IoHandler getHandler() {
-		return handler;
-	}
-
-	private IoHandler handler = null;
-
-	public MinaClient(String ip, int port, IoHandler handler) {
+	public MinaClient(String ip, int port) {
 		super();
 		this.ip = ip;
 		this.port = port;
-		this.handler = handler;
 	}
 
 	public void start() {
@@ -44,7 +53,49 @@ public class MinaClient {
 		chain.addLast("myChin", new ProtocolCodecFilter(new GameObjectCodecFactory()));
 
 		// 消息处理器
-		connector.setHandler(new MinaHandler());
+		connector.setHandler(new IoHandler() {
+
+			@Override
+			public void sessionOpened(IoSession arg0) throws Exception {
+				if (listener != null) {
+					listener.onConnected();
+				}
+			}
+
+			@Override
+			public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {
+
+			}
+
+			@Override
+			public void sessionCreated(IoSession arg0) throws Exception {
+
+			}
+
+			@Override
+			public void sessionClosed(IoSession arg0) throws Exception {
+				if (listener != null) {
+					listener.onDisconnected();
+				}
+			}
+
+			@Override
+			public void messageSent(IoSession arg0, Object arg1) throws Exception {
+
+			}
+
+			@Override
+			public void messageReceived(IoSession arg0, Object msg) throws Exception {
+				if (listener != null) {
+					listener.onMessageReceived((GameObject) msg);
+				}
+			}
+
+			@Override
+			public void exceptionCaught(IoSession arg0, Throwable arg1) throws Exception {
+
+			}
+		});
 
 		// 连接到服务器：
 		ConnectFuture cf = connector.connect(new InetSocketAddress(this.ip, this.port));
@@ -52,13 +103,17 @@ public class MinaClient {
 		// Wait for the connection attempt to be finished.
 		cf.awaitUninterruptibly();
 
-		cf.getSession().getCloseFuture().awaitUninterruptibly();
+		this.session = cf.getSession();
+
+		this.session.getCloseFuture().awaitUninterruptibly();
 
 		connector.dispose();
 	}
 
-	public static void main(String[] args) {
-		
+	public void sendMessage(GameObject msg) {
+		if (this.session != null) {
+			this.session.write(msg);
+		}
 	}
 
 }
