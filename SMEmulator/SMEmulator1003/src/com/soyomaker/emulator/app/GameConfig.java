@@ -12,7 +12,7 @@ import com.soyomaker.xml.XMLParser;
 
 public class GameConfig {
 
-	private static String CONFIG_PATH = "plugin/emulator/config/emulator.xml";
+	private static String CONFIG_PATH = "plugin/emulator/config/game.xml";
 
 	private static GameConfig instance = new GameConfig();
 

@@ -1,5 +1,6 @@
 package com.soyomaker.emulator.app;
 
+import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.utils.SMLog;
 
@@ -80,14 +81,14 @@ public class Game implements IGame, Runnable {
 				// 重绘界面
 				UIScreen.getInstance().requestRepaint();
 				t = System.currentTimeMillis() - t;
-				GameConfig gameInfo = GameConfig.getInstance();
-				if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
-					gameInfo.setActualFPS(gameInfo.getRatedFPS());
-					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
+				GameConfig gameConfig = GameConfig.getInstance();
+				if (t < 1000 * 1.0 / gameConfig.getRatedFPS()) {
+					gameConfig.setActualFPS(gameConfig.getRatedFPS());
+					this.sleep((int) (1000 * 1.0 / gameConfig.getRatedFPS() - t));
 				} else {
-					gameInfo.setActualFPS((int) (1000 * 1.0 / t));
-					if (gameInfo.getActualFPS() < gameInfo.getRatedFPS()) {
-						SMLog.getInstance().info("FPS警告:" + gameInfo.getActualFPS());
+					gameConfig.setActualFPS((int) (1000 * 1.0 / t));
+					if (gameConfig.getActualFPS() < gameConfig.getRatedFPS()) {
+						SMLog.getInstance().info("FPS警告:" + gameConfig.getActualFPS());
 					}
 				}
 			}
@@ -110,7 +111,11 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void start() {
+		// 启动网络模块
+		NetTransceiver.getInstance().start();
+		// 初始化Lua适配器
 		luaAdapter = new LuaAdapter(this);
+		// 启动游戏线程
 		running = true;
 		new Thread(this).start();
 	}
@@ -118,6 +123,8 @@ public class Game implements IGame, Runnable {
 	@Override
 	public void stop() {
 		running = false;
+		// 停止网络模块
+		NetTransceiver.getInstance().stop();
 	}
 
 }
