@@ -14,7 +14,7 @@ import com.soyomaker.lang.GameObject;
  * @author wangpeng
  * 
  */
-public class GDSDecoder extends MessageDecoderAdapter {
+public class GameObjectDecoder extends MessageDecoderAdapter {
 
 	@Override
 	public MessageDecoderResult decodable(IoSession session, IoBuffer in) {

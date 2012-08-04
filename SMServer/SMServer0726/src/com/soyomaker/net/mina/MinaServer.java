@@ -24,7 +24,7 @@ public class MinaServer implements INetService {
 			acceptor.setReuseAddress(true);
 			acceptor.getSessionConfig().setReadBufferSize(readBufferSize);
 
-			ProtocolCodecFactory codecFactory = new GDSCodecFactory();
+			ProtocolCodecFactory codecFactory = new GameObjectCodecFactory();
 			acceptor.getFilterChain().addLast("codec",
 					new ProtocolCodecFilter(codecFactory));
 			acceptor.setHandler(new MinaHandler());

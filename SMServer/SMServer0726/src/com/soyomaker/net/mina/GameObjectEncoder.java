@@ -13,17 +13,17 @@ import com.soyomaker.lang.GameObject;
  * @author wp_g4
  * 
  */
-public class GDObjectEncoder implements MessageEncoder<GameObject> {
+public class GameObjectEncoder implements MessageEncoder<GameObject> {
 	@Override
-	public void encode(IoSession arg0, GameObject arg1, ProtocolEncoderOutput arg2) throws Exception {
-		byte[] bs = arg1.toBinary();
+	public void encode(IoSession session, GameObject obj, ProtocolEncoderOutput out) throws Exception {
+		byte[] bs = obj.toBinary();
 		IoBuffer buf = IoBuffer.allocate(bs.length + 12);
 		buf.setAutoExpand(true);
 		buf.putInt(bs.length);
 		buf.put(bs);
 		buf.flip();
-		arg2.write(buf);
-		arg2.flush();
+		out.write(buf);
+		out.flush();
 	}
 
 }
