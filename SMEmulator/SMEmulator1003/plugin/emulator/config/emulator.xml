@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<emulator>
+<config>
 	<width>960</width>
 	<height>640</height>
 	<fps>50</fps>
 	<showFPS>true</showFPS>
-</emulator>
+	<ip>127.0.0.1</ip>
+	<port>9090</port>
+</config>

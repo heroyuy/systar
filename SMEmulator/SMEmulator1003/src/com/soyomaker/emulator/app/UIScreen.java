@@ -54,7 +54,7 @@ public class UIScreen extends JPanel implements InputListener {
 				GameConfig gameInfo = GameConfig.getInstance();
 				if (gameInfo.isShowFPS()) {
 					painter.setColor(ColorFactory.getInstance().WHITE);
-					painter.drawString("FPS:" + gameInfo.getActualFps(), 10, gameInfo.getHeight() - 10, Painter.LB);
+					painter.drawString("FPS:" + gameInfo.getActualFPS(), 10, gameInfo.getHeight() - 10, Painter.LB);
 				}
 			}
 		};

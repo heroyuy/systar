@@ -30,15 +30,29 @@ public class GameConfig {
 
 	private boolean showFPS = true;
 
+	private String ip = null;
+
+	public String getIp() {
+		return ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	private int port = 0;
+
 	private String gamePath = null;
 
 	private GameConfig() {
 		try {
-			XMLObject emulatorXMLObject = XMLParser.parse(new File(CONFIG_PATH));
-			this.width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());
-			this.height = Integer.parseInt(emulatorXMLObject.getChild(1).getValue());
-			this.ratedFPS = Integer.parseInt(emulatorXMLObject.getChild(2).getValue());
-			this.showFPS = Boolean.parseBoolean(emulatorXMLObject.getChild(3).getValue());
+			XMLObject configXMLObject = XMLParser.parse(new File(CONFIG_PATH));
+			this.width = Integer.parseInt(configXMLObject.getChild(0).getValue());
+			this.height = Integer.parseInt(configXMLObject.getChild(1).getValue());
+			this.ratedFPS = Integer.parseInt(configXMLObject.getChild(2).getValue());
+			this.showFPS = Boolean.parseBoolean(configXMLObject.getChild(3).getValue());
+			this.ip = configXMLObject.getChild(4).getValue();
+			this.port = Integer.parseInt(configXMLObject.getChild(5).getValue());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -48,7 +62,7 @@ public class GameConfig {
 		}
 	}
 
-	public int getActualFps() {
+	public int getActualFPS() {
 		return actualFPS;
 	}
 
@@ -78,14 +92,6 @@ public class GameConfig {
 
 	public void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
-	}
-
-	public void setRatedFPS(int fps) {
-		this.ratedFPS = fps;
-	}
-
-	public void setShowFPS(boolean showFPS) {
-		this.showFPS = showFPS;
 	}
 
 }
