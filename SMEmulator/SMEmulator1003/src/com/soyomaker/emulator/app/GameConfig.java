@@ -10,13 +10,13 @@ import org.xml.sax.SAXException;
 import com.soyomaker.xml.XMLObject;
 import com.soyomaker.xml.XMLParser;
 
-public class GameInfo {
+public class GameConfig {
 
 	private static String CONFIG_PATH = "plugin/emulator/config/emulator.xml";
 
-	private static GameInfo instance = new GameInfo();
+	private static GameConfig instance = new GameConfig();
 
-	public static GameInfo getInstance() {
+	public static GameConfig getInstance() {
 		return instance;
 	}
 
@@ -32,7 +32,7 @@ public class GameInfo {
 
 	private String gamePath = null;
 
-	private GameInfo() {
+	private GameConfig() {
 		try {
 			XMLObject emulatorXMLObject = XMLParser.parse(new File(CONFIG_PATH));
 			this.width = Integer.parseInt(emulatorXMLObject.getChild(0).getValue());

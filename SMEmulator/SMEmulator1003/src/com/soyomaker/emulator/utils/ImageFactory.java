@@ -3,7 +3,7 @@ package com.soyomaker.emulator.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.soyomaker.emulator.app.GameInfo;
+import com.soyomaker.emulator.app.GameConfig;
 import com.soyomaker.emulator.ui.Image;
 
 public class ImageFactory {
@@ -30,7 +30,7 @@ public class ImageFactory {
 		}
 		Image image = imageMap.get(fileName);
 		if (image == null) {
-			image = new Image(GameInfo.getInstance().getGamePath() + fileName);
+			image = new Image(GameConfig.getInstance().getGamePath() + fileName);
 			imageMap.put(fileName, image);
 		}
 		return image;

@@ -37,7 +37,7 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 	public static void main(String[] args) {
 		Emulator emulator = new Emulator();
 		emulator.setType(TYPE_SOFTWARE);
-		GameInfo.getInstance().setGamePath(DEFAULT_GAME_PATH);
+		GameConfig.getInstance().setGamePath(DEFAULT_GAME_PATH);
 		emulator.startGame();
 	}
 
@@ -59,7 +59,7 @@ public class Emulator extends JDialog implements IPlugin, Observer {
 	public void handleEvent(Event e) {
 		if (e.getCommand().equals(EventIdConst.GAME_BUILD_SUCCESSFUL)) {
 			this.setType(TYPE_PLUGIN);
-			GameInfo.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
+			GameConfig.getInstance().setGamePath(AppData.getInstance().getCurProject().getPath());
 			this.setModal(true);
 			this.startGame();
 		} else {

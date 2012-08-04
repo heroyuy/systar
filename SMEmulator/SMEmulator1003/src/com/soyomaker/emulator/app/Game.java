@@ -16,11 +16,11 @@ public class Game implements IGame, Runnable {
 	private long time = 0;
 
 	public int getHeight() {
-		return GameInfo.getInstance().getHeight();
+		return GameConfig.getInstance().getHeight();
 	}
 
 	public String getPath() {
-		return GameInfo.getInstance().getGamePath();
+		return GameConfig.getInstance().getGamePath();
 	}
 
 	public int getTime() {
@@ -28,7 +28,7 @@ public class Game implements IGame, Runnable {
 	}
 
 	public int getWidth() {
-		return GameInfo.getInstance().getWidth();
+		return GameConfig.getInstance().getWidth();
 	}
 
 	public boolean isRunning() {
@@ -80,7 +80,7 @@ public class Game implements IGame, Runnable {
 				// 重绘界面
 				UIScreen.getInstance().requestRepaint();
 				t = System.currentTimeMillis() - t;
-				GameInfo gameInfo = GameInfo.getInstance();
+				GameConfig gameInfo = GameConfig.getInstance();
 				if (t < 1000 * 1.0 / gameInfo.getRatedFPS()) {
 					gameInfo.setActualFPS(gameInfo.getRatedFPS());
 					this.sleep((int) (1000 * 1.0 / gameInfo.getRatedFPS() - t));
