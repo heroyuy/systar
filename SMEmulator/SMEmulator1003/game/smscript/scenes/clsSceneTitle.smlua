@@ -45,19 +45,19 @@ function clsSceneTitle:onStart()
   self.centerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
   self.bgLayer:addChild(self.centerLayer)
   
-  self.name=clsUILabel:new(45,30,80,20)
+  self.name=clsUILabel:new(45,25,80,20)
   self.name.text="输入账号"
   self.name.textSize=16
   self.name.textColor="0xff000000"
   self.centerLayer:addChild(self.name)
   
-  self.password=clsUILabel:new(45,60,80,20)
+  self.password=clsUILabel:new(45,55,80,20)
   self.password.text="输入密码"
   self.password.textSize=16
   self.password.textColor="0xff000000"
   self.centerLayer:addChild(self.password)
   
-  self.editName=clsUIEditText:standardEditText(155,30,145,20,clsUIEditText.NORMAL)
+  self.editName=clsUIEditText:standardEditText(155,25,145,20,clsUIEditText.NORMAL)
   --self.editName.hintText="这里输入账号"
   --self.editName.hintTextSize=16
   --self.editName.hintTextColor="0x99000000"
@@ -65,7 +65,7 @@ function clsSceneTitle:onStart()
   self.editName.textColor="0xff000000"
   self.centerLayer:addChild(self.editName)
   
-  self.editPassword=clsUIEditText:standardEditText(155,60,145,20,clsUIEditText.PASSWORD)
+  self.editPassword=clsUIEditText:standardEditText(155,55,145,20,clsUIEditText.PASSWORD)
   --self.editPassword.hintText="这里输入密码"
   --self.editPassword.hintTextSize=16
   --self.editPassword.hintTextColor="0x99000000"
@@ -73,19 +73,19 @@ function clsSceneTitle:onStart()
   self.editPassword.textColor="0xff000000"
   self.centerLayer:addChild(self.editPassword)
   --登录按钮
-  self.loginButton=clsUIButton:standardButton(60,100,80,20,"登录")
+  self.loginButton=clsUIButton:standardButton(60,110,80,20,"登录")
   self.loginButton.textSize=16
   self.loginButton.textColor="0xff000000"
   self.loginButton.delegate=self
   self.centerLayer:addChild(self.loginButton)
   --注册按钮
-  self.registerButton=clsUIButton:standardButton(180,100,80,20,"注册")
+  self.registerButton=clsUIButton:standardButton(180,110,80,20,"注册")
   self.registerButton.textSize=16
   self.registerButton.textColor="0xff000000"
   self.registerButton.delegate=self
   self.centerLayer:addChild(self.registerButton)
   
-  self.msgLabel=clsUILabel:new(120,130,80,20)
+  self.msgLabel=clsUILabel:new(120,140,80,20)
   self.msgLabel.text=""
   self.msgLabel.textSize=16
   self.msgLabel.textColor="0xffff0000"
@@ -107,12 +107,18 @@ end
 --按钮点击的回调
 function clsSceneTitle:buttonTapped(button)
   if button==self.loginButton then
-    if self.editName.text and self.editPassword.text then
+    if self.editName.text and self.editPassword.text 
+    and string.len(self.editName.text)>0 and string.len(self.editPassword.text)>0 then
       smNet:login(self.editName.text,self.editPassword.text)
+    else
+      self.msgLabel.text="账号或者密码不能为空"
     end
   elseif button==self.registerButton then
-    if self.editName.text and self.editPassword.text then
+    if self.editName.text and self.editPassword.text 
+    and string.len(self.editName.text)>0 and string.len(self.editPassword.text)>0 then
       smNet:register(self.editName.text,self.editPassword.text)
+    else
+      self.msgLabel.text="账号或者密码不能为空"
     end
   end
 end
