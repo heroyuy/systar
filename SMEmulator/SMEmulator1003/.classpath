@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="libs/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="lib" path="libs/com.soyomaker.net.mina.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
