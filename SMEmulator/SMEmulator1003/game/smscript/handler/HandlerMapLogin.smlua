@@ -1,0 +1,12 @@
+HandlerMap.login={}
+
+function HandlerMap.login:handleMessage(msg)
+  smLog:info("登录")
+end
+
+--====================================================
+HandlerMap.register={}
+
+function HandlerMap.register:handleMessage(msg)
+  smLog:info("注册")
+end

@@ -5,6 +5,7 @@ package.path = package.path .. ";"..Game.path.."/smscript/common/ui/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/util/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/action/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/data/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/handler/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/layers/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/scenes/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/script/?.smlua"
@@ -45,6 +46,7 @@ require("clsNPC")
 require("GameData")
 require("GameData_player")
 require("GameData_battle")
+require("MsgHandlerFactory")
 
 --layers
 require("clsSprite")

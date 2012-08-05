@@ -1,0 +1,16 @@
+MsgHandlerFactory={}
+
+HandlerMap={}
+
+--加载handler配置
+require("HandlerMapLogin")
+
+MsgHandlerFactory["101001"]=HandlerMap.register
+MsgHandlerFactory["101002"]=HandlerMap.login
+
+function MsgHandlerFactory:dispatchMessage(msg)
+  smLog:info("dispatchMessage:"..msg)
+  local fun=loadstring(msg)
+  fun()
+  self[Msg.id]:handleMessage(Msg.content)
+end
