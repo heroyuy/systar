@@ -93,14 +93,16 @@ public class MinaClient {
 			}
 
 			@Override
-			public void messageSent(IoSession arg0, Object msg) throws Exception {
-				SMLog.getInstance().info("发出消息:" + ((GameObject) msg).toJson());
+			public void messageSent(IoSession arg0, Object obj) throws Exception {
+				GameObject msg = (GameObject) obj;
+				SMLog.getInstance().info("发出消息:" + msg.getType() + msg.toJson());
 			}
 
 			@Override
-			public void messageReceived(IoSession arg0, Object msg) throws Exception {
-				SMLog.getInstance().info("收到消息:" + ((GameObject) msg).toJson());
-				NetTransceiver.getInstance().dispatchMessage((GameObject) msg);
+			public void messageReceived(IoSession arg0, Object obj) throws Exception {
+				GameObject msg = (GameObject) obj;
+				SMLog.getInstance().info("收到消息:" + msg.getType() + msg.toJson());
+				NetTransceiver.getInstance().dispatchMessage(msg);
 			}
 
 		});
@@ -109,5 +111,4 @@ public class MinaClient {
 		connector.connect(new InetSocketAddress(this.ip, this.port));
 
 	}
-
 }
