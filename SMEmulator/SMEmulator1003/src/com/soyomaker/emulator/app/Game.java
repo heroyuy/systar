@@ -2,7 +2,7 @@ package com.soyomaker.emulator.app;
 
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.utils.SMLog;
+import com.soyomaker.emulator.util.SMLog;
 
 public class Game implements IGame, Runnable {
 

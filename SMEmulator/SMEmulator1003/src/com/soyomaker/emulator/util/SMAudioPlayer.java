@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.utils;
+package com.soyomaker.emulator.util;
 
 import java.io.File;
 import java.util.Timer;

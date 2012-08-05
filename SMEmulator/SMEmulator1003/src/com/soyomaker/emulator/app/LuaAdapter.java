@@ -6,11 +6,11 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.utils.ColorFactory;
-import com.soyomaker.emulator.utils.ImageFactory;
-import com.soyomaker.emulator.utils.SMAudioPlayer;
-import com.soyomaker.emulator.utils.SMLog;
-import com.soyomaker.emulator.utils.SMString;
+import com.soyomaker.emulator.util.ColorFactory;
+import com.soyomaker.emulator.util.ImageFactory;
+import com.soyomaker.emulator.util.SMAudioPlayer;
+import com.soyomaker.emulator.util.SMLog;
+import com.soyomaker.emulator.util.SMString;
 
 /**
  * Lua适配器，功能：<br>

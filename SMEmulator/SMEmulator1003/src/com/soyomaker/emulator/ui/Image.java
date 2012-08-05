@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.soyomaker.emulator.utils.ColorFactory;
+import com.soyomaker.emulator.util.ColorFactory;
 
 /**
  * 图形图像 TODO 图片处理算法需要重写

@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.utils;
+package com.soyomaker.emulator.util;
 
 import com.soyomaker.emulator.ui.Color;
 

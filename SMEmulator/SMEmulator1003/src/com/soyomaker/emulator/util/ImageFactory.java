@@ -1,4 +1,4 @@
-package com.soyomaker.emulator.utils;
+package com.soyomaker.emulator.util;
 
 import java.util.HashMap;
 import java.util.Map;

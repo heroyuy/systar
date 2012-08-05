@@ -15,7 +15,7 @@ import javax.swing.border.BevelBorder;
 
 import com.soyomaker.emulator.ui.Image;
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.utils.ImageFactory;
+import com.soyomaker.emulator.util.ImageFactory;
 
 public class InputDialog extends JPanel {
 

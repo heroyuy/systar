@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 
 import com.soyomaker.emulator.app.InputDialog.InputListener;
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.utils.ColorFactory;
+import com.soyomaker.emulator.util.ColorFactory;
 
 public class UIScreen extends JPanel implements InputListener {
 

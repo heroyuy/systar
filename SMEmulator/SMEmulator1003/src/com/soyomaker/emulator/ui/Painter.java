@@ -9,7 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.RescaleOp;
 
-import com.soyomaker.emulator.utils.ColorFactory;
+import com.soyomaker.emulator.util.ColorFactory;
 
 /**
  * 
