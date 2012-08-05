@@ -8,6 +8,7 @@ import org.keplerproject.luajava.LuaStateFactory;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.util.ColorFactory;
 import com.soyomaker.emulator.util.ImageFactory;
+import com.soyomaker.emulator.util.Net;
 import com.soyomaker.emulator.util.SMAudioPlayer;
 import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.emulator.util.SMString;
@@ -32,6 +33,8 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnKey = null;
 
+	private LuaObject luaFunctionOnMessage = null;
+
 	private LuaObject luaFunctionOnUpdate = null;
 
 	private LuaObject luaFunctionOnPaint = null;
@@ -51,9 +54,12 @@ public class LuaAdapter {
 			luaState.openLibs();
 			luaState.LdoFile(GameConfig.getInstance().getGamePath() + MAIN_FILE);
 			// 1、注册JAVA提供给lua的API
-			// --注册GameEngine
+			// --注册Game
 			luaState.pushObjectValue(game);
 			luaState.setGlobal("smGame");
+			// --注册Net
+			luaState.pushObjectValue(Net.getInstance());
+			luaState.setGlobal("smNet");
 			// --注册SMLog
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
@@ -74,6 +80,7 @@ public class LuaAdapter {
 			luaFunctionOnStart = luaGame.getField("onStart");
 			luaFunctionOnTouch = luaGame.getField("onTouch");
 			luaFunctionOnKey = luaGame.getField("onKey");
+			luaFunctionOnMessage = luaGame.getField("onMessage");
 			luaFunctionOnUpdate = luaGame.getField("onUpdate");
 			luaFunctionOnPaint = luaGame.getField("onPaint");
 			luaFunctionOnStop = luaGame.getField("onStop");
@@ -146,6 +153,17 @@ public class LuaAdapter {
 	public void onKey(String key) {
 		try {
 			luaFunctionOnKey.call(new Object[] { luaGame, key });
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * onMessage方法的转换
+	 */
+	public void onMessage(String msg) {
+		try {
+			luaFunctionOnMessage.call(new Object[] { luaGame, msg });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
