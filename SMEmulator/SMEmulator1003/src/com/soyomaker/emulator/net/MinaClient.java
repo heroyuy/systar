@@ -57,8 +57,12 @@ public class MinaClient {
 	}
 
 	public void disconnect() {
-		this.session.close(true);
-		this.session = null;
+		if (this.session != null) {
+			if (this.session.isConnected()) {
+				this.session.close(true);
+			}
+			this.session = null;
+		}
 	}
 
 	public void connect() {
