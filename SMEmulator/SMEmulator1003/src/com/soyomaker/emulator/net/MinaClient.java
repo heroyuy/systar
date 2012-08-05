@@ -10,6 +10,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.mina.GameObjectCodecFactory;
 
@@ -54,7 +55,8 @@ public class MinaClient {
 	}
 
 	public void disconnect() {
-		// TODO
+		this.session.close(true);
+		this.session = null;
 	}
 
 	public void connect() {
@@ -85,7 +87,13 @@ public class MinaClient {
 			}
 
 			@Override
+			public void messageSent(IoSession arg0, Object msg) throws Exception {
+				SMLog.getInstance().info("发出消息:" + ((GameObject) msg).toJson());
+			}
+
+			@Override
 			public void messageReceived(IoSession arg0, Object msg) throws Exception {
+				SMLog.getInstance().info("收到消息:" + ((GameObject) msg).toJson());
 				NetTransceiver.getInstance().dispatchMessage((GameObject) msg);
 			}
 
