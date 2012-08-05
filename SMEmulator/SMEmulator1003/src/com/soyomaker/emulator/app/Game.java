@@ -83,7 +83,7 @@ public class Game implements IGame, Runnable, IHandler {
 				}
 				// 处理消息
 				while (messageQueue.size() > 0) {
-					luaAdapter.onMessage(messageQueue.poll().toLua());
+					luaAdapter.onMessage(messageQueue.poll());
 				}
 				// 更新游戏
 				luaAdapter.update();

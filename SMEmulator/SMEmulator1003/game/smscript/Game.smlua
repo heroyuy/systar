@@ -44,6 +44,7 @@ end
 --网络消息  lua层不应该调用
 function Game:onMessage(msg)
   --TODO
+  smLog:info(msg)
 end
 
 --更新model  lua层不应该调用

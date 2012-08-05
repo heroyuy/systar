@@ -12,6 +12,7 @@ import com.soyomaker.emulator.util.Net;
 import com.soyomaker.emulator.util.SMAudioPlayer;
 import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.emulator.util.SMString;
+import com.soyomaker.lang.GameObject;
 
 /**
  * Lua适配器，功能：<br>
@@ -161,9 +162,9 @@ public class LuaAdapter {
 	/**
 	 * onMessage方法的转换
 	 */
-	public void onMessage(String msg) {
+	public void onMessage(GameObject msg) {
 		try {
-			luaFunctionOnMessage.call(new Object[] { luaGame, msg });
+			luaFunctionOnMessage.call(new Object[] { luaGame, msgToLua(msg) });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -189,5 +190,9 @@ public class LuaAdapter {
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String msgToLua(GameObject msg) {
+		return "Msg={id=\"101001\",content=" + msg.toLua() + "}";
 	}
 }
