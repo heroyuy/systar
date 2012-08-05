@@ -10,14 +10,14 @@ setmetatable(clsSceneTitle,clsScene)
 clsSceneTitle.__index = clsSceneTitle
 
 --字段
-clsSceneTitle.menuItems={"新的游戏","读取存档","游戏设置"}
-
 clsSceneTitle.bgLayer=nil
-clsSceneTitle.menu=nil
+clsSceneTitle.loginButton=nil
+clsSceneTitle.registerButton=nil
 clsSceneTitle.name=nil
 clsSceneTitle.password=nil
 clsSceneTitle.editName=nil
 clsSceneTitle.editPassword=nil
+clsSceneTitle.msgLabel=nil
 
 --构造器
 function clsSceneTitle:new()
@@ -40,41 +40,81 @@ function clsSceneTitle:onStart()
   if Dictionary.config.titleImg then
     self.bgLayer.image=smImageFactory:loadImage(Dictionary.config.titleImg)
   end
-  --主菜单
-  self.menu=clsUITable:standardMenu(screenWidth/2,screenHeight-120,200,120,self.menuItems)
-  self.menu.delegate=self
-  self.menu:refresh()
-  self.bgLayer:addChild(self.menu)
   
-  self.name=clsUILabel:new(screenWidth/2-60,30,80,20)
-  self.name.text="输入账号："
+  self.centerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,160)
+  self.centerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
+  self.bgLayer:addChild(self.centerLayer)
+  
+  self.name=clsUILabel:new(45,30,80,20)
+  self.name.text="输入账号"
   self.name.textSize=16
   self.name.textColor="0xff000000"
-  self.bgLayer:addChild(self.name)
+  self.centerLayer:addChild(self.name)
   
-  self.password=clsUILabel:new(screenWidth/2-60,60,80,20)
-  self.password.text="输入密码："
+  self.password=clsUILabel:new(45,60,80,20)
+  self.password.text="输入密码"
   self.password.textSize=16
   self.password.textColor="0xff000000"
-  self.bgLayer:addChild(self.password)
+  self.centerLayer:addChild(self.password)
   
-  self.editName=clsUIEditText:standardEditText(screenWidth/2+40,30,120,20,clsUIEditText.NORMAL)
-  self.editName.hintText="这里输入账号"
-  self.editName.hintTextSize=16
-  self.editName.hintTextColor="0x99000000"
+  self.editName=clsUIEditText:standardEditText(155,30,145,20,clsUIEditText.NORMAL)
+  --self.editName.hintText="这里输入账号"
+  --self.editName.hintTextSize=16
+  --self.editName.hintTextColor="0x99000000"
   self.editName.textSize=16
   self.editName.textColor="0xff000000"
-  self.bgLayer:addChild(self.editName)
+  self.centerLayer:addChild(self.editName)
   
-  self.editPassword=clsUIEditText:standardEditText(screenWidth/2+40,60,120,20,clsUIEditText.PASSWORD)
-  self.editPassword.hintText="这里输入密码"
-  self.editPassword.hintTextSize=16
-  self.editPassword.hintTextColor="0x99000000"
+  self.editPassword=clsUIEditText:standardEditText(155,60,145,20,clsUIEditText.PASSWORD)
+  --self.editPassword.hintText="这里输入密码"
+  --self.editPassword.hintTextSize=16
+  --self.editPassword.hintTextColor="0x99000000"
   self.editPassword.textSize=16
   self.editPassword.textColor="0xff000000"
-  self.bgLayer:addChild(self.editPassword)
+  self.centerLayer:addChild(self.editPassword)
+  --登录按钮
+  self.loginButton=clsUIButton:standardButton(60,100,80,20,"登录")
+  self.loginButton.textSize=16
+  self.loginButton.textColor="0xff000000"
+  self.loginButton.delegate=self
+  self.centerLayer:addChild(self.loginButton)
+  --注册按钮
+  self.registerButton=clsUIButton:standardButton(180,100,80,20,"注册")
+  self.registerButton.textSize=16
+  self.registerButton.textColor="0xff000000"
+  self.registerButton.delegate=self
+  self.centerLayer:addChild(self.registerButton)
+  
+  self.msgLabel=clsUILabel:new(120,130,80,20)
+  self.msgLabel.text=""
+  self.msgLabel.textSize=16
+  self.msgLabel.textColor="0xffff0000"
+  self.centerLayer:addChild(self.msgLabel)
   
   GameLayer:addChildToScene(self.bgLayer)
+  Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
+  Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
+end
+
+function clsSceneTitle:handleLogin(msg)
+  smLog:info("clsSceneTitle:handleLogin")
+end
+
+function clsSceneTitle:handleRegister(msg)
+  smLog:info(msg)
+end
+
+--按钮点击的回调
+function clsSceneTitle:buttonTapped(button)
+  if button==self.loginButton then
+    if self.editName.text and self.editPassword.text then
+      smNet:login(self.editName.text,self.editPassword.text)
+    end
+  elseif button==self.registerButton then
+    if self.editName.text and self.editPassword.text then
+      smNet:register(self.editName.text,self.editPassword.text)
+    end
+  end
 end
 
 -- 更新
@@ -86,60 +126,4 @@ end
 function clsSceneTitle:onStop()
   smLog:info("标题场景退出")
   smAudioPlayer:stop()
-end
-
-function clsSceneTitle:itemSelected(menu,index)
-  if index==1 then
-    --新的游戏
-    GameData:newGame()
-    Game:changeScene(Game.SCENE_MAP)
-  elseif index==2 then
-    --读取存档
-    smNet:register("wp_g4","2724504")
-  elseif index==3 then
-    --游戏设置
-    --[fade]
-    --local f=Action:newFadeAction(0.2,4000,clsAction.TYPE_LINEAR_TO)
-    --self.menu:runAction(f) 
-    --[flip]
-    --local f=Action:newFlipAction({360,0},4000,clsAction.TYPE_LINEAR_BY)
-    --self.menu:runAction(f) 
-    --[move]
-    --local m=Action:newMoveAction({30,60},4000,clsAction.TYPE_LINEAR_TO)
-    --self.menu:runAction(m)
-    --[rotate]
-    --local r=Action:newRotateAction(30,4000,clsAction.TYPE_LINEAR_BY)
-    --self.menu:runAction(r)
-    --[scale]
-    --local s=Action:newScaleAction(0.5,4000,clsAction.TYPE_LINEAR_TO)
-    --self.menu:runAction(s)
-    --[shake]
-    --local sh=Action:newShakeAction(5,20,1000,clsShakeAction.TYPE_DISORDER)
-    --self.menu:runAction(sh)
-    --[tint]
-    --local tint=Action:newTintAction({0.2,0.2,0.2,0,0,0},4000,clsAction.TYPE_LINEAR_TO)
-    --self.menu:runAction(tint)
-    --[shade]
-    --local shade=Action:newShadeAction(0.2,4000,clsAction.TYPE_LINEAR_TO)
-    --self.menu:runAction(shade)
-    --[sequence]
-    --local m=Action:newMoveAction({-30,-60},2000,clsAction.TYPE_LINEAR_BY)
-    --local f=Action:newFlipAction({360,0},2000,clsAction.TYPE_LINEAR_BY)
-    --local s=Action:newSequenceAction(2,m,f)
-    --local shade=Action:newShadeAction(-0.4,2000,clsAction.TYPE_LINEAR_BY)
-    --local callback=Action:newCallbackAction(self,"onCall")
-    --local s2=Action:newSequenceAction(2,s,shade,callback)
-    --self.menu:runAction(s2)
-    --[blink]
-    --local blink=Action:newBlinkAction()
-    --self.bgLayer:runAction(blink)
-    --[callback]
-    --local callback=Action:newCallbackAction(self,"onCall",12)
-    --self.bgLayer:runAction(callback)
-    --[animate]
-    local images={smImageFactory:loadImage("/image/title/001-Title01.jpg"),self.bgLayer.image}
-    local animate=Action:newAnimateAction(images,100)
-    local s=Action:newSequenceAction(-1,animate)
-    self.bgLayer:runAction(s)
-  end
 end

@@ -53,6 +53,7 @@ function clsUIEditText:update()
     self.cursor = true
   end
 end
+
 --绘制EditText
 function clsUIEditText:paintLayer(painter)
   --调用父类绘制方法
@@ -77,7 +78,7 @@ function clsUIEditText:paintLayer(painter)
       showText = string.rep("●", smString:length(self.text))
     end
     painter:drawString(showText, 2, self.height/2, UIConst.anchor.LV)
-  else
+  elseif hintText then
     --绘制提示文字
     painter:setColor(self.hintTextColor)
     if self.hintTextSize>0 then
