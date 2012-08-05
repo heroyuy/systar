@@ -193,6 +193,6 @@ public class LuaAdapter {
 	}
 
 	private String msgToLua(GameObject msg) {
-		return "Msg={id=\"101001\",content=" + msg.toLua() + "}";
+		return "Msg={id=\""+msg.getType()+"\",content=" + msg.toLua() + "}";
 	}
 }
