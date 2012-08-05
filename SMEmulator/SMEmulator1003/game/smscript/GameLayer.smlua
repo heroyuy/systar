@@ -12,8 +12,6 @@ GameLayer.rootLayer=nil				--根层 。不可以直接在这一层上添加元�
 GameLayer.sceneLayer=nil			--场景层。场景的所有元素应加在这一层上
 GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事件
 
-GameLayer.inputDelegate=nil			--输入框事件委托
-GameLayer.inputCallback=nil			--输入框回调方法
 GameLayer.allLeafLayers=nil			--所有的子层
 
 --初始化
@@ -95,11 +93,6 @@ function GameLayer:onKey(value)
   self.rootLayer:onKey(value)
 end
 
---输入事件
-function GameLayer:onInput(value)
-  callFunction(self.inputDelegate,self.inputCallback,value)
-end
-
 --清理层
 function GameLayer:clear()
   self.sceneLayer:clear()
@@ -132,16 +125,6 @@ function GameLayer:showNormalDialog(name,content,bustPath,position,target,callba
   dialogLayer.enabled=true
   dialogLayer.visibility=true
   dialogLayer:addChild(normalDialog)
-end
-
---显示输入框
-function GameLayer:showInputDialog(tip,target,callback)
-  if callback==nil then
-    callback="onInput"
-  end
-  self.inputDelegate=target
-  self.inputCallback=callback
-  Game:showInputDialog(tip)
 end
 
 --显示选项对话框

@@ -13,11 +13,10 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.soyomaker.emulator.app.InputDialog.InputListener;
 import com.soyomaker.emulator.ui.Painter;
 import com.soyomaker.emulator.util.ColorFactory;
 
-public class UIScreen extends JPanel implements InputListener {
+public class UIScreen extends JPanel {
 
 	private static final long serialVersionUID = 7608812515686704871L;
 
@@ -30,8 +29,6 @@ public class UIScreen extends JPanel implements InputListener {
 	private IGame game = null;
 
 	private JPanel gamePanel = null;
-
-	private InputDialog inputDialog = null;
 
 	private UIScreen() {
 		this.setLayout(null);
@@ -64,33 +61,24 @@ public class UIScreen extends JPanel implements InputListener {
 		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 
-			public void mouseEntered(MouseEvent e){
+			public void mouseEntered(MouseEvent e) {
 				gamePanel.requestFocus();
 			}
-			
+
 			public void mouseDragged(MouseEvent e) {
-				if (inputDialog.isVisible()) {
-					return;
-				}
 				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
 			}
 
 			public void mousePressed(MouseEvent e) {
-				if (inputDialog.isVisible()) {
-					return;
-				}
 				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				if (inputDialog.isVisible()) {
-					return;
-				}
 				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_UP));
 			}
 		};
 		KeyAdapter keyAdapter = new KeyAdapter() {
-			
+
 			public void keyTyped(KeyEvent e) {
 				game.onKey("" + e.getKeyChar());
 			}
@@ -103,17 +91,6 @@ public class UIScreen extends JPanel implements InputListener {
 		gamePanel.setLayout(null);
 		this.add(gamePanel);
 
-		inputDialog = new InputDialog(GameConfig.getInstance().getWidth(), 100);
-		inputDialog.setLocation(0, gamePanel.getHeight() - inputDialog.getHeight());
-		inputDialog.setVisible(false);
-		inputDialog.setInputListener(this);
-		gamePanel.add(inputDialog);
-	}
-
-	@Override
-	public void onInput(String value) {
-		inputDialog.setVisible(false);
-		this.game.onInput(value);
 	}
 
 	public void requestRepaint() {
@@ -137,9 +114,4 @@ public class UIScreen extends JPanel implements InputListener {
 		this.game = game;
 	}
 
-	public void showInputDialog(String tip) {
-		inputDialog.setTip(tip);
-		inputDialog.setContent("");
-		inputDialog.setVisible(true);
-	}
 }

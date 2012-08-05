@@ -186,11 +186,6 @@ end
 
 --显示输入框
 function Interpreter:showInputDialog(tip)
-  local delegate={}
-  function delegate:onInput(value)
-    Interpreter:endCurrentEvent(value)
-  end
-  GameLayer:showInputDialog(tip,delegate,delegate.onInput)
   return false  --返回值为flase表示此方法不立即返回
 end
 

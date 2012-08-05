@@ -13,8 +13,6 @@ public interface IGame {
 
 	public void onEvent(Event e);
 
-	public void onInput(String value);
-
 	public void onKey(String value);
 	
 	public void onLowMemory();

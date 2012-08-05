@@ -18,8 +18,6 @@ public class Game implements IGame, Runnable, IHandler {
 	private Queue<Event> eventQueue = null;
 
 	private Queue<String> keyQueue = null;
-	
-	private String inputValue = null;
 
 	private long time = 0;
 
@@ -54,11 +52,6 @@ public class Game implements IGame, Runnable, IHandler {
 	public void onKey(String key) {
 		this.keyQueue.offer(key);
 	}
-	
-	@Override
-	public void onInput(String value) {
-		this.inputValue = value;
-	}
 
 	@Override
 	public void onLowMemory() {
@@ -81,10 +74,7 @@ public class Game implements IGame, Runnable, IHandler {
 			while (running) {
 				t = System.currentTimeMillis();
 				// 处理事件
-				if (inputValue != null) {
-					luaAdapter.onInput(inputValue);
-					inputValue = null;
-				}
+
 				while (eventQueue.size() > 0) {
 					luaAdapter.onTouch(eventQueue.poll());
 				}
@@ -110,10 +100,6 @@ public class Game implements IGame, Runnable, IHandler {
 			// 此处调用lua的onStop()方法
 			luaAdapter.onStop();
 		}
-	}
-
-	public void showInputDialog(String tip) {
-		UIScreen.getInstance().showInputDialog(tip);
 	}
 
 	public void sleep(int millis) {
