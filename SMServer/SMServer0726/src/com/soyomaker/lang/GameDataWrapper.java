@@ -18,6 +18,6 @@ public class GameDataWrapper {
 	}
 
 	public String toString() {
-		return type + "(" + value.toString() + ")";
+		return value.toString();
 	}
 }

@@ -317,9 +317,17 @@ public class GameObject {
 		return JsonSerializer.object2json(this);
 	}
 
+	public String toLua() {
+		return LuaSerializer.object2Lua(this);
+	}
+
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		buf.append(getType() + "{");
+		String type = this.getType();
+		if (type != null) {
+			buf.append(type);
+		}
+		buf.append("{");
 		for (String key : getKeys()) {
 			buf.append(key + ":" + dataHolder.get(key) + ";");
 		}
