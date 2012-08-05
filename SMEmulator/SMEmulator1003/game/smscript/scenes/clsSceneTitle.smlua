@@ -97,16 +97,10 @@ function clsSceneTitle:onStart()
 end
 
 function clsSceneTitle:handleLogin(msg)
-  smLog:info(msg.status)
-  smLog:info(msg.playerId)
-  smLog:info(msg.msg)
   self.msgLabel.text=msg.msg
 end
 
 function clsSceneTitle:handleRegister(msg)
-  smLog:info(msg.status)
-  smLog:info(msg.playerId)
-  smLog:info(msg.msg)
   self.msgLabel.text=msg.msg
 end
 
