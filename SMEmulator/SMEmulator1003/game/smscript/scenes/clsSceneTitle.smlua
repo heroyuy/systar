@@ -41,7 +41,7 @@ function clsSceneTitle:onStart()
     self.bgLayer.image=smImageFactory:loadImage(Dictionary.config.titleImg)
   end
   
-  self.centerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,160)
+  self.centerLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
   self.centerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
   self.bgLayer:addChild(self.centerLayer)
   
@@ -97,11 +97,17 @@ function clsSceneTitle:onStart()
 end
 
 function clsSceneTitle:handleLogin(msg)
-  smLog:info("clsSceneTitle:handleLogin")
+  smLog:info(msg.status)
+  smLog:info(msg.playerId)
+  smLog:info(msg.msg)
+  self.msgLabel.text=msg.msg
 end
 
 function clsSceneTitle:handleRegister(msg)
-  smLog:info(msg)
+  smLog:info(msg.status)
+  smLog:info(msg.playerId)
+  smLog:info(msg.msg)
+  self.msgLabel.text=msg.msg
 end
 
 --按钮点击的回调
