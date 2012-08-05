@@ -13,6 +13,16 @@ public class NetTransceiver {
 
 	private MinaClient minaClient = null;
 
+	private IHandler handler = null;
+
+	public IHandler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(IHandler handler) {
+		this.handler = handler;
+	}
+
 	private NetTransceiver() {
 		String ip = GameConfig.getInstance().getIp();
 		int port = GameConfig.getInstance().getPort();
@@ -20,19 +30,21 @@ public class NetTransceiver {
 	}
 
 	public void start() {
-		this.minaClient.start();
+		this.minaClient.connect();
 	}
 
 	public void stop() {
-
+		this.minaClient.disconnect();
 	}
 
 	public void sendMessage(GameObject msg) {
-
+		this.minaClient.sendMessage(msg);
 	}
 
 	public void dispatchMessage(GameObject msg) {
-
+		if (this.handler != null) {
+			this.handler.onMessageReceived(msg);
+		}
 	}
 
 }

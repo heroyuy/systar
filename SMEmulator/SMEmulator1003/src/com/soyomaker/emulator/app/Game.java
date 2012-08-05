@@ -1,20 +1,28 @@
 package com.soyomaker.emulator.app;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import com.soyomaker.emulator.net.IHandler;
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.util.Net;
 import com.soyomaker.emulator.util.SMLog;
+import com.soyomaker.lang.GameObject;
 
-public class Game implements IGame, Runnable {
+public class Game implements IGame, Runnable, IHandler {
 
 	private LuaAdapter luaAdapter = null;
 
 	private boolean running = false;
 
-	private Event event = null;
+	private Queue<Event> eventQueue = null;
 
 	private String inputValue = null;
 
 	private long time = 0;
+
+	private Queue<GameObject> messageQueue = null;
 
 	public int getHeight() {
 		return GameConfig.getInstance().getHeight();
@@ -38,7 +46,7 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void onEvent(Event e) {
-		this.event = e;
+		this.eventQueue.offer(e);
 	}
 
 	@Override
@@ -72,9 +80,8 @@ public class Game implements IGame, Runnable {
 					luaAdapter.onInput(inputValue);
 					inputValue = null;
 				}
-				if (event != null) {
-					luaAdapter.onTouch(event);
-					event = null;
+				while (eventQueue.size() > 0) {
+					luaAdapter.onTouch(eventQueue.poll());
 				}
 				// 更新游戏
 				luaAdapter.update();
@@ -111,10 +118,14 @@ public class Game implements IGame, Runnable {
 
 	@Override
 	public void start() {
-		// 启动网络模块
-		NetTransceiver.getInstance().start();
-		// 初始化Lua适配器
+		// 初始化
+		eventQueue = new ConcurrentLinkedQueue<Event>();
+		messageQueue = new ConcurrentLinkedQueue<GameObject>();
 		luaAdapter = new LuaAdapter(this);
+		// 启动网络模块
+		NetTransceiver.getInstance().setHandler(this);
+		NetTransceiver.getInstance().start();
+		Net.getInstance().register("test", "test");
 		// 启动游戏线程
 		running = true;
 		new Thread(this).start();
@@ -125,6 +136,11 @@ public class Game implements IGame, Runnable {
 		running = false;
 		// 停止网络模块
 		NetTransceiver.getInstance().stop();
+	}
+
+	@Override
+	public void onMessageReceived(GameObject msg) {
+		messageQueue.offer(msg);
 	}
 
 }
