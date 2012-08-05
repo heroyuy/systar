@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.soyomaker.emulator.net.IHandler;
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.util.Net;
 import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.lang.GameObject;
 
@@ -125,7 +124,6 @@ public class Game implements IGame, Runnable, IHandler {
 		// 启动网络模块
 		NetTransceiver.getInstance().setHandler(this);
 		NetTransceiver.getInstance().start();
-		Net.getInstance().register("test", "test");
 		// 启动游戏线程
 		running = true;
 		new Thread(this).start();
