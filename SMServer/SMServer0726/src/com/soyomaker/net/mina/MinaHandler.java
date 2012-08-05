@@ -38,7 +38,7 @@ public class MinaHandler implements IoHandler {
 				session.setAttribute("playerSession", playerSession);
 			}
 			GameObject message = (GameObject) obj;
-			log.debug("Mina收到包:" + message.toJson());
+			log.debug("Mina收到包:" + message.getType() + message.toJson());
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
@@ -58,7 +58,8 @@ public class MinaHandler implements IoHandler {
 
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
-		log.debug("Mina发出包:" + ((GameObject) message).toJson());
+		GameObject msg = (GameObject) message;
+		log.debug("Mina发出包:" + msg.getType() + msg.toJson());
 	}
 
 	@Override
