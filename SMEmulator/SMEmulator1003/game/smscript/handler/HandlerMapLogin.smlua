@@ -9,4 +9,5 @@ HandlerMap.register={}
 
 function HandlerMap.register:handleMessage(msg)
   smLog:info("注册")
+  Notifier:notify("register",msg)
 end
