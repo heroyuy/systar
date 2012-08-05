@@ -125,7 +125,6 @@ public class Game implements IGame, Runnable, IHandler {
 		// 启动网络模块
 		NetTransceiver.getInstance().setHandler(this);
 		NetTransceiver.getInstance().start();
-		Net.getInstance().register("player", "player");
 		// 启动游戏线程
 		running = true;
 		new Thread(this).start();

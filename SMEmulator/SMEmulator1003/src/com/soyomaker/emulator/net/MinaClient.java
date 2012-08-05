@@ -45,6 +45,8 @@ public class MinaClient {
 
 		if (this.session != null && this.session.isConnected()) {
 			this.sendMessageQueue();
+		} else {
+			this.connect();
 		}
 	}
 
