@@ -74,7 +74,7 @@ function clsUIEditText:paintLayer(painter)
     if self.type==clsUIEditText.NORMAL then
       showText = self.text
     elseif self.type==clsUIEditText.PASSWORD then
-      showText = string.rep("●", string.len(self.text))
+      showText = string.rep("●", smString:length(self.text))
     end
     painter:drawString(showText, 2, self.height/2, UIConst.anchor.LV)
   else
@@ -94,29 +94,6 @@ function clsUIEditText:paintLayer(painter)
     painter:setColor("0xff000000")
   	painter:drawLine(2+w,2,2+w,self.height-4)
   end 
-end
-
---- 获取utf8编码字符串正确长度的方法
--- @param str
--- @return number
-function clsUIEditText:utfstrlen(str)
-  local len = #str;
-  local left = len;
-  local cnt = 0;
-  local arr={0,0xc0,0xe0,0xf0,0xf8,0xfc};
-  while left ~= 0 do
-    local tmp=string.byte(str,-left);
-    local i=#arr;
-    while arr[i] do
-      if tmp>=arr[i] then 
-        left=left-i;
-        break;
-      end
-      i=i-1;
-    end
-    cnt=cnt+1;
-  end
-  return cnt;
 end
 
 function clsUIEditText:onKey(key)
