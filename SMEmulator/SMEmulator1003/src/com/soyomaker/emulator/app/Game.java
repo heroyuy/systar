@@ -17,6 +17,8 @@ public class Game implements IGame, Runnable, IHandler {
 
 	private Queue<Event> eventQueue = null;
 
+	private Queue<String> keyQueue = null;
+	
 	private String inputValue = null;
 
 	private long time = 0;
@@ -49,6 +51,11 @@ public class Game implements IGame, Runnable, IHandler {
 	}
 
 	@Override
+	public void onKey(String key) {
+		this.keyQueue.offer(key);
+	}
+	
+	@Override
 	public void onInput(String value) {
 		this.inputValue = value;
 	}
@@ -62,7 +69,6 @@ public class Game implements IGame, Runnable, IHandler {
 	@Override
 	public void onPaint(Painter painter) {
 		luaAdapter.paint(painter);
-
 	}
 
 	@Override
@@ -81,6 +87,9 @@ public class Game implements IGame, Runnable, IHandler {
 				}
 				while (eventQueue.size() > 0) {
 					luaAdapter.onTouch(eventQueue.poll());
+				}
+				while (keyQueue.size() > 0) {
+					luaAdapter.onKey(keyQueue.poll());
 				}
 				// 更新游戏
 				luaAdapter.update();
@@ -118,6 +127,7 @@ public class Game implements IGame, Runnable, IHandler {
 	@Override
 	public void start() {
 		// 初始化
+		keyQueue = new ConcurrentLinkedQueue<String>();
 		eventQueue = new ConcurrentLinkedQueue<Event>();
 		messageQueue = new ConcurrentLinkedQueue<GameObject>();
 		luaAdapter = new LuaAdapter(this);

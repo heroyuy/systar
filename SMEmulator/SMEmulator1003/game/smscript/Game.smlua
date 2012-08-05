@@ -37,6 +37,11 @@ function Game:onTouch(event)
 end
 
 --输入事件  lua层不应该调用
+function Game:onKey(value)
+  GameLayer:dispatchKeyEvent(value)
+end
+
+--输入事件  lua层不应该调用
 function Game:onInput(value)
   GameLayer:onInput(value)
 end

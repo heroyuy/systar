@@ -14,6 +14,10 @@ clsSceneTitle.menuItems={"新的游戏","读取存档","游戏设置"}
 
 clsSceneTitle.bgLayer=nil
 clsSceneTitle.menu=nil
+clsSceneTitle.name=nil
+clsSceneTitle.password=nil
+clsSceneTitle.editName=nil
+clsSceneTitle.editPassword=nil
 
 --构造器
 function clsSceneTitle:new()
@@ -41,6 +45,35 @@ function clsSceneTitle:onStart()
   self.menu.delegate=self
   self.menu:refresh()
   self.bgLayer:addChild(self.menu)
+  
+  self.name=clsUILabel:new(screenWidth/2-60,30,80,20)
+  self.name.text="输入账号："
+  self.name.textSize=16
+  self.name.textColor="0xff000000"
+  self.bgLayer:addChild(self.name)
+  
+  self.password=clsUILabel:new(screenWidth/2-60,60,80,20)
+  self.password.text="输入密码："
+  self.password.textSize=16
+  self.password.textColor="0xff000000"
+  self.bgLayer:addChild(self.password)
+  
+  self.editName=clsUIEditText:standardEditText(screenWidth/2+40,30,120,20,clsUIEditText.NORMAL)
+  self.editName.hintText="这里输入账号"
+  self.editName.hintTextSize=16
+  self.editName.hintTextColor="0x99000000"
+  self.editName.textSize=16
+  self.editName.textColor="0xff000000"
+  self.bgLayer:addChild(self.editName)
+  
+  self.editPassword=clsUIEditText:standardEditText(screenWidth/2+40,60,120,20,clsUIEditText.PASSWORD)
+  self.editPassword.hintText="这里输入密码"
+  self.editPassword.hintTextSize=16
+  self.editPassword.hintTextColor="0x99000000"
+  self.editPassword.textSize=16
+  self.editPassword.textColor="0xff000000"
+  self.bgLayer:addChild(self.editPassword)
+  
   GameLayer:addChildToScene(self.bgLayer)
 end
 

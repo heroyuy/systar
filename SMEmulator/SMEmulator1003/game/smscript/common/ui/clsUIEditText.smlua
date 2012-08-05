@@ -1,0 +1,139 @@
+--[[
+  description:输入框
+  author:cokey
+  date:2011/05/13
+--]]
+
+--类结构定义
+clsUIEditText={}
+setmetatable(clsUIEditText,clsUILayer)
+clsUIEditText.__index=clsUIEditText
+
+--重定向需要覆盖的父类方法
+clsUIEditText.paintLayerF=clsUIEditText.paintLayer
+
+--字段
+clsUIEditText.NORMAL=0                         	   --常规输入框
+clsUIEditText.PASSWORD=1                           --密码输入框
+
+clsUIEditText.text=nil                             --标签文字
+clsUIEditText.textColor="0xffffffff"               --文字颜色
+clsUIEditText.textSize=-1                          --文字大小
+
+clsUIEditText.hintText=nil                         --标签文字
+clsUIEditText.hintTextColor="0xffffffff"           --文字颜色
+clsUIEditText.hintTextSize=-1                      --文字大小
+
+clsUIEditText.cursor=true				   		   --光标计时器
+clsUIEditText.callback="keyTyped"				   --事件回调
+clsUIEditText.type = clsUIEditText.NORMAL		   --输入框类型
+
+--构造器
+function clsUIEditText:standardEditText(x,y,width,height,type)
+  local editText=clsUIEditText:new(x,y,width,height)
+  editText.type=type
+  return editText
+end
+
+--构造器
+function clsUIEditText:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIEditText)
+  self.enabled=true
+  self.keyEnabled=true
+  self.clipBounds=true
+  Scheduler:scheduleTask(self,"update",500,-1)
+  return self
+end
+
+function clsUIEditText:update()
+  if self.cursor then
+    self.cursor = false
+  else
+    self.cursor = true
+  end
+end
+--绘制EditText
+function clsUIEditText:paintLayer(painter)
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+  if self.image==nil then
+    --假如没有设定背景图片，则默认给输入框加入白色矩形背景
+    painter:setColor("0xffffffff")
+    painter:fillRoundRect(0,0,self.width-1,self.height-1,5)
+    painter:setColor("0xff000000")
+    painter:drawRoundRect(0,0,self.width-1,self.height-1,5)
+  end
+  local showText = nil --显示在输入框中的文字
+  if self.text then
+    --绘制输入文字
+    painter:setColor(self.textColor)
+    if self.textSize>0 then
+      painter:setTextSize(self.textSize)
+    end
+    if self.type==clsUIEditText.NORMAL then
+      showText = self.text
+    elseif self.type==clsUIEditText.PASSWORD then
+      showText = string.rep("●", string.len(self.text))
+    end
+    painter:drawString(showText, 2, self.height/2, UIConst.anchor.LV)
+  else
+    --绘制提示文字
+    painter:setColor(self.hintTextColor)
+    if self.hintTextSize>0 then
+      painter:setTextSize(self.hintTextSize)
+    end
+    painter:drawString(self.hintText, 2, self.height/2, UIConst.anchor.LV)
+  end
+  --开始绘制光标
+  if self.activation and self.cursor then
+    local w = 0
+    if showText then
+      w = painter:stringWidth(showText)
+    end
+    painter:setColor("0xff000000")
+  	painter:drawLine(2+w,2,2+w,self.height-4)
+  end 
+end
+
+--- 获取utf8编码字符串正确长度的方法
+-- @param str
+-- @return number
+function clsUIEditText:utfstrlen(str)
+  local len = #str;
+  local left = len;
+  local cnt = 0;
+  local arr={0,0xc0,0xe0,0xf0,0xf8,0xfc};
+  while left ~= 0 do
+    local tmp=string.byte(str,-left);
+    local i=#arr;
+    while arr[i] do
+      if tmp>=arr[i] then 
+        left=left-i;
+        break;
+      end
+      i=i-1;
+    end
+    cnt=cnt+1;
+  end
+  return cnt;
+end
+
+function clsUIEditText:onKey(key)
+  if key == string.char(127) or key == string.char(8) then
+    --char(8)表示按下回退键  char(127)表示按下delete键
+    if self.text then
+      local len = smString:length(self.text)
+      if len>0 then
+        self.text=smString:subString(self.text, 1, len-1)
+      end
+    end
+  else
+    if self.text then
+      self.text=self.text..key
+    else
+      self.text=key
+    end
+  end
+  callFunction(self.delegate,self.callback,self,key)
+end

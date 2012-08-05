@@ -32,6 +32,8 @@ public class LuaAdapter {
 
 	private LuaObject luaFunctionOnInput = null;
 
+	private LuaObject luaFunctionOnKey = null;
+
 	private LuaObject luaFunctionOnUpdate = null;
 
 	private LuaObject luaFunctionOnPaint = null;
@@ -74,6 +76,7 @@ public class LuaAdapter {
 			luaFunctionOnStart = luaGame.getField("onStart");
 			luaFunctionOnTouch = luaGame.getField("onTouch");
 			luaFunctionOnInput = luaGame.getField("onInput");
+			luaFunctionOnKey = luaGame.getField("onKey");
 			luaFunctionOnUpdate = luaGame.getField("onUpdate");
 			luaFunctionOnPaint = luaGame.getField("onPaint");
 			luaFunctionOnStop = luaGame.getField("onStop");
@@ -146,6 +149,17 @@ public class LuaAdapter {
 	public void onTouch(Event event) {
 		try {
 			luaFunctionOnTouch.call(new Object[] { luaGame, event });
+		} catch (LuaException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * onKey方法的转换
+	 */
+	public void onKey(String key) {
+		try {
+			luaFunctionOnKey.call(new Object[] { luaGame, key });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}

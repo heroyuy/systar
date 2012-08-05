@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -62,6 +64,10 @@ public class UIScreen extends JPanel implements InputListener {
 		// 鼠标事件监听
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 
+			public void mouseEntered(MouseEvent e){
+				gamePanel.requestFocus();
+			}
+			
 			public void mouseDragged(MouseEvent e) {
 				if (inputDialog.isVisible()) {
 					return;
@@ -83,8 +89,15 @@ public class UIScreen extends JPanel implements InputListener {
 				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_UP));
 			}
 		};
+		KeyAdapter keyAdapter = new KeyAdapter() {
+			
+			public void keyTyped(KeyEvent e) {
+				game.onKey("" + e.getKeyChar());
+			}
+		};
 		gamePanel.addMouseMotionListener(mouseAdapter);
 		gamePanel.addMouseListener(mouseAdapter);
+		gamePanel.addKeyListener(keyAdapter);
 		gamePanel.setSize(new Dimension(GameConfig.getInstance().getWidth(), GameConfig.getInstance().getHeight()));
 		gamePanel.setLocation(0, 0);
 		gamePanel.setLayout(null);

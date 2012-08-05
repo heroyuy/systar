@@ -14,6 +14,7 @@ GameLayer.animationLayer=nil		--动画层。仅用于渲染动画，不接收事
 
 GameLayer.inputDelegate=nil			--输入框事件委托
 GameLayer.inputCallback=nil			--输入框回调方法
+GameLayer.allLeafLayers=nil			--所有的子层
 
 --初始化
 function GameLayer:init()
@@ -32,12 +33,66 @@ end
 
 --分发事件
 function GameLayer:dispatchEvent(event)
+  --接到事件，首先将全部叶子层激活事件置为false
+  local allLayers=self:getAllLeafLayers()
+  for i=table.getn(allLayers),1,-1 do
+    local layer=allLayers[i]
+    layer.activation=false
+  end
   self.rootLayer:dispatchEvent(event)
 end
 
 --绘制层
 function GameLayer:paint(painter)
   self.rootLayer:paint(painter)
+end
+
+--分发事件
+function GameLayer:dispatchKeyEvent(key)
+  local editLayer=nil
+  local allLayers=self:getAllLeafLayers()
+  local time = -1
+  for i=table.getn(allLayers),1,-1 do
+    local layer=allLayers[i]
+    layer.activation=false
+	if layer.visibility and layer.alpha~=0 and layer.enabled and layer.keyEnabled then
+	  --表示该控件可见，且为编辑框
+	  if layer.time>=time then
+	    --找出最新添加或者最新获得焦点的编辑框
+	    time=layer.time
+	    editLayer=layer
+	  end
+	end
+  end
+  if editLayer then
+    editLayer.activation=true
+    editLayer:onKey(key)
+  end
+  --如果什么都没找到，说明界面上没有出现编辑框，什么都不做
+end
+
+--得到所有的叶子层
+function GameLayer:getAllLeafLayers()
+  allLeafLayers=clsList:new()
+  self:getLeafLayers(self.rootLayer)
+  return allLeafLayers
+end
+
+--得到某层以下的所有叶子层
+function GameLayer:getLeafLayers(layer)
+  for i=table.getn(layer.children),1,-1 do
+    local laye=layer.children[i]
+    if laye.children==nil or table.getn(laye.children)==0 then
+      allLeafLayers:add(laye)
+    else
+      self:getLeafLayers(laye)
+    end
+  end
+end
+
+--输入事件
+function GameLayer:onKey(value)
+  self.rootLayer:onKey(value)
 end
 
 --输入事件
