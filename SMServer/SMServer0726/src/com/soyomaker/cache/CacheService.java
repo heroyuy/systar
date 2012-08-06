@@ -7,7 +7,8 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.lang.IService;
 
 public class CacheService extends AbstractBean implements IService {
-	private CacheManager cacheManager = new CacheManager();
+
+	private final CacheManager cacheManager = new CacheManager();
 
 	@Override
 	public void initialize() {
