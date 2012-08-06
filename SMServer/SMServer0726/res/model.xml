@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Model>
-	<Datasource driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://127.0.0.1:3306/feitu" username="root" password="2724504"
-		maxActive="20" maxIdle="8" minIdle="5" />
+	<Datasource driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/feitu"
+		username="root" password="2724504" maxActive="20" maxIdle="8" minIdle="5" />
 	<TableProxies>
 		<TableProxy name="account" table="account" primaryKey="id">
 			<field name="id" type="int" />
 			<field name="username" type="string" />
 			<field name="password" type="string" />
+		</TableProxy>
+		<TableProxy name="dict_player" table="dict_player" primaryKey="id">
+			<field name="id" type="int" />
+			<field name="name" type="string" />
+			<field name="mapId" type="int" />
+			<field name="x" type="int" />
+			<field name="y" type="int" />
+			<field name="avatar" type="int" />
+			<field name="level" type="int" />
+			<field name="exp" type="int" />
+			<field name="money" type="int" />
+			<field name="str" type="int" />
+			<field name="agi" type="int" />
+			<field name="int" type="int" />
+			<field name="vit" type="int" />
+			<field name="dex" type="int" />
+			<field name="luck" type="int" />
+		</TableProxy>
+		<TableProxy name="player" table="player" primaryKey="id">
+			<field name="id" type="int" />
+			<field name="name" type="string" />
+			<field name="mapId" type="int" />
+			<field name="x" type="int" />
+			<field name="y" type="int" />
+			<field name="avatar" type="int" />
+			<field name="level" type="int" />
+			<field name="exp" type="int" />
+			<field name="money" type="int" />
+			<field name="str" type="int" />
+			<field name="agi" type="int" />
+			<field name="int" type="int" />
+			<field name="vit" type="int" />
+			<field name="dex" type="int" />
+			<field name="luck" type="int" />
 		</TableProxy>
 	</TableProxies>
 </Model>
