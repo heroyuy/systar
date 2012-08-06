@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Model>
-	<Datasource driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/feitu"
+	<Datasource driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://ggggeeqg.vicp.net:3306/feitu"
 		username="root" password="2724504" maxActive="20" maxIdle="8" minIdle="5" />
 	<TableProxies>
 		<TableProxy name="account" table="account" primaryKey="id">
