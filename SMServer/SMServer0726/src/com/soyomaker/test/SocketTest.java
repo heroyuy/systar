@@ -22,7 +22,7 @@ public class SocketTest {
 	public static void main(String[] args) {
 		boolean running = true;
 		GameObject msg = new GameObject();
-		msg.setType("101005");
+		msg.setType("101001");
 		msg.putString("username", "wp_g4");
 		msg.putString("password", "2724504");
 		Collection<GameObject> c = new ArrayList<GameObject>();
