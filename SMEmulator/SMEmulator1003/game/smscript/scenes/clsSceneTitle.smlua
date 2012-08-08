@@ -9,16 +9,34 @@ clsSceneTitle = {}
 setmetatable(clsSceneTitle,clsScene)
 clsSceneTitle.__index = clsSceneTitle
 
---字段
+--背景层
 clsSceneTitle.bgLayer=nil
-clsSceneTitle.loginButton=nil
-clsSceneTitle.registerButton=nil
-clsSceneTitle.name=nil
-clsSceneTitle.password=nil
-clsSceneTitle.editName=nil
-clsSceneTitle.editPassword=nil
-clsSceneTitle.msgLabel=nil
-
+--登录和注册按钮
+clsSceneTitle.loginLoginButton=nil
+clsSceneTitle.loginRegisterButton=nil
+clsSceneTitle.registerLoginButton=nil
+clsSceneTitle.registerRegisterButton=nil
+--登录层
+clsSceneTitle.loginLayer=nil
+clsSceneTitle.loginName=nil
+clsSceneTitle.loginPassword=nil
+clsSceneTitle.loginEditName=nil
+clsSceneTitle.loginEditPassword=nil
+clsSceneTitle.loginMsgLabel=nil
+--注册层
+clsSceneTitle.registerLayer=nil
+clsSceneTitle.registerName=nil
+clsSceneTitle.registerPassword=nil
+clsSceneTitle.registerConfirmPassword=nil
+clsSceneTitle.registerEditName=nil
+clsSceneTitle.registerEditPassword=nil
+clsSceneTitle.registerEditConfirmPassword=nil
+clsSceneTitle.registerMsgLabel=nil
+--动作
+clsSceneTitle.loginDisappearAction=nil
+clsSceneTitle.loginAppearAction=nil
+clsSceneTitle.registerDisappearAction=nil
+clsSceneTitle.registerAppearAction=nil
 --构造器
 function clsSceneTitle:new()
 	local self = {}
@@ -40,88 +58,177 @@ function clsSceneTitle:onStart()
   if Dictionary.config.titleImg then
     self.bgLayer.image=smImageFactory:loadImage(Dictionary.config.titleImg)
   end
+  --登录层开始
+  self.loginLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
+  self.loginLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
+  self.bgLayer:addChild(self.loginLayer)
   
-  self.centerLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
-  self.centerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
-  self.bgLayer:addChild(self.centerLayer)
+  self.loginName=clsUILabel:new(45,25,80,20)
+  self.loginName.text="输入账号"
+  self.loginName.textSize=16
+  self.loginName.textColor="0xff000000"
+  self.loginLayer:addChild(self.loginName)
   
-  self.name=clsUILabel:new(45,25,80,20)
-  self.name.text="输入账号"
-  self.name.textSize=16
-  self.name.textColor="0xff000000"
-  self.centerLayer:addChild(self.name)
+  self.loginPassword=clsUILabel:new(45,55,80,20)
+  self.loginPassword.text="输入密码"
+  self.loginPassword.textSize=16
+  self.loginPassword.textColor="0xff000000"
+  self.loginLayer:addChild(self.loginPassword)
   
-  self.password=clsUILabel:new(45,55,80,20)
-  self.password.text="输入密码"
-  self.password.textSize=16
-  self.password.textColor="0xff000000"
-  self.centerLayer:addChild(self.password)
+  self.loginEditName=clsUIEditText:standardEditText(155,25,145,20,clsUIEditText.NORMAL)
+  self.loginEditName.textSize=16
+  self.loginEditName.textColor="0xff000000"
+  self.loginLayer:addChild(self.loginEditName)
   
-  self.editName=clsUIEditText:standardEditText(155,25,145,20,clsUIEditText.NORMAL)
-  --self.editName.hintText="这里输入账号"
-  --self.editName.hintTextSize=16
-  --self.editName.hintTextColor="0x99000000"
-  self.editName.textSize=16
-  self.editName.textColor="0xff000000"
-  self.centerLayer:addChild(self.editName)
+  self.loginEditPassword=clsUIEditText:standardEditText(155,55,145,20,clsUIEditText.PASSWORD)
+  self.loginEditPassword.textSize=16
+  self.loginEditPassword.textColor="0xff000000"
+  self.loginLayer:addChild(self.loginEditPassword)
   
-  self.editPassword=clsUIEditText:standardEditText(155,55,145,20,clsUIEditText.PASSWORD)
-  --self.editPassword.hintText="这里输入密码"
-  --self.editPassword.hintTextSize=16
-  --self.editPassword.hintTextColor="0x99000000"
-  self.editPassword.textSize=16
-  self.editPassword.textColor="0xff000000"
-  self.centerLayer:addChild(self.editPassword)
-  --登录按钮
-  self.loginButton=clsUIButton:standardButton(60,110,80,20,"登录")
-  self.loginButton.textSize=16
-  self.loginButton.textColor="0xff000000"
-  self.loginButton.delegate=self
-  self.centerLayer:addChild(self.loginButton)
-  --注册按钮
-  self.registerButton=clsUIButton:standardButton(180,110,80,20,"注册")
-  self.registerButton.textSize=16
-  self.registerButton.textColor="0xff000000"
-  self.registerButton.delegate=self
-  self.centerLayer:addChild(self.registerButton)
+  self.loginMsgLabel=clsUILabel:new(120,140,80,20)
+  self.loginMsgLabel.text=""
+  self.loginMsgLabel.textSize=16
+  self.loginMsgLabel.textColor="0xffff0000"
+  self.loginLayer:addChild(self.loginMsgLabel) 
   
-  self.msgLabel=clsUILabel:new(120,140,80,20)
-  self.msgLabel.text=""
-  self.msgLabel.textSize=16
-  self.msgLabel.textColor="0xffff0000"
-  self.centerLayer:addChild(self.msgLabel)
+  self.loginLoginButton=clsUIButton:standardButton(60,115,80,20,"登录")
+  self.loginLoginButton.textSize=16
+  self.loginLoginButton.textColor="0xff000000"
+  self.loginLoginButton.delegate=self
+  self.loginLayer:addChild(self.loginLoginButton)
   
+  self.loginRegisterButton=clsUIButton:standardButton(180,115,80,20,"注册")
+  self.loginRegisterButton.textSize=16
+  self.loginRegisterButton.textColor="0xff000000"
+  self.loginRegisterButton.delegate=self
+  self.loginLayer:addChild(self.loginRegisterButton)
+  --登陆层结束
+  --注册层开始
+  self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
+  self.registerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
+  self.registerLayer.alpha=0
+  self.bgLayer:addChild(self.registerLayer)
+  
+  self.registerName=clsUILabel:new(45,25,80,20)
+  self.registerName.text="输入账号"
+  self.registerName.textSize=16
+  self.registerName.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerName)
+  
+  self.registerPassword=clsUILabel:new(45,55,80,20)
+  self.registerPassword.text="输入密码"
+  self.registerPassword.textSize=16
+  self.registerPassword.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerPassword)
+  
+  self.registerConfirmPassword=clsUILabel:new(45,85,80,20)
+  self.registerConfirmPassword.text="确认密码"
+  self.registerConfirmPassword.textSize=16
+  self.registerConfirmPassword.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerConfirmPassword)
+  
+  self.registerEditName=clsUIEditText:standardEditText(155,25,145,20,clsUIEditText.NORMAL)
+  self.registerEditName.textSize=16
+  self.registerEditName.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerEditName)
+  
+  self.registerEditPassword=clsUIEditText:standardEditText(155,55,145,20,clsUIEditText.PASSWORD)
+  self.registerEditPassword.textSize=16
+  self.registerEditPassword.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerEditPassword)
+  
+  self.registerEditConfirmPassword=clsUIEditText:standardEditText(155,85,145,20,clsUIEditText.PASSWORD)
+  self.registerEditConfirmPassword.textSize=16
+  self.registerEditConfirmPassword.textColor="0xff000000"
+  self.registerLayer:addChild(self.registerEditConfirmPassword)
+  
+  self.registerMsgLabel=clsUILabel:new(120,140,80,20)
+  self.registerMsgLabel.text=""
+  self.registerMsgLabel.textSize=16
+  self.registerMsgLabel.textColor="0xffff0000"
+  self.registerLayer:addChild(self.registerMsgLabel) 
+  
+  self.registerLoginButton=clsUIButton:standardButton(60,115,80,20,"登录")
+  self.registerLoginButton.textSize=16
+  self.registerLoginButton.textColor="0xff000000"
+  self.registerLoginButton.delegate=self
+  self.registerLayer:addChild(self.registerLoginButton)
+  
+  self.registerRegisterButton=clsUIButton:standardButton(180,115,80,20,"注册")
+  self.registerRegisterButton.textSize=16
+  self.registerRegisterButton.textColor="0xff000000"
+  self.registerRegisterButton.delegate=self
+  self.registerLayer:addChild(self.registerRegisterButton)
+  --注册层结束
   GameLayer:addChildToScene(self.bgLayer)
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
 end
 
 function clsSceneTitle:handleLogin(msg)
-  self.msgLabel.text=msg.msg
+  self.loginMsgLabel.text=msg.msg
 end
 
 function clsSceneTitle:handleRegister(msg)
-  self.msgLabel.text=msg.msg
+  self.registerMsgLabel.text=msg.msg
 end
 
 --按钮点击的回调
 function clsSceneTitle:buttonTapped(button)
-  if button==self.loginButton then
-    if self.editName.text and self.editPassword.text 
-    and string.len(self.editName.text)>0 and string.len(self.editPassword.text)>0 then
-      smNet:login(self.editName.text,self.editPassword.text)
-    else
-      self.msgLabel.text="账号或者密码不能为空"
-    end
-  elseif button==self.registerButton then
-    if self.editName.text and self.editPassword.text 
-    and string.len(self.editName.text)>0 and string.len(self.editPassword.text)>0 then
-      smNet:register(self.editName.text,self.editPassword.text)
-    else
-      self.msgLabel.text="账号或者密码不能为空"
-    end
+  if button==self.loginLoginButton then
+  		if self.loginEditName.text==nil
+  			or self.loginEditPassword.text==nil
+  			or string.len(self.loginEditName.text)==0
+  			or string.len(self.loginEditPassword.text)==0 then
+  			self.loginMsgLabel.text="账号或者密码不能为空"	
+    	else
+      		smNet:login(self.loginEditName.text,self.loginEditPassword.text)
+    	end
+  elseif button==self.loginRegisterButton then
+    	self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+    	self.loginDisappearAction.delegate = self
+    	self.loginLayer:runAction(self.loginDisappearAction)
+    	
+    	self.registerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+    	self.registerAppearAction.delegate = self
+    	self.registerLayer:runAction(self.registerAppearAction)     
+  elseif button==self.registerLoginButton then
+  		self.registerDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+    	self.registerDisappearAction.delegate = self
+    	self.registerLayer:runAction(self.registerDisappearAction)
+    	
+    	self.loginAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+    	self.loginAppearAction.delegate = self
+    	self.loginLayer:runAction(self.loginAppearAction)
+  elseif button==self.registerRegisterButton then
+  		if self.registerEditName.text==nil
+  			or self.registerEditPassword.text==nil
+  			or string.len(self.registerEditName.text)==0
+  			or string.len(self.registerEditPassword.text)==0 then
+  			self.registerMsgLabel.text="账号或者密码不能为空"
+  		elseif self.registerEditConfirmPassword.text==nil 
+    		or string.len(self.registerEditConfirmPassword.text)==0 then
+    		self.registerMsgLabel.text="请再次输入密码确认"
+    	elseif self.registerEditPassword.text~=self.registerEditConfirmPassword.text then
+    	  	self.registerMsgLabel.text="两次输入密码不一致"
+    	else
+    		smNet:register(self.registerEditName.text,self.registerEditPassword.text)
+  		end
   end
 end
+
+function clsSceneTitle:onActionEnd(action)
+	if action == self.loginDisappearAction then
+		
+	elseif action == self.loginAppearAction then
+		
+	elseif action == self.registerDisappearAction then
+		
+	elseif action == self.registerAppearAction then
+		
+	end
+end
+
 
 -- 更新
 function clsSceneTitle:update()
