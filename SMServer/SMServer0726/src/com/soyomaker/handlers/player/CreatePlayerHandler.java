@@ -4,11 +4,11 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.model.dao.IDao;
-import com.soyomaker.net.IHandler;
+import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 
-public class CreatePlayerHandler implements IHandler {
+public class CreatePlayerHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -48,17 +48,35 @@ public class CreatePlayerHandler implements IHandler {
 		player.setDext(9);
 		player.setLuck(9);
 		boolean status = playerDao.insert(player);
-		this.sendMessage(session, msg.getType(), status, status ? "注册成功"
-				: "注册失败");
+		if (status) {
+			GameObject msgSent = this.buildPackage(msg.getType(), status,
+					"创建成功");
+			this.insertPlayerIntoPackage(player, msgSent);
+			NetTransceiver.getInstance().sendMessage(session, msgSent);
+		} else {
+			this.sendMessage(session, msg.getType(), status, "创建失败");
+		}
+
 	}
 
-	private void sendMessage(UserSession session, String type,
-			boolean status, String message) {
-		GameObject msgSent = new GameObject();
-		msgSent.setType(type);
-		msgSent.putBool("status", status);
-		msgSent.putString("msg", message);
-		NetTransceiver.getInstance().sendMessage(session, msgSent);
+	private void insertPlayerIntoPackage(Player player, GameObject msg) {
+		GameObject playerObj = new GameObject();
+		playerObj.putInt("playerId", player.getId());
+		playerObj.putString("name", player.getName());
+		playerObj.putInt("mapId", player.getMapId());
+		playerObj.putInt("x", player.getX());
+		playerObj.putInt("y", player.getY());
+		playerObj.putInt("avatar", player.getAvatar());
+		playerObj.putInt("level", player.getLevel());
+		playerObj.putInt("exp", player.getExp());
+		playerObj.putInt("money", player.getMoney());
+		playerObj.putInt("stre", player.getStre());
+		playerObj.putInt("agil", player.getAgil());
+		playerObj.putInt("inte", player.getInte());
+		playerObj.putInt("vita", player.getVita());
+		playerObj.putInt("dext", player.getDext());
+		playerObj.putInt("luck", player.getLuck());
+		msg.putObject("player", playerObj);
 	}
 
 }
