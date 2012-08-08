@@ -38,10 +38,6 @@ public class XMLObject {
 	 * @return 属性值
 	 */
 	public String getAttribute(String name) {
-		if (!attributeMap.containsKey(name)) {
-			throw new IllegalArgumentException(
-					"can't find the Attribute named \"" + name + "\"");
-		}
 		return attributeMap.get(name);
 	}
 
