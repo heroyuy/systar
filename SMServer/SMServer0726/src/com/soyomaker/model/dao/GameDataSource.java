@@ -1,4 +1,4 @@
-package com.soyomaker.model.db;
+package com.soyomaker.model.dao;
 
 import java.io.File;
 import java.io.IOException;

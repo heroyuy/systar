@@ -5,7 +5,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.soyomaker.model.Model;
 import com.soyomaker.model.dao.DaoManager;
-import com.soyomaker.model.db.GameDataSource;
+import com.soyomaker.model.dao.GameDataSource;
 import com.soyomaker.net.NetTransceiver;
 
 public class GameServer {

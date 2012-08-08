@@ -6,7 +6,6 @@ import java.lang.reflect.Type;
 import org.nutz.dao.Dao;
 import org.nutz.dao.impl.NutDao;
 
-import com.soyomaker.model.db.GameDataSource;
 
 public class BasicDao<T> implements IDao<T> {
 
