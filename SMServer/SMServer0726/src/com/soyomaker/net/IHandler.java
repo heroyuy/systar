@@ -4,5 +4,5 @@ import com.soyomaker.lang.GameObject;
 
 public interface IHandler {
 
-	public void handleMessage(UserSession playerSession, GameObject msg);
+	public void handleMessage(UserSession session, GameObject msg);
 }

@@ -31,11 +31,11 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void messageReceived(IoSession session, Object obj) throws Exception {
 		if (obj instanceof GameObject) {
-			UserSession playerSession = (UserSession) session
-					.getAttribute("playerSession");
-			if (playerSession == null) {
-				playerSession = new UserSession(session);
-				session.setAttribute("playerSession", playerSession);
+			UserSession userSession = (UserSession) session
+					.getAttribute("userSession");
+			if (userSession == null) {
+				userSession = new UserSession(session);
+				session.setAttribute("userSession", userSession);
 			}
 			GameObject message = (GameObject) obj;
 			log.debug("Mina收到包:" + message.getType() + message.toJson());
@@ -45,12 +45,12 @@ public class MinaHandler implements IoHandler {
 				Collection<GameObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (GameObject msg : c) {
-					NetTransceiver.getInstance().dispatchMessage(playerSession,
+					NetTransceiver.getInstance().dispatchMessage(userSession,
 							msg);
 				}
 			} else {
 				// 单包
-				NetTransceiver.getInstance().dispatchMessage(playerSession,
+				NetTransceiver.getInstance().dispatchMessage(userSession,
 						message);
 			}
 		}

@@ -17,21 +17,21 @@ public class UserSessionManager {
 
 	}
 
-	public synchronized void putPlayerSession(long userId,
-			UserSession playerSession) {
-		UserSession ps = this.getPlayerSession(userId);
-		if (ps != null && ps != playerSession) {
+	public synchronized void putUserSession(long userId,
+			UserSession session) {
+		UserSession ps = this.getUserSession(userId);
+		if (ps != null && ps != session) {
 			ps.disConnect();
-			this.removePlayerSession(userId);
+			this.removeUserSession(userId);
 		}
-		this.sessionMap.put(userId, playerSession);
+		this.sessionMap.put(userId, session);
 	}
 
-	public synchronized UserSession getPlayerSession(long userId) {
+	public synchronized UserSession getUserSession(long userId) {
 		return sessionMap.get(userId);
 	}
 
-	public synchronized void removePlayerSession(long userId) {
+	public synchronized void removeUserSession(long userId) {
 		this.sessionMap.remove(userId);
 	}
 

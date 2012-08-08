@@ -5,6 +5,6 @@ import com.soyomaker.lang.IService;
 
 public interface INetService extends IService {
 
-	public void sendMessage(UserSession playerSession, GameObject msg);
+	public void sendMessage(UserSession session, GameObject msg);
 
 }

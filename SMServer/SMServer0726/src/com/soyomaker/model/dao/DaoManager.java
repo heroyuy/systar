@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.soyomaker.model.User;
+import com.soyomaker.model.Player;
 
 public class DaoManager {
 
@@ -29,6 +30,11 @@ public class DaoManager {
 	}
 
 	public void config(String configFile) {
-		this.addDao(User.class, new BasicDao<User>(){});
+		// User
+		this.addDao(User.class, new BasicDao<User>() {
+		});
+		// Player
+		this.addDao(Player.class, new BasicDao<Player>() {
+		});
 	}
 }

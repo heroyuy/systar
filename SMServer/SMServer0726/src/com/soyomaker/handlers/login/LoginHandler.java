@@ -4,15 +4,15 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.model.dao.IDao;
-import com.soyomaker.net.IHandler;
+import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
 
-public class LoginHandler implements IHandler {
+public class LoginHandler extends AbHandler {
 
 	@Override
-	public void handleMessage(UserSession playerSession, GameObject msg) {
+	public void handleMessage(UserSession session, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
@@ -23,32 +23,22 @@ public class LoginHandler implements IHandler {
 		IDao<User> userDao = DaoManager.getInatance().getDao(User.class);
 		User user = userDao.get(username);
 		if (user == null) {
-			this.sendMessage(playerSession, msg.getType(), false, "帐号不存在", -1);
+			this.sendMessage(session, msg.getType(), false, "帐号不存在");
 			return;
 		}
 		// (3)验证
 		if (!user.getPassword().equals(password)) {
-			this.sendMessage(playerSession, msg.getType(), false, "密码不正确", -1);
+			this.sendMessage(session, msg.getType(), false, "密码不正确");
 			return;
 		}
 		// (4)登录成功
-		playerSession.setLogin(true);
-		playerSession.setUserId(user.getId());
-		UserSessionManager.getInstance().putPlayerSession(user.getId(),
-				playerSession);
-		this.sendMessage(playerSession, msg.getType(), true, "登录成功",
-				user.getId());
+		session.setLogin(true);
+		session.setUserId(user.getId());
+		UserSessionManager.getInstance()
+				.putUserSession(user.getId(), session);
+		GameObject msgSent = this.buildPackage(msg.getType(), true, "登录成功");
+		msg.putLong("userId", user.getId());
+		NetTransceiver.getInstance().sendMessage(session, msgSent);
 	}
 
-	private void sendMessage(UserSession playerSession, String type,
-			boolean status, String message, long userId) {
-		GameObject msgSent = new GameObject();
-		msgSent.setType(type);
-		msgSent.putBool("status", status);
-		msgSent.putString("msg", message);
-		if (userId >= 0) {
-			msgSent.putLong("uid", userId);
-		}
-		NetTransceiver.getInstance().sendMessage(playerSession, msgSent);
-	}
 }
