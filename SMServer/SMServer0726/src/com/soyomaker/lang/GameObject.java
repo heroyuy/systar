@@ -20,7 +20,7 @@ public class GameObject {
 		return JsonSerializer.json2object(jsonStr);
 	}
 
-	private String type;
+	private String type = "";
 
 	private Map<String, GameDataWrapper> dataHolder = new HashMap<String, GameDataWrapper>();
 

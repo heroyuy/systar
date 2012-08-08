@@ -63,7 +63,9 @@ public class NetTransceiver {
 					IHandler handler = (IHandler) handlerClass.newInstance();
 					protocol.setHandler(handler);
 				}
-				protocol.setNeedLogin(needLogin.equalsIgnoreCase("true"));
+				if (needLogin != null) {
+					protocol.setNeedLogin(Boolean.parseBoolean(needLogin));
+				}
 				protocolMap.put(id, protocol);
 			}
 		} catch (Exception e) {

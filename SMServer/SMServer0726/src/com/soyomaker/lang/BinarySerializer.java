@@ -19,7 +19,7 @@ public class BinarySerializer {
 	public static byte[] object2binary(GameObject object) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFFER_SIZE);
 		DataOutputStream dos = new DataOutputStream(baos);
-		writeIGUObject(dos, object);
+		writeObject(dos, object);
 		return baos.toByteArray();
 	}
 
@@ -254,19 +254,19 @@ public class BinarySerializer {
 			break;
 		case OBJECT:
 			GameObject obj = (GameObject) v;
-			writeIGUObject(dos, obj);
+			writeObject(dos, obj);
 			break;
 		case OBJECT_ARRAY:
 			Collection<GameObject> v9 = (Collection<GameObject>) v;
 			dos.writeShort(v9.size());
 			for (GameObject obj2 : v9) {
-				writeIGUObject(dos, obj2);
+				writeObject(dos, obj2);
 			}
 			break;
 		}
 	}
 
-	private static void writeIGUObject(DataOutputStream dos, GameObject object)
+	private static void writeObject(DataOutputStream dos, GameObject object)
 			throws IOException {
 		// (1)类型
 		dos.writeUTF(object.getType());

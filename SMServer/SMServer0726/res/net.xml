@@ -9,6 +9,6 @@
 			needLogin="false" />
 		<Protocol id="101002" netService="socket" handler="com.soyomaker.handlers.login.LoginHandler"
 			needLogin="false" />
-		<Protocol id="102001" netService="socket" handler="com.soyomaker.handlers.login.CreatePlayerHandler" />
+		<Protocol id="102001" netService="socket" handler="com.soyomaker.handlers.player.CreatePlayerHandler" />
 	</Protocols>
 </NetTransceiver>
