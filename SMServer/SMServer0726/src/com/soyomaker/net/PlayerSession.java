@@ -24,7 +24,7 @@ public class PlayerSession {
 	/**
 	 * 玩家id
 	 */
-	private int playerId = -1;
+	private long userId = -1;
 
 	public PlayerSession(IoSession ioSession) {
 		this.ioSession = ioSession;
@@ -34,8 +34,8 @@ public class PlayerSession {
 		return ioSession;
 	}
 
-	public int getPlayerId() {
-		return playerId;
+	public long getUserId() {
+		return userId;
 	}
 
 	public boolean isLogin() {
@@ -46,8 +46,8 @@ public class PlayerSession {
 		this.login = login;
 	}
 
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public void disConnect() {

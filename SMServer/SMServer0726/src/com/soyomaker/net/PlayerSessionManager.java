@@ -11,28 +11,28 @@ public class PlayerSessionManager {
 		return instance;
 	}
 
-	private Map<Integer, PlayerSession> playerSessionMap = new HashMap<Integer, PlayerSession>();
+	private Map<Long, PlayerSession> playerSessionMap = new HashMap<Long, PlayerSession>();
 
 	private PlayerSessionManager() {
 
 	}
 
-	public synchronized void putPlayerSession(int playerId,
+	public synchronized void putPlayerSession(long userId,
 			PlayerSession playerSession) {
-		PlayerSession ps = this.getPlayerSession(playerId);
+		PlayerSession ps = this.getPlayerSession(userId);
 		if (ps != null && ps != playerSession) {
 			ps.disConnect();
-			this.removePlayerSession(playerId);
+			this.removePlayerSession(userId);
 		}
-		this.playerSessionMap.put(playerId, playerSession);
+		this.playerSessionMap.put(userId, playerSession);
 	}
 
-	public synchronized PlayerSession getPlayerSession(int playerId) {
-		return playerSessionMap.get(playerId);
+	public synchronized PlayerSession getPlayerSession(long userId) {
+		return playerSessionMap.get(userId);
 	}
 
-	public synchronized void removePlayerSession(int playerId) {
-		this.playerSessionMap.remove(playerId);
+	public synchronized void removePlayerSession(long userId) {
+		this.playerSessionMap.remove(userId);
 	}
 
 }

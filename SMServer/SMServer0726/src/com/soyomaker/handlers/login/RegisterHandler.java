@@ -1,11 +1,9 @@
 package com.soyomaker.handlers.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.model.Model;
-import com.soyomaker.model.db.TableProxy;
+import com.soyomaker.model.User;
+import com.soyomaker.model.dao.DaoManager;
+import com.soyomaker.model.dao.UserDao;
 import com.soyomaker.net.IHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PlayerSession;
@@ -31,18 +29,17 @@ public class RegisterHandler implements IHandler {
 			return;
 		}
 		// (4)检查用户名是否已经存在
-		TableProxy accountProxy = Model.getInstance().getTableProxy("account");
-		GameObject account = accountProxy
-				.selectSingleWhere("username", username);
-		if (account != null) {
+		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
+		User user = userDao.get(username);
+		if (user != null) {
 			this.sendMessage(playerSession, msg.getType(), false, "用户名已存在");
 			return;
 		}
 		// (5)添加用户到数据库
-		List<String> keys = new ArrayList<String>();
-		keys.add("username");
-		keys.add("password");
-		boolean status = accountProxy.insert(keys, msg);
+		user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		boolean status = userDao.insert(user);
 		this.sendMessage(playerSession, msg.getType(), status, status ? "注册成功"
 				: "注册失败");
 	}

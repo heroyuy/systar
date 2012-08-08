@@ -1,5 +1,34 @@
 package com.soyomaker.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.soyomaker.model.User;
+
 public class DaoManager {
 
+	private static DaoManager inatance = new DaoManager();
+
+	public static DaoManager getInatance() {
+		return inatance;
+	}
+
+	private Map<Class<?>, IDao<?>> daoMap = new HashMap<Class<?>, IDao<?>>();
+
+	private DaoManager() {
+
+	}
+
+	private <T> void addDao(Class<T> modelClass, IDao<T> dao) {
+		this.daoMap.put(modelClass, dao);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> IDao<T> getDao(Class<T> modelClass) {
+		return (IDao<T>) this.daoMap.get(modelClass);
+	}
+
+	public void config(String configFile) {
+		this.addDao(User.class, new UserDao());
+	}
 }
