@@ -6,12 +6,12 @@ import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.model.dao.IDao;
 import com.soyomaker.net.IHandler;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.PlayerSession;
+import com.soyomaker.net.UserSession;
 
 public class RegisterHandler implements IHandler {
 
 	@Override
-	public void handleMessage(PlayerSession playerSession, GameObject msg) {
+	public void handleMessage(UserSession playerSession, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
@@ -44,7 +44,7 @@ public class RegisterHandler implements IHandler {
 				: "注册失败");
 	}
 
-	private void sendMessage(PlayerSession playerSession, String type,
+	private void sendMessage(UserSession playerSession, String type,
 			boolean status, String message) {
 		GameObject msgSent = new GameObject();
 		msgSent.setType(type);

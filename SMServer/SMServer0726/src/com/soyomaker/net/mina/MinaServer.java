@@ -10,7 +10,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.INetService;
-import com.soyomaker.net.PlayerSession;
+import com.soyomaker.net.UserSession;
 
 public class MinaServer implements INetService {
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
@@ -44,7 +44,7 @@ public class MinaServer implements INetService {
 	}
 
 	@Override
-	public void sendMessage(PlayerSession playerSession, GameObject msg) {
+	public void sendMessage(UserSession playerSession, GameObject msg) {
 		playerSession.getIoSession().write(msg);
 	}
 

@@ -9,7 +9,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.PlayerSession;
+import com.soyomaker.net.UserSession;
 
 /**
  * Mina所使用的IoHandler的实现。
@@ -31,10 +31,10 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void messageReceived(IoSession session, Object obj) throws Exception {
 		if (obj instanceof GameObject) {
-			PlayerSession playerSession = (PlayerSession) session
+			UserSession playerSession = (UserSession) session
 					.getAttribute("playerSession");
 			if (playerSession == null) {
-				playerSession = new PlayerSession(session);
+				playerSession = new UserSession(session);
 				session.setAttribute("playerSession", playerSession);
 			}
 			GameObject message = (GameObject) obj;

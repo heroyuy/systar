@@ -6,13 +6,13 @@ import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.model.dao.IDao;
 import com.soyomaker.net.IHandler;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.PlayerSession;
-import com.soyomaker.net.PlayerSessionManager;
+import com.soyomaker.net.UserSession;
+import com.soyomaker.net.UserSessionManager;
 
 public class LoginHandler implements IHandler {
 
 	@Override
-	public void handleMessage(PlayerSession playerSession, GameObject msg) {
+	public void handleMessage(UserSession playerSession, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
 		// (1)检查包是否完整
@@ -34,13 +34,13 @@ public class LoginHandler implements IHandler {
 		// (4)登录成功
 		playerSession.setLogin(true);
 		playerSession.setUserId(user.getId());
-		PlayerSessionManager.getInstance().putPlayerSession(user.getId(),
+		UserSessionManager.getInstance().putPlayerSession(user.getId(),
 				playerSession);
 		this.sendMessage(playerSession, msg.getType(), true, "登录成功",
 				user.getId());
 	}
 
-	private void sendMessage(PlayerSession playerSession, String type,
+	private void sendMessage(UserSession playerSession, String type,
 			boolean status, String message, long userId) {
 		GameObject msgSent = new GameObject();
 		msgSent.setType(type);

@@ -76,7 +76,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void sendMessage(PlayerSession session, GameObject msg) {
+	public void sendMessage(UserSession session, GameObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
@@ -98,7 +98,7 @@ public class NetTransceiver {
 	 * 
 	 * @param msg
 	 */
-	public void dispatchMessage(PlayerSession session, GameObject msg) {
+	public void dispatchMessage(UserSession session, GameObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
