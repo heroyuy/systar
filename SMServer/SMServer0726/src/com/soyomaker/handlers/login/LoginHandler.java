@@ -3,7 +3,7 @@ package com.soyomaker.handlers.login;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.model.dao.DaoManager;
-import com.soyomaker.model.dao.UserDao;
+import com.soyomaker.model.dao.IDao;
 import com.soyomaker.net.IHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.PlayerSession;
@@ -20,7 +20,7 @@ public class LoginHandler implements IHandler {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
-		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
+		IDao<User> userDao = DaoManager.getInatance().getDao(User.class);
 		User user = userDao.get(username);
 		if (user == null) {
 			this.sendMessage(playerSession, msg.getType(), false, "帐号不存在", -1);

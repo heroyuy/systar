@@ -29,6 +29,6 @@ public class DaoManager {
 	}
 
 	public void config(String configFile) {
-		this.addDao(User.class, new UserDao());
+		this.addDao(User.class, new BasicDao<User>(){});
 	}
 }
