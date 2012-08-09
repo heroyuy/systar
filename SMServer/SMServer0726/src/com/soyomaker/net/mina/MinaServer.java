@@ -37,7 +37,8 @@ public class MinaServer implements INetService {
 			logger.debug(
 					"socket server started on " + PORT);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Mina server starts fail", e);
+			throw new RuntimeException(e);
 		}
 
 	}
