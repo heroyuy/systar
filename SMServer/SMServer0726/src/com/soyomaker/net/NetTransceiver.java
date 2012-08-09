@@ -69,7 +69,8 @@ public class NetTransceiver {
 				protocolMap.put(id, protocol);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("加载信息出错", e);
+			throw new RuntimeException(e);
 		}
 	}
 
