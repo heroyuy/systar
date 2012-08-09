@@ -51,8 +51,12 @@ Const.NotifyCMD.Net={}
   --[[
 	登录，此通知的参数为{msg}
   --]]
-  Const.NotifyCMD.Net.LOGIN="login"		--登录命令
+  Const.NotifyCMD.Net.LOGIN="login"					--登录命令
   --[[
 	注册，此通知的参数为{msg}
   --]]
-  Const.NotifyCMD.Net.REGISTER="register"		--注册命令
+  Const.NotifyCMD.Net.REGISTER="register"			--注册命令
+  --[[
+	创建角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CREATE_PLAYER="createPlayer"	--创建角色

@@ -37,6 +37,14 @@ clsSceneTitle.loginDisappearAction=nil
 clsSceneTitle.loginAppearAction=nil
 clsSceneTitle.registerDisappearAction=nil
 clsSceneTitle.registerAppearAction=nil
+clsSceneTitle.createPlayerDisappearAction=nil
+clsSceneTitle.createPlayerAppearAction=nil
+--创建角色层
+clsSceneTitle.createPlayerLayer=nil
+clsSceneTitle.createPlayerName=nil
+clsSceneTitle.createPlayerEditName=nil
+clsSceneTitle.createPlayerButton=nil
+clsSceneTitle.createPlayerMsgLabel=nil
 --构造器
 function clsSceneTitle:new()
 	local self = {}
@@ -60,7 +68,7 @@ function clsSceneTitle:onStart()
   end
   --登录层开始
   self.loginLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
-  self.loginLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
+  self.loginLayer.image=Skin:createBgWithFrame(240,160)
   self.bgLayer:addChild(self.loginLayer)
   
   self.loginName=clsUILabel:new(45,25,80,20)
@@ -93,7 +101,7 @@ function clsSceneTitle:onStart()
   
   self.loginLoginButton=clsUIButton:standardButton(60,115,80,20,"登录")
   self.loginLoginButton.textSize=16
-  self.loginLoginButton.textColor="0xff000000"
+  self.loginLoginButton.textColor="0xffffff00"
   self.loginLoginButton.delegate=self
   self.loginLayer:addChild(self.loginLoginButton)
   
@@ -105,7 +113,7 @@ function clsSceneTitle:onStart()
   --登陆层结束
   --注册层开始
   self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
-  self.registerLayer.image=Skin:createBgWithFrame(screenWidth/4,screenHeight/4)
+  self.registerLayer.image=Skin:createBgWithFrame(240,160)
   self.registerLayer.alpha=0
   self.bgLayer:addChild(self.registerLayer)
   
@@ -156,17 +164,61 @@ function clsSceneTitle:onStart()
   
   self.registerRegisterButton=clsUIButton:standardButton(180,115,80,20,"注册")
   self.registerRegisterButton.textSize=16
-  self.registerRegisterButton.textColor="0xff000000"
+  self.registerRegisterButton.textColor="0xffffff00"
   self.registerRegisterButton.delegate=self
   self.registerLayer:addChild(self.registerRegisterButton)
   --注册层结束
+  --创建角色层开始
+  self.createPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,100)
+  self.createPlayerLayer.image=Skin:createBgWithFrame(240,100)
+  --self.createPlayerLayer.alpha=0
+  self.bgLayer:addChild(self.createPlayerLayer)
+  
+  self.createPlayerName=clsUILabel:new(30,25,80,20)
+  self.createPlayerName.text="昵称"
+  self.createPlayerName.textSize=16
+  self.createPlayerName.textColor="0xff000000"
+  self.createPlayerLayer:addChild(self.createPlayerName)
+  
+  self.createPlayerEditName=clsUIEditText:standardEditText(140,25,175,20,clsUIEditText.NORMAL)
+  self.createPlayerEditName.textSize=16
+  self.createPlayerEditName.textColor="0xff000000"
+  self.createPlayerLayer:addChild(self.createPlayerEditName)
+
+  self.createPlayerButton=clsUIButton:standardButton(self.createPlayerLayer.width/2,55,80,20,"创建角色")
+  self.createPlayerButton.textSize=16
+  self.createPlayerButton.textColor="0xffffff00"
+  self.createPlayerButton.delegate=self
+  self.createPlayerLayer:addChild(self.createPlayerButton)
+  
+  self.createPlayerMsgLabel=clsUILabel:new(self.createPlayerLayer.width/2,80,80,20)
+  self.createPlayerMsgLabel.text=""
+  self.createPlayerMsgLabel.textSize=16
+  self.createPlayerMsgLabel.textColor="0xffff0000"
+  self.createPlayerLayer:addChild(self.createPlayerMsgLabel) 
+  --创建角色层结束
   GameLayer:addChildToScene(self.bgLayer)
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
+  Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")
+end
+
+function clsSceneTitle:handleCreatePlayer(msg)
+	self.createPlayerMsgLabel.text=msg.msg
+	if msg.status then
+		smLog:info("创建角色成功");
+	end
 end
 
 function clsSceneTitle:handleLogin(msg)
   self.loginMsgLabel.text=msg.msg
+  if msg.status then
+  	self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  	self.loginLayer:runAction(self.loginDisappearAction)
+    	
+  	self.createPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+  	self.createPlayerLayer:runAction(self.createPlayerAppearAction)
+  end
 end
 
 function clsSceneTitle:handleRegister(msg)
@@ -186,19 +238,15 @@ function clsSceneTitle:buttonTapped(button)
     	end
   elseif button==self.loginRegisterButton then
     	self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
-    	self.loginDisappearAction.delegate = self
     	self.loginLayer:runAction(self.loginDisappearAction)
     	
     	self.registerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
-    	self.registerAppearAction.delegate = self
     	self.registerLayer:runAction(self.registerAppearAction)     
   elseif button==self.registerLoginButton then
   		self.registerDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
-    	self.registerDisappearAction.delegate = self
     	self.registerLayer:runAction(self.registerDisappearAction)
     	
     	self.loginAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
-    	self.loginAppearAction.delegate = self
     	self.loginLayer:runAction(self.loginAppearAction)
   elseif button==self.registerRegisterButton then
   		if self.registerEditName.text==nil
@@ -214,21 +262,15 @@ function clsSceneTitle:buttonTapped(button)
     	else
     		smNet:register(self.registerEditName.text,self.registerEditPassword.text)
   		end
+  elseif button==self.createPlayerButton then
+  		if self.createPlayerEditName.text==nil 
+  			or string.len(self.createPlayerEditName.text)==0 then
+  			self.createPlayerMsgLabel.text="角色名称不能为空"
+  		else
+  			smNet:createPlayer(self.createPlayerEditName.text)
+  		end
   end
 end
-
-function clsSceneTitle:onActionEnd(action)
-	if action == self.loginDisappearAction then
-		
-	elseif action == self.loginAppearAction then
-		
-	elseif action == self.registerDisappearAction then
-		
-	elseif action == self.registerAppearAction then
-		
-	end
-end
-
 
 -- 更新
 function clsSceneTitle:update()

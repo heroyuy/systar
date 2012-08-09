@@ -2,9 +2,6 @@ HandlerMap.login={}
 
 function HandlerMap.login:handleMessage(msg)
   smLog:info("登录")
-  if msg.status then
-    smNet:createPlayer("大哥大2")
-  end
   Notifier:notify(Const.NotifyCMD.Net.LOGIN,msg)
 end
 
