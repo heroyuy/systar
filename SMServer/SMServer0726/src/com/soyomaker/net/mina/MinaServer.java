@@ -13,25 +13,29 @@ import com.soyomaker.net.INetService;
 import com.soyomaker.net.UserSession;
 
 public class MinaServer implements INetService {
+	
+	private static final Logger logger=Logger.getLogger(MinaServer.class);
+	
+	private static final int READ_BUFFE_RSIZE = 100000;
+	
+	private static final int PORT = 9090;
+	
+	private static final boolean IS_REUSE=true;
+	
 	private SocketAcceptor acceptor = new NioSocketAcceptor();
-
-	private int readBufferSize = 100000;
-	private int port = 9090;
 
 	@Override
 	public void start() {
 		try {
-			acceptor.setReuseAddress(true);
-			acceptor.getSessionConfig().setReadBufferSize(readBufferSize);
-
+			acceptor.setReuseAddress(IS_REUSE);
+			acceptor.getSessionConfig().setReadBufferSize(READ_BUFFE_RSIZE);
 			ProtocolCodecFactory codecFactory = new GameObjectCodecFactory();
 			acceptor.getFilterChain().addLast("codec",
 					new ProtocolCodecFilter(codecFactory));
 			acceptor.setHandler(new MinaHandler());
-
-			acceptor.bind(new InetSocketAddress(port));
-			Logger.getLogger(getClass()).debug(
-					"socket server started on " + port);
+			acceptor.bind(new InetSocketAddress(PORT));
+			logger.debug(
+					"socket server started on " + PORT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
