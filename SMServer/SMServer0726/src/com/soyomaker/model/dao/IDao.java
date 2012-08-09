@@ -1,5 +1,7 @@
 package com.soyomaker.model.dao;
 
+import java.util.List;
+
 /**
  * dao基本接口。 TODO 有待扩展
  * 
@@ -63,5 +65,25 @@ public interface IDao<T> {
 	 * @return 记录
 	 */
 	public T get(String id);
+
+	/**
+	 * 获取所有记录
+	 * 
+	 * @return 所有记录
+	 */
+	public List<T> getAll();
+
+	/**
+	 * 根据条件获取记录
+	 * 
+	 * @param name
+	 *            列名
+	 * @param op
+	 *            操作
+	 * @param value
+	 *            值
+	 * @return
+	 */
+	public List<T> get(String name, String op, Object value);
 
 }

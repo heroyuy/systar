@@ -2,10 +2,11 @@ package com.soyomaker.model.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
+import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.impl.NutDao;
-
 
 public class BasicDao<T> implements IDao<T> {
 
@@ -56,6 +57,18 @@ public class BasicDao<T> implements IDao<T> {
 	public T get(String id) {
 		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
 		return dao.fetch(entityClass, id);
+	}
+
+	@Override
+	public List<T> getAll() {
+		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
+		return dao.query(entityClass, null);
+	}
+
+	@Override
+	public List<T> get(String name, String op, Object value) {
+		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
+		return dao.query(entityClass, Cnd.where(name, op, value));
 	}
 
 }
