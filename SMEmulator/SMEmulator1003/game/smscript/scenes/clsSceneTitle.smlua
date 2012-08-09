@@ -171,7 +171,7 @@ function clsSceneTitle:onStart()
   --创建角色层开始
   self.createPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,100)
   self.createPlayerLayer.image=Skin:createBgWithFrame(240,100)
-  --self.createPlayerLayer.alpha=0
+  self.createPlayerLayer.alpha=0
   self.bgLayer:addChild(self.createPlayerLayer)
   
   self.createPlayerName=clsUILabel:new(30,25,80,20)
