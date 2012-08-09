@@ -1,0 +1,6 @@
+HandlerMap.createPlayer={}
+
+function HandlerMap.createPlayer:handleMessage(msg)
+  smLog:info("创建角色")
+end
+

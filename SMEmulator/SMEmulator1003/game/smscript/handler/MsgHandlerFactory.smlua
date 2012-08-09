@@ -4,9 +4,11 @@ HandlerMap={}
 
 --加载handler配置
 require("HandlerMapLogin")
+require("HandlerMapPlayer")
 
 MsgHandlerFactory["101001"]=HandlerMap.register
 MsgHandlerFactory["101002"]=HandlerMap.login
+MsgHandlerFactory["102001"]=HandlerMap.createPlayer
 
 function MsgHandlerFactory:dispatchMessage(msg)
   smLog:info("dispatchMessage:"..msg)
