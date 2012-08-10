@@ -11,6 +11,10 @@ public class Net {
 
 	private static final String MSG_ID_PLAYER_CREATE = "102001";
 
+	private static final String MSG_ID_PLAYER_DELETE = "102002";
+
+	private static final String MSG_ID_PLAYER_LIST = "102003";
+
 	private static Net instance = new Net();
 
 	public static Net getInstance() {
@@ -25,7 +29,9 @@ public class Net {
 	 * 注册101001
 	 * 
 	 * @param username
+	 *            用户名
 	 * @param password
+	 *            密码
 	 */
 	public void register(String username, String password) {
 		GameObject msg = new GameObject();
@@ -39,7 +45,9 @@ public class Net {
 	 * 登录 101002
 	 * 
 	 * @param username
+	 *            用户名
 	 * @param password
+	 *            密码
 	 */
 	public void login(String username, String password) {
 		GameObject msg = new GameObject();
@@ -53,11 +61,34 @@ public class Net {
 	 * 创建角色 102001
 	 * 
 	 * @param name
+	 *            角色呢称
 	 */
 	public void createPlayer(String name) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_PLAYER_CREATE);
 		msg.putString("name", name);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 删除角色 102002
+	 * 
+	 * @param playerId
+	 *            角色ID
+	 */
+	public void deletePlayer(int playerId) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_PLAYER_DELETE);
+		msg.putInt("playerId", playerId);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 获取角色列表 102003
+	 */
+	public void listPlayer() {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_PLAYER_LIST);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 
