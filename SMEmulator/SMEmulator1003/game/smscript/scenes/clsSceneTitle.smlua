@@ -11,11 +11,15 @@ clsSceneTitle.__index = clsSceneTitle
 
 --背景层
 clsSceneTitle.bgLayer=nil
---登录和注册按钮
-clsSceneTitle.loginLoginButton=nil
-clsSceneTitle.loginRegisterButton=nil
-clsSceneTitle.registerLoginButton=nil
-clsSceneTitle.registerRegisterButton=nil
+
+--动作
+clsSceneTitle.loginDisappearAction=nil
+clsSceneTitle.loginAppearAction=nil
+clsSceneTitle.registerDisappearAction=nil
+clsSceneTitle.registerAppearAction=nil
+clsSceneTitle.createPlayerDisappearAction=nil
+clsSceneTitle.createPlayerAppearAction=nil
+
 --登录层
 clsSceneTitle.loginLayer=nil
 clsSceneTitle.loginName=nil
@@ -23,6 +27,9 @@ clsSceneTitle.loginPassword=nil
 clsSceneTitle.loginEditName=nil
 clsSceneTitle.loginEditPassword=nil
 clsSceneTitle.loginMsgLabel=nil
+clsSceneTitle.loginLoginButton=nil
+clsSceneTitle.loginRegisterButton=nil
+
 --注册层
 clsSceneTitle.registerLayer=nil
 clsSceneTitle.registerName=nil
@@ -32,19 +39,16 @@ clsSceneTitle.registerEditName=nil
 clsSceneTitle.registerEditPassword=nil
 clsSceneTitle.registerEditConfirmPassword=nil
 clsSceneTitle.registerMsgLabel=nil
---动作
-clsSceneTitle.loginDisappearAction=nil
-clsSceneTitle.loginAppearAction=nil
-clsSceneTitle.registerDisappearAction=nil
-clsSceneTitle.registerAppearAction=nil
-clsSceneTitle.createPlayerDisappearAction=nil
-clsSceneTitle.createPlayerAppearAction=nil
+clsSceneTitle.registerLoginButton=nil
+clsSceneTitle.registerRegisterButton=nil
+
 --创建角色层
 clsSceneTitle.createPlayerLayer=nil
 clsSceneTitle.createPlayerName=nil
 clsSceneTitle.createPlayerEditName=nil
 clsSceneTitle.createPlayerButton=nil
 clsSceneTitle.createPlayerMsgLabel=nil
+
 --构造器
 function clsSceneTitle:new()
 	local self = {}
@@ -201,6 +205,8 @@ function clsSceneTitle:onStart()
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
   Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")
+  Notifier:addObserver(Const.NotifyCMD.Net.DELETE_PLAYER,self,"handleDeletePlayer")
+  Notifier:addObserver(Const.NotifyCMD.Net.LIST_PLAYER,self,"handleListPlayer")
 end
 
 function clsSceneTitle:handleCreatePlayer(msg)
@@ -210,14 +216,28 @@ function clsSceneTitle:handleCreatePlayer(msg)
 	end
 end
 
+function clsSceneTitle:handleDeletePlayer(msg)
+	if msg.status then
+		smLog:info("删除角色成功");
+	end
+end
+
+function clsSceneTitle:handleListPlayer(msg)
+	if table.getn(msg.players)>0 then
+		smLog:info("获取角色列表成功");
+	else
+		self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  		self.loginLayer:runAction(self.loginDisappearAction)
+    	
+  		self.createPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+  		self.createPlayerLayer:runAction(self.createPlayerAppearAction)
+	end
+end
+
 function clsSceneTitle:handleLogin(msg)
   self.loginMsgLabel.text=msg.msg
   if msg.status then
-  	self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
-  	self.loginLayer:runAction(self.loginDisappearAction)
-    	
-  	self.createPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
-  	self.createPlayerLayer:runAction(self.createPlayerAppearAction)
+  	smNet:listPlayer()
   end
 end
 

@@ -5,3 +5,18 @@ function HandlerMap.createPlayer:handleMessage(msg)
   Notifier:notify(Const.NotifyCMD.Net.CREATE_PLAYER,msg)
 end
 
+--====================================================
+HandlerMap.deletePlayer={}
+
+function HandlerMap.deletePlayer:handleMessage(msg)
+  smLog:info("删除角色")
+  Notifier:notify(Const.NotifyCMD.Net.DELETE_PLAYER,msg)
+end
+
+--====================================================
+HandlerMap.listPlayer={}
+
+function HandlerMap.listPlayer:handleMessage(msg)
+  smLog:info("获取角色列表")
+  Notifier:notify(Const.NotifyCMD.Net.LIST_PLAYER,msg)
+end

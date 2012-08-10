@@ -60,3 +60,11 @@ Const.NotifyCMD.Net={}
 	创建角色，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.CREATE_PLAYER="createPlayer"	--创建角色
+  --[[
+	删除角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.DELETE_PLAYER="deletePlayer"	--删除角色
+  --[[
+	获取角色列表，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LIST_PLAYER="listPlayer"	--获取角色列表

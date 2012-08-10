@@ -9,6 +9,8 @@ require("HandlerMapPlayer")
 MsgHandlerFactory["101001"]=HandlerMap.register
 MsgHandlerFactory["101002"]=HandlerMap.login
 MsgHandlerFactory["102001"]=HandlerMap.createPlayer
+MsgHandlerFactory["102002"]=HandlerMap.deletePlayer
+MsgHandlerFactory["102003"]=HandlerMap.listPlayer
 
 function MsgHandlerFactory:dispatchMessage(msg)
   smLog:info("dispatchMessage:"..msg)
