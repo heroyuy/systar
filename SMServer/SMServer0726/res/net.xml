@@ -12,5 +12,6 @@
 		<Protocol id="102001" netService="socket" handler="com.soyomaker.handlers.player.CreatePlayerHandler" />
 		<Protocol id="102002" netService="socket" handler="com.soyomaker.handlers.player.DeletePlayerHandler" />
 		<Protocol id="102003" netService="socket" handler="com.soyomaker.handlers.player.ListPlayerHandler" />
+		<Protocol id="102004" netService="socket" handler="com.soyomaker.handlers.player.ChoosePlayerHandler" />
 	</Protocols>
 </NetTransceiver>
