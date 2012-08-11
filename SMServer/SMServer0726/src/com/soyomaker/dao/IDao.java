@@ -1,4 +1,4 @@
-package com.soyomaker.model.dao;
+package com.soyomaker.dao;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.soyomaker.handlers.login;
 
+import com.soyomaker.dao.DaoManager;
+import com.soyomaker.dao.IDao;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
-import com.soyomaker.model.dao.DaoManager;
-import com.soyomaker.model.dao.IDao;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 

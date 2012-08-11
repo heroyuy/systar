@@ -3,10 +3,10 @@ package com.soyomaker.handlers.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.soyomaker.dao.DaoManager;
+import com.soyomaker.dao.IDao;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
-import com.soyomaker.model.dao.DaoManager;
-import com.soyomaker.model.dao.IDao;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
