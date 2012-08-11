@@ -1,7 +1,7 @@
 package com.soyomaker.handlers.player;
 
 import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.IDao;
+import com.soyomaker.dao.impl.PlayerDao;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
@@ -23,8 +23,9 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (3)检查呢称是否已被使用
-		IDao<Player> playerDao = DaoManager.getInatance().getDao(Player.class);
-		Player player = playerDao.get(name);
+		PlayerDao playerDao = (PlayerDao) DaoManager.getInatance().getDao(
+				Player.class);
+		Player player = playerDao.getPlayer(name);
 		if (player != null) {
 			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
 			return;

@@ -1,7 +1,7 @@
 package com.soyomaker.handlers.login;
 
 import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.IDao;
+import com.soyomaker.dao.impl.UserDao;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
@@ -20,8 +20,8 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
-		IDao<User> userDao = DaoManager.getInatance().getDao(User.class);
-		User user = userDao.get(username);
+		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
+		User user = userDao.getUser(username);
 		if (user == null) {
 			this.sendMessage(session, msg.getType(), false, "帐号不存在");
 			return;
@@ -34,8 +34,7 @@ public class LoginHandler extends AbHandler {
 		// (4)登录成功
 		session.setLogin(true);
 		session.setUserId(user.getId());
-		UserSessionManager.getInstance()
-				.putUserSession(user.getId(), session);
+		UserSessionManager.getInstance().putUserSession(user.getId(), session);
 		GameObject msgSent = this.buildPackage(msg.getType(), true, "登录成功");
 		msg.putLong("userId", user.getId());
 		NetTransceiver.getInstance().sendMessage(session, msgSent);

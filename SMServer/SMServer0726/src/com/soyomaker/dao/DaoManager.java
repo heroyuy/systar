@@ -3,6 +3,7 @@ package com.soyomaker.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.soyomaker.dao.impl.UserDao;
 import com.soyomaker.model.User;
 import com.soyomaker.model.Player;
 
@@ -31,8 +32,7 @@ public class DaoManager {
 
 	public void config(String configFile) {
 		// User
-		this.addDao(User.class, new BasicDao<User>() {
-		});
+		this.addDao(User.class, new UserDao());
 		// Player
 		this.addDao(Player.class, new BasicDao<Player>() {
 		});

@@ -1,7 +1,7 @@
 package com.soyomaker.handlers.login;
 
 import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.IDao;
+import com.soyomaker.dao.impl.UserDao;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
@@ -28,8 +28,8 @@ public class RegisterHandler extends AbHandler {
 			return;
 		}
 		// (4)检查用户名是否已经存在
-		IDao<User> userDao = DaoManager.getInatance().getDao(User.class);
-		User user = userDao.get(username);
+		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
+		User user = userDao.getUser(username);
 		if (user != null) {
 			this.sendMessage(session, msg.getType(), false, "用户名已存在");
 			return;

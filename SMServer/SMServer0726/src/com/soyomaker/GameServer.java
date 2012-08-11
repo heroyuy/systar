@@ -3,7 +3,7 @@ package com.soyomaker;
 import org.apache.log4j.Logger;
 
 import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.GameDataSource;
+import com.soyomaker.db.GameDataSource;
 import com.soyomaker.net.NetTransceiver;
 
 public class GameServer {

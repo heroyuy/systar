@@ -1,4 +1,4 @@
-package com.soyomaker.dao;
+package com.soyomaker.db;
 
 import java.io.File;
 import java.io.IOException;

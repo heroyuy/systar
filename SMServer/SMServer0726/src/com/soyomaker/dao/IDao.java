@@ -22,7 +22,7 @@ public interface IDao<T> {
 	public boolean insert(T t);
 
 	/**
-	 * 根据long型主键删除一条记录
+	 * 根据主键删除一条记录。
 	 * 
 	 * @param id
 	 *            主键值
@@ -31,40 +31,24 @@ public interface IDao<T> {
 	public boolean delete(long id);
 
 	/**
-	 * 根据String型主键删除一条记录
-	 * 
-	 * @param id
-	 *            主键值
-	 * @return 操作结果：成功or失败
-	 */
-	public boolean delete(String id);
-
-	/**
 	 * 更新记录
 	 * 
+	 * @param id
+	 *            主键值。
 	 * @param t
-	 *            待插入记录
+	 *            待更新记录
 	 * @return 操作结果：成功or失败
 	 */
-	public boolean update(T t);
+	public boolean update(long id, T t);
 
 	/**
-	 * 根据long型主键获取一条记录
+	 * 根据主键获取一条记录。
 	 * 
 	 * @param id
 	 *            主键值
 	 * @return 记录
 	 */
 	public T get(long id);
-
-	/**
-	 * 根据String型主键获取一条记录
-	 * 
-	 * @param id
-	 *            主键值
-	 * @return 记录
-	 */
-	public T get(String id);
 
 	/**
 	 * 获取所有记录

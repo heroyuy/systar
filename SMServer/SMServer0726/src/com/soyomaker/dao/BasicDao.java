@@ -4,9 +4,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.impl.NutDao;
+
+import com.soyomaker.db.GameDataSource;
 
 public class BasicDao<T> implements IDao<T> {
 
@@ -17,6 +20,7 @@ public class BasicDao<T> implements IDao<T> {
 		Type genType = getClass().getGenericSuperclass();
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 		entityClass = (Class<T>) params[0];
+		Logger.getLogger(getClass());
 	}
 
 	@Override
@@ -34,14 +38,7 @@ public class BasicDao<T> implements IDao<T> {
 	}
 
 	@Override
-	public boolean delete(String id) {
-		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
-		int num = dao.delete(entityClass, id);
-		return num != 0;
-	}
-
-	@Override
-	public boolean update(T t) {
+	public boolean update(long id, T t) {
 		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
 		int num = dao.update(t);
 		return num != 0;
@@ -49,12 +46,6 @@ public class BasicDao<T> implements IDao<T> {
 
 	@Override
 	public T get(long id) {
-		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
-		return dao.fetch(entityClass, id);
-	}
-
-	@Override
-	public T get(String id) {
 		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
 		return dao.fetch(entityClass, id);
 	}
@@ -70,5 +61,4 @@ public class BasicDao<T> implements IDao<T> {
 		Dao dao = new NutDao(GameDataSource.getInstance().getDataSource());
 		return dao.query(entityClass, Cnd.where(name, op, value));
 	}
-
 }
