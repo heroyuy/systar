@@ -1,0 +1,43 @@
+--[[
+  description:按钮组
+  author:cokey
+  date:2011/12/16
+--]]
+
+--类结构定义
+clsUIButtonGroup={}
+clsUIButtonGroup.__index=clsUIButtonGroup
+
+clsUIButtonGroup.buttonList=nil
+
+--构造器
+function clsUIButtonGroup:new()
+  local self = {}
+  setmetatable(self,clsUIButtonGroup)
+  self.buttonList=clsList:new()
+  return self
+end
+
+--添加button
+function clsUIButtonGroup:addButton(button)
+  table.insert(self.buttonList,button)
+  button.buttonGroup=self
+end
+
+--移除button
+function clsUIButtonGroup:removeButton(button)
+  local index=0
+  for i,child in ipairs(self.buttonList) do
+    if child==button then
+      index=i
+      break
+    end
+  end
+  self:removeButtonAt(index)
+end
+
+--移除指定位置的button(所有移除方法均依赖此方法)
+function clsUIButtonGroup:removeButtonAt(index)
+  table.remove(self.buttonList,index)		--移除列表
+  button.buttonGroup=nil
+end

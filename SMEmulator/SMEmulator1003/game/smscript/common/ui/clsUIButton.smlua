@@ -22,6 +22,8 @@ clsUIButton.normalImage=nil               			--普通时图片
 
 clsUIButton.buttonState=clsUIButton.STATE_NORMAL	--按钮状态
 clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
+clsUIButton.toggleMode=false						--开关模式
+clsUIButton.buttonGroup=nil							--按钮组
 
 --构造器
 function clsUIButton:standardButton(x,y,width,height,title)
@@ -55,27 +57,53 @@ function clsUIButton:paintLayer(painter)
   self:paintLayerFF(painter)
 end
 
+--改变按钮状态
+function clsUIButton:changeButtonState()
+  if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+  	self.buttonState=clsUIButton.STATE_NORMAL
+  	self.image=self.normalImage
+  else
+  	self.buttonState=clsUIButton.STATE_HIGHLIGHT
+  	self.image=self.highlightImage
+  	if self.buttonGroup then
+  		for i=table.getn(self.buttonGroup.buttonList),1,-1 do
+    		local button=self.buttonGroup.buttonList[i]
+    		if button~=self then
+    			button.buttonState=clsUIButton.STATE_NORMAL
+  				button.image=self.normalImage
+    		end
+  		end
+  	end
+  end
+end
+
 --处理触屏事件（lua层不应该调用此方法）
 function clsUIButton:onTouch(event)
   local x,y,type=event:getX(),event:getY(),event:getType()
-  if type==UIConst.eventType.DOWN then
-    self.buttonState=clsUIButton.STATE_HIGHLIGHT
-    self.image=self.highlightImage
-  elseif type==UIConst.eventType.MOVE then
-    local offsetWidth=(self.highlightBoundTimes-1)*self.width
-    local offsetHeight=(self.highlightBoundTimes-1)*self.height
-    if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
-      self.buttonState=clsUIButton.STATE_HIGHLIGHT
-      self.image=self.highlightImage
-    else
-      self.buttonState=clsUIButton.STATE_NORMAL
-      self.image=self.normalImage
+  if self.toggleMode then
+  	if type==UIConst.eventType.DOWN then
+    	self:changeButtonState()
     end
-  elseif type==UIConst.eventType.UP then
-    if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
-      callFunction(self.delegate,self.callback,self)
-    end
-    self.buttonState=clsUIButton.STATE_NORMAL
-    self.image=self.normalImage
+  else
+  	if type==UIConst.eventType.DOWN then
+    	self.buttonState=clsUIButton.STATE_HIGHLIGHT
+    	self.image=self.highlightImage
+  	elseif type==UIConst.eventType.MOVE then
+    	local offsetWidth=(self.highlightBoundTimes-1)*self.width
+    	local offsetHeight=(self.highlightBoundTimes-1)*self.height
+    	if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
+      		self.buttonState=clsUIButton.STATE_HIGHLIGHT
+      		self.image=self.highlightImage
+    	else
+      		self.buttonState=clsUIButton.STATE_NORMAL
+      		self.image=self.normalImage
+    	end
+  	elseif type==UIConst.eventType.UP then
+    	if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      		callFunction(self.delegate,self.callback,self)
+    	end
+    	self.buttonState=clsUIButton.STATE_NORMAL
+    	self.image=self.normalImage
+  	end
   end
 end
