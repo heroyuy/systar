@@ -60,4 +60,9 @@ public class Protocol {
 		this.netService = netService;
 	}
 
+	public String toString() {
+		return "id:" + id + " netService:" + netService + " needLogin:"
+				+ needLogin + " handler:" + handler;
+	}
+
 }

@@ -118,7 +118,9 @@ public class NetTransceiver {
 		// (3)检查协议是否允许
 		if (protocol.isNeedLogin() && !session.isLogin()) {
 			log.debug("protocol [" + protocol.getId() + "] need login");
+		} else {
+			handler.handleMessage(session, msg);
 		}
-		handler.handleMessage(session, msg);
+
 	}
 }
