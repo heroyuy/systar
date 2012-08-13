@@ -1,14 +1,21 @@
 package com.soyomaker.handlers.player;
 
-import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.impl.PlayerDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
+import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.UserService;
 
+@Component("createPlayerHandler")
 public class CreatePlayerHandler extends AbHandler {
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
