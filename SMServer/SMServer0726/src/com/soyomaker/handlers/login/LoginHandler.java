@@ -1,15 +1,20 @@
 package com.soyomaker.handlers.login;
 
-import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.impl.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
+import com.soyomaker.service.UserService;
 
+@Component("loginHandler")
 public class LoginHandler extends AbHandler {
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -20,8 +25,7 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
-		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
-		User user = userDao.getUser(username);
+		User user = userService.findUnique("from User u where u.username=?", username);
 		if (user == null) {
 			this.sendMessage(session, msg.getType(), false, "帐号不存在");
 			return;
@@ -34,10 +38,11 @@ public class LoginHandler extends AbHandler {
 		// (4)登录成功
 		session.setLogin(true);
 		session.setUserId(user.getId());
-		UserSessionManager.getInstance().putUserSession(user.getId(), session);
+		UserSessionManager.getInstance()
+				.putUserSession(user.getId(), session);
 		GameObject msgSent = this.buildPackage(msg.getType(), true, "登录成功");
 		msg.putLong("userId", user.getId());
-		NetTransceiver.getInstance().sendMessage(session, msgSent);
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 }
