@@ -3,6 +3,9 @@ package com.soyomaker.handlers.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.dao.DaoManager;
 import com.soyomaker.dao.IDao;
 import com.soyomaker.lang.GameObject;
@@ -10,8 +13,16 @@ import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.UserService;
 
+@Component("listPlayerHandler")
 public class ListPlayerHandler extends AbHandler {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private NetTransceiver netTransceiver;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -19,7 +30,7 @@ public class ListPlayerHandler extends AbHandler {
 		List<Player> list = playerDao.get("userId", "=", session.getUserId());
 		GameObject msgSent = this.buildPackage(msg.getType());
 		msgSent.putObjectArray("players", this.convertPlayerList(list));
-		NetTransceiver.getInstance().sendMessage(session, msgSent);
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 	private List<GameObject> convertPlayerList(List<Player> list) {

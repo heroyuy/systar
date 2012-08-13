@@ -1,186 +1,174 @@
 package com.soyomaker.model;
 
-import org.nutz.dao.entity.annotation.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Table("player")
+@Entity
+@Table(name = "player")
 public class Player {
 
-	@Column
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
-	@Column
-	@Name
 	private String name;
 
-	@Column
-	private long userId;
+	private Long userId;
 
-	@Column
-	private int mapId;
+	private Integer mapId;
 
-	@Column
-	private int x;
+	private Integer x;
 
-	@Column
-	private int y;
+	private Integer y;
 
-	@Column
-	private int avatar;
+	private Integer avatar;
 
-	@Column
-	private int level;
+	private Integer level;
 
-	@Column
-	private int exp;
+	private Integer exp;
 
-	@Column
-	private int money;
+	private Integer money;
 
-	@Column
-	private int stre;
+	private Integer stre;
 
-	@Column
-	private int agil;
+	private Integer agil;
 
-	@Column
-	private int inte;
+	private Integer inte;
 
-	@Column
-	private int vita;
+	private Integer vita;
 
-	@Column
-	private int dext;
+	private Integer dext;
 
-	@Column
-	private int luck;
+	private Integer luck;
 
-	public int getAgil() {
-		return agil;
-	}
-
-	public int getAvatar() {
-		return avatar;
-	}
-
-	public int getDext() {
-		return dext;
-	}
-
-	public int getExp() {
-		return exp;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public int getInte() {
-		return inte;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public int getLuck() {
-		return luck;
-	}
-
-	public int getMapId() {
-		return mapId;
-	}
-
-	public int getMoney() {
-		return money;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getStre() {
-		return stre;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public int getVita() {
-		return vita;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setAgil(int agil) {
-		this.agil = agil;
-	}
-
-	public void setAvatar(int avatar) {
-		this.avatar = avatar;
-	}
-
-	public void setDext(int dext) {
-		this.dext = dext;
-	}
-
-	public void setExp(int exp) {
-		this.exp = exp;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setInte(int inte) {
-		this.inte = inte;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public void setLuck(int luck) {
-		this.luck = luck;
-	}
-
-	public void setMapId(int mapId) {
-		this.mapId = mapId;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setStre(int stre) {
-		this.stre = stre;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public void setVita(int vita) {
-		this.vita = vita;
+	public Integer getMapId() {
+		return mapId;
 	}
 
-	public void setX(int x) {
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
+	}
+
+	public Integer getX() {
+		return x;
+	}
+
+	public void setX(Integer x) {
 		this.x = x;
 	}
 
-	public void setY(int y) {
+	public Integer getY() {
+		return y;
+	}
+
+	public void setY(Integer y) {
 		this.y = y;
 	}
 
+	public Integer getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Integer avatar) {
+		this.avatar = avatar;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getExp() {
+		return exp;
+	}
+
+	public void setExp(Integer exp) {
+		this.exp = exp;
+	}
+
+	public Integer getMoney() {
+		return money;
+	}
+
+	public void setMoney(Integer money) {
+		this.money = money;
+	}
+
+	public Integer getStre() {
+		return stre;
+	}
+
+	public void setStre(Integer stre) {
+		this.stre = stre;
+	}
+
+	public Integer getAgil() {
+		return agil;
+	}
+
+	public void setAgil(Integer agil) {
+		this.agil = agil;
+	}
+
+	public Integer getInte() {
+		return inte;
+	}
+
+	public void setInte(Integer inte) {
+		this.inte = inte;
+	}
+
+	public Integer getVita() {
+		return vita;
+	}
+
+	public void setVita(Integer vita) {
+		this.vita = vita;
+	}
+
+	public Integer getDext() {
+		return dext;
+	}
+
+	public void setDext(Integer dext) {
+		this.dext = dext;
+	}
+
+	public Integer getLuck() {
+		return luck;
+	}
+
+	public void setLuck(Integer luck) {
+		this.luck = luck;
+	}
 }

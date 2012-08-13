@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.soyomaker.model.Player;
 import com.soyomaker.model.User;
 import com.soyomaker.orm.HibernateRepository;
 
@@ -88,5 +89,14 @@ public class UserService {
 		}
 
 		return results.get(0);
+	}
+
+	public boolean savePlayer(Player player) {
+		try {
+			hibernateRepository.save(player);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

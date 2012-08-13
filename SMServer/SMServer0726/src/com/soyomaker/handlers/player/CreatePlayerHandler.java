@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
-import com.soyomaker.model.dao.DaoManager;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
@@ -16,6 +15,9 @@ public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private NetTransceiver netTransceiver;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -30,9 +32,7 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (3)检查呢称是否已被使用
-		PlayerDao playerDao = (PlayerDao) DaoManager.getInatance().getDao(
-				Player.class);
-		Player player = playerDao.getPlayer(name);
+		Player player = userService.findUnique("from Player p where p.name=? ", name);
 		if (player != null) {
 			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
 			return;
@@ -55,12 +55,11 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setVita(9);
 		player.setDext(9);
 		player.setLuck(9);
-		boolean status = playerDao.insert(player);
+		boolean status = userService.savePlayer(player);
 		if (status) {
-			GameObject msgSent = this.buildPackage(msg.getType(), status,
-					"创建成功");
+			GameObject msgSent = this.buildPackage(msg.getType(), status, "创建成功");
 			this.insertPlayerIntoPackage(player, msgSent);
-			NetTransceiver.getInstance().sendMessage(session, msgSent);
+			netTransceiver.sendMessage(session, msgSent);
 		} else {
 			this.sendMessage(session, msg.getType(), status, "创建失败");
 		}

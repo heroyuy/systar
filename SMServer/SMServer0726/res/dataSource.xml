@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Datasource driverClassName="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://ggggeeqp.vicp.net:3306/feitu?useUnicode=true&amp;characterEncoding=utf8" username="root"
-	password="2724504" maxActive="20" maxIdle="8" minIdle="5" />
