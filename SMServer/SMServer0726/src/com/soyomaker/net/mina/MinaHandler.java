@@ -19,12 +19,18 @@ import com.soyomaker.net.UserSession;
  */
 public class MinaHandler implements IoHandler {
 
-	private Logger log = Logger.getLogger(MinaHandler.class);
+	private static final Logger logger = Logger.getLogger(MinaHandler.class);
+	
+	private NetTransceiver netTransceiver;
+
+	public void setNetTransceiver(NetTransceiver netTransceiver) {
+		this.netTransceiver = netTransceiver;
+	}
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
 			throws Exception {
-		log.error("exceptionCaught");
+		logger.error("exceptionCaught");
 		cause.printStackTrace();
 	}
 
@@ -38,19 +44,19 @@ public class MinaHandler implements IoHandler {
 				session.setAttribute("userSession", userSession);
 			}
 			GameObject message = (GameObject) obj;
-			log.debug("Mina收到包:" + message.getType() + message.toJson());
+			logger.debug("Mina收到包:" + message.getType() + message.toJson());
 			String type = message.getType();
 			if (type.equals(PackageConst.PACKAGE_TYPE_NAME)) {
 				// 多包
 				Collection<GameObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (GameObject msg : c) {
-					NetTransceiver.getInstance().dispatchMessage(userSession,
+					netTransceiver.dispatchMessage(userSession,
 							msg);
 				}
 			} else {
 				// 单包
-				NetTransceiver.getInstance().dispatchMessage(userSession,
+				netTransceiver.dispatchMessage(userSession,
 						message);
 			}
 		}
@@ -59,27 +65,27 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		GameObject msg = (GameObject) message;
-		log.debug("Mina发出包:" + msg.getType() + msg.toJson());
+		logger.debug("Mina发出包:" + msg.getType() + msg.toJson());
 	}
 
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
-		log.debug("sessionClosed");
+		logger.debug("sessionClosed");
 	}
 
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
-		log.debug("sessionCreated");
+		logger.debug("sessionCreated");
 	}
 
 	@Override
 	public void sessionIdle(IoSession session, IdleStatus status)
 			throws Exception {
-		log.debug("sessionIdle");
+		logger.debug("sessionIdle");
 	}
 
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
-		log.debug("sessionOpened");
+		logger.debug("sessionOpened");
 	}
 }
