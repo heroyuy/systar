@@ -1,8 +1,16 @@
 package com.soyomaker.net;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.lang.GameObject;
 
+@Component
 public abstract class AbHandler implements IHandler {
+	
+	@Autowired
+	protected NetTransceiver netTransceiver;
+	
 
 	/**
 	 * 创建基本包
@@ -39,7 +47,7 @@ public abstract class AbHandler implements IHandler {
 
 	public void sendMessage(UserSession session, String protocolId,
 			boolean status, String message) {
-		NetTransceiver.getInstance().sendMessage(session,
+		netTransceiver.sendMessage(session,
 				this.buildPackage(protocolId, status, message));
 	}
 }
