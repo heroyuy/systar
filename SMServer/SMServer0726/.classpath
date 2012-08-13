@@ -31,5 +31,36 @@
 	<classpathentry kind="lib" path="libs/com.soyomaker.xml1.6.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.21-bin.jar"/>
 	<classpathentry kind="lib" path="libs/nutz-1.b.45_X.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.aop-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.asm-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.aspects-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.beans-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.context-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.context.support-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.core-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.expression-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.instrument-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.instrument.tomcat-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.jdbc-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.jms-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.orm-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.oxm-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.test-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring/org.springframework.transaction-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/hibernate-core-4.1.6.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/hibernate-ehcache-4.1.6.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/hibernate-entitymanager-4.1.6.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/javassist-3.15.0-GA.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/spring/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring/aspectjrt-1.6.9.jar"/>
+	<classpathentry kind="lib" path="libs/spring/aspectjweaver-1.6.9.jar"/>
+	<classpathentry kind="lib" path="libs/spring/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="libs/spring/asm-3.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
