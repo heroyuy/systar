@@ -1,14 +1,11 @@
 package com.soyomaker.net;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.xml.XMLObject;
-import com.soyomaker.xml.XMLParser;
 
 /**
  * 网络收发器。 负责发送和接收消息.
@@ -17,62 +14,24 @@ import com.soyomaker.xml.XMLParser;
  * 
  */
 public class NetTransceiver {
-
-	private static NetTransceiver instance = new NetTransceiver();
-
-	private Map<String, INetService> netServiceMap = new HashMap<String, INetService>();
+	
+	private static final Logger log = Logger.getLogger(NetTransceiver.class);
 
 	private Map<String, Protocol> protocolMap = new HashMap<String, Protocol>();
-
-	private Logger log = Logger.getLogger(NetTransceiver.class);
-
-	public static NetTransceiver getInstance() {
-		return instance;
-	}
+	
 
 	private NetTransceiver() {
 
 	}
 
-	public void config(String configFile) {
-		try {
-			XMLObject netObject = XMLParser.parse(new File("res/net.xml"));
-			// 加载NetService
-			XMLObject servicesObject = netObject.getChild("NetServices");
-			for (XMLObject serviceObject : servicesObject.getChildList()) {
-				String name = serviceObject.getAttribute("name");
-				String className = serviceObject.getAttribute("class");
-				Class<?> serviceClass = Class.forName(className);
-				INetService netService = (INetService) serviceClass
-						.newInstance();
-				netService.start();
-				netServiceMap.put(name, netService);
-			}
-			// 配置协议
-			XMLObject protocolsObject = netObject.getChild("Protocols");
-			for (XMLObject protocolObject : protocolsObject.getChildList()) {
-				String id = protocolObject.getAttribute("id");
-				String netService = protocolObject.getAttribute("netService");
-				String handlerName = protocolObject.getAttribute("handler");
-				String needLogin = protocolObject.getAttribute("needLogin");
-				Protocol protocol = new Protocol();
-				protocol.setId(id);
-				protocol.setNetService(netServiceMap.get(netService));
-				if (handlerName != null) {
-					Class<?> handlerClass = Class.forName(handlerName);
-					IHandler handler = (IHandler) handlerClass.newInstance();
-					protocol.setHandler(handler);
-				}
-				if (needLogin != null) {
-					protocol.setNeedLogin(Boolean.parseBoolean(needLogin));
-				}
-				protocolMap.put(id, protocol);
-			}
-		} catch (Exception e) {
-			log.error("加载信息出错", e);
-			throw new RuntimeException(e);
-		}
+	public Map<String, Protocol> getProtocolMap() {
+		return protocolMap;
 	}
+
+	public void setProtocolMap(Map<String, Protocol> protocolMap) {
+		this.protocolMap = protocolMap;
+	}
+
 
 	/**
 	 * 业务逻辑层发送消息
@@ -121,6 +80,5 @@ public class NetTransceiver {
 		} else {
 			handler.handleMessage(session, msg);
 		}
-
 	}
 }
