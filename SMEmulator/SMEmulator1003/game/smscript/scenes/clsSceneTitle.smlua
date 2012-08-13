@@ -227,6 +227,7 @@ function clsSceneTitle:onStart()
   self.listPlayerTable.image=Skin:createBgWithFrame(220,480)
   self.listPlayerTable.anchor={0,0}
   self.listPlayerTable.delegate=self
+  self.listPlayerTable.clipBounds=true
   self.listPlayerLayer:addChild(self.listPlayerTable)
   
   self.listPlayerCreatePlayerButton=clsUIButton:standardButton(60,self.listPlayerLayer.height-40,80,20,"创建角色")
@@ -249,9 +250,14 @@ function clsSceneTitle:onStart()
   Notifier:addObserver(Const.NotifyCMD.Net.LIST_PLAYER,self,"handleListPlayer")
 end
 
+function clsSceneTitle:itemSelected(menu,index)
+	smLog:info("clsSceneTitle:itemSelected "..index)
+end
+
 function clsSceneTitle:handleCreatePlayer(msg)
 	self.createPlayerMsgLabel.text=msg.msg
 	if msg.status then
+  		smNet:listPlayer()
 		smLog:info("创建角色成功");
 	end
 end
@@ -262,36 +268,43 @@ function clsSceneTitle:handleDeletePlayer(msg)
 	end
 end
 
-function clsSceneTitle:handleListPlayer(msg)
-		smLog:info("获取角色列表成功")
-		self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
-  		self.loginLayer:runAction(self.loginDisappearAction)
-  		
-  		self.listPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
-    	self.listPlayerLayer:runAction(self.listPlayerAppearAction)
+function clsSceneTitle:refreshListPlayer(players)
+	local buttonGroup=clsUIButtonGroup:new()
+  	self.listPlayerTable.dataSource={
+    	cellLayerAtIndex=function(self,menu,cellLayer,index)
+      		local w,h=cellLayer.width,cellLayer.height
+      		local player = players[index].name.."(等级"..players[index].level..")"
+      		local button=clsUIButton:standardButton(w/2,h/2,w,h,player)
+      		button.toggleMode=true
+      		button.tag=index
+      		button.delegate={
+        		buttonTapped=function(self,button)
+          			local index=button.tag
+         			callFunction(menu.delegate,menu.callback,menu,index)
+        		end
+      		}
+      		buttonGroup:addButton(button)
+      		cellLayer:addChild(button)
+    	end
+  	}
+  	self.listPlayerTable:refresh()
+end
 
-  		self.listPlayerTable.cellNum=table.getn(msg.players)
-  		self.listPlayerTable.colNum=1
-  		self.listPlayerTable.cellHeight=48
-  		local buttonGroup=clsUIButtonGroup:new()
-  		self.listPlayerTable.dataSource={
-    		cellLayerAtIndex=function(self,menu,cellLayer,index)
-      			local w,h=cellLayer.width,cellLayer.height
-      			local player = msg.players[index].name.."(等级"..msg.players[index].level..")"
-      			local button=clsUIButton:standardButton(w/2,h/2,w,h,player)
-      			button.toggleMode=true
-      			button.tag=index
-      			button.delegate={
-        			buttonTapped=function(self,button)
-          				local index=button.tag
-         				callFunction(menu.delegate,menu.callback,menu,index)
-        			end
-      			}
-      			buttonGroup:addButton(button)
-      			cellLayer:addChild(button)
-    		end
-  		}
-  		self.listPlayerTable:refresh()
+function clsSceneTitle:handleListPlayer(msg)
+	smLog:info("获取角色列表成功")
+	self.loginDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  	self.loginLayer:runAction(self.loginDisappearAction)
+  		
+  	self.createPlayerAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  	self.createPlayerLayer:runAction(self.createPlayerAppearAction)
+  		
+  	self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+    self.listPlayerLayer:runAction(self.listPlayerAppearAction)
+
+  	self.listPlayerTable.cellNum=table.getn(msg.players)
+  	self.listPlayerTable.colNum=1
+  	self.listPlayerTable.cellHeight=48
+  	self:refreshListPlayer(msg.players)
 end
 
 function clsSceneTitle:handleLogin(msg)
@@ -317,16 +330,16 @@ function clsSceneTitle:buttonTapped(button)
       		smNet:login(self.loginEditName.text,self.loginEditPassword.text)
     	end
   elseif button==self.loginRegisterButton then
-    	self.loginDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+    	self.loginDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.loginLayer:runAction(self.loginDisappearAction)
     	
-    	self.registerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+    	self.registerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.registerLayer:runAction(self.registerAppearAction)     
   elseif button==self.registerLoginButton then
-  		self.registerDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  		self.registerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.registerLayer:runAction(self.registerDisappearAction)
     	
-    	self.loginAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+    	self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.loginLayer:runAction(self.loginAppearAction)
   elseif button==self.registerRegisterButton then
   		if self.registerEditName.text==nil
@@ -350,22 +363,22 @@ function clsSceneTitle:buttonTapped(button)
   			smNet:createPlayer(self.createPlayerEditName.text)
   		end
   elseif button==self.createPlayerCancleButton then
-  		self.createPlayerDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  		self.createPlayerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   		self.createPlayerLayer:runAction(self.createPlayerDisappearAction)
   		
-  		self.listPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+  		self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerAppearAction)
   elseif button==self.listPlayerCreatePlayerButton then
-  		self.listPlayerDisappearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  		self.listPlayerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   		self.listPlayerLayer:runAction(self.listPlayerDisappearAction)
     	
-  		self.createPlayerAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+  		self.createPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
   		self.createPlayerLayer:runAction(self.createPlayerAppearAction)
   elseif button==self.listPlayerCancleButton then
-  		self.loginAppearAction = Action:newFadeAction(1,1000,clsAction.TYPE_LINEAR_TO)
+  		self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
   		self.loginLayer:runAction(self.loginAppearAction)
   		
-  		self.listPlayerDisAppearAction = Action:newFadeAction(0,1000,clsAction.TYPE_LINEAR_TO)
+  		self.listPlayerDisAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerDisAppearAction)
   end
 end
