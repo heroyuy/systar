@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.soyomaker.model.User;
 import com.soyomaker.orm.HibernateRepository;
 
 @Service("userService")
@@ -34,6 +35,15 @@ public class UserService {
 	// --------------------------CRUD----------------------------------------------
 	public void saveOrUpdate(Object entity) {
 		hibernateRepository.saveOrUpdate(entity);
+	}
+
+	public boolean saveUser(User user) {
+		try {
+			hibernateRepository.save(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public Serializable save(Object entity) {
@@ -70,7 +80,7 @@ public class UserService {
 	public <T> List<T> find(String hql, Object... values) {
 		return hibernateRepository.find(hql, values);
 	}
-	
+
 	public <T> T findUnique(String hql, Object... values) {
 		List<T> results = hibernateRepository.find(hql, values);
 		if (CollectionUtils.isEmpty(results)) {

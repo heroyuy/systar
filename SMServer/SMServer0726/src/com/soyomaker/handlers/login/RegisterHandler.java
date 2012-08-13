@@ -1,13 +1,19 @@
 package com.soyomaker.handlers.login;
 
-import com.soyomaker.dao.DaoManager;
-import com.soyomaker.dao.impl.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.UserService;
 
+@Component("registerHandler")
 public class RegisterHandler extends AbHandler {
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -28,8 +34,7 @@ public class RegisterHandler extends AbHandler {
 			return;
 		}
 		// (4)检查用户名是否已经存在
-		UserDao userDao = (UserDao) DaoManager.getInatance().getDao(User.class);
-		User user = userDao.getUser(username);
+		User user = userService.findUnique("from User u where u.username=?", username);
 		if (user != null) {
 			this.sendMessage(session, msg.getType(), false, "用户名已存在");
 			return;
@@ -38,7 +43,8 @@ public class RegisterHandler extends AbHandler {
 		user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
-		boolean status = userDao.insert(user);
+		userService.save(user);
+		boolean status = userService.saveUser(user);
 		this.sendMessage(session, msg.getType(), status, status ? "注册成功"
 				: "注册失败");
 	}
