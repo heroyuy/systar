@@ -1,43 +1,47 @@
 package com.soyomaker.model;
 
-import org.nutz.dao.entity.annotation.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Table("user")
+@Entity
+@Table(name = "user")
 public class User {
 
-	@Column
 	@Id
-	private long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	@Column
-	@Name
 	private String username;
 
-	@Column
 	private String password;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public String getPassword() {
-		return password;
+	public User setId(Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setUsername(String username) {
+	public User setUsername(String username) {
 		this.username = username;
+		return this;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public User setPassword(String password) {
+		this.password = password;
+		return this;
+	}
 }
