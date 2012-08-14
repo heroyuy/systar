@@ -25,7 +25,7 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
-		User user = userService.findUnique("from User u where u.username=?", username);
+		User user = userService.findUserByUsername(username);
 		if (user == null) {
 			this.sendMessage(session, msg.getType(), false, "帐号不存在");
 			return;
