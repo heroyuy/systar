@@ -11,6 +11,7 @@ MsgHandlerFactory["101002"]=HandlerMap.login
 MsgHandlerFactory["102001"]=HandlerMap.createPlayer
 MsgHandlerFactory["102002"]=HandlerMap.deletePlayer
 MsgHandlerFactory["102003"]=HandlerMap.listPlayer
+MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
 
 function MsgHandlerFactory:dispatchMessage(msg)
   smLog:info("dispatchMessage:"..msg)

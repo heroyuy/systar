@@ -14,6 +14,8 @@ public class Net {
 	private static final String MSG_ID_PLAYER_DELETE = "102002";
 
 	private static final String MSG_ID_PLAYER_LIST = "102003";
+	
+	private static final String MSG_ID_PLAYER_CHOOSE = "102004";
 
 	private static Net instance = new Net();
 
@@ -92,4 +94,13 @@ public class Net {
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 
+	/**
+	 * 选择角色列表 102004
+	 */
+	public void choosePlayer(int playerId) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_PLAYER_CHOOSE);
+		msg.putInt("playerId", playerId);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
 }

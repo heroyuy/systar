@@ -95,11 +95,3 @@ function clsUITable:layerTapped(layer,event)
     callFunction(self.delegate,self.callback,self,self.selectedIndex)
   end
 end
-
-function clsUITable:onTouch(event)
-	smLog:info("clsUITable:onTouch")
-	if event:getType()==UIConst.eventType.DOWN then
-	elseif event:getType()==UIConst.eventType.MOVE then
-	elseif event:getType()==UIConst.eventType.UP then
-	end
-end

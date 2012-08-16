@@ -67,4 +67,8 @@ Const.NotifyCMD.Net={}
   --[[
 	获取角色列表，此通知的参数为{msg}
   --]]
-  Const.NotifyCMD.Net.LIST_PLAYER="listPlayer"	--获取角色列表
+  Const.NotifyCMD.Net.LIST_PLAYER="listPlayer"		--获取角色列表
+  --[[
+	选择角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CHOOSE_PLAYER="choosePlayer"	--选择角色

@@ -58,6 +58,13 @@ clsSceneTitle.listPlayerTable=nil
 clsSceneTitle.listPlayerCreatePlayerButton=nil
 clsSceneTitle.listPlayerCancleButton=nil
 
+--进入游戏按钮
+clsSceneTitle.joinGameButton=nil
+
+--辅助字段
+clsSceneTitle.listPlayerTableSelectedIndex=nil
+clsSceneTitle.players=nil
+
 --构造器
 function clsSceneTitle:new()
 	local self = {}
@@ -242,16 +249,28 @@ function clsSceneTitle:onStart()
   self.listPlayerCancleButton.delegate=self
   self.listPlayerLayer:addChild(self.listPlayerCancleButton)
   --角色选择层结束
+  --进入游戏按钮开始
+  self.joinGameButton=clsUIButton:standardButton(screenWidth/2,screenHeight-80,140,40,"进入游戏")
+  self.joinGameButton.alpha=0
+  self.joinGameButton.textSize=24
+  self.joinGameButton.textColor="0xffffff00"
+  self.joinGameButton.delegate=self
+  self.bgLayer:addChild(self.joinGameButton)
+  
   GameLayer:addChildToScene(self.bgLayer)
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
   Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")
   Notifier:addObserver(Const.NotifyCMD.Net.DELETE_PLAYER,self,"handleDeletePlayer")
   Notifier:addObserver(Const.NotifyCMD.Net.LIST_PLAYER,self,"handleListPlayer")
+  Notifier:addObserver(Const.NotifyCMD.Net.CHOOSE_PLAYER,self,"handleChoosePlayer")
 end
 
-function clsSceneTitle:itemSelected(menu,index)
-	smLog:info("clsSceneTitle:itemSelected "..index)
+function clsSceneTitle:handleChoosePlayer(msg)
+	if msg.status then
+		smLog:info("进入游戏");
+		Game:changeScene(Game.SCENE_MAP)
+	end
 end
 
 function clsSceneTitle:handleCreatePlayer(msg)
@@ -269,6 +288,12 @@ function clsSceneTitle:handleDeletePlayer(msg)
 end
 
 function clsSceneTitle:refreshListPlayer(players)
+	self.listPlayerTableSelectedIndex=nil--重置选中的角色
+	self.players=players
+	
+	self.listPlayerTable.cellNum=table.getn(players)
+  	self.listPlayerTable.colNum=1
+  	self.listPlayerTable.cellHeight=48
 	local buttonGroup=clsUIButtonGroup:new()
   	self.listPlayerTable.dataSource={
     	cellLayerAtIndex=function(self,menu,cellLayer,index)
@@ -300,10 +325,10 @@ function clsSceneTitle:handleListPlayer(msg)
   		
   	self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.listPlayerLayer:runAction(self.listPlayerAppearAction)
+    
+    self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+    self.joinGameButton:runAction(self.listPlayerAppearAction)
 
-  	self.listPlayerTable.cellNum=table.getn(msg.players)
-  	self.listPlayerTable.colNum=1
-  	self.listPlayerTable.cellHeight=48
   	self:refreshListPlayer(msg.players)
 end
 
@@ -380,7 +405,15 @@ function clsSceneTitle:buttonTapped(button)
   		
   		self.listPlayerDisAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerDisAppearAction)
+  elseif button==self.joinGameButton then
+  		if self.listPlayerTableSelectedIndex then
+  			smNet:choosePlayer(self.players[self.listPlayerTableSelectedIndex].playerId)
+  		end
   end
+end
+
+function clsSceneTitle:itemSelected(listPlayerTable,index)
+	self.listPlayerTableSelectedIndex = index
 end
 
 -- 更新

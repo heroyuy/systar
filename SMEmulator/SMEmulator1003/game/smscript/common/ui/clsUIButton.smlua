@@ -83,6 +83,9 @@ function clsUIButton:onTouch(event)
   if self.toggleMode then
   	if type==UIConst.eventType.DOWN then
     	self:changeButtonState()
+    	if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      		callFunction(self.delegate,self.callback,self)
+    	end
     end
   else
   	if type==UIConst.eventType.DOWN then

@@ -20,3 +20,11 @@ function HandlerMap.listPlayer:handleMessage(msg)
   smLog:info("获取角色列表")
   Notifier:notify(Const.NotifyCMD.Net.LIST_PLAYER,msg)
 end
+
+--====================================================
+HandlerMap.choosePlayer={}
+
+function HandlerMap.choosePlayer:handleMessage(msg)
+  smLog:info("选择角色")
+  Notifier:notify(Const.NotifyCMD.Net.CHOOSE_PLAYER,msg)
+end
