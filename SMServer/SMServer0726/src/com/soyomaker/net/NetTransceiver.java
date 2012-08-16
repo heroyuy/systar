@@ -75,7 +75,7 @@ public class NetTransceiver {
 			return;
 		}
 		// (3)检查协议是否允许
-		if (protocol.isNeedLogin() && !session.isLogin()) {
+		if (protocol.isNeedLogin() && session.getUser()==null) {
 			log.debug("protocol [" + protocol.getId() + "] need login");
 		} else {
 			handler.handleMessage(session, msg);

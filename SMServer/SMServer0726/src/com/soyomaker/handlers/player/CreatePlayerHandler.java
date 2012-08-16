@@ -41,7 +41,7 @@ public class CreatePlayerHandler extends AbHandler {
 		// (4)添加用户到数据库
 		player = new Player();
 		player.setName(name);
-		player.setUserId(session.getUserId());
+		player.setUserId(session.getUser().getId());
 		// TODO 此处应该读配置
 		player.setMapId(108000012);
 		player.setX(3);

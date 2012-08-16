@@ -2,6 +2,8 @@ package com.soyomaker.net;
 
 import org.apache.mina.core.session.IoSession;
 
+import com.soyomaker.model.User;
+
 /**
  * 逻辑session。
  * 
@@ -16,15 +18,8 @@ public class UserSession {
 	 */
 	private IoSession ioSession = null;
 
-	/**
-	 * 是否登录
-	 */
-	private boolean login = false;
+	private User user;
 
-	/**
-	 * 玩家id
-	 */
-	private long userId = -1;
 
 	public UserSession(IoSession ioSession) {
 		this.ioSession = ioSession;
@@ -34,20 +29,12 @@ public class UserSession {
 		return ioSession;
 	}
 
-	public long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public boolean isLogin() {
-		return login;
-	}
-
-	public void setLogin(boolean login) {
-		this.login = login;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public void disConnect() {

@@ -1,10 +1,14 @@
 package com.soyomaker.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
@@ -17,6 +21,9 @@ public class User {
 	private String username;
 
 	private String password;
+
+	@Transient
+	private Player player;
 
 	public Long getId() {
 		return id;
@@ -44,4 +51,13 @@ public class User {
 		this.password = password;
 		return this;
 	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 }

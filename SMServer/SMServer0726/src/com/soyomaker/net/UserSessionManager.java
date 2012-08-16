@@ -17,8 +17,17 @@ public class UserSessionManager {
 
 	}
 
-	public synchronized void putUserSession(long userId,
-			UserSession session) {
+	public synchronized boolean existsUser(long userId) {
+		UserSession ps = sessionMap.get(userId);
+		if (ps == null) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	public synchronized void putUserSession(long userId, UserSession session) {
 		UserSession ps = this.getUserSession(userId);
 		if (ps != null && ps != session) {
 			ps.disConnect();

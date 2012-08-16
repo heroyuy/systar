@@ -12,7 +12,7 @@ import com.soyomaker.service.UserService;
 
 @Component("loginHandler")
 public class LoginHandler extends AbHandler {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -36,10 +36,8 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (4)登录成功
-		session.setLogin(true);
-		session.setUserId(user.getId());
-		UserSessionManager.getInstance()
-				.putUserSession(user.getId(), session);
+		session.setUser(user);
+		UserSessionManager.getInstance().putUserSession(user.getId(), session);
 		GameObject msgSent = this.buildPackage(msg.getType(), true, "登录成功");
 		msg.putLong("userId", user.getId());
 		netTransceiver.sendMessage(session, msgSent);

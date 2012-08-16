@@ -43,7 +43,6 @@ public class RegisterHandler extends AbHandler {
 		user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
-		userService.save(user);
 		boolean status = userService.saveUser(user);
 		this.sendMessage(session, msg.getType(), status, status ? "注册成功"
 				: "注册失败");
