@@ -1,6 +1,7 @@
 package com.soyomaker.handlers.player;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
@@ -8,6 +9,7 @@ import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.service.PlayerService;
 
+@Component("deletePlayerHandler")
 public class DeletePlayerHandler extends AbHandler {
 
 	@Autowired
@@ -17,7 +19,7 @@ public class DeletePlayerHandler extends AbHandler {
 	public void handleMessage(UserSession session, GameObject msg) {
 		int playerId = msg.getInt("playerId");
 		// (1)检查是否有此角色
-		Player player =  playerService.load(Player.class, playerId);
+		Player player = playerService.load(Player.class, playerId);
 		if (player == null) {
 			this.sendMessage(session, msg.getType(), false, "角色不存在");
 		}
