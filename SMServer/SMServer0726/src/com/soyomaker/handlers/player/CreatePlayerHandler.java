@@ -32,7 +32,8 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (3)检查呢称是否已被使用
-		Player player = userService.findUnique("from Player p where p.name=? ", name);
+		Player player = userService.findUnique("from Player p where p.name=? ",
+				name);
 		if (player != null) {
 			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
 			return;
@@ -42,7 +43,7 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setName(name);
 		player.setUserId(session.getUserId());
 		// TODO 此处应该读配置
-		player.setMapId(12);
+		player.setMapId(108000012);
 		player.setX(3);
 		player.setY(8);
 		player.setAvatar(1);
@@ -57,7 +58,8 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setLuck(9);
 		boolean status = userService.savePlayer(player);
 		if (status) {
-			GameObject msgSent = this.buildPackage(msg.getType(), status, "创建成功");
+			GameObject msgSent = this.buildPackage(msg.getType(), status,
+					"创建成功");
 			this.insertPlayerIntoPackage(player, msgSent);
 			netTransceiver.sendMessage(session, msgSent);
 		} else {
