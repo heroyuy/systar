@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Session.LockRequest;
 import org.hibernate.SessionFactory;
@@ -295,6 +296,35 @@ public class HibernateRepository {
 		Assert.hasText(propertyName, "propertyName不能为空");
 		Criterion criterion = Restrictions.eq(propertyName, value);
 		return (T) createCriteria(entityClass, criterion).uniqueResult();
+	}
+	
+	public void executeSql(final String sql,final Object... values){
+		SQLQuery queryObject = getSession().createSQLQuery(sql);
+		
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				queryObject.setParameter(i, values[i]);
+			}
+		}
+		
+		queryObject.executeUpdate();
+	}
+ 
+	
+	public <T> List<T> findBySQLSimple(final Class entityClass, final String sql, final Object... values) {
+		SQLQuery queryObject = getSession().createSQLQuery(sql);
+
+		if (entityClass != null) {
+			queryObject.addEntity(entityClass);
+		}
+
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				queryObject.setParameter(i, values[i]);
+			}
+		}
+
+		return queryObject.list();
 	}
 
 
