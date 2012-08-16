@@ -98,7 +98,9 @@
 	        <entry key="101001"  value-ref="p101001"/>  
 	        <entry key="101002"  value-ref="p101002"/> 
 	        <entry key="102001"  value-ref="p102001"/>  
+	        <entry key="102002"  value-ref="p102002"/>  
 	        <entry key="102003"  value-ref="p102003"/>  
+	        <entry key="102004"  value-ref="p102004"/>  
 	      </map>  
 	    </property>   
 	</bean>
