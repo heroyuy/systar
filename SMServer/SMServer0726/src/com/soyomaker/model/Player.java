@@ -32,6 +32,10 @@ public class Player {
 
 	private Integer money;
 
+	private Integer hp;
+	
+	private Integer sp;
+
 	private Integer stre;
 
 	private Integer agil;
@@ -39,136 +43,152 @@ public class Player {
 	private Integer inte;
 
 	private Integer vita;
-
+	
 	private Integer dext;
 
 	private Integer luck;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public Integer getMapId() {
-		return mapId;
-	}
-
-	public void setMapId(Integer mapId) {
-		this.mapId = mapId;
-	}
-
-	public Integer getX() {
-		return x;
-	}
-
-	public void setX(Integer x) {
-		this.x = x;
-	}
-
-	public Integer getY() {
-		return y;
-	}
-
-	public void setY(Integer y) {
-		this.y = y;
+	public Integer getAgil() {
+		return agil;
 	}
 
 	public Integer getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(Integer avatar) {
-		this.avatar = avatar;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
+	public Integer getDext() {
+		return dext;
 	}
 
 	public Integer getExp() {
 		return exp;
 	}
 
-	public void setExp(Integer exp) {
-		this.exp = exp;
+	public Integer getHp() {
+		return hp;
 	}
 
-	public Integer getMoney() {
-		return money;
-	}
-
-	public void setMoney(Integer money) {
-		this.money = money;
-	}
-
-	public Integer getStre() {
-		return stre;
-	}
-
-	public void setStre(Integer stre) {
-		this.stre = stre;
-	}
-
-	public Integer getAgil() {
-		return agil;
-	}
-
-	public void setAgil(Integer agil) {
-		this.agil = agil;
+	public Integer getId() {
+		return id;
 	}
 
 	public Integer getInte() {
 		return inte;
 	}
 
-	public void setInte(Integer inte) {
-		this.inte = inte;
-	}
-
-	public Integer getVita() {
-		return vita;
-	}
-
-	public void setVita(Integer vita) {
-		this.vita = vita;
-	}
-
-	public Integer getDext() {
-		return dext;
-	}
-
-	public void setDext(Integer dext) {
-		this.dext = dext;
+	public Integer getLevel() {
+		return level;
 	}
 
 	public Integer getLuck() {
 		return luck;
 	}
 
+	public Integer getMapId() {
+		return mapId;
+	}
+
+	public Integer getMoney() {
+		return money;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Integer getSp() {
+		return sp;
+	}
+
+	public Integer getStre() {
+		return stre;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public Integer getVita() {
+		return vita;
+	}
+
+	public Integer getX() {
+		return x;
+	}
+
+	public Integer getY() {
+		return y;
+	}
+
+	public void setAgil(Integer agil) {
+		this.agil = agil;
+	}
+
+	public void setAvatar(Integer avatar) {
+		this.avatar = avatar;
+	}
+
+	public void setDext(Integer dext) {
+		this.dext = dext;
+	}
+
+	public void setExp(Integer exp) {
+		this.exp = exp;
+	}
+
+	public void setHp(Integer hp) {
+		this.hp = hp;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setInte(Integer inte) {
+		this.inte = inte;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	public void setLuck(Integer luck) {
 		this.luck = luck;
+	}
+
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
+	}
+
+	public void setMoney(Integer money) {
+		this.money = money;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSp(Integer sp) {
+		this.sp = sp;
+	}
+
+	public void setStre(Integer stre) {
+		this.stre = stre;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setVita(Integer vita) {
+		this.vita = vita;
+	}
+
+	public void setX(Integer x) {
+		this.x = x;
+	}
+
+	public void setY(Integer y) {
+		this.y = y;
 	}
 }

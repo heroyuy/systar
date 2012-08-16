@@ -24,7 +24,8 @@ public class ListPlayerHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		List<Player> list =playerService.findPlayerByUserId(session.getUser().getId());
+		List<Player> list = playerService.findPlayerByUserId(session.getUser()
+				.getId());
 		GameObject msgSent = this.buildPackage(msg.getType());
 		msgSent.putObjectArray("players", this.convertPlayerList(list));
 		netTransceiver.sendMessage(session, msgSent);
@@ -44,6 +45,8 @@ public class ListPlayerHandler extends AbHandler {
 				playerObj.putInt("level", player.getLevel());
 				playerObj.putInt("exp", player.getExp());
 				playerObj.putInt("money", player.getMoney());
+				playerObj.putInt("hp", player.getHp());
+				playerObj.putInt("sp", player.getSp());
 				playerObj.putInt("stre", player.getStre());
 				playerObj.putInt("agil", player.getAgil());
 				playerObj.putInt("inte", player.getInte());

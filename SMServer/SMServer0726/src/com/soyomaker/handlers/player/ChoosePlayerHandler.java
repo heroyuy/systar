@@ -1,6 +1,7 @@
 package com.soyomaker.handlers.player;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
@@ -8,6 +9,7 @@ import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.service.PlayerService;
 
+@Component("choosePlayerHandler")
 public class ChoosePlayerHandler extends AbHandler {
 
 	@Autowired

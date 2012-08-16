@@ -125,14 +125,12 @@
 			<property name="handler" ref="createPlayerHandler"/>
 	</bean>
 
-	<!--  
 	<bean id="p102002" class="com.soyomaker.net.Protocol">
 			<property name="id" value="102001"/>
 			<property name="needLogin" value="false"/>
 			<property name="netService" ref="minaServer"/>
 			<property name="handler" ref="deletePlayerHandler"/>
 	</bean>
-	-->
 	
 	<bean id="p102003" class="com.soyomaker.net.Protocol">
 			<property name="id" value="102003"/>
@@ -141,14 +139,12 @@
 			<property name="handler" ref="listPlayerHandler"/>
 	</bean>
 	
-	<!--  
 	<bean id="p102004" class="com.soyomaker.net.Protocol">
 			<property name="id" value="102004"/>
-			<property name="needLogin" value="false"/>
+			<property name="needLogin" value="true"/>
 			<property name="netService" ref="minaServer"/>
 			<property name="handler" ref="choosePlayerHandler"/>
 	</bean>
-	-->
 	<!--======================================= net Service end =======================================-->
 	<!--======================================= hibernate begin =======================================-->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

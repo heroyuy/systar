@@ -50,6 +50,8 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setLevel(1);
 		player.setExp(0);
 		player.setMoney(300);
+		player.setHp(100);
+		player.setSp(100);
 		player.setStre(9);
 		player.setAgil(9);
 		player.setInte(9);
@@ -79,6 +81,8 @@ public class CreatePlayerHandler extends AbHandler {
 		playerObj.putInt("level", player.getLevel());
 		playerObj.putInt("exp", player.getExp());
 		playerObj.putInt("money", player.getMoney());
+		playerObj.putInt("hp", player.getHp());
+		playerObj.putInt("sp", player.getSp());
 		playerObj.putInt("stre", player.getStre());
 		playerObj.putInt("agil", player.getAgil());
 		playerObj.putInt("inte", player.getInte());
