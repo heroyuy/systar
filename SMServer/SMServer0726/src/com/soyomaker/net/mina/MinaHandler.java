@@ -8,8 +8,10 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.model.User;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.net.UserSessionManager;
 
 /**
  * Mina所使用的IoHandler的实现。
@@ -20,12 +22,10 @@ import com.soyomaker.net.UserSession;
 public class MinaHandler implements IoHandler {
 
 	private static final Logger logger = Logger.getLogger(MinaHandler.class);
-	
+
 	private NetTransceiver netTransceiver;
 
-	public void setNetTransceiver(NetTransceiver netTransceiver) {
-		this.netTransceiver = netTransceiver;
-	}
+	private final static String KEY_USERSESSION = "usersession";
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
@@ -38,11 +38,7 @@ public class MinaHandler implements IoHandler {
 	public void messageReceived(IoSession session, Object obj) throws Exception {
 		if (obj instanceof GameObject) {
 			UserSession userSession = (UserSession) session
-					.getAttribute("userSession");
-			if (userSession == null) {
-				userSession = new UserSession(session);
-				session.setAttribute("userSession", userSession);
-			}
+					.getAttribute(KEY_USERSESSION);
 			GameObject message = (GameObject) obj;
 			logger.debug("Mina收到包:" + message.getType() + message.toJson());
 			String type = message.getType();
@@ -51,13 +47,11 @@ public class MinaHandler implements IoHandler {
 				Collection<GameObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (GameObject msg : c) {
-					netTransceiver.dispatchMessage(userSession,
-							msg);
+					netTransceiver.dispatchMessage(userSession, msg);
 				}
 			} else {
 				// 单包
-				netTransceiver.dispatchMessage(userSession,
-						message);
+				netTransceiver.dispatchMessage(userSession, message);
 			}
 		}
 	}
@@ -71,11 +65,19 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		logger.debug("sessionClosed");
+		UserSession userSession = (UserSession) session
+				.getAttribute(KEY_USERSESSION);
+		User user = userSession.getUser();
+		if (user != null) {
+			UserSessionManager.getInstance().removeUserSession(user.getId());
+		}
+		session.removeAttribute(KEY_USERSESSION);
 	}
 
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
 		logger.debug("sessionCreated");
+		session.setAttribute(KEY_USERSESSION, new UserSession(session));
 	}
 
 	@Override
@@ -87,5 +89,9 @@ public class MinaHandler implements IoHandler {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		logger.debug("sessionOpened");
+	}
+
+	public void setNetTransceiver(NetTransceiver netTransceiver) {
+		this.netTransceiver = netTransceiver;
 	}
 }
