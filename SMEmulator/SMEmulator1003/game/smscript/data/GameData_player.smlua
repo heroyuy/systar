@@ -11,7 +11,7 @@ GameData.playerTroop.players=nil  			--Player列表
 GameData.playerTroop.itemList=nil			--道具列表（背包,单元结构为:{id,num}）
 
 function GameData.playerTroop:leader()
-  return self.players[1]
+  return GameData.curPlayer
 end
 
 --锁定所有player（锁定后player将不再更新数据，也不接收普通行走命令）
