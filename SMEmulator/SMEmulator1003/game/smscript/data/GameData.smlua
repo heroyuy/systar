@@ -31,6 +31,7 @@ GameData.switchs={}							--游戏开关
 GameData.variables={}						--游戏变量
 
 GameData.curMap=nil          				--当前地图
+GameData.curPlayer=nil          			--当前角色
 GameData.npcs=nil            				--当前npc列表
 GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的脚本时，NPC即进入锁定状态）
 

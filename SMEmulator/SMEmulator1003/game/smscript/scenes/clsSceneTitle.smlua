@@ -269,6 +269,14 @@ end
 function clsSceneTitle:handleChoosePlayer(msg)
 	if msg.status then
 		smLog:info("进入游戏");
+		GameData.curPlayer = self.players[self.listPlayerTableSelectedIndex]
+		GameData.curPlayer.col = GameData.curPlayer.x
+		GameData.curPlayer.row = GameData.curPlayer.y
+		GameData.curPlayer.headImg="/image/face/姜维.png"
+		GameData.curPlayer.charImg="/image/character/player1.png"
+		GameData.curPlayer.actionImg="/image/character/player1_action.png"
+		GameData.updateSwitch=true
+		
 		Game:changeScene(Game.SCENE_MAP)
 	end
 end

@@ -65,7 +65,8 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.MOVED,self,self.characterMoved)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
-  self.curPlayer=GameData.playerTroop:leader()
+  
+  self.curPlayer=GameData.curPlayer
   self.buttonHead.normalImage=self.curPlayer.headImg
   local map=Dictionary:getMap(self.curPlayer.mapId)
   self:changeMap(map)
