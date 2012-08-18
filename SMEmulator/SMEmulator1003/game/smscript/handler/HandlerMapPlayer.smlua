@@ -18,6 +18,33 @@ HandlerMap.listPlayer={}
 
 function HandlerMap.listPlayer:handleMessage(msg)
   smLog:info("获取角色列表")
+  GameData.playerList=clsList:new()
+  for i=table.getn(msg.players),1,-1 do
+  	local player=clsPlayer:new()
+  	player.id=msg.players[i].playerId;
+    player.col=msg.players[i].x;
+    player.row=msg.players[i].y;
+    player.hp=msg.players[i].hp;
+    player.sp=msg.players[i].sp;
+    player.luck=msg.players[i].luck;
+    player.agi=msg.players[i].agil;
+    player.mapId=msg.players[i].mapId;
+    player.x=msg.players[i].x;
+    player.y=msg.players[i].y;
+    player.exp=msg.players[i].exp;
+    player.str=msg.players[i].stre;
+    player.level=msg.players[i].level;
+    player.dex=msg.players[i].dext;
+    player.name=msg.players[i].name;
+    player.money=msg.players[i].money;
+    player.int=msg.players[i].inte;
+    player.vit=msg.players[i].vita;
+    player.headImg=smImageFactory:loadImage("/image/face/姜维.png")
+	player.charImg=smImageFactory:loadImage("/image/character/player1.png")
+	player.actionImg=smImageFactory:loadImage("/image/character/player1_action.png")
+	player.moveDelegate=GameData
+	GameData.playerList:add(player)
+  end
   Notifier:notify(Const.NotifyCMD.Net.LIST_PLAYER,msg)
 end
 

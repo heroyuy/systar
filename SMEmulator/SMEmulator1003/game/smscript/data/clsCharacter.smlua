@@ -68,10 +68,11 @@ clsCharacter.moveDelegate=nil     --行走事件委托 需要方法：
                    
 clsCharacter.str=0 		--力量(基本值，不考虑装备和Buff的)
 clsCharacter.agi=0 		--敏捷(基本值，不考虑装备和Buff的)
-clsCharacter.int=0			--智力(基本值，不考虑装备和Buff的)
+clsCharacter.int=0		--智力(基本值，不考虑装备和Buff的)
 clsCharacter.vit=0 		--体力(基本值，不考虑装备和Buff的)
 clsCharacter.dex=0 		--灵巧(基本值，不考虑装备和Buff的)
-clsCharacter.luck=0 		--幸运(基本值，不考虑装备和Buff的)
+clsCharacter.luck=0 	--幸运(基本值，不考虑装备和Buff的)
+clsCharacter.id=0		--角色id
 
 --构造器
 function clsCharacter:new()

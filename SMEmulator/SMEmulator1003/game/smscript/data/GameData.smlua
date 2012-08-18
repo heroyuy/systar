@@ -35,7 +35,8 @@ GameData.curPlayer=nil          			--当前角色
 GameData.npcs=nil            				--当前npc列表
 GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的脚本时，NPC即进入锁定状态）
 
-GameData.updateSwitch=false  				-- 模型更新开关
+GameData.updateSwitch=false  				--模型更新开关
+GameData.playerList=nil						--当前账号所有角色
 
 --============NPC相关操作============
 --获取指定id的NPC

@@ -63,7 +63,6 @@ clsSceneTitle.joinGameButton=nil
 
 --辅助字段
 clsSceneTitle.listPlayerTableSelectedIndex=nil
-clsSceneTitle.players=nil
 
 --构造器
 function clsSceneTitle:new()
@@ -269,13 +268,7 @@ end
 function clsSceneTitle:handleChoosePlayer(msg)
 	if msg.status then
 		smLog:info("进入游戏");
-		GameData.curPlayer = self.players[self.listPlayerTableSelectedIndex]
-		GameData.curPlayer.col = GameData.curPlayer.x
-		GameData.curPlayer.row = GameData.curPlayer.y
-		GameData.curPlayer.headImg=smImageFactory:loadImage("/image/face/姜维.png")
-		GameData.curPlayer.charImg=smImageFactory:loadImage("/image/character/player1.png")
-		GameData.curPlayer.actionImg=smImageFactory:loadImage("/image/character/player1_action.png")
-		GameData.curPlayer.moveDelegate=GameData
+		GameData.curPlayer = GameData.playerList:get(self.listPlayerTableSelectedIndex)
 		GameData.updateSwitch=true
 		--初始化NPC信息表
         GameData.npcs={}
@@ -297,18 +290,17 @@ function clsSceneTitle:handleDeletePlayer(msg)
 	end
 end
 
-function clsSceneTitle:refreshListPlayer(players)
+function clsSceneTitle:refreshListPlayer()
 	self.listPlayerTableSelectedIndex=nil--重置选中的角色
-	self.players=players
 	
-	self.listPlayerTable.cellNum=table.getn(players)
+	self.listPlayerTable.cellNum=GameData.playerList:size()
   	self.listPlayerTable.colNum=1
   	self.listPlayerTable.cellHeight=48
 	local buttonGroup=clsUIButtonGroup:new()
   	self.listPlayerTable.dataSource={
     	cellLayerAtIndex=function(self,menu,cellLayer,index)
       		local w,h=cellLayer.width,cellLayer.height
-      		local player = players[index].name.."(等级"..players[index].level..")"
+      		local player = GameData.playerList:get(index).name.."(等级"..GameData.playerList:get(index).level..")"
       		local button=clsUIButton:standardButton(w/2,h/2,w,h,player)
       		button.toggleMode=true
       		button.tag=index
@@ -339,7 +331,7 @@ function clsSceneTitle:handleListPlayer(msg)
     self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.joinGameButton:runAction(self.listPlayerAppearAction)
 
-  	self:refreshListPlayer(msg.players)
+  	self:refreshListPlayer()
 end
 
 function clsSceneTitle:handleLogin(msg)
@@ -417,7 +409,7 @@ function clsSceneTitle:buttonTapped(button)
     	self.listPlayerLayer:runAction(self.listPlayerDisAppearAction)
   elseif button==self.joinGameButton then
   		if self.listPlayerTableSelectedIndex then
-  			smNet:choosePlayer(self.players[self.listPlayerTableSelectedIndex].playerId)
+  			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTableSelectedIndex).id)
   		end
   end
 end
