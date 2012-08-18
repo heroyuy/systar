@@ -55,3 +55,11 @@ function HandlerMap.choosePlayer:handleMessage(msg)
   smLog:info("选择角色")
   Notifier:notify(Const.NotifyCMD.Net.CHOOSE_PLAYER,msg)
 end
+
+--====================================================
+HandlerMap.movePlayer={}
+
+function HandlerMap.choosePlayer:handleMessage(msg)
+  smLog:info("移动角色")
+  Notifier:notify(Const.NotifyCMD.Net.MOVE_PLAYER,msg)
+end

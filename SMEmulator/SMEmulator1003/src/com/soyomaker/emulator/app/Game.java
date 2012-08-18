@@ -74,7 +74,6 @@ public class Game implements IGame, Runnable, IHandler {
 			while (running) {
 				t = System.currentTimeMillis();
 				// 处理事件
-
 				while (eventQueue.size() > 0) {
 					luaAdapter.onTouch(eventQueue.poll());
 				}

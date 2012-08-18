@@ -72,3 +72,7 @@ Const.NotifyCMD.Net={}
 	选择角色，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.CHOOSE_PLAYER="choosePlayer"	--选择角色
+  --[[
+	移动角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.MOVE_PLAYER="movePlayer"		--移动角色
