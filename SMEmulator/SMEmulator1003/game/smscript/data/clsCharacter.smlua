@@ -35,6 +35,7 @@ clsCharacter.CRI="cri"
 clsCharacter.STA="sta"
 
 --字段定义
+clsCharacter.vocationId=0 --职业ID
 clsCharacter.name="" --角色名称
 clsCharacter.desc="" --角色描述
 clsCharacter.headImgName=nil --头像名称

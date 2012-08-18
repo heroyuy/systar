@@ -269,7 +269,6 @@ end
 function clsSceneTitle:handleChoosePlayer(msg)
 	if msg.status then
 		smLog:info("进入游戏");
-		GameData.playerTroop.players={}
 		GameData.curPlayer = self.players[self.listPlayerTableSelectedIndex]
 		GameData.curPlayer.col = GameData.curPlayer.x
 		GameData.curPlayer.row = GameData.curPlayer.y
@@ -277,7 +276,6 @@ function clsSceneTitle:handleChoosePlayer(msg)
 		GameData.curPlayer.charImg=smImageFactory:loadImage("/image/character/player1.png")
 		GameData.curPlayer.actionImg=smImageFactory:loadImage("/image/character/player1_action.png")
 		GameData.curPlayer.moveDelegate=GameData
-		table.insert(GameData.playerTroop.players,GameData.curPlayer)
 		GameData.updateSwitch=true
 		--初始化NPC信息表
         GameData.npcs={}

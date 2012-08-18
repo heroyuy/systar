@@ -150,7 +150,7 @@ end
 --============游戏表现类============
 --切换地图
 function Interpreter:changeMap(mapId,row,col,face)
-  GameData.playerTroop:leader():changeMap(mapId,row,col,face)
+  GameData.curPlayer:changeMap(mapId,row,col,face)
   return true
 end
 
@@ -201,7 +201,7 @@ end
 
 --更改面向
 function Interpreter:changeFace(face)
-  GameData.playerTroop:leader():changeFace(face)
+  GameData.curPlayer:changeFace(face)
   return true
 end
 

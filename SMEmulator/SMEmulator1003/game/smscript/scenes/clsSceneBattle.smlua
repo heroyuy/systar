@@ -88,7 +88,8 @@ function clsSceneBattle:onStart()
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   self.actors={}
   --初始化玩家队伍
-  for i,player in ipairs(GameData.playerTroop.players) do
+  GameData.battle:initPlayerTroop()
+  for i,player in ipairs(GameData.battle.players) do
     --设置player的坐标
     player.x,player.y=768,192+64*i
     --将player加入到角色列表
@@ -124,9 +125,9 @@ function clsSceneBattle:onStart()
   end
   --初始化玩家队伍信息面板
   local gap=15
-  local playerNum=table.getn(GameData.playerTroop.players)
+  local playerNum=table.getn(GameData.battle.players)
   local width,height=(screenWidth-(playerNum+1)*gap)/playerNum,self.playerInfoLayer.height-2*gap
-  for i,player in ipairs(GameData.playerTroop.players) do
+  for i,player in ipairs(GameData.battle.players) do
     local infoPane=clsPlayerInfo:new(gap+(i-1)*(width+gap),self.playerInfoLayer.height/2,width,height,player)
     infoPane.anchor={0,0.5}
     self.playerInfoLayer:addChild(infoPane)
@@ -253,7 +254,7 @@ function clsSceneBattle:doEnemyAction(id)
   smLog:info("["..self.curActor.name.."]开始动作")
   --TODO 根据AI决定动作（攻击、物品、技能）
   self.curActionType=self.ACTION_TYPE_ATTACK
-  self.curTarget=GameData.playerTroop.players[1]
+  self.curTarget=GameData.battle.players[1]
   self:executeAction()
 end
 

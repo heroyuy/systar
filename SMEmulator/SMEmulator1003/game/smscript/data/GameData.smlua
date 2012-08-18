@@ -37,85 +37,6 @@ GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的
 
 GameData.updateSwitch=false  				-- 模型更新开关
 
---字段：私有
-GameData.gameType=-1         				--游戏类型（-1 新游戏   0-n 游戏存档）
-
---============游戏加载、保存============
---新游戏：从字典中初始化游戏
-function GameData:newGame()
-  smLog:info("newGame");
-  self.gameType=-1
-  --初始化PlayerTroop
-  self.playerTroop.players={}
-  for _,v in ipairs(Dictionary.config.playerList) do
-    smLog:info("new player:"..v)
-    local player=clsPlayer:new()
-    local playerDict=Dictionary.players[v]
-    --直接取值字段值
-    player.id=playerDict.id
-    player.name=playerDict.name
-    player.desc=playerDict.intro
-    player.headImgName=playerDict.headImg
-    if player.headImgName then
-      player.headImg=smImageFactory:loadImage(player.headImgName)
-    end
-    player.charImgName=playerDict.charImg
-    if player.charImgName then
-      player.charImg=smImageFactory:loadImage(player.charImgName)
-    end
-    player.actionImgName=playerDict.actionImg
-    if player.actionImgName then
-      player.actionImg=smImageFactory:loadImage(player.actionImgName)
-    end
-    player.vocationId=playerDict.vocationId
-    player.level=1
-    --查表获取字段值
-    player.nextExp=playerDict.expList[player.level+1]
-    player.str=playerDict.strList[player.level]
-    player.agi=playerDict.agiList[player.level]
-    player.int=playerDict.intList[player.level]
-    player.vit=playerDict.vitList[player.level]
-    player.dex=playerDict.dexList[player.level]
-    player.luck=playerDict.luckList[player.level]
-    player.hp=player:getProperty(clsCharacter.HP)
-    player.sp=player:getProperty(clsCharacter.SP)
-    --查配置获取字段值
-    player.mapId=Dictionary.config.mapId
-    player.row=Dictionary.config.row
-    player.col=Dictionary.config.col
-    player.face=Dictionary.config.face
-    player.moveDelegate=self
-    table.insert(self.playerTroop.players,player)
-  end
-  self.playerTroop.itemList={}
-  --test
-  self.playerTroop:addItem(103000001,2)
-  self.playerTroop:addItem(103000002,4)
-  self.playerTroop:addItem(103000003,67)
-  self.playerTroop:addItem(103000004,12)
-  self.playerTroop:addItem(103000005,9)
-  self.playerTroop:addItem(103000006,1)
-  self.playerTroop:addItem(103000007,1)
-  self.playerTroop:addItem(103000008,1)
-  self.playerTroop:addItem(103000009,1)
-  self.playerTroop:addItem(103000010,2)
-  self.playerTroop:addItem(103000011,4)
-  self.playerTroop:addItem(103000012,5)
-  self.playerTroop:addItem(103000013,5)
-  --初始化NPC信息表
-  self.npcs={}
-  --打开Model更新开关
-  self.updateSwitch=true
-end
-
---加载游戏:从第index个存档初始化游戏
-function GameData:loadGame(index)
-end
-
---保存游戏:保存游戏到第index个存档
-function GameData:saveGame(index)
-end
-
 --============NPC相关操作============
 --获取指定id的NPC
 function GameData:getNPC(id)
@@ -159,8 +80,8 @@ function GameData:update()
     return
   end
   --更新玩家
-  if self.playerTroop:leader() then
-    self.playerTroop:leader():update()
+  if self.curPlayer then
+    self.curPlayer:update()
   end
   --更新当前地图上的NPC
   if self.curMap then
@@ -184,7 +105,7 @@ function GameData:checkCellBeforeMove(character)
     return false
   end
   --检查精灵的碰撞
-  local player=self.playerTroop:leader()
+  local player=self.curPlayer
   local pRow,pCol=player:getHoldingCell()
     --(1)、player即将移动
     if character==player then
@@ -221,7 +142,7 @@ end
 
 --检查是否可以继续行走
 function GameData:checkCellAfterMove(character)
-  local player=self.playerTroop:leader()
+  local player=self.curPlayer
   local pRow,pCol=player:getHoldingCell()
   local cRow,cCol=character:getHoldingCell()
   --(1)、player移动结束
@@ -255,8 +176,8 @@ function GameData:checkScript(npc)
     return
   end
   local scriptId=Dictionary.npcs[npc.id].scriptId
-  --锁定playerTroop
-  self.playerTroop:lock()
+  --锁定player
+  self.curPlayer.locked=true
   --锁定当前NPC
   npc.locked=true
   self.curLockedNPC=npc  
@@ -265,7 +186,7 @@ end
 
 --获取当前玩家的位置
 function GameData:curPlayerLocation()
-  return self.playerTroop:leader():getHoldingCell()
+  return self.curPlayer:getHoldingCell()
 end
 
 

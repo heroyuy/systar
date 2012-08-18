@@ -46,7 +46,7 @@ function clsBag:new()
     equipCell.anchor={0,0}
     equipCell.image=Skin.BG_CELL
     self.equipButtonList[i]=clsUIButton:new(equipCell.width/2,equipCell.height/2,cw,ch)
-    local itemCell=GameData.playerTroop:itemAt(i)
+    local itemCell=GameData.curPlayer:itemAt(i)
     local itemDict=Dictionary.items[itemCell.id]
     self.equipButtonList[i].normalImage=smImageFactory:loadImage(itemDict.icon)
     equipCell:addChild(self.equipButtonList[i])
@@ -69,12 +69,12 @@ function clsBag:new()
 end
 
 function clsBag:refresh()
-  self.tableBag.cellNum=math.ceil(table.getn(GameData.playerTroop.itemList)/self.tableBag.colNum)*self.tableBag.colNum
+  self.tableBag.cellNum=math.ceil(table.getn(GameData.curPlayer.itemList)/self.tableBag.colNum)*self.tableBag.colNum
   self.tableBag:refresh()
 end
 
 function clsBag:cellLayerAtIndex(table,cellLayer,i)
-  local itemCell=GameData.playerTroop:itemAt(i)
+  local itemCell=GameData.curPlayer:itemAt(i)
   if itemCell then
     local itemDict=Dictionary.items[itemCell.id]
     local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)

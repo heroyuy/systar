@@ -14,7 +14,18 @@ GameData.battle.bg=nil						--战斗背景
 GameData.battle.enemyTroopId=nil			--敌人队伍ID
 GameData.battle.battleType=nil				--战斗类型
 
-GameData.battle.enemys=nil				--敌人队伍
+GameData.battle.players=nil					--玩家队伍
+GameData.battle.enemys=nil					--敌人队伍
+
+function GameData.battle:initPlayerTroop()
+  self.players={}
+  table.insert(self.players,GameData.curPlayer)
+  if GameData.curPlayer.playerList then
+    for i,v in ipairs(GameData.curPlayer.playerList) do
+      table.insert(v)
+    end
+  end
+end
 
 function GameData.battle:initEnemyTroop()
   self.enemys={}
