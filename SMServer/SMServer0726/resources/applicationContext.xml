@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
@@ -17,15 +16,15 @@
 	<context:annotation-config />
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	
+
 	<tx:annotation-driven transaction-manager="transactionManager"
 		proxy-target-class="true" />
 	<context:component-scan base-package="com.soyomaker" />
-	
-    <context:property-placeholder ignore-resource-not-found="true"
-			location="classpath*:/application.properties" />
-	
-			
+
+	<context:property-placeholder ignore-resource-not-found="true"
+		location="classpath*:/application.properties" />
+
+
 	<!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<!-- Connection Info -->
@@ -41,19 +40,17 @@
 		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
 		<property name="minEvictableIdleTimeMillis" value="3600000" />
 	</bean>
-	
-	<!--======================================= mina config begin =======================================-->
-	<bean id="loggingFilter"
-  		class="org.apache.mina.filter.logging.LoggingFilter" />
+
+	<!--======================================= mina config begin ======================================= -->
+	<bean id="loggingFilter" class="org.apache.mina.filter.logging.LoggingFilter" />
 
 	<bean id="protocolCodecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
 		<constructor-arg>
 			<bean class="com.soyomaker.net.mina.GameObjectCodecFactory" />
 		</constructor-arg>
 	</bean>
-  	
-	<bean id="filterChainBuilder"
-		class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
+
+	<bean id="filterChainBuilder" class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
 		<property name="filters">
 			<map>
 				<entry key="loggingFilter" value-ref="loggingFilter" />
@@ -71,7 +68,7 @@
 			</map>
 		</property>
 	</bean>
-	
+
 	<bean id="acceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor"
 		init-method="bind" destroy-method="unbind">
 		<property name="defaultLocalAddress" value=":9090" />
@@ -79,93 +76,98 @@
 		<property name="filterChainBuilder" ref="filterChainBuilder" />
 		<property name="reuseAddress" value="true" />
 	</bean>
-	
+
 	<!-- 核心handler -->
 	<bean id="handler" class="com.soyomaker.net.mina.MinaHandler">
-			<!-- use netTransceiver -->
-			<property name="netTransceiver" ref="netTransceiver"></property>
+		<!-- use netTransceiver -->
+		<property name="netTransceiver" ref="netTransceiver"></property>
 	</bean>
-	<!--======================================= mina config end =======================================-->
-	
-	<!--======================================= net Service begin =======================================-->
+	<!--======================================= mina config end ======================================= -->
+
+	<!--======================================= net Service begin ======================================= -->
 	<bean id="minaServer" class="com.soyomaker.net.mina.MinaServer" init-method="start">
-			<property name="acceptor" ref="acceptor"/>
+		<property name="acceptor" ref="acceptor" />
 	</bean>
-	
+
 	<bean id="netTransceiver" class="com.soyomaker.net.NetTransceiver">
-	    <property name="protocolMap">  
-	      <map>  
-	        <entry key="101001"  value-ref="p101001"/>  
-	        <entry key="101002"  value-ref="p101002"/> 
-	        <entry key="102001"  value-ref="p102001"/>  
-	        <entry key="102002"  value-ref="p102002"/>  
-	        <entry key="102003"  value-ref="p102003"/>  
-	        <entry key="102004"  value-ref="p102004"/>  
-	      </map>  
-	    </property>   
+		<property name="protocolMap">
+			<map>
+				<entry key="101001" value-ref="p101001" />
+				<entry key="101002" value-ref="p101002" />
+				<entry key="102001" value-ref="p102001" />
+				<entry key="102002" value-ref="p102002" />
+				<entry key="102003" value-ref="p102003" />
+				<entry key="102004" value-ref="p102004" />
+				<entry key="103001" value-ref="p103001" />
+			</map>
+		</property>
 	</bean>
-	
+
 	<!--protocols -->
 	<bean id="p101001" class="com.soyomaker.net.Protocol">
-			<property name="id" value="101001"/>
-			<property name="needLogin" value="false"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="registerHandler"/>
+		<property name="id" value="101001" />
+		<property name="needLogin" value="false" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="registerHandler" />
 	</bean>
-	
+
 	<bean id="p101002" class="com.soyomaker.net.Protocol">
-			<property name="id" value="101002"/>
-			<property name="needLogin" value="false"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="loginHandler"/>
+		<property name="id" value="101002" />
+		<property name="needLogin" value="false" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="loginHandler" />
 	</bean>
-	
+
 	<bean id="p102001" class="com.soyomaker.net.Protocol">
-			<property name="id" value="102001"/>
-			<property name="needLogin" value="true"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="createPlayerHandler"/>
+		<property name="id" value="102001" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="createPlayerHandler" />
 	</bean>
 
 	<bean id="p102002" class="com.soyomaker.net.Protocol">
-			<property name="id" value="102001"/>
-			<property name="needLogin" value="true"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="deletePlayerHandler"/>
+		<property name="id" value="102001" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="deletePlayerHandler" />
 	</bean>
-	
+
 	<bean id="p102003" class="com.soyomaker.net.Protocol">
-			<property name="id" value="102003"/>
-			<property name="needLogin" value="true"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="listPlayerHandler"/>
+		<property name="id" value="102003" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="listPlayerHandler" />
 	</bean>
-	
+
 	<bean id="p102004" class="com.soyomaker.net.Protocol">
-			<property name="id" value="102004"/>
-			<property name="needLogin" value="true"/>
-			<property name="netService" ref="minaServer"/>
-			<property name="handler" ref="choosePlayerHandler"/>
+		<property name="id" value="102004" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="choosePlayerHandler" />
 	</bean>
-	<!--======================================= net Service end =======================================-->
-	<!--======================================= hibernate begin =======================================-->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+	<bean id="p103001" class="com.soyomaker.net.Protocol">
+		<property name="id" value="103001" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="moveHandler" />
+	</bean>
+
+	<!--======================================= net Service end ======================================= -->
+	<!--======================================= hibernate begin ======================================= -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-				 <!-- 
-				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
-				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
-				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
-				 -->
+				<!-- <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop> <prop 
+					key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop> <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop> -->
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
 			</props>
@@ -177,10 +179,9 @@
 		</property>
 	</bean>
 
-	<!--全局仓储-->
-	<bean id="repository"
-		class="com.soyomaker.orm.HibernateRepository">
+	<!--全局仓储 -->
+	<bean id="repository" class="com.soyomaker.orm.HibernateRepository">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-    <!--======================================= hibernate end =======================================-->
+	<!--======================================= hibernate end ======================================= -->
 </beans>
