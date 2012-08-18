@@ -45,7 +45,6 @@ require("clsCharacter")
 require("clsPlayer")
 require("clsNPC")
 require("GameData")
-require("GameData_player")
 require("GameData_battle")
 require("MsgHandlerFactory")
 
