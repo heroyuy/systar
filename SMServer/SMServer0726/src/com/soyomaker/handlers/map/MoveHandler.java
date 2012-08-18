@@ -19,7 +19,7 @@ public class MoveHandler extends AbHandler {
 		// (1)检查当前位置是否合法，合法有两种情形
 		// a 客户端传来的坐标和服务器上的坐标一致
 		// b 客户端传来的坐标和服务器上的坐标不一致但坐标在上次行走序列中
-		Collection<Integer> steps = msg.getIntArray("stpes");
+		Collection<Integer> steps = msg.getIntArray("steps");
 		// (2)检查行走序列是否合法，不合法的情形
 		// a 行走路线越出地图边界
 		// b 行走路线上有障碍物(环境障碍、npc(?))
