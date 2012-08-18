@@ -44,14 +44,7 @@ function GameData:getNPC(id)
   if self.npcs[id]==nil then
     --指定id的NPC不存在
     local npc=clsNPC:new()
-    local npcDict=nil
-    if self.gameType==-1 then
-      --新游戏
-      npcDict=Dictionary.npcs[id]
-    else
-      --加载存档
-      npcDict=nil  --TODO 从存档加载NPC信息
-    end
+    local npcDict=Dictionary.npcs[id]
     npc.id=npcDict.id
     npc.row=npcDict.row
     npc.col=npcDict.col
