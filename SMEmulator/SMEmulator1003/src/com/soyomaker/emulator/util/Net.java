@@ -1,7 +1,6 @@
 package com.soyomaker.emulator.util;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.lang.GameObject;
