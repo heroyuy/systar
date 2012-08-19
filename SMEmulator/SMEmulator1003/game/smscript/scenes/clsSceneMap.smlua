@@ -66,9 +66,8 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   
-  self.curPlayer=GameData.curPlayer
-  self.buttonHead.normalImage=self.curPlayer.headImg
-  local map=Dictionary:getMap(self.curPlayer.mapId)
+  self.buttonHead.normalImage=GameData.curPlayer.headImg
+  local map=Dictionary:getMap(GameData.curPlayer.mapId)
   self:changeMap(map)
 end
 
@@ -108,11 +107,11 @@ function clsSceneMap:changeMap(map)
   --精灵层移除所有sprite
   self.spriteLayer:clear()
     --玩家
-    local playerSprite=clsSprite:new(self.curPlayer.charImg,
-       self.curPlayer.charImg:getWidth()/4,self.curPlayer.charImg:getHeight()/4)
-    playerSprite.tag=self.curPlayer.id
-    playerSprite.z=self.curPlayer.row
-    local px,py=self:calculateCharacterLocation(self.curPlayer)
+    local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
+       GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
+    playerSprite.tag=GameData.curPlayer.id
+    playerSprite.z=GameData.curPlayer.row
+    local px,py=self:calculateCharacterLocation(GameData.curPlayer)
     playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
     playerSprite:refresh()
     self.spriteLayer:addChild(playerSprite)
@@ -150,23 +149,23 @@ function clsSceneMap:mapTapped(target,row,col)
   smLog:info("逻辑坐标: row="..row.." col="..col)
   --向player发送移动命令
   --(1)清除原有的行走命令
-  self.curPlayer.moveSequence:clear()
+  GameData.curPlayer.moveSequence:clear()
   --(2)获取寻路起点
-  local curRow=self.curPlayer.row
-  local curCol=self.curPlayer.col
+  local curRow=GameData.curPlayer.row
+  local curCol=GameData.curPlayer.col
   --(3)起点修正
-  if self.curPlayer.step~=0 then
+  if GameData.curPlayer.step~=0 then
     --player行走中
-    if self.curPlayer.face==0 then
+    if GameData.curPlayer.face==0 then
       --上
       curRow=curRow-1
-    elseif self.curPlayer.face==1 then
+    elseif GameData.curPlayer.face==1 then
       --下
       curRow=curRow+1
-    elseif self.curPlayer.face==2 then
+    elseif GameData.curPlayer.face==2 then
       --左
       curCol=curCol-1
-    elseif self.curPlayer.face==3 then
+    elseif GameData.curPlayer.face==3 then
       --右
       curCol=curCol+1
     end
@@ -176,13 +175,13 @@ function clsSceneMap:mapTapped(target,row,col)
   --(5)发送行走命令(TODO 可优化)
   while directions:size()>0 do
     local direction=directions:poll()
-    self.curPlayer.moveSequence:offer(direction)
+    GameData.curPlayer.moveSequence:offer(direction)
   end
 end
 
 --计算viewport
 function clsSceneMap:checkViewport()
-  local px,py=self:calculateCharacterLocation(self.curPlayer)
+  local px,py=self:calculateCharacterLocation(GameData.curPlayer)
   local width=Game:getWidth()
   local height=Game:getHeight()
   local vx=px-width/2
@@ -236,7 +235,7 @@ function clsSceneMap:itemSelected(menu,index)
   self.menu.visibility=false
   if index==1 then
     --状态
-    local basicInfo=clsBasicInfo:new(self.curPlayer)
+    local basicInfo=clsBasicInfo:new(GameData.curPlayer)
     GameLayer:addChildToScene(basicInfo)
   elseif index==2 then
     --物品
@@ -263,7 +262,7 @@ function clsSceneMap:characterMoved(param)
     sprite.z=param.character.row
     self.spriteLayer:sortChildren()
   end
-  if param.character==self.curPlayer then
+  if param.character==GameData.curPlayer then
     --玩家移动(检测viewport是否改变)
     local viewport=self:checkViewport()
     local offsetX=viewport.x-self.mapBgLayer.viewport.x
@@ -318,8 +317,8 @@ end
 
 --character地图改变
 function clsSceneMap:characterMapChanged(param)
-  if param.character==self.curPlayer then
-    local map=Dictionary:getMap(self.curPlayer.mapId)
+  if param.character==GameData.curPlayer then
+    local map=Dictionary:getMap(GameData.curPlayer.mapId)
     self:changeMap(map)
   end
 end
