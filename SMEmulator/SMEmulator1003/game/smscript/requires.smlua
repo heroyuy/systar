@@ -49,13 +49,13 @@ require("GameData_battle")
 require("MsgHandlerFactory")
 
 --layers
-require("clsSprite")
 require("clsTiled")
 require("clsOption")
 require("clsDialog")
 require("clsPlayerInfo")
 require("clsPicker")
 require("clsBasicInfo")
+require("clsSprite")
 require("clsBag")
 
 --scenes

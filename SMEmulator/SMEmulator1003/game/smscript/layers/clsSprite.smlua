@@ -13,30 +13,26 @@ clsSprite.__index=clsSprite
 clsSprite.paintLayerF=clsSprite.paintLayer
 
 --字段
-clsSprite.spriteImage=nil    				--图像
-clsSprite.frameIndex=0           			--当前帧index
 clsSprite.colNum=1               			--帧列数
 clsSprite.rowNum=1            				--帧行数
 clsSprite.frameImages=nil					--帧列表
 
-
 --构造器
 function clsSprite:new(spriteImage,frameWidth,frameHeight)
-  local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
+  local self = clsUILayer:new(0,0,frameWidth,frameHeight)
   setmetatable(self,clsSprite)
   self.anchor={0.5,1}
-  self.spriteImage=spriteImage
   self.colNum=spriteImage:getWidth()/frameWidth
   self.rowNum=spriteImage:getHeight()/frameHeight
   --初始化帧列表
   self.frameImages={}
-  for index=0,self.colNum*self.rowNum-1 do
-    self.frameImages[index]=self.spriteImage:clip(index%self.colNum*self.width,math.floor(index/self.rowNum)*self.height,self.width,self.height)
+  for i=0,self.colNum-1 do
+    local frames={}
+    for i=0,self.rowNum-1 do
+      table.insert(frames,spriteImage:clip(i%frameWidth,frameHeight,frameWidth,frameHeight))
+    end
+    table.insert(self.frameImages,frames)
   end
+  self.image=self.frameImages[1][1]
   return self
-end
-
---更新Sprite
-function clsSprite:refresh()
-  self.image=self.frameImages[self.frameIndex]
 end
