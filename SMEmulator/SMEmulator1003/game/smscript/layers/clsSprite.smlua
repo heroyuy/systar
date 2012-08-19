@@ -19,6 +19,7 @@ clsSprite.colNum=1               			--帧列数
 clsSprite.rowNum=1            				--帧行数
 clsSprite.frameImages=nil					--帧列表
 
+
 --构造器
 function clsSprite:new(spriteImage,frameWidth,frameHeight)
   local self = clsUILayer:new(frameWidth/2,frameHeight,frameWidth,frameHeight)
