@@ -56,15 +56,6 @@ clsCharacter.exp=0 --经验值
 clsCharacter.nextExp=0 --升到下一级需要的经验值
 clsCharacter.money=0 --金钱
 clsCharacter.equipList=nil  --装备列表[头盔	饰品	武器	盾牌	铠甲	战靴]
-
-clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
-clsCharacter.moveSequence=nil				--角色当前移动序列
-clsCharacter.curMoveDirection=nil			--角色当前移动方向
-clsCharacter.x=nil							--角色在屏幕上的x坐标
-clsCharacter.y=nil							--角色在屏幕上的y坐标
-clsCharacter.moveDelegate=nil     --行走事件委托 需要方法：
-                                  --1、 “checkCellBeforeMove(character)”以检查指定单元格是否可以行走，是否有脚本要执行等
-                                  --2、 “checkCellAfterMove(character)”以检查是否有事件要执行等
                    
 clsCharacter.str=0 		--力量(基本值，不考虑装备和Buff的)
 clsCharacter.agi=0 		--敏捷(基本值，不考虑装备和Buff的)
@@ -72,6 +63,10 @@ clsCharacter.int=0		--智力(基本值，不考虑装备和Buff的)
 clsCharacter.vit=0 		--体力(基本值，不考虑装备和Buff的)
 clsCharacter.dex=0 		--灵巧(基本值，不考虑装备和Buff的)
 clsCharacter.luck=0 	--幸运(基本值，不考虑装备和Buff的)
+
+clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
+clsCharacter.moveSequence=nil				--角色当前移动序列
+clsCharacter.moving=false					--角色是否在移动
 
 --构造器
 function clsCharacter:new()
@@ -95,75 +90,12 @@ end
 function clsCharacter:update()
   --调用父类的update方法
   self:updateF()
-  --行走
-  if self.curMoveDirection==nil and self.moveSequence:size()~=0 then
-    self.curMoveDirection=self.moveSequence:poll()
-    self.face=self.curMoveDirection
-  end
-  if self.curMoveDirection then
-    self:move() 
+  --行走:发送移动命令
+  if not self.moving and self.moveSequence:size()>0 then
+    local direction=self.moveSequence:poll()
+    Notifier:notify(Const.NotifyCMD.Character.MOVE,{character=self,direction=direction})
   end
   --TODO 其它更新
-end
-
---行走
-function clsCharacter:move()
-  --移动之前检查目标单元格是否可以移动
-  if self.step==0 then
-    --获取角色目的地
-    local row,col=self:getHoldingCell()
-    if self.moveDelegate then
-      --检查目的地是否可以移动
-      if not self.moveDelegate:checkCellBeforeMove(self) then
-        --目的地不可达(停止所有移动)
-        self.curMoveDirection=nil
-        self.moveSequence:clear()
-        return
-      end
-    end
-  end
-  --移动
-  local direction=self.curMoveDirection
-  local rowChanged=false
-  self.step=self.step+1
-  if self.step==4 then
-    local row,col=self:getHoldingCell()
-    if row~=self.row then
-      rowChanged=true
-    end
-    self.row,self.col=row,col
-    self.curMoveDirection=nil
-    self.step=0
-    --移动结束后检查角色所在地情况，以判断是否可以继续行走
-    if self.moveDelegate then
-      if not self.moveDelegate:checkCellAfterMove(self) then
-        --不能继续行走(停止所有移动)
-        self.moveSequence:clear()
-        return
-      end
-    end
-  end
-  Notifier:notify(Const.NotifyCMD.Character.MOVED,{character=self,direction=direction,rowChanged=rowChanged})
-end
-
---获取当前行走帧编号
-function clsCharacter:getCurFrameIndex()
-  local index=0
-  if self.face==0 then
-    --上
-    index=12
-  elseif self.face==1 then
-    --下
-    index=0
-  elseif self.face==2 then
-    --左
-    index=4
-  elseif self.face==3 then
-    --右
-    index=8
-  end
-  index=index+self.step
-  return index
 end
 
 function clsCharacter:changeFace(face)
@@ -176,33 +108,7 @@ function clsCharacter:changeMap(mapId,row,col,face)
   self.row=row
   self.col=col
   self.face=face
-  self.curMoveDirection=nil
+  self.moving=false
   self.moveSequence:clear()
   Notifier:notify(Const.NotifyCMD.Character.MAP_CHANGED,{character=self})
-end
-
---获取character当前持有的单元格
-function clsCharacter:getHoldingCell()
-  if self.curMoveDirection then
-    --移动中
-    local row=self.row
-    local col=self.col
-    if self.curMoveDirection==0 then
-      --上
-      row=row-1
-    elseif self.curMoveDirection==1 then
-      --下
-      row=row+1
-    elseif self.curMoveDirection==2 then
-      --左
-      col=col-1
-    elseif self.curMoveDirection==3 then
-      --右
-      col=col+1
-    end
-    return row,col
-  else
-    --静止
-    return self.row,self.col
-  end 
 end

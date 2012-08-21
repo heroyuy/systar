@@ -270,7 +270,7 @@ function clsSceneTitle:handleChoosePlayer(msg)
 		smLog:info("进入游戏");
 		GameData.curPlayer = GameData.playerList:get(self.listPlayerTableSelectedIndex)
 		GameData.updateSwitch=true
-		--初始化NPC信息表
+		--初始化Npc信息表
         GameData.npcs={}
 		Game:changeScene(Game.SCENE_MAP)
 	end

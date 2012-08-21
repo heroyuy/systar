@@ -132,9 +132,9 @@ end
 function Game:scriptEnd()
   --解锁player
   GameData.curPlayer:unlock()
-  --解锁NPC
-  if GameData.curLockedNPC then
-    GameData.curLockedNPC.locked=false
-    GameData.curLockedNPC=nil
+  --解锁Npc
+  if GameData.curLockedNpc then
+    GameData.curLockedNpc.locked=false
+    GameData.curLockedNpc=nil
   end
 end

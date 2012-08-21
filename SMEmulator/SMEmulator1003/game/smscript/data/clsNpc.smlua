@@ -1,0 +1,46 @@
+--[[
+  description:Npc类
+  author:wp_g4
+  date:2012/02/09
+--]]
+
+--结构定义
+clsNpc = {}
+setmetatable(clsNpc,clsCharacter)
+clsNpc.__index = clsNpc
+
+
+--重定向需要覆盖的父类方法
+clsNpc.updateFF=clsNpc.update
+
+--字段定义
+clsNpc.moveType=0            --移动规则                       0 固定	1 随机	2 接近
+clsNpc.speedLevel=1          --移动速度级别                1 慢	    2 中    	3 快
+clsNpc.penetrable=true       --是否可穿透
+
+--构造器
+function clsNpc:new()
+  local self = clsCharacter:new()
+  setmetatable(self,clsNpc)
+  return self
+end
+
+--更新[Npc更新] 
+function clsNpc:update()
+  --调用父类的update方法
+  self:updateFF()
+  --自动行走(没有锁定的情况下)
+  if not self.locked then
+    if not self.moving then
+      --当前没有行走
+      if math.random(0,20/self.speedLevel-1)==0 then
+        if self.moveType ==1 then
+          --随机
+          self.moveSequence:offer(math.random(0,3))
+        end
+      end
+    end
+  end
+  --TODO 其它更新
+end
+

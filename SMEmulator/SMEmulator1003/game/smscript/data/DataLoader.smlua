@@ -42,8 +42,8 @@ function DataLoader:init()
   self:loadStatus()
   --(9)加载Animation信息
   self:loadAnimation()
-  --(10)加载NPC信息
-  self:loadNPC()
+  --(10)加载Npc信息
+  self:loadNpc()
 end
 
 --加载Config数据
@@ -105,7 +105,7 @@ function DataLoader:loadMap(id)
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
 
-function DataLoader:loadNPC()
+function DataLoader:loadNpc()
   dofile(self.npcPath)
 end
 

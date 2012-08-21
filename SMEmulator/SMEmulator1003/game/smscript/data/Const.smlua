@@ -7,20 +7,6 @@
 --初始化
 Const={}
 
---============对象类型============
-Const.ObjectType={}
-Const.ObjectType.VOCATION=0           --职业
-Const.ObjectType.PLAYER=1             --玩家
-Const.ObjectType.SKILL=2              --技能
-Const.ObjectType.ITEM=3               --物品
-Const.ObjectType.EQUIP=4              --装备
-Const.ObjectType.ENEMY=5              --敌人
-Const.ObjectType.ENEMYTROOP=6         --敌人队伍
-Const.ObjectType.STATUS=7             --状态
-Const.ObjectType.MAP=8                --地图
-Const.ObjectType.NPC=9                --NPC
-Const.ObjectType.ANIMATION=10         --动画
-
 --============消息命令============
 Const.NotifyCMD={}
 --System
@@ -32,6 +18,11 @@ Const.NotifyCMD.System={}
 
 --Character
 Const.NotifyCMD.Character={}
+  --[[
+    character移动，此通知的参数为{character=player/npc,direction}
+            第一个参数是移动的目标 第二个标识是移动的方向
+  --]]
+  Const.NotifyCMD.Character.MOVE="characterMove"    			   --角色移动
   --[[
     character移动，此通知的参数为{character=player/npc,direction,rowChanged=true}
             第一个参数是移动的目标 第二个标识是移动的方向 第三个标识移动后character的行号是否变化
@@ -76,3 +67,4 @@ Const.NotifyCMD.Net={}
 	移动角色，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.MOVE_PLAYER="movePlayer"		--移动角色
+  
