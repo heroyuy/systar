@@ -39,7 +39,6 @@ function clsSprite:new(spriteImage,frameWidth,frameHeight)
 end
 
 function clsSprite:walk(x,y,time)
-  smLog:info("walk x:"..x.." y:"..y.." time:"..time)
   local move=Action:newMoveAction({x,y},time,clsAction.TYPE_LINEAR_BY)
   local index=nil
   if y<0 then
