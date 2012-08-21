@@ -153,26 +153,9 @@ function clsSceneMap:mapTapped(target,row,col)
   --(2)获取寻路起点
   local curRow=GameData.curPlayer.row
   local curCol=GameData.curPlayer.col
-  --(3)起点修正
-  if GameData.curPlayer.step~=0 then
-    --player行走中
-    if GameData.curPlayer.face==0 then
-      --上
-      curRow=curRow-1
-    elseif GameData.curPlayer.face==1 then
-      --下
-      curRow=curRow+1
-    elseif GameData.curPlayer.face==2 then
-      --左
-      curCol=curCol-1
-    elseif GameData.curPlayer.face==3 then
-      --右
-      curCol=curCol+1
-    end
-  end
-  --(4)寻路
+  --(3)寻路
   local directions=self.aStar:searchDirection(curRow+1,curCol+1,row,col)
-  --(5)发送行走命令(TODO 可优化)
+  --(4)设置行走命令(TODO 可优化)
   while directions:size()>0 do
     local direction=directions:poll()
     GameData.curPlayer.moveSequence:offer(direction)
@@ -298,6 +281,9 @@ function clsSceneMap:characterMove(param)
       --TODO 玩家行走
       smLog:info("玩家行走")
       character.moving=true
+      local sprite=self.spriteLayer:childWithTag(character.id)
+      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,400)
+      character.row,character.col=row,col
     end
   else
     --Npc行走
