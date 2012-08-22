@@ -16,14 +16,15 @@ clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
 
 --字段
 clsSceneMap.menuItems={"属性","背包","技能","队伍","存档","退出"}
-clsSceneMap.mapBgLayer=nil     		--背景
-clsSceneMap.mapFgLayer=nil    		--前景
-clsSceneMap.spriteLayer=nil    		--精灵层
+clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
+clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
+clsSceneMap.spriteLayer=nil    		--精灵层（尺寸同地图）
 clsSceneMap.buttonHead=nil    		--头像按钮
 clsSceneMap.menu=nil     	 		--菜单
 
 clsSceneMap.curPlayer=nil     		--当前player
 clsSceneMap.aStar=nil      			--A*寻路工具
+clsSceneMap.viewport=nil			--视口
 
 --构造器
 function clsSceneMap:new()
@@ -35,7 +36,8 @@ function clsSceneMap:new()
   self.mapBgLayer.delegate=self
   GameLayer:addChildToScene(self.mapBgLayer)
   --精灵层实例化
-  self.spriteLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.spriteLayer=clsUILayer:new(0,0,screenWidth,screenHeight)
+  self.spriteLayer.anchor={0,0}
   self.spriteLayer.enabled=false
   GameLayer:addChildToScene(self.spriteLayer)
   --前景实例化
@@ -68,7 +70,7 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
 
   self.buttonHead.normalImage=GameData.curPlayer.headImg
-  self:changeMap()
+  self:buildMap()
 end
 
 -- 更新
@@ -89,36 +91,9 @@ function clsSceneMap:onStop()
 end
 
 --切换地图
-function clsSceneMap:changeMap()
+function clsSceneMap:buildMap()
   GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
   self.aStar=clsAStar:new(GameData.curMap.areas)
-  local viewport=nil
-  --精灵层移除所有sprite
-  self.spriteLayer:clear()
-    --主角
-    local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
-       GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
-    playerSprite.tag=GameData.curPlayer.id
-    playerSprite.delegate=self
-    playerSprite.z=GameData.curPlayer.row
-    local px,py=self:characherLocation(GameData.curPlayer)
-    self.spriteLayer:addChild(playerSprite)
-    viewport=self:checkViewport()
-    --修正主角坐标
-    playerSprite.x,playerSprite.y=px-viewport.x,py-viewport.y
-    --Npc
-    for k,v in pairs(GameData.curMap.npcs) do
-      local npc=GameData:getNpc(v)
-      local npcSprite=clsSprite:new(npc.charImg,
-        npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
-      npcSprite.tag=npc.id
-      npcSprite.delegate=self
-      npcSprite.z=npc.row
-      local nx,ny=self:characherLocation(npc)
-      npcSprite.x,npcSprite.y=nx-viewport.x,ny-viewport.y
-      self.spriteLayer:addChild(npcSprite)
-    end
-  self.spriteLayer:sortChildren()
   --预加载地图图集
   for _,v in pairs(GameData.curMap.tilesets) do
     smImageFactory:loadImage(v.path)
@@ -131,7 +106,34 @@ function clsSceneMap:changeMap()
       bgLayers:add(layer)
     end
   end
-  self.mapBgLayer:init(GameData.curMap.id,bgLayers,viewport)
+  self.viewport=self:checkViewport(self:characherLocation(GameData.curPlayer))
+  self.mapBgLayer:init(GameData.curMap.id,bgLayers,self.viewport)
+  --精灵层移除所有sprite
+  self.spriteLayer:clear()
+  --修正精灵层大小
+  self.spriteLayer.width=GameData.curMap.cellWidth*GameData.curMap.colNum
+  self.spriteLayer.height=GameData.curMap.cellHeight*GameData.curMap.rowNum
+    --主角
+    local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
+       GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
+    playerSprite.tag=GameData.curPlayer.id
+    playerSprite.delegate=self
+    playerSprite.z=GameData.curPlayer.row
+    playerSprite.x,playerSprite.y=self:characherLocation(GameData.curPlayer)
+    self.spriteLayer:addChild(playerSprite)
+    --Npc
+    for k,v in pairs(GameData.curMap.npcs) do
+      local npc=GameData:getNpc(v)
+      local npcSprite=clsSprite:new(npc.charImg,
+        npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
+      npcSprite.tag=npc.id
+      npcSprite.delegate=self
+      npcSprite.z=npc.row
+      npcSprite.x,npcSprite.y=self:characherLocation(npc)
+      self.spriteLayer:addChild(npcSprite)
+    end
+  self.spriteLayer:sortChildren()
+  self.spriteLayer.x,self.spriteLayer.y=-self.viewport.x,-self.viewport.y
   --加载前景
   local fgLayers=clsList:new()
   for i=1,table.getn(GameData.curMap.layers) do
@@ -142,7 +144,7 @@ function clsSceneMap:changeMap()
   end
   if fgLayers:size()>0 then
     self.mapFgLayer.visibility=true
-    self.mapFgLayer:init(GameData.curMap.id,fgLayers,viewport)
+    self.mapFgLayer:init(GameData.curMap.id,fgLayers,self.viewport)
   else
     self.mapFgLayer.visibility=false
   end
@@ -151,36 +153,26 @@ end
 --地图更新视口
 function clsSceneMap:updateViewport()
   --检测viewport是否改变
-  local viewport=self:checkViewport()
-  local offsetX=viewport.x-self.mapBgLayer.viewport.x
-  local offsetY=viewport.y-self.mapBgLayer.viewport.y
+  local sprite=self.spriteLayer:childWithTag(GameData.curPlayer.id)
+  local viewport=self:checkViewport(sprite.x,sprite.y)
+  local offsetX=viewport.x-self.viewport.x
+  local offsetY=viewport.y-self.viewport.y
   if offsetX~=0 or offsetY~=0 then
     --viewport有变化
+    self.viewport=viewport
     --背景移动
-    self.mapBgLayer:trackViewport(viewport)
+    self.mapBgLayer:trackViewport(self.viewport)
     --前景移动
     if self.mapFgLayer.visibility then
-      self.mapFgLayer:trackViewport(viewport)
+      self.mapFgLayer:trackViewport(self.viewport)
     end
-    --修正character位置
-    if offsetX~=0 then
-      --地图水平滚动
-      for k,sprite in pairs(self.spriteLayer.children) do
-        sprite.x=sprite.x-offsetX
-      end
-    elseif offsetY~=0 then
-      --地图垂直滚动
-      for k,sprite in pairs(self.spriteLayer.children) do
-        sprite.y=sprite.y-offsetY
-      end
-    end
+    self.spriteLayer.x,self.spriteLayer.y=-self.viewport.x,-self.viewport.y
   end
 end
 
---计算viewport
-function clsSceneMap:checkViewport()
-  local sprite=self.spriteLayer:childWithTag(GameData.curPlayer.id)
-  local px,py=sprite.x,sprite.y
+--计算viewport,相机焦点为(x,y)
+function clsSceneMap:checkViewport(x,y)
+  local px,py=x,y
   local width=Game:getWidth()
   local height=Game:getHeight()
   local vx=px-width/2
@@ -302,7 +294,7 @@ function clsSceneMap:characterMove(param)
       smLog:info("主角行走")
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
-      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,400)
+      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,100)
       character.row,character.col=row,col
     end
   else
@@ -354,6 +346,6 @@ end
 --character地图改变
 function clsSceneMap:characterMapChanged(param)
   if param.character==GameData.curPlayer then
-    self:changeMap()
+    self:buildMap()
   end
 end
