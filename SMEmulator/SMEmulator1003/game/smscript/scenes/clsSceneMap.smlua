@@ -287,7 +287,7 @@ function clsSceneMap:characterMove(param)
     local npc=GameData:getNpcAt(row,col)
     if npc and not npc.penetrable then
       smLog:info("主角撞到Npc")
-      GameData:checkScript(npc)
+      --GameData:checkScript(npc)
       return
     else
       --TODO 主角行走
@@ -303,7 +303,7 @@ function clsSceneMap:characterMove(param)
     if not character.penetrable then
       if row==GameData.curPlayer.row and col==GameData.curPlayer.col then
         smLog:info("Npc撞到主角")
-        GameData:checkScript(character)
+        --GameData:checkScript(character)
         npcMovable=false
       end
       if npcMovable then

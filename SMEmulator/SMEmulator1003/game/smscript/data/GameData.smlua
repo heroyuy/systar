@@ -72,7 +72,7 @@ end
 function GameData:getNpcAt(row,col)
   local npc=nil
   if self.npcs then
-    for i,v in ipairs(self.npcs) do
+    for k,v in pairs(self.npcs) do
       if v.row==row and v.col==col then
         npc=v
         break
