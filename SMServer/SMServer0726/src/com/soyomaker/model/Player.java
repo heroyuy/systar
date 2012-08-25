@@ -20,6 +20,8 @@ public class Player {
 
 	private Integer mapId;
 
+	private String mapName;
+
 	private Integer x;
 
 	private Integer y;
@@ -33,7 +35,7 @@ public class Player {
 	private Integer money;
 
 	private Integer hp;
-	
+
 	private Integer sp;
 
 	private Integer stre;
@@ -43,7 +45,7 @@ public class Player {
 	private Integer inte;
 
 	private Integer vita;
-	
+
 	private Integer dext;
 
 	private Integer luck;
@@ -86,6 +88,10 @@ public class Player {
 
 	public Integer getMapId() {
 		return mapId;
+	}
+
+	public String getMapName() {
+		return mapName;
 	}
 
 	public Integer getMoney() {
@@ -158,6 +164,10 @@ public class Player {
 
 	public void setMapId(Integer mapId) {
 		this.mapId = mapId;
+	}
+
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
 	}
 
 	public void setMoney(Integer money) {

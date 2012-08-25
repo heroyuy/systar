@@ -39,6 +39,7 @@ public class ListPlayerHandler extends AbHandler {
 				playerObj.putInt("playerId", player.getId());
 				playerObj.putString("name", player.getName());
 				playerObj.putInt("mapId", player.getMapId());
+				playerObj.putString("mapName", player.getMapName());
 				playerObj.putInt("x", player.getX());
 				playerObj.putInt("y", player.getY());
 				playerObj.putInt("avatar", player.getAvatar());

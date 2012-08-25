@@ -44,6 +44,7 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setUserId(session.getUser().getId());
 		// TODO 此处应该读配置
 		player.setMapId(108000012);
+		player.setMapName("达拉然");
 		player.setX(3);
 		player.setY(8);
 		player.setAvatar(1);
@@ -75,6 +76,7 @@ public class CreatePlayerHandler extends AbHandler {
 		playerObj.putInt("playerId", player.getId());
 		playerObj.putString("name", player.getName());
 		playerObj.putInt("mapId", player.getMapId());
+		playerObj.putString("mapName", player.getMapName());
 		playerObj.putInt("x", player.getX());
 		playerObj.putInt("y", player.getY());
 		playerObj.putInt("avatar", player.getAvatar());
