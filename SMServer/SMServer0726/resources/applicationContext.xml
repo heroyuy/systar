@@ -84,6 +84,12 @@
 	</bean>
 	<!--======================================= mina config end ======================================= -->
 
+	<!--======================================= DictManager begin ======================================= -->
+	<bean id="dictManager" class="com.soyomaker.model.DictManager"
+		init-method="load" destroy-method="unload">
+	</bean>
+	<!--======================================= DictManager end ======================================= -->
+	
 	<!--======================================= net Service begin ======================================= -->
 	<bean id="minaServer" class="com.soyomaker.net.mina.MinaServer" init-method="start">
 		<property name="acceptor" ref="acceptor" />

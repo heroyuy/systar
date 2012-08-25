@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
@@ -18,6 +19,10 @@ public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
 	private NetTransceiver netTransceiver;
+	
+
+	@Autowired
+	private DictManager dictManager;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -42,23 +47,24 @@ public class CreatePlayerHandler extends AbHandler {
 		player = new Player();
 		player.setName(name);
 		player.setUserId(session.getUser().getId());
-		// TODO 此处应该读配置
-		player.setMapId(108000012);
-		player.setMapName("达拉然");
-		player.setX(3);
-		player.setY(8);
-		player.setAvatar(1);
-		player.setLevel(1);
-		player.setExp(0);
-		player.setMoney(300);
-		player.setHp(100);
-		player.setSp(100);
-		player.setStre(9);
-		player.setAgil(9);
-		player.setInte(9);
-		player.setVita(9);
-		player.setDext(9);
-		player.setLuck(9);
+		// 初始化
+		Player playerDict=dictManager.getPlayer();
+		player.setMapId(playerDict.getMapId());
+		player.setMapName(playerDict.getMapName());
+		player.setX(playerDict.getX());
+		player.setY(playerDict.getY());
+		player.setAvatar(playerDict.getAvatar());
+		player.setLevel(playerDict.getLevel());
+		player.setExp(playerDict.getExp());
+		player.setMoney(playerDict.getMoney());
+		player.setHp(playerDict.getHp());
+		player.setSp(playerDict.getSp());
+		player.setStre(playerDict.getStre());
+		player.setAgil(playerDict.getAgil());
+		player.setInte(playerDict.getInte());
+		player.setVita(playerDict.getVita());
+		player.setDext(playerDict.getDext());
+		player.setLuck(playerDict.getDext());
 		boolean status = userService.savePlayer(player);
 		if (status) {
 			GameObject msgSent = this.buildPackage(msg.getType(), status,
