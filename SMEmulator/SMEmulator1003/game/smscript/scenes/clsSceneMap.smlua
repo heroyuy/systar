@@ -294,7 +294,7 @@ function clsSceneMap:characterMove(param)
       smLog:info("主角行走")
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
-      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,100)
+      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,1000)
       character.row,character.col=row,col
     end
   else
@@ -329,6 +329,7 @@ end
 function clsSceneMap:spriteWalkEnd(sprite)
   if sprite.tag == GameData.curPlayer.id then
     --主角移动结束
+    smLog:info("主角停止")
     GameData.curPlayer.moving=false
   else
     --npc移动结束
