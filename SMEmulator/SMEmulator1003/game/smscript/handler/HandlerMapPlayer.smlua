@@ -29,6 +29,7 @@ function HandlerMap.listPlayer:handleMessage(msg)
     player.luck=msg.players[i].luck;
     player.agi=msg.players[i].agil;
     player.mapId=msg.players[i].mapId;
+    player.mapName=msg.players[i].mapName;
     player.x=msg.players[i].x;
     player.y=msg.players[i].y;
     player.exp=msg.players[i].exp;

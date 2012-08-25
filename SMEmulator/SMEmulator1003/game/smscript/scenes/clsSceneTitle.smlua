@@ -24,8 +24,6 @@ clsSceneTitle.listPlayerAppearAction=nil
 
 --登录层
 clsSceneTitle.loginLayer=nil
---clsSceneTitle.loginName=nil
---clsSceneTitle.loginPassword=nil
 clsSceneTitle.loginEditName=nil
 clsSceneTitle.loginEditPassword=nil
 clsSceneTitle.loginMsgLabel=nil
@@ -35,9 +33,6 @@ clsSceneTitle.loginCancleButton=nil
 
 --注册层
 clsSceneTitle.registerLayer=nil
---clsSceneTitle.registerName=nil
---clsSceneTitle.registerPassword=nil
---clsSceneTitle.registerConfirmPassword=nil
 clsSceneTitle.registerEditName=nil
 clsSceneTitle.registerEditPassword=nil
 clsSceneTitle.registerEditConfirmPassword=nil
@@ -58,8 +53,7 @@ clsSceneTitle.listPlayerLayer=nil
 clsSceneTitle.listPlayerTable=nil
 clsSceneTitle.listPlayerCreatePlayerButton=nil
 clsSceneTitle.listPlayerCancleButton=nil
-
---进入游戏按钮
+clsSceneTitle.listPlayerDeletePlayerButton=nil
 clsSceneTitle.joinGameButton=nil
 
 --辅助字段
@@ -77,9 +71,9 @@ end
 function clsSceneTitle:onStart()
   smLog:info("标题场景启动")
   --播放背景音乐
-  if Dictionary.config.titleMusic then
-    smAudioPlayer:play(Game.path..Dictionary.config.titleMusic)
-  end
+  --if Dictionary.config.titleMusic then
+    --smAudioPlayer:play(Game.path..Dictionary.config.titleMusic)
+  --end
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --背景大图 
   self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
@@ -88,38 +82,26 @@ function clsSceneTitle:onStart()
   end
   --登录层开始
   self.loginLayer=clsUILayer:new(screenWidth/2,screenHeight-160,386,206)
-  self.loginLayer.image=smImageFactory:loadImage("/image/skin/login_menu.png")
+  self.loginLayer.image=smImageFactory:loadImage("/image/skin/login_layer.png")
   self.bgLayer:addChild(self.loginLayer)
-  
-  --self.loginName=clsUILabel:new(45,25,80,20)
-  --self.loginName.text="输入账号"
-  --self.loginName.textSize=16
-  --self.loginName.textColor="0xff000000"
-  --self.loginLayer:addChild(self.loginName)
-  
-  --self.loginPassword=clsUILabel:new(45,55,80,20)
-  --self.loginPassword.text="输入密码"
-  --self.loginPassword.textSize=16
-  --self.loginPassword.textColor="0xff000000"
-  --self.loginLayer:addChild(self.loginPassword)
   
   self.loginEditName=clsUIEditText:standardEditText(218,47,265,27,clsUIEditText.NORMAL)
   self.loginEditName.textSize=20
   self.loginEditName.textColor="0xffffffff"
   self.loginEditName.cursorColor="0xffffffff"
-  self.loginEditName.transparent=true
+  self.loginEditName.hideBackground=true
   self.loginLayer:addChild(self.loginEditName)
   
   self.loginEditPassword=clsUIEditText:standardEditText(218,97,265,27,clsUIEditText.PASSWORD)
   self.loginEditPassword.textSize=10
   self.loginEditPassword.textColor="0xffffffff"
   self.loginEditPassword.cursorColor="0xffffffff"
-  self.loginEditPassword.transparent=true
+  self.loginEditPassword.hideBackground=true
   self.loginLayer:addChild(self.loginEditPassword)
   
   self.loginMsgLabel=clsUILabel:new(190,125,80,20)
   self.loginMsgLabel.text=""
-  self.loginMsgLabel.textSize=16
+  self.loginMsgLabel.textSize=15
   self.loginMsgLabel.textColor="0xffff0000"
   self.loginLayer:addChild(self.loginMsgLabel) 
   
@@ -142,53 +124,35 @@ function clsSceneTitle:onStart()
   self.loginLayer:addChild(self.loginCancleButton)
   --登陆层结束
   --注册层开始
-  self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-160,380,206)
-  self.registerLayer.image=smImageFactory:loadImage("/image/skin/register_menu.png")
+  self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-160,386,206)
+  self.registerLayer.image=smImageFactory:loadImage("/image/skin/register_layer.png")
   self.registerLayer.alpha=0
   self.bgLayer:addChild(self.registerLayer)
-  
-  --self.registerName=clsUILabel:new(45,25,80,20)
-  --self.registerName.text="输入账号"
-  --self.registerName.textSize=16
-  --self.registerName.textColor="0xff000000"
-  --self.registerLayer:addChild(self.registerName)
-  
-  --self.registerPassword=clsUILabel:new(45,55,80,20)
-  --self.registerPassword.text="输入密码"
-  --self.registerPassword.textSize=16
-  --self.registerPassword.textColor="0xff000000"
-  --self.registerLayer:addChild(self.registerPassword)
-  
-  --self.registerConfirmPassword=clsUILabel:new(45,85,80,20)
-  --self.registerConfirmPassword.text="确认密码"
-  --self.registerConfirmPassword.textSize=16
-  --self.registerConfirmPassword.textColor="0xff000000"
-  --self.registerLayer:addChild(self.registerConfirmPassword)
   
   self.registerEditName=clsUIEditText:standardEditText(218,40,265,27,clsUIEditText.NORMAL)
   self.registerEditName.textSize=20
   self.registerEditName.textColor="0xffffffff"
   self.registerEditName.cursorColor="0xffffffff"
-  self.registerEditName.transparent=true
+  self.registerEditName.hideBackground=true
   self.registerLayer:addChild(self.registerEditName)
   
   self.registerEditPassword=clsUIEditText:standardEditText(218,80,265,27,clsUIEditText.PASSWORD)
   self.registerEditPassword.textSize=10
   self.registerEditPassword.textColor="0xffffffff"
   self.registerEditPassword.cursorColor="0xffffffff"
-  self.registerEditPassword.transparent=true
+  self.registerEditPassword.hideBackground=true
   self.registerLayer:addChild(self.registerEditPassword)
   
   self.registerEditConfirmPassword=clsUIEditText:standardEditText(218,120,265,27,clsUIEditText.PASSWORD)
   self.registerEditConfirmPassword.textSize=10
   self.registerEditConfirmPassword.textColor="0xffffffff"
   self.registerEditConfirmPassword.cursorColor="0xffffffff"
-  self.registerEditConfirmPassword.transparent=true
+  self.registerEditConfirmPassword.hideBackground=true
   self.registerLayer:addChild(self.registerEditConfirmPassword)
   
-  self.registerMsgLabel=clsUILabel:new(190,140,80,20)
+  self.registerMsgLabel=clsUILabel:new(190,175,80,20)
   self.registerMsgLabel.text=""
-  self.registerMsgLabel.textSize=16
+  self.registerMsgLabel.textSize=15
   self.registerMsgLabel.textColor="0xffff0000"
   self.registerLayer:addChild(self.registerMsgLabel) 
   
@@ -206,7 +170,7 @@ function clsSceneTitle:onStart()
   --注册层结束
   --创建角色层开始
   self.createPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,100)
-  self.createPlayerLayer.image=Skin:createBgWithFrame(240,100)
+  self.createPlayerLayer.image=smImageFactory:loadImage("/image/skin/create_player_layer.png")
   self.createPlayerLayer.alpha=0
   self.bgLayer:addChild(self.createPlayerLayer)
   
@@ -217,8 +181,8 @@ function clsSceneTitle:onStart()
   self.createPlayerLayer:addChild(self.createPlayerName)
   
   self.createPlayerEditName=clsUIEditText:standardEditText(140,25,175,20,clsUIEditText.NORMAL)
-  self.createPlayerEditName.textSize=16
-  self.createPlayerEditName.textColor="0xff000000"
+  self.createPlayerEditName.textSize=20
+  self.createPlayerEditName.textColor="0xffffffff"
   self.createPlayerLayer:addChild(self.createPlayerEditName)
 
   self.createPlayerButton=clsUIButton:standardButton(60,55,80,20,"创建角色")
@@ -240,39 +204,45 @@ function clsSceneTitle:onStart()
   self.createPlayerLayer:addChild(self.createPlayerMsgLabel) 
   --创建角色层结束
   --角色选择层开始
-  self.listPlayerLayer=clsUILayer:new(screenWidth-20,20,240,560)
-  self.listPlayerLayer.image=Skin:createBgWithFrame(240,560)
-  self.listPlayerLayer.anchor={1,0}
+  self.listPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,692,312)
+  self.listPlayerLayer.image=smImageFactory:loadImage("/image/skin/choose_player_layer.png")
   self.listPlayerLayer.alpha=0
   self.bgLayer:addChild(self.listPlayerLayer)
   
-  self.listPlayerTable=clsUITable:new(10,10,220,480)
-  self.listPlayerTable.image=Skin:createBgWithFrame(220,480)
-  self.listPlayerTable.anchor={0,0}
+  self.listPlayerTable=clsUITable:new(self.listPlayerLayer.width/2,18,652,226)
+  self.listPlayerTable.anchor={0.5,0}
+  self.listPlayerTable.gap={5,0,0,5,0,0}
+  self.listPlayerTable.cellWidth,self.listPlayerTable.cellHeight=213,72
+  self.listPlayerTable.colNum=3
   self.listPlayerTable.delegate=self
   self.listPlayerTable.clipBounds=true
+  self.listPlayerTable.cellSelectedBackground=smImageFactory:loadImage("/image/skin/jiaose_guangbiao.png")
   self.listPlayerLayer:addChild(self.listPlayerTable)
   
-  self.listPlayerCreatePlayerButton=clsUIButton:standardButton(60,self.listPlayerLayer.height-40,80,20,"创建角色")
-  self.listPlayerCreatePlayerButton.textSize=16
-  self.listPlayerCreatePlayerButton.textColor="0xffffff00"
+  self.listPlayerCreatePlayerButton=clsUIButton:new(60,self.listPlayerLayer.height-40,94,36)
   self.listPlayerCreatePlayerButton.delegate=self
+  self.listPlayerCreatePlayerButton.normalImage=smImageFactory:loadImage("/image/skin/chuangjian_up.png")
+  self.listPlayerCreatePlayerButton.highlightImage=smImageFactory:loadImage("/image/skin/chuangjian_down.png")
   self.listPlayerLayer:addChild(self.listPlayerCreatePlayerButton)
   
-  self.listPlayerCancleButton=clsUIButton:standardButton(self.listPlayerLayer.width-60,self.listPlayerLayer.height-40,80,20,"返回")
-  self.listPlayerCancleButton.textSize=16
-  self.listPlayerCancleButton.textColor="0xffffff00"
+  self.listPlayerCancleButton=clsUIButton:new(self.listPlayerLayer.width-60,self.listPlayerLayer.height-40,94,36)
   self.listPlayerCancleButton.delegate=self
+  self.listPlayerCancleButton.normalImage=smImageFactory:loadImage("/image/skin/fanhui_up.png")
+  self.listPlayerCancleButton.highlightImage=smImageFactory:loadImage("/image/skin/fanhui_down.png")
   self.listPlayerLayer:addChild(self.listPlayerCancleButton)
-  --角色选择层结束
-  --进入游戏按钮开始
-  self.joinGameButton=clsUIButton:standardButton(screenWidth/2,screenHeight-80,140,40,"进入游戏")
-  self.joinGameButton.alpha=0
-  self.joinGameButton.textSize=24
-  self.joinGameButton.textColor="0xffffff00"
-  self.joinGameButton.delegate=self
-  self.bgLayer:addChild(self.joinGameButton)
   
+  self.listPlayerDeleteButton=clsUIButton:new(180,self.listPlayerLayer.height-40,94,36)
+  self.listPlayerDeleteButton.delegate=self
+  self.listPlayerDeleteButton.normalImage=smImageFactory:loadImage("/image/skin/shanchu_up.png")
+  self.listPlayerDeleteButton.highlightImage=smImageFactory:loadImage("/image/skin/shanchu_down.png")
+  self.listPlayerLayer:addChild(self.listPlayerDeleteButton)
+  
+  self.joinGameButton=clsUIButton:new(self.listPlayerLayer.width-200,self.listPlayerLayer.height-40,131,39)
+  self.joinGameButton.normalImage=smImageFactory:loadImage("/image/skin/kaishi_up.png")
+  self.joinGameButton.highlightImage=smImageFactory:loadImage("/image/skin/kaishi_down.png")
+  self.joinGameButton.delegate=self
+  self.listPlayerLayer:addChild(self.joinGameButton)
+  --角色选择层结束
   GameLayer:addChildToScene(self.bgLayer)
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
@@ -311,24 +281,25 @@ function clsSceneTitle:refreshListPlayer()
 	self.listPlayerTableSelectedIndex=nil--重置选中的角色
 	
 	self.listPlayerTable.cellNum=GameData.playerList:size()
-  	self.listPlayerTable.colNum=1
-  	self.listPlayerTable.cellHeight=48
-	local buttonGroup=clsUIButtonGroup:new()
+
   	self.listPlayerTable.dataSource={
     	cellLayerAtIndex=function(self,menu,cellLayer,index)
       		local w,h=cellLayer.width,cellLayer.height
-      		local player = GameData.playerList:get(index).name.."(等级"..GameData.playerList:get(index).level..")"
-      		local button=clsUIButton:standardButton(w/2,h/2,w,h,player)
-      		button.toggleMode=true
-      		button.tag=index
-      		button.delegate={
-        		buttonTapped=function(self,button)
-          			local index=button.tag
-         			callFunction(menu.delegate,menu.callback,menu,index)
-        		end
-      		}
-      		buttonGroup:addButton(button)
-      		cellLayer:addChild(button)
+      		local player = GameData.playerList:get(index).name.." LV:"..GameData.playerList:get(index).level..""
+      		local mapName = "所在地: "..GameData.playerList:get(index).mapName..""
+      		
+      		local label1=clsUILabel:new(w/2,h/4,w,h/2)
+      		label1.anchor={0.5,0}
+      		label1.text=player
+      		label1.tag=index
+      		
+      		local label2=clsUILabel:new(w/2,h/2,w,h/2)
+      		label2.anchor={0.5,0}
+      		label2.text=mapName
+      		label2.tag=index
+      		
+      		cellLayer:addChild(label1)
+      		cellLayer:addChild(label2)
     	end
   	}
   	self.listPlayerTable:refresh()
@@ -344,10 +315,7 @@ function clsSceneTitle:handleListPlayer(msg)
   		
   	self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.listPlayerLayer:runAction(self.listPlayerAppearAction)
-    
-    self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
-    self.joinGameButton:runAction(self.listPlayerAppearAction)
-
+   
   	self:refreshListPlayer()
 end
 
@@ -429,7 +397,7 @@ function clsSceneTitle:buttonTapped(button)
   			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTableSelectedIndex).id)
   		end
   elseif button==self.loginCancleButton then
-  
+  		--退出游戏
   end
 end
 

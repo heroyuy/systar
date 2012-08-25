@@ -45,6 +45,7 @@ clsCharacter.charImg=nil --行走图
 clsCharacter.actionImgName=nil --战斗图名称
 clsCharacter.actionImg=nil --战斗图
 clsCharacter.mapId=0 --角色当前所在地图ID
+clsCharacter.mapName=0 --角色所在地图的名称
 clsCharacter.row=0 --角色当前所在行号
 clsCharacter.col=0 --角色当前所在列号
 clsCharacter.face=0 --角色当前面向   0上  1下  2左  3右 

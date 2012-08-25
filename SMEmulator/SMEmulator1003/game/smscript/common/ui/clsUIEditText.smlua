@@ -29,7 +29,7 @@ clsUIEditText.cursorColor="0xff000000"
 clsUIEditText.callback="keyTyped"				   --事件回调
 clsUIEditText.type = clsUIEditText.NORMAL		   --输入框类型
 
-clsUIEditText.transparent=false					   --是否将背景透明
+clsUIEditText.hideBackground=false					   --是否将背景透明
 --构造器
 function clsUIEditText:standardEditText(x,y,width,height,type)
   local editText=clsUIEditText:new(x,y,width,height)
@@ -60,8 +60,8 @@ end
 function clsUIEditText:paintLayer(painter)
   --调用父类绘制方法
   self:paintLayerF(painter)
-  if self.image==nil and not self.transparent then
-    --假如没有设定背景图片，则默认给输入框加入白色矩形背景
+  if not self.hideBackground then
+    --默认给输入框加入白色矩形背景
     painter:setColor("0xffffffff")
     painter:fillRoundRect(0,0,self.width-1,self.height-1,5)
     painter:setColor("0xff000000")
