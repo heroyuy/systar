@@ -35,9 +35,9 @@ clsSceneTitle.loginCancleButton=nil
 
 --注册层
 clsSceneTitle.registerLayer=nil
-clsSceneTitle.registerName=nil
-clsSceneTitle.registerPassword=nil
-clsSceneTitle.registerConfirmPassword=nil
+--clsSceneTitle.registerName=nil
+--clsSceneTitle.registerPassword=nil
+--clsSceneTitle.registerConfirmPassword=nil
 clsSceneTitle.registerEditName=nil
 clsSceneTitle.registerEditPassword=nil
 clsSceneTitle.registerEditConfirmPassword=nil
@@ -111,13 +111,13 @@ function clsSceneTitle:onStart()
   self.loginLayer:addChild(self.loginEditName)
   
   self.loginEditPassword=clsUIEditText:standardEditText(218,97,265,27,clsUIEditText.PASSWORD)
-  self.loginEditPassword.textSize=20
+  self.loginEditPassword.textSize=10
   self.loginEditPassword.textColor="0xffffffff"
   self.loginEditPassword.cursorColor="0xffffffff"
   self.loginEditPassword.transparent=true
   self.loginLayer:addChild(self.loginEditPassword)
   
-  self.loginMsgLabel=clsUILabel:new(120,140,80,20)
+  self.loginMsgLabel=clsUILabel:new(190,125,80,20)
   self.loginMsgLabel.text=""
   self.loginMsgLabel.textSize=16
   self.loginMsgLabel.textColor="0xffff0000"
@@ -125,8 +125,8 @@ function clsSceneTitle:onStart()
   
   self.loginLoginButton=clsUIButton:new(220,175,94,36)
   self.loginLoginButton.delegate=self
-  self.loginLoginButton.normalImage=smImageFactory:loadImage("/image/skin/queding_up.png")
-  self.loginLoginButton.highlightImage=smImageFactory:loadImage("/image/skin/queding_down.png")
+  self.loginLoginButton.normalImage=smImageFactory:loadImage("/image/skin/denglu_up.png")
+  self.loginLoginButton.highlightImage=smImageFactory:loadImage("/image/skin/denglu_down.png")
   self.loginLayer:addChild(self.loginLoginButton)
   
   self.loginRegisterButton=clsUIButton:new(70,175,94,36)
@@ -142,60 +142,66 @@ function clsSceneTitle:onStart()
   self.loginLayer:addChild(self.loginCancleButton)
   --登陆层结束
   --注册层开始
-  self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-140,240,160)
-  self.registerLayer.image=Skin:createBgWithFrame(240,160)
+  self.registerLayer=clsUILayer:new(screenWidth/2,screenHeight-160,380,206)
+  self.registerLayer.image=smImageFactory:loadImage("/image/skin/register_menu.png")
   self.registerLayer.alpha=0
   self.bgLayer:addChild(self.registerLayer)
   
-  self.registerName=clsUILabel:new(45,25,80,20)
-  self.registerName.text="输入账号"
-  self.registerName.textSize=16
-  self.registerName.textColor="0xff000000"
-  self.registerLayer:addChild(self.registerName)
+  --self.registerName=clsUILabel:new(45,25,80,20)
+  --self.registerName.text="输入账号"
+  --self.registerName.textSize=16
+  --self.registerName.textColor="0xff000000"
+  --self.registerLayer:addChild(self.registerName)
   
-  self.registerPassword=clsUILabel:new(45,55,80,20)
-  self.registerPassword.text="输入密码"
-  self.registerPassword.textSize=16
-  self.registerPassword.textColor="0xff000000"
-  self.registerLayer:addChild(self.registerPassword)
+  --self.registerPassword=clsUILabel:new(45,55,80,20)
+  --self.registerPassword.text="输入密码"
+  --self.registerPassword.textSize=16
+  --self.registerPassword.textColor="0xff000000"
+  --self.registerLayer:addChild(self.registerPassword)
   
-  self.registerConfirmPassword=clsUILabel:new(45,85,80,20)
-  self.registerConfirmPassword.text="确认密码"
-  self.registerConfirmPassword.textSize=16
-  self.registerConfirmPassword.textColor="0xff000000"
-  self.registerLayer:addChild(self.registerConfirmPassword)
+  --self.registerConfirmPassword=clsUILabel:new(45,85,80,20)
+  --self.registerConfirmPassword.text="确认密码"
+  --self.registerConfirmPassword.textSize=16
+  --self.registerConfirmPassword.textColor="0xff000000"
+  --self.registerLayer:addChild(self.registerConfirmPassword)
   
-  self.registerEditName=clsUIEditText:standardEditText(155,25,145,20,clsUIEditText.NORMAL)
-  self.registerEditName.textSize=16
-  self.registerEditName.textColor="0xff000000"
+  self.registerEditName=clsUIEditText:standardEditText(218,40,265,27,clsUIEditText.NORMAL)
+  self.registerEditName.textSize=20
+  self.registerEditName.textColor="0xffffffff"
+  self.registerEditName.cursorColor="0xffffffff"
+  self.registerEditName.transparent=true
   self.registerLayer:addChild(self.registerEditName)
   
-  self.registerEditPassword=clsUIEditText:standardEditText(155,55,145,20,clsUIEditText.PASSWORD)
-  self.registerEditPassword.textSize=16
-  self.registerEditPassword.textColor="0xff000000"
+  self.registerEditPassword=clsUIEditText:standardEditText(218,80,265,27,clsUIEditText.PASSWORD)
+  self.registerEditPassword.textSize=10
+  self.registerEditPassword.textColor="0xffffffff"
+  self.registerEditPassword.cursorColor="0xffffffff"
+  self.registerEditPassword.transparent=true
   self.registerLayer:addChild(self.registerEditPassword)
   
-  self.registerEditConfirmPassword=clsUIEditText:standardEditText(155,85,145,20,clsUIEditText.PASSWORD)
-  self.registerEditConfirmPassword.textSize=16
-  self.registerEditConfirmPassword.textColor="0xff000000"
+  self.registerEditConfirmPassword=clsUIEditText:standardEditText(218,120,265,27,clsUIEditText.PASSWORD)
+  self.registerEditConfirmPassword.textSize=10
+  self.registerEditConfirmPassword.textColor="0xffffffff"
+  self.registerEditConfirmPassword.cursorColor="0xffffffff"
+  self.registerEditConfirmPassword.transparent=true
   self.registerLayer:addChild(self.registerEditConfirmPassword)
   
-  self.registerMsgLabel=clsUILabel:new(120,140,80,20)
+  self.registerMsgLabel=clsUILabel:new(190,140,80,20)
   self.registerMsgLabel.text=""
   self.registerMsgLabel.textSize=16
   self.registerMsgLabel.textColor="0xffff0000"
   self.registerLayer:addChild(self.registerMsgLabel) 
   
-  self.registerLoginButton=clsUIButton:standardButton(60,115,80,20,"登录")
-  self.registerLoginButton.textSize=16
-  self.registerLoginButton.textColor="0xff000000"
+  self.registerLoginButton=clsUIButton:new(70,175,94,36)
   self.registerLoginButton.delegate=self
+  self.registerLoginButton.normalImage=smImageFactory:loadImage("/image/skin/fanhui_up.png")
+  self.registerLoginButton.highlightImage=smImageFactory:loadImage("/image/skin/fanhui_down.png")
   self.registerLayer:addChild(self.registerLoginButton)
   
-  self.registerRegisterButton=clsUIButton:standardButton(180,115,80,20,"注册")
-  self.registerRegisterButton.textSize=16
-  self.registerRegisterButton.textColor="0xffffff00"
+  self.registerRegisterButton=clsUIButton:new(320,175,94,36)
   self.registerRegisterButton.delegate=self
+  self.registerRegisterButton.normalImage=smImageFactory:loadImage("/image/skin/zhuce_up.png")
+  self.registerRegisterButton.highlightImage=smImageFactory:loadImage("/image/skin/zhuce_down.png")
   self.registerLayer:addChild(self.registerRegisterButton)
   --注册层结束
   --创建角色层开始
@@ -422,6 +428,8 @@ function clsSceneTitle:buttonTapped(button)
   		if self.listPlayerTableSelectedIndex then
   			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTableSelectedIndex).id)
   		end
+  elseif button==self.loginCancleButton then
+  
   end
 end
 
