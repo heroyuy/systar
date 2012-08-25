@@ -265,6 +265,7 @@ end
 
 function clsSceneTitle:handleDeletePlayer(msg)
 	if msg.status then
+		smNet:listPlayer()
 		smLog:info("删除角色成功");
 	end
 end
@@ -305,7 +306,13 @@ function clsSceneTitle:handleListPlayer(msg)
   		
   	self.createPlayerAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   	self.createPlayerLayer:runAction(self.createPlayerAppearAction)
-  		
+  	
+  	self.loginEditName.text=""
+	self.loginEditPassword.text=""
+	self.loginMsgLabel.text=""
+
+	self.createPlayerEditName.text=""
+	
   	self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.listPlayerLayer:runAction(self.listPlayerAppearAction)
    
@@ -321,6 +328,18 @@ end
 
 function clsSceneTitle:handleRegister(msg)
   self.registerMsgLabel.text=msg.msg
+  if msg.status then
+  	self.registerEditName.text=""
+	self.registerEditPassword.text=""
+	self.registerEditConfirmPassword.text=""
+	self.registerMsgLabel.text=""
+
+  	self.registerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+    self.registerLayer:runAction(self.registerDisappearAction)
+    	
+    self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+    self.loginLayer:runAction(self.loginAppearAction)
+  end
 end
 
 --按钮点击的回调
@@ -391,6 +410,10 @@ function clsSceneTitle:buttonTapped(button)
   		end
   elseif button==self.loginCancleButton then
   		--退出游戏
+  elseif button==self.listPlayerDeleteButton then
+  		if self.listPlayerTable.selectedIndex then
+  			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).id)
+  		end
   end
 end
 
