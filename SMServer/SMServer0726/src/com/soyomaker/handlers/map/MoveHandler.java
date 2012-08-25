@@ -58,6 +58,7 @@ public class MoveHandler extends AbHandler {
 		Player player = session.getUser().getPlayer();
 		player.setX(x);
 		player.setY(y);
+		// TODO 延迟写
 		playerService.update(player);
 	}
 }

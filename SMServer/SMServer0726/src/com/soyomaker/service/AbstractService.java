@@ -20,14 +20,14 @@ import org.springframework.util.CollectionUtils;
 import com.soyomaker.orm.HibernateRepository;
 
 /**
- *
+ * 
  * @author chenwentao
- *
+ * 
  */
 @Service("abstractService")
 @Transactional
 public abstract class AbstractService {
-	
+
 	@Autowired
 	protected HibernateRepository hibernateRepository;
 
@@ -42,7 +42,7 @@ public abstract class AbstractService {
 	public Session getSession() {
 		return this.hibernateRepository.getSession();
 	}
-	
+
 	// --------------------------CRUD----------------------------------------------
 	public void saveOrUpdate(Object entity) {
 		hibernateRepository.saveOrUpdate(entity);
@@ -83,6 +83,10 @@ public abstract class AbstractService {
 		return hibernateRepository.find(hql, values);
 	}
 
+	public <T> List<T> findAll(Class<?> entityClass) {
+		return hibernateRepository.findAll(entityClass);
+	}
+
 	public <T> T findUnique(String hql, Object... values) {
 		List<T> results = hibernateRepository.find(hql, values);
 		if (CollectionUtils.isEmpty(results)) {
@@ -91,4 +95,5 @@ public abstract class AbstractService {
 
 		return results.get(0);
 	}
+
 }
