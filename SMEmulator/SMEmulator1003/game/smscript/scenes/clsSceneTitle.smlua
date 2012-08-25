@@ -211,25 +211,25 @@ function clsSceneTitle:onStart()
   self.listPlayerTable.cellSelectedBackground=smImageFactory:loadImage("/image/skin/jiaose_guangbiao.png")
   self.listPlayerLayer:addChild(self.listPlayerTable)
   
-  self.listPlayerCreatePlayerButton=clsUIButton:new(60,self.listPlayerLayer.height-40,94,36)
+  self.listPlayerCreatePlayerButton=clsUIButton:new(60,self.listPlayerLayer.height-35,94,36)
   self.listPlayerCreatePlayerButton.delegate=self
   self.listPlayerCreatePlayerButton.normalImage=smImageFactory:loadImage("/image/skin/chuangjian_up.png")
   self.listPlayerCreatePlayerButton.highlightImage=smImageFactory:loadImage("/image/skin/chuangjian_down.png")
   self.listPlayerLayer:addChild(self.listPlayerCreatePlayerButton)
   
-  self.listPlayerCancleButton=clsUIButton:new(self.listPlayerLayer.width-60,self.listPlayerLayer.height-40,94,36)
+  self.listPlayerCancleButton=clsUIButton:new(self.listPlayerLayer.width-60,self.listPlayerLayer.height-35,94,36)
   self.listPlayerCancleButton.delegate=self
   self.listPlayerCancleButton.normalImage=smImageFactory:loadImage("/image/skin/fanhui_up.png")
   self.listPlayerCancleButton.highlightImage=smImageFactory:loadImage("/image/skin/fanhui_down.png")
   self.listPlayerLayer:addChild(self.listPlayerCancleButton)
   
-  self.listPlayerDeleteButton=clsUIButton:new(180,self.listPlayerLayer.height-40,94,36)
+  self.listPlayerDeleteButton=clsUIButton:new(180,self.listPlayerLayer.height-35,94,36)
   self.listPlayerDeleteButton.delegate=self
   self.listPlayerDeleteButton.normalImage=smImageFactory:loadImage("/image/skin/shanchu_up.png")
   self.listPlayerDeleteButton.highlightImage=smImageFactory:loadImage("/image/skin/shanchu_down.png")
   self.listPlayerLayer:addChild(self.listPlayerDeleteButton)
   
-  self.joinGameButton=clsUIButton:new(self.listPlayerLayer.width-200,self.listPlayerLayer.height-40,131,39)
+  self.joinGameButton=clsUIButton:new(self.listPlayerLayer.width-200,self.listPlayerLayer.height-35,131,39)
   self.joinGameButton.normalImage=smImageFactory:loadImage("/image/skin/kaishi_up.png")
   self.joinGameButton.highlightImage=smImageFactory:loadImage("/image/skin/kaishi_down.png")
   self.joinGameButton.delegate=self
