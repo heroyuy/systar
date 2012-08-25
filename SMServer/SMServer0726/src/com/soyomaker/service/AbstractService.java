@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import com.soyomaker.model.Player;
-import com.soyomaker.model.User;
 import com.soyomaker.orm.HibernateRepository;
 
 /**
