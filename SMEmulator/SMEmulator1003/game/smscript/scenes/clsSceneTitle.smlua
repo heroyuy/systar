@@ -42,7 +42,6 @@ clsSceneTitle.registerRegisterButton=nil
 
 --创建角色层
 clsSceneTitle.createPlayerLayer=nil
-clsSceneTitle.createPlayerName=nil
 clsSceneTitle.createPlayerEditName=nil
 clsSceneTitle.createPlayerButton=nil
 clsSceneTitle.createPlayerCancleButton=nil
@@ -55,9 +54,6 @@ clsSceneTitle.listPlayerCreatePlayerButton=nil
 clsSceneTitle.listPlayerCancleButton=nil
 clsSceneTitle.listPlayerDeletePlayerButton=nil
 clsSceneTitle.joinGameButton=nil
-
---辅助字段
-clsSceneTitle.listPlayerTableSelectedIndex=nil
 
 --构造器
 function clsSceneTitle:new()
@@ -169,32 +165,28 @@ function clsSceneTitle:onStart()
   self.registerLayer:addChild(self.registerRegisterButton)
   --注册层结束
   --创建角色层开始
-  self.createPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,240,100)
+  self.createPlayerLayer=clsUILayer:new(screenWidth/2,screenHeight/2,392,162)
   self.createPlayerLayer.image=smImageFactory:loadImage("/image/skin/create_player_layer.png")
   self.createPlayerLayer.alpha=0
   self.bgLayer:addChild(self.createPlayerLayer)
   
-  self.createPlayerName=clsUILabel:new(30,25,80,20)
-  self.createPlayerName.text="昵称"
-  self.createPlayerName.textSize=16
-  self.createPlayerName.textColor="0xff000000"
-  self.createPlayerLayer:addChild(self.createPlayerName)
-  
-  self.createPlayerEditName=clsUIEditText:standardEditText(140,25,175,20,clsUIEditText.NORMAL)
+  self.createPlayerEditName=clsUIEditText:standardEditText(225,55,265,27,clsUIEditText.NORMAL)
   self.createPlayerEditName.textSize=20
   self.createPlayerEditName.textColor="0xffffffff"
+  self.createPlayerEditName.cursorColor="0xffffffff"
+  self.createPlayerEditName.hideBackground=true
   self.createPlayerLayer:addChild(self.createPlayerEditName)
 
-  self.createPlayerButton=clsUIButton:standardButton(60,55,80,20,"创建角色")
-  self.createPlayerButton.textSize=16
-  self.createPlayerButton.textColor="0xffffff00"
+  self.createPlayerButton=clsUIButton:new(60,135,94,36)
   self.createPlayerButton.delegate=self
+  self.createPlayerButton.normalImage=smImageFactory:loadImage("/image/skin/chuangjian_up.png")
+  self.createPlayerButton.highlightImage=smImageFactory:loadImage("/image/skin/chuangjian_down.png")
   self.createPlayerLayer:addChild(self.createPlayerButton)
   
-  self.createPlayerCancleButton=clsUIButton:standardButton(self.createPlayerLayer.width-60,55,80,20,"返回")
-  self.createPlayerCancleButton.textSize=16
-  self.createPlayerCancleButton.textColor="0xffffff00"
+  self.createPlayerCancleButton=clsUIButton:new(self.createPlayerLayer.width-60,135,94,36)
   self.createPlayerCancleButton.delegate=self
+  self.createPlayerCancleButton.normalImage=smImageFactory:loadImage("/image/skin/fanhui_up.png")
+  self.createPlayerCancleButton.highlightImage=smImageFactory:loadImage("/image/skin/fanhui_down.png")
   self.createPlayerLayer:addChild(self.createPlayerCancleButton)
   
   self.createPlayerMsgLabel=clsUILabel:new(self.createPlayerLayer.width/2,80,80,20)
@@ -255,7 +247,7 @@ end
 function clsSceneTitle:handleChoosePlayer(msg)
 	if msg.status then
 		smLog:info("进入游戏");
-		GameData.curPlayer = GameData.playerList:get(self.listPlayerTableSelectedIndex)
+		GameData.curPlayer = GameData.playerList:get(self.listPlayerTable.selectedIndex)
 		GameData.updateSwitch=true
 		--初始化Npc信息表
         GameData.npcs={}
@@ -278,7 +270,6 @@ function clsSceneTitle:handleDeletePlayer(msg)
 end
 
 function clsSceneTitle:refreshListPlayer()
-	self.listPlayerTableSelectedIndex=nil--重置选中的角色
 	
 	self.listPlayerTable.cellNum=GameData.playerList:size()
 
@@ -288,14 +279,16 @@ function clsSceneTitle:refreshListPlayer()
       		local player = GameData.playerList:get(index).name.." LV:"..GameData.playerList:get(index).level..""
       		local mapName = "所在地: "..GameData.playerList:get(index).mapName..""
       		
-      		local label1=clsUILabel:new(w/2,h/4,w,h/2)
+      		local label1=clsUILabel:new(w/2,0,w,h/2)
       		label1.anchor={0.5,0}
       		label1.text=player
+      		label1.textSize=18
       		label1.tag=index
       		
-      		local label2=clsUILabel:new(w/2,h/2,w,h/2)
+      		local label2=clsUILabel:new(w/2,32,w,h/2)
       		label2.anchor={0.5,0}
       		label2.text=mapName
+      		label2.textSize=18
       		label2.tag=index
       		
       		cellLayer:addChild(label1)
@@ -393,16 +386,12 @@ function clsSceneTitle:buttonTapped(button)
   		self.listPlayerDisAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerDisAppearAction)
   elseif button==self.joinGameButton then
-  		if self.listPlayerTableSelectedIndex then
-  			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTableSelectedIndex).id)
+  		if self.listPlayerTable.selectedIndex then
+  			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).id)
   		end
   elseif button==self.loginCancleButton then
   		--退出游戏
   end
-end
-
-function clsSceneTitle:itemSelected(listPlayerTable,index)
-	self.listPlayerTableSelectedIndex = index
 end
 
 -- 更新
