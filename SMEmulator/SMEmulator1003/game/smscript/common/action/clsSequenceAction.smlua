@@ -31,45 +31,52 @@ function clsSequenceAction:reset()
     action.target=self.target
     action.delegate=self
     action.finished=false
+    action:reset()
   end
   if self.times<0 then
     self.remnantTimes=99999999
   else
     self.remnantTimes=self.times
   end
-  self.curIndex=nil
+  self.curIndex=1
 end
 
 --更新
 function clsSequenceAction:update()
-  --(1)确定当前应该执行的动作
-  if self.curIndex==nil then
-    self.curIndex=1
-    self.actionList[self.curIndex]:reset()
+  local action=self:curAction()
+  if action then
+    action:update()
   end
-  if self.actionList[self.curIndex].finished then
-    self.curIndex=math.mod(self.curIndex,table.getn(self.actionList))+1
-    self.actionList[self.curIndex]:reset()
-  end
-  self.actionList[self.curIndex]:update()
 end
 
---检查动作是否结束
-function clsSequenceAction:checkEnd()
-  --标志是:当前动作是最后一个动作，并且动作结束
-  local finished=(self.curIndex==table.getn(self.actionList) and self.actionList[self.curIndex].finished)
-  if finished then
-    --最后一个动作结束则判断是循环次数
-    self.remnantTimes=self.remnantTimes-1
-    if self.remnantTimes<=0 then
-      --循环结束
-      callFunction(self.delegate,self.callback,self)
+--获取当前运行的动作
+function clsSequenceAction:curAction()
+  local action=self.actionList[self.curIndex]
+  if action.finished then
+    --当前任务已结束
+    self.curIndex=self.curIndex+1
+    if self.curIndex <= table.getn(self.actionList) then
+      action=self.actionList[self.curIndex]
+      action:reset()
+    else
+      --最后一个动作结束则判断是循环次数
+      self.remnantTimes=self.remnantTimes-1
+      if self.remnantTimes>0 then
+        self.curIndex=1
+        action=self.actionList[self.curIndex]
+        action:reset()
+      else
+        --序列任务结束
+        action=nil
+        callFunction(self.delegate,self.callback,self)
+      end
     end
   end
+  return action
 end
 
 --action回调
 function clsSequenceAction:onActionEnd(action)
   action.finished=true
-  self:checkEnd()
+  self:update()
 end
