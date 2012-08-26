@@ -18,12 +18,10 @@ clsAction.TYPE_DECELERATE_BY=5		--类型：减速、追加
 clsAction.TYPE_MAX=6				--类型编号最大值
 
 clsAction.target=nil				--动作的目标
-clsAction.finished=false			--动作是否结束
 clsAction.tag=nil					--动作的标志
 
-clsAction.delegate=nil				--委托
+clsAction.delegate=nil				--委托(内部使用)
 clsAction.callback="onActionEnd"	--回调
-
 
 -- 构造
 function clsAction:new()
@@ -33,19 +31,18 @@ function clsAction:new()
 end
 
 --重置动作
-function clsAction:onReset()
+function clsAction:reset()
   --根据参数重置动作，执行动作之前被调用
 end
 
 --更新
-function clsAction:onUpdate()
+function clsAction:update()
   --根据action参数更新target的属性
 end
 
---结束
-function clsAction:onEnd()
-  --结束action。action在此方法被调用后移除播放队列
-  callFunction(self.delegate,self.callback,self)
+--结束动作(主动结束)
+function clsAction:stop()
+  --结束action。
 end
 
 
@@ -158,26 +155,27 @@ ActionPlayer={}
 ActionPlayer.actionList={}						--动作列表
 
 --播放动作
-function ActionPlayer:run(action)				
-  self.actionList[tostring(action)]=action		--加入播放列表
-  action:onReset()								--重置动作
+function ActionPlayer:run(action)
+  --事件委托
+  action.delegate=self
+  --重置动作
+  action:reset()
+  --加入播放列表
+  self.actionList[tostring(action)]=action
 end
 
 --更新
 function ActionPlayer:update()
   for k,action in pairs(self.actionList) do
-    if action.finished then
-      self:stopAction(action)
-    else
-      action:onUpdate()
-    end
+    action:update()
   end
 end
 
 --停止动作
 function ActionPlayer:stopAction(action)
-  action:onEnd()
-  self.actionList[tostring(action)]=nil					--移除动作
+  action:stop()
+  --移除动作
+  self.actionList[tostring(action)]=nil
 end
 
 --停止目标的动作
@@ -194,4 +192,10 @@ function ActionPlayer:stopAllAction()
   for k,action in pairs(self.actionList) do
     self:stopAction(action)
   end
+end
+
+--action回调
+function ActionPlayer:onActionEnd(action)
+  --移除动作
+  self.actionList[tostring(action)]=nil
 end

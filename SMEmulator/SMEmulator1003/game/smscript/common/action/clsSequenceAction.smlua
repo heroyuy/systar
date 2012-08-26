@@ -26,9 +26,11 @@ function clsSequenceAction:new(times,...)
 end
 
 --设置目标
-function clsSequenceAction:onReset()
+function clsSequenceAction:reset()
   for i,action in ipairs(self.actionList) do
     action.target=self.target
+    action.delegate=self
+    action.finished=false
   end
   if self.times<0 then
     self.remnantTimes=99999999
@@ -36,30 +38,33 @@ function clsSequenceAction:onReset()
     self.remnantTimes=self.times
   end
   self.curIndex=nil
-  self.finished=false
 end
 
 --更新
-function clsSequenceAction:onUpdate()
-  --(1)检查一次循环是否结束,标志是:当前动作是最后一个动作，并且动作结束
+function clsSequenceAction:update()
+  --(1)确定当前应该执行的动作
+  if self.curIndex==nil then
+    self.curIndex=1
+    self.actionList[self.curIndex]:reset()
+  end
+  if self.actionList[self.curIndex].finished then
+    self.curIndex=math.mod(self.curIndex,table.getn(self.actionList))+1
+    self.actionList[self.curIndex]:reset()
+  end
+  self.actionList[self.curIndex]:update()
+  --(2)检查一次循环是否结束,标志是:当前动作是最后一个动作，并且动作结束
   local finished=(self.curIndex==table.getn(self.actionList) and self.actionList[self.curIndex].finished)
   if finished then
     --最后一个动作结束则判断是循环次数
     self.remnantTimes=self.remnantTimes-1
     if self.remnantTimes<=0 then
       --循环结束
-      self.finished=finished
-      return
+      callFunction(self.delegate,self.callback,self)
     end
   end
-  --(2)确定当前应该执行的动作
-  if self.curIndex==nil then
-    self.curIndex=1
-    self.actionList[self.curIndex]:onReset()
-  end
-  if self.actionList[self.curIndex].finished then
-    self.curIndex=math.mod(self.curIndex,table.getn(self.actionList))+1
-    self.actionList[self.curIndex]:onReset()
-  end
-  self.actionList[self.curIndex]:onUpdate()
+end
+
+--action回调
+function clsSequenceAction:onActionEnd(action)
+  action.finished=true
 end

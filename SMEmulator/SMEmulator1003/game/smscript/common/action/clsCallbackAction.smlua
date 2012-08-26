@@ -10,29 +10,22 @@ setmetatable(clsCallbackAction,clsAction)
 clsCallbackAction.__index = clsCallbackAction
 
 --字段定义
-clsCallbackAction.delegate=nil			--回调委托
-clsCallbackAction.callback=nil			--回调
-clsCallbackAction.arg=nil				--回调参数
+clsCallbackAction.tdelegate=nil			--回调委托
+clsCallbackAction.tcallback=nil			--回调
+clsCallbackAction.targs=nil				--回调参数
 
 -- 构造
-function clsCallbackAction:new(delegate,callback,...)
+function clsCallbackAction:new(tdelegate,tcallback,...)
   local self=clsAction:new()
   setmetatable(self,clsCallbackAction)
-  self.delegate=delegate
-  self.callback=callback
-  self.arg=arg
+  self.tdelegate=tdelegate
+  self.tcallback=tcallback
+  self.targs=arg
   return self
 end
 
---设置目标
-function clsCallbackAction:onReset()
-  self.finished=false
-end
-
 --更新
-function clsCallbackAction:onUpdate()
-  if not self.finished then
-    callFunction(self.delegate,self.callback,unpack(self.arg))
-    self.finished=true
-  end
+function clsCallbackAction:update()
+  callFunction(self.tdelegate,self.tcallback,unpack(self.targs))
+  callFunction(self.delegate,self.callback,self)
 end

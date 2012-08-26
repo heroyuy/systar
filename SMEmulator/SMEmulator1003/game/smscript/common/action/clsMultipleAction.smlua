@@ -21,17 +21,24 @@ function clsMultipleAction:new(...)
 end
 
 --设置目标
-function clsMultipleAction:onReset()
+function clsMultipleAction:reset()
   for i,action in ipairs(self.actionList) do
     action.target=self.target
-    action:onReset()
+    action.delegate=self
+    action.finished=false
+    action:reset()
   end
-  self.finished=false
 end
 
 --更新
-function clsMultipleAction:onUpdate()
-  --(1)检查动作是否结束,标志是动作列表中的所有动作都结束
+function clsMultipleAction:update()
+  --(1)更新
+  for i,v in ipairs(self.actionList) do
+    if not v.finished then
+      v:update()
+    end
+  end
+  --(2)检查动作是否结束,标志是动作列表中的所有动作都结束
   local finished=true
   for i,v in ipairs(self.actionList) do
     if not v.finished then
@@ -40,15 +47,13 @@ function clsMultipleAction:onUpdate()
       break
     end
   end
-  self.finished=finished
-  if self.finished then
+  if finished then
+    callFunction(self.delegate,self.callback,self)
     --smLog:info("复合动作结束")
-    return
   end
-  --(2)更新
-  for i,v in ipairs(self.actionList) do
-    if not v.finished then
-      v:onUpdate()
-    end
-  end
+end
+
+--action回调
+function clsMultipleAction:onActionEnd(action)
+  action.finished=true
 end
