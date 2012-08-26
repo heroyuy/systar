@@ -295,6 +295,10 @@ function clsSceneMap:characterMove(param)
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
       sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,320)
+      sprite.z=row
+      if character.row ~= row then
+        self.spriteLayer:sortChildren()
+      end
       character.row,character.col=row,col
     end
   else
@@ -320,6 +324,10 @@ function clsSceneMap:characterMove(param)
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
       sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,320)
+      sprite.z=row
+      if character.row ~= row then
+        self.spriteLayer:sortChildren()
+      end
       character.row,character.col=row,col
     end
   end
