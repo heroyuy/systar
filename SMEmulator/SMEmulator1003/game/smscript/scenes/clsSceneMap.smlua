@@ -331,10 +331,12 @@ function clsSceneMap:spriteWalkEnd(sprite)
     --主角移动结束
     smLog:info("主角停止")
     GameData.curPlayer.moving=false
+    GameData.curPlayer:checkMove()
   else
     --npc移动结束
     local npc=GameData:getNpc(sprite.tag)
     npc.moving=false
+    npc:checkMove()
   end
 end
 

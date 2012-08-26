@@ -91,12 +91,17 @@ end
 function clsCharacter:update()
   --调用父类的update方法
   self:updateF()
-  --行走:发送移动命令
+  --检查行走
+  self:checkMove()
+  --TODO 其它更新
+end
+
+function clsCharacter:checkMove()
   if not self.moving and self.moveSequence:size()>0 then
     local direction=self.moveSequence:poll()
+    --发送移动命令
     Notifier:notify(Const.NotifyCMD.Character.MOVE,{character=self,direction=direction})
   end
-  --TODO 其它更新
 end
 
 function clsCharacter:changeFace(face)
