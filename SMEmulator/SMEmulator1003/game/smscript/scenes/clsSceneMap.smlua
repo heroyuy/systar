@@ -319,7 +319,7 @@ function clsSceneMap:characterMove(param)
       smLog:info("npc行走")
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
-      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,1000)
+      sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,400)
       character.row,character.col=row,col
     end
   end

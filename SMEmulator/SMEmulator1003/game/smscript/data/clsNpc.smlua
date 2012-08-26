@@ -36,7 +36,7 @@ function clsNpc:update()
       if math.random(0,20/self.speedLevel-1)==0 then
         if self.moveType ==1 then
           --随机
-          --self.moveSequence:offer(math.random(0,3))
+          self.moveSequence:offer(math.random(0,3))
         end
       end
     end
