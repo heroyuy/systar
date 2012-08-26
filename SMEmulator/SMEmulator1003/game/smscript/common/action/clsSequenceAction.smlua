@@ -52,7 +52,11 @@ function clsSequenceAction:update()
     self.actionList[self.curIndex]:reset()
   end
   self.actionList[self.curIndex]:update()
-  --(2)检查一次循环是否结束,标志是:当前动作是最后一个动作，并且动作结束
+end
+
+--检查动作是否结束
+function clsSequenceAction:checkEnd()
+  --标志是:当前动作是最后一个动作，并且动作结束
   local finished=(self.curIndex==table.getn(self.actionList) and self.actionList[self.curIndex].finished)
   if finished then
     --最后一个动作结束则判断是循环次数
@@ -67,4 +71,5 @@ end
 --action回调
 function clsSequenceAction:onActionEnd(action)
   action.finished=true
+  self:checkEnd()
 end

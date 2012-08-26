@@ -32,13 +32,17 @@ end
 
 --更新
 function clsMultipleAction:update()
-  --(1)更新
+  --更新
   for i,v in ipairs(self.actionList) do
     if not v.finished then
       v:update()
     end
   end
-  --(2)检查动作是否结束,标志是动作列表中的所有动作都结束
+end
+
+--检查动作是否结束
+function clsMultipleAction:checkEnd()
+  --标志是动作列表中的所有动作都结束
   local finished=true
   for i,v in ipairs(self.actionList) do
     if not v.finished then
@@ -56,4 +60,5 @@ end
 --action回调
 function clsMultipleAction:onActionEnd(action)
   action.finished=true
+  self:checkEnd()
 end

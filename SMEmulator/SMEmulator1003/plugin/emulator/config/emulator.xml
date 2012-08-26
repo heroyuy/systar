@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<width>960</width>
-	<height>640</height>
+	<width>800</width>
+	<height>480</height>
 	<fps>50</fps>
 	<showFPS>true</showFPS>
 	<ip>ggggeeqg.vicp.net</ip>
