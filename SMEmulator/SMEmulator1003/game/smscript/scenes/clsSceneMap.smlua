@@ -58,6 +58,7 @@ function clsSceneMap:new()
     button.delegate=self
     button.normalImage=smImageFactory:loadImage(imageUp[i])
     button.highlightImage=smImageFactory:loadImage(imageDown[i])
+    button.tag=i
     self.menuLayer:addChild(button)
   end
   GameLayer:addChildToScene(self.menuLayer)
@@ -214,6 +215,33 @@ function clsSceneMap:mapTapped(target,row,col)
   while directions:size()>0 do
     local direction=directions:poll()
     GameData.curPlayer.moveSequence:offer(direction)
+  end
+end
+
+--按钮点击事件
+function clsSceneMap:buttonTapped(button)
+  local index=button.tag
+  if index==1 then
+    --背包
+    smLog:info("[背包] 功能开发中")
+  elseif index==2 then
+    --地图
+    smLog:info("[地图 ]功能开发中")
+  elseif index==3 then
+    --属性
+    smLog:info("[属性] 功能开发中")
+  elseif index==4 then
+    --人物
+    smLog:info("[人物]功能开发中")
+  elseif index==5 then
+    --技能
+    smLog:info("[技能 ]功能开发中")
+  elseif index==6 then
+    --炮弹
+    smLog:info("[炮弹] 功能开发中")
+  else
+    --未知
+    smLog:info("未知功能")
   end
 end
 
