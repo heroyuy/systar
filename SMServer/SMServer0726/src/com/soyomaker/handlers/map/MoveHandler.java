@@ -70,8 +70,10 @@ public class MoveHandler extends AbHandler {
 			player.setX(x);
 			player.setX(y);
 			playerService.update(player);
+			this.sendMessage(session, msg.getType(), false, "行走验证成功");
 		} else {
 			// 验证失败
+			this.sendMessage(session, msg.getType(), false, "行走验证失败");
 		}
 	}
 }
