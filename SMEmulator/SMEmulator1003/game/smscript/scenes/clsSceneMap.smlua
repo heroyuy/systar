@@ -41,6 +41,26 @@ function clsSceneMap:new()
   self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   self.mapFgLayer.enabled=false
   GameLayer:addChildToScene(self.mapFgLayer)
+  --主菜单
+  local width,height=245,38
+  --背包 地图 属性 人物 技能 炮弹
+  local imageUp={"/image/skin/beibao_up.png","/image/skin/ditu_up.png","/image/skin/shuxing_up.png",
+                 "/image/skin/renwu_up.png","/image/skin/jineng_up.png","/image/skin/paodan_up.png"}
+  local imageDown={"/image/skin/beibao_down.png","/image/skin/ditu_down.png","/image/skin/shuxing_down.png",
+                 "/image/skin/renwu_down.png","/image/skin/jineng_down.png","/image/skin/paodan_down.png"}
+  self.menuLayer=clsUILayer:new(screenWidth,screenHeight,width,height)
+  self.menuLayer.anchor={1,1}
+  self.menuLayer.image=smImageFactory:loadImage("/image/skin/menu.png")
+  local bw,bh,gap,num=27,30,5,6
+  for i=1,num do
+    local button=clsUIButton:new((self.menuLayer.width-num*bw-(num-1)*gap)/2+bw/2+(i-1)*(bw+gap),
+                                  self.menuLayer.height/2,bw,bh)
+    button.delegate=self
+    button.normalImage=smImageFactory:loadImage(imageUp[i])
+    button.highlightImage=smImageFactory:loadImage(imageDown[i])
+    self.menuLayer:addChild(button)
+  end
+  GameLayer:addChildToScene(self.menuLayer)
   return self
 end
 

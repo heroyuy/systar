@@ -63,7 +63,6 @@ require("clsScene")
 require("clsSceneTitle")
 require("clsSceneMap")
 require("clsSceneBattle")
-require("clsSceneStatus")
 
 --script
 require("ScriptThread")
