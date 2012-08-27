@@ -15,14 +15,11 @@ clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
 clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
 
 --字段
-clsSceneMap.menuItems={"属性","背包","技能","队伍","存档","退出"}
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
 clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
 clsSceneMap.spriteLayer=nil    		--精灵层（尺寸同地图）
-clsSceneMap.buttonHead=nil    		--头像按钮
-clsSceneMap.menu=nil     	 		--菜单
+clsSceneMap.menuLayer=nil    		--菜单层
 
-clsSceneMap.curPlayer=nil     		--当前player
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -44,19 +41,6 @@ function clsSceneMap:new()
   self.mapFgLayer=clsTiled:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   self.mapFgLayer.enabled=false
   GameLayer:addChildToScene(self.mapFgLayer)
-  --头像
-  self.buttonHead=clsUIButton:new(0,0,self.Param.HEAD_WIDTH,self.Param.HEAD_HEIGHT)
-  self.buttonHead.anchor={0,0}
-  self.buttonHead.delegate=self
-  GameLayer:addChildToScene(self.buttonHead)
-  --菜单
-  local w,h=self.Param.HEAD_WIDTH,200
-  self.menu=clsUITable:standardMenu(0,self.Param.HEAD_HEIGHT,w,h,self.menuItems)
-  self.menu.anchor={0,0}
-  self.menu.delegate=self
-  self.menu:refresh()
-  self.menu.visibility=false
-  GameLayer:addChildToScene(self.menu)
   return self
 end
 
@@ -65,11 +49,8 @@ function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   --注册接收通知
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
-  Notifier:addObserver(Const.NotifyCMD.Character.MOVED,self,self.characterMoved)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
-
-  self.buttonHead.normalImage=GameData.curPlayer.headImg
   self:buildMap()
 end
 
@@ -85,7 +66,6 @@ function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
   Notifier:removeObserver(Const.NotifyCMD.Character.MOVE,self)
-  Notifier:removeObserver(Const.NotifyCMD.Character.MOVED,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.MAP_CHANGED,self)
 end
@@ -214,37 +194,6 @@ function clsSceneMap:mapTapped(target,row,col)
   while directions:size()>0 do
     local direction=directions:poll()
     GameData.curPlayer.moveSequence:offer(direction)
-  end
-end
-
---按钮点击的回调
-function clsSceneMap:buttonTapped(button)
-  if button==self.buttonHead then
-    --显示/隐藏菜单
-    self.menu.visibility=not self.menu.visibility
-  end
-end
-
---菜单点击的回调 {"状态","物品","技能","装备","存档","退出"}
-function clsSceneMap:itemSelected(menu,index)
-  self.menu.visibility=false
-  if index==1 then
-    --状态
-    local basicInfo=clsBasicInfo:new(GameData.curPlayer)
-    GameLayer:addChildToScene(basicInfo)
-  elseif index==2 then
-    --物品
-    local bag=clsBag:new()
-    GameLayer:addChildToScene(bag)
-  elseif index==3 then
-    --技能
-  elseif index==4 then
-    --装备
-  elseif index==5 then
-    --存档
-  elseif index==6 then
-    --退出
-    Game:changeScene(Game.SCENE_TITLE)
   end
 end
 
