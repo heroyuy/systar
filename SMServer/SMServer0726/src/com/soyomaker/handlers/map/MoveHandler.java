@@ -69,6 +69,7 @@ public class MoveHandler extends AbHandler {
 			// 验证通过
 			player.setX(x);
 			player.setY(y);
+			// TODO 延迟写
 			playerService.update(player);
 			this.sendMessage(session, msg.getType(), false, "行走验证成功");
 		} else {
