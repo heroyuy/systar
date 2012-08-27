@@ -11,8 +11,8 @@ import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.service.PlayerService;
 
-@Component("moveHandler")
-public class MoveHandler extends AbHandler {
+@Component("moveBeginHandler")
+public class MoveBeginHandler extends AbHandler {
 
 	private static final int UP = 0;
 
