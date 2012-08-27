@@ -9,11 +9,6 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
---常量:param
-clsSceneMap.Param={}
-clsSceneMap.Param.HEAD_WIDTH=64  --头像宽度
-clsSceneMap.Param.HEAD_HEIGHT=64 --头像高度
-
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
 clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
@@ -22,6 +17,8 @@ clsSceneMap.menuLayer=nil    		--菜单层
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
+
+clsSceneMap.stepQueue=nil			--与服务器同步用的step队列，保存角色已经走过的路径
 
 --构造器
 function clsSceneMap:new()
@@ -62,6 +59,7 @@ function clsSceneMap:new()
     self.menuLayer:addChild(button)
   end
   GameLayer:addChildToScene(self.menuLayer)
+  self.stepQueue=clsQueue:new()
   return self
 end
 
@@ -72,6 +70,8 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
+  --定时任务
+  Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
 end
 
@@ -86,6 +86,8 @@ end
 function clsSceneMap:onStop()
   smLog:info("地图场景退出")
   smAudioPlayer:stop()
+  Scheduler:unScheduleTask(self,"syncLocation")
+  self:syncLocation()
   Notifier:removeObserver(Const.NotifyCMD.Character.MOVE,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.MAP_CHANGED,self)
@@ -297,6 +299,7 @@ function clsSceneMap:characterMove(param)
         self.spriteLayer:sortChildren()
       end
       character.row,character.col=row,col
+      self.stepQueue:offer(direction)
     end
   else
     --Npc行走
@@ -342,6 +345,23 @@ function clsSceneMap:spriteWalkEnd(sprite)
     local npc=GameData:getNpc(sprite.tag)
     npc.moving=false
     npc:checkMove()
+  end
+end
+
+--与服务器同步角色坐标
+function clsSceneMap:syncLocation()
+  --syncLocation
+  local str=nil
+  while self.stepQueue:size()>0 do
+    if str then
+      str=str..","
+    else
+      str=""
+    end
+    str=str..self.stepQueue:poll()
+  end
+  if str then
+    smNet:move(str)
   end
 end
 

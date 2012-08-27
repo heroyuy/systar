@@ -112,7 +112,7 @@ public class Net {
 	/**
 	 * 移动角色 103001
 	 */
-	public void movePlayer(String stepsStr) {
+	public void move(String stepsStr) {
 		Collection<Integer> steps = new ArrayList<Integer>();
 		String[] strs = stepsStr.split(",");
 		for (String string : strs) {

@@ -49,11 +49,7 @@ function clsUIEditText:new(x,y,width,height)
 end
 
 function clsUIEditText:update()
-  if self.cursor then
-    self.cursor = false
-  else
-    self.cursor = true
-  end
+  self.cursor=not self.cursor
 end
 
 --绘制EditText
