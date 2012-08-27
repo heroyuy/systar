@@ -3,6 +3,7 @@ package com.soyomaker.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "map")
@@ -18,6 +19,9 @@ public class MapData {
 	private Integer height;
 
 	private String ways;
+
+	@Transient
+	private int[][] wayMatrix;
 
 	public Integer getHeight() {
 		return height;
@@ -57,5 +61,21 @@ public class MapData {
 
 	public void setWidth(Integer width) {
 		this.width = width;
+	}
+
+	public int getWay(int x, int y) {
+		return wayMatrix[x][y];
+	}
+
+	public void updateWayMatrix() {
+		this.wayMatrix = new int[this.width][this.height];
+		String[] strs = this.ways.split(",");
+		int index = 0;
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
+				this.wayMatrix[i][j] = Integer.parseInt(strs[index]);
+				index++;
+			}
+		}
 	}
 }
