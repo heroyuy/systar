@@ -6,7 +6,6 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.util.CollectionFactory;
 import com.soyomaker.emulator.util.ColorFactory;
 import com.soyomaker.emulator.util.ImageFactory;
 import com.soyomaker.emulator.util.Net;
@@ -65,9 +64,6 @@ public class LuaAdapter {
 			// --注册SMLog
 			luaState.pushObjectValue(SMLog.getInstance());
 			luaState.setGlobal("smLog");
-			// --注册CollectionFactory
-			luaState.pushObjectValue(CollectionFactory.getInstance());
-			luaState.setGlobal("smCollectionFactory");
 			// --注册ImageFactory
 			luaState.pushObjectValue(ImageFactory.getInstance());
 			luaState.setGlobal("smImageFactory");
@@ -197,6 +193,6 @@ public class LuaAdapter {
 	}
 
 	private String msgToLua(GameObject msg) {
-		return "Msg={id=\""+msg.getType()+"\",content=" + msg.toLua() + "}";
+		return "Msg={id=\"" + msg.getType() + "\",content=" + msg.toLua() + "}";
 	}
 }

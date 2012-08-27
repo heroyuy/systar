@@ -1,5 +1,6 @@
 package com.soyomaker.emulator.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.soyomaker.emulator.net.NetTransceiver;
@@ -19,7 +20,7 @@ public class Net {
 
 	private static final String MSG_ID_PLAYER_CHOOSE = "102004";
 
-	private static final String MSG_ID_PLAYER_MOVE = "103001";
+	private static final String MSG_ID_MAP_MOVE = "103001";
 
 	private static Net instance = new Net();
 
@@ -111,12 +112,15 @@ public class Net {
 	/**
 	 * 移动角色 103001
 	 */
-	public void movePlayer(int x, int y, Collection<Integer> moveSequence) {
+	public void movePlayer(String stepsStr) {
+		Collection<Integer> steps = new ArrayList<Integer>();
+		String[] strs = stepsStr.split(",");
+		for (String string : strs) {
+			steps.add(Integer.parseInt(string));
+		}
 		GameObject msg = new GameObject();
-		msg.setType(MSG_ID_PLAYER_MOVE);
-		msg.putInt("x", x);
-		msg.putInt("y", y);
-		msg.putIntArray("steps", moveSequence);
+		msg.setType(MSG_ID_MAP_MOVE);
+		msg.putIntArray("steps", steps);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 }
