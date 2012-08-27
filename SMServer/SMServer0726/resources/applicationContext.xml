@@ -156,7 +156,7 @@
 		<property name="id" value="103001" />
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
-		<property name="handler" ref="moveBeginHandler" />
+		<property name="handler" ref="moveHandler" />
 	</bean>
 
 	<!--======================================= net Service end ======================================= -->

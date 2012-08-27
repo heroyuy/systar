@@ -25,6 +25,10 @@ public class DictManager {
 		return player;
 	}
 
+	public MapData getMapData(int mapId) {
+		return mapDataMap.get(mapId);
+	}
+
 	public void load() {
 		// 加载player配置
 		player = playerService.findPlayerById(-1);

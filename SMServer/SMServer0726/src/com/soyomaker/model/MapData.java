@@ -9,6 +9,16 @@ import javax.persistence.Transient;
 @Table(name = "map")
 public class MapData {
 
+	/**
+	 * 可通行的
+	 */
+	public static final int PASSABLE = 0;
+
+	/**
+	 * 不可通行的
+	 */
+	public static final int IMPASSABLE = 1;
+
 	@Id
 	private Integer id;
 
