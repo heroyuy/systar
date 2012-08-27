@@ -17,7 +17,7 @@ import com.soyomaker.service.PlayerService;
 @Component("moveHandler")
 public class MoveHandler extends AbHandler {
 
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = Logger.getLogger(MoveHandler.class);
 
 	@Autowired
 	private DictManager dictManager;
@@ -68,7 +68,7 @@ public class MoveHandler extends AbHandler {
 		if (res) {
 			// 验证通过
 			player.setX(x);
-			player.setX(y);
+			player.setY(y);
 			playerService.update(player);
 			this.sendMessage(session, msg.getType(), false, "行走验证成功");
 		} else {
