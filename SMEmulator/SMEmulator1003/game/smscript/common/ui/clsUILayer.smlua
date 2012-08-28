@@ -26,7 +26,7 @@ clsUILayer.tint=nil							--相对调色值{sr,sg,sb,tr,tg,tb}
 clsUILayer.tag=0                       		--标志（可选）
 clsUILayer.visibility = true             	--是否可见
 clsUILayer.enabled = true                 	--是否接收事件
-clsUILayer.keyEnabled=false               	--是否接收按键事件
+clsUILayer.isKeyFocus=false               	--是否是按键事件焦点
 clsUILayer.clipBounds=false              	--是否裁剪区域
 clsUILayer.delegate=nil                    	--事件委托
 clsUILayer.callback="layerTapped"			--回调方法
@@ -34,8 +34,6 @@ clsUILayer.callback="layerTapped"			--回调方法
 clsUILayer.parent=nil                   	--父layer
 clsUILayer.children=nil                   	--子layer
 clsUILayer.focusLayer=nil               	--当前事件焦点子layer
-clsUILayer.time=nil							--获取焦点的时间
-clsUILayer.activation = false				--激活
 
 --构造器
 function clsUILayer:new(x,y,width,height)
@@ -49,7 +47,6 @@ function clsUILayer:new(x,y,width,height)
   self.anchor={0.5,0.5}
   self.flip={0,0}
   self.tint={1,1,1,0,0,0}
-  self.time=os.time()
   return self
 end
 
@@ -229,14 +226,14 @@ function clsUILayer:dispatchEvent(event)
   end
   local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
+    --通过按下事件确认输入焦点
+    self.isKeyFocus=true
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
   if self.focusLayer then
     --找到焦点组件
     local lx,ly=self.focusLayer.x-self.focusLayer.anchor[1]*self.focusLayer.width,self.focusLayer.y-self.focusLayer.anchor[2]*self.focusLayer.height
-    self.focusLayer.time = os.time()
-    self.focusLayer.activation = true
     self.focusLayer:dispatchEvent(event:relativeEvent(-lx,-ly))
   else
     --未找到焦点组件
@@ -253,9 +250,30 @@ function clsUILayer:onTouch(event)
   callFunction(self.delegate,self.callback,self,event)
 end
 
+--输入事件分发 （lua层不应该调用此方法）
+function clsUILayer:dispatchKeyEvent(key)
+  local status=false
+  for _,layer in ipairs(self.children) do
+    if layer.isKeyFocus then
+      layer:dispatchKeyEvent(key)
+      status=true
+    end
+  end 
+  if not status then
+    self:onKey(key)
+  end
+end
+
 --处理输入事件（lua层不应该调用此方法）
 function clsUILayer:onKey(key)
-  callFunction(self.delegate,self.callback,self,key)
+
+end
+
+function clsUILayer:clearKeyFocus()
+  self.isKeyFocus=false
+  for _,layer in ipairs(self.children) do
+    layer:clearKeyFocus()
+  end 
 end
 
 --运行动作

@@ -32,7 +32,6 @@ require("clsUIButtonGroup")
 require("clsAStar")
 require("Notifier")
 require("Scheduler")
-require("AnimationPlayer")
 
 --common\action
 require("Action")

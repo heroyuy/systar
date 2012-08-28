@@ -41,8 +41,6 @@ end
 function clsUIEditText:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUIEditText)
-  self.enabled=true
-  self.keyEnabled=true
   self.clipBounds=true
   Scheduler:scheduleTask(self,"update",500,-1)
   return self
@@ -85,7 +83,7 @@ function clsUIEditText:paintLayer(painter)
     painter:drawString(self.hintText, 2, self.height/2, UIConst.anchor.LV)
   end
   --开始绘制光标
-  if self.activation and self.cursor then
+  if self.isKeyFocus and self.cursor then
     local w = 0
     if showText then
       w = painter:stringWidth(showText)

@@ -94,11 +94,6 @@ function Game:getTime()
   return smGame:getTime()
 end
 
---显示输入框
-function Game:showInputDialog(tip)
-  smGame:showInputDialog(tip)
-end
-
 --切换场景  lua调用
 function Game:changeScene(index)
   --(1)原场景onStop
