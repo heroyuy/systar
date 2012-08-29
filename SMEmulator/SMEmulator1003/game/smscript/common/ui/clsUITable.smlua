@@ -84,6 +84,14 @@ function clsUITable:refresh()
   end
 end
 
+function clsUITable:setSelectedIndex(index)
+	self.selectedIndex=index
+    local selectedLayer=self:childWithTag(self.CellTagMin+self.selectedIndex)
+    if selectedLayer then
+    	selectedLayer.image=self.cellSelectedBackground
+    end
+end
+
 function clsUITable:layerTapped(layer,event)
   if event:getType()==UIConst.eventType.DOWN then
     if self.selectedIndex then

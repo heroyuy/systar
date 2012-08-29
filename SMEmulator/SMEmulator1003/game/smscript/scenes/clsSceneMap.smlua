@@ -9,11 +9,14 @@ clsSceneMap = {}
 setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
+--按钮tag枚举
+clsSceneMap.CHAT_TAG=7
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
 clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
 clsSceneMap.spriteLayer=nil    		--精灵层（尺寸同地图）
 clsSceneMap.menuLayer=nil    		--菜单层
+clsSceneMap.chatButton=nil			--聊天按钮
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
@@ -59,6 +62,14 @@ function clsSceneMap:new()
     self.menuLayer:addChild(button)
   end
   GameLayer:addChildToScene(self.menuLayer)
+  
+  self.chatButton=clsUIButton:new(16,screenHeight-16,30,30)
+  self.chatButton.anchor={0,1}
+  self.chatButton.delegate=self
+  self.chatButton.tag=self.CHAT_TAG
+  self.chatButton.normalImage=smImageFactory:loadImage("/image/skin/talk_up.png")
+  self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
+  GameLayer:addChildToScene(self.chatButton)
   self.stepQueue=clsQueue:new()
   return self
 end
@@ -225,13 +236,13 @@ function clsSceneMap:buttonTapped(button)
   local index=button.tag
   if index==1 then
     --背包
-    smLog:info("[背包] 功能开发中")
+    smLog:info("[背包]功能开发中")
   elseif index==2 then
     --地图
     smLog:info("[地图 ]功能开发中")
   elseif index==3 then
     --属性
-    smLog:info("[属性] 功能开发中")
+    smLog:info("[属性]功能开发中")
   elseif index==4 then
     --人物
     smLog:info("[人物]功能开发中")
@@ -240,7 +251,10 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[技能 ]功能开发中")
   elseif index==6 then
     --炮弹
-    smLog:info("[炮弹] 功能开发中")
+    smLog:info("[炮弹]功能开发中")
+  elseif index==self.CHAT_TAG then
+  	--聊天
+  	smLog:info("[聊天]功能开发中")
   else
     --未知
     smLog:info("未知功能")

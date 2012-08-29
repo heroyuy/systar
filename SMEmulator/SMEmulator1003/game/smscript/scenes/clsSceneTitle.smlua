@@ -295,6 +295,7 @@ function clsSceneTitle:refreshListPlayer()
     	end
   	}
   	self.listPlayerTable:refresh()
+  	self.listPlayerTable:setSelectedIndex(1)
 end
 
 function clsSceneTitle:handleListPlayer(msg)
@@ -408,6 +409,7 @@ function clsSceneTitle:buttonTapped(button)
   		end
   elseif button==self.loginCancleButton then
   		--退出游戏
+  		smGame:stop()
   elseif button==self.listPlayerDeleteButton then
   		if self.listPlayerTable.selectedIndex then
   			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).id)
