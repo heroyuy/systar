@@ -1,5 +1,6 @@
 package com.soyomaker.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -30,6 +31,20 @@ public class PlayerService extends AbstractService {
 			log.error("删除角色错误", e);
 			return false;
 		}
+	}
+
+	/**
+	 * 更新player的x,y
+	 * 
+	 * @param id
+	 * @param x
+	 * @param y
+	 */
+	public void updateXY(Serializable id, int x, int y) {
+		Player player = this.get(Player.class, id);
+		player.setX(x);
+		player.setY(y);
+		this.update(player);
 	}
 
 }

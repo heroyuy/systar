@@ -1,6 +1,7 @@
 package com.soyomaker.handlers.map;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class MoveHandler extends AbHandler {
 		int x = player.getX();
 		int y = player.getY();
 		boolean res = true;
+		// 1s发送一次,客户端的行走发送的数据
 		Collection<Integer> steps = msg.getIntArray("steps");
 		for (int step : steps) {
 			switch (step) {
@@ -69,12 +71,38 @@ public class MoveHandler extends AbHandler {
 			// 验证通过
 			player.setX(x);
 			player.setY(y);
-			// TODO 延迟写
-			playerService.update(player);
+			
+			//延迟写
+			delayUpdate(player, x, y);
 			this.sendMessage(session, msg.getType(), false, "行走验证成功");
 		} else {
 			// 验证失败
 			this.sendMessage(session, msg.getType(), false, "行走验证失败");
 		}
+	}
+
+	private void delayUpdate(Player player, int x, int y) {
+		if (player.getLastUpdateTime() == null) {
+			// 第一次更新x,y
+			player.setLastUpdateTime(new Date());
+			playerService.updateXY(player.getId(), x, y);
+			return;
+		}
+		
+		if (intervalTime(new Date(), player.getLastUpdateTime()) >= 60) {
+			// 大于或等于60秒更新一次
+			player.setLastUpdateTime(new Date());
+			playerService.updateXY(player.getId(), x, y);
+			return;
+		}
+	}
+
+	private int intervalTime(Date now, Date lastTime) {
+		long nowL = now.getTime();
+		long lastL = lastTime.getTime();
+		long ei = nowL - lastL;
+
+		// TODO 需要测试
+		return (int) (ei / (1000));
 	}
 }
