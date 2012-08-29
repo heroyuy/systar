@@ -1,5 +1,6 @@
 package com.soyomaker.net;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +43,10 @@ public class UserSessionManager {
 
 	public synchronized void removeUserSession(long userId) {
 		this.sessionMap.remove(userId);
+	}
+	
+	public Collection<UserSession>  getAllUserSession(){
+		return sessionMap.values();
 	}
 
 }
