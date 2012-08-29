@@ -335,8 +335,12 @@ function clsSceneMap:sendChatContent()
 end
 
 function clsSceneMap:handleSendChatContent(msg)
-	local text = msg.playerName.."："..msg.content
-	self.chatLayerTextArea.text = text
+	local text = msg.playerName.."："..msg.content.."<n>[1]"
+	if self.chatLayerTextArea.text then
+		self.chatLayerTextArea.text=self.chatLayerTextArea.text..text
+	else
+		self.chatLayerTextArea.text=text
+	end
 	self.chatLayerTextArea:refresh()
 end
 
