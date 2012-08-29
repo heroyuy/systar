@@ -27,6 +27,7 @@ require("clsUIButton")
 require("clsUITable")
 require("clsUIEditText")
 require("clsUIButtonGroup")
+require("clsUIScrollLayer")
 
 --common\util
 require("clsAStar")

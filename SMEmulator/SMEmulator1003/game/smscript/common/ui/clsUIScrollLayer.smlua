@@ -1,0 +1,26 @@
+--[[
+  description:标签
+  author:wp_g4
+  date:2012/08/30
+--]]
+
+--类结构定义
+clsUIScrollLayer={}
+setmetatable(clsUIScrollLayer,clsUILayer)
+clsUIScrollLayer.__index=clsUIScrollLayer
+
+--重定向需要覆盖的父类方法
+clsUIScrollLayer.paintLayerF=clsUIScrollLayer.paintLayer
+
+--构造器
+function clsUIScrollLayer:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIScrollLayer)
+  return self
+end
+
+--绘制Label
+function clsUIScrollLayer:paintLayer(painter)
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+end
