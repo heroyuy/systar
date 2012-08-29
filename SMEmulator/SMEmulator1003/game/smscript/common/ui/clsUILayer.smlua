@@ -228,6 +228,9 @@ function clsUILayer:dispatchEvent(event)
   if type==UIConst.eventType.DOWN then
     --通过按下事件确认输入焦点
     self.isKeyFocus=true
+    for _,layer in ipairs(self.children) do
+      layer.isKeyFocus=false
+    end 
     --如果是DOWN事件，则从子组件中寻找焦点组件
     self.focusLayer = self:searchFocusLayer(x,y)
   end
@@ -267,13 +270,6 @@ end
 --处理输入事件（lua层不应该调用此方法）
 function clsUILayer:onKey(key)
 
-end
-
-function clsUILayer:clearKeyFocus()
-  self.isKeyFocus=false
-  for _,layer in ipairs(self.children) do
-    layer:clearKeyFocus()
-  end 
 end
 
 --运行动作

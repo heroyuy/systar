@@ -32,11 +32,6 @@ end
 
 --分发事件
 function GameLayer:dispatchEvent(event)
-  --通过按下事件确认输入焦点
-  local type=event:getType()
-  if type==UIConst.eventType.DOWN then
-    self.rootLayer:clearKeyFocus()
-  end
   self.rootLayer:dispatchEvent(event)
 end
 
