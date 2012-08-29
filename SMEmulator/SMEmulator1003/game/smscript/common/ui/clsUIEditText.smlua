@@ -17,12 +17,12 @@ clsUIEditText.NORMAL=0                         	   --常规输入框
 clsUIEditText.PASSWORD=1                           --密码输入框
 
 clsUIEditText.text=nil                             --标签文字
-clsUIEditText.textColor="0xffffffff"               --文字颜色
-clsUIEditText.textSize=-1                          --文字大小
+clsUIEditText.textColor="0xff000000"               --文字颜色
+clsUIEditText.textSize=16                          --文字大小
 
 clsUIEditText.hintText=nil                         --标签文字
-clsUIEditText.hintTextColor="0xffffffff"           --文字颜色
-clsUIEditText.hintTextSize=-1                      --文字大小
+clsUIEditText.hintTextColor="0xff000000"           --文字颜色
+clsUIEditText.hintTextSize=16                      --文字大小
 
 clsUIEditText.cursor=true				   		   --光标计时器
 clsUIEditText.cursorColor="0xff000000"

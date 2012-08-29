@@ -5,6 +5,7 @@ HandlerMap={}
 --加载handler配置
 require("HandlerMapLogin")
 require("HandlerMapPlayer")
+require("HandlerMapChat")
 
 MsgHandlerFactory["101001"]=HandlerMap.register
 MsgHandlerFactory["101002"]=HandlerMap.login
@@ -13,6 +14,7 @@ MsgHandlerFactory["102002"]=HandlerMap.deletePlayer
 MsgHandlerFactory["102003"]=HandlerMap.listPlayer
 MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
 MsgHandlerFactory["103001"]=HandlerMap.movePlayer
+MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
 
 function MsgHandlerFactory:dispatchMessage(msg)
   smLog:info("dispatchMessage:"..msg)

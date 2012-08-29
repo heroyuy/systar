@@ -19,7 +19,7 @@ clsUILabel.ALIGN_RIGHT=2                        --右对齐
 
 clsUILabel.text=nil                             --标签文字
 clsUILabel.textColor="0xffffffff"               --文字颜色
-clsUILabel.textSize=-1                          --文字大小
+clsUILabel.textSize=16                          --文字大小
 clsUILabel.alignment=clsUILabel.ALIGN_CENTER	--对齐方式
 
 --构造器

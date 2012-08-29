@@ -62,4 +62,8 @@ Const.NotifyCMD.Net={}
 	移动角色，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.MOVE_PLAYER="movePlayer"		--移动角色
+  --[[
+	发送聊天内容，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CHAT_SEND="sendChatContent"	--发送聊天内容
   

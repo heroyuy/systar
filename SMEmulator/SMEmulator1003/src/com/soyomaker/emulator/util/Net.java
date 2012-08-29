@@ -22,6 +22,8 @@ public class Net {
 
 	private static final String MSG_ID_MAP_MOVE = "103001";
 
+	private static final String MSG_ID_CHAT_SEND = "104001";
+
 	private static Net instance = new Net();
 
 	public static Net getInstance() {
@@ -121,6 +123,16 @@ public class Net {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_MAP_MOVE);
 		msg.putIntArray("steps", steps);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 发送聊天内容 104001
+	 */
+	public void sendChatContent(String content) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_CHAT_SEND);
+		msg.putString("content", content);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 }

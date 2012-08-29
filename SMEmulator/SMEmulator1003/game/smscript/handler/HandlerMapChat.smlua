@@ -1,0 +1,6 @@
+HandlerMap.sendChatContent={}
+
+function HandlerMap.sendChatContent:handleMessage(msg)
+  smLog:info("发送聊天内容")
+  Notifier:notify(Const.NotifyCMD.Net.CHAT_SEND,msg)
+end

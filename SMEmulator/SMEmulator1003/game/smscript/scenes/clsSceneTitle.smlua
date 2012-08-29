@@ -236,6 +236,17 @@ function clsSceneTitle:onStart()
   self.listPlayerLayer:addChild(self.joinGameButton)
   --角色选择层结束
   GameLayer:addChildToScene(self.bgLayer)
+  
+  --初始化动作
+  clsSceneTitle.loginDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.loginAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.registerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.registerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.createPlayerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.createPlayerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.listPlayerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.listPlayerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+  
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
   Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")
@@ -300,11 +311,9 @@ end
 
 function clsSceneTitle:handleListPlayer(msg)
 	smLog:info("获取角色列表成功")
-	self.loginDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   	self.loginLayer:runAction(self.loginDisappearAction)
   		
-  	self.createPlayerAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
-  	self.createPlayerLayer:runAction(self.createPlayerAppearAction)
+  	self.createPlayerLayer:runAction(self.createPlayerDisappearAction)
   	
   	self.loginEditName.text=""
 	self.loginEditPassword.text=""
@@ -312,7 +321,6 @@ function clsSceneTitle:handleListPlayer(msg)
 
 	self.createPlayerEditName.text=""
 	
-  	self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.listPlayerLayer:runAction(self.listPlayerAppearAction)
    
   	self:refreshListPlayer()
@@ -333,10 +341,8 @@ function clsSceneTitle:handleRegister(msg)
 	self.registerEditConfirmPassword.text=""
 	self.registerMsgLabel.text=""
 
-  	self.registerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     self.registerLayer:runAction(self.registerDisappearAction)
     	
-    self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     self.loginLayer:runAction(self.loginAppearAction)
   end
 end
@@ -353,16 +359,12 @@ function clsSceneTitle:buttonTapped(button)
       		smNet:login(self.loginEditName.text,self.loginEditPassword.text)
     	end
   elseif button==self.loginRegisterButton then
-    	self.loginDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.loginLayer:runAction(self.loginDisappearAction)
     	
-    	self.registerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.registerLayer:runAction(self.registerAppearAction)     
   elseif button==self.registerLoginButton then
-  		self.registerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.registerLayer:runAction(self.registerDisappearAction)
     	
-    	self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.loginLayer:runAction(self.loginAppearAction)
   elseif button==self.registerRegisterButton then
   		if self.registerEditName.text==nil
@@ -386,22 +388,16 @@ function clsSceneTitle:buttonTapped(button)
   			smNet:createPlayer(self.createPlayerEditName.text)
   		end
   elseif button==self.createPlayerCancleButton then
-  		self.createPlayerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   		self.createPlayerLayer:runAction(self.createPlayerDisappearAction)
   		
-  		self.listPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerAppearAction)
   elseif button==self.listPlayerCreatePlayerButton then
-  		self.listPlayerDisappearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
   		self.listPlayerLayer:runAction(self.listPlayerDisappearAction)
     	
-  		self.createPlayerAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
   		self.createPlayerLayer:runAction(self.createPlayerAppearAction)
   elseif button==self.listPlayerCancleButton then
-  		self.loginAppearAction = Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
   		self.loginLayer:runAction(self.loginAppearAction)
   		
-  		self.listPlayerDisAppearAction = Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
     	self.listPlayerLayer:runAction(self.listPlayerDisAppearAction)
   elseif button==self.joinGameButton then
   		if self.listPlayerTable.selectedIndex then
