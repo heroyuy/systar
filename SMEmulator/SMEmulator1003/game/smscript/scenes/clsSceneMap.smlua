@@ -29,6 +29,7 @@ clsSceneMap.chatButton=nil			--聊天按钮
 clsSceneMap.chatLayerCloseButton=nil
 clsSceneMap.chatLayerSendButton=nil
 clsSceneMap.chatLayerEditText=nil
+clsSceneMap.chatLayerTextArea=nil
 --聊天层结束
 
 clsSceneMap.aStar=nil      			--A*寻路工具
@@ -113,6 +114,12 @@ function clsSceneMap:new()
   self.chatLayerEditText.cursorColor="0xffffffff"
   self.chatLayerEditText.hideBackground=true
   self.chatLayer:addChild(self.chatLayerEditText)
+  
+  self.chatLayerTextArea=clsUITextArea:new(26,48,360,160)
+  self.chatLayerTextArea.anchor={0,0}
+  self.chatLayerTextArea.textSize=20
+  self.chatLayerTextArea.textColor="0xffffffff"
+  self.chatLayer:addChild(self.chatLayerTextArea)
   --初始化动作
   self.chatDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.chatAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
@@ -323,11 +330,14 @@ end
 function clsSceneMap:sendChatContent()
 	if self.chatLayerEditText.text then
 		smNet:sendChatContent(self.chatLayerEditText.text)
+		self.chatLayerEditText.text=""
 	end
 end
 
 function clsSceneMap:handleSendChatContent(msg)
-	smLog:info("clsSceneMap:handleSendChatContent")
+	local text = msg.playerName.."："..msg.content
+	self.chatLayerTextArea.text = text
+	self.chatLayerTextArea:refresh()
 end
 
 --============处理通知============
