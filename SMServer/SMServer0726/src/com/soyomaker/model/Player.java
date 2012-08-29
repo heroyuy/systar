@@ -1,10 +1,13 @@
 package com.soyomaker.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "player")
@@ -57,6 +60,12 @@ public class Player {
 	private Integer dext;
 
 	private Integer luck;
+	
+	/**
+	 * 根据时间周期，判断是否更新x,y到数据库上
+	 */
+	@Transient
+	private Date lastUpdateTime;
 
 	public Integer getAgil() {
 		return agil;
@@ -209,4 +218,13 @@ public class Player {
 	public void setY(Integer y) {
 		this.y = y;
 	}
+
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+	
 }
