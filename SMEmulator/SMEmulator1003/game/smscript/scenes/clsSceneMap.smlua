@@ -45,16 +45,18 @@ function clsSceneMap:new()
   self.mapFgLayer.enabled=false
   GameLayer:addChildToScene(self.mapFgLayer)
   --主菜单
-  local width,height=245,38
+  local width,height=350,42
   --背包 地图 属性 人物 技能 炮弹
-  local imageUp={"/image/skin/beibao_up.png","/image/skin/ditu_up.png","/image/skin/shuxing_up.png",
-                 "/image/skin/renwu_up.png","/image/skin/jineng_up.png","/image/skin/paodan_up.png"}
-  local imageDown={"/image/skin/beibao_down.png","/image/skin/ditu_down.png","/image/skin/shuxing_down.png",
-                 "/image/skin/renwu_down.png","/image/skin/jineng_down.png","/image/skin/paodan_down.png"}
+  local imageUp={"/image/skin/bag_up.png","/image/skin/status_up.png","/image/skin/skill_up.png",
+                 "/image/skin/tianfu_up.png","/image/skin/party_up.png","/image/skin/tank_up.png",
+                 "/image/skin/dancang_up.png","/image/skin/misson_up.png","/image/skin/system_up.png"}
+  local imageDown={"/image/skin/bag_down.png","/image/skin/status_down.png","/image/skin/skill_down.png",
+                   "/image/skin/tianfu_down.png","/image/skin/party_down.png","/image/skin/tank_down.png",
+                   "/image/skin/dancang_down.png","/image/skin/misson_down.png","/image/skin/system_down.png"}
   self.menuLayer=clsUILayer:new(screenWidth,screenHeight,width,height)
   self.menuLayer.anchor={1,1}
-  self.menuLayer.image=smImageFactory:loadImage("/image/skin/menu.png")
-  local bw,bh,gap,num=27,30,5,6
+  self.menuLayer.image=smImageFactory:loadImage("/image/skin/window_main.png")
+  local bw,bh,gap,num=30,30,5,9
   for i=1,num do
     local button=clsUIButton:new((self.menuLayer.width-num*bw-(num-1)*gap)/2+bw/2+(i-1)*(bw+gap),
                                   self.menuLayer.height/2,bw,bh)
