@@ -1,0 +1,45 @@
+--[[
+  description:人物面板窗体
+  author:cokey
+  date:2012/08/30
+--]]
+
+--类结构定义
+clsPlayerPanel={}
+setmetatable(clsPlayerPanel,clsUILayer)
+clsPlayerPanel.__index=clsPlayerPanel
+
+clsChatPanel.PLAYER_FACE_TAG=1
+clsChatPanel.PLAYER_RECHARGE_TAG=2
+
+clsPlayerPanel.faceButton=nil
+clsPlayerPanel.faceBackgroundLayer=nil
+clsPlayerPanel.rechargeButton=nil
+clsPlayerPanel.playerNameLable=nil
+clsPlayerPanel.moneyLable=nil
+clsPlayerPanel.backgroundLayer=nil
+
+--构造器
+function clsPlayerPanel:new(x,y)
+  local self = clsUILayer:new(x,y,287,96)
+  setmetatable(self,clsPlayerPanel)
+  self.anchor={0,0}
+  
+  self.backgroundLayer=clsUILayer:new(0,0,287,96)
+  self.backgroundLayer.anchor={0,0}
+  self.backgroundLayer.image=smImageFactory:loadImage("/image/skin/little_window.png")
+  self:addChild(self.backgroundLayer)
+  
+  self.faceBackgroundLayer=clsUILayer:new(36,37,73,74)
+  self.faceBackgroundLayer.image=smImageFactory:loadImage("/image/skin/face_button.png")
+  self:addChild(self.faceBackgroundLayer)
+  
+  self.faceButton=clsUIButton:new(36,37,64,65)
+  self.faceButton.delegate=self
+  self.faceButton.tag=self.PLAYER_FACE_TAG
+  self.faceButton.normalImage=smImageFactory:loadImage("/image/skin/face.png")
+  self.faceButton.highlightImage=smImageFactory:loadImage("/image/skin/face_down.png")
+  self:addChild(self.faceButton)
+  
+  return self
+end

@@ -56,7 +56,8 @@ require("clsPicker")
 require("clsBasicInfo")
 require("clsSprite")
 require("clsBag")
-require("clsChat")
+require("clsChatPanel")
+require("clsPlayerPanel")
 
 --scenes
 require("clsScene")

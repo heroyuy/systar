@@ -30,6 +30,8 @@ clsSceneMap.menuLayer=nil    		--菜单层
 clsSceneMap.chatButton=nil			--聊天按钮
 clsSceneMap.chatLayer=nil			--聊天层
 
+clsSceneMap.playerPanelLayer=nil	--人物面板层
+
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -85,8 +87,11 @@ function clsSceneMap:new()
   self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
   GameLayer:addChildToScene(self.chatButton)
   
-  self.chatLayer=clsChat:new(16,screenHeight-32,428,252)
+  self.chatLayer=clsChatPanel:new(8,screenHeight-32)
   GameLayer:addChildToScene(self.chatLayer)
+  
+  self.playerPanelLayer=clsPlayerPanel:new(8,8)
+  GameLayer:addChildToScene(self.playerPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
