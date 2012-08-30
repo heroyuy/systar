@@ -19,7 +19,6 @@ require("clsStack")
 
 --common\ui
 require("UIConst")
-require("Skin")
 require("clsUILayer")
 require("clsUILabel")
 require("clsUITextArea")

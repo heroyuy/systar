@@ -58,7 +58,6 @@ Interpreter.functionList={
   [101016]="toneImage",
   [101017]="playAnimation",
   [101018]="playAnimationInFight",
-  [101019]="changeSkin",
   [101020]="toneScene",
   [101021]="shakeScene",
   [101022]="openSystemMenu",
@@ -244,12 +243,6 @@ end
 
 --显示动画
 function Interpreter:playAnimationInFight(animationId,targetType,targetId)
-end
-
---更换皮肤
-function Interpreter:changeSkin(name)
-  Skin:init(name)
-  return true
 end
 
 --更改画面色调

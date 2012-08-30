@@ -27,7 +27,6 @@ clsUITable.CellTagMin=100								--单元格tag最小值
 --标准菜单
 function clsUITable:standardMenu(x,y,width,height,items,colNum)
   local menu=clsUITable:new(x,y,width,height)
-  menu.image=Skin:createBgWithFrame(menu.width,menu.height)
   menu.cellNum=table.getn(items)
   menu.colNum=colNum
   menu.dataSource={

@@ -25,8 +25,6 @@ function Game:onStart()
   GameLayer:init()
   --加载游戏数据
   DataLoader:init()
-  --初始化皮肤
-  Skin:init(Dictionary.config.skins.frame)
   --切换到标题场景
   self:changeScene(self.SCENE_TITLE)
 end

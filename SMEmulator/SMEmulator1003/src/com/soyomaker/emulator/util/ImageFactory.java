@@ -30,6 +30,7 @@ public class ImageFactory {
 		}
 		Image image = imageMap.get(fileName);
 		if (image == null) {
+			System.out.println(fileName);
 			image = new Image(GameConfig.getInstance().getGamePath() + fileName);
 			imageMap.put(fileName, image);
 		}

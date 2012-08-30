@@ -29,8 +29,6 @@ clsUIButton.buttonGroup=nil							--按钮组
 function clsUIButton:standardButton(x,y,width,height,title)
   local button=clsUIButton:new(x,y,width,height)
   button.text=title
-  button.normalImage=Skin:createBody(button.width,button.height)
-  button.highlightImage=Skin:createSelectedBg(button.width,button.height)
   return button
 end
 
