@@ -10,7 +10,16 @@ setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
 --按钮tag枚举
-clsSceneMap.CHAT_TAG=7
+clsSceneMap.TAG_BAG=1		--
+clsSceneMap.TAG_BAG=2		--
+clsSceneMap.TAG_BAG=3		--
+clsSceneMap.TAG_BAG=4		--
+clsSceneMap.TAG_BAG=5		--
+clsSceneMap.TAG_BAG=6		--
+clsSceneMap.TAG_BAG=7		--
+clsSceneMap.TAG_BAG=8		--
+clsSceneMap.TAG_BAG=9		--
+clsSceneMap.TAG_CHAT=10		--
 
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
@@ -58,7 +67,7 @@ function clsSceneMap:new()
   self.menuLayer.image=smImageFactory:loadImage("/image/skin/window_main.png")
   local bw,bh,gap,num=30,30,5,9
   for i=1,num do
-    local button=clsUIButton:new((self.menuLayer.width-num*bw-(num-1)*gap)/2+bw/2+(i-1)*(bw+gap),
+    local button=clsUIButton:new((self.menuLayer.width-num*bw-(num-1)*gap)/2+bw/2+(i-1)*(bw+gap)+2*gap,
                                   self.menuLayer.height/2,bw,bh)
     button.delegate=self
     button.normalImage=smImageFactory:loadImage(imageUp[i])
@@ -71,7 +80,7 @@ function clsSceneMap:new()
   self.chatButton=clsUIButton:new(8,screenHeight-4,30,30)
   self.chatButton.anchor={0,1}
   self.chatButton.delegate=self
-  self.chatButton.tag=self.CHAT_TAG
+  self.chatButton.tag=self.TAG_CHAT
   self.chatButton.normalImage=smImageFactory:loadImage("/image/skin/talk_up.png")
   self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
   GameLayer:addChildToScene(self.chatButton)
@@ -261,7 +270,7 @@ function clsSceneMap:buttonTapped(button)
   elseif index==6 then
     --炮弹
     smLog:info("[炮弹]功能开发中")
-  elseif index==self.CHAT_TAG then
+  elseif index==self.TAG_CHAT then
   	--聊天
   	self.chatLayer:setVisible(true)
   else
@@ -312,8 +321,7 @@ function clsSceneMap:characterMove(param)
       --GameData:checkScript(npc)
       return
     else
-      --TODO 主角行走
-      smLog:info("主角行走")
+      --smLog:info("主角行走")
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
       sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,320)
@@ -342,8 +350,7 @@ function clsSceneMap:characterMove(param)
       end
     end
     if npcMovable then
-      --TODO npc行走
-      smLog:info("npc行走")
+      --smLog:info("npc行走")
       character.moving=true
       local sprite=self.spriteLayer:childWithTag(character.id)
       sprite:walk((col-character.col)*GameData.curMap.cellWidth,(row-character.row)*GameData.curMap.cellHeight,320)
