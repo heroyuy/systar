@@ -23,9 +23,9 @@ clsChat.chatDisappearAction=nil
 clsChat.chatAppearAction=nil
 
 --构造器
-function clsBag:new(x,y,width,height)
+function clsChat:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
-  setmetatable(self,clsBag)
+  setmetatable(self,clsChat)
   self.anchor={0,1}
   self.image=smImageFactory:loadImage("/image/skin/talk_window.png")
   self.alpha=0

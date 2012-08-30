@@ -272,6 +272,7 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[炮弹]功能开发中")
   elseif index==self.TAG_CHAT then
   	--聊天
+  	smLog:info("[聊天]功能开发中")
   	self.chatLayer:setVisible(true)
   else
     --未知
