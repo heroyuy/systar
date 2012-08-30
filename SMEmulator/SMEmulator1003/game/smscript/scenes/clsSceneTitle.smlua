@@ -235,7 +235,12 @@ function clsSceneTitle:onStart()
   self.joinGameButton.delegate=self
   self.listPlayerLayer:addChild(self.joinGameButton)
   --角色选择层结束
-  GameLayer:addChildToScene(self.bgLayer)
+  local scrollLayer=clsUIScrollLayer:new(screenWidth/2,screenHeight/2,screenWidth/2,screenHeight/2)
+  scrollLayer.contentLayer:addChild(self.bgLayer)
+  self.bgLayer.anchor={0,0}
+  self.bgLayer.x,self.bgLayer.y=0,0
+  GameLayer:addChildToScene(scrollLayer)
+  scrollLayer.contentLayer.width,scrollLayer.contentLayer.height=self.bgLayer.width,self.bgLayer.height
   
   --初始化动作
   clsSceneTitle.loginDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
