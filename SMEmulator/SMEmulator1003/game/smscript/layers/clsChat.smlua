@@ -1,0 +1,102 @@
+--[[
+  description:聊天窗体
+  author:cokey
+  date:2012/06/30
+--]]
+
+--类结构定义
+clsChat={}
+setmetatable(clsChat,clsUILayer)
+clsChat.__index=clsChat
+
+--按钮tag枚举
+clsChat.CHAT_CLOSE_TAG=1
+clsChat.CHAT_SEND_TAG=2
+
+clsChat.chatLayerCloseButton=nil
+clsChat.chatLayerSendButton=nil
+clsChat.chatLayerEditText=nil
+clsChat.chatLayerTextArea=nil
+
+--动作
+clsChat.chatDisappearAction=nil
+clsChat.chatAppearAction=nil
+
+--构造器
+function clsBag:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsBag)
+  self.anchor={0,1}
+  self.image=smImageFactory:loadImage("/image/skin/talk_window.png")
+  self.alpha=0
+  
+  self.chatLayerCloseButton=clsUIButton:new(self.width-16,16,27,27)
+  self.chatLayerCloseButton.anchor={1,0}
+  self.chatLayerCloseButton.delegate=self
+  self.chatLayerCloseButton.tag=self.CHAT_CLOSE_TAG
+  self.chatLayerCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.chatLayerCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.chatLayerCloseButton)
+  
+  self.chatLayerSendButton=clsUIButton:new(self.width-24,self.height-8,74,30)
+  self.chatLayerSendButton.anchor={1,1}
+  self.chatLayerSendButton.delegate=self
+  self.chatLayerSendButton.tag=self.CHAT_SEND_TAG
+  self.chatLayerSendButton.normalImage=smImageFactory:loadImage("/image/skin/send_up.png")
+  self.chatLayerSendButton.highlightImage=smImageFactory:loadImage("/image/skin/send_down.png")
+  self:addChild(self.chatLayerSendButton)
+  
+  self.chatLayerEditText=clsUIEditText:standardEditText(52,self.height-8,272,27,clsUIEditText.NORMAL)
+  self.chatLayerEditText.anchor={0,1}
+  self.chatLayerEditText.textSize=20
+  self.chatLayerEditText.textColor="0xffffffff"
+  self.chatLayerEditText.cursorColor="0xffffffff"
+  self.chatLayerEditText.hideBackground=true
+  self:addChild(self.chatLayerEditText)
+  
+  self.chatLayerTextArea=clsUITextArea:new(26,48,360,160)
+  self.chatLayerTextArea.anchor={0,0}
+  self.chatLayerTextArea.textSize=20
+  self.chatLayerTextArea.textColor="0xffffffff"
+  self:addChild(self.chatLayerTextArea)
+  --初始化动作
+  self.chatDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.chatAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  Notifier:addObserver(Const.NotifyCMD.Net.CHAT_SEND,self,"handleSendChatContent")
+  return self
+end
+
+--设置聊天窗口的可见性
+function clsChat:setVisible(visible)
+	if visible then
+		self:runAction(self.chatAppearAction)
+	else
+		self:runAction(self.chatDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsChat:buttonTapped(button)
+	local index=button.tag
+	if index==self.CHAT_CLOSE_TAG then
+  		self:setVisible(false)
+  	elseif index==self.CHAT_SEND_TAG then
+  		if self.chatLayerEditText.text then
+			smNet:sendChatContent(self.chatLayerEditText.text)
+			self.chatLayerEditText.text=""
+		end
+  	end
+end
+
+--处理收到的聊天内容
+function clsChat:handleSendChatContent(msg)
+	local text = msg.playerName.."："..msg.content.."<n>[1]"
+	if self.chatLayerTextArea.text then
+		self.chatLayerTextArea.text=self.chatLayerTextArea.text..text
+	else
+		self.chatLayerTextArea.text=text
+	end
+	self.chatLayerTextArea:refresh()
+end
+
+

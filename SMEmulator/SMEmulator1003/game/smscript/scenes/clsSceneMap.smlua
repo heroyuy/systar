@@ -11,26 +11,15 @@ clsSceneMap.__index = clsSceneMap
 
 --按钮tag枚举
 clsSceneMap.CHAT_TAG=7
-clsSceneMap.CHAT_CLOSE_TAG=8
-clsSceneMap.CHAT_SEND_TAG=9
-
---动作
-clsSceneTitle.chatDisappearAction=nil
-clsSceneTitle.chatAppearAction=nil
 
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
 clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
 clsSceneMap.spriteLayer=nil    		--精灵层（尺寸同地图）
 clsSceneMap.menuLayer=nil    		--菜单层
-clsSceneMap.chatButton=nil			--聊天按钮
 
---聊天层开始
-clsSceneMap.chatLayerCloseButton=nil
-clsSceneMap.chatLayerSendButton=nil
-clsSceneMap.chatLayerEditText=nil
-clsSceneMap.chatLayerTextArea=nil
---聊天层结束
+clsSceneMap.chatButton=nil			--聊天按钮
+clsSceneMap.chatLayer=nil			--聊天层
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
@@ -85,44 +74,9 @@ function clsSceneMap:new()
   self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
   GameLayer:addChildToScene(self.chatButton)
   
-  self.chatLayer=clsUILayer:new(16,screenHeight-32,428,252)
-  self.chatLayer.anchor={0,1}
-  self.chatLayer.image=smImageFactory:loadImage("/image/skin/talk_window.png")
-  self.chatLayer.alpha=0
+  self.chatLayer=clsChat:new(16,screenHeight-32,428,252)
   GameLayer:addChildToScene(self.chatLayer)
   
-  self.chatLayerCloseButton=clsUIButton:new(self.chatLayer.width-16,16,27,27)
-  self.chatLayerCloseButton.anchor={1,0}
-  self.chatLayerCloseButton.delegate=self
-  self.chatLayerCloseButton.tag=self.CHAT_CLOSE_TAG
-  self.chatLayerCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
-  self.chatLayerCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
-  self.chatLayer:addChild(self.chatLayerCloseButton)
-  
-  self.chatLayerSendButton=clsUIButton:new(self.chatLayer.width-24,self.chatLayer.height-8,74,30)
-  self.chatLayerSendButton.anchor={1,1}
-  self.chatLayerSendButton.delegate=self
-  self.chatLayerSendButton.tag=self.CHAT_SEND_TAG
-  self.chatLayerSendButton.normalImage=smImageFactory:loadImage("/image/skin/send_up.png")
-  self.chatLayerSendButton.highlightImage=smImageFactory:loadImage("/image/skin/send_down.png")
-  self.chatLayer:addChild(self.chatLayerSendButton)
-  
-  self.chatLayerEditText=clsUIEditText:standardEditText(52,self.chatLayer.height-8,272,27,clsUIEditText.NORMAL)
-  self.chatLayerEditText.anchor={0,1}
-  self.chatLayerEditText.textSize=20
-  self.chatLayerEditText.textColor="0xffffffff"
-  self.chatLayerEditText.cursorColor="0xffffffff"
-  self.chatLayerEditText.hideBackground=true
-  self.chatLayer:addChild(self.chatLayerEditText)
-  
-  self.chatLayerTextArea=clsUITextArea:new(26,48,360,160)
-  self.chatLayerTextArea.anchor={0,0}
-  self.chatLayerTextArea.textSize=20
-  self.chatLayerTextArea.textColor="0xffffffff"
-  self.chatLayer:addChild(self.chatLayerTextArea)
-  --初始化动作
-  self.chatDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
-  self.chatAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   self.stepQueue=clsQueue:new()
   return self
 end
@@ -134,7 +88,6 @@ function clsSceneMap:onStart()
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
-  Notifier:addObserver(Const.NotifyCMD.Net.CHAT_SEND,self,"handleSendChatContent")
   --定时任务
   Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
@@ -308,40 +261,11 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[炮弹]功能开发中")
   elseif index==self.CHAT_TAG then
   	--聊天
-  	self:openChatDialog()
-  elseif index==self.CHAT_CLOSE_TAG then
-  	self:closeChatDialog()
-  elseif index==self.CHAT_SEND_TAG then
-  	self:sendChatContent()
+  	self.chatLayer:setVisible(true)
   else
     --未知
     smLog:info("未知功能")
   end
-end
-
-function clsSceneMap:closeChatDialog()
-	self.chatLayer:runAction(self.chatDisappearAction)
-end
-
-function clsSceneMap:openChatDialog()
-	self.chatLayer:runAction(self.chatAppearAction)
-end
-
-function clsSceneMap:sendChatContent()
-	if self.chatLayerEditText.text then
-		smNet:sendChatContent(self.chatLayerEditText.text)
-		self.chatLayerEditText.text=""
-	end
-end
-
-function clsSceneMap:handleSendChatContent(msg)
-	local text = msg.playerName.."："..msg.content.."<n>[1]"
-	if self.chatLayerTextArea.text then
-		self.chatLayerTextArea.text=self.chatLayerTextArea.text..text
-	else
-		self.chatLayerTextArea.text=text
-	end
-	self.chatLayerTextArea:refresh()
 end
 
 --============处理通知============
