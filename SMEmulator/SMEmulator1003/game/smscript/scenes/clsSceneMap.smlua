@@ -68,7 +68,7 @@ function clsSceneMap:new()
   local bw,bh,gap,num=30,30,5,9
   for i=1,num do
     local button=clsUIButton:new((self.menuLayer.width-num*bw-(num-1)*gap)/2+bw/2+(i-1)*(bw+gap)+2*gap,
-                                  self.menuLayer.height/2,bw,bh)
+                                  self.menuLayer.height/2+gap/2,bw,bh)
     button.delegate=self
     button.normalImage=smImageFactory:loadImage(imageUp[i])
     button.highlightImage=smImageFactory:loadImage(imageDown[i])
