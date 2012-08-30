@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
 
