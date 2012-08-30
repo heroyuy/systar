@@ -10,16 +10,16 @@ setmetatable(clsSceneMap,clsScene)
 clsSceneMap.__index = clsSceneMap
 
 --按钮tag枚举
-clsSceneMap.TAG_BAG=1		--
-clsSceneMap.TAG_BAG=2		--
-clsSceneMap.TAG_BAG=3		--
-clsSceneMap.TAG_BAG=4		--
-clsSceneMap.TAG_BAG=5		--
-clsSceneMap.TAG_BAG=6		--
-clsSceneMap.TAG_BAG=7		--
-clsSceneMap.TAG_BAG=8		--
-clsSceneMap.TAG_BAG=9		--
-clsSceneMap.TAG_CHAT=10		--
+clsSceneMap.TAG_BAG=1		--背包
+clsSceneMap.TAG_STATUS=2	--属性
+clsSceneMap.TAG_SKILL=3		--技能
+clsSceneMap.TAG_TALENT=4	--天赋
+clsSceneMap.TAG_TROOP=5		--队列
+clsSceneMap.TAG_TANK=6		--车厢
+clsSceneMap.TAG_MAG=7		--弹仓
+clsSceneMap.TAG_TASK=8		--任务
+clsSceneMap.TAG_SYSTEM=9	--系统
+clsSceneMap.TAG_CHAT=10		--聊天
 
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
@@ -252,27 +252,35 @@ end
 --按钮点击事件
 function clsSceneMap:buttonTapped(button)
   local index=button.tag
-  if index==1 then
+  if index==TAG_BAG then
     --背包
     smLog:info("[背包]功能开发中")
-  elseif index==2 then
-    --地图
-    smLog:info("[地图 ]功能开发中")
-  elseif index==3 then
+  elseif index==self.TAG_STATUS then
     --属性
     smLog:info("[属性]功能开发中")
-  elseif index==4 then
-    --人物
-    smLog:info("[人物]功能开发中")
-  elseif index==5 then
+  elseif index==self.TAG_SKILL then
     --技能
-    smLog:info("[技能 ]功能开发中")
-  elseif index==6 then
-    --炮弹
-    smLog:info("[炮弹]功能开发中")
+    smLog:info("[技能]功能开发中")
+  elseif index==self.TAG_TALENT then
+    --天赋
+    smLog:info("[天赋]功能开发中")
+  elseif index==self.TAG_TROOP then
+    --队列
+    smLog:info("[队列 ]功能开发中")
+  elseif index==self.TAG_TANK then
+    --车厢
+    smLog:info("[车厢]功能开发中")
+  elseif index==self.TAG_MAG then
+    --弹仓
+    smLog:info("[弹仓]功能开发中")
+  elseif index==self.TAG_TASK then
+    --任务
+    smLog:info("[任务]功能开发中")
+  elseif index==self.TAG_SYSTEM then
+    --系统
+    smLog:info("[系统]功能开发中")
   elseif index==self.TAG_CHAT then
   	--聊天
-  	smLog:info("[聊天]功能开发中")
   	self.chatLayer:setVisible(true)
   else
     --未知
