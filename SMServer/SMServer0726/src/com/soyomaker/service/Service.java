@@ -33,5 +33,4 @@ public interface Service<T> {
 	List<T> find(String hql, Object... params);
 
 	T findUnique(String hql, Object... values);
-
 }
