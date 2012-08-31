@@ -9,13 +9,13 @@ import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
-import com.soyomaker.service.UserService;
+import com.soyomaker.service.PlayerService;
 
 @Component("createPlayerHandler")
 public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
-	private UserService userService;
+	private PlayerService playerService;
 
 	@Autowired
 	private NetTransceiver netTransceiver;
@@ -37,7 +37,7 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (3)检查呢称是否已被使用
-		Player player = userService.findUnique("from Player p where p.name=? ",
+		Player player = playerService.findUnique("from Player p where p.name=? ",
 				name);
 		if (player != null) {
 			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
@@ -65,7 +65,7 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setVita(playerDict.getVita());
 		player.setDext(playerDict.getDext());
 		player.setLuck(playerDict.getDext());
-		boolean status = userService.savePlayer(player);
+		boolean status = playerService.save(player);
 		if (status) {
 			GameObject msgSent = this.buildPackage(msg.getType(), status,
 					"创建成功");

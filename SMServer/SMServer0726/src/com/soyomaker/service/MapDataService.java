@@ -7,12 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soyomaker.model.MapData;
 
+/**
+ * @author chenwentao
+ *
+ */
 @Service("mapDataService")
 @Transactional
-public class MapDataService extends AbstractService {
-
+public class MapDataService extends AbstractService<MapData> {
+	
 	public List<MapData> getAllMapData() {
-		return findAll(MapData.class);
+		return findAll();
 	}
-
+	
 }

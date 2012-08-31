@@ -19,7 +19,7 @@ public class DeletePlayerHandler extends AbHandler {
 	public void handleMessage(UserSession session, GameObject msg) {
 		int playerId = msg.getInt("playerId");
 		// (1)检查是否有此角色
-		Player player = playerService.get(Player.class, playerId);
+		Player player = playerService.get(playerId);
 		if (player == null) {
 			this.sendMessage(session, msg.getType(), false, "角色不存在");
 		}
@@ -28,7 +28,7 @@ public class DeletePlayerHandler extends AbHandler {
 			this.sendMessage(session, msg.getType(), false, "这个角色不属于你");
 		}
 		// (3)删除
-		boolean status = playerService.deletePlay(Player.class, playerId);
+		boolean status = playerService.delete(playerId);
 		this.sendMessage(session, msg.getType(), status, status ? "删除成功"
 				: "删除失败");
 	}

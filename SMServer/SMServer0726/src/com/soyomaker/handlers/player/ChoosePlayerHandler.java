@@ -18,7 +18,7 @@ public class ChoosePlayerHandler extends AbHandler {
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
 		Integer playerId = msg.getInt("playerId");
-		Player player = playerService.get(Player.class, playerId);
+		Player player = playerService.get(playerId);
 		if (player == null) {
 			this.sendMessage(session, msg.getType(), false, "选择角色不存在 ");
 			return;

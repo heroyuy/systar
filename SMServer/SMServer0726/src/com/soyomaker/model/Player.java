@@ -14,12 +14,20 @@ import javax.persistence.Transient;
 public class Player {
 
 	public static final int UP = 0;
-	
+
 	public static final int DOWN = 1;
-	
+
 	public static final int LEFT = 2;
-	
+
 	public static final int RIGHT = 3;
+
+	public static void main(String[] args) {
+		System.out.println(1 & 2);
+		System.out.println(1 & 3);
+		System.out.println(1 & 4);
+		System.out.println(1 & 5);
+		System.out.println(1 & 1);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,7 +68,7 @@ public class Player {
 	private Integer dext;
 
 	private Integer luck;
-	
+
 	/**
 	 * 根据时间周期，判断是否更新x,y到数据库上
 	 */
@@ -226,5 +234,5 @@ public class Player {
 	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
-	
+
 }
