@@ -18,6 +18,10 @@ clsPlayerPanel.rechargeButton=nil
 clsPlayerPanel.playerNameLable=nil
 clsPlayerPanel.goldLable=nil
 clsPlayerPanel.backgroundLayer=nil
+clsPlayerPanel.hpBar=nil
+clsPlayerPanel.spBar=nil
+clsPlayerPanel.hpTag=nil
+clsPlayerPanel.spTag=nil
 
 --动作
 clsPlayerPanel.playerPanelDisappearAction=nil
@@ -68,6 +72,26 @@ function clsPlayerPanel:new(x,y)
   self.rechargeButton.highlightImage=smImageFactory:loadImage("/image/skin/menny_down.png")
   self.backgroundLayer:addChild(self.rechargeButton)
   
+  self.hpBar=clsUILayer:new(76,26,201,16)
+  self.hpBar.anchor={0,0}
+  self.hpBar.image=smImageFactory:loadImage("/image/skin/red_bar.png")
+  self.backgroundLayer:addChild(self.hpBar)
+  
+  self.hpTag=clsUILayer:new(5,-5,201,16)
+  self.hpTag.anchor={0,0}
+  self.hpTag.image=smImageFactory:loadImage("/image/skin/HP.png")
+  self.hpBar:addChild(self.hpTag)
+  
+  self.spBar=clsUILayer:new(76,50,29,24)
+  self.spBar.anchor={0,0}
+  self.spBar.image=smImageFactory:loadImage("/image/skin/blue_bar.png")
+  self.backgroundLayer:addChild(self.spBar)
+  
+  self.spTag=clsUILayer:new(5,-5,29,24)
+  self.spTag.anchor={0,0}
+  self.spTag.image=smImageFactory:loadImage("/image/skin/TP.png")
+  self.spBar:addChild(self.spTag)
+  
   --初始化动作
   self.playerPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.playerPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
@@ -78,13 +102,11 @@ end
 function clsPlayerPanel:buttonTapped(button)
 	local index=button.tag
 	if index==self.PLAYER_FACE_TAG then
-		smLog:info("隐藏/显示面板")
 		if self.backgroundLayer.alpha==0 then
 			self.backgroundLayer:runAction(self.playerPanelAppearAction)
 		else
 			self.backgroundLayer:runAction(self.playerPanelDisappearAction)
 		end
   	elseif index==self.PLAYER_RECHARGE_TAG then
-  		smLog:info("进入商店")
   	end
 end
