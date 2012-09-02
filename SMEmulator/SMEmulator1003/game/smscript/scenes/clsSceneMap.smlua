@@ -95,7 +95,7 @@ function clsSceneMap:new()
   self.playerPanelLayer=clsPlayerPanel:new(8,8)
   GameLayer:addChildToScene(self.playerPanelLayer)
   
-  self.mapPanelLayer=clsMapPanel:new(screenWidth,8)
+  self.mapPanelLayer=clsMapPanel:new(screenWidth-8,8)
   GameLayer:addChildToScene(self.mapPanelLayer)
   
   self.stepQueue=clsQueue:new()

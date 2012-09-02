@@ -32,10 +32,10 @@ function clsMapPanel:new(x,y)
   self.mapButton.highlightImage=smImageFactory:loadImage("/image/skin/map_down.png")
   self:addChild(self.mapButton)
   
-  self.mapNameLable=clsUILabel:new(70,14,90,20)
-  self.mapNameLable.textSize=16
+  self.mapNameLable=clsUILabel:new(72,14,90,20)
+  self.mapNameLable.textSize=14
   self.mapNameLable.textColor="0xffffffff"
-  self.mapNameLable.text=""..GameData.curPlayer.mapName
+  self.mapNameLable.text=GameData.curPlayer.mapName.."("..GameData.curPlayer.col..","..GameData.curPlayer.row..")"
   self:addChild(self.mapNameLable)
   return self
 end
