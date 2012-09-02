@@ -50,16 +50,16 @@ function clsPlayerPanel:new(x,y)
   self.faceButton.highlightImage=smImageFactory:loadImage("/image/skin/face1_down.png")
   self:addChild(self.faceButton)
   
-  self.playerNameLable=clsUILabel:new(52,4,90,20)
-  self.playerNameLable.anchor={0,0}
+  self.playerNameLable=clsUILabel:new(112,4,90,20)
+  self.playerNameLable.anchor={0.5,0}
   self.playerNameLable.textSize=15
   self.playerNameLable.textColor="0xffffffff"
   self.playerNameLable.text=GameData.curPlayer.name
   self.backgroundLayer:addChild(self.playerNameLable)
  
-  self.goldLable=clsUILabel:new(10,70,90,20)
-  self.goldLable.anchor={0,0}
-  self.goldLable.textSize=16
+  self.goldLable=clsUILabel:new(60,70,90,20)
+  self.goldLable.anchor={0.5,0}
+  self.goldLable.textSize=15
   self.goldLable.textColor="0xffffffff"
   self.goldLable.text=""..GameData.curPlayer.money
   self.backgroundLayer:addChild(self.goldLable)
@@ -77,19 +77,19 @@ function clsPlayerPanel:new(x,y)
   self.hpBar.image=smImageFactory:loadImage("/image/skin/red_bar.png")
   self.backgroundLayer:addChild(self.hpBar)
   
-  self.hpTag=clsUILayer:new(5,-5,201,16)
+  self.hpTag=clsUILayer:new(5,-5,27,22)
   self.hpTag.anchor={0,0}
-  self.hpTag.image=smImageFactory:loadImage("/image/skin/HP.png")
+  self.hpTag.image=smImageFactory:loadImage("/image/skin/HP_18.png")
   self.hpBar:addChild(self.hpTag)
   
-  self.spBar=clsUILayer:new(76,50,29,24)
+  self.spBar=clsUILayer:new(76,50,201,16)
   self.spBar.anchor={0,0}
   self.spBar.image=smImageFactory:loadImage("/image/skin/blue_bar.png")
   self.backgroundLayer:addChild(self.spBar)
   
-  self.spTag=clsUILayer:new(5,-5,29,24)
+  self.spTag=clsUILayer:new(5,-5,27,22)
   self.spTag.anchor={0,0}
-  self.spTag.image=smImageFactory:loadImage("/image/skin/TP.png")
+  self.spTag.image=smImageFactory:loadImage("/image/skin/TP_18.png")
   self.spBar:addChild(self.spTag)
   
   --初始化动作

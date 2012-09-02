@@ -1,0 +1,48 @@
+--[[
+  description:地图面板窗体
+  author:cokey
+  date:2012/09/02
+--]]
+
+--类结构定义
+clsMapPanel={}
+setmetatable(clsMapPanel,clsUILayer)
+clsMapPanel.__index=clsMapPanel
+
+clsMapPanel.MAP_TAG=1
+
+clsMapPanel.mapButton=nil
+clsMapPanel.mapNameLable=nil
+
+--动作
+clsMapPanel.mapPanelDisappearAction=nil
+clsMapPanel.mapPanelAppearAction=nil
+
+--构造器
+function clsMapPanel:new(x,y)
+  local self = clsUILayer:new(x,y,187,52)
+  setmetatable(self,clsMapPanel)
+  self.anchor={1,0}
+  self.image=smImageFactory:loadImage("/image/skin/map_window.png")
+
+  self.mapButton=clsUIButton:new(161,26,42,44)
+  self.mapButton.delegate=self
+  self.mapButton.tag=self.MAP_TAG
+  self.mapButton.normalImage=smImageFactory:loadImage("/image/skin/map_up.png")
+  self.mapButton.highlightImage=smImageFactory:loadImage("/image/skin/map_down.png")
+  self:addChild(self.mapButton)
+  
+  self.mapNameLable=clsUILabel:new(70,14,90,20)
+  self.mapNameLable.textSize=16
+  self.mapNameLable.textColor="0xffffffff"
+  self.mapNameLable.text=""..GameData.curPlayer.mapName
+  self:addChild(self.mapNameLable)
+  return self
+end
+
+--按钮点击事件
+function clsMapPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.MAP_TAG then
+	end
+end

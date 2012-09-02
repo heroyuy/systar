@@ -58,6 +58,7 @@ require("clsSprite")
 require("clsBag")
 require("clsChatPanel")
 require("clsPlayerPanel")
+require("clsMapPanel")
 
 --scenes
 require("clsScene")
