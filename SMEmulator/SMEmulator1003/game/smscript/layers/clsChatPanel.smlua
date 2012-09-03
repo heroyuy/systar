@@ -55,7 +55,7 @@ function clsChatPanel:new(x,y)
   self.chatLayerEditText.hideBackground=true
   self:addChild(self.chatLayerEditText)
   
-  self.chatLayerTextAreaScrollLayer=clsUIScrollLayer:new(26,54,360,148)
+  self.chatLayerTextAreaScrollLayer=clsUIScrollLayer:new(26,56,360,140)
   self.chatLayerTextAreaScrollLayer.anchor={0,0}
   
   self.chatLayerTextArea=clsUITextArea:new(0,0,360,160)

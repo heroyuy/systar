@@ -14,6 +14,8 @@ clsUIImageNumber.paintLayerF=clsUIImageNumber.paintLayer
 
 clsUIImageNumber.number="0"
 clsUIImageNumber.numberImage=nil
+clsUIImageNumber.charWidth=nil	--单个数字的宽度
+clsUIImageNumber.charHeight=nil	--单个数字的高度
 
 --构造器
 --调用举例 xxx=clsUIImageNumber:new(5,5,20,10,"100/200",smImageFactory:loadImage("/image/skin/redword.png"))
@@ -22,6 +24,8 @@ function clsUIImageNumber:new(x,y,width,height,num,numberImg)
   setmetatable(self,clsUIImageNumber)
   self.number = num
   self.numberImage = numberImg
+  self.charWidth = self.numberImage:getWidth()/11	
+  self.charHeight = self.numberImage:getHeight()		
   return self
 end
 
@@ -29,15 +33,15 @@ function clsUIImageNumber:paintLayer(painter)
   --调用父类绘制方法
   self:paintLayerF(painter)
   if self.numberImage then
-  	local sw = self.numberImage:getWidth()/11	--单个数字的宽度
-  	local sh = self.numberImage:getHeight()		--单个数字的高度
   	local length = smString:length(""..self.number)	--数字的长度
   	for cnt=1, length, 1 do
   		local s = smString:subString(""..self.number, cnt, cnt)
   		if s~="/" then
-  			painter:drawImage(self.numberImage,s*sw,0,sw,sh,self.x+(cnt-1)*sw,self.y,UIConst.anchor.LT)
+  			painter:drawImage(self.numberImage,s*self.charWidth
+  				,0,self.charHeight,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
   		else
-  			painter:drawImage(self.numberImage,10*sw,0,sw,sh,self.x+(cnt-1)*sw,self.y,UIConst.anchor.LT)
+  			painter:drawImage(self.numberImage,10*self.charWidth
+  				,0,self.charHeight,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
   		end
   	end
   end
