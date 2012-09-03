@@ -37,7 +37,20 @@ function clsMapPanel:new(x,y)
   self.mapNameLable.textColor="0xffffffff"
   self.mapNameLable.text=GameData.curPlayer.mapName.."("..GameData.curPlayer.col..","..GameData.curPlayer.row..")"
   self:addChild(self.mapNameLable)
+  
+  --注册接收通知
+  Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   return self
+end
+
+--============处理通知============
+--character移动
+function clsMapPanel:characterMove(param)
+  local character=param.character
+  if character==GameData.curPlayer then
+  	local row,col=character.row,character.col
+  	self.mapNameLable.text=GameData.curPlayer.mapName.."("..col..","..row..")"
+  end
 end
 
 --按钮点击事件
