@@ -1,5 +1,5 @@
 --[[
-  description:图片字，支持 0123456789/ 排列的图片字
+  description:图片字，支持 0 1 2 3 4 5 6 7 8 9 / 排列的图片字 和 1 2 3 4 5 6 7 8 9 10 10+ 排列的图片字
   author:cokey
   date:2011/09/02
 --]]
@@ -9,6 +9,9 @@ clsUIImageNumber={}
 setmetatable(clsUIImageNumber,clsUILayer)
 clsUIImageNumber.__index=clsUIImageNumber
 
+clsUIImageNumber.NORMAL_TYPE=0
+clsUIImageNumber.ADDITION_TYPE=1
+
 --重定向需要覆盖的父类方法
 clsUIImageNumber.paintLayerF=clsUIImageNumber.paintLayer
 
@@ -16,6 +19,7 @@ clsUIImageNumber.number="0"
 clsUIImageNumber.numberImage=nil
 clsUIImageNumber.charWidth=nil	--单个数字的宽度
 clsUIImageNumber.charHeight=nil	--单个数字的高度
+clsUIImageNumber.type=0
 
 --构造器
 --调用举例 xxx=clsUIImageNumber:new(5,5,20,10,"100/200",smImageFactory:loadImage("/image/skin/redword.png"))
@@ -24,8 +28,8 @@ function clsUIImageNumber:new(x,y,width,height,num,numberImg)
   setmetatable(self,clsUIImageNumber)
   self.number = num
   self.numberImage = numberImg
-  self.charWidth = self.numberImage:getWidth()/11	
-  self.charHeight = self.numberImage:getHeight()		
+  self.charWidth = self.numberImage:getWidth()/11
+  self.charHeight = self.numberImage:getHeight()
   return self
 end
 
@@ -33,15 +37,25 @@ function clsUIImageNumber:paintLayer(painter)
   --调用父类绘制方法
   self:paintLayerF(painter)
   if self.numberImage then
-  	local length = smString:length(""..self.number)	--数字的长度
-  	for cnt=1, length, 1 do
-  		local s = smString:subString(""..self.number, cnt, cnt)
-  		if s~="/" then
-  			painter:drawImage(self.numberImage,s*self.charWidth
-  				,0,self.charHeight,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
-  		else
+  	if self.type==self.NORMAL_TYPE then
+  		local length = smString:length(""..self.number)	--数字的长度
+  		for cnt=1, length, 1 do
+  			local s = smString:subString(""..self.number, cnt, cnt)
+  			if s~="/" then
+  				painter:drawImage(self.numberImage,s*self.charWidth
+  					,0,self.charWidth,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
+  			else
+  				painter:drawImage(self.numberImage,10*self.charWidth
+  					,0,self.charWidth,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
+  			end
+  		end
+  	else
+  		if self.number-10>0 then
   			painter:drawImage(self.numberImage,10*self.charWidth
-  				,0,self.charHeight,self.charHeight,self.x+(cnt-1)*self.charWidth,self.y,UIConst.anchor.LT)
+  					,0,self.charWidth,self.charHeight,self.x,self.y,UIConst.anchor.LT)
+  		elseif self.number~=0 then
+  			painter:drawImage(self.numberImage,(self.number-1)*self.charWidth
+  					,0,self.charWidth,self.charHeight,self.x,self.y,UIConst.anchor.LT)
   		end
   	end
   end

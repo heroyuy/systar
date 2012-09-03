@@ -20,6 +20,7 @@ clsSceneMap.TAG_MAG=7		--弹仓
 clsSceneMap.TAG_TASK=8		--任务
 clsSceneMap.TAG_SYSTEM=9	--系统
 clsSceneMap.TAG_CHAT=10		--聊天
+clsSceneMap.TAG_PLAYER_FACE=11	--人物信息
 
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
@@ -28,8 +29,11 @@ clsSceneMap.spriteLayer=nil    		--精灵层（尺寸同地图）
 clsSceneMap.menuLayer=nil    		--菜单层
 
 clsSceneMap.chatButton=nil			--聊天按钮
+clsSceneMap.chatTip=nil				--聊天提示数字
 clsSceneMap.chatLayer=nil			--聊天层
 
+clsSceneMap.playerFaceBackgroundLayer=nil	--人物面板按钮背景
+clsSceneMap.playerFaceButton=nil	--人物面板按钮
 clsSceneMap.playerPanelLayer=nil	--人物面板层
 
 clsSceneMap.mapPanelLayer=nil		--地图面板层
@@ -87,6 +91,10 @@ function clsSceneMap:new()
   self.chatButton.tag=self.TAG_CHAT
   self.chatButton.normalImage=smImageFactory:loadImage("/image/skin/talk_up.png")
   self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
+  
+  self.chatTip=clsUIImageNumber:new(12,2,20,13,"0",smImageFactory:loadImage("/image/skin/number_talk.png"))
+  self.chatTip.type=clsUIImageNumber.ADDITION_TYPE
+  self.chatButton:addChild(self.chatTip)
   GameLayer:addChildToScene(self.chatButton)
   
   self.chatLayer=clsChatPanel:new(8,screenHeight-32)
@@ -94,6 +102,19 @@ function clsSceneMap:new()
   
   self.playerPanelLayer=clsPlayerPanel:new(8,8)
   GameLayer:addChildToScene(self.playerPanelLayer)
+  
+  self.playerFaceBackgroundLayer=clsUILayer:new(12,12,73,74)
+  self.playerFaceBackgroundLayer.anchor={0,0}
+  self.playerFaceBackgroundLayer.image=smImageFactory:loadImage("/image/skin/face_button.png")
+  GameLayer:addChildToScene(self.playerFaceBackgroundLayer)
+  
+  self.playerFaceButton=clsUIButton:new(44,45,73,74)
+  self.playerFaceButton.anchor={0.5,0.5}
+  self.playerFaceButton.delegate=self
+  self.playerFaceButton.tag=self.TAG_PLAYER_FACE
+  self.playerFaceButton.normalImage=smImageFactory:loadImage("/image/skin/face1.png")
+  self.playerFaceButton.highlightImage=smImageFactory:loadImage("/image/skin/face1_down.png")
+  GameLayer:addChildToScene(self.playerFaceButton)
   
   self.mapPanelLayer=clsMapPanel:new(screenWidth-8,8)
   GameLayer:addChildToScene(self.mapPanelLayer)
@@ -291,7 +312,18 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[系统]功能开发中")
   elseif index==self.TAG_CHAT then
   	--聊天
-  	self.chatLayer:setVisible(true)
+  	if self.chatLayer.alpha==0 then
+  		self.chatLayer:setVisible(true)
+  	else
+  		self.chatLayer:setVisible(false)
+  	end
+  elseif index==self.TAG_PLAYER_FACE then
+  	--人物头像
+	if self.playerPanelLayer.alpha==0 then
+		self.playerPanelLayer:setVisible(true)
+	else
+		self.playerPanelLayer:setVisible(false)
+	end
   else
     --未知
     smLog:info("未知功能")

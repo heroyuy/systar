@@ -234,7 +234,6 @@ function clsSceneTitle:onStart()
   self.joinGameButton.highlightImage=smImageFactory:loadImage("/image/skin/kaishi_down.png")
   self.joinGameButton.delegate=self
   self.listPlayerLayer:addChild(self.joinGameButton)
-  
   --角色选择层结束
   GameLayer:addChildToScene(self.bgLayer)
   
