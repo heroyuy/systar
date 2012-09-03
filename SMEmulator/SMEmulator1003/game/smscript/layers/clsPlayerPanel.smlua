@@ -22,6 +22,8 @@ clsPlayerPanel.hpBar=nil
 clsPlayerPanel.spBar=nil
 clsPlayerPanel.hpTag=nil
 clsPlayerPanel.spTag=nil
+clsPlayerPanel.hpNumber=nil
+clsPlayerPanel.spNumber=nil
 
 --动作
 clsPlayerPanel.playerPanelDisappearAction=nil
@@ -92,6 +94,17 @@ function clsPlayerPanel:new(x,y)
   self.spTag.image=smImageFactory:loadImage("/image/skin/TP_18.png")
   self.spBar:addChild(self.spTag)
   
+  local hp = GameData.curPlayer.hp.."/"..GameData.curPlayer:getProperty(GameData.curPlayer.HP)
+  smLog:info("hp "..hp)
+  self.hpNumber=clsUIImageNumber:new(0,0,100,16,hp,smImageFactory:loadImage("/image/skin/redword.png"))
+  self.hpNumber.anchor={0,0}
+  self.hpBar:addChild(self.hpNumber)
+  
+  local sp = GameData.curPlayer.sp.."/"..GameData.curPlayer:getProperty(GameData.curPlayer.SP)
+  smLog:info("sp "..sp)
+  self.spNumber=clsUIImageNumber:new(0,0,100,16,sp,smImageFactory:loadImage("/image/skin/blueword.png"))
+  self.spNumber.anchor={0,0}
+  self.spBar:addChild(self.spNumber)
   --初始化动作
   self.playerPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.playerPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)

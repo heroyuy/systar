@@ -1,0 +1,44 @@
+--[[
+  description:图片字，支持 0123456789/ 排列的图片字
+  author:cokey
+  date:2011/09/02
+--]]
+
+--类结构定义
+clsUIImageNumber={}
+setmetatable(clsUIImageNumber,clsUILayer)
+clsUIImageNumber.__index=clsUIImageNumber
+
+--重定向需要覆盖的父类方法
+clsUIImageNumber.paintLayerF=clsUIImageNumber.paintLayer
+
+clsUIImageNumber.number="0"
+clsUIImageNumber.numberImage=nil
+
+--构造器
+--调用举例 xxx=clsUIImageNumber:new(5,5,20,10,"100/200",smImageFactory:loadImage("/image/skin/redword.png"))
+function clsUIImageNumber:new(x,y,width,height,num,numberImg)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIImageNumber)
+  self.number = num
+  self.numberImage = numberImg
+  return self
+end
+
+function clsUIImageNumber:paintLayer(painter)
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+  if self.numberImage then
+  	local sw = self.numberImage:getWidth()/11	--单个数字的宽度
+  	local sh = self.numberImage:getHeight()		--单个数字的高度
+  	local length = smString:length(""..self.number)	--数字的长度
+  	for cnt=1, length, 1 do
+  		local s = smString:subString(""..self.number, cnt, cnt)
+  		if s~="/" then
+  			painter:drawImage(self.numberImage,s*sw,0,sw,sh,self.x+(cnt-1)*sw,self.y,UIConst.anchor.LT)
+  		else
+  			painter:drawImage(self.numberImage,10*sw,0,sw,sh,self.x+(cnt-1)*sw,self.y,UIConst.anchor.LT)
+  		end
+  	end
+  end
+end

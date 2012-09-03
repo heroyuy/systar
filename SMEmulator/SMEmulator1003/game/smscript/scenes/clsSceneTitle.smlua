@@ -234,18 +234,19 @@ function clsSceneTitle:onStart()
   self.joinGameButton.highlightImage=smImageFactory:loadImage("/image/skin/kaishi_down.png")
   self.joinGameButton.delegate=self
   self.listPlayerLayer:addChild(self.joinGameButton)
+  
   --角色选择层结束
   GameLayer:addChildToScene(self.bgLayer)
   
   --初始化动作
-  clsSceneTitle.loginDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.loginAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.registerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.registerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.createPlayerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.createPlayerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.listPlayerDisappearAction=Action:newFadeAction(0,500,clsAction.TYPE_LINEAR_TO)
-  clsSceneTitle.listPlayerAppearAction=Action:newFadeAction(1,500,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.loginDisappearAction=Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.loginAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.registerDisappearAction=Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.registerAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.createPlayerDisappearAction=Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.createPlayerAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.listPlayerDisappearAction=Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  clsSceneTitle.listPlayerAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
