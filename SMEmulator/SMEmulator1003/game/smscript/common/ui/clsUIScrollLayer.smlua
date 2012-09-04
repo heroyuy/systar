@@ -43,7 +43,7 @@ function clsUIScrollLayer:scrollWithEvent(event)
   local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     self.lastX,self.lastY=x,y
-  elseif type==UIConst.eventType.MOVE then
+  else
     local offsetX,offsetY=x-self.lastX,y-self.lastY
     self.lastX,self.lastY=x,y
     self:scroll(offsetX,offsetY)
@@ -53,7 +53,7 @@ end
 --滚动ScrollLayer
 function clsUIScrollLayer:scroll(offsetX,offsetY)
   --x方向
-  if self.horizontalScrollable then
+  if self.horizontalScrollable and self.contentLayer.width>self.width then
     self.contentLayer.x=self.contentLayer.x+offsetX
     if self.contentLayer.x>0 then
       self.contentLayer.x=0
@@ -62,7 +62,7 @@ function clsUIScrollLayer:scroll(offsetX,offsetY)
     end
   end
   --y方向
-  if self.verticalScrollable then
+  if self.verticalScrollable and self.contentLayer.height>self.height then
     self.contentLayer.y=self.contentLayer.y+offsetY
     if self.contentLayer.y>0 then
       self.contentLayer.y=0
