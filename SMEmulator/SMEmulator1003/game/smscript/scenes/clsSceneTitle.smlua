@@ -350,6 +350,7 @@ end
 --按钮点击的回调
 function clsSceneTitle:buttonTapped(button)
   if button==self.loginLoginButton then
+        self.loginEditPassword.text="111"  --随便定，开发阶段服务器不验证密码
   		if self.loginEditName.text==nil
   			or self.loginEditPassword.text==nil
   			or string.len(self.loginEditName.text)==0
