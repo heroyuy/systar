@@ -100,12 +100,12 @@ end
 function clsChatPanel:handleSendChatContent(msg)
 	local text = ""
 	if GameData.curPlayer.id==msg.playerId then
-		text = "我".."："..msg.content.."<n>[1]"
+		text = "我".."："..msg.content
 	else
-		text = msg.playerName.."："..msg.content.."<n>[1]"
+		text = msg.playerName.."："..msg.content
 	end
 	if self.chatLayerTextArea.text then
-		self.chatLayerTextArea.text=self.chatLayerTextArea.text..text
+		self.chatLayerTextArea.text=self.chatLayerTextArea.text.."<n>[1]"..text
 	else
 		self.chatLayerTextArea.text=text
 	end

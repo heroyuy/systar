@@ -60,7 +60,7 @@ function clsUITextArea:refresh()
       while colIndex<=smString:length(text) do
         local char=smString:subString(text,colIndex,colIndex)
         --(a)检查是否需要换行
-        if self.cursorX+painter:stringWidth(char)>width-2*self.gap then
+        if self.cursorX+painter:stringWidth(char)>width then
           self.cursorX=0
           self.cursorY=self.cursorY+self.textSize+self.gap
           self.rowNum=self.rowNum+1
