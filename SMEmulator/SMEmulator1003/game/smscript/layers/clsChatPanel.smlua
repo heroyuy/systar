@@ -91,7 +91,7 @@ function clsChatPanel:buttonTapped(button)
   	elseif index==self.CHAT_SEND_TAG then
   		if self.chatLayerEditText.text then
 			smNet:sendChatContent(self.chatLayerEditText.text)
-			self.chatLayerEditText.text=""
+			self.chatLayerEditText.text=nil
 		end
   	end
 end
