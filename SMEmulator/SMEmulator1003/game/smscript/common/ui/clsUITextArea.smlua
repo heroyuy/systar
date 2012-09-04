@@ -41,13 +41,14 @@ function clsUITextArea:refresh()
   --(2)创建足够大的缓冲图并初始化
   local num=table.getn(self.textItemList)
   local width,height=self.width,num*self.textSize+(num+1)*self.gap
+
   self.textImage=smImageFactory:createImage(width,height)
   local painter=self.textImage:getPainter()
   painter:setColor(self.textColor)
   painter:setTextSize(self.textSize)
   --(3)重置辅助标志
   local rowIndex,colIndex=1,1    --当前正在绘制的字符在textItemList中的位置
-  self.cursorX,self.cursorY=self.gap,self.gap
+  self.cursorX,self.cursorY=0,self.gap
   self.rowNum=0
   --(4)绘制
   while rowIndex<=num do

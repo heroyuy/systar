@@ -21,7 +21,7 @@ clsSceneMap.TAG_TASK=8		--任务
 clsSceneMap.TAG_SYSTEM=9	--系统
 clsSceneMap.TAG_CHAT=10		--聊天
 clsSceneMap.TAG_PLAYER_FACE=11	--人物信息
-
+clsMapPanel.TAG_MAP=12			--地图信息
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
 clsSceneMap.mapFgLayer=nil    		--前景（尺寸同窗口）
@@ -37,6 +37,8 @@ clsSceneMap.playerFaceButton=nil	--人物面板按钮
 clsSceneMap.playerPanelLayer=nil	--人物面板层
 
 clsSceneMap.mapPanelLayer=nil		--地图面板层
+clsSceneMap.mapButton=nil			--地图面板按钮
+clsSceneMap.mapNameLable=nil		--地图名称Lable
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口

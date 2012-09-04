@@ -43,10 +43,10 @@ function clsUIScrollLayer:scrollWithEvent(event)
   local x,y,type=event:getX(),event:getY(),event:getType()
   if type==UIConst.eventType.DOWN then
     self.lastX,self.lastY=x,y
-  else
+  elseif type==UIConst.eventType.MOVE then
     local offsetX,offsetY=x-self.lastX,y-self.lastY
-    self:scroll(offsetX,offsetY)
     self.lastX,self.lastY=x,y
+    self:scroll(offsetX,offsetY)
   end
 end
 
