@@ -10,7 +10,7 @@ import com.soyomaker.model.Player;
 
 /**
  * @author chenwentao
- *
+ * 
  */
 @Service("playerService")
 @Transactional
@@ -36,6 +36,10 @@ public class PlayerService extends AbstractService<Player> {
 
 	public Player findPlayerById(int playerId) {
 		return findUnique("from Player p where p.id=?", playerId);
+	}
+
+	public Player findPlayerByName(String name) {
+		return findUnique("from Player p where p.name=? ", name);
 	}
 
 }
