@@ -30,7 +30,6 @@ clsPlayerPanel.playerPanelAppearAction=nil
 function clsPlayerPanel:new(x,y)
   local self = clsUILayer:new(x,y,287,96)
   setmetatable(self,clsPlayerPanel)
-  self.anchor={0,0}
   
   self.backgroundLayer=clsUILayer:new(0,0,287,96)
   self.backgroundLayer.anchor={0,0}

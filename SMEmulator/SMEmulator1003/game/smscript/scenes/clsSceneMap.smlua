@@ -98,9 +98,11 @@ function clsSceneMap:new()
   GameLayer:addChildToScene(self.chatButton)
   
   self.chatLayer=clsChatPanel:new(8,screenHeight-32)
+  self.chatLayer.anchor={0,1}
   GameLayer:addChildToScene(self.chatLayer)
   
   self.playerPanelLayer=clsPlayerPanel:new(8,8)
+  self.playerPanelLayer.anchor={0,0}
   GameLayer:addChildToScene(self.playerPanelLayer)
   
   self.playerFaceBackgroundLayer=clsUILayer:new(12,12,73,74)
@@ -369,7 +371,7 @@ function clsSceneMap:characterMove(param)
     local npc=GameData:getNpcAt(row,col)
     if npc and not npc.penetrable then
       smLog:info("主角撞到Npc")
-      --GameData:checkScript(npc)
+      GameData:checkScript(npc)
       return
     else
       --smLog:info("主角行走")

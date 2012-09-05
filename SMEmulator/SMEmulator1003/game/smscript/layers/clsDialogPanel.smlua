@@ -1,0 +1,57 @@
+--[[
+  description:对话框。
+  author:cokey
+  date:2012/09/06
+--]]
+
+--类结构定义
+clsDialogPanel={}
+setmetatable(clsDialogPanel,clsUILayer)
+clsDialogPanel.__index=clsDialogPanel
+
+clsDialogPanel.contentLabel=nil
+
+--构造器
+function clsDialogPanel:new(name,content,bustPath,position)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self=clsUILayer:new(0,screenHeight-173,960,173)
+  setmetatable(self,clsDialogPanel)
+  self.callback="dialogEnd"
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,173)
+  bgLayer.anchor={0,1}
+  bgLayer.image=smImageFactory:loadImage("/image/skin/normal_dialog_window.png")
+  bgLayer.enabled=false
+  self:addChild(bgLayer)
+  --头像
+  local bustLayer=clsUILayer:new(60,40,96,96)
+  bustLayer.anchor={0,0}
+  bustLayer.image=smImageFactory:loadImage(bustPath)
+  bustLayer.enabled=false
+  self:addChild(bustLayer)
+  --姓名
+  local nameLabel=clsUILabel:new(200,20,60,20)
+  nameLabel.anchor={0,0}
+  nameLabel.text=name
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.textColor="0xffffffff"
+  nameLabel.enabled=false
+  bgLayer:addChild(nameLabel)
+  --内容
+  self.contentLabel=clsUITextArea:new(100,40,600,100)
+  self.contentLabel.anchor={0,0}
+  self.contentLabel.text=content
+  self.contentLabel.textColor="0xffffffff"
+  self.contentLabel:refresh()
+  self.contentLabel.enabled=false
+  bgLayer:addChild(self.contentLabel)
+  return self
+end
+
+function clsDialogPanel:onTouch(event)
+  local type=event:getType()
+  if type==UIConst.eventType.UP then
+      callFunction(self.delegate,self.callback)
+      smLog:info("关闭对话框")
+  end
+end

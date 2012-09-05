@@ -27,6 +27,7 @@ function GameLayer:init()
   self.rootLayer:addChild(self.animationLayer)
   --事件层
   self.eventLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  --self.eventLayer.enabled=false				--暂时不接收事件
   --self.rootLayer:addChild(self.eventLayer)
 end
 
@@ -63,20 +64,22 @@ end
 
 --显示普通对话框
 function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
-  local dialogLayer=self.dialogLayer
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local dialogLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   local delegate={}
   function delegate:dialogEnd()
     dialogLayer:clear()
     dialogLayer.enabled=false
-    dialogLayer.visibility=false
+    dialogLayer:removeFromParent()
     callFunction(target,callback)
   end
-  local normalDialog=clsDialog:new(name,content,bustPath,position)
+  local normalDialog=clsDialogPanel:new(name,content,bustPath,position)
+  normalDialog.anchor={0,1}
   normalDialog.delegate=delegate
   normalDialog.callback=delegate.dialogEnd
   dialogLayer.enabled=true
-  dialogLayer.visibility=true
   dialogLayer:addChild(normalDialog)
+  self.rootLayer:addChild(dialogLayer)
 end
 
 --显示选项对话框

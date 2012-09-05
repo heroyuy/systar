@@ -60,6 +60,7 @@ require("clsBag")
 require("clsChatPanel")
 require("clsPlayerPanel")
 require("clsMapPanel")
+require("clsDialogPanel")
 
 --scenes
 require("clsScene")

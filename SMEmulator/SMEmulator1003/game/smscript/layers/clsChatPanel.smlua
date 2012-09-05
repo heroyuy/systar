@@ -27,7 +27,6 @@ clsChatPanel.chatAppearAction=nil
 function clsChatPanel:new(x,y)
   local self = clsUILayer:new(x,y,428,252)
   setmetatable(self,clsChatPanel)
-  self.anchor={0,1}
   self.image=smImageFactory:loadImage("/image/skin/talk_window.png")
   self.alpha=0
   
