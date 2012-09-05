@@ -14,7 +14,7 @@ clsDialogPanel.contentLabel=nil
 --构造器
 function clsDialogPanel:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
-  local self=clsUILayer:new(0,screenHeight,960,173)
+  local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsDialogPanel)
   self.callback="dialogEnd"
   --背景
@@ -24,21 +24,22 @@ function clsDialogPanel:new(name,content,bustPath,position)
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustLayer=clsUILayer:new(60,40,96,96)
-  bustLayer.anchor={0,0}
+  local bustLayer=clsUILayer:new(100,90,96,96)
+  bustLayer.anchor={0.5,0.5}
   bustLayer.image=smImageFactory:loadImage(bustPath)
   bustLayer.enabled=false
-  self:addChild(bustLayer)
+  bgLayer:addChild(bustLayer)
   --姓名
-  local nameLabel=clsUILabel:new(200,20,60,20)
-  nameLabel.anchor={0,0}
+  local nameLabel=clsUILabel:new(280,35,80,20)
+  nameLabel.anchor={0.5,0.5}
   nameLabel.text=name
+  nameLabel.textSize=20
   nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.textColor="0xffffffff"
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   --内容
-  self.contentLabel=clsUITextArea:new(100,40,600,100)
+  self.contentLabel=clsUITextArea:new(0,0,100,100)
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
   self.contentLabel.textColor="0xffffffff"

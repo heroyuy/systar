@@ -64,22 +64,16 @@ end
 
 --显示普通对话框
 function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
-  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
-  local dialogLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  local normalDialog=clsDialogPanel:new(name,content,bustPath,position)
   local delegate={}
   function delegate:dialogEnd()
-    dialogLayer:clear()
-    dialogLayer.enabled=false
-    dialogLayer:removeFromParent()
+    normalDialog:removeFromParent()
     callFunction(target,callback)
   end
-  local normalDialog=clsDialogPanel:new(name,content,bustPath,position)
-  normalDialog.anchor={0,1}
   normalDialog.delegate=delegate
   normalDialog.callback=delegate.dialogEnd
-  dialogLayer.enabled=true
-  dialogLayer:addChild(normalDialog)
-  self.rootLayer:addChild(dialogLayer)
+  normalDialog.enabled=true
+  self.rootLayer:addChild(normalDialog)
 end
 
 --显示选项对话框
