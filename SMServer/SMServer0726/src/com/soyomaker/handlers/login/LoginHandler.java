@@ -31,10 +31,10 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (3)验证
-		if (!user.getPassword().equals(password)) {
-			this.sendMessage(session, msg.getType(), false, "密码不正确");
-			return;
-		}
+//		if (!user.getPassword().equals(password)) {
+//			this.sendMessage(session, msg.getType(), false, "密码不正确");
+//			return;
+//		}
 		// (4)登录成功
 		session.setUser(user);
 		UserSessionManager.getInstance().putUserSession(user.getId(), session);
