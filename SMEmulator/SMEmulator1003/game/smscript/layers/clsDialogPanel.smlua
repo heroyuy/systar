@@ -14,7 +14,7 @@ clsDialogPanel.contentLabel=nil
 --构造器
 function clsDialogPanel:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
-  local self=clsUILayer:new(0,screenHeight-173,960,173)
+  local self=clsUILayer:new(0,screenHeight,960,173)
   setmetatable(self,clsDialogPanel)
   self.callback="dialogEnd"
   --背景
