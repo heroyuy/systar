@@ -1,3 +1,3 @@
-Interpreter:doCommand(101006,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！","/image/face/头像.png",0)
-Interpreter:doCommand(101008,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！","/image/face/头像.png",{"yes","no","cancel"})
+Interpreter:doCommand(101006,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈，噢噢噢噢噢噢！","/image/face/头像.png",0)
+Interpreter:doCommand(101008,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈","/image/face/头像.png",{"111","222","333","444"})
 Interpreter:doCommand(101006,"g4","小明,测试测试测试！","/image/face/头像.png",0)

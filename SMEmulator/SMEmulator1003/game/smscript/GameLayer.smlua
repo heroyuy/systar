@@ -73,7 +73,9 @@ function GameLayer:showNormalDialog(name,content,bustPath,position,target,callba
   normalDialog.delegate=delegate
   normalDialog.callback=delegate.dialogEnd
   normalDialog.enabled=true
+  normalDialog.alpha=0
   self.rootLayer:addChild(normalDialog)
+  normalDialog:setVisible(true)
 end
 
 --显示选项对话框
@@ -87,5 +89,7 @@ function GameLayer:showOptionDialog(name,content,bustPath,options,target,callbac
   optionDialog.delegate=delegate
   optionDialog.callback=delegate.onSelected
   optionDialog.enabled=true
+  optionDialog.alpha=0
   self.rootLayer:addChild(optionDialog)
+  optionDialog:setVisible(true)
 end

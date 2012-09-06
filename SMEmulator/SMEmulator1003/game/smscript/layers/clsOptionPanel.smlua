@@ -9,16 +9,27 @@ clsOptionPanel={}
 setmetatable(clsOptionPanel,clsUILayer)
 clsOptionPanel.__index=clsOptionPanel
 
+clsOptionPanel.dialogDisappearAction = nil
+clsOptionPanel.dialogAppearAction = nil
+
 --构造器
 function clsOptionPanel:new(name,content,bustPath,optionItems)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsOptionPanel)
-  self.callback="optionSelected"
+  local n=table.getn(optionItems)
+  --对选项数目做限制，2~5之间
+  if n<2 then
+  	n=2
+  end
+  if n>5 then
+  	n=5
+  end
+  local bgImage=smImageFactory:loadImage("/image/skin/no"..n.."_dialog.png")
   --背景
-  local bgLayer=clsUILayer:new(0,self.height,960,211)
+  local bgLayer=clsUILayer:new(0,self.height,960,bgImage:getHeight())
   bgLayer.anchor={0,1}
-  bgLayer.image=smImageFactory:loadImage("/image/skin/no3_dialog.png")
+  bgLayer.image=bgImage
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
@@ -36,8 +47,8 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   nameLabel.textColor="0xffffffff"
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
-  --内容
-  self.contentLabel=clsUITextArea:new(170,60,720,100)
+  --内容 TODO TextArea换行有问题？
+  self.contentLabel=clsUITextArea:new(170,60,710,100)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
@@ -62,11 +73,25 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
     button.enabled=true
     bgLayer:addChild(button)
   end
+  --初始化动作
+  self.dialogDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.dialogAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   return self
 end
 
+--设置选项框的可见性
+function clsOptionPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.dialogAppearAction)
+	else
+		self:runAction(self.dialogDisappearAction)
+	end
+end
+
+--function clsOptionPanel:onTouch(event)
+--end
+
 function clsOptionPanel:buttonTapped(target)
   local index=target.tag
-  smLog:info("index "..index)
-  callFunction(self.delegate,self.callback,index)
+  callFunction(self.delegate,self.delegate.onSelected,index)
 end

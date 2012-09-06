@@ -10,13 +10,14 @@ setmetatable(clsDialogPanel,clsUILayer)
 clsDialogPanel.__index=clsDialogPanel
 
 clsDialogPanel.contentLabel=nil
-
+clsDialogPanel.dialogDisappearAction = nil
+clsDialogPanel.dialogAppearAction = nil
+  
 --构造器
 function clsDialogPanel:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsDialogPanel)
-  self.callback="dialogEnd"
   --背景
   local bgLayer=clsUILayer:new(0,self.height,960,173)
   bgLayer.anchor={0,1}
@@ -39,7 +40,7 @@ function clsDialogPanel:new(name,content,bustPath,position)
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   --内容
-  self.contentLabel=clsUITextArea:new(170,60,720,100)
+  self.contentLabel=clsUITextArea:new(170,60,710,100)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
@@ -48,13 +49,24 @@ function clsDialogPanel:new(name,content,bustPath,position)
   self.contentLabel:refresh()
   self.contentLabel.enabled=false
   bgLayer:addChild(self.contentLabel)
+  --初始化动作
+  self.dialogDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.dialogAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   return self
+end
+
+--设置对话框的可见性
+function clsDialogPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.dialogAppearAction)
+	else
+		self:runAction(self.dialogDisappearAction)
+	end
 end
 
 function clsDialogPanel:onTouch(event)
   local type=event:getType()
   if type==UIConst.eventType.UP then
       callFunction(self.delegate,self.callback)
-      smLog:info("关闭对话框")
   end
 end
