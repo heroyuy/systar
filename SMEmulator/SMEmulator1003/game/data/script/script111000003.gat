@@ -1,1 +1,2 @@
 Interpreter:doCommand(101006,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！","/image/face/头像.png",0)
+Interpreter:doCommand(101008,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！","/image/face/头像.png",{"yes","no","cancel"})

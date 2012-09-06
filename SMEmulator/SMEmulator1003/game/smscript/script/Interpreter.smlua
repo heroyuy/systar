@@ -189,12 +189,12 @@ function Interpreter:showInputDialog(tip)
 end
 
 --显示选项框 e.g  {"yes","no","cancel"}
-function Interpreter:showOptionDialog(options)
+function Interpreter:showOptionDialog(name,content,bustPath,options)
   local delegate={}
   function delegate:optionSelected(index)
     Interpreter:endCurrentEvent(index)
   end
-  GameLayer:showOptionDialog(options,delegate,"optionSelected")
+  GameLayer:showOptionDialog(name,content,bustPath,options,delegate,"optionSelected")
   return false  --返回值为flase表示此方法不立即返回
 end
 

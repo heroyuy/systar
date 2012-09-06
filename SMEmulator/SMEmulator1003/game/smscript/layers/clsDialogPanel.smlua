@@ -24,7 +24,7 @@ function clsDialogPanel:new(name,content,bustPath,position)
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustLayer=clsUILayer:new(86,76,96,96)
+  local bustLayer=clsUILayer:new(84,76,96,96)
   bustLayer.anchor={0.5,0.5}
   bustLayer.image=smImageFactory:loadImage(bustPath)
   bustLayer.enabled=false

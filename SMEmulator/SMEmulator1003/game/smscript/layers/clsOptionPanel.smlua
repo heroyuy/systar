@@ -1,0 +1,63 @@
+--[[
+  description:选项对话框
+  author:cokey
+  date:2011/04/21
+--]]
+
+--类结构定义
+clsOptionPanel={}
+setmetatable(clsOptionPanel,clsUILayer)
+clsOptionPanel.__index=clsOptionPanel
+
+--构造器
+function clsOptionPanel:new(name,content,bustPath,optionItems)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsOptionPanel)
+  self.callback="optionSelected"
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,211)
+  bgLayer.anchor={0,1}
+  bgLayer.image=smImageFactory:loadImage("/image/skin/no3_dialog.png")
+  bgLayer.enabled=false
+  self:addChild(bgLayer)
+  --头像
+  local bustLayer=clsUILayer:new(84,76,96,96)
+  bustLayer.anchor={0.5,0.5}
+  bustLayer.image=smImageFactory:loadImage(bustPath)
+  bustLayer.enabled=false
+  bgLayer:addChild(bustLayer)
+  --姓名
+  local nameLabel=clsUILabel:new(280,35,80,20)
+  nameLabel.anchor={0.5,0.5}
+  nameLabel.text=name
+  nameLabel.textSize=20
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.textColor="0xffffffff"
+  nameLabel.enabled=false
+  bgLayer:addChild(nameLabel)
+  --选项
+  local normalImage=smImageFactory:loadImage("/image/skin/button_dialog_up.png")
+  local highlightImage=smImageFactory:loadImage("/image/skin/button_dialog_down.png")
+  for i,v in ipairs(optionItems) do
+    local button=clsUIButton:new(170,60+(i-1)*(37+10),389,37)
+    button.anchor={0,0}
+    button.normalImage=normalImage
+    button.highlightImage=highlightImage
+    button.text=v
+    button.textColor="0xffffffff"
+    button.tag=i
+    button.delegate=self
+    bgLayer:addChild(button)
+  end
+  return self
+end
+
+--处理触屏事件（lua层不应该调用此方法）
+function clsOptionPanel:onTouch(event)
+end
+
+function clsOptionPanel:buttonTapped(target)
+  local index=target.tag
+  callFunction(self.delegate,self.callback,index)
+end

@@ -77,19 +77,15 @@ function GameLayer:showNormalDialog(name,content,bustPath,position,target,callba
 end
 
 --显示选项对话框
-function GameLayer:showOptionDialog(options,target,callback)
-  local dialogLayer=self.dialogLayer
+function GameLayer:showOptionDialog(name,content,bustPath,options,target,callback)
+  local optionDialog=clsOptionPanel:new(name,content,bustPath,options)
   local delegate={}
   function delegate:onSelected(index)
-    dialogLayer:clear()
-    dialogLayer.enabled=false
-    dialogLayer.visibility=false
+    optionDialog:removeFromParent()
     callFunction(target,callback,index)
   end
-  local optionDialog=clsOption:new(options)
   optionDialog.delegate=delegate
   optionDialog.callback=delegate.onSelected
-  dialogLayer.enabled=true
-  dialogLayer.visibility=true
-  dialogLayer:addChild(optionDialog)
+  optionDialog.enabled=true
+  self.rootLayer:addChild(optionDialog)
 end
