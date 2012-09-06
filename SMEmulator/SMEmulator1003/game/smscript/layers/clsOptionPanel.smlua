@@ -36,28 +36,37 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   nameLabel.textColor="0xffffffff"
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
+  --内容
+  self.contentLabel=clsUITextArea:new(170,60,720,100)
+  self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.contentLabel.anchor={0,0}
+  self.contentLabel.text=content
+  self.contentLabel.textSize=18
+  self.contentLabel.textColor="0xffffffff"
+  self.contentLabel:refresh()
+  self.contentLabel.enabled=false
+  bgLayer:addChild(self.contentLabel)
   --选项
   local normalImage=smImageFactory:loadImage("/image/skin/button_dialog_up.png")
   local highlightImage=smImageFactory:loadImage("/image/skin/button_dialog_down.png")
   for i,v in ipairs(optionItems) do
-    local button=clsUIButton:new(170,60+(i-1)*(37+10),389,37)
+    local button=clsUIButton:new(170,85+(i-1)*(37+4),389,37)
     button.anchor={0,0}
     button.normalImage=normalImage
     button.highlightImage=highlightImage
     button.text=v
+    button.textSize=18
     button.textColor="0xffffffff"
     button.tag=i
     button.delegate=self
+    button.enabled=true
     bgLayer:addChild(button)
   end
   return self
 end
 
---处理触屏事件（lua层不应该调用此方法）
-function clsOptionPanel:onTouch(event)
-end
-
 function clsOptionPanel:buttonTapped(target)
   local index=target.tag
+  smLog:info("index "..index)
   callFunction(self.delegate,self.callback,index)
 end
