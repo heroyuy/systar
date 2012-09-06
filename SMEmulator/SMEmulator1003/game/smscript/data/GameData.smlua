@@ -134,6 +134,7 @@ end
 function GameData:checkScript(npc)
   if self.curLockedNpc then
     --当前有脚本在执行则直接返回
+    smLog:info("当前有脚本在执行")
     return
   end
   local scriptId=Dictionary.npcs[npc.id].scriptId

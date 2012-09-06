@@ -20,11 +20,11 @@ function clsDialogPanel:new(name,content,bustPath,position)
   --背景
   local bgLayer=clsUILayer:new(0,self.height,960,173)
   bgLayer.anchor={0,1}
-  bgLayer.image=smImageFactory:loadImage("/image/skin/normal_dialog_window.png")
+  bgLayer.image=smImageFactory:loadImage("/image/skin/no2_dialog.png")
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustLayer=clsUILayer:new(100,90,96,96)
+  local bustLayer=clsUILayer:new(86,76,96,96)
   bustLayer.anchor={0.5,0.5}
   bustLayer.image=smImageFactory:loadImage(bustPath)
   bustLayer.enabled=false
@@ -39,9 +39,11 @@ function clsDialogPanel:new(name,content,bustPath,position)
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   --内容
-  self.contentLabel=clsUITextArea:new(0,0,100,100)
+  self.contentLabel=clsUITextArea:new(170,60,720,100)
+  self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
+  self.contentLabel.textSize=18
   self.contentLabel.textColor="0xffffffff"
   self.contentLabel:refresh()
   self.contentLabel.enabled=false
