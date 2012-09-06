@@ -138,8 +138,6 @@ function GameData:checkScript(npc)
     return
   end
   local scriptId=Dictionary.npcs[npc.id].scriptId
-  --锁定player
-  self.curPlayer.locked=true
   --锁定当前Npc
   npc.locked=true
   self.curLockedNpc=npc

@@ -123,8 +123,6 @@ end
 ----------接收通知------------
 --Const.NotifyCMD.System.SCRIPT_END
 function Game:scriptEnd()
-  --解锁player
-  GameData.curPlayer:unlock()
   --解锁Npc
   if GameData.curLockedNpc then
     GameData.curLockedNpc.locked=false
