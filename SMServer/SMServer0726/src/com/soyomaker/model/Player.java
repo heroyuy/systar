@@ -1,5 +1,6 @@
 package com.soyomaker.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -70,6 +71,12 @@ public class Player {
 	private Integer luck;
 
 	/**
+	 * 当前任务列表
+	 */
+	@Transient
+	private Collection<PlayerTask> playerTasks;
+
+	/**
 	 * 根据时间周期，判断是否更新x,y到数据库上
 	 */
 	@Transient
@@ -103,6 +110,10 @@ public class Player {
 		return inte;
 	}
 
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
 	public Integer getLevel() {
 		return level;
 	}
@@ -125,6 +136,10 @@ public class Player {
 
 	public String getName() {
 		return name;
+	}
+
+	public Collection<PlayerTask> getPlayerTasks() {
+		return playerTasks;
 	}
 
 	public Integer getSp() {
@@ -179,6 +194,10 @@ public class Player {
 		this.inte = inte;
 	}
 
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
@@ -203,6 +222,10 @@ public class Player {
 		this.name = name;
 	}
 
+	public void setPlayerTasks(Collection<PlayerTask> playerTasks) {
+		this.playerTasks = playerTasks;
+	}
+
 	public void setSp(Integer sp) {
 		this.sp = sp;
 	}
@@ -225,14 +248,6 @@ public class Player {
 
 	public void setY(Integer y) {
 		this.y = y;
-	}
-
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
-	}
-
-	public void setLastUpdateTime(Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
 	}
 
 }
