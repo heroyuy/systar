@@ -13,7 +13,7 @@ import com.soyomaker.model.User;
 @Transactional
 public class UserService extends AbstractService<User> {
 
-	public User findUserByUsername(String username) {
+	public User findByUsername(String username) {
 		return findUnique("from User u where u.username=?", username);
 	}
 }

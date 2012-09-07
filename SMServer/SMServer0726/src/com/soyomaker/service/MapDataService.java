@@ -15,7 +15,7 @@ import com.soyomaker.model.MapData;
 @Transactional
 public class MapDataService extends AbstractService<MapData> {
 	
-	public List<MapData> getAllMapData() {
+	public List<MapData> getAll() {
 		return findAll();
 	}
 	

@@ -37,7 +37,7 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (3)检查呢称是否已被使用
-		Player player = playerService.findPlayerByName(name);
+		Player player = playerService.findByName(name);
 		if (player != null) {
 			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
 			return;

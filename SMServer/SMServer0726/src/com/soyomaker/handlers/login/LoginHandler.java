@@ -3,6 +3,7 @@ package com.soyomaker.handlers.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.soyomaker.config.Config;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
@@ -25,16 +26,18 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (2)取用户名为 userName 的帐户
-		User user = userService.findUserByUsername(username);
+		User user = userService.findByUsername(username);
 		if (user == null) {
 			this.sendMessage(session, msg.getType(), false, "帐号不存在");
 			return;
 		}
 		// (3)验证
-//		if (!user.getPassword().equals(password)) {
-//			this.sendMessage(session, msg.getType(), false, "密码不正确");
-//			return;
-//		}
+		if(Config.isDebug()==false){
+			if (!user.getPassword().equals(password)) {
+				this.sendMessage(session, msg.getType(), false, "密码不正确");
+				return;
+			}
+		}
 		// (4)登录成功
 		session.setUser(user);
 		UserSessionManager.getInstance().putUserSession(user.getId(), session);

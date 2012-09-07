@@ -23,6 +23,11 @@
 
 	<context:property-placeholder ignore-resource-not-found="true"
 		location="classpath*:/application.properties" />
+		
+	<!-- 系统全局配置 -->
+	<bean id="config" class="">
+		<property name="debug">${debug}</property>
+	</bean>
 
 
 	<!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->

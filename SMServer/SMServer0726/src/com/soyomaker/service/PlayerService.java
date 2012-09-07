@@ -30,15 +30,15 @@ public class PlayerService extends AbstractService<Player> {
 		this.update(player);
 	}
 
-	public List<Player> findPlayerByUserId(long userId) {
+	public List<Player> findByUserId(long userId) {
 		return find("from Player p where p.userId=?", userId);
 	}
 
-	public Player findPlayerById(int playerId) {
+	public Player findById(int playerId) {
 		return findUnique("from Player p where p.id=?", playerId);
 	}
 
-	public Player findPlayerByName(String name) {
+	public Player findByName(String name) {
 		return findUnique("from Player p where p.name=? ", name);
 	}
 

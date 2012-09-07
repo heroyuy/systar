@@ -1,5 +1,6 @@
 package com.soyomaker.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -7,33 +8,24 @@ import javax.persistence.Table;
 @Table(name = "task_player")
 public class PlayerTask {
 
-	private int playerId;
+	@EmbeddedId
+	private PlayerTaskId id;
 
-	private int taskId;
+	private Integer step;
 
-	private int step;
-
-	public int getPlayerId() {
-		return playerId;
+	public PlayerTaskId getId() {
+		return id;
 	}
 
-	public int getStep() {
+	public void setId(PlayerTaskId id) {
+		this.id = id;
+	}
+
+	public Integer getStep() {
 		return step;
 	}
 
-	public int getTaskId() {
-		return taskId;
-	}
-
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
-	}
-
-	public void setStep(int step) {
+	public void setStep(Integer step) {
 		this.step = step;
-	}
-
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
 	}
 }

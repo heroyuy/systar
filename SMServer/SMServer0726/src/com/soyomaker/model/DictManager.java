@@ -31,10 +31,10 @@ public class DictManager {
 
 	public void load() {
 		// 加载player配置
-		player = playerService.findPlayerById(-1);
+		player = playerService.findById(-1);
 		// 加载mapData
 		mapDataMap = new HashMap<Integer, MapData>();
-		List<MapData> list = mapDataService.getAllMapData();
+		List<MapData> list = mapDataService.getAll();
 		for (MapData mapData : list) {
 			mapData.updateWayMatrix();
 			mapDataMap.put(mapData.getId(), mapData);

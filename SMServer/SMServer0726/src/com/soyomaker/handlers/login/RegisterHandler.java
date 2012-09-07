@@ -34,7 +34,7 @@ public class RegisterHandler extends AbHandler {
 			return;
 		}
 		// (4)检查用户名是否已经存在
-		User user = userService.findUserByUsername(username);
+		User user = userService.findByUsername(username);
 		if (user != null) {
 			this.sendMessage(session, msg.getType(), false, "用户名已存在");
 			return;
