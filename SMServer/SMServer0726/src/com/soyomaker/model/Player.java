@@ -2,6 +2,7 @@ package com.soyomaker.model;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -67,7 +68,7 @@ public class Player {
 	 * 当前任务列表
 	 */
 	@Transient
-	private Map<Integer, PlayerTask> playerTasks = new HashMap<Integer, PlayerTask>();
+	private Map<Integer, PlayerTask> playerTasks = new LinkedHashMap<Integer, PlayerTask>();
 
 	/**
 	 * 根据时间周期，判断是否更新x,y到数据库上
