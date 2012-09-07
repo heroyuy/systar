@@ -1,5 +1,14 @@
 Interpreter:doCommand(101006,"g4","你能帮帮我吗？","/image/face/头像.png",0)
-Interpreter:doCommand(101008,"梁鸿博李可","帮我干掉下面这些怪物，他们抢走了我的孩子！","/image/face/头像.png",{"  【收集】荒漠变异黄蜂群","  【普通】沙漠狼","  【通缉令】特里克","  【通缉令】变异牛"})
-Interpreter:doCommand(101006,"89757","希望你能活着回来！","/image/face/头像.png",0)
+local index = Interpreter:doCommand(101008,"梁鸿博李可","帮我干掉下面这些怪物，他们抢走了我的孩子！▼","/image/face/头像.png",{"  【收集】荒漠变异黄蜂群","  【普通】沙漠狼","  【通缉令】特里克","  【通缉令】变异牛"})
+if index==1 then
+  Interpreter:doCommand(101006,"89757","去干掉荒漠变异黄蜂群吧，希望你能活着回来！","/image/face/头像.png",0)
+elseif index==2 then
+  Interpreter:doCommand(101006,"89757","去干掉沙漠狼吧，希望你能活着回来！","/image/face/头像.png",0)
+elseif index==3 then
+  Interpreter:doCommand(101006,"89757","去干掉可恶的特里克吧，希望你能活着回来！","/image/face/头像.png",0)
+elseif index==4 then
+  Interpreter:doCommand(101006,"89757","去干掉凶残的变异牛吧，希望你能活着回来！","/image/face/头像.png",0)
+end
+
 
 
