@@ -2,15 +2,17 @@ package com.soyomaker.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "task_player")
 public class PlayerTask {
-
+	
+	@Id
 	@EmbeddedId
 	private PlayerTaskId id;
-
+	
 	private Integer step;
 
 	public PlayerTaskId getId() {

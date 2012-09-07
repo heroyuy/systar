@@ -111,6 +111,7 @@
 				<entry key="102004" value-ref="p102004" />
 				<entry key="103001" value-ref="p103001" />
 				<entry key="104001" value-ref="p104001" />
+				<entry key="105001" value-ref="p105001" />
 			</map>
 		</property>
 	</bean>
@@ -170,6 +171,13 @@
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="chatHandler" />
+	</bean>
+	
+	<bean id="p105001" class="com.soyomaker.net.Protocol">
+		<property name="id" value="105001" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="applyTaskHandler" />
 	</bean>
 
 	<!--======================================= net Service end ======================================= -->
