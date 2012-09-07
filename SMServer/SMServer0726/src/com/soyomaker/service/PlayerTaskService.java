@@ -22,15 +22,15 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	}
 
 	/**
-	 * 从数据库读取player的所有任务
+	 * 用户选择角色
 	 * 
 	 * @param player
 	 */
-	public void loadPlayerTask(Player player) {
-		List<PlayerTask> tasks = findByPlayerId(player.getId());
-		//TODO 是否要清空，还是看业务
+	public void choosePlayer(Player player) {
+		// 保证清空上次的
 		player.clearNowTasks();
-		for (PlayerTask playerTask : tasks) {
+		List<PlayerTask> pts = findByPlayerId(player.getId());
+		for (PlayerTask playerTask : pts) {
 			player.setPlayerTasks(playerTask.getId().getTaskId(), playerTask);
 		}
 	}
