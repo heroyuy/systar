@@ -18,7 +18,7 @@ import com.soyomaker.model.PlayerTask;
 public class PlayerTaskService extends AbstractService<PlayerTask> {
 
 	public List<PlayerTask> findPlayerTaskByPlayerId(int playerId) {
-		return find("from PlayerTask pt where pt.playerId=?", playerId);
+		return find("from PlayerTask pt where pt.id.playerId=?", playerId);
 	}
 
 	/**
