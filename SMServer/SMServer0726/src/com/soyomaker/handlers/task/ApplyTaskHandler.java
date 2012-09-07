@@ -15,7 +15,7 @@ public class ApplyTaskHandler extends AbHandler {
 		// (1)取待申请任务ID
 		int id = msg.getInt("id");
 		// (2)是否已经申请(正在进行或者已经完成)
-		PlayerTask playerTask = session.getUser().getPlayer().getPlayerTask(id);
+		PlayerTask playerTask = session.getUser().getPlayer().getPlayerTaskId(id);
 		if (playerTask!=null) {
 			
 		}

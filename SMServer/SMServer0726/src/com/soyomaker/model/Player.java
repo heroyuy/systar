@@ -1,7 +1,8 @@
 package com.soyomaker.model;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,14 +22,6 @@ public class Player {
 	public static final int LEFT = 2;
 
 	public static final int RIGHT = 3;
-
-	public static void main(String[] args) {
-		System.out.println(1 & 2);
-		System.out.println(1 & 3);
-		System.out.println(1 & 4);
-		System.out.println(1 & 5);
-		System.out.println(1 & 1);
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -74,7 +67,7 @@ public class Player {
 	 * 当前任务列表
 	 */
 	@Transient
-	private Collection<PlayerTask> playerTasks;
+	private Map<Integer, PlayerTask> playerTasks = new HashMap<Integer, PlayerTask>();
 
 	/**
 	 * 根据时间周期，判断是否更新x,y到数据库上
@@ -138,9 +131,9 @@ public class Player {
 		return name;
 	}
 
-	public Collection<PlayerTask> getPlayerTasks() {
-		return playerTasks;
-	}
+	// public Map<Integer,PlayerTask> getPlayerTasks() {
+	// return playerTasks;
+	// }
 
 	public Integer getSp() {
 		return sp;
@@ -222,8 +215,13 @@ public class Player {
 		this.name = name;
 	}
 
-	public void setPlayerTasks(Collection<PlayerTask> playerTasks) {
-		this.playerTasks = playerTasks;
+	/**
+	 * 
+	 * @param taskId
+	 * @param playerTask
+	 */
+	public void setPlayerTasks(Integer taskId, PlayerTask playerTask) {
+		this.playerTasks.put(taskId, playerTask);
 	}
 
 	public void setSp(Integer sp) {
@@ -250,17 +248,11 @@ public class Player {
 		this.y = y;
 	}
 
-	public PlayerTask getPlayerTask(int taskId) {
-		PlayerTask playerTask = null;
-		if (playerTasks != null) {
-			for (PlayerTask pt : playerTasks) {
-				if (pt.getId().getTaskId() == taskId) {
-					playerTask = pt;
-					break;
-				}
-			}
-		}
-		return playerTask;
+	public PlayerTask getPlayerTaskId(int taskId) {
+		return playerTasks.get(taskId);
 	}
 
+	public void clearNowTasks() {
+		playerTasks.clear();
+	}
 }

@@ -17,7 +17,7 @@ import com.soyomaker.model.PlayerTask;
 @Transactional
 public class PlayerTaskService extends AbstractService<PlayerTask> {
 
-	public List<PlayerTask> findPlayerTaskByPlayerId(int playerId) {
+	public List<PlayerTask> findByPlayerId(int playerId) {
 		return find("from PlayerTask pt where pt.id.playerId=?", playerId);
 	}
 
@@ -27,7 +27,12 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 * @param player
 	 */
 	public void loadPlayerTask(Player player) {
-		player.setPlayerTasks(this.findPlayerTaskByPlayerId(player.getId()));
+		List<PlayerTask> tasks = findByPlayerId(player.getId());
+		//TODO 是否要清空，还是看业务
+		player.clearNowTasks();
+		for (PlayerTask playerTask : tasks) {
+			player.setPlayerTasks(playerTask.getId().getTaskId(), playerTask);
+		}
 	}
 
 	/**
