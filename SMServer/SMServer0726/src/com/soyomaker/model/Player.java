@@ -250,4 +250,17 @@ public class Player {
 		this.y = y;
 	}
 
+	public PlayerTask getPlayerTask(int taskId) {
+		PlayerTask playerTask = null;
+		if (playerTasks != null) {
+			for (PlayerTask pt : playerTasks) {
+				if (pt.getId().getTaskId() == taskId) {
+					playerTask = pt;
+					break;
+				}
+			}
+		}
+		return playerTask;
+	}
+
 }
