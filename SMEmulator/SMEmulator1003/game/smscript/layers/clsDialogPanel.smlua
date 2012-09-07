@@ -31,12 +31,12 @@ function clsDialogPanel:new(name,content,bustPath,position)
   bustLayer.enabled=false
   bgLayer:addChild(bustLayer)
   --姓名
-  local nameLabel=clsUILabel:new(240,35,80,20)
+  local nameLabel=clsUILabel:new(235,37,80,20)
   nameLabel.anchor={0.5,0.5}
   nameLabel.text=name
   nameLabel.textSize=20
-  nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.textColor="0xffffffff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   --内容

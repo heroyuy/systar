@@ -38,12 +38,12 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   bustLayer.enabled=false
   bgLayer:addChild(bustLayer)
   --姓名
-  local nameLabel=clsUILabel:new(240,35,80,20)
+  local nameLabel=clsUILabel:new(235,37,80,20)
   nameLabel.anchor={0.5,0.5}
   nameLabel.text=name
   nameLabel.textSize=20
-  nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.textColor="0xffffffff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   --内容 TODO TextArea换行有问题？
@@ -60,13 +60,14 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   local normalImage=smImageFactory:loadImage("/image/skin/button_dialog_up.png")
   local highlightImage=smImageFactory:loadImage("/image/skin/button_dialog_down.png")
   for i,v in ipairs(optionItems) do
-    local button=clsUIButton:new(170,85+(i-1)*(37+4),normalImage:getWidth(),normalImage:getHeight())
+    local button=clsUIButton:new(170,88+(i-1)*(37+2),normalImage:getWidth(),normalImage:getHeight())
     button.anchor={0,0}
     button.normalImage=normalImage
     button.highlightImage=highlightImage
     button.text=v
     button.textSize=18
     button.textColor="0xffffffff"
+    button.alignment=clsUILabel.ALIGN_LEFT
     button.tag=i
     button.delegate=self
     button.enabled=true
