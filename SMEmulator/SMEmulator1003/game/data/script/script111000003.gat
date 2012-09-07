@@ -1,3 +1,12 @@
-Interpreter:doCommand(101006,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈，噢噢噢噢噢噢！","/image/face/头像.png",0)
-Interpreter:doCommand(101008,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈","/image/face/头像.png",{"111","222","333","444"})
-Interpreter:doCommand(101006,"g4","小明,测试测试测试！","/image/face/头像.png",0)
+Interpreter:doCommand(101006,"g4","小明,你好,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈","/image/face/头像.png",0)
+local n = Interpreter:doCommand(101008,"g4","小明,你好,哈哈哈哈哈哈哈哈","/image/face/头像.png",{"111","222","333","444"})
+if n == 0 then
+Interpreter:doCommand(101006,"g4","小明,你选择了111！","/image/face/头像.png",0)
+else n == 1 then
+Interpreter:doCommand(101006,"g4","小明,你选择了222！","/image/face/头像.png",0)
+else n == 2 then
+Interpreter:doCommand(101006,"g4","小明,你选择了333！","/image/face/头像.png",0)
+else n == 3 then
+Interpreter:doCommand(101006,"g4","小明,你选择了444！","/image/face/头像.png",0)
+end
+

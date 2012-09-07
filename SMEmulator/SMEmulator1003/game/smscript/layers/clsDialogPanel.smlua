@@ -25,13 +25,13 @@ function clsDialogPanel:new(name,content,bustPath,position)
   bgLayer.enabled=false
   self:addChild(bgLayer)
   --头像
-  local bustLayer=clsUILayer:new(84,76,96,96)
+  local bustLayer=clsUILayer:new(85,75,96,96)
   bustLayer.anchor={0.5,0.5}
   bustLayer.image=smImageFactory:loadImage(bustPath)
   bustLayer.enabled=false
   bgLayer:addChild(bustLayer)
   --姓名
-  local nameLabel=clsUILabel:new(280,35,80,20)
+  local nameLabel=clsUILabel:new(240,35,80,20)
   nameLabel.anchor={0.5,0.5}
   nameLabel.text=name
   nameLabel.textSize=20
