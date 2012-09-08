@@ -12,14 +12,16 @@ public class ApplyTaskHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		// (1)取待申请任务ID
+		// TODO
 		int id = msg.getInt("id");
+		// (1)检查是否存在指定id的任务
 		// (2)是否已经申请(正在进行或者已经完成)
 		PlayerTask playerTask = session.getUser().getPlayer().getPlayerTaskId(id);
-		if (playerTask!=null) {
-			
+		if (playerTask != null) {
+			this.sendMessage(session, msg.getType(), false, "任务正在进行或者已经完成");
+			return;
 		}
-		// (3)是否可以申请
+		// (3)注册任务
 
 	}
 
