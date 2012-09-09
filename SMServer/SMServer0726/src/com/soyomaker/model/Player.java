@@ -1,7 +1,6 @@
 package com.soyomaker.model;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -249,11 +248,15 @@ public class Player {
 		this.y = y;
 	}
 
-	public PlayerTask getPlayerTaskId(int taskId) {
+	public PlayerTask getPlayerTask(int taskId) {
 		return playerTasks.get(taskId);
 	}
 
 	public void clearNowTasks() {
 		playerTasks.clear();
+	}
+
+	public void removePlayerTask(int taskId) {
+		playerTasks.remove(taskId);
 	}
 }

@@ -28,7 +28,7 @@ public class ApplyTaskHandler extends AbHandler {
 		}
 		// (2)是否已经申请(正在进行或者已经完成)
 		Player player = session.getUser().getPlayer();
-		PlayerTask playerTask = player.getPlayerTaskId(id);
+		PlayerTask playerTask = player.getPlayerTask(id);
 		if (playerTask != null) {
 			this.sendMessage(session, msg.getType(), false, "任务正在进行或者已经完成");
 			return;
