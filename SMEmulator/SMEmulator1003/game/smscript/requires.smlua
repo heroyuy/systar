@@ -62,6 +62,7 @@ require("clsPlayerPanel")
 require("clsMapPanel")
 require("clsDialogPanel")
 require("clsOptionPanel")
+require("clsAsidePanel")
 
 --scenes
 require("clsScene")
