@@ -102,6 +102,7 @@
 	<bean id="netTransceiver" class="com.soyomaker.net.NetTransceiver">
 		<property name="protocolMap">
 			<map>
+				<entry key="100000" value-ref="p100000" />
 				<entry key="101001" value-ref="p101001" />
 				<entry key="101002" value-ref="p101002" />
 				<entry key="102001" value-ref="p102001" />
@@ -119,6 +120,13 @@
 	</bean>
 
 	<!--protocols -->
+	<bean id="p100000" class="com.soyomaker.net.Protocol">
+		<property name="id" value="100000" />
+		<property name="needLogin" value="false" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="testHandler" />
+	</bean>
+
 	<bean id="p101001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="101001" />
 		<property name="needLogin" value="false" />
