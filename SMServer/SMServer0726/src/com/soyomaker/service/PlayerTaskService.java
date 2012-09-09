@@ -31,7 +31,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 		player.clearNowTasks();
 		List<PlayerTask> pts = findByPlayerId(player.getId());
 		for (PlayerTask playerTask : pts) {
-			player.setPlayerTasks(playerTask.getId().getTaskId(), playerTask);
+			player.setPlayerTask(playerTask.getId().getTaskId(), playerTask);
 		}
 	}
 

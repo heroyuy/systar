@@ -33,9 +33,10 @@ public class ApplyTaskHandler extends AbHandler {
 			this.sendMessage(session, msg.getType(), false, "任务正在进行或者已经完成");
 			return;
 		}
+		//TODO 检查申请条件
 		// (3)注册任务
 		PlayerTask pt = new PlayerTask(player.getId(), id);
-		player.setPlayerTasks(pt.getId().getTaskId(), pt);
+		player.setPlayerTask(pt.getId().getTaskId(), pt);
 		this.sendMessage(session, msg.getType(), true, "任务申请成功");
 	}
 

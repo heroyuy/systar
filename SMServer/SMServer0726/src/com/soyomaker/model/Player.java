@@ -220,7 +220,7 @@ public class Player {
 	 * @param taskId
 	 * @param playerTask
 	 */
-	public void setPlayerTasks(Integer taskId, PlayerTask playerTask) {
+	public void setPlayerTask(Integer taskId, PlayerTask playerTask) {
 		this.playerTasks.put(taskId, playerTask);
 	}
 
