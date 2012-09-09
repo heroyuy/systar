@@ -85,7 +85,11 @@ Interpreter.functionList={
   [102018]="getEquipNum",
   [102019]="operateEnemyProperty",
   [102020]="getEnemyProperty",
-  [102021]="operateEnemyPattern"
+  [102021]="operateEnemyPattern",
+  [102022]="applyTask",
+  [102023]="nextStepTask",
+  [102024]="giveUpTask",
+  [102025]="listTask"
 }
 
 --[[
@@ -362,4 +366,28 @@ end
 
 --敌人模型操作
 function Interpreter:operateEnemyPattern(enemyId,characterImageName)
+end
+
+--申请任务
+function Interpreter:applyTask(id)
+  smNet:applyTask(id)
+  return true
+end
+
+--下一步任务
+function Interpreter:nextStepTask(id)
+  smNet:nextStepTask(id)
+  return true
+end
+
+--放弃任务
+function Interpreter:giveUpTask(id)
+  smNet:giveUpTask(id)
+  return true
+end
+
+--获取任务列表
+function Interpreter:listTask()
+  smNet:listTask()
+  return true
 end
