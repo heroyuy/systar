@@ -131,9 +131,9 @@ public class Player {
 		return name;
 	}
 
-	// public Map<Integer,PlayerTask> getPlayerTasks() {
-	// return playerTasks;
-	// }
+	public Map<Integer, PlayerTask> getPlayerTasks() {
+		return playerTasks;
+	}
 
 	public Integer getSp() {
 		return sp;
