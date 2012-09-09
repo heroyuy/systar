@@ -66,4 +66,19 @@ Const.NotifyCMD.Net={}
 	发送聊天内容，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.CHAT_SEND="sendChatContent"	--发送聊天内容
-  
+  --[[
+	申请任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.APPLY_TASK="applyTask"		--申请任务
+  --[[
+	获取任务列表，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LIST_TASK="listTask"			--获取角色列表
+  --[[
+	放弃任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.GIVE_UP_TASK="giveUpTask"		--放弃任务
+  --[[
+	下一步任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.NEXT_STEP_TASK="nextStepTask"	--下一步任务

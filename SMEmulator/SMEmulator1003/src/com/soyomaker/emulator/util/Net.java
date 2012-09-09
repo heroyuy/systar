@@ -24,6 +24,14 @@ public class Net {
 
 	private static final String MSG_ID_CHAT_SEND = "104001";
 
+	private static final String MSG_ID_TASK_APPLY = "105001";
+
+	private static final String MSG_ID_TASK_GIVE_UP = "105002";
+
+	private static final String MSG_ID_TASK_LIST = "105003";
+
+	private static final String MSG_ID_TASK_NEXT_STEP = "105004";
+
 	private static Net instance = new Net();
 
 	public static Net getInstance() {
@@ -133,6 +141,45 @@ public class Net {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_CHAT_SEND);
 		msg.putString("content", content);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 申请任务 105001
+	 */
+	public void applyTask(int id) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_TASK_APPLY);
+		msg.putInt("id", id);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 放弃任务 105002
+	 */
+	public void giveUpTask(int id) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_TASK_GIVE_UP);
+		msg.putInt("id", id);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 得到任务列表 105003
+	 */
+	public void listTask() {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_TASK_LIST);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 任务下一步 105004
+	 */
+	public void nextStepTask(int id) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_TASK_NEXT_STEP);
+		msg.putInt("id", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 }
