@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.soyomaker.service.MapDataService;
 import com.soyomaker.service.PlayerService;
+import com.soyomaker.service.TaskService;
+import com.soyomaker.service.TaskStepService;
 
 public class DictManager {
 
@@ -17,9 +19,17 @@ public class DictManager {
 	@Autowired
 	private MapDataService mapDataService;
 
-	private Player player;
+	@Autowired
+	private TaskService taskService;
 
-	private Map<Integer, MapData> mapDataMap;
+	@Autowired
+	private TaskStepService taskStepService;
+
+	private Player player;// 角色初始数据
+
+	private Map<Integer, MapData> mapDataMap;// 地图数据
+
+	private Map<Integer, Task> taskMap;
 
 	public Player getPlayer() {
 		return player;
@@ -29,15 +39,26 @@ public class DictManager {
 		return mapDataMap.get(mapId);
 	}
 
+	public Task getTask(int taskId) {
+		return taskMap.get(taskId);
+	}
+
 	public void load() {
 		// 加载player配置
 		player = playerService.findById(-1);
 		// 加载mapData
 		mapDataMap = new HashMap<Integer, MapData>();
-		List<MapData> list = mapDataService.getAll();
+		List<MapData> list = mapDataService.findAll();
 		for (MapData mapData : list) {
 			mapData.updateWayMatrix();
 			mapDataMap.put(mapData.getId(), mapData);
+		}
+		// 加载task
+		taskMap = new HashMap<Integer, Task>();
+		List<Task> taskList = taskService.findAll();
+		for (Task task : taskList) {
+			task.setSteps(taskStepService.findByTaskId(task.getId()));
+			taskMap.put(task.getId(), task);
 		}
 	}
 
