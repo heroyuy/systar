@@ -37,9 +37,9 @@ public class NextStepHandler extends AbHandler {
 		}
 		if (step == stepNum) {
 			// TODO 完成任务，检查条件
+			pt.setFinished(true);
 		}
 		pt.setStep(step);
-		pt.setFinished(true);
 		this.sendMessage(session, msg.getType(), true, pt.isFinished() ? "任务完成"
 				: "步骤完成");
 	}
