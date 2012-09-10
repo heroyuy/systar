@@ -1,5 +1,5 @@
 Interpreter:doCommand(101006,"g4","你能帮帮我吗？","/image/face/头像.png",0)
-local index = Interpreter:doCommand(101008,"SoyoMaker","帮我干掉下面这些怪物，他们抢走了我的孩子！▼","/image/face/头像.png",{"  【收集】荒漠变异黄蜂群","  【普通】沙漠狼","  【通缉令】特里克","  【通缉令】变异牛"})
+local index = Interpreter:doCommand(101008,"SoyoMaker","任务测试！▼","/image/face/头像.png",{"  申请任务","  下一步任务","  放弃任务","  获取任务列表"})
 if index==1 then
   Interpreter:doCommand(102022,1)
   Interpreter:doCommand(101006,"89757","申请任务","/image/face/头像.png",0)

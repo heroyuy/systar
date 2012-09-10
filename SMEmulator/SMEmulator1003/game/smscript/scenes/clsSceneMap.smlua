@@ -31,16 +31,18 @@ clsSceneMap.menuLayer=nil    		--菜单层
 
 clsSceneMap.chatButton=nil			--聊天按钮
 clsSceneMap.chatTip=nil				--聊天提示数字
-clsSceneMap.chatLayer=nil			--聊天层
+clsSceneMap.chatPanelLayer=nil			--聊天层
 
 clsSceneMap.playerFaceBackgroundLayer=nil	--人物面板按钮背景
 clsSceneMap.playerFaceButton=nil	--人物面板按钮
 clsSceneMap.playerPanelLayer=nil	--人物面板层
 
-clsSceneMap.mapButtonBackgroundLayer=nil
-clsSceneMap.mapButton=nil
-clsSceneMap.mapNameLable=nil
+clsSceneMap.mapButtonBackgroundLayer=nil	--地图面板按钮背景
+clsSceneMap.mapButton=nil			--地图面板按钮
+clsSceneMap.mapNameLable=nil		--地图名称标签
 clsSceneMap.mapPanelLayer=nil		--地图面板层
+
+clsSceneMap.taskPanelLayer=nil		--任务面板层
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
@@ -139,9 +141,13 @@ function clsSceneMap:new()
   self.chatButton:addChild(self.chatTip)
   GameLayer:addChildToScene(self.chatButton)
   
-  self.chatLayer=clsChatPanel:new(8,screenHeight-32)
-  self.chatLayer.anchor={0,1}
-  GameLayer:addChildToScene(self.chatLayer)
+  self.chatPanelLayer=clsChatPanel:new(8,screenHeight-48)
+  self.chatPanelLayer.anchor={0,1}
+  GameLayer:addChildToScene(self.chatPanelLayer)
+  
+  self.taskPanelLayer=clsTaskPanel:new(screenWidth-8,screenHeight-48)
+  self.taskPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.taskPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -330,16 +336,20 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[弹仓]功能开发中")
   elseif index==self.TAG_TASK then
     --任务
-    smLog:info("[任务]功能开发中")
+    if self.taskPanelLayer.alpha==0 then
+  		self.taskPanelLayer:setVisible(true)
+  	else
+  		self.taskPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_SYSTEM then
     --系统
     smLog:info("[系统]功能开发中")
   elseif index==self.TAG_CHAT then
   	--聊天
-  	if self.chatLayer.alpha==0 then
-  		self.chatLayer:setVisible(true)
+  	if self.chatPanelLayer.alpha==0 then
+  		self.chatPanelLayer:setVisible(true)
   	else
-  		self.chatLayer:setVisible(false)
+  		self.chatPanelLayer:setVisible(false)
   	end
   elseif index==self.TAG_PLAYER_FACE then
   	--人物头像

@@ -1,0 +1,67 @@
+--[[
+  description:任务菜单面板窗体
+  author:cokey
+  date:2012/09/10
+--]]
+
+--类结构定义
+clsTaskPanel={}
+setmetatable(clsTaskPanel,clsUILayer)
+clsTaskPanel.__index=clsTaskPanel
+
+clsTaskPanel.TAG_TASK_CLOSE=0
+clsTaskPanel.TAG_TASK_GIVE_UP=1
+
+--动作
+clsTaskPanel.taskMenuPanelDisappearAction=nil
+clsTaskPanel.taskMenuPanelAppearAction=nil
+
+clsTaskPanel.taskMenuPanelCloseButton=nil
+clsTaskPanel.taskMenuPanelGiveUpButton=nil
+
+--构造器
+function clsTaskPanel:new(x,y)
+  local self = clsUILayer:new(x,y,517,348)
+  setmetatable(self,clsTaskPanel)
+  self.image=smImageFactory:loadImage("/image/skin/misson_window.png")
+  self.alpha=0
+  
+  self.taskMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.taskMenuPanelCloseButton.anchor={1,0}
+  self.taskMenuPanelCloseButton.delegate=self
+  self.taskMenuPanelCloseButton.tag=self.TAG_TASK_CLOSE
+  self.taskMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.taskMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.taskMenuPanelCloseButton)
+  
+  self.taskMenuPanelGiveUpButton=clsUIButton:new(self.width-20,self.height-7,74,30)
+  self.taskMenuPanelGiveUpButton.anchor={1,1}
+  self.taskMenuPanelGiveUpButton.delegate=self
+  self.taskMenuPanelGiveUpButton.tag=self.TAG_TASK_GIVE_UP
+  self.taskMenuPanelGiveUpButton.normalImage=smImageFactory:loadImage("/image/skin/giveup_up.png")
+  self.taskMenuPanelGiveUpButton.highlightImage=smImageFactory:loadImage("/image/skin/giveup_down.png")
+  self:addChild(self.taskMenuPanelGiveUpButton)
+  
+  --初始化动作
+  self.taskMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.taskMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置任务窗口的可见性
+function clsTaskPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.taskMenuPanelAppearAction)
+	else
+		self:runAction(self.taskMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsTaskPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_TASK_CLOSE then
+  		self:setVisible(false)
+    elseif index==self.TAG_TASK_GIVE_UP then
+  	end
+end

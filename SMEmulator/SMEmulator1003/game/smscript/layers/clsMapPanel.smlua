@@ -1,5 +1,5 @@
 --[[
-  description:地图面板菜单窗体
+  description:地图菜单面板窗体
   author:cokey
   date:2012/09/10
 --]]
@@ -19,6 +19,7 @@ clsMapPanel.TAG_MAP_RENWU=5
 --动作
 clsMapPanel.mapMenuPanelDisappearAction=nil
 clsMapPanel.mapMenuPanelAppearAction=nil
+
 clsMapPanel.mapMenuPanelCloseButton=nil
 clsMapPanel.buttonLayer=nil
 clsMapPanel.descriptionTextArea=nil
@@ -85,7 +86,7 @@ function clsMapPanel:buttonTapped(button)
   	end
 end
 
---设置聊天窗口的可见性
+--设置地图窗口的可见性
 function clsMapPanel:setVisible(visible)
 	if visible then
 		self:runAction(self.mapMenuPanelAppearAction)
