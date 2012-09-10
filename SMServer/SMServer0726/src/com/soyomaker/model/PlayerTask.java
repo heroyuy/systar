@@ -17,6 +17,10 @@ public class PlayerTask {
 
 	private boolean finished;// 是否完成（0 未完成 1已完成）
 
+	public PlayerTask() {
+
+	}
+
 	public PlayerTask(int playerId, int taskId) {
 		this.id = new PlayerTaskId(playerId, taskId);
 		this.step = 0;

@@ -27,7 +27,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 			Map<Integer, PlayerTask> playerTasks = player.getPlayerTasks();
 			if (playerTasks != null) {
 				for (PlayerTask pt : playerTasks.values()) {
-					this.update(pt);
+					this.saveOrUpdate(pt);
 				}
 			}
 		}
