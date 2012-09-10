@@ -1,22 +1,16 @@
 package com.soyomaker.net;
 
 import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component("userSessionManager")
 public class UserSessionManager {
 
-	private static UserSessionManager instance = new UserSessionManager();
-
-	public static UserSessionManager getInstance() {
-		return instance;
-	}
-
 	private Map<Long, UserSession> sessionMap = new HashMap<Long, UserSession>();
-
-	private UserSessionManager() {
-
-	}
 
 	public synchronized boolean existsUser(long userId) {
 		UserSession ps = sessionMap.get(userId);
@@ -44,8 +38,8 @@ public class UserSessionManager {
 	public synchronized void removeUserSession(long userId) {
 		this.sessionMap.remove(userId);
 	}
-	
-	public Collection<UserSession>  getAllUserSession(){
+
+	public Collection<UserSession> getAllUserSession() {
 		return sessionMap.values();
 	}
 

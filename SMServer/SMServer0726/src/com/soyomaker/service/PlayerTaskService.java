@@ -1,6 +1,7 @@
 package com.soyomaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,17 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 
 	public List<PlayerTask> findByPlayerId(int playerId) {
 		return find("from PlayerTask pt where pt.id.playerId=?", playerId);
+	}
+
+	public void updateAllTaskForPlayer(Player player) {
+		if (player != null) {
+			Map<Integer, PlayerTask> playerTasks = player.getPlayerTasks();
+			if (playerTasks != null) {
+				for (PlayerTask pt : playerTasks.values()) {
+					this.update(pt);
+				}
+			}
+		}
 	}
 
 	/**

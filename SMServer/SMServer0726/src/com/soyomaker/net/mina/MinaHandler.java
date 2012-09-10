@@ -6,12 +6,17 @@ import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.model.Player;
 import com.soyomaker.model.User;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
+import com.soyomaker.service.PlayerService;
+import com.soyomaker.service.PlayerTaskService;
+import com.soyomaker.service.UserService;
 
 /**
  * Mina所使用的IoHandler的实现。
@@ -26,6 +31,18 @@ public class MinaHandler implements IoHandler {
 	private NetTransceiver netTransceiver;
 
 	private final static String KEY_USERSESSION = "usersession";
+
+	@Autowired
+	private UserSessionManager userSessionManager;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private PlayerService playerService;
+
+	@Autowired
+	private PlayerTaskService playerTaskService;
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
@@ -69,7 +86,13 @@ public class MinaHandler implements IoHandler {
 				.getAttribute(KEY_USERSESSION);
 		User user = userSession.getUser();
 		if (user != null) {
-			UserSessionManager.getInstance().removeUserSession(user.getId());
+			userSessionManager.removeUserSession(user.getId());
+			userService.update(user);
+			Player player = user.getPlayer();
+			if (player != null) {
+				playerService.update(player);
+				playerTaskService.updateAllTaskForPlayer(player);
+			}
 		}
 		session.removeAttribute(KEY_USERSESSION);
 	}
