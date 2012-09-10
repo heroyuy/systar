@@ -17,6 +17,9 @@ public class LoginHandler extends AbHandler {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private UserSessionManager userSessionManager;
+
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
 		String username = msg.getString("username");
@@ -32,7 +35,7 @@ public class LoginHandler extends AbHandler {
 			return;
 		}
 		// (3)验证
-		if(Config.isDebug()==false){
+		if (Config.isDebug() == false) {
 			if (!user.getPassword().equals(password)) {
 				this.sendMessage(session, msg.getType(), false, "密码不正确");
 				return;
@@ -40,7 +43,7 @@ public class LoginHandler extends AbHandler {
 		}
 		// (4)登录成功
 		session.setUser(user);
-		UserSessionManager.getInstance().putUserSession(user.getId(), session);
+		userSessionManager.putUserSession(user.getId(), session);
 		GameObject msgSent = this.buildPackage(msg.getType(), true, "登录成功");
 		msg.putLong("userId", user.getId());
 		netTransceiver.sendMessage(session, msgSent);
