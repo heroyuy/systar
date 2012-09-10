@@ -63,7 +63,7 @@ function clsMapPanel:new(x,y)
                    "/image/skin/feitinganniu_down.png","/image/skin/renwuanniu_down.png"}
   local bw,bh,num=94,36,5
   for i=1,num do
-    local button=clsUIButton:new(self.width-75,48*i+32,bw,bh)
+    local button=clsUIButton:new(self.width-77,48*i+32,bw,bh)
     button.delegate=sel
     button.normalImage=smImageFactory:loadImage(imageUp[i])
     button.highlightImage=smImageFactory:loadImage(imageDown[i])
