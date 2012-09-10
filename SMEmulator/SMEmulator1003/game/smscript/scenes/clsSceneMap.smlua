@@ -21,6 +21,7 @@ clsSceneMap.TAG_TASK=8		--任务
 clsSceneMap.TAG_SYSTEM=9	--系统
 clsSceneMap.TAG_CHAT=10		--聊天
 clsSceneMap.TAG_PLAYER_FACE=11	--人物信息
+clsSceneMap.TAG_MAP=12		--地图信息
 
 --字段
 clsSceneMap.mapBgLayer=nil     		--背景(尺寸同窗口)
@@ -36,6 +37,9 @@ clsSceneMap.playerFaceBackgroundLayer=nil	--人物面板按钮背景
 clsSceneMap.playerFaceButton=nil	--人物面板按钮
 clsSceneMap.playerPanelLayer=nil	--人物面板层
 
+clsSceneMap.mapButtonBackgroundLayer=nil
+clsSceneMap.mapButton=nil
+clsSceneMap.mapNameLable=nil
 clsSceneMap.mapPanelLayer=nil		--地图面板层
 
 clsSceneMap.aStar=nil      			--A*寻路工具
@@ -84,23 +88,7 @@ function clsSceneMap:new()
     self.menuLayer:addChild(button)
   end
   GameLayer:addChildToScene(self.menuLayer)
-  
-  self.chatButton=clsUIButton:new(8,screenHeight-4,30,30)
-  self.chatButton.anchor={0,1}
-  self.chatButton.delegate=self
-  self.chatButton.tag=self.TAG_CHAT
-  self.chatButton.normalImage=smImageFactory:loadImage("/image/skin/talk_up.png")
-  self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
-  
-  self.chatTip=clsUIImageNumber:new(12,2,20,13,"0",smImageFactory:loadImage("/image/skin/number_talk.png"))
-  self.chatTip.type=clsUIImageNumber.ADDITION_TYPE
-  self.chatButton:addChild(self.chatTip)
-  GameLayer:addChildToScene(self.chatButton)
-  
-  self.chatLayer=clsChatPanel:new(8,screenHeight-32)
-  self.chatLayer.anchor={0,1}
-  GameLayer:addChildToScene(self.chatLayer)
-  
+  --人物信息面板
   self.playerPanelLayer=clsPlayerPanel:new(8,8)
   self.playerPanelLayer.anchor={0,0}
   GameLayer:addChildToScene(self.playerPanelLayer)
@@ -117,9 +105,43 @@ function clsSceneMap:new()
   self.playerFaceButton.normalImage=smImageFactory:loadImage("/image/skin/face1.png")
   self.playerFaceButton.highlightImage=smImageFactory:loadImage("/image/skin/face1_down.png")
   GameLayer:addChildToScene(self.playerFaceButton)
+  --地图信息面板
+  self.mapButtonBackgroundLayer=clsUILayer:new(screenWidth-8,8,187,52)
+  self.mapButtonBackgroundLayer.anchor={1,0}
+  self.mapButtonBackgroundLayer.image=smImageFactory:loadImage("/image/skin/map_window.png")
+  GameLayer:addChildToScene(self.mapButtonBackgroundLayer)
   
-  self.mapPanelLayer=clsMapPanel:new(screenWidth-8,8)
+  self.mapButton=clsUIButton:new(161,26,42,44)
+  self.mapButton.delegate=self
+  self.mapButton.tag=self.TAG_MAP
+  self.mapButton.normalImage=smImageFactory:loadImage("/image/skin/map_up.png")
+  self.mapButton.highlightImage=smImageFactory:loadImage("/image/skin/map_down.png")
+  self.mapButtonBackgroundLayer:addChild(self.mapButton)
+  
+  self.mapNameLable=clsUILabel:new(72,14,90,20)
+  self.mapNameLable.textSize=14
+  self.mapNameLable.textColor="0xffffffff"
+  self.mapNameLable.text=GameData.curPlayer.mapName.."("..GameData.curPlayer.col..","..GameData.curPlayer.row..")"
+  self.mapButtonBackgroundLayer:addChild(self.mapNameLable)
+  
+  self.mapPanelLayer=clsMapPanel:new(screenWidth/2,screenHeight/2)
   GameLayer:addChildToScene(self.mapPanelLayer)
+  --聊天面板
+  self.chatButton=clsUIButton:new(8,screenHeight-4,30,30)
+  self.chatButton.anchor={0,1}
+  self.chatButton.delegate=self
+  self.chatButton.tag=self.TAG_CHAT
+  self.chatButton.normalImage=smImageFactory:loadImage("/image/skin/talk_up.png")
+  self.chatButton.highlightImage=smImageFactory:loadImage("/image/skin/talk_down.png")
+  
+  self.chatTip=clsUIImageNumber:new(12,2,20,13,"0",smImageFactory:loadImage("/image/skin/number_talk.png"))
+  self.chatTip.type=clsUIImageNumber.ADDITION_TYPE
+  self.chatButton:addChild(self.chatTip)
+  GameLayer:addChildToScene(self.chatButton)
+  
+  self.chatLayer=clsChatPanel:new(8,screenHeight-32)
+  self.chatLayer.anchor={0,1}
+  GameLayer:addChildToScene(self.chatLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -326,6 +348,15 @@ function clsSceneMap:buttonTapped(button)
 	else
 		self.playerPanelLayer:setVisible(false)
 	end
+  elseif index==self.TAG_MAP then
+    --地图
+    smLog:info("[地图]功能开发中")
+    --地图菜单面板
+  	if self.mapPanelLayer.alpha==0 then
+  		self.mapPanelLayer:setVisible(true)
+  	else
+  		self.mapPanelLayer:setVisible(false)
+  	end
   else
     --未知
     smLog:info("未知功能")
@@ -383,6 +414,7 @@ function clsSceneMap:characterMove(param)
         self.spriteLayer:sortChildren()
       end
       character.row,character.col=row,col
+  	  self.mapNameLable.text=GameData.curPlayer.mapName.."("..col..","..row..")"
       self.stepQueue:offer(direction)
     end
   else
