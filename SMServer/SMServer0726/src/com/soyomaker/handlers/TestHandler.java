@@ -11,7 +11,7 @@ public class TestHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		// TODO Auto-generated method stub
+		// 调试用接口，直接返回客户端发来的包
 		netTransceiver.sendMessage(session, msg);
 	}
 
