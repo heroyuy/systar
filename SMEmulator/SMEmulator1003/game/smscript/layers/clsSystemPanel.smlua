@@ -38,7 +38,7 @@ function clsSystemPanel:new(x,y)
   self.systemMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.systemMenuPanelCloseButton)
 
-  self.systemMenuPanelChangePlayerButton=clsUIButton:new(self.width-20,222,41,42)
+  self.systemMenuPanelChangePlayerButton=clsUIButton:new(self.width-20,221,41,42)
   self.systemMenuPanelChangePlayerButton.anchor={1,0}
   self.systemMenuPanelChangePlayerButton.delegate=self
   self.systemMenuPanelChangePlayerButton.tag=self.TAG_SYSTEM_CHANGE_PLAYER
@@ -46,7 +46,7 @@ function clsSystemPanel:new(x,y)
   self.systemMenuPanelChangePlayerButton.highlightImage=smImageFactory:loadImage("/image/skin/go_down.png")
   self:addChild(self.systemMenuPanelChangePlayerButton)
   
-  self.systemMenuPanelExitGameButton=clsUIButton:new(self.width-20,280,41,42)
+  self.systemMenuPanelExitGameButton=clsUIButton:new(self.width-20,279,41,42)
   self.systemMenuPanelExitGameButton.anchor={1,0}
   self.systemMenuPanelExitGameButton.delegate=self
   self.systemMenuPanelExitGameButton.tag=self.TAG_SYSTEM_EXIT_GAME
