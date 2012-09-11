@@ -44,6 +44,8 @@ clsSceneMap.mapPanelLayer=nil		--地图面板层
 
 clsSceneMap.taskPanelLayer=nil		--任务面板层
 
+clsSceneMap.systemPanelLayer=nil	--系统面板层
+
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -148,6 +150,10 @@ function clsSceneMap:new()
   self.taskPanelLayer=clsTaskPanel:new(screenWidth-8,screenHeight-48)
   self.taskPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.taskPanelLayer)
+  
+  self.systemPanelLayer=clsSystemPanel:new(screenWidth-8,screenHeight-48)
+  self.systemPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.systemPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -343,7 +349,11 @@ function clsSceneMap:buttonTapped(button)
   	end
   elseif index==self.TAG_SYSTEM then
     --系统
-    smLog:info("[系统]功能开发中")
+    if self.systemPanelLayer.alpha==0 then
+  		self.systemPanelLayer:setVisible(true)
+  	else
+  		self.systemPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_CHAT then
   	--聊天
   	if self.chatPanelLayer.alpha==0 then

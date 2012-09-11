@@ -50,8 +50,6 @@ require("MsgHandlerFactory")
 
 --layers
 require("clsTiled")
-require("clsOption")
-require("clsDialog")
 require("clsPlayerInfo")
 require("clsPicker")
 require("clsBasicInfo")
@@ -64,6 +62,7 @@ require("clsDialogPanel")
 require("clsOptionPanel")
 require("clsAsidePanel")
 require("clsTaskPanel")
+require("clsSystemPanel")
 
 --scenes
 require("clsScene")
