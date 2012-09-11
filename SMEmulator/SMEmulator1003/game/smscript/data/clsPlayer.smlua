@@ -10,8 +10,9 @@ setmetatable(clsPlayer,clsCharacter)
 clsPlayer.__index = clsPlayer
 
 --字段
-clsPlayer.itemList=nil;
-clsPlayer.partnerList=nil;
+clsPlayer.itemList=nil
+clsPlayer.partnerList=nil
+clsPlayer.taskList=nil
 
 --重定向需要覆盖的父类方法
 clsPlayer.updateFF=clsPlayer.update

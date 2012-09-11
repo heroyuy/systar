@@ -45,7 +45,24 @@ function clsTaskPanel:new(x,y)
   --初始化动作
   self.taskMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.taskMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  Notifier:addObserver(Const.NotifyCMD.Net.LIST_TASK,self,"handleListTask")
+  Notifier:addObserver(Const.NotifyCMD.Net.GIVE_UP_TASK,self,"handleGiveUpTask")
+  Notifier:addObserver(Const.NotifyCMD.Net.NEXT_STEP_TASK,self,"handleNextStepTask")
+  Notifier:addObserver(Const.NotifyCMD.Net.APPLY_TASK,self,"handleApplyTask")
   return self
+end
+
+function clsTaskPanel:handleListTask(msg)
+  smLog:info("任务列表长度 "..GameData.curPlayer.taskList:size())
+end
+
+function clsTaskPanel:handleGiveUpTask(msg)
+end
+
+function clsTaskPanel:handleNextStepTask(msg)
+end
+
+function clsTaskPanel:handleApplyTask(msg)
 end
 
 --设置任务窗口的可见性
