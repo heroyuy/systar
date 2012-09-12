@@ -68,14 +68,14 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskName.anchor={0,0}
   self.taskMenuPanelTaskName.alignment=clsUILabel.ALIGN_LEFT
   self.taskMenuPanelTaskName.text=""
-  self.taskMenuPanelTaskName.textSize=17
+  self.taskMenuPanelTaskName.textSize=16
   self.taskMenuPanelTaskName.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskName)
   
   self.taskMenuPanelTaskInfo=clsUITextArea:new(155,76,340,250)
   self.taskMenuPanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskInfo.anchor={0,0}
-  self.taskMenuPanelTaskInfo.textSize=17
+  self.taskMenuPanelTaskInfo.textSize=16
   self.taskMenuPanelTaskInfo.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskInfo)
   
@@ -87,21 +87,21 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskTip.anchor={0,0}
   self.taskMenuPanelTaskTip.alignment=clsUILabel.ALIGN_LEFT
   self.taskMenuPanelTaskTip.text="提示：任务名字区域可以上下拖动。"
-  self.taskMenuPanelTaskTip.textSize=17
+  self.taskMenuPanelTaskTip.textSize=15
   self.taskMenuPanelTaskTip.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskTip)
   
   self.taskMenuPanelTaskNeed=clsUITextArea:new(155,136,340,250)
   self.taskMenuPanelTaskNeed.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskNeed.anchor={0,0}
-  self.taskMenuPanelTaskNeed.textSize=17
+  self.taskMenuPanelTaskNeed.textSize=16
   self.taskMenuPanelTaskNeed.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskNeed)
   
   self.taskMenuPanelTaskReward=clsUITextArea:new(155,225,340,250)
   self.taskMenuPanelTaskReward.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskReward.anchor={0,0}
-  self.taskMenuPanelTaskReward.textSize=17
+  self.taskMenuPanelTaskReward.textSize=16
   self.taskMenuPanelTaskReward.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskReward)
   
@@ -135,6 +135,8 @@ function clsTaskPanel:refreshTaskInfo(task)
 		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/zhuxian.png")
 	elseif task.type==clsMission.BOSS then
 		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/tongjiling.png")
+	elseif task.type==clsMission.DAILY then
+		self.taskMenuPanelTaskType.image=nil	--由于没有日常的图片，这里不显示
 	end
 	self.taskMenuPanelTaskInfo.text=task.desc
 	self.taskMenuPanelTaskInfo:refresh()
@@ -146,20 +148,26 @@ function clsTaskPanel:refreshListTask()
   	self.taskMenuPanelTaskTable.dataSource={
     	cellLayerAtIndex=function(self,menu,cellLayer,index)
       		local w,h=cellLayer.width,cellLayer.height
+      		local label1 = nil
       		local taskType = GameData.curPlayer.taskList:get(index).type
       		local taskName = ""
       		if taskType==clsMission.NORMAL then
       			taskName = GameData.curPlayer.taskList:get(index).name
+      			label1=clsUILabel:new(w/2,h/2,w,h)
       		elseif taskType==clsMission.MAIN_LINE then
       			taskName = "【主】"..GameData.curPlayer.taskList:get(index).name
+      			label1=clsUILabel:new(w/2-3,h/2,w,h)
       		elseif taskType==clsMission.BOSS then
       			taskName = "【令】"..GameData.curPlayer.taskList:get(index).name
+      			label1=clsUILabel:new(w/2-3,h/2,w,h)
+      		elseif taskType==clsMission.DAILY then
+      			taskName = "【日】"..GameData.curPlayer.taskList:get(index).name
+      			label1=clsUILabel:new(w/2-3,h/2,w,h)
       		end
       		
-      		local label1=clsUILabel:new(w/2,h/2,w,h)
       		label1.anchor={0.5,0.5}
       		label1.text=taskName
-      		label1.textSize=17
+      		label1.textSize=16
       		label1.tag=index
       		
       		cellLayer:addChild(label1)
@@ -180,12 +188,21 @@ function clsTaskPanel:handleListTask(msg)
 end
 
 function clsTaskPanel:handleGiveUpTask(msg)
+  if msg.status then
+  	smNet:listTask()
+  end
 end
 
 function clsTaskPanel:handleNextStepTask(msg)
+  if msg.status then
+  	smNet:listTask()
+  end
 end
 
 function clsTaskPanel:handleApplyTask(msg)
+  if msg.status then
+  	smNet:listTask()
+  end
 end
 
 --设置任务窗口的可见性

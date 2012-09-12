@@ -18,6 +18,7 @@ function HandlerMap.listTask:handleMessage(msg)
   	task.desc=msg.taskList[i].desc
   	task.finished=msg.taskList[i].finished
   	task.step=msg.taskList[i].step
+  	task.type=msg.taskList[i].type
   	GameData.curPlayer.taskList:add(task)
   end
   Notifier:notify(Const.NotifyCMD.Net.LIST_TASK,msg)

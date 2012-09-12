@@ -247,6 +247,7 @@ function clsSceneTitle:onStart()
   clsSceneTitle.listPlayerDisappearAction=Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   clsSceneTitle.listPlayerAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   
+  --smNet:shutdownServer()
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
   Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")

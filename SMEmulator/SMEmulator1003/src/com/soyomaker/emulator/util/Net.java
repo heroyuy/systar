@@ -8,6 +8,8 @@ import com.soyomaker.lang.GameObject;
 
 public class Net {
 
+	private static final String MSG_ID_SHUTDOWN_SERVER = "100000";//关闭服务器，仅供调试
+	
 	private static final String MSG_ID_LOGIN_REGISTER = "101001";
 
 	private static final String MSG_ID_LOGIN_LOGIN = "101002";
@@ -180,6 +182,16 @@ public class Net {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_NEXT_STEP);
 		msg.putInt("id", id);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+	
+	/**
+	 * 关闭服务器 100000
+	 */
+	public void shutdownServer() {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_SHUTDOWN_SERVER);
+		msg.putString("command", "shutdown");
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 }

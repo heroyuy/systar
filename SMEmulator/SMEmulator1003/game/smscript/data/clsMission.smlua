@@ -9,9 +9,10 @@ clsMission = {}
 setmetatable(clsMission,clsModel)
 clsMission.__index = clsMission
 
-clsMission.NORMAL=0	--普通任务
+clsMission.NORMAL=0		--普通任务
 clsMission.MAIN_LINE=1	--主线任务
-clsMission.BOSS=2		--Boss任务
+clsMission.BOSS=2		--通缉令任务
+clsMission.DAILY=3		--日常任务
 
 clsMission.name=nil	--任务名称
 clsMission.desc=nil	--任务描述

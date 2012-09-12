@@ -80,6 +80,7 @@ function clsUITable:refresh()
       callFunction(self.dataSource,self.dataSourceCallback,self,cellLayer,i)
       self:addChild(cellLayer)
     end
+  	self.height=gt+rowNum*(self.cellHeight+gv)
   end
 end
 

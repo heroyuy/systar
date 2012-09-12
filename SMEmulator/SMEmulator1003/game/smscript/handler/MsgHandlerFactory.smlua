@@ -7,7 +7,9 @@ require("HandlerMapLogin")
 require("HandlerMapPlayer")
 require("HandlerMapChat")
 require("HandlerMapTask")
+require("HandlerMapServer")
 
+MsgHandlerFactory["100000"]=HandlerMap.shutdownServer
 MsgHandlerFactory["101001"]=HandlerMap.register
 MsgHandlerFactory["101002"]=HandlerMap.login
 MsgHandlerFactory["102001"]=HandlerMap.createPlayer
