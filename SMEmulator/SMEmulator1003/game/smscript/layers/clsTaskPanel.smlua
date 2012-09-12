@@ -18,6 +18,14 @@ clsTaskPanel.taskMenuPanelAppearAction=nil
 
 clsTaskPanel.taskMenuPanelCloseButton=nil
 clsTaskPanel.taskMenuPanelGiveUpButton=nil
+clsTaskPanel.taskMenuPanelTaskTable=nil
+clsTaskPanel.taskMenuPanelTaskTableScrollLayer=nil
+clsTaskPanel.taskMenuPanelTaskName=nil
+clsTaskPanel.taskMenuPanelTaskInfo=nil
+clsTaskPanel.taskMenuPanelTaskType=nil
+clsTaskPanel.taskMenuPanelTaskTip=nil
+clsTaskPanel.taskMenuPanelTaskNeed=nil
+clsTaskPanel.taskMenuPanelTaskReward=nil
 
 --构造器
 function clsTaskPanel:new(x,y)
@@ -42,9 +50,65 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelGiveUpButton.highlightImage=smImageFactory:loadImage("/image/skin/giveup_down.png")
   self:addChild(self.taskMenuPanelGiveUpButton)
   
+  self.taskMenuPanelTaskTableScrollLayer=clsUIScrollLayer:new(20,45,125,260)
+  self.taskMenuPanelTaskTableScrollLayer.anchor={0,0}
+  
+  self.taskMenuPanelTaskTable=clsUITable:new(0,0,125,260)
+  self.taskMenuPanelTaskTable.anchor={0,0}
+  self.taskMenuPanelTaskTable.gap={5,0,0,5,0,0}
+  self.taskMenuPanelTaskTable.cellWidth,self.taskMenuPanelTaskTable.cellHeight=120,32
+  self.taskMenuPanelTaskTable.colNum=1
+  self.taskMenuPanelTaskTable.delegate=self
+  self.taskMenuPanelTaskTable.clipBounds=true
+  self.taskMenuPanelTaskTable.cellSelectedBackground=smImageFactory:loadImage("/image/skin/curcor_misson.png")
+  self.taskMenuPanelTaskTableScrollLayer.contentLayer:addChild(self.taskMenuPanelTaskTable)
+  self:addChild(self.taskMenuPanelTaskTableScrollLayer)
+  
+  self.taskMenuPanelTaskName=clsUILabel:new(155,51,340,20)
+  self.taskMenuPanelTaskName.anchor={0,0}
+  self.taskMenuPanelTaskName.alignment=clsUILabel.ALIGN_LEFT
+  self.taskMenuPanelTaskName.text=""
+  self.taskMenuPanelTaskName.textSize=17
+  self.taskMenuPanelTaskName.textColor="0xffffffff"
+  self:addChild(self.taskMenuPanelTaskName)
+  
+  self.taskMenuPanelTaskInfo=clsUITextArea:new(155,76,340,250)
+  self.taskMenuPanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.taskMenuPanelTaskInfo.anchor={0,0}
+  self.taskMenuPanelTaskInfo.textSize=17
+  self.taskMenuPanelTaskInfo.textColor="0xffffffff"
+  self:addChild(self.taskMenuPanelTaskInfo)
+  
+  self.taskMenuPanelTaskType=clsUILayer:new(self.width-38,55,34,20)
+  self.taskMenuPanelTaskType.anchor={1,0}
+  self:addChild(self.taskMenuPanelTaskType)
+  
+  self.taskMenuPanelTaskTip=clsUILabel:new(25,314,250,20)
+  self.taskMenuPanelTaskTip.anchor={0,0}
+  self.taskMenuPanelTaskTip.alignment=clsUILabel.ALIGN_LEFT
+  self.taskMenuPanelTaskTip.text="提示：任务名字区域可以上下拖动。"
+  self.taskMenuPanelTaskTip.textSize=17
+  self.taskMenuPanelTaskTip.textColor="0xffffffff"
+  self:addChild(self.taskMenuPanelTaskTip)
+  
+  self.taskMenuPanelTaskNeed=clsUITextArea:new(155,136,340,250)
+  self.taskMenuPanelTaskNeed.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.taskMenuPanelTaskNeed.anchor={0,0}
+  self.taskMenuPanelTaskNeed.textSize=17
+  self.taskMenuPanelTaskNeed.textColor="0xffffffff"
+  self:addChild(self.taskMenuPanelTaskNeed)
+  
+  self.taskMenuPanelTaskReward=clsUITextArea:new(155,225,340,250)
+  self.taskMenuPanelTaskReward.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.taskMenuPanelTaskReward.anchor={0,0}
+  self.taskMenuPanelTaskReward.textSize=17
+  self.taskMenuPanelTaskReward.textColor="0xffffffff"
+  self:addChild(self.taskMenuPanelTaskReward)
+  
   --初始化动作
   self.taskMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.taskMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  
   Notifier:addObserver(Const.NotifyCMD.Net.LIST_TASK,self,"handleListTask")
   Notifier:addObserver(Const.NotifyCMD.Net.GIVE_UP_TASK,self,"handleGiveUpTask")
   Notifier:addObserver(Const.NotifyCMD.Net.NEXT_STEP_TASK,self,"handleNextStepTask")
@@ -52,8 +116,67 @@ function clsTaskPanel:new(x,y)
   return self
 end
 
+function clsTaskPanel:itemSelected(table,index)
+  if table == self.taskMenuPanelTaskTable then
+	local task = GameData.curPlayer.taskList:get(index)
+	self:refreshTaskInfo(task)
+  end
+end
+
+function clsTaskPanel:refreshTaskInfo(task)
+	self.taskMenuPanelTaskName.text="任务："..task.name
+	self.taskMenuPanelTaskNeed.text="任务需求<n>[1]"
+	self.taskMenuPanelTaskNeed:refresh()
+	self.taskMenuPanelTaskReward.text="任务奖励<n>[1]"
+	self.taskMenuPanelTaskReward:refresh()
+	if task.type==clsMission.NORMAL then
+		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/putong.png")
+	elseif task.type==clsMission.MAIN_LINE then
+		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/zhuxian.png")
+	elseif task.type==clsMission.BOSS then
+		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/tongjiling.png")
+	end
+	self.taskMenuPanelTaskInfo.text=task.desc
+	self.taskMenuPanelTaskInfo:refresh()
+end
+
+function clsTaskPanel:refreshListTask()
+	self.taskMenuPanelTaskTable.cellNum=GameData.curPlayer.taskList:size()
+
+  	self.taskMenuPanelTaskTable.dataSource={
+    	cellLayerAtIndex=function(self,menu,cellLayer,index)
+      		local w,h=cellLayer.width,cellLayer.height
+      		local taskType = GameData.curPlayer.taskList:get(index).type
+      		local taskName = ""
+      		if taskType==clsMission.NORMAL then
+      			taskName = GameData.curPlayer.taskList:get(index).name
+      		elseif taskType==clsMission.MAIN_LINE then
+      			taskName = "【主】"..GameData.curPlayer.taskList:get(index).name
+      		elseif taskType==clsMission.BOSS then
+      			taskName = "【令】"..GameData.curPlayer.taskList:get(index).name
+      		end
+      		
+      		local label1=clsUILabel:new(w/2,h/2,w,h)
+      		label1.anchor={0.5,0.5}
+      		label1.text=taskName
+      		label1.textSize=17
+      		label1.tag=index
+      		
+      		cellLayer:addChild(label1)
+    	end
+  	}
+  	self.taskMenuPanelTaskTable:refresh()
+  	if GameData.curPlayer.taskList:size()>0 then
+  		self.taskMenuPanelTaskTable:setSelectedIndex(GameData.curPlayer.taskList:size())
+  		self.taskMenuPanelTaskTableScrollLayer.contentLayer.height=self.taskMenuPanelTaskTable.height
+		self.taskMenuPanelTaskTableScrollLayer:scrollToBottom()
+  		local task = GameData.curPlayer.taskList:get(GameData.curPlayer.taskList:size())
+  		self:refreshTaskInfo(task)
+  	end
+end
+
 function clsTaskPanel:handleListTask(msg)
-  smLog:info("任务列表长度 "..GameData.curPlayer.taskList:size())
+  self:refreshListTask()
 end
 
 function clsTaskPanel:handleGiveUpTask(msg)

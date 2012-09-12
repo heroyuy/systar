@@ -156,6 +156,8 @@ function clsSceneMap:new()
   GameLayer:addChildToScene(self.systemPanelLayer)
   
   self.stepQueue=clsQueue:new()
+  --登录游戏后，自动从服务器请求角色任务列表
+  smNet:listTask()
   return self
 end
 

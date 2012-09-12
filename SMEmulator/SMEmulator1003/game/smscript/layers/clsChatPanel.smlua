@@ -63,7 +63,6 @@ function clsChatPanel:new(x,y)
   self.chatLayerTextArea.textSize=16
   self.chatLayerTextArea.textColor="0xffffffff"
   self.chatLayerTextAreaScrollLayer.contentLayer:addChild(self.chatLayerTextArea)
-  
   self:addChild(self.chatLayerTextAreaScrollLayer)
   
   --初始化动作
