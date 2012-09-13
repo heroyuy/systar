@@ -1,0 +1,56 @@
+--[[
+  description:人物装备面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsEquipPanel={}
+setmetatable(clsEquipPanel,clsUILayer)
+clsEquipPanel.__index=clsEquipPanel
+
+clsEquipPanel.TAG_EQUIP_CLOSE=0
+
+clsEquipPanel.equipMenuPanelCloseButton=nil
+
+--动作
+clsEquipPanel.equipMenuPanelDisappearAction=nil
+clsEquipPanel.equipMenuPanelAppearAction=nil
+
+--构造器
+function clsEquipPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsEquipPanel)
+  self.image=smImageFactory:loadImage("/image/skin/equip_window.png")
+  self.alpha=0
+  
+  self.equipMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.equipMenuPanelCloseButton.anchor={1,0}
+  self.equipMenuPanelCloseButton.delegate=self
+  self.equipMenuPanelCloseButton.tag=self.TAG_EQUIP_CLOSE
+  self.equipMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.equipMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.equipMenuPanelCloseButton)
+  
+  --初始化动作
+  self.equipMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.equipMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsEquipPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.equipMenuPanelAppearAction)
+	else
+		self:runAction(self.equipMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsEquipPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_EQUIP_CLOSE then
+  		self:setVisible(false)
+  	end
+end

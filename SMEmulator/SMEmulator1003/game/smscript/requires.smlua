@@ -64,6 +64,10 @@ require("clsOptionPanel")
 require("clsAsidePanel")
 require("clsTaskPanel")
 require("clsSystemPanel")
+require("clsStatusPanel")
+require("clsBagPanel")
+require("clsEquipPanel")
+require("clsSkillPanel")
 
 --scenes
 require("clsScene")

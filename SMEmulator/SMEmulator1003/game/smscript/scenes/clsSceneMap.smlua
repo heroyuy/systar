@@ -46,6 +46,14 @@ clsSceneMap.taskPanelLayer=nil		--任务面板层
 
 clsSceneMap.systemPanelLayer=nil	--系统面板层
 
+clsSceneMap.statusPanelLayer=nil	--人物状态面板
+
+clsSceneMap.bagPanelLayer=nil		--人物背包面板
+
+clsSceneMap.skillPanelLayer=nil		--人物技能面板
+
+clsSceneMap.equipPanelLayer=nil		--人物装备面板
+
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -154,6 +162,22 @@ function clsSceneMap:new()
   self.systemPanelLayer=clsSystemPanel:new(screenWidth-8,screenHeight-48)
   self.systemPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.systemPanelLayer)
+  
+  self.statusPanelLayer=clsStatusPanel:new(screenWidth-8,screenHeight-48)
+  self.statusPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.statusPanelLayer)
+  
+  self.bagPanelLayer=clsBagPanel:new(screenWidth-8,screenHeight-48)
+  self.bagPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.bagPanelLayer)
+  
+  self.skillPanelLayer=clsSkillPanel:new(screenWidth-8,screenHeight-48)
+  self.skillPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.skillPanelLayer)
+  
+  self.equipPanelLayer=clsEquipPanel:new(screenWidth-8-258,screenHeight-48)
+  self.equipPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.equipPanelLayer)
   
   self.stepQueue=clsQueue:new()
   --登录游戏后，自动从服务器请求角色任务列表
@@ -321,15 +345,33 @@ end
 --按钮点击事件
 function clsSceneMap:buttonTapped(button)
   local index=button.tag
-  if index==TAG_BAG then
+  smLog:info("index "..index)
+  if index==self.TAG_BAG then
     --背包
-    smLog:info("[背包]功能开发中")
+    if self.bagPanelLayer.alpha==0 then
+  		self.bagPanelLayer:setVisible(true)
+  	else
+  		self.bagPanelLayer:setVisible(false)
+  	end
+  	if self.equipPanelLayer.alpha==0 then
+  		self.equipPanelLayer:setVisible(true)
+  	else
+  		self.equipPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_STATUS then
     --属性
-    smLog:info("[属性]功能开发中")
+    if self.statusPanelLayer.alpha==0 then
+  		self.statusPanelLayer:setVisible(true)
+  	else
+  		self.statusPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_SKILL then
     --技能
-    smLog:info("[技能]功能开发中")
+    if self.skillPanelLayer.alpha==0 then
+  		self.skillPanelLayer:setVisible(true)
+  	else
+  		self.skillPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_TALENT then
     --天赋
     smLog:info("[天赋]功能开发中")

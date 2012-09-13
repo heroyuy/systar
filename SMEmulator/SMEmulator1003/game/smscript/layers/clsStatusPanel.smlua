@@ -1,0 +1,56 @@
+--[[
+  description:人物状态面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsStatusPanel={}
+setmetatable(clsStatusPanel,clsUILayer)
+clsStatusPanel.__index=clsStatusPanel
+
+clsStatusPanel.TAG_STATUS_CLOSE=0
+
+clsStatusPanel.statusMenuPanelCloseButton=nil
+
+--动作
+clsStatusPanel.statusMenuPanelDisappearAction=nil
+clsStatusPanel.statusMenuPanelAppearAction=nil
+
+--构造器
+function clsStatusPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsStatusPanel)
+  self.image=smImageFactory:loadImage("/image/skin/status_window.png")
+  self.alpha=0
+  
+  self.statusMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.statusMenuPanelCloseButton.anchor={1,0}
+  self.statusMenuPanelCloseButton.delegate=self
+  self.statusMenuPanelCloseButton.tag=self.TAG_STATUS_CLOSE
+  self.statusMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.statusMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.statusMenuPanelCloseButton)
+  
+  --初始化动作
+  self.statusMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.statusMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsStatusPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.statusMenuPanelAppearAction)
+	else
+		self:runAction(self.statusMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsStatusPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_STATUS_CLOSE then
+  		self:setVisible(false)
+  	end
+end

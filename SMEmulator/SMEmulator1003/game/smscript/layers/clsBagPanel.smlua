@@ -1,0 +1,56 @@
+--[[
+  description:人物背包面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsBagPanel={}
+setmetatable(clsBagPanel,clsUILayer)
+clsBagPanel.__index=clsBagPanel
+
+clsBagPanel.TAG_BAG_CLOSE=0
+
+clsBagPanel.bagMenuPanelCloseButton=nil
+
+--动作
+clsBagPanel.bagMenuPanelDisappearAction=nil
+clsBagPanel.bagMenuPanelAppearAction=nil
+
+--构造器
+function clsBagPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsBagPanel)
+  self.image=smImageFactory:loadImage("/image/skin/bag_window.png")
+  self.alpha=0
+  
+  self.bagMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.bagMenuPanelCloseButton.anchor={1,0}
+  self.bagMenuPanelCloseButton.delegate=self
+  self.bagMenuPanelCloseButton.tag=self.TAG_BAG_CLOSE
+  self.bagMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.bagMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.bagMenuPanelCloseButton)
+  
+  --初始化动作
+  self.bagMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.bagMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsBagPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.bagMenuPanelAppearAction)
+	else
+		self:runAction(self.bagMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsBagPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_BAG_CLOSE then
+  		self:setVisible(false)
+  	end
+end
