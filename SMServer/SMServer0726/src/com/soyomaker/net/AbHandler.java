@@ -7,47 +7,47 @@ import com.soyomaker.lang.GameObject;
 
 @Component
 public abstract class AbHandler implements IHandler {
-	
+
+	public static String SN_KEY = "sn";
+
 	@Autowired
 	protected NetTransceiver netTransceiver;
-	
 
 	/**
-	 * 创建基本包
+	 * 根据收到的包构造回复包，初始化回复包的序列号和协议ID
 	 * 
-	 * @param protocolId
-	 *            协议ID
-	 * @return 基本包
+	 * @param msgReceived
+	 *            收到的包
 	 */
-	public GameObject buildPackage(String protocolId) {
+	public GameObject buildPackage(GameObject msgReceived) {
 		GameObject msgSent = new GameObject();
-		msgSent.setType(protocolId);
+		msgSent.setType(msgReceived.getType());
+		msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
 		return msgSent;
 	}
 
 	/**
-	 * 创建基本包
 	 * 
-	 * @param protocolId
-	 *            协议ID
+	 * 根据收到的包构造回复包，初始化回复包的序列号、协议ID、操作状态、操作信息
+	 * 
+	 * @param msgReceived
+	 *            收到的包
 	 * @param status
-	 *            状态
+	 *            操作状态
 	 * @param message
-	 *            附带消息
-	 * @return 基本包
+	 *            操作信息
 	 */
-	public GameObject buildPackage(String protocolId, boolean status,
+	public GameObject buildPackage(GameObject msgReceived, boolean status,
 			String message) {
-		GameObject msgSent = new GameObject();
-		msgSent.setType(protocolId);
+		GameObject msgSent = this.buildPackage(msgReceived);
 		msgSent.putBool("status", status);
 		msgSent.putString("msg", message);
 		return msgSent;
 	}
 
-	public void sendMessage(UserSession session, String protocolId,
+	public void sendMessage(UserSession session, GameObject msgReceived,
 			boolean status, String message) {
 		netTransceiver.sendMessage(session,
-				this.buildPackage(protocolId, status, message));
+				this.buildPackage(msgReceived, status, message));
 	}
 }

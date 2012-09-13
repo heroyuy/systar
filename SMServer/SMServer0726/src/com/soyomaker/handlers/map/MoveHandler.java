@@ -74,10 +74,10 @@ public class MoveHandler extends AbHandler {
 			
 			//延迟写
 			delayUpdate(player, x, y);
-			this.sendMessage(session, msg.getType(), false, "行走验证成功");
+			this.sendMessage(session, msg, false, "行走验证成功");
 		} else {
 			// 验证失败
-			this.sendMessage(session, msg.getType(), false, "行走验证失败");
+			this.sendMessage(session, msg, false, "行走验证失败");
 		}
 	}
 

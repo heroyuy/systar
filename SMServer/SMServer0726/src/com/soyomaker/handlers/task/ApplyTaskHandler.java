@@ -23,21 +23,21 @@ public class ApplyTaskHandler extends AbHandler {
 		// (1)检查是否存在指定id的任务
 		Task task = dictManager.getTask(id);
 		if (task == null) {
-			this.sendMessage(session, msg.getType(), false, "任务不存在");
+			this.sendMessage(session, msg, false, "任务不存在");
 			return;
 		}
 		// (2)是否已经申请(正在进行或者已经完成)
 		Player player = session.getUser().getPlayer();
 		PlayerTask playerTask = player.getPlayerTask(id);
 		if (playerTask != null) {
-			this.sendMessage(session, msg.getType(), false, "任务正在进行或者已经完成");
+			this.sendMessage(session, msg, false, "任务正在进行或者已经完成");
 			return;
 		}
 		//TODO 检查申请条件
 		// (3)注册任务
 		PlayerTask pt = new PlayerTask(player.getId(), id);
 		player.setPlayerTask(pt.getId().getTaskId(), pt);
-		this.sendMessage(session, msg.getType(), true, "任务申请成功");
+		this.sendMessage(session, msg, true, "任务申请成功");
 	}
 
 }

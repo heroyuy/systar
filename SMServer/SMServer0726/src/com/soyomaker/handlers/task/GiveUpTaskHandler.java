@@ -18,17 +18,17 @@ public class GiveUpTaskHandler extends AbHandler {
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);
 		if (pt == null) {
-			this.sendMessage(session, msg.getType(), false, "任务不存在");
+			this.sendMessage(session, msg, false, "任务不存在");
 			return;
 		}
 		// (2)检查任务是否已经完成
 		if (pt.isFinished()) {
-			this.sendMessage(session, msg.getType(), false, "任务已完成，不能放弃");
+			this.sendMessage(session, msg, false, "任务已完成，不能放弃");
 			return;
 		}
 		// (3)移除任务
 		player.removePlayerTask(id);
-		this.sendMessage(session, msg.getType(), true, "放弃任务成功");
+		this.sendMessage(session, msg, true, "放弃任务成功");
 	}
 
 }

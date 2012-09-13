@@ -33,13 +33,13 @@ public class CreatePlayerHandler extends AbHandler {
 		}
 		// (2)检查呢称长度
 		if (name.length() < 3) {
-			this.sendMessage(session, msg.getType(), false, "呢称长度不能小于3");
+			this.sendMessage(session, msg, false, "呢称长度不能小于3");
 			return;
 		}
 		// (3)检查呢称是否已被使用
 		Player player = playerService.findByName(name);
 		if (player != null) {
-			this.sendMessage(session, msg.getType(), false, "呢称已被使用");
+			this.sendMessage(session, msg, false, "呢称已被使用");
 			return;
 		}
 		// (4)添加用户到数据库
@@ -66,12 +66,12 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setLuck(playerDict.getDext());
 		boolean status = playerService.save(player);
 		if (status) {
-			GameObject msgSent = this.buildPackage(msg.getType(), status,
+			GameObject msgSent = this.buildPackage(msg, status,
 					"创建成功");
 			this.insertPlayerIntoPackage(player, msgSent);
 			netTransceiver.sendMessage(session, msgSent);
 		} else {
-			this.sendMessage(session, msg.getType(), status, "创建失败");
+			this.sendMessage(session, msg, status, "创建失败");
 		}
 
 	}
