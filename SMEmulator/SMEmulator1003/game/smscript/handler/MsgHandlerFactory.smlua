@@ -2,6 +2,14 @@ MsgHandlerFactory={}
 
 HandlerMap={}
 
+function HandlerMap:msgToLua(msg)
+  local msgLuaString=msg:toLua()
+  print(msgLuaString)
+  local fun=loadstring("Msg="..msgLuaString)
+  fun()
+  return Msg
+end
+
 --加载handler配置
 require("HandlerMapLogin")
 require("HandlerMapPlayer")
@@ -24,8 +32,10 @@ MsgHandlerFactory["105003"]=HandlerMap.listTask
 MsgHandlerFactory["105004"]=HandlerMap.nextStepTask
 
 function MsgHandlerFactory:dispatchMessage(msg)
-  smLog:info("dispatchMessage:"..msg)
-  local fun=loadstring(msg)
-  fun()
-  self[Msg.id]:handleMessage(Msg.content)
+  --显示消息
+  local msgLuaString=msg:toLua()
+  smLog:info("dispatchMessage->"..msgLuaString)
+  --分发消息
+  local id=msg:getType()
+  self[id]:handleMessage(msg)
 end

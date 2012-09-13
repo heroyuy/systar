@@ -164,7 +164,7 @@ public class LuaAdapter {
 	 */
 	public void onMessage(GameObject msg) {
 		try {
-			luaFunctionOnMessage.call(new Object[] { luaGame, msgToLua(msg) });
+			luaFunctionOnMessage.call(new Object[] { luaGame, msg });
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
@@ -190,9 +190,5 @@ public class LuaAdapter {
 		} catch (LuaException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private String msgToLua(GameObject msg) {
-		return "Msg={id=\"" + msg.getType() + "\",content=" + msg.toLua() + "}";
 	}
 }

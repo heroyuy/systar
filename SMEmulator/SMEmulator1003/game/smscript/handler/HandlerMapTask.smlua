@@ -2,7 +2,7 @@ HandlerMap.applyTask={}
 
 function HandlerMap.applyTask:handleMessage(msg)
   smLog:info("申请任务")
-  Notifier:notify(Const.NotifyCMD.Net.APPLY_TASK,msg)
+  Notifier:notify(Const.NotifyCMD.Net.APPLY_TASK,HandlerMap:msgToLua(msg))
 end
 
 --====================================================
@@ -10,6 +10,7 @@ HandlerMap.listTask={}
 
 function HandlerMap.listTask:handleMessage(msg)
   smLog:info("获取任务列表")
+  msg=HandlerMap:msgToLua(msg)
   GameData.curPlayer.taskList=clsList:new()
   for i=table.getn(msg.taskList),1,-1 do
   	if not msg.taskList[i].finished then
@@ -31,7 +32,7 @@ HandlerMap.giveUpTask={}
 
 function HandlerMap.giveUpTask:handleMessage(msg)
   smLog:info("放弃任务")
-  Notifier:notify(Const.NotifyCMD.Net.GIVE_UP_TASK,msg)
+  Notifier:notify(Const.NotifyCMD.Net.GIVE_UP_TASK,HandlerMap:msgToLua(msg))
 end
 
 --====================================================
@@ -39,5 +40,5 @@ HandlerMap.nextStepTask={}
 
 function HandlerMap.nextStepTask:handleMessage(msg)
   smLog:info("下一步任务")
-  Notifier:notify(Const.NotifyCMD.Net.NEXT_STEP_TASK,msg)
+  Notifier:notify(Const.NotifyCMD.Net.NEXT_STEP_TASK,HandlerMap:msgToLua(msg))
 end
