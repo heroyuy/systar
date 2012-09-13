@@ -26,15 +26,17 @@ public class ListTaskHandler extends AbHandler {
 				.getPlayerTasks();
 		Collection<GameObject> taskObjs = new ArrayList<GameObject>();
 		for (PlayerTask pt : playerTasks.values()) {
-			GameObject taskObj = new GameObject();
-			Task task = dictManager.getTask(pt.getId().getTaskId());
-			taskObj.putInt("id", task.getId());
-			taskObj.putString("name", task.getName());
-			taskObj.putString("desc", task.getDesc());
-			taskObj.putInt("type", task.getType());
-			taskObj.putInt("step", pt.getStep());
-			taskObj.putBool("finished", pt.isFinished());
-			taskObjs.add(taskObj);
+			if (!pt.isFinished()) {
+				GameObject taskObj = new GameObject();
+				Task task = dictManager.getTask(pt.getId().getTaskId());
+				taskObj.putInt("id", task.getId());
+				taskObj.putString("name", task.getName());
+				taskObj.putString("desc", task.getDesc());
+				taskObj.putInt("type", task.getType());
+				taskObj.putInt("step", pt.getStep());
+				taskObj.putBool("finished", pt.isFinished());
+				taskObjs.add(taskObj);
+			}
 		}
 		GameObject msgSent = new GameObject();
 		msgSent.setType(msg.getType());

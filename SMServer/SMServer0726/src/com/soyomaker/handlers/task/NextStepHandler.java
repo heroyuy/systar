@@ -40,8 +40,10 @@ public class NextStepHandler extends AbHandler {
 			pt.setFinished(true);
 		}
 		pt.setStep(step);
-		this.sendMessage(session, msg.getType(), true, pt.isFinished() ? "任务完成"
-				: "步骤完成");
+		GameObject msgSent = this.buildPackage(msg.getType(), true,
+				pt.isFinished() ? "任务完成" : "步骤完成");
+		msgSent.putBool("finished", pt.isFinished());
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 }
