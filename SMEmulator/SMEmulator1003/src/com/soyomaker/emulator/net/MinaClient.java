@@ -1,6 +1,8 @@
 package com.soyomaker.emulator.net;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -15,6 +17,12 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.mina.GameObjectCodecFactory;
 
 public class MinaClient {
+
+	private static String SN_KEY = "sn";
+
+	private int sn = 0;// 全局消息序列号 自动递增
+
+	private Map<Integer, GameObject> msgSentMap = new HashMap<Integer, GameObject>();// 发出包缓存
 
 	private String ip = null;
 
@@ -52,7 +60,11 @@ public class MinaClient {
 
 	private void sendMessageQueue() {
 		while (messageQueue.size() > 0) {
-			this.session.write(messageQueue.poll());
+			GameObject msgSent = messageQueue.poll();
+			msgSent.putInt(SN_KEY, sn);
+			msgSentMap.put(sn, msgSent);
+			this.session.write(msgSent);
+			sn++;
 		}
 	}
 
@@ -90,6 +102,7 @@ public class MinaClient {
 			@Override
 			public void sessionClosed(IoSession arg0) throws Exception {
 				MinaClient.this.session = null;
+				MinaClient.this.msgSentMap.clear();
 			}
 
 			@Override
@@ -101,6 +114,11 @@ public class MinaClient {
 			@Override
 			public void messageReceived(IoSession arg0, Object obj) throws Exception {
 				GameObject msg = (GameObject) obj;
+				if (msg.containsKey(SN_KEY)) {
+					int sn = msg.getInt(SN_KEY);
+					msg.putObject("msgSent", MinaClient.this.msgSentMap.get(sn));
+					MinaClient.this.msgSentMap.remove(sn);
+				}
 				SMLog.getInstance().info("收到消息:" + msg.getType() + msg.toJson());
 				NetTransceiver.getInstance().dispatchMessage(msg);
 			}
