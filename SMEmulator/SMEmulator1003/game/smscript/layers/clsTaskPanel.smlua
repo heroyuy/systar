@@ -113,6 +113,9 @@ function clsTaskPanel:new(x,y)
   Notifier:addObserver(Const.NotifyCMD.Net.GIVE_UP_TASK,self,"handleGiveUpTask")
   Notifier:addObserver(Const.NotifyCMD.Net.NEXT_STEP_TASK,self,"handleNextStepTask")
   Notifier:addObserver(Const.NotifyCMD.Net.APPLY_TASK,self,"handleApplyTask")
+  
+  --登录游戏后，初始化任务面板时，自动从服务器请求角色任务列表
+  smNet:listTask()
   return self
 end
 
@@ -220,5 +223,6 @@ function clsTaskPanel:buttonTapped(button)
 	if index==self.TAG_TASK_CLOSE then
   		self:setVisible(false)
     elseif index==self.TAG_TASK_GIVE_UP then
+    	smLog:info("放弃任务 id："..self.taskMenuPanelTaskTable.selectedIndex)
   	end
 end

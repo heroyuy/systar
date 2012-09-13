@@ -12,14 +12,16 @@ function HandlerMap.listTask:handleMessage(msg)
   smLog:info("获取任务列表")
   GameData.curPlayer.taskList=clsList:new()
   for i=table.getn(msg.taskList),1,-1 do
-  	local task=clsMission:new()
-  	task.index=msg.taskList[i].id;
-  	task.name=msg.taskList[i].name
-  	task.desc=msg.taskList[i].desc
-  	task.finished=msg.taskList[i].finished
-  	task.step=msg.taskList[i].step
-  	task.type=msg.taskList[i].type
-  	GameData.curPlayer.taskList:add(task)
+  	if not msg.taskList[i].finished then
+  		local task=clsMission:new()
+  		task.index=msg.taskList[i].id
+  		task.name=msg.taskList[i].name
+  		task.desc=msg.taskList[i].desc
+  		task.finished=msg.taskList[i].finished
+  		task.step=msg.taskList[i].step
+  		task.type=msg.taskList[i].type
+  		GameData.curPlayer.taskList:add(task)
+  	end
   end
   Notifier:notify(Const.NotifyCMD.Net.LIST_TASK,msg)
 end
