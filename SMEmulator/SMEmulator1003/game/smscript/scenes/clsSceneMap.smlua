@@ -348,12 +348,9 @@ function clsSceneMap:buttonTapped(button)
     --背包
     if self.bagPanelLayer.alpha==0 then
   		self.bagPanelLayer:setVisible(true)
-  	else
-  		self.bagPanelLayer:setVisible(false)
-  	end
-  	if self.equipPanelLayer.alpha==0 then
   		self.equipPanelLayer:setVisible(true)
   	else
+  		self.bagPanelLayer:setVisible(false)
   		self.equipPanelLayer:setVisible(false)
   	end
   elseif index==self.TAG_STATUS then

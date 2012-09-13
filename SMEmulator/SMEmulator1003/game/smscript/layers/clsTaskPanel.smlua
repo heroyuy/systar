@@ -223,6 +223,9 @@ function clsTaskPanel:buttonTapped(button)
 	if index==self.TAG_TASK_CLOSE then
   		self:setVisible(false)
     elseif index==self.TAG_TASK_GIVE_UP then
-    	smLog:info("放弃任务 id："..self.taskMenuPanelTaskTable.selectedIndex)
+    	if GameData.curPlayer.taskList:size()>0 then
+    		smNet:giveUpTask(GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).id)
+    		smLog:info("放弃任务 id："..GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).id)
+    	end
   	end
 end
