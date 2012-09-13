@@ -14,7 +14,7 @@ public interface IGame {
 	public void onEvent(Event e);
 
 	public void onKey(String value);
-	
+
 	public void onLowMemory();
 
 	public void onPaint(Painter painter);

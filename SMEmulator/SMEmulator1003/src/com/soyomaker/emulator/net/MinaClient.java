@@ -116,8 +116,10 @@ public class MinaClient {
 				GameObject msg = (GameObject) obj;
 				if (msg.containsKey(SN_KEY)) {
 					int sn = msg.getInt(SN_KEY);
-					msg.putObject("msgSent", MinaClient.this.msgSentMap.get(sn));
-					MinaClient.this.msgSentMap.remove(sn);
+					GameObject msgSent = MinaClient.this.msgSentMap.remove(sn);
+					msgSent.remove(SN_KEY);
+					msg.putObject("msgSent", msgSent);
+					msg.remove(SN_KEY);
 				}
 				SMLog.getInstance().info("收到消息:" + msg.getType() + msg.toJson());
 				NetTransceiver.getInstance().dispatchMessage(msg);
