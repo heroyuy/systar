@@ -28,6 +28,10 @@ public class GameObject {
 		dataHolder.clear();
 	}
 
+	public boolean containsKey(String key) {
+		return dataHolder.containsKey(key);
+	}
+
 	// 以下为getter方法
 
 	public GameDataWrapper get(String key) {
