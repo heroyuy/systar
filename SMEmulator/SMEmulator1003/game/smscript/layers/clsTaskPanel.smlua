@@ -42,14 +42,6 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.taskMenuPanelCloseButton)
   
-  self.taskMenuPanelGiveUpButton=clsUIButton:new(self.width-20,self.height-7,74,30)
-  self.taskMenuPanelGiveUpButton.anchor={1,1}
-  self.taskMenuPanelGiveUpButton.delegate=self
-  self.taskMenuPanelGiveUpButton.tag=self.TAG_TASK_GIVE_UP
-  self.taskMenuPanelGiveUpButton.normalImage=smImageFactory:loadImage("/image/skin/giveup_up.png")
-  self.taskMenuPanelGiveUpButton.highlightImage=smImageFactory:loadImage("/image/skin/giveup_down.png")
-  self:addChild(self.taskMenuPanelGiveUpButton)
-  
   self.taskMenuPanelTaskTableScrollLayer=clsUIScrollLayer:new(20,45,125,260)
   self.taskMenuPanelTaskTableScrollLayer.anchor={0,0}
   
@@ -104,6 +96,14 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskReward.textSize=16
   self.taskMenuPanelTaskReward.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskReward)
+  
+  self.taskMenuPanelGiveUpButton=clsUIButton:new(self.width-20,self.height-7,74,30)
+  self.taskMenuPanelGiveUpButton.anchor={1,1}
+  self.taskMenuPanelGiveUpButton.delegate=self
+  self.taskMenuPanelGiveUpButton.tag=self.TAG_TASK_GIVE_UP
+  self.taskMenuPanelGiveUpButton.normalImage=smImageFactory:loadImage("/image/skin/giveup_up.png")
+  self.taskMenuPanelGiveUpButton.highlightImage=smImageFactory:loadImage("/image/skin/giveup_down.png")
+  self:addChild(self.taskMenuPanelGiveUpButton)
   
   --初始化动作
   self.taskMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
