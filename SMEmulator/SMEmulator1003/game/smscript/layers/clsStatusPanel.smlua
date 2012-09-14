@@ -9,9 +9,9 @@ clsStatusPanel={}
 setmetatable(clsStatusPanel,clsUILayer)
 clsStatusPanel.__index=clsStatusPanel
 
-clsStatusPanel.TAG_STATUS_CLOSE=0
-
-clsStatusPanel.statusMenuPanelCloseButton=nil
+clsStatusPanel.playerNameLabel=nil
+clsStatusPanel.playerLevelLabel=nil
+clsStatusPanel.playerFaceLayer=nil
 
 --动作
 clsStatusPanel.statusMenuPanelDisappearAction=nil
@@ -23,14 +23,18 @@ function clsStatusPanel:new(x,y)
   setmetatable(self,clsStatusPanel)
   self.image=smImageFactory:loadImage("/image/skin/status_window.png")
   self.alpha=0
+
+  self.playerNameLable=clsUILabel:new(112,4,90,20)
+  self.playerNameLable.anchor={0.5,0}
+  self.playerNameLable.textSize=15
+  self.playerNameLable.textColor="0xffffffff"
+  self.playerNameLable.text=GameData.curPlayer.name
+  self:addChild(self.playerNameLable)
   
-  self.statusMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
-  self.statusMenuPanelCloseButton.anchor={1,0}
-  self.statusMenuPanelCloseButton.delegate=self
-  self.statusMenuPanelCloseButton.tag=self.TAG_STATUS_CLOSE
-  self.statusMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
-  self.statusMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
-  self:addChild(self.statusMenuPanelCloseButton)
+  self.playerFaceLayer=clsUILayer:new(120,110,96,96)
+  self.playerFaceLayer.anchor={0.5,0.5}
+  self.playerFaceLayer.image=smImageFactory:loadImage("/image/skin/头像1.png")
+  self:addChild(self.playerFaceLayer)
   
   --初始化动作
   self.statusMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
@@ -50,7 +54,4 @@ end
 --按钮点击事件
 function clsStatusPanel:buttonTapped(button)
 	local index=button.tag
-	if index==self.TAG_STATUS_CLOSE then
-  		self:setVisible(false)
-  	end
 end

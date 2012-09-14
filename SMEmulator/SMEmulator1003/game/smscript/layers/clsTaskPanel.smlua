@@ -64,7 +64,7 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskTableScrollLayer.contentLayer:addChild(self.taskMenuPanelTaskTable)
   self:addChild(self.taskMenuPanelTaskTableScrollLayer)
   
-  self.taskMenuPanelTaskName=clsUILabel:new(155,51,340,20)
+  self.taskMenuPanelTaskName=clsUILabel:new(170,51,340,20)
   self.taskMenuPanelTaskName.anchor={0,0}
   self.taskMenuPanelTaskName.alignment=clsUILabel.ALIGN_LEFT
   self.taskMenuPanelTaskName.text=""
@@ -72,7 +72,7 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskName.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskName)
   
-  self.taskMenuPanelTaskInfo=clsUITextArea:new(155,76,340,250)
+  self.taskMenuPanelTaskInfo=clsUITextArea:new(170,76,340,250)
   self.taskMenuPanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskInfo.anchor={0,0}
   self.taskMenuPanelTaskInfo.textSize=16
@@ -91,14 +91,14 @@ function clsTaskPanel:new(x,y)
   self.taskMenuPanelTaskTip.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskTip)
   
-  self.taskMenuPanelTaskNeed=clsUITextArea:new(155,136,340,250)
+  self.taskMenuPanelTaskNeed=clsUITextArea:new(170,136,340,250)
   self.taskMenuPanelTaskNeed.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskNeed.anchor={0,0}
   self.taskMenuPanelTaskNeed.textSize=16
   self.taskMenuPanelTaskNeed.textColor="0xffffffff"
   self:addChild(self.taskMenuPanelTaskNeed)
   
-  self.taskMenuPanelTaskReward=clsUITextArea:new(155,225,340,250)
+  self.taskMenuPanelTaskReward=clsUITextArea:new(170,225,340,250)
   self.taskMenuPanelTaskReward.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskMenuPanelTaskReward.anchor={0,0}
   self.taskMenuPanelTaskReward.textSize=16
@@ -224,8 +224,7 @@ function clsTaskPanel:buttonTapped(button)
   		self:setVisible(false)
     elseif index==self.TAG_TASK_GIVE_UP then
     	if GameData.curPlayer.taskList:size()>0 then
-    		smNet:giveUpTask(GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).id)
-    		smLog:info("放弃任务 id："..GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).id)
+    		smNet:giveUpTask(GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).index)
     	end
   	end
 end

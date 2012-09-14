@@ -46,13 +46,11 @@ clsSceneMap.taskPanelLayer=nil		--任务面板层
 
 clsSceneMap.systemPanelLayer=nil	--系统面板层
 
-clsSceneMap.statusPanelLayer=nil	--人物状态面板
-
 clsSceneMap.bagPanelLayer=nil		--人物背包面板
 
 clsSceneMap.skillPanelLayer=nil		--人物技能面板
 
-clsSceneMap.equipPanelLayer=nil		--人物装备面板
+clsSceneMap.statusAddPanelLayer=nil		--属性加点面板
 
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
@@ -163,10 +161,6 @@ function clsSceneMap:new()
   self.systemPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.systemPanelLayer)
   
-  self.statusPanelLayer=clsStatusPanel:new(screenWidth-8,screenHeight-48)
-  self.statusPanelLayer.anchor={1,1}
-  GameLayer:addChildToScene(self.statusPanelLayer)
-  
   self.bagPanelLayer=clsBagPanel:new(screenWidth-8,screenHeight-48)
   self.bagPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.bagPanelLayer)
@@ -175,9 +169,9 @@ function clsSceneMap:new()
   self.skillPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.skillPanelLayer)
   
-  self.equipPanelLayer=clsEquipPanel:new(screenWidth-8-258,screenHeight-48)
-  self.equipPanelLayer.anchor={1,1}
-  GameLayer:addChildToScene(self.equipPanelLayer)
+  self.statusAddPanelLayer=clsStatusAddPanel:new(screenWidth-8,screenHeight-48)
+  self.statusAddPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.statusAddPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -348,17 +342,15 @@ function clsSceneMap:buttonTapped(button)
     --背包
     if self.bagPanelLayer.alpha==0 then
   		self.bagPanelLayer:setVisible(true)
-  		self.equipPanelLayer:setVisible(true)
   	else
   		self.bagPanelLayer:setVisible(false)
-  		self.equipPanelLayer:setVisible(false)
   	end
   elseif index==self.TAG_STATUS then
     --属性
-    if self.statusPanelLayer.alpha==0 then
-  		self.statusPanelLayer:setVisible(true)
+    if self.statusAddPanelLayer.alpha==0 then
+  		self.statusAddPanelLayer:setVisible(true)
   	else
-  		self.statusPanelLayer:setVisible(false)
+  		self.statusAddPanelLayer:setVisible(false)
   	end
   elseif index==self.TAG_SKILL then
     --技能

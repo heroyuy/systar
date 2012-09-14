@@ -13,6 +13,8 @@ clsBagPanel.TAG_BAG_CLOSE=0
 
 clsBagPanel.bagMenuPanelCloseButton=nil
 
+clsBagPanel.equipPanelLayer=nil		--人物装备面板
+
 --动作
 clsBagPanel.bagMenuPanelDisappearAction=nil
 clsBagPanel.bagMenuPanelAppearAction=nil
@@ -21,6 +23,7 @@ clsBagPanel.bagMenuPanelAppearAction=nil
 function clsBagPanel:new(x,y)
   local self = clsUILayer:new(x,y,258,348)
   setmetatable(self,clsBagPanel)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   self.image=smImageFactory:loadImage("/image/skin/bag_window.png")
   self.alpha=0
   
@@ -32,6 +35,10 @@ function clsBagPanel:new(x,y)
   self.bagMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.bagMenuPanelCloseButton)
   
+  self.equipPanelLayer=clsEquipPanel:new(screenWidth-8-258,screenHeight-48)
+  self.equipPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.equipPanelLayer)
+  
   --初始化动作
   self.bagMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.bagMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
@@ -42,8 +49,10 @@ end
 function clsBagPanel:setVisible(visible)
 	if visible then
 		self:runAction(self.bagMenuPanelAppearAction)
+		self.equipPanelLayer:setVisible(true)
 	else
 		self:runAction(self.bagMenuPanelDisappearAction)
+		self.equipPanelLayer:setVisible(false)
 	end
 end
 

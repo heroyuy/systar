@@ -1,0 +1,65 @@
+--[[
+  description:人物状态面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsStatusAddPanel={}
+setmetatable(clsStatusAddPanel,clsUILayer)
+clsStatusAddPanel.__index=clsStatusAddPanel
+
+clsStatusAddPanel.TAG_STATUS_ADD_CLOSE=0
+
+clsStatusAddPanel.statusAddMenuPanelCloseButton=nil
+
+clsStatusAddPanel.statusPanelLayer=nil	--人物状态面板
+
+--动作
+clsStatusAddPanel.statusAddMenuPanelDisappearAction=nil
+clsStatusAddPanel.statusAddMenuPanelAppearAction=nil
+
+--构造器
+function clsStatusAddPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsStatusAddPanel)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  self.image=smImageFactory:loadImage("/image/skin/jiadian_window.png")
+  self.alpha=0
+
+  self.statusAddMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.statusAddMenuPanelCloseButton.anchor={1,0}
+  self.statusAddMenuPanelCloseButton.delegate=self
+  self.statusAddMenuPanelCloseButton.tag=self.TAG_STATUS_ADD_CLOSE
+  self.statusAddMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.statusAddMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.statusAddMenuPanelCloseButton)
+  
+  self.statusPanelLayer=clsStatusPanel:new(screenWidth-8-258,screenHeight-48)
+  self.statusPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.statusPanelLayer)
+  
+  --初始化动作
+  self.statusAddMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.statusAddMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsStatusAddPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.statusAddMenuPanelAppearAction)
+		self.statusPanelLayer:setVisible(true)
+	else
+		self:runAction(self.statusAddMenuPanelDisappearAction)
+		self.statusPanelLayer:setVisible(false)
+	end
+end
+
+--按钮点击事件
+function clsStatusAddPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_STATUS_ADD_CLOSE then
+  		self:setVisible(false)
+  	end
+end
