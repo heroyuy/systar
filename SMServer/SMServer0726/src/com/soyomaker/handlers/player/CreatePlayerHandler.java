@@ -32,8 +32,8 @@ public class CreatePlayerHandler extends AbHandler {
 			return;
 		}
 		// (2)检查呢称长度
-		if (name.length() < 3) {
-			this.sendMessage(session, msg, false, "呢称长度不能小于3");
+		if (name.length() < 2) {
+			this.sendMessage(session, msg, false, "呢称长度不能小于2");
 			return;
 		}
 		// (3)检查呢称是否已被使用
