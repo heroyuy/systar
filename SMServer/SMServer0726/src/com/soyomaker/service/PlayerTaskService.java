@@ -24,6 +24,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 
 	public void updateAllTaskForPlayer(Player player) {
 		if (player != null) {
+			this.delete("delete from PlayerTask pt where pt.id.playerId=?", player.getId());
 			Map<Integer, PlayerTask> playerTasks = player.getPlayerTasks();
 			if (playerTasks != null) {
 				for (PlayerTask pt : playerTasks.values()) {
