@@ -10,8 +10,21 @@ setmetatable(clsStatusAddPanel,clsUILayer)
 clsStatusAddPanel.__index=clsStatusAddPanel
 
 clsStatusAddPanel.TAG_STATUS_ADD_CLOSE=0
+clsStatusAddPanel.TAG_STATUS_ADD_STR=1
+clsStatusAddPanel.TAG_STATUS_ADD_SPE=2
+clsStatusAddPanel.TAG_STATUS_ADD_INT=3
+clsStatusAddPanel.TAG_STATUS_ADD_VIT=4
 
 clsStatusAddPanel.statusAddMenuPanelCloseButton=nil
+clsStatusAddPanel.addStrButton=nil			--增加力量按钮
+clsStatusAddPanel.addSpeedButton=nil		--增加速度按钮
+clsStatusAddPanel.addIntButton=nil			--增加智力按钮
+clsStatusAddPanel.addVitButton=nil			--增加体力按钮
+clsStatusAddPanel.strLabel=nil				
+clsStatusAddPanel.speedLabel=nil			
+clsStatusAddPanel.intLabel=nil				
+clsStatusAddPanel.vitLabel=nil				
+clsStatusAddPanel.availablePointLabel=nil	--可用点数标签
 
 clsStatusAddPanel.statusPanelLayer=nil	--人物状态面板
 
@@ -34,6 +47,73 @@ function clsStatusAddPanel:new(x,y)
   self.statusAddMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
   self.statusAddMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.statusAddMenuPanelCloseButton)
+  
+  self.strLabel=clsUILabel:new(180,60,60,20)
+  self.strLabel.anchor={0.5,0}
+  self.strLabel.textSize=17
+  self.strLabel.textColor="0xffffffff"
+  self.strLabel.text=""..GameData.curPlayer.str
+  self:addChild(self.strLabel)
+  
+  self.speedLabel=clsUILabel:new(180,90,60,20)
+  self.speedLabel.anchor={0.5,0}
+  self.speedLabel.textSize=17
+  self.speedLabel.textColor="0xffffffff"
+  self.speedLabel.text=""..GameData.curPlayer.agi
+  self:addChild(self.speedLabel)
+  
+  self.intLabel=clsUILabel:new(180,120,60,20)
+  self.intLabel.anchor={0.5,0}
+  self.intLabel.textSize=17
+  self.intLabel.textColor="0xffffffff"
+  self.intLabel.text=""..GameData.curPlayer.int
+  self:addChild(self.intLabel)
+  
+  self.vitLabel=clsUILabel:new(180,150,60,20)
+  self.vitLabel.anchor={0.5,0}
+  self.vitLabel.textSize=17
+  self.vitLabel.textColor="0xffffffff"
+  self.vitLabel.text=""..GameData.curPlayer.vit
+  self:addChild(self.vitLabel)
+  
+  self.availablePointLabel=clsUILabel:new(self.width-18,self.height-12,60,20)
+  self.availablePointLabel.anchor={1,1}
+  self.availablePointLabel.textSize=17
+  self.availablePointLabel.textColor="0xffffffff"
+  self.availablePointLabel.text="0"
+  self:addChild(self.availablePointLabel)
+  
+  self.addStrButton=clsUIButton:new(self.width-25,57,27,27)
+  self.addStrButton.anchor={1,0}
+  self.addStrButton.delegate=self
+  self.addStrButton.tag=self.TAG_STATUS_ADD_STR
+  self.addStrButton.normalImage=smImageFactory:loadImage("/image/skin/plus_up.png")
+  self.addStrButton.highlightImage=smImageFactory:loadImage("/image/skin/plus_down.png")
+  self:addChild(self.addStrButton)
+  
+  self.addSpeedButton=clsUIButton:new(self.width-25,87,27,27)
+  self.addSpeedButton.anchor={1,0}
+  self.addSpeedButton.delegate=self
+  self.addSpeedButton.tag=self.TAG_STATUS_ADD_SPE
+  self.addSpeedButton.normalImage=smImageFactory:loadImage("/image/skin/plus_up.png")
+  self.addSpeedButton.highlightImage=smImageFactory:loadImage("/image/skin/plus_down.png")
+  self:addChild(self.addSpeedButton)
+  
+  self.addIntButton=clsUIButton:new(self.width-25,117,27,27)
+  self.addIntButton.anchor={1,0}
+  self.addIntButton.delegate=self
+  self.addIntButton.tag=self.TAG_STATUS_ADD_INT
+  self.addIntButton.normalImage=smImageFactory:loadImage("/image/skin/plus_up.png")
+  self.addIntButton.highlightImage=smImageFactory:loadImage("/image/skin/plus_down.png")
+  self:addChild(self.addIntButton)
+  
+  self.addVitButton=clsUIButton:new(self.width-25,147,27,27)
+  self.addVitButton.anchor={1,0}
+  self.addVitButton.delegate=self
+  self.addVitButton.tag=self.TAG_STATUS_ADD_VIT
+  self.addVitButton.normalImage=smImageFactory:loadImage("/image/skin/plus_up.png")
+  self.addVitButton.highlightImage=smImageFactory:loadImage("/image/skin/plus_down.png")
+  self:addChild(self.addVitButton)
   
   self.statusPanelLayer=clsStatusPanel:new(screenWidth-8-258,screenHeight-48)
   self.statusPanelLayer.anchor={1,1}
@@ -61,5 +141,9 @@ function clsStatusAddPanel:buttonTapped(button)
 	local index=button.tag
 	if index==self.TAG_STATUS_ADD_CLOSE then
   		self:setVisible(false)
+  	elseif index==self.TAG_STATUS_ADD_STR then
+  	elseif index==self.TAG_STATUS_ADD_SPE then
+  	elseif index==self.TAG_STATUS_ADD_INT then
+  	elseif index==self.TAG_STATUS_ADD_VIT then
   	end
 end

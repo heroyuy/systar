@@ -74,7 +74,7 @@ function clsStatusPanel:new(x,y)
   
   self.expBar=clsUILayer:new(29,256,201,16)
   self.expBar.anchor={0,0}
-  self.expBar.image=smImageFactory:loadImage("/image/skin/yellow_bar.png")
+  self.expBar.image=smImageFactory:loadImage("/image/skin/green_bar.png")
   self:addChild(self.expBar)
   
   self.expTag=clsUILayer:new(5,-7,39,24)
