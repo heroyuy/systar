@@ -4,7 +4,6 @@ HandlerMap={}
 
 function HandlerMap:msgToLua(msg)
   local msgLuaString=msg:toLua()
-  print(msgLuaString)
   local fun=loadstring("Msg="..msgLuaString)
   fun()
   return Msg
