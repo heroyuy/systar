@@ -191,19 +191,19 @@ function clsTaskPanel:handleListTask(msg)
 end
 
 function clsTaskPanel:handleGiveUpTask(msg)
-  if msg.status then
+  if msg.res then
   	smNet:listTask()
   end
 end
 
 function clsTaskPanel:handleNextStepTask(msg)
-  if msg.status then
+  if msg.res then
   	smNet:listTask()
   end
 end
 
 function clsTaskPanel:handleApplyTask(msg)
-  if msg.status then
+  if msg.res then
   	smNet:listTask()
   end
 end

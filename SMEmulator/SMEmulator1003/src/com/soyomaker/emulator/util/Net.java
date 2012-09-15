@@ -112,7 +112,7 @@ public class Net {
 	}
 
 	/**
-	 * 选择角色列表 102004
+	 * 选择角色 102004
 	 */
 	public void choosePlayer(int playerId) {
 		GameObject msg = new GameObject();
@@ -152,7 +152,7 @@ public class Net {
 	public void applyTask(int id) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_APPLY);
-		msg.putInt("id", id);
+		msg.putInt("taskId", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 
@@ -162,7 +162,7 @@ public class Net {
 	public void giveUpTask(int id) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_GIVE_UP);
-		msg.putInt("id", id);
+		msg.putInt("taskId", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 
@@ -181,7 +181,7 @@ public class Net {
 	public void nextStepTask(int id) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_NEXT_STEP);
-		msg.putInt("id", id);
+		msg.putInt("taskId", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 	

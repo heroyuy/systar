@@ -257,7 +257,7 @@ function clsSceneTitle:onStart()
 end
 
 function clsSceneTitle:handleChoosePlayer(msg)
-	if msg.status then
+	if msg.res then
 		smLog:info("进入游戏");
 		GameData.curPlayer = GameData.playerList:get(self.listPlayerTable.selectedIndex)
 		GameData.updateSwitch=true
@@ -267,14 +267,14 @@ end
 
 function clsSceneTitle:handleCreatePlayer(msg)
 	self.createPlayerMsgLabel.text=msg.msg
-	if msg.status then
+	if msg.res then
   		smNet:listPlayer()
 		smLog:info("创建角色成功");
 	end
 end
 
 function clsSceneTitle:handleDeletePlayer(msg)
-	if msg.status then
+	if msg.res then
 		smNet:listPlayer()
 		smLog:info("删除角色成功");
 	end
@@ -329,14 +329,14 @@ end
 
 function clsSceneTitle:handleLogin(msg)
   self.loginMsgLabel.text=msg.msg
-  if msg.status then
+  if msg.res then
   	smNet:listPlayer()
   end
 end
 
 function clsSceneTitle:handleRegister(msg)
   self.registerMsgLabel.text=msg.msg
-  if msg.status then
+  if msg.res then
   	self.registerEditName.text=""
 	self.registerEditPassword.text=""
 	self.registerEditConfirmPassword.text=""
