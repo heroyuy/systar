@@ -13,7 +13,7 @@ public class GiveUpTaskHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		int id = msg.getInt("id");
+		int id = msg.getInt("taskId");
 		// (1)检查是否有此任务
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);

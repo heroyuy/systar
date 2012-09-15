@@ -19,7 +19,7 @@ public class ApplyTaskHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		int id = msg.getInt("id");
+		int id = msg.getInt("taskId");
 		// (1)检查是否存在指定id的任务
 		Task task = dictManager.getTask(id);
 		if (task == null) {

@@ -40,7 +40,7 @@ public abstract class AbHandler implements IHandler {
 	public GameObject buildPackage(GameObject msgReceived, boolean status,
 			String message) {
 		GameObject msgSent = this.buildPackage(msgReceived);
-		msgSent.putBool("status", status);
+		msgSent.putBool("res", status);
 		msgSent.putString("msg", message);
 		return msgSent;
 	}

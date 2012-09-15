@@ -19,7 +19,7 @@ public class NextStepHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		int id = msg.getInt("id");
+		int id = msg.getInt("taskId");
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);
 		Task task = dictManager.getTask(id);

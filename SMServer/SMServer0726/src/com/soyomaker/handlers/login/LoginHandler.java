@@ -45,7 +45,7 @@ public class LoginHandler extends AbHandler {
 		session.setUser(user);
 		userSessionManager.putUserSession(user.getId(), session);
 		GameObject msgSent = this.buildPackage(msg, true, "登录成功");
-		msg.putLong("userId", user.getId());
+		msgSent.putLong("userId", user.getId());
 		netTransceiver.sendMessage(session, msgSent);
 	}
 
