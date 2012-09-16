@@ -183,6 +183,15 @@ function clsTaskPanel:refreshListTask()
 		self.taskMenuPanelTaskTableScrollLayer:scrollToBottom()
   		local task = GameData.curPlayer.taskList:get(GameData.curPlayer.taskList:size())
   		self:refreshTaskInfo(task)
+  	else
+  		self.taskMenuPanelTaskType.image=nil
+  		self.taskMenuPanelTaskName.text=nil
+		self.taskMenuPanelTaskNeed.text=""
+		self.taskMenuPanelTaskNeed:refresh()
+		self.taskMenuPanelTaskReward.text=""
+		self.taskMenuPanelTaskReward:refresh()
+		self.taskMenuPanelTaskInfo.text=""
+		self.taskMenuPanelTaskInfo:refresh()
   	end
 end
 

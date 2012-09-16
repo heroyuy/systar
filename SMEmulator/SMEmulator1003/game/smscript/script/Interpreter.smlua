@@ -266,8 +266,6 @@ end
 
 --获取任务步骤
 function Interpreter:getTaskStep(id)
-  smNet:applyTask(id)
-  return true
 end
 
 --申请任务
