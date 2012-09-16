@@ -1,11 +1,19 @@
 package com.soyomaker.handlers.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 
+@Component("playerUtil")
 public class PlayerUtil {
 
-	public static GameObject getPlayerInfo(Player player) {
+	@Autowired
+	private DictManager dictManager;
+
+	public GameObject getPlayerInfo(Player player) {
 		GameObject playerObj = new GameObject();
 		playerObj.putInt("playerId", player.getId());
 		playerObj.putString("name", player.getName());
@@ -16,15 +24,17 @@ public class PlayerUtil {
 		playerObj.putInt("avatar", player.getAvatar());
 		playerObj.putInt("level", player.getLevel());
 		playerObj.putInt("exp", player.getExp());
+		playerObj.putInt("lastExp", dictManager.getExp(player.getLevel()));
+		playerObj.putInt("nextExp", dictManager.getExp(player.getLevel() + 1));
 		playerObj.putInt("money", player.getMoney());
 		playerObj.putInt("hp", player.getHp());
 		playerObj.putInt("sp", player.getSp());
+		playerObj.putInt("maxHP", player.getMaxHP());
+		playerObj.putInt("maxSP", player.getMaxSP());
 		playerObj.putInt("stre", player.getStre());
 		playerObj.putInt("agil", player.getAgil());
 		playerObj.putInt("inte", player.getInte());
 		playerObj.putInt("vita", player.getVita());
-		playerObj.putInt("maxHP", player.getMaxHP());
-		playerObj.putInt("maxSP", player.getMaxSP());
 		playerObj.putInt("atk", player.getAtk());
 		playerObj.putInt("def", player.getDef());
 		playerObj.putInt("hit", player.getHit());

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
 import com.soyomaker.service.PlayerService;
 import com.soyomaker.service.TaskService;
@@ -25,11 +26,16 @@ public class DictManager {
 	@Autowired
 	private TaskStepService taskStepService;
 
+	@Autowired
+	private LevelExpService levelExpService;
+
 	private Player player;// 角色初始数据
 
 	private Map<Integer, MapData> mapDataMap;// 地图数据
 
 	private Map<Integer, Task> taskMap;
+
+	private Map<Integer, Integer> levelExpMap;
 
 	public Player getPlayer() {
 		return player;
@@ -41,6 +47,10 @@ public class DictManager {
 
 	public Task getTask(int taskId) {
 		return taskMap.get(taskId);
+	}
+
+	public int getExp(int level) {
+		return levelExpMap.get(level);
 	}
 
 	public void load() {
@@ -60,6 +70,8 @@ public class DictManager {
 			task.setSteps(taskStepService.findByTaskId(task.getId()));
 			taskMap.put(task.getId(), task);
 		}
+		// 加载等级经验配置
+		levelExpMap = levelExpService.getLevelExpMap();
 	}
 
 	public void unload() {

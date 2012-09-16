@@ -7,7 +7,6 @@ import com.soyomaker.handlers.utils.PlayerUtil;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.service.PlayerService;
 
@@ -16,9 +15,9 @@ public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
 	private PlayerService playerService;
-
+	
 	@Autowired
-	private NetTransceiver netTransceiver;
+	private PlayerUtil playerUtil;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -42,7 +41,7 @@ public class CreatePlayerHandler extends AbHandler {
 		player = playerService.newPlayer(session.getUser().getId(), name);
 		if (player != null) {
 			GameObject msgSent = this.buildPackage(msg, true, "创建成功");
-			GameObject playerObject = PlayerUtil.getPlayerInfo(player);
+			GameObject playerObject = playerUtil.getPlayerInfo(player);
 			msgSent.putObject("player", playerObject);
 			netTransceiver.sendMessage(session, msgSent);
 		} else {

@@ -10,7 +10,6 @@ import com.soyomaker.handlers.utils.PlayerUtil;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.service.PlayerService;
 
@@ -19,9 +18,9 @@ public class ListPlayerHandler extends AbHandler {
 
 	@Autowired
 	private PlayerService playerService;
-
+	
 	@Autowired
-	private NetTransceiver netTransceiver;
+	private PlayerUtil playerUtil;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -36,7 +35,7 @@ public class ListPlayerHandler extends AbHandler {
 		List<GameObject> objList = new ArrayList<GameObject>();
 		if (list != null) {
 			for (Player player : list) {
-				objList.add(PlayerUtil.getPlayerInfo(player));
+				objList.add(playerUtil.getPlayerInfo(player));
 			}
 		}
 		return objList;
