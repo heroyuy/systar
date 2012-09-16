@@ -68,7 +68,10 @@ require("clsStatusPanel")
 require("clsBagPanel")
 require("clsEquipPanel")
 require("clsSkillPanel")
+require("clsTalentPanel")
 require("clsStatusAddPanel")
+require("clsTankBagPanel")
+require("clsTankEquipPanel")
 
 --scenes
 require("clsScene")

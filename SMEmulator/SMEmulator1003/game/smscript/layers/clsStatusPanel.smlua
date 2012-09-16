@@ -82,12 +82,12 @@ function clsStatusPanel:new(x,y)
   self.expTag.image=smImageFactory:loadImage("/image/skin/EXP.png")
   self.expBar:addChild(self.expTag)
   
-  local hp = GameData.curPlayer.hp.."/"..GameData.curPlayer.hp
+  local hp = GameData.curPlayer.hp.."/"..GameData.curPlayer.maxHP
   self.hpNumber=clsUIImageNumber:new(60,1,100,16,hp,smImageFactory:loadImage("/image/skin/redword.png"))
   self.hpNumber.anchor={0.5,0}
   self.hpBar:addChild(self.hpNumber)
   
-  local sp = GameData.curPlayer.sp.."/"..GameData.curPlayer.sp
+  local sp = GameData.curPlayer.sp.."/"..GameData.curPlayer.maxSP
   self.spNumber=clsUIImageNumber:new(60,1,100,16,sp,smImageFactory:loadImage("/image/skin/blueword.png"))
   self.spNumber.anchor={0.5,0}
   self.spBar:addChild(self.spNumber)

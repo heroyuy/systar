@@ -25,9 +25,14 @@ function HandlerMap.listPlayer:handleMessage(msg)
   	player.index=msg.playerList[i].playerId;
     player.col=msg.playerList[i].x;
     player.row=msg.playerList[i].y;
+    player.atk=msg.playerList[i].atk;
+    player.def=msg.playerList[i].def;
+    player.hit=msg.playerList[i].hit;
+    player.flee=msg.playerList[i].flee;
     player.hp=msg.playerList[i].hp;
     player.sp=msg.playerList[i].sp;
-    player.luck=msg.playerList[i].luck;
+    player.maxHP=msg.playerList[i].maxHP;
+    player.maxSP=msg.playerList[i].maxSP;
     player.agi=msg.playerList[i].agil;
     player.mapId=msg.playerList[i].mapId;
     player.mapName=msg.playerList[i].mapName;
@@ -36,7 +41,6 @@ function HandlerMap.listPlayer:handleMessage(msg)
     player.exp=msg.playerList[i].exp;
     player.str=msg.playerList[i].stre;
     player.level=msg.playerList[i].level;
-    player.dex=msg.playerList[i].dext;
     player.name=msg.playerList[i].name;
     player.money=msg.playerList[i].money;
     player.int=msg.playerList[i].inte;

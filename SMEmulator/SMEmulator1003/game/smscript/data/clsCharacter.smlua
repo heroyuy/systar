@@ -12,28 +12,6 @@ clsCharacter.__index = clsCharacter
 --重定向需要覆盖的父类方法
 clsCharacter.updateF=clsCharacter.update
 
---常量定义
-clsCharacter.STR="str"
-clsCharacter.AGI="agi"
-clsCharacter.INT="int"
-clsCharacter.DEX="dex"
-clsCharacter.VIT="vit"
-clsCharacter.LUCK="luck"
-clsCharacter.HP="HP"
-clsCharacter.SP="SP"
-clsCharacter.HRP="hpr"
-clsCharacter.SPR="spr"
-clsCharacter.ATK="atk"
-clsCharacter.DEF="def"
-clsCharacter.MATK="matk"
-clsCharacter.MDEF="mdef"
-clsCharacter.HIT="hit"
-clsCharacter.FLEE="flee"
-clsCharacter.ASPD="aspd"
-clsCharacter.MSPD="mspd"
-clsCharacter.CRI="cri"
-clsCharacter.STA="sta"
-
 --字段定义
 clsCharacter.vocationId=0 --职业ID
 clsCharacter.name="" --角色名称
@@ -53,6 +31,12 @@ clsCharacter.step=0 --角色当前行走步数 取值范围[0,3]
 clsCharacter.level=0 --等级
 clsCharacter.hp=0 --HP值
 clsCharacter.sp=0 --SP值
+clsCharacter.atk=0 --攻击值
+clsCharacter.def=0 --防御值
+clsCharacter.hit=0 --命中值
+clsCharacter.flee=0 --闪避值
+clsCharacter.maxHP=0 --MAXHP值
+clsCharacter.maxSP=0 --MAXSP值
 clsCharacter.exp=0 --经验值
 clsCharacter.nextExp=0 --升到下一级需要的经验值
 clsCharacter.money=0 --金钱
@@ -62,8 +46,6 @@ clsCharacter.str=0 		--力量(基本值，不考虑装备和Buff的)
 clsCharacter.agi=0 		--敏捷(基本值，不考虑装备和Buff的)
 clsCharacter.int=0		--智力(基本值，不考虑装备和Buff的)
 clsCharacter.vit=0 		--体力(基本值，不考虑装备和Buff的)
-clsCharacter.dex=0 		--灵巧(基本值，不考虑装备和Buff的)
-clsCharacter.luck=0 	--幸运(基本值，不考虑装备和Buff的)
 
 clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
 clsCharacter.moveSequence=nil				--角色当前移动序列
@@ -76,15 +58,6 @@ function clsCharacter:new()
 	self.moveSequence=clsQueue:new()
 	self.equipList={}
 	return self
-end
-
-function clsCharacter:getProperty(name)
-  --(1)取配置中的公式计算基本值
-  local fun=loadstring("return function(self) return "..Dictionary.config.formulas[name].." end")()
-  local value=fun(self)
-  --(2)考虑装备
-  --(3)考虑Buff
-  return value
 end
 
 --更新[角色的基本更新] 

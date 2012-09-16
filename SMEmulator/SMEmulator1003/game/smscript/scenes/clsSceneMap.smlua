@@ -52,6 +52,8 @@ clsSceneMap.skillPanelLayer=nil		--人物技能面板
 
 clsSceneMap.statusAddPanelLayer=nil		--属性加点面板
 
+clsSceneMap.tankBagPanelLayer=nil		--坦克车厢面板
+
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -172,6 +174,10 @@ function clsSceneMap:new()
   self.statusAddPanelLayer=clsStatusAddPanel:new(screenWidth-8,screenHeight-48)
   self.statusAddPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.statusAddPanelLayer)
+  
+  self.tankBagPanelLayer=clsTankBagPanel:new(screenWidth-8,screenHeight-48)
+  self.tankBagPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.tankBagPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -367,7 +373,11 @@ function clsSceneMap:buttonTapped(button)
     smLog:info("[队列 ]功能开发中")
   elseif index==self.TAG_TANK then
     --车厢
-    smLog:info("[车厢]功能开发中")
+    if self.tankBagPanelLayer.alpha==0 then
+  		self.tankBagPanelLayer:setVisible(true)
+  	else
+  		self.tankBagPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_MAG then
     --弹仓
     smLog:info("[弹仓]功能开发中")

@@ -13,6 +13,8 @@ clsSkillPanel.TAG_SKILL_CLOSE=0
 
 clsSkillPanel.skillMenuPanelCloseButton=nil
 
+clsSkillPanel.statusPanelLayer=nil	--人物状态面板
+
 --动作
 clsSkillPanel.skillMenuPanelDisappearAction=nil
 clsSkillPanel.skillMenuPanelAppearAction=nil
@@ -21,6 +23,7 @@ clsSkillPanel.skillMenuPanelAppearAction=nil
 function clsSkillPanel:new(x,y)
   local self = clsUILayer:new(x,y,258,348)
   setmetatable(self,clsSkillPanel)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   self.image=smImageFactory:loadImage("/image/skin/skill_window.png")
   self.alpha=0
   
@@ -32,6 +35,10 @@ function clsSkillPanel:new(x,y)
   self.skillMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.skillMenuPanelCloseButton)
   
+  self.statusPanelLayer=clsStatusPanel:new(screenWidth-8-258,screenHeight-48)
+  self.statusPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.statusPanelLayer)
+  
   --初始化动作
   self.skillMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.skillMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
@@ -42,8 +49,10 @@ end
 function clsSkillPanel:setVisible(visible)
 	if visible then
 		self:runAction(self.skillMenuPanelAppearAction)
+		self.statusPanelLayer:setVisible(true)
 	else
 		self:runAction(self.skillMenuPanelDisappearAction)
+		self.statusPanelLayer:setVisible(false)
 	end
 end
 

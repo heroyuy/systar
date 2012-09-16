@@ -23,7 +23,11 @@ clsStatusAddPanel.addVitButton=nil			--增加体力按钮
 clsStatusAddPanel.strLabel=nil				
 clsStatusAddPanel.speedLabel=nil			
 clsStatusAddPanel.intLabel=nil				
-clsStatusAddPanel.vitLabel=nil				
+clsStatusAddPanel.vitLabel=nil
+clsStatusAddPanel.atkLabel=nil				
+clsStatusAddPanel.defLabel=nil			
+clsStatusAddPanel.fleeLabel=nil				
+clsStatusAddPanel.hitLabel=nil				
 clsStatusAddPanel.availablePointLabel=nil	--可用点数标签
 
 clsStatusAddPanel.statusPanelLayer=nil	--人物状态面板
@@ -114,6 +118,38 @@ function clsStatusAddPanel:new(x,y)
   self.addVitButton.normalImage=smImageFactory:loadImage("/image/skin/plus_up.png")
   self.addVitButton.highlightImage=smImageFactory:loadImage("/image/skin/plus_down.png")
   self:addChild(self.addVitButton)
+  
+  self.atkLabel=clsUILabel:new(200,190,60,20)
+  self.atkLabel.anchor={0.5,0}
+  self.atkLabel.textSize=17
+  self.atkLabel.textColor="0xffffffff"
+  self.atkLabel.alignment=clsUILabel.ALIGN_RIGHT
+  self.atkLabel.text=""..GameData.curPlayer.atk
+  self:addChild(self.atkLabel)
+  
+  self.defLabel=clsUILabel:new(200,220,60,20)
+  self.defLabel.anchor={0.5,0}
+  self.defLabel.textSize=17
+  self.defLabel.textColor="0xffffffff"
+  self.defLabel.alignment=clsUILabel.ALIGN_RIGHT
+  self.defLabel.text=""..GameData.curPlayer.def
+  self:addChild(self.defLabel)
+  
+  self.hitLabel=clsUILabel:new(200,250,60,20)
+  self.hitLabel.anchor={0.5,0}
+  self.hitLabel.textSize=17
+  self.hitLabel.textColor="0xffffffff"
+  self.hitLabel.alignment=clsUILabel.ALIGN_RIGHT
+  self.hitLabel.text=""..GameData.curPlayer.hit
+  self:addChild(self.hitLabel)
+  
+  self.fleeLabel=clsUILabel:new(200,280,60,20)
+  self.fleeLabel.anchor={0.5,0}
+  self.fleeLabel.textSize=17
+  self.fleeLabel.textColor="0xffffffff"
+  self.fleeLabel.alignment=clsUILabel.ALIGN_RIGHT
+  self.fleeLabel.text=""..GameData.curPlayer.flee
+  self:addChild(self.fleeLabel)
   
   self.statusPanelLayer=clsStatusPanel:new(screenWidth-8-258,screenHeight-48)
   self.statusPanelLayer.anchor={1,1}
