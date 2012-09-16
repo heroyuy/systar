@@ -62,8 +62,6 @@ public class CreatePlayerHandler extends AbHandler {
 		player.setAgil(playerDict.getAgil());
 		player.setInte(playerDict.getInte());
 		player.setVita(playerDict.getVita());
-		player.setDext(playerDict.getDext());
-		player.setLuck(playerDict.getDext());
 		boolean status = playerService.save(player);
 		if (status) {
 			GameObject msgSent = this.buildPackage(msg, status,
@@ -94,8 +92,6 @@ public class CreatePlayerHandler extends AbHandler {
 		playerObj.putInt("agil", player.getAgil());
 		playerObj.putInt("inte", player.getInte());
 		playerObj.putInt("vita", player.getVita());
-		playerObj.putInt("dext", player.getDext());
-		playerObj.putInt("luck", player.getLuck());
 		msg.putObject("player", playerObj);
 	}
 

@@ -59,10 +59,6 @@ public class Player {
 
 	private Integer vita;
 
-	private Integer dext;
-
-	private Integer luck;
-
 	/**
 	 * 当前任务列表
 	 */
@@ -81,10 +77,6 @@ public class Player {
 
 	public Integer getAvatar() {
 		return avatar;
-	}
-
-	public Integer getDext() {
-		return dext;
 	}
 
 	public Integer getExp() {
@@ -109,10 +101,6 @@ public class Player {
 
 	public Integer getLevel() {
 		return level;
-	}
-
-	public Integer getLuck() {
-		return luck;
 	}
 
 	public Integer getMapId() {
@@ -167,10 +155,6 @@ public class Player {
 		this.avatar = avatar;
 	}
 
-	public void setDext(Integer dext) {
-		this.dext = dext;
-	}
-
 	public void setExp(Integer exp) {
 		this.exp = exp;
 	}
@@ -193,10 +177,6 @@ public class Player {
 
 	public void setLevel(Integer level) {
 		this.level = level;
-	}
-
-	public void setLuck(Integer luck) {
-		this.luck = luck;
 	}
 
 	public void setMapId(Integer mapId) {

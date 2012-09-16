@@ -52,8 +52,6 @@ public class ListPlayerHandler extends AbHandler {
 				playerObj.putInt("agil", player.getAgil());
 				playerObj.putInt("inte", player.getInte());
 				playerObj.putInt("vita", player.getVita());
-				playerObj.putInt("dext", player.getDext());
-				playerObj.putInt("luck", player.getLuck());
 				objList.add(playerObj);
 			}
 		}
