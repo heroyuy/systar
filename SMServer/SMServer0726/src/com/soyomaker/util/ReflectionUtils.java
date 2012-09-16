@@ -9,12 +9,12 @@ public class ReflectionUtils {
 
 	private static Logger logger = Logger.getLogger(ReflectionUtils.class);
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <T> Class<T> getSuperClassGenricType(final Class clazz) {
 		return getSuperClassGenricType(clazz, 0);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static Class getSuperClassGenricType(final Class clazz,
 			final int index) {
 
