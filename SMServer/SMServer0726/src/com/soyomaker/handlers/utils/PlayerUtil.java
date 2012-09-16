@@ -23,6 +23,12 @@ public class PlayerUtil {
 		playerObj.putInt("agil", player.getAgil());
 		playerObj.putInt("inte", player.getInte());
 		playerObj.putInt("vita", player.getVita());
+		playerObj.putInt("maxHP", player.getMaxHP());
+		playerObj.putInt("maxSP", player.getMaxSP());
+		playerObj.putInt("atk", player.getAtk());
+		playerObj.putInt("def", player.getDef());
+		playerObj.putInt("hit", player.getHit());
+		playerObj.putInt("flee", player.getFlee());
 		return playerObj;
 	}
 
