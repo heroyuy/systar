@@ -101,35 +101,6 @@ function GameData:update()
   end
 end
 
---检查是否可以继续行走
-function GameData:checkCellAfterMove(character)
-  local player=self.curPlayer
-  local pRow,pCol=player:getHoldingCell()
-  local cRow,cCol=character:getHoldingCell()
-  --(1)、player移动结束
-  if character==player then
-    --player踩到Npc，条件：player当前位置有一个可穿透的Npc
-    for k,v in pairs(self.curMap.npcs) do
-      local npc=self:getNpc(v)
-      local nRow,nCol=npc:getHoldingCell()
-      if nRow==pRow and nCol==pCol and npc.penetrable then
-        smLog:info("玩家踩到Npc")
-        self:checkScript(npc)
-        return true
-      end
-    end
-  else
-  --(2)、npc移动结束
-    --Npc走到player脚下，条件：当前移动中的Npc可穿透并且player也在当前位置
-    if cRow==pRow and cCol==pCol and character.penetrable then
-      smLog:info("Npc走到玩家脚下")
-      self:checkScript(character)
-      return true
-    end
-  end
-  return true
-end
-
 --Npc和玩家接触(碰撞、重叠)后检查脚本
 function GameData:checkScript(npc)
   if self.curLockedNpc then
