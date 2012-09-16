@@ -1,6 +1,6 @@
 package com.soyomaker.model;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -59,17 +59,11 @@ public class Player {
 
 	private Integer vita;
 
-	/**
-	 * 当前任务列表
-	 */
 	@Transient
-	private Map<Integer, PlayerTask> playerTasks = new LinkedHashMap<Integer, PlayerTask>();
+	private Map<Integer, PlayerTask> playerTasks = new LinkedHashMap<Integer, PlayerTask>();// 当前任务列表
 
-	/**
-	 * 根据时间周期，判断是否更新x,y到数据库上
-	 */
 	@Transient
-	private Date lastUpdateTime;
+	private Map<Integer, Item> equipMap = new HashMap<Integer, Item>();// 装备
 
 	public Integer getAgil() {
 		return agil;
@@ -93,10 +87,6 @@ public class Player {
 
 	public Integer getInte() {
 		return inte;
-	}
-
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
 	}
 
 	public Integer getLevel() {
@@ -171,10 +161,6 @@ public class Player {
 		this.inte = inte;
 	}
 
-	public void setLastUpdateTime(Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
-	}
-
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
@@ -238,5 +224,79 @@ public class Player {
 
 	public void removePlayerTask(int taskId) {
 		playerTasks.remove(taskId);
+	}
+
+	/**
+	 * 获取角色最大HP
+	 * 
+	 * @return
+	 */
+	public int getMaxHP() {
+		// TODO MaxHP计算公式
+		return this.getVita() * 10;
+	}
+
+	/**
+	 * 获取角色最大SP
+	 * 
+	 * @return
+	 */
+	public int getMaxSP() {
+		// TODO MaxSP计算公式
+		return this.getInte() * 7;
+	}
+
+	/**
+	 * 获取攻击力
+	 * 
+	 * @return
+	 */
+	public int getAtk() {
+		// TODO Atk计算公式
+		int atk = 0;
+		for (Item item : equipMap.values()) {
+			atk += item.getAtk();
+		}
+		return this.getStre() + atk;
+	}
+
+	/**
+	 * 获取防御
+	 * 
+	 * @return
+	 */
+	public int getDef() {
+		// TODO Def计算公式
+		int def = 0;
+		for (Item item : equipMap.values()) {
+			def += item.getDef();
+		}
+		return def;
+	}
+
+	/**
+	 * 获取命中率
+	 * 
+	 * @return
+	 */
+	public int getHit() {
+		// TODO Hit公式
+		int hit = 0;
+		for (Item item : equipMap.values()) {
+			hit += item.getHit();
+		}
+		return hit;
+	}
+
+	/**
+	 * 获取闪避率
+	 */
+	public int getFlee() {
+		// TODO Flee公式
+		int flee = 0;
+		for (Item item : equipMap.values()) {
+			flee += item.getFlee();
+		}
+		return flee;
 	}
 }

@@ -1,7 +1,6 @@
 package com.soyomaker.handlers.map;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.soyomaker.model.MapData;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
-import com.soyomaker.service.PlayerService;
 
 @Component("moveHandler")
 public class MoveHandler extends AbHandler {
@@ -22,9 +20,6 @@ public class MoveHandler extends AbHandler {
 
 	@Autowired
 	private DictManager dictManager;
-
-	@Autowired
-	private PlayerService playerService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -78,28 +73,4 @@ public class MoveHandler extends AbHandler {
 		}
 	}
 
-	private void delayUpdate(Player player, int x, int y) {
-		if (player.getLastUpdateTime() == null) {
-			// 第一次更新x,y
-			player.setLastUpdateTime(new Date());
-			playerService.updateXY(player.getId(), x, y);
-			return;
-		}
-		
-		if (intervalTime(new Date(), player.getLastUpdateTime()) >= 60) {
-			// 大于或等于60秒更新一次
-			player.setLastUpdateTime(new Date());
-			playerService.updateXY(player.getId(), x, y);
-			return;
-		}
-	}
-
-	private int intervalTime(Date now, Date lastTime) {
-		long nowL = now.getTime();
-		long lastL = lastTime.getTime();
-		long ei = nowL - lastL;
-
-		// TODO 需要测试
-		return (int) (ei / (1000));
-	}
 }

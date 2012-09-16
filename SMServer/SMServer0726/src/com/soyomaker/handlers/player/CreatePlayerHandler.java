@@ -3,8 +3,8 @@ package com.soyomaker.handlers.player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.soyomaker.handlers.utils.PlayerUtil;
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
@@ -19,10 +19,6 @@ public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
 	private NetTransceiver netTransceiver;
-	
-
-	@Autowired
-	private DictManager dictManager;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -42,57 +38,17 @@ public class CreatePlayerHandler extends AbHandler {
 			this.sendMessage(session, msg, false, "呢称已被使用");
 			return;
 		}
-		// (4)添加用户到数据库
-		player = new Player();
-		player.setName(name);
-		player.setUserId(session.getUser().getId());
-		// 初始化
-		Player playerDict=dictManager.getPlayer();
-		player.setMapId(playerDict.getMapId());
-		player.setMapName(playerDict.getMapName());
-		player.setX(playerDict.getX());
-		player.setY(playerDict.getY());
-		player.setAvatar(playerDict.getAvatar());
-		player.setLevel(playerDict.getLevel());
-		player.setExp(playerDict.getExp());
-		player.setMoney(playerDict.getMoney());
-		player.setHp(playerDict.getHp());
-		player.setSp(playerDict.getSp());
-		player.setStre(playerDict.getStre());
-		player.setAgil(playerDict.getAgil());
-		player.setInte(playerDict.getInte());
-		player.setVita(playerDict.getVita());
-		boolean status = playerService.save(player);
-		if (status) {
-			GameObject msgSent = this.buildPackage(msg, status,
-					"创建成功");
-			this.insertPlayerIntoPackage(player, msgSent);
+		// (4)新建角色
+		player = playerService.newPlayer(session.getUser().getId(), name);
+		if (player != null) {
+			GameObject msgSent = this.buildPackage(msg, true, "创建成功");
+			GameObject playerObject = PlayerUtil.getPlayerInfo(player);
+			msgSent.putObject("player", playerObject);
 			netTransceiver.sendMessage(session, msgSent);
 		} else {
-			this.sendMessage(session, msg, status, "创建失败");
+			this.sendMessage(session, msg, false, "创建失败");
 		}
 
-	}
-
-	private void insertPlayerIntoPackage(Player player, GameObject msg) {
-		GameObject playerObj = new GameObject();
-		playerObj.putInt("playerId", player.getId());
-		playerObj.putString("name", player.getName());
-		playerObj.putInt("mapId", player.getMapId());
-		playerObj.putString("mapName", player.getMapName());
-		playerObj.putInt("x", player.getX());
-		playerObj.putInt("y", player.getY());
-		playerObj.putInt("avatar", player.getAvatar());
-		playerObj.putInt("level", player.getLevel());
-		playerObj.putInt("exp", player.getExp());
-		playerObj.putInt("money", player.getMoney());
-		playerObj.putInt("hp", player.getHp());
-		playerObj.putInt("sp", player.getSp());
-		playerObj.putInt("stre", player.getStre());
-		playerObj.putInt("agil", player.getAgil());
-		playerObj.putInt("inte", player.getInte());
-		playerObj.putInt("vita", player.getVita());
-		msg.putObject("player", playerObj);
 	}
 
 }

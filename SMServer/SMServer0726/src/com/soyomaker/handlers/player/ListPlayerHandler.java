@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.soyomaker.handlers.utils.PlayerUtil;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
@@ -35,24 +36,7 @@ public class ListPlayerHandler extends AbHandler {
 		List<GameObject> objList = new ArrayList<GameObject>();
 		if (list != null) {
 			for (Player player : list) {
-				GameObject playerObj = new GameObject();
-				playerObj.putInt("playerId", player.getId());
-				playerObj.putString("name", player.getName());
-				playerObj.putInt("mapId", player.getMapId());
-				playerObj.putString("mapName", player.getMapName());
-				playerObj.putInt("x", player.getX());
-				playerObj.putInt("y", player.getY());
-				playerObj.putInt("avatar", player.getAvatar());
-				playerObj.putInt("level", player.getLevel());
-				playerObj.putInt("exp", player.getExp());
-				playerObj.putInt("money", player.getMoney());
-				playerObj.putInt("hp", player.getHp());
-				playerObj.putInt("sp", player.getSp());
-				playerObj.putInt("stre", player.getStre());
-				playerObj.putInt("agil", player.getAgil());
-				playerObj.putInt("inte", player.getInte());
-				playerObj.putInt("vita", player.getVita());
-				objList.add(playerObj);
+				objList.add(PlayerUtil.getPlayerInfo(player));
 			}
 		}
 		return objList;
