@@ -46,8 +46,8 @@ public class PlayerService extends AbstractService<Player> {
 		player.setLevel(playerDict.getLevel());
 		player.setExp(playerDict.getExp());
 		player.setMoney(playerDict.getMoney());
-		player.setHp(playerDict.getHp());
-		player.setSp(playerDict.getSp());
+		player.setHp(playerDict.getMaxHP());
+		player.setSp(playerDict.getMaxSP());
 		player.setStre(playerDict.getStre());
 		player.setAgil(playerDict.getAgil());
 		player.setInte(playerDict.getInte());
