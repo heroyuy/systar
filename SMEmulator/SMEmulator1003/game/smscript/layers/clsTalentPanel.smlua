@@ -21,7 +21,7 @@ clsTalentPanel.talentMenuPanelAppearAction=nil
 function clsTalentPanel:new(x,y)
   local self = clsUILayer:new(x,y,517,348)
   setmetatable(self,clsTalentPanel)
-  self.image=smImageFactory:loadImage("/image/skin/talent_window.png")
+  self.image=smImageFactory:loadImage("/image/skin/tianfu_window.png")
   self.alpha=0
   
   self.talentMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)

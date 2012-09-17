@@ -56,6 +56,8 @@ clsSceneMap.tankBagPanelLayer=nil		--坦克车厢面板
 
 clsSceneMap.partyPanelLayer=nil			--队列面板
 
+clsSceneMap.talentPanelLayer=nil		--天赋面板
+
 clsSceneMap.aStar=nil      			--A*寻路工具
 clsSceneMap.viewport=nil			--视口
 
@@ -184,6 +186,10 @@ function clsSceneMap:new()
   self.partyPanelLayer=clsPartyPanel:new(screenWidth-8,screenHeight-48)
   self.partyPanelLayer.anchor={1,1}
   GameLayer:addChildToScene(self.partyPanelLayer)
+  
+  self.talentPanelLayer=clsTalentPanel:new(screenWidth-8,screenHeight-48)
+  self.talentPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.talentPanelLayer)
   
   self.stepQueue=clsQueue:new()
   return self
@@ -373,7 +379,11 @@ function clsSceneMap:buttonTapped(button)
   	end
   elseif index==self.TAG_TALENT then
     --天赋
-    smLog:info("[天赋]功能开发中")
+    if self.talentPanelLayer.alpha==0 then
+  		self.talentPanelLayer:setVisible(true)
+  	else
+  		self.talentPanelLayer:setVisible(false)
+  	end
   elseif index==self.TAG_TROOP then
     --队列
     if self.partyPanelLayer.alpha==0 then
