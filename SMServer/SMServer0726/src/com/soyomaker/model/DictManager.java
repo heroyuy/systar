@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
+import com.soyomaker.service.MapEntryService;
 import com.soyomaker.service.PlayerService;
 import com.soyomaker.service.TaskService;
 import com.soyomaker.service.TaskStepService;
@@ -28,6 +29,9 @@ public class DictManager {
 
 	@Autowired
 	private LevelExpService levelExpService;
+
+	@Autowired
+	private MapEntryService mapEntryService;
 
 	private Player player;// 角色初始数据
 
@@ -72,6 +76,10 @@ public class DictManager {
 		}
 		// 加载等级经验配置
 		levelExpMap = levelExpService.getLevelExpMap();
+		// 加载传送点
+		for (MapData mapData : list) {
+			mapData.setMapEntryList(mapEntryService.findByMapId(mapData.getId()));
+		}
 	}
 
 	public void unload() {
