@@ -83,6 +83,10 @@ Const.NotifyCMD.Net={}
   --]]
   Const.NotifyCMD.Net.NEXT_STEP_TASK="nextStepTask"	--下一步任务
   --[[
+	加载地图，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LOAD_MAP="loadMap"			--加载地图
+  --[[
 	关闭服务器，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.SHUTDOWN_SERVER="shutdownServer"	--关闭服务器

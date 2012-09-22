@@ -1,0 +1,6 @@
+HandlerMap.loadMap={}
+
+function HandlerMap.loadMap:handleMessage(msg)
+  smLog:info("加载地图")
+  Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP,HandlerMap:msgToLua(msg))
+end

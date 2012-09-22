@@ -192,7 +192,12 @@ function clsSceneMap:new()
   GameLayer:addChildToScene(self.talentPanelLayer)
   
   self.stepQueue=clsQueue:new()
+  Notifier:addObserver(Const.NotifyCMD.Net.LOAD_MAP,self,"handleLoadMap")
   return self
+end
+
+function clsSceneMap:handleLoadMap(msg)
+	smLog:info("clsSceneMap:handleLoadMap")
 end
 
 -- 开始

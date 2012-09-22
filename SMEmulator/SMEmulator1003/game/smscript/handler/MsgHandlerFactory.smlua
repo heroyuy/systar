@@ -14,6 +14,7 @@ require("HandlerMapLogin")
 require("HandlerMapPlayer")
 require("HandlerMapChat")
 require("HandlerMapTask")
+require("HandlerMapMap")
 require("HandlerMapServer")
 
 MsgHandlerFactory["100000"]=HandlerMap.shutdownServer
@@ -24,6 +25,7 @@ MsgHandlerFactory["102002"]=HandlerMap.deletePlayer
 MsgHandlerFactory["102003"]=HandlerMap.listPlayer
 MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
 MsgHandlerFactory["103001"]=HandlerMap.movePlayer
+MsgHandlerFactory["103002"]=HandlerMap.loadMap
 MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
 MsgHandlerFactory["105001"]=HandlerMap.applyTask
 MsgHandlerFactory["105002"]=HandlerMap.giveUpTask

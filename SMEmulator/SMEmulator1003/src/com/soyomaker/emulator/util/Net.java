@@ -8,8 +8,8 @@ import com.soyomaker.lang.GameObject;
 
 public class Net {
 
-	private static final String MSG_ID_SHUTDOWN_SERVER = "100000";//关闭服务器，仅供调试
-	
+	private static final String MSG_ID_SHUTDOWN_SERVER = "100000";// 关闭服务器，仅供调试
+
 	private static final String MSG_ID_LOGIN_REGISTER = "101001";
 
 	private static final String MSG_ID_LOGIN_LOGIN = "101002";
@@ -23,6 +23,8 @@ public class Net {
 	private static final String MSG_ID_PLAYER_CHOOSE = "102004";
 
 	private static final String MSG_ID_MAP_MOVE = "103001";
+
+	private static final String MSG_ID_LOAD_MAP = "103002";
 
 	private static final String MSG_ID_CHAT_SEND = "104001";
 
@@ -184,7 +186,16 @@ public class Net {
 		msg.putInt("taskId", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
-	
+
+	/**
+	 * 加载地图 103002
+	 */
+	public void loadMap() {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_LOAD_MAP);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
 	/**
 	 * 关闭服务器 100000
 	 */
