@@ -248,17 +248,12 @@ function clsSceneTitle:onStart()
   clsSceneTitle.listPlayerAppearAction=Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
   
   --smNet:shutdownServer()
-  Notifier:addObserver(Const.NotifyCMD.Net.LOAD_MAP,self,"handleLoadMap")
   Notifier:addObserver(Const.NotifyCMD.Net.LOGIN,self,"handleLogin")
   Notifier:addObserver(Const.NotifyCMD.Net.REGISTER,self,"handleRegister")
   Notifier:addObserver(Const.NotifyCMD.Net.CREATE_PLAYER,self,"handleCreatePlayer")
   Notifier:addObserver(Const.NotifyCMD.Net.DELETE_PLAYER,self,"handleDeletePlayer")
   Notifier:addObserver(Const.NotifyCMD.Net.LIST_PLAYER,self,"handleListPlayer")
   Notifier:addObserver(Const.NotifyCMD.Net.CHOOSE_PLAYER,self,"handleChoosePlayer")
-end
-
-function clsSceneTitle:handleLoadMap(msg)
-	smLog:info("clsSceneTitle:handleLoadMap")
 end
 
 function clsSceneTitle:handleChoosePlayer(msg)
