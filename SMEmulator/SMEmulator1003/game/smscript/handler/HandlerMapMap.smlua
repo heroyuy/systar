@@ -14,8 +14,27 @@ function HandlerMap.loadMap:handleMessage(msg)
   --加载地图后更新NPC列表
   GameData.curNpcList={}
   --(1)地图NPC
-  for k,v in pairs(GameData.curMap.npcs) do
-    table.insert(GameData.curNpcList,GameData:getNpc(v))
+  for k,mapId in pairs(GameData.curMap.npcs) do
+    local npc=clsNpc:new()
+    local npcDict=Dictionary.npcs[mapId]
+    npc.id=npcDict.id
+    npc.row=npcDict.row
+    npc.col=npcDict.col
+    npc.name=npcDict.name
+    npc.charImgName=npcDict.charImg
+    if npc.charImgName then
+      npc.charImg=smImageFactory:loadImage(npc.charImgName)
+    end
+    npc.headImgName=npcDict.headImg
+    if npc.headImgName then
+      npc.headImg=smImageFactory:loadImage(npc.headImgName)
+    end
+    npc.face=npcDict.face
+    npc.moveType=npcDict.moveType
+    npc.speedLevel=npcDict.speedLevel
+    npc.penetrable=npcDict.penetrable
+    npc.moveDelegate=self
+    GameData.curNpcList[npc.id]=npc
   end
   --(2)传送点
   msg=HandlerMap:msgToLua(msg)
@@ -28,7 +47,7 @@ function HandlerMap.loadMap:handleMessage(msg)
     npc.row=mapEntry.y
     npc.avatar=mapEntry.avatar
     npc.type=clsNpc.TYPE_MAPENTRY
-    table.insert(GameData.curNpcList,npc)
+    GameData.curNpcList[npc.id]=npc
   end
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end

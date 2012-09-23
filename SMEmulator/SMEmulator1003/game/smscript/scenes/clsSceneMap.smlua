@@ -225,7 +225,6 @@ end
 
 --切换地图
 function clsSceneMap:buildMap()
-  GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
   self.aStar=clsAStar:new(GameData.curMap.areas)
   --预加载地图图集
   for _,v in pairs(GameData.curMap.tilesets) do
@@ -256,7 +255,7 @@ function clsSceneMap:buildMap()
     self.spriteLayer:addChild(playerSprite)
     --Npc
     for k,v in pairs(GameData.curMap.npcs) do
-      local npc=GameData:getNpc(v)
+      local npc=GameData.curNpcList[v]
       local npcSprite=clsSprite:new(npc.charImg,
         npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
       npcSprite.tag=npc.id
@@ -536,7 +535,7 @@ function clsSceneMap:spriteWalkEnd(sprite)
     GameData.curPlayer:checkMove()
   else
     --npc移动结束
-    local npc=GameData:getNpc(sprite.tag)
+    local npc=GameData.curNpcList[sprite.tag]
     npc.moving=false
     npc:checkMove()
   end

@@ -40,39 +40,11 @@ GameData.switchs={}							--游戏开关
 GameData.variables={}						--游戏变量
 
 --============Npc相关操作============
---获取指定id的Npc
-function GameData:getNpc(id)
-  if self.npcs[id]==nil then
-    --指定id的Npc不存在
-    local npc=clsNpc:new()
-    local npcDict=Dictionary.npcs[id]
-    npc.id=npcDict.id
-    npc.row=npcDict.row
-    npc.col=npcDict.col
-    npc.name=npcDict.name
-    npc.charImgName=npcDict.charImg
-    if npc.charImgName then
-      npc.charImg=smImageFactory:loadImage(npc.charImgName)
-    end
-    npc.headImgName=npcDict.headImg
-    if npc.headImgName then
-      npc.headImg=smImageFactory:loadImage(npc.headImgName)
-    end
-    npc.face=npcDict.face
-    npc.moveType=npcDict.moveType
-    npc.speedLevel=npcDict.speedLevel
-    npc.penetrable=npcDict.penetrable
-    npc.moveDelegate=self
-    self.npcs[id]=npc
-  end
-  return self.npcs[id]
-end
-
 --获取指定位置的Npc
 function GameData:getNpcAt(row,col)
   local npc=nil
-  if self.npcs then
-    for k,v in pairs(self.npcs) do
+  if self.curNpcList then
+    for k,v in pairs(self.curNpcList) do
       if v.row==row and v.col==col then
         npc=v
         break
@@ -95,7 +67,7 @@ function GameData:update()
   --更新当前地图上的Npc
   if self.curMap then
     for k,v in pairs(self.curMap.npcs) do
-      local npc=self:getNpc(v)
+      local npc=self.curNpcList[v]
       npc:update()
     end
   end
