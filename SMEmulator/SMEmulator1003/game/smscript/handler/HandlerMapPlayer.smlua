@@ -60,4 +60,6 @@ HandlerMap.choosePlayer={}
 function HandlerMap.choosePlayer:handleMessage(msg)
   smLog:info("选择角色")
   Notifier:notify(Const.NotifyCMD.Net.CHOOSE_PLAYER,HandlerMap:msgToLua(msg))
+  --登录游戏后，自动从服务器请求角色任务列表
+  smNet:listTask()
 end
