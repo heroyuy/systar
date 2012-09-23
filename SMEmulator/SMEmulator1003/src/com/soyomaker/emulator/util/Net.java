@@ -26,6 +26,8 @@ public class Net {
 
 	private static final String MSG_ID_LOAD_MAP = "103002";
 
+	private static final String MSG_ID_ENTER_MAPENTRY = "103003";
+
 	private static final String MSG_ID_CHAT_SEND = "104001";
 
 	private static final String MSG_ID_TASK_APPLY = "105001";
@@ -139,6 +141,25 @@ public class Net {
 	}
 
 	/**
+	 * 加载地图 103002
+	 */
+	public void loadMap() {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_LOAD_MAP);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 进入传送点 103003
+	 */
+	public void enterMapEntry(int mapEntryId) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_ENTER_MAPENTRY);
+		msg.putInt("mapEntryId", mapEntryId);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
 	 * 发送聊天内容 104001
 	 */
 	public void sendChatContent(String content) {
@@ -184,15 +205,6 @@ public class Net {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_NEXT_STEP);
 		msg.putInt("taskId", id);
-		NetTransceiver.getInstance().sendMessage(msg);
-	}
-
-	/**
-	 * 加载地图 103002
-	 */
-	public void loadMap() {
-		GameObject msg = new GameObject();
-		msg.setType(MSG_ID_LOAD_MAP);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 

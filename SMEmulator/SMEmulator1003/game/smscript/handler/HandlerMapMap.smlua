@@ -1,5 +1,3 @@
-HandlerMap.loadMap={}
-
 HandlerMap.movePlayer={}
 
 function HandlerMap.movePlayer:handleMessage(msg)
@@ -8,6 +6,8 @@ function HandlerMap.movePlayer:handleMessage(msg)
 end
 
 --====================================================
+HandlerMap.loadMap={}
+
 function HandlerMap.loadMap:handleMessage(msg)
   smLog:info("加载地图")
   GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
@@ -57,3 +57,13 @@ function HandlerMap.loadMap:handleMessage(msg)
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end
 
+--====================================================
+HandlerMap.enterMapEntry={}
+
+function HandlerMap.enterMapEntry:handleMessage(msg)
+  smLog:info("进入传送点")
+  GameData.curPlayer.mapId=msg:getInt("mapId")
+  GameData.curPlayer.col=msg:getInt("x")
+  GameData.curPlayer.row=msg:getInt("y")
+  smNet:loadMap()
+end

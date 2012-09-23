@@ -547,7 +547,8 @@ function clsSceneMap:doNpcEvent(npc)
     GameData:checkScript(npc)
   elseif npc.type==clsNpc.TYPE_MAPENTRY then
     --传送点
-    print("传送。。。")
+    Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})
+    smNet:enterMapEntry(npc.id)
   end
 end
 
