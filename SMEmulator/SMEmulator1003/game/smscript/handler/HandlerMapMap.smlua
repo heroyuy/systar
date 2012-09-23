@@ -1,6 +1,15 @@
 HandlerMap.loadMap={}
 
+HandlerMap.movePlayer={}
+
+function HandlerMap.movePlayer:handleMessage(msg)
+  smLog:info("移动角色")
+  Notifier:notify(Const.NotifyCMD.Net.MOVE_PLAYER,HandlerMap:msgToLua(msg))
+end
+
+--====================================================
 function HandlerMap.loadMap:handleMessage(msg)
   smLog:info("加载地图")
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP,HandlerMap:msgToLua(msg))
 end
+

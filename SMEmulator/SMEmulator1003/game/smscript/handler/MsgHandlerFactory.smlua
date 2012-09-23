@@ -26,6 +26,7 @@ MsgHandlerFactory["102003"]=HandlerMap.listPlayer
 MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
 MsgHandlerFactory["103001"]=HandlerMap.movePlayer
 MsgHandlerFactory["103002"]=HandlerMap.loadMap
+MsgHandlerFactory["103002"]=HandlerMap.loadMap
 MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
 MsgHandlerFactory["105001"]=HandlerMap.applyTask
 MsgHandlerFactory["105002"]=HandlerMap.giveUpTask

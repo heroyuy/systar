@@ -1,0 +1,42 @@
+--[[
+  description:加载进度场景
+  author:wp_g4
+  date:2012/09/23
+--]]
+
+--结构定义
+clsSceneLoading = {}
+setmetatable(clsSceneLoading,clsScene)
+clsSceneLoading.__index = clsSceneLoading
+
+--背景层
+clsSceneLoading.bgLayer=nil
+
+--构造器
+function clsSceneLoading:new()
+	local self = {}
+	self = clsScene:new()
+	setmetatable(self,clsSceneLoading)
+	return self
+end
+
+-- 开始
+function clsSceneLoading:onStart()
+  smLog:info("加载进度场景启动")
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  --背景大图 
+  self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  if Dictionary.config.titleImg then
+    self.bgLayer.image=smImageFactory:loadImage(Dictionary.config.titleImg)
+  end
+end
+
+-- 更新
+function clsSceneLoading:update()
+  --smLog:info("加载进度场景更新")
+end
+
+-- 退出
+function clsSceneLoading:onStop()
+  smLog:info("加载进度场景退出")
+end

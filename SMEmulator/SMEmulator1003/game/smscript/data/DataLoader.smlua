@@ -101,7 +101,6 @@ function DataLoader:loadMap(id)
   local t=Game:getTime()
   local path=string.gsub(self.mapPath,"{id}",id)
   dofile(path)
-  smNet:loadMap()
   t=Game:getTime()-t
   smLog:info("加载地图["..id.."]耗时:"..t.."ms")
 end
