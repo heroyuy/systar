@@ -11,8 +11,8 @@ import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 
-@Component("enterWarpHandler")
-public class EnterWarpHandler extends AbHandler {
+@Component("enterMapEntryHandler")
+public class EnterMapEntryHandler extends AbHandler {
 
 	@Autowired
 	private DictManager dictManager;
