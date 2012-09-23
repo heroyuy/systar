@@ -31,9 +31,8 @@ function clsSceneLoading:onStart()
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
   --背景大图 
   self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
-  if Dictionary.config.titleImg then
-    self.bgLayer.image=smImageFactory:loadImage(Dictionary.config.titleImg)
-  end
+  self.bgLayer.image=smImageFactory:loadImage("/image/title/001-Title01.jpg")
+  GameLayer:addChildToScene(self.bgLayer)
   Notifier:addObserver(self.eventCommand,self,"gotoNextScene")
 end
 
