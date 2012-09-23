@@ -60,5 +60,4 @@ HandlerMap.choosePlayer={}
 function HandlerMap.choosePlayer:handleMessage(msg)
   smLog:info("选择角色")
   Notifier:notify(Const.NotifyCMD.Net.CHOOSE_PLAYER,HandlerMap:msgToLua(msg))
-  smNet:loadMap()
 end

@@ -261,7 +261,8 @@ function clsSceneTitle:handleChoosePlayer(msg)
 		smLog:info("进入游戏")
 		GameData.curPlayer = GameData.playerList:get(self.listPlayerTable.selectedIndex)
 		GameData.updateSwitch=true
-		Game:changeScene(Game.SCENE_MAP)
+		Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})
+  		smNet:loadMap()
 	end
 end
 
