@@ -110,6 +110,7 @@
 				<entry key="102003" value-ref="p102003" />
 				<entry key="102004" value-ref="p102004" />
 				<entry key="103001" value-ref="p103001" />
+				<entry key="103002" value-ref="p103002" />
 				<entry key="104001" value-ref="p104001" />
 				<entry key="105001" value-ref="p105001" />
 				<entry key="105002" value-ref="p105002" />
@@ -174,6 +175,13 @@
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="moveHandler" />
+	</bean>
+
+	<bean id="p103002" class="com.soyomaker.net.Protocol">
+		<property name="id" value="103002" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="loadMapHandler" />
 	</bean>
 
 	<bean id="p104001" class="com.soyomaker.net.Protocol">

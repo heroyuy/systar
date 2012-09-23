@@ -78,7 +78,13 @@ public class DictManager {
 		levelExpMap = levelExpService.getLevelExpMap();
 		// 加载传送点
 		for (MapData mapData : list) {
-			mapData.setMapEntryList(mapEntryService.findByMapId(mapData.getId()));
+			List<MapEntry> mapEntryList = mapEntryService.findByMapId(mapData
+					.getId());
+			Map<Integer, MapEntry> mapEntryMap = new HashMap<Integer, MapEntry>();
+			for (MapEntry mapEntry : mapEntryList) {
+				mapEntryMap.put(mapEntry.getId(), mapEntry);
+			}
+			mapData.setMapEntryMap(mapEntryMap);
 		}
 	}
 

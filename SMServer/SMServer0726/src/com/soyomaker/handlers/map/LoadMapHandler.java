@@ -2,7 +2,6 @@ package com.soyomaker.handlers.map;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +26,7 @@ public class LoadMapHandler extends AbHandler {
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		GameObject msgSent = this.buildPackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
-		List<MapEntry> mapEntryList = mapData.getMapEntryList();
+		Collection<MapEntry> mapEntryList = mapData.getMapEntryMap().values();
 		if (mapEntryList != null) {
 			for (MapEntry mapEntry : mapEntryList) {
 				GameObject mapEntryObj = new GameObject();
@@ -35,10 +34,7 @@ public class LoadMapHandler extends AbHandler {
 				mapEntryObj.putInt("mapId", mapEntry.getMapId());
 				mapEntryObj.putInt("x", mapEntry.getX());
 				mapEntryObj.putInt("y", mapEntry.getY());
-				mapEntryObj.putInt("type", mapEntry.getType());
-				mapEntryObj.putInt("targetMapId", mapEntry.getTargetMapId());
-				mapEntryObj.putInt("targetX", mapEntry.getTargetX());
-				mapEntryObj.putInt("targetY", mapEntry.getTargetY());
+				mapEntryObj.putInt("avatar", mapEntry.getAvatar());
 				mapEntryObjList.add(mapEntryObj);
 			}
 		}

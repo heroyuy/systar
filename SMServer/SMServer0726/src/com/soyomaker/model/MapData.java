@@ -1,6 +1,6 @@
 package com.soyomaker.model;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,7 +36,7 @@ public class MapData {
 	private int[][] wayMatrix;
 
 	@Transient
-	private List<MapEntry> mapEntryList;
+	private Map<Integer, MapEntry> mapEntryMap;
 
 	public Integer getHeight() {
 		return height;
@@ -46,8 +46,8 @@ public class MapData {
 		return id;
 	}
 
-	public List<MapEntry> getMapEntryList() {
-		return mapEntryList;
+	public Map<Integer, MapEntry> getMapEntryMap() {
+		return mapEntryMap;
 	}
 
 	public String getName() {
@@ -74,8 +74,8 @@ public class MapData {
 		this.id = id;
 	}
 
-	public void setMapEntryList(List<MapEntry> mapEntryList) {
-		this.mapEntryList = mapEntryList;
+	public void setMapEntryMap(Map<Integer, MapEntry> mapEntryMap) {
+		this.mapEntryMap = mapEntryMap;
 	}
 
 	public void setName(String name) {

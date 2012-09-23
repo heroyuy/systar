@@ -17,7 +17,7 @@ public class MapEntry {
 
 	private int y;
 
-	private int type;
+	private int avatar;
 
 	private int targetMapId;
 
@@ -45,8 +45,8 @@ public class MapEntry {
 		return targetY;
 	}
 
-	public int getType() {
-		return type;
+	public int getAvatar() {
+		return avatar;
 	}
 
 	public int getX() {
@@ -77,8 +77,8 @@ public class MapEntry {
 		this.targetY = targetY;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setAvatar(int type) {
+		this.avatar = type;
 	}
 
 	public void setX(int x) {
