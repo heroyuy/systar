@@ -47,6 +47,11 @@ function HandlerMap.loadMap:handleMessage(msg)
     npc.row=mapEntry.y
     npc.avatar=mapEntry.avatar
     npc.type=clsNpc.TYPE_MAPENTRY
+    npc.penetrable=false
+    npc.charImgName="/image/character/001-Fighter01.png"
+    if npc.charImgName then
+      npc.charImg=smImageFactory:loadImage(npc.charImgName)
+    end
     GameData.curNpcList[npc.id]=npc
   end
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)

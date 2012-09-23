@@ -254,8 +254,7 @@ function clsSceneMap:buildMap()
     playerSprite.x,playerSprite.y=self:characherLocation(GameData.curPlayer)
     self.spriteLayer:addChild(playerSprite)
     --Npc
-    for k,v in pairs(GameData.curMap.npcs) do
-      local npc=GameData.curNpcList[v]
+    for k,npc in pairs(GameData.curNpcList) do
       local npcSprite=clsSprite:new(npc.charImg,
         npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
       npcSprite.tag=npc.id
@@ -480,7 +479,7 @@ function clsSceneMap:characterMove(param)
     local npc=GameData:getNpcAt(row,col)
     if npc and not npc.penetrable then
       smLog:info("主角撞到Npc")
-      GameData:checkScript(npc)
+      self:doNpcEvent(npc)
       return
     else
       --smLog:info("主角行走")
@@ -501,7 +500,7 @@ function clsSceneMap:characterMove(param)
     if not character.penetrable then
       if row==GameData.curPlayer.row and col==GameData.curPlayer.col then
         smLog:info("Npc撞到主角")
-        --GameData:checkScript(character)
+        self:doNpcEvent(character)
         npcMovable=false
       end
       if npcMovable then
@@ -538,6 +537,17 @@ function clsSceneMap:spriteWalkEnd(sprite)
     local npc=GameData.curNpcList[sprite.tag]
     npc.moving=false
     npc:checkMove()
+  end
+end
+
+--处理主角与npc碰撞、重叠的事件
+function clsSceneMap:doNpcEvent(npc)
+  if npc.type == clsNpc.TYPE_NORMAL then
+    --普通NPC
+    GameData:checkScript(npc)
+  elseif npc.type==clsNpc.TYPE_MAPENTRY then
+    --传送点
+    print("传送。。。")
   end
 end
 
