@@ -27,10 +27,6 @@ Const.NotifyCMD.Character={}
     character面向改变，此通知的参数为{character=player/npc}
   --]]
   Const.NotifyCMD.Character.FACE_CHANGED="characterFaceChanged"    --角色面向改变
-  --[[
-    character所在地图改变，此通知的参数为{character=player/npc}
-  --]]
-  Const.NotifyCMD.Character.MAP_CHANGED="characterMapChanged"      --角色地图改变
   
 --Net
 Const.NotifyCMD.Net={}

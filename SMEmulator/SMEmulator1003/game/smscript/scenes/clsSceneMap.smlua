@@ -201,7 +201,6 @@ function clsSceneMap:onStart()
   --注册接收通知
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
-  Notifier:addObserver(Const.NotifyCMD.Character.MAP_CHANGED,self,self.characterMapChanged)
   --定时任务
   Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
@@ -222,7 +221,6 @@ function clsSceneMap:onStop()
   self:syncLocation()
   Notifier:removeObserver(Const.NotifyCMD.Character.MOVE,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
-  Notifier:removeObserver(Const.NotifyCMD.Character.MAP_CHANGED,self)
 end
 
 --切换地图
@@ -565,11 +563,4 @@ end
 function clsSceneMap:characterFaceChanged(param)
   local sprite=self.spriteLayer:childWithTag(param.character.id)  
   sprite.frameIndex=param.character:getCurFrameIndex()
-end
-
---character地图改变
-function clsSceneMap:characterMapChanged(param)
-  if param.character==GameData.curPlayer then
-    self:buildMap()
-  end
 end

@@ -81,13 +81,3 @@ function clsCharacter:changeFace(face)
   self.face=face
   Notifier:notify(Const.NotifyCMD.Character.FACE_CHANGED,{character=self})
 end
-
-function clsCharacter:changeMap(mapId,row,col,face)
-  self.mapId=mapId
-  self.row=row
-  self.col=col
-  self.face=face
-  self.moving=false
-  self.moveSequence:clear()
-  Notifier:notify(Const.NotifyCMD.Character.MAP_CHANGED,{character=self})
-end

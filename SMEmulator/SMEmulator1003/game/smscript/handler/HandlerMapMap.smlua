@@ -10,6 +10,26 @@ end
 --====================================================
 function HandlerMap.loadMap:handleMessage(msg)
   smLog:info("加载地图")
-  Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP,HandlerMap:msgToLua(msg))
+  GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
+  --加载地图后更新NPC列表
+  GameData.curNpcList={}
+  --(1)地图NPC
+  for k,v in pairs(GameData.curMap.npcs) do
+    table.insert(GameData.curNpcList,GameData:getNpc(v))
+  end
+  --(2)传送点
+  msg=HandlerMap:msgToLua(msg)
+  local mapEntryList=msg.mapEntryList
+  for i,mapEntry in ipairs(mapEntryList) do
+    local npc=clsNpc:new()
+    npc.id=mapEntry.id
+    npc.mapId=mapEntry.mapId
+    npc.col=mapEntry.x
+    npc.row=mapEntry.y
+    npc.avatar=mapEntry.avatar
+    npc.type=clsNpc.TYPE_MAPENTRY
+    table.insert(GameData.curNpcList,npc)
+  end
+  Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end
 

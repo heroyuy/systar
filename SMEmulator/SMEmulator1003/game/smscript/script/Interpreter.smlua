@@ -135,7 +135,7 @@ end
 --============游戏表现类============
 --切换地图
 function Interpreter:changeMap(mapId,row,col,face)
-  GameData.curPlayer:changeMap(mapId,row,col,face)
+  --TODO 切换地图
   return true
 end
 

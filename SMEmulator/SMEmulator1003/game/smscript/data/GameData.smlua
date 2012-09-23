@@ -32,7 +32,7 @@ GameData.updateSwitch=false  				--模型更新开关
 GameData.playerList=nil						--玩家角色列表
 GameData.curPlayer=nil          			--当前角色
 GameData.curMap=nil          				--当前地图
-GameData.npcs={}							--npc列表
+GameData.curNpcList=nil						--当前npc列表
 
 GameData.curLockedNpc=nil					--当前锁定的Npc（当执行一个Npc身上的脚本时，Npc即进入锁定状态）
 
