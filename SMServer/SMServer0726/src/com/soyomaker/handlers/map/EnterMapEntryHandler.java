@@ -19,7 +19,7 @@ public class EnterMapEntryHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		int mapEnreyId = msg.getInt("mapEnreyId");
+		int mapEnreyId = msg.getInt("mapEntryId");
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		MapEntry mapEntry = mapData.getMapEntryMap().get(mapEnreyId);
