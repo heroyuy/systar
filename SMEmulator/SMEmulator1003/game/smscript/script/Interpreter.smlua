@@ -300,6 +300,7 @@ end
 
 --获取任务状态
 function Interpreter:getTaskState(taskId)
+  smLog:info("tastId:"..tastId)
   local status=false
   for _,v in ipairs(GameData.curPlayer.taskList) do
     if v.index==taskId then
