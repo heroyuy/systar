@@ -31,7 +31,7 @@ public class ListTaskHandler extends AbHandler {
 				Task task = dictManager.getTask(pt.getId().getTaskId());
 				taskObj.putInt("id", task.getId());
 				taskObj.putString("name", task.getName());
-				taskObj.putString("desc", task.getDesc());
+				taskObj.putString("desc", task.getIntro());
 				taskObj.putInt("type", task.getType());
 				taskObj.putInt("step", pt.getStep());
 				taskObj.putBool("finished", pt.isFinished());

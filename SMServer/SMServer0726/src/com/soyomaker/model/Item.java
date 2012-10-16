@@ -27,7 +27,7 @@ public class Item {
 
 	private String name;
 
-	private String desc;
+	private String intro;
 
 	private int atk;
 
@@ -45,10 +45,6 @@ public class Item {
 		return def;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public int getFlee() {
 		return flee;
 	}
@@ -59,6 +55,10 @@ public class Item {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getIntro() {
+		return intro;
 	}
 
 	public String getName() {
@@ -73,10 +73,6 @@ public class Item {
 		this.def = def;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setFlee(int flee) {
 		this.flee = flee;
 	}
@@ -87,6 +83,10 @@ public class Item {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 
 	public void setName(String name) {

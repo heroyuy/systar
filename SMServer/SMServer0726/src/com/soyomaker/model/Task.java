@@ -16,7 +16,7 @@ public class Task {
 
 	private String name;
 
-	private String desc;
+	private String intro;
 
 	private int preTaskId;
 
@@ -35,16 +35,16 @@ public class Task {
 		return applyCondition;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getFinishCondition() {
 		return finishCondition;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public String getIntro() {
+		return intro;
 	}
 
 	public String getName() {
@@ -71,16 +71,16 @@ public class Task {
 		this.applyCondition = applyCondition;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setFinishCondition(String finishCondition) {
 		this.finishCondition = finishCondition;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 
 	public void setName(String name) {
