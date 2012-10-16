@@ -144,7 +144,6 @@ end
 
 function clsTaskPanel:refreshListTask()
 	self.taskMenuPanelTaskTable.cellNum=GameData.curPlayer.taskList:size()
-
   	self.taskMenuPanelTaskTable.dataSource={
     	cellLayerAtIndex=function(self,menu,cellLayer,index)
       		local w,h=cellLayer.width,cellLayer.height
@@ -198,19 +197,19 @@ end
 
 function clsTaskPanel:handleGiveUpTask(msg)
   if msg.res then
-  	smNet:listTask()
+  	smNet:refreshTaskList()
   end
 end
 
 function clsTaskPanel:handleNextStepTask(msg)
   if msg.res then
-  	smNet:listTask()
+  	smNet:refreshTaskList()
   end
 end
 
 function clsTaskPanel:handleApplyTask(msg)
   if msg.res then
-  	smNet:listTask()
+  	smNet:refreshTaskList()
   end
 end
 

@@ -426,8 +426,6 @@ function clsSceneMap:buttonTapped(button)
 		self.playerPanelLayer:setVisible(false)
 	end
   elseif index==self.TAG_MAP then
-    --地图
-    smLog:info("[地图]功能开发中")
     --地图菜单面板
   	if self.mapPanelLayer.alpha==0 then
   		self.mapPanelLayer:setVisible(true)

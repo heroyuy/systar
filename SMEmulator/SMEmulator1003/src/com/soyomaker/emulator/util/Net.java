@@ -190,9 +190,9 @@ public class Net {
 	}
 
 	/**
-	 * 得到任务列表 105003
+	 * 刷新任务列表 105003
 	 */
-	public void listTask() {
+	public void refreshTaskList() {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_LIST);
 		NetTransceiver.getInstance().sendMessage(msg);

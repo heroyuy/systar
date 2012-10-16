@@ -59,6 +59,7 @@ Interpreter.functionList={
   [101017]="playAnimationInFight",
   [101018]="toneScene",
   [101019]="shakeScene",
+  [101020]="npcForceMove",
   
   [102001]="getPlayerProperty",
   [102002]="getPlayerName",
@@ -71,7 +72,8 @@ Interpreter.functionList={
   [102009]="applyTask",
   [102010]="nextStepTask",
   [102011]="giveUpTask",
-  [102012]="listTask"
+  [102012]="refreshTaskList",
+  [102013]="getTaskState"
 }
 
 --[[
@@ -139,8 +141,8 @@ function Interpreter:changeMap(mapId,row,col,face)
   return true
 end
 
---强制移动   e.g  {0,0,1,2,3,3,1}
-function Interpreter:forceMove(paths)
+--强制移动
+function Interpreter:forceMove(mapId,row,col)
 end
 
 --显示倒计时
@@ -235,6 +237,10 @@ end
 function Interpreter:shakeScene(range,millisecond,times)
 end
 
+--Npc强制移动
+function Interpreter:npcForceMove(npcId,mapId,row,col)
+end
+
 --============数据处理类============
 --获取玩家属性
 function Interpreter:getPlayerProperty(playerId,propertyType)
@@ -286,8 +292,21 @@ function Interpreter:giveUpTask(id)
   return true
 end
 
---获取任务列表
-function Interpreter:listTask()
-  smNet:listTask()
+--刷新任务列表
+function Interpreter:refreshTaskList()
+  smNet:refreshTaskList()
+  return true
+end
+
+--获取任务状态
+function Interpreter:getTaskState(taskId)
+  local status=false
+  for _,v in ipairs(GameData.curPlayer.taskList) do
+    if v.index==taskId then
+      status = true
+      break
+    end
+  end
+  Interpreter:endCurrentEvent(status)
   return true
 end
