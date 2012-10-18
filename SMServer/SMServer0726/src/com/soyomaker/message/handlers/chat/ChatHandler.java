@@ -22,8 +22,7 @@ public class ChatHandler extends AbHandler {
 		int sn = msg.getInt(SN_KEY);
 		String content = msg.getString("content");
 		Player player = session.getUser().getPlayer();
-		GameObject msgSent = new GameObject();
-		msgSent.setType(msg.getType());
+		GameObject msgSent = new GameObject(msg.getType());
 		msgSent.putInt("playerId", player.getId());
 		msgSent.putString("playerName", player.getName());
 		msgSent.putString("content", content);

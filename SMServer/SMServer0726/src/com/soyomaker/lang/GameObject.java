@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameObject {
+
 	public static GameObject createFromBytes(byte[] bytes) {
 		try {
 			return BinarySerializer.binary2object(bytes);
@@ -23,6 +24,14 @@ public class GameObject {
 	private String type = "";
 
 	private Map<String, GameDataWrapper> dataHolder = new HashMap<String, GameDataWrapper>();
+
+	public GameObject() {
+	}
+
+	public GameObject(String type) {
+		super();
+		this.type = type;
+	}
 
 	public void clear() {
 		dataHolder.clear();
@@ -270,6 +279,25 @@ public class GameObject {
 		putObj(key, value, GameDataType.LONG_ARRAY);
 	}
 
+	private void putObj(String key, Object value, GameDataType typeId) {
+		if (key == null)
+			throw new IllegalArgumentException(
+					"GUObject requires a non-null key for a 'put' operation!");
+
+		if (key.length() > 255)
+			throw new IllegalArgumentException(
+					"GUObject keys must be less than 255 characters!");
+
+		if (value == null)
+			throw new IllegalArgumentException(
+					"GUObject requires a non-null value!");
+
+		if (value instanceof GameDataWrapper)
+			dataHolder.put(key, (GameDataWrapper) value);
+		else
+			dataHolder.put(key, new GameDataWrapper(typeId, value));
+	}
+
 	public void putObject(String key, GameObject value) {
 		putObj(key, value, GameDataType.OBJECT);
 	}
@@ -282,11 +310,11 @@ public class GameObject {
 		putObj(key, value, GameDataType.SHORT);
 	}
 
+	// 以下为其他方法
+
 	public void putShortArray(String key, Collection<Short> value) {
 		putObj(key, value, GameDataType.SHORT_ARRAY);
 	}
-
-	// 以下为其他方法
 
 	public void putString(String key, String value) {
 		putObj(key, value, GameDataType.STRING);
@@ -337,24 +365,5 @@ public class GameObject {
 		}
 		buf.append("}");
 		return buf.toString();
-	}
-
-	private void putObj(String key, Object value, GameDataType typeId) {
-		if (key == null)
-			throw new IllegalArgumentException(
-					"GUObject requires a non-null key for a 'put' operation!");
-
-		if (key.length() > 255)
-			throw new IllegalArgumentException(
-					"GUObject keys must be less than 255 characters!");
-
-		if (value == null)
-			throw new IllegalArgumentException(
-					"GUObject requires a non-null value!");
-
-		if (value instanceof GameDataWrapper)
-			dataHolder.put(key, (GameDataWrapper) value);
-		else
-			dataHolder.put(key, new GameDataWrapper(typeId, value));
 	}
 }

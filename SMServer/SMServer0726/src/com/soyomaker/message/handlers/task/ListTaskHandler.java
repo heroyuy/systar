@@ -38,8 +38,7 @@ public class ListTaskHandler extends AbHandler {
 				taskObjs.add(taskObj);
 			}
 		}
-		GameObject msgSent = new GameObject();
-		msgSent.setType(msg.getType());
+		GameObject msgSent = new GameObject(msg.getType());
 		msgSent.putObjectArray("taskList", taskObjs);
 		netTransceiver.sendMessage(session, msgSent);
 	}
