@@ -16,20 +16,20 @@ public class TaskStep {
 
 	private int taskId;
 
-	private int mapId;
-
 	private int npcId;
+
+	private String operate;
 
 	public int getId() {
 		return id;
 	}
 
-	public int getMapId() {
-		return mapId;
-	}
-
 	public int getNpcId() {
 		return npcId;
+	}
+
+	public String getOperate() {
+		return operate;
 	}
 
 	public int getTaskId() {
@@ -40,12 +40,12 @@ public class TaskStep {
 		this.id = id;
 	}
 
-	public void setMapId(int mapId) {
-		this.mapId = mapId;
-	}
-
 	public void setNpcId(int npcId) {
 		this.npcId = npcId;
+	}
+
+	public void setOperate(String operate) {
+		this.operate = operate;
 	}
 
 	public void setTaskId(int taskId) {

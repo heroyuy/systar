@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
 import com.soyomaker.service.MapEntryService;
+import com.soyomaker.service.NpcService;
 import com.soyomaker.service.PlayerService;
 import com.soyomaker.service.TaskService;
 import com.soyomaker.service.TaskStepService;
@@ -32,6 +33,9 @@ public class DictManager {
 
 	@Autowired
 	private MapEntryService mapEntryService;
+
+	@Autowired
+	private NpcService npcService;
 
 	private Player player;// 角色初始数据
 
@@ -85,6 +89,15 @@ public class DictManager {
 				mapEntryMap.put(mapEntry.getId(), mapEntry);
 			}
 			mapData.setMapEntryMap(mapEntryMap);
+		}
+		// 加载Npc
+		for (MapData mapData : list) {
+			List<Npc> npcList = npcService.findByMapId(mapData.getId());
+			Map<Integer, Npc> npcMap = new HashMap<Integer, Npc>();
+			for (Npc npc : npcList) {
+				npcMap.put(npc.getId(), npc);
+			}
+			mapData.setNpcMap(npcMap);
 		}
 	}
 

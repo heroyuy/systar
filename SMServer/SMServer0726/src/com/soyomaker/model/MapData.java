@@ -38,6 +38,9 @@ public class MapData {
 	@Transient
 	private Map<Integer, MapEntry> mapEntryMap;
 
+	@Transient
+	private Map<Integer, Npc> npcMap;
+
 	public Integer getHeight() {
 		return height;
 	}
@@ -52,6 +55,10 @@ public class MapData {
 
 	public String getName() {
 		return name;
+	}
+
+	public Map<Integer, Npc> getNpcMap() {
+		return npcMap;
 	}
 
 	public int getWay(int x, int y) {
@@ -80,6 +87,10 @@ public class MapData {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNpcMap(Map<Integer, Npc> npcMap) {
+		this.npcMap = npcMap;
 	}
 
 	public void setWays(String ways) {

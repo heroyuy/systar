@@ -18,25 +18,27 @@ public class Task {
 
 	private String intro;
 
-	private int preTaskId;
+	private int preId;
 
 	private int type;
 
-	private String applyCondition;
+	private int npcId;
 
-	private String finishCondition;
+	private String applyCnd;
+
+	private String finishCnd;
 
 	private String reward;
 
 	@Transient
 	private Collection<TaskStep> steps;
 
-	public String getApplyCondition() {
-		return applyCondition;
+	public String getApplyCnd() {
+		return applyCnd;
 	}
 
-	public String getFinishCondition() {
-		return finishCondition;
+	public String getFinishCnd() {
+		return finishCnd;
 	}
 
 	public int getId() {
@@ -51,8 +53,12 @@ public class Task {
 		return name;
 	}
 
-	public int getPreTaskId() {
-		return preTaskId;
+	public int getNpcId() {
+		return npcId;
+	}
+
+	public int getPreId() {
+		return preId;
 	}
 
 	public String getReward() {
@@ -67,12 +73,12 @@ public class Task {
 		return type;
 	}
 
-	public void setApplyCondition(String applyCondition) {
-		this.applyCondition = applyCondition;
+	public void setApplyCnd(String applyCnd) {
+		this.applyCnd = applyCnd;
 	}
 
-	public void setFinishCondition(String finishCondition) {
-		this.finishCondition = finishCondition;
+	public void setFinishCnd(String finishCnd) {
+		this.finishCnd = finishCnd;
 	}
 
 	public void setId(int id) {
@@ -87,8 +93,12 @@ public class Task {
 		this.name = name;
 	}
 
-	public void setPreTaskId(int preTaskId) {
-		this.preTaskId = preTaskId;
+	public void setNpcId(int npcId) {
+		this.npcId = npcId;
+	}
+
+	public void setPreId(int preId) {
+		this.preId = preId;
 	}
 
 	public void setReward(String reward) {
