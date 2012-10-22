@@ -27,6 +27,7 @@ MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
 MsgHandlerFactory["103001"]=HandlerMap.movePlayer
 MsgHandlerFactory["103002"]=HandlerMap.loadMap
 MsgHandlerFactory["103003"]=HandlerMap.enterMapEntry
+MsgHandlerFactory["103004"]=HandlerMap.updateNpcState
 MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
 MsgHandlerFactory["105001"]=HandlerMap.applyTask
 MsgHandlerFactory["105002"]=HandlerMap.giveUpTask

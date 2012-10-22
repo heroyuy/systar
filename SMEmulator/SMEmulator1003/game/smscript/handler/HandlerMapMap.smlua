@@ -67,3 +67,10 @@ function HandlerMap.enterMapEntry:handleMessage(msg)
   GameData.curPlayer.row=msg:getInt("y")
   smNet:loadMap()
 end
+
+--====================================================
+HandlerMap.updateNpcState={}
+
+function HandlerMap.updateNpcState:handleMessage(msg)
+  smLog:info("服务器通知更新地图NPC信息")
+end
