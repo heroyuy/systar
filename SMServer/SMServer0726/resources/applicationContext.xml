@@ -197,7 +197,7 @@
 		<property name="id" value="103004" />
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
-		<property name="handler" ref="npcStatusHandler" />
+		<property name="handler" ref="npcStateHandler" />
 	</bean>
 
 	<bean id="p104001" class="com.soyomaker.net.Protocol">

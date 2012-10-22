@@ -15,8 +15,8 @@ import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 
-@Component("npcStatusHandler")
-public class NPCStatusHandler extends AbHandler {
+@Component("npcStateHandler")
+public class NPCStateHandler extends AbHandler {
 
 	@Autowired
 	private DictManager dictManager;
@@ -39,6 +39,7 @@ public class NPCStatusHandler extends AbHandler {
 		// (3)返回消息给客户端
 		GameObject msgSent = new GameObject(msg.getType());
 		msgSent.putObjectArray("stateList", stateList);
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 	public int checkNpcState(Npc npc) {
