@@ -8,6 +8,19 @@ import javax.persistence.Table;
 @Table(name = "npc")
 public class Npc {
 
+	/**
+	 * 普通
+	 */
+	public static final int STATE_NORMAL = 0;
+	/**
+	 * 提示对话
+	 */
+	public static final int STATE_DIALOGUE = 1;
+	/**
+	 * 提示完成任务
+	 */
+	public static final int STATE_FINISH_TASK = 2;
+
 	@Id
 	private int id;
 
