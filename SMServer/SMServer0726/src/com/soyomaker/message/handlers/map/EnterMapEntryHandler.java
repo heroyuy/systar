@@ -32,7 +32,7 @@ public class EnterMapEntryHandler extends AbHandler {
 		player.setMapId(mapEntry.getTargetMapId());
 		player.setX(mapEntry.getTargetX());
 		player.setY(mapEntry.getTargetY());
-		GameObject msgSent = this.buildPackage(msg);
+		GameObject msgSent = this.buildPackage(msg, true, "成功");
 		msgSent.putInt("mapId", player.getMapId());
 		msgSent.putInt("x", player.getX());
 		msgSent.putInt("y", player.getY());
