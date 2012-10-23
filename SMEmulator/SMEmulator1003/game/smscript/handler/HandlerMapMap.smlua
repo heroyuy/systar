@@ -14,9 +14,9 @@ function HandlerMap.loadMap:handleMessage(msg)
   --加载地图后更新NPC列表
   GameData.curNpcList={}
   --(1)地图NPC
-  for k,mapId in pairs(GameData.curMap.npcs) do
+  for k,npcId in pairs(GameData.curMap.npcs) do
     local npc=clsNpc:new()
-    local npcDict=Dictionary.npcs[mapId]
+    local npcDict=Dictionary.npcs[npcId]
     npc.id=npcDict.id
     npc.row=npcDict.row
     npc.col=npcDict.col
@@ -73,4 +73,13 @@ HandlerMap.updateNpcState={}
 
 function HandlerMap.updateNpcState:handleMessage(msg)
   smLog:info("服务器通知更新地图NPC信息")
+  msg=HandlerMap:msgToLua(msg)
+  local stateList=msg.stateList
+  for k,npc in pairs(stateList) do
+    --smLog:info(npc.npcId)
+    --smLog:info(npc.state)
+  	if GameData.curNpcList[npc.npcId] then
+  		GameData.curNpcList[npc.npcId].state=npc.state
+  	end
+  end
 end

@@ -16,7 +16,7 @@ clsSprite.paintLayerF=clsSprite.paintLayer
 clsSprite.colNum=1               			--帧列数
 clsSprite.rowNum=1            				--帧行数
 clsSprite.frameImages=nil					--帧列表
-
+clsSprite.promptImage=nil					--头顶的提示图片
 --构造器
 function clsSprite:new(spriteImage,frameWidth,frameHeight)
   local self = clsUILayer:new(0,0,frameWidth,frameHeight)
@@ -64,4 +64,14 @@ end
 
 function clsSprite:walkEnd()
   callFunction(self.delegate,"spriteWalkEnd",self)
+end
+
+--绘制Sprite
+function clsSprite:paintLayer(painter)
+  --调用父类绘制方法
+  self:paintLayerF(painter)
+  if self.promptImage then
+  	--TODO 这里的16应该修改
+  	painter:drawImage(self.promptImage,16,0,UIConst.anchor.HV)
+  end
 end
