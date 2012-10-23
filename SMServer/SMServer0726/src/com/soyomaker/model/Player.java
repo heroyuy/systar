@@ -299,4 +299,16 @@ public class Player {
 		}
 		return flee;
 	}
+
+	public boolean hasTask(int taskId) {
+		return playerTasks.containsKey(taskId);
+	}
+
+	public boolean canApplyTask(Task task) {
+		return true;
+	}
+
+	public boolean canFinishTask(Task task) {
+		return true;
+	}
 }

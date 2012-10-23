@@ -1,6 +1,6 @@
 package com.soyomaker.model;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,7 +31,7 @@ public class Task {
 	private String reward;
 
 	@Transient
-	private Collection<TaskStep> steps;
+	private List<TaskStep> steps;
 
 	public String getApplyCnd() {
 		return applyCnd;
@@ -65,7 +65,7 @@ public class Task {
 		return reward;
 	}
 
-	public Collection<TaskStep> getSteps() {
+	public List<TaskStep> getSteps() {
 		return steps;
 	}
 
@@ -105,7 +105,7 @@ public class Task {
 		this.reward = reward;
 	}
 
-	public void setSteps(Collection<TaskStep> steps) {
+	public void setSteps(List<TaskStep> steps) {
 		this.steps = steps;
 	}
 

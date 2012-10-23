@@ -1,5 +1,6 @@
 package com.soyomaker.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,10 @@ public class DictManager {
 
 	public Task getTask(int taskId) {
 		return taskMap.get(taskId);
+	}
+
+	public Collection<Task> getTaskList() {
+		return taskMap.values();
 	}
 
 	public int getExp(int level) {
