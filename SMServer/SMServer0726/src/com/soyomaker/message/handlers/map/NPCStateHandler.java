@@ -92,7 +92,7 @@ public class NPCStateHandler extends AbHandler {
 				}
 			}
 		}
-		return state;
+		return Npc.STATE_DIALOGUE;
 	}
 
 }
