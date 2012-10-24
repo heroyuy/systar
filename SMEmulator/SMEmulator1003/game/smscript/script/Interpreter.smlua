@@ -39,27 +39,24 @@ Interpreter.functionList={
   [100000]="executeScript",
   [100001]="sleep",
   
-  [101000]="changeMap",
-  [101001]="forceMove",
-  [101002]="showTimer",
-  [101003]="playMusic",
-  [101004]="stopMusic",
-  [101005]="openShop",
-  [101006]="showMessageDialog",
-  [101007]="showInputDialog",
-  [101008]="showOptionDialog",
-  [101009]="changeFace",
-  [101010]="startFight",
-  [101011]="showImage",
-  [101012]="removeImage",
-  [101013]="moveImage",
-  [101014]="rotateImage",
-  [101015]="toneImage",
-  [101016]="playAnimation",
-  [101017]="playAnimationInFight",
-  [101018]="toneScene",
-  [101019]="shakeScene",
-  [101020]="npcForceMove",
+  [101001]="showTimer",
+  [101002]="playMusic",
+  [101003]="stopMusic",
+  [101004]="showMessageDialog",
+  [101005]="showInputDialog",
+  [101006]="showOptionDialog",
+  [101007]="changeFace",
+  [101008]="startFight",
+  [101009]="showImage",
+  [101010]="removeImage",
+  [101011]="moveImage",
+  [101012]="rotateImage",
+  [101013]="toneImage",
+  [101014]="playAnimation",
+  [101015]="toneScene",
+  [101016]="shakeScene",
+  [101017]="npcForceMove",
+  [101018]="showNpc",
   
   [102001]="getPlayerProperty",
   [102002]="getPlayerName",
@@ -67,13 +64,7 @@ Interpreter.functionList={
   [102004]="getPlayerEquipStatus",
   [102005]="getMoneyNum",
   [102006]="getItemNum",
-  [102007]="getEquipNum",
-  [102008]="getTaskStep",
-  [102009]="applyTask",
-  [102010]="nextStepTask",
-  [102011]="giveUpTask",
-  [102012]="refreshTaskList",
-  [102013]="getTaskState"
+  [102007]="getEquipNum"
 }
 
 --[[
@@ -135,16 +126,6 @@ function Interpreter:sleep(millisecond)
 end
 
 --============游戏表现类============
---切换地图
-function Interpreter:changeMap(mapId,row,col,face)
-  --TODO 切换地图
-  return true
-end
-
---强制移动
-function Interpreter:forceMove(mapId,row,col)
-end
-
 --显示倒计时
 function Interpreter:showTimer(millisecond)
 end
@@ -155,10 +136,6 @@ end
 
 --停止音乐
 function Interpreter:stopMusic(name)
-end
-
---开启商店 e.g {10,2,5,0}
-function Interpreter:openShop(itemIds)
 end
 
 --显示对话
@@ -225,10 +202,6 @@ end
 function Interpreter:playAnimation(animationId,x,y)
 end
 
---显示动画
-function Interpreter:playAnimationInFight(animationId,targetType,targetId)
-end
-
 --更改画面色调
 function Interpreter:toneScene(a,r,g,b,millisecond)
 end
@@ -239,6 +212,10 @@ end
 
 --Npc强制移动
 function Interpreter:npcForceMove(npcId,mapId,row,col)
+end
+
+--显示/隐藏Npc
+function Interpreter:showNpc(npcId,visible,mapId,row,col)
 end
 
 --============数据处理类============
@@ -268,45 +245,4 @@ end
 
 --获取装备数量
 function Interpreter:getEquipNum(equipId)
-end
-
---获取任务步骤
-function Interpreter:getTaskStep(id)
-end
-
---申请任务
-function Interpreter:applyTask(id)
-  smNet:applyTask(id)
-  return true
-end
-
---任务下一步
-function Interpreter:nextStepTask(id)
-  smNet:nextStepTask(id)
-  return true
-end
-
---放弃任务
-function Interpreter:giveUpTask(id)
-  smNet:giveUpTask(id)
-  return true
-end
-
---刷新任务列表
-function Interpreter:refreshTaskList()
-  smNet:refreshTaskList()
-  return true
-end
-
---获取任务状态
-function Interpreter:getTaskState(taskId)
-  local status=false
-  for _,v in ipairs(GameData.curPlayer.taskList) do
-    if v.index==taskId then
-      status = true
-      break
-    end
-  end
-  Interpreter:endCurrentEvent(status)
-  return true
 end
