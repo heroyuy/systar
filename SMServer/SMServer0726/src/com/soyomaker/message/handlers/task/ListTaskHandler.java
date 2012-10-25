@@ -2,7 +2,6 @@ package com.soyomaker.message.handlers.task;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +21,8 @@ public class ListTaskHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		Map<Integer, PlayerTask> playerTasks = session.getUser().getPlayer()
-				.getPlayerTasks();
 		Collection<GameObject> taskObjs = new ArrayList<GameObject>();
-		for (PlayerTask pt : playerTasks.values()) {
+		for (PlayerTask pt : session.getUser().getPlayer().getPlayerTaskList()) {
 			if (!pt.isFinished()) {
 				GameObject taskObj = new GameObject();
 				Task task = dictManager.getTask(pt.getId().getTaskId());

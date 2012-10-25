@@ -91,7 +91,7 @@ public class MinaHandler implements IoHandler {
 			Player player = user.getPlayer();
 			if (player != null) {
 				playerService.update(player);
-				playerTaskService.updateAllTaskForPlayer(player);
+				playerTaskService.updatePlayerTaskList(player);
 			}
 		}
 		session.removeAttribute(KEY_USERSESSION);

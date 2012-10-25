@@ -12,14 +12,16 @@ public class Npc {
 	 * 普通
 	 */
 	public static final int STATE_NORMAL = 0;
+
 	/**
-	 * 提示对话
+	 * 接收任务
 	 */
-	public static final int STATE_DIALOGUE = 1;
+	public static final int STATE_APPLY_TASK = 1;
+
 	/**
-	 * 提示完成任务
+	 * 进行任务
 	 */
-	public static final int STATE_FINISH_TASK = 2;
+	public static final int STATE_PROCEED_TASK = 2;
 
 	@Id
 	private int id;

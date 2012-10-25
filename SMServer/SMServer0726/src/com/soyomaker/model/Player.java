@@ -1,5 +1,6 @@
 package com.soyomaker.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -63,21 +64,100 @@ public class Player {
 	private Integer vita;
 
 	@Transient
-	private Map<Integer, PlayerTask> playerTasks = new LinkedHashMap<Integer, PlayerTask>();// 当前任务列表
+	private Map<Integer, PlayerTask> playerTaskMap = new LinkedHashMap<Integer, PlayerTask>();// 当前任务列表
 
 	@Transient
 	private Map<Integer, Item> equipMap = new HashMap<Integer, Item>();// 装备
 
+	/**
+	 * 添加任务
+	 * 
+	 * @param playerTask
+	 *            任务
+	 */
+	public void addPlayerTask(PlayerTask playerTask) {
+		this.playerTaskMap.put(playerTask.getId().getTaskId(), playerTask);
+	}
+
+	public boolean canApplyTask(Task task) {
+		return true;
+	}
+
+	public boolean canFinishTask(Task task) {
+		return true;
+	}
+
+	/**
+	 * 清空任务列表
+	 */
+	public void clearPlayerTaskList() {
+		playerTaskMap.clear();
+	}
+
 	public Integer getAgil() {
 		return agil;
+	}
+
+	/**
+	 * 获取攻击力
+	 * 
+	 * @return
+	 */
+	public int getAtk() {
+		// TODO Atk计算公式
+		int atk = 0;
+		for (Item item : equipMap.values()) {
+			atk += item.getAtk();
+		}
+		return this.getStre() + atk;
 	}
 
 	public Integer getAvatar() {
 		return avatar;
 	}
 
+	/**
+	 * 获取防御
+	 * 
+	 * @return
+	 */
+	public int getDef() {
+		// TODO Def计算公式
+		int def = 0;
+		for (Item item : equipMap.values()) {
+			def += item.getDef();
+		}
+		return def;
+	}
+
 	public Integer getExp() {
 		return exp;
+	}
+
+	/**
+	 * 获取闪避率
+	 */
+	public int getFlee() {
+		// TODO Flee公式
+		int flee = 0;
+		for (Item item : equipMap.values()) {
+			flee += item.getFlee();
+		}
+		return flee;
+	}
+
+	/**
+	 * 获取命中率
+	 * 
+	 * @return
+	 */
+	public int getHit() {
+		// TODO Hit公式
+		int hit = 0;
+		for (Item item : equipMap.values()) {
+			hit += item.getHit();
+		}
+		return hit;
 	}
 
 	public Integer getHp() {
@@ -104,6 +184,26 @@ public class Player {
 		return mapName;
 	}
 
+	/**
+	 * 获取角色最大HP
+	 * 
+	 * @return
+	 */
+	public int getMaxHP() {
+		// TODO MaxHP计算公式
+		return this.getVita() * 10;
+	}
+
+	/**
+	 * 获取角色最大SP
+	 * 
+	 * @return
+	 */
+	public int getMaxSP() {
+		// TODO MaxSP计算公式
+		return this.getInte() * 7;
+	}
+
 	public Integer getMoney() {
 		return money;
 	}
@@ -112,8 +212,24 @@ public class Player {
 		return name;
 	}
 
-	public Map<Integer, PlayerTask> getPlayerTasks() {
-		return playerTasks;
+	/**
+	 * 获取任务
+	 * 
+	 * @param taskId
+	 *            任务ID
+	 * @return 任务
+	 */
+	public PlayerTask getPlayerTask(int taskId) {
+		return playerTaskMap.get(taskId);
+	}
+
+	/**
+	 * 获取任务列表
+	 * 
+	 * @return 任务列表
+	 */
+	public Collection<PlayerTask> getPlayerTaskList() {
+		return playerTaskMap.values();
 	}
 
 	public Integer getSp() {
@@ -138,6 +254,27 @@ public class Player {
 
 	public Integer getY() {
 		return y;
+	}
+
+	/**
+	 * 检查任务是否存在
+	 * 
+	 * @param taskId
+	 *            任务ID
+	 * @return 任务是否存在
+	 */
+	public boolean hasTask(int taskId) {
+		return playerTaskMap.containsKey(taskId);
+	}
+
+	/**
+	 * 删除任务
+	 * 
+	 * @param taskId
+	 *            任务ID
+	 */
+	public void removePlayerTask(int taskId) {
+		playerTaskMap.remove(taskId);
 	}
 
 	public void setAgil(Integer agil) {
@@ -184,15 +321,6 @@ public class Player {
 		this.name = name;
 	}
 
-	/**
-	 * 
-	 * @param taskId
-	 * @param playerTask
-	 */
-	public void setPlayerTask(Integer taskId, PlayerTask playerTask) {
-		this.playerTasks.put(taskId, playerTask);
-	}
-
 	public void setSp(Integer sp) {
 		this.sp = sp;
 	}
@@ -215,103 +343,5 @@ public class Player {
 
 	public void setY(Integer y) {
 		this.y = y;
-	}
-
-	public PlayerTask getPlayerTask(int taskId) {
-		return playerTasks.get(taskId);
-	}
-
-	public void clearNowTasks() {
-		playerTasks.clear();
-	}
-
-	public void removePlayerTask(int taskId) {
-		playerTasks.remove(taskId);
-	}
-
-	/**
-	 * 获取角色最大HP
-	 * 
-	 * @return
-	 */
-	public int getMaxHP() {
-		// TODO MaxHP计算公式
-		return this.getVita() * 10;
-	}
-
-	/**
-	 * 获取角色最大SP
-	 * 
-	 * @return
-	 */
-	public int getMaxSP() {
-		// TODO MaxSP计算公式
-		return this.getInte() * 7;
-	}
-
-	/**
-	 * 获取攻击力
-	 * 
-	 * @return
-	 */
-	public int getAtk() {
-		// TODO Atk计算公式
-		int atk = 0;
-		for (Item item : equipMap.values()) {
-			atk += item.getAtk();
-		}
-		return this.getStre() + atk;
-	}
-
-	/**
-	 * 获取防御
-	 * 
-	 * @return
-	 */
-	public int getDef() {
-		// TODO Def计算公式
-		int def = 0;
-		for (Item item : equipMap.values()) {
-			def += item.getDef();
-		}
-		return def;
-	}
-
-	/**
-	 * 获取命中率
-	 * 
-	 * @return
-	 */
-	public int getHit() {
-		// TODO Hit公式
-		int hit = 0;
-		for (Item item : equipMap.values()) {
-			hit += item.getHit();
-		}
-		return hit;
-	}
-
-	/**
-	 * 获取闪避率
-	 */
-	public int getFlee() {
-		// TODO Flee公式
-		int flee = 0;
-		for (Item item : equipMap.values()) {
-			flee += item.getFlee();
-		}
-		return flee;
-	}
-
-	public boolean hasTask(int taskId) {
-		return playerTasks.containsKey(taskId);
-	}
-
-	public boolean canApplyTask(Task task) {
-		return true;
-	}
-
-	public boolean canFinishTask(Task task) {
-		return true;
 	}
 }

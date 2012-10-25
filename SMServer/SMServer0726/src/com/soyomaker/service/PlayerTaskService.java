@@ -1,7 +1,7 @@
 package com.soyomaker.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,43 +18,90 @@ import com.soyomaker.model.task.PlayerTask;
 @Transactional
 public class PlayerTaskService extends AbstractService<PlayerTask> {
 
+	/**
+	 * 查找玩家任务列表
+	 * 
+	 * @param playerId
+	 *            玩家ID
+	 * @return 玩家的任务列表
+	 */
 	public List<PlayerTask> findByPlayerId(int playerId) {
 		return find("from PlayerTask pt where pt.id.playerId=?", playerId);
 	}
 
-	public void updateAllTaskForPlayer(Player player) {
+	/**
+	 * 同步玩家的任务列表到数据库
+	 * 
+	 * @param player
+	 */
+	public void updatePlayerTaskList(Player player) {
 		if (player != null) {
-			this.delete("delete from PlayerTask pt where pt.id.playerId=?", player.getId());
-			Map<Integer, PlayerTask> playerTasks = player.getPlayerTasks();
-			if (playerTasks != null) {
-				for (PlayerTask pt : playerTasks.values()) {
-					this.saveOrUpdate(pt);
-				}
+			this.delete("delete from PlayerTask pt where pt.id.playerId=?",
+					player.getId());
+			for (PlayerTask pt : player.getPlayerTaskList()) {
+				this.saveOrUpdate(pt);
 			}
 		}
 	}
 
 	/**
-	 * 用户选择角色
+	 * 初始化玩家任务列表
 	 * 
 	 * @param player
+	 *            玩家
 	 */
-	public void choosePlayer(Player player) {
+	public void initPlayerTaskList(Player player) {
 		// 保证清空上次的
-		player.clearNowTasks();
-		List<PlayerTask> pts = findByPlayerId(player.getId());
-		for (PlayerTask playerTask : pts) {
-			player.setPlayerTask(playerTask.getId().getTaskId(), playerTask);
+		player.clearPlayerTaskList();
+		List<PlayerTask> ptList = findByPlayerId(player.getId());
+		for (PlayerTask playerTask : ptList) {
+			player.addPlayerTask(playerTask);
 		}
 	}
 
 	/**
-	 * 同步player的当前任务列表到数据库
+	 * 获取玩家已完成任务列表
 	 * 
 	 * @param player
+	 *            玩家
+	 * @return 已完成任务列表
 	 */
-	public void updatePlayerTask(Player player) {
+	public List<PlayerTask> getFinishedTaskList(Player player) {
+		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
+		for (PlayerTask playerTask : player.getPlayerTaskList()) {
+			if (playerTask.isFinished()) {
+				ptList.add(playerTask);
+			}
+		}
+		return ptList;
+	}
 
+	/**
+	 * 获取玩家未完成任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 未完成任务列表
+	 */
+	public List<PlayerTask> getUnfinishedTaskList(Player player) {
+		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
+		for (PlayerTask playerTask : player.getPlayerTaskList()) {
+			if (!playerTask.isFinished()) {
+				ptList.add(playerTask);
+			}
+		}
+		return ptList;
+	}
+
+	/**
+	 * 获取玩家可接收任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 可接收任务列表
+	 */
+	public List<PlayerTask> getAvailableTaskList(Player player) {
+		return null;
 	}
 
 }

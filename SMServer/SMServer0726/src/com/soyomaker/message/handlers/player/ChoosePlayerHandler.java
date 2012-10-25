@@ -34,7 +34,7 @@ public class ChoosePlayerHandler extends AbHandler {
 		}
 		session.getUser().setPlayer(player);
 		// 初始化任务列表
-		playerTaskService.choosePlayer(player);
+		playerTaskService.initPlayerTaskList(player);
 		this.sendMessage(session, msg, true, "选择角色成功");
 	}
 

@@ -2,7 +2,6 @@ package com.soyomaker.message.handlers.npc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +14,18 @@ import com.soyomaker.model.Npc;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
-import com.soyomaker.model.task.TaskStep;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.PlayerTaskService;
 
 @Component("npcStateHandler")
 public class NPCStateHandler extends AbHandler {
 
 	@Autowired
 	private DictManager dictManager;
+
+	@Autowired
+	private PlayerTaskService playerTaskService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -46,53 +48,38 @@ public class NPCStateHandler extends AbHandler {
 		netTransceiver.sendMessage(session, msgSent);
 	}
 
+	/**
+	 * 获取npc对于玩家的状态，“进行任务”状态优先
+	 * 
+	 * @param player
+	 *            玩家
+	 * @param npc
+	 *            npc
+	 * @return 状态
+	 */
 	public int checkNpcState(Player player, Npc npc) {
 		int state = Npc.STATE_NORMAL;
-		boolean canFinishTask = false;
-		boolean hasDialogue = false;
-		Map<Integer, PlayerTask> playerTasks = player.getPlayerTasks();
-		for (PlayerTask pt : playerTasks.values()) {
-			Task task = dictManager.getTask(pt.getId().getTaskId());
-			if (!pt.isFinished()) {
-				// 正在进行的任务
-				if (pt.getStep() == task.getSteps().size()) {
-					// 所有任务步骤已完成
-					if (task.getNpcId() == npc.getId()) {
-						// “完成任务”的NPC就是当前NPC
-						canFinishTask = true;
-						// 由于"有任务可完成"优先级最高，故此处可以break
-						break;
-					}
-				} else {
-					// 任务步骤未完成
-					TaskStep ts = task.getSteps().get(pt.getStep());
-					if (ts.getNpcId() == npc.getId()) {
-						// 任务步骤NPC就是当前NPC
-						hasDialogue = true;
-					}
-				}
+		// 检查NPC是否处于STATE_PROCEED_TASK状态
+		for (PlayerTask pt : playerTaskService.getUnfinishedTaskList(player)) {
+			Task task = pt.getTask();
+			// (1)任务步骤已经结束，在此NPC处完成任务
+			// (2)任务步骤未结束，在此NPC处进行当前步骤
+			if ((pt.isStepOver() && task.getNpcId() == npc.getId())
+					|| (!pt.isStepOver() && pt.getCurTaskStep().getNpcId() == npc
+							.getId())) {
+				state = Npc.STATE_PROCEED_TASK;
+				break;
 			}
 		}
-		if (canFinishTask) {
-			state = Npc.STATE_FINISH_TASK;
-		} else if (hasDialogue) {
-			state = Npc.STATE_DIALOGUE;
-		}
 		if (state == Npc.STATE_NORMAL) {
-			// 检查是否有任务可接
-			Collection<Task> taskList = dictManager.getTaskList();
-			for (Iterator<Task> iterator = taskList.iterator(); iterator
-					.hasNext();) {
-				Task task = iterator.next();
-				if (!player.hasTask(task.getId())
-						&& task.getNpcId() == npc.getId()
-						&& player.canApplyTask(task)) {
-					state = Npc.STATE_DIALOGUE;
+			// 检查NPC是否处于STATE_PROCEED_TASK状态
+			for (PlayerTask pt : playerTaskService.getAvailableTaskList(player)) {
+				if (pt.getTask().getNpcId() == npc.getId()) {
+					state = Npc.STATE_APPLY_TASK;
 					break;
 				}
 			}
 		}
-		return Npc.STATE_DIALOGUE;
+		return state;
 	}
-
 }
