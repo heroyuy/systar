@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.DictManager;
-import com.soyomaker.model.PlayerTask;
-import com.soyomaker.model.Task;
+import com.soyomaker.model.task.PlayerTask;
+import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 

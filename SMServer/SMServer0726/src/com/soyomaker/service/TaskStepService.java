@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.soyomaker.model.TaskStep;
+import com.soyomaker.model.task.TaskStep;
 
 @Service("taskStepService")
 @Transactional

@@ -13,9 +13,9 @@ import com.soyomaker.model.DictManager;
 import com.soyomaker.model.MapData;
 import com.soyomaker.model.Npc;
 import com.soyomaker.model.Player;
-import com.soyomaker.model.PlayerTask;
-import com.soyomaker.model.Task;
-import com.soyomaker.model.TaskStep;
+import com.soyomaker.model.task.PlayerTask;
+import com.soyomaker.model.task.Task;
+import com.soyomaker.model.task.TaskStep;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 

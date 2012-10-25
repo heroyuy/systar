@@ -1,4 +1,4 @@
-package com.soyomaker.model;
+package com.soyomaker.model.task;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

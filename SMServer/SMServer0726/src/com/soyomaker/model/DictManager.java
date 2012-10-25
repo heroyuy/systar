@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.soyomaker.model.task.Task;
 import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
 import com.soyomaker.service.MapEntryService;

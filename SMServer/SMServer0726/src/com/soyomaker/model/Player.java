@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.soyomaker.model.task.PlayerTask;
+import com.soyomaker.model.task.Task;
+
 @Entity
 @Table(name = "player")
 public class Player {

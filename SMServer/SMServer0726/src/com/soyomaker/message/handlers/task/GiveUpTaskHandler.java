@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
-import com.soyomaker.model.PlayerTask;
+import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 

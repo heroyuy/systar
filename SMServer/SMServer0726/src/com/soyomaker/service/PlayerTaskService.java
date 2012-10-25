@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soyomaker.model.Player;
-import com.soyomaker.model.PlayerTask;
+import com.soyomaker.model.task.PlayerTask;
 
 /**
  * 
