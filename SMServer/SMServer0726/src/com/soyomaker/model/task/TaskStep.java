@@ -18,6 +18,8 @@ public class TaskStep {
 
 	private int npcId;
 
+	private String script;
+
 	private String operate;
 
 	public int getId() {
@@ -30,6 +32,10 @@ public class TaskStep {
 
 	public String getOperate() {
 		return operate;
+	}
+
+	public String getScript() {
+		return script;
 	}
 
 	public int getTaskId() {
@@ -46,6 +52,10 @@ public class TaskStep {
 
 	public void setOperate(String operate) {
 		this.operate = operate;
+	}
+
+	public void setScript(String script) {
+		this.script = script;
 	}
 
 	public void setTaskId(int taskId) {

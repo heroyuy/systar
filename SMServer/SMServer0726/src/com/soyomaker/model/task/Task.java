@@ -16,12 +16,14 @@ public class Task {
 
 	private String name;
 
-	private String intro;
-
-	private int preId;
-
 	private int type;
+	
+	private int preTask;
 
+	private int nextTask;
+	
+	private String intro;
+	
 	private int npcId;
 
 	private String applyCnd;
@@ -53,12 +55,16 @@ public class Task {
 		return name;
 	}
 
+	public int getNextTask() {
+		return nextTask;
+	}
+
 	public int getNpcId() {
 		return npcId;
 	}
 
-	public int getPreId() {
-		return preId;
+	public int getPreTask() {
+		return preTask;
 	}
 
 	public String getReward() {
@@ -93,12 +99,16 @@ public class Task {
 		this.name = name;
 	}
 
+	public void setNextTask(int nextTask) {
+		this.nextTask = nextTask;
+	}
+
 	public void setNpcId(int npcId) {
 		this.npcId = npcId;
 	}
 
-	public void setPreId(int preId) {
-		this.preId = preId;
+	public void setPreTask(int preId) {
+		this.preTask = preId;
 	}
 
 	public void setReward(String reward) {
