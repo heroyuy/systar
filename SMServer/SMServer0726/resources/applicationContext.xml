@@ -117,6 +117,7 @@
 				<entry key="105002" value-ref="p105002" />
 				<entry key="105003" value-ref="p105003" />
 				<entry key="105004" value-ref="p105004" />
+				<entry key="105005" value-ref="p105005" />
 				<entry key="106001" value-ref="p106001" />
 				<entry key="106002" value-ref="p106002" />
 			</map>
@@ -229,13 +230,20 @@
 		<property name="handler" ref="nextStepHandler" />
 	</bean>
 
+	<bean id="p105005" class="com.soyomaker.net.Protocol">
+		<property name="id" value="105005" />
+		<property name="needLogin" value="true" />
+		<property name="netService" ref="minaServer" />
+		<property name="handler" ref="finishTaskHandler" />
+	</bean>
+
 	<bean id="p106001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="106001" />
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="npcStateHandler" />
 	</bean>
-	
+
 	<bean id="p106002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="106002" />
 		<property name="needLogin" value="true" />
