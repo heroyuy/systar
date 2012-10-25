@@ -53,6 +53,12 @@ public abstract class AbstractService<T> implements
 	public Session getSession() {
 		return this.hibernateRepository.getSession();
 	}
+	
+	public static void main(String[] args) {
+		System.out.print(Boolean.getBoolean("true"));
+		System.out.print(Boolean.parseBoolean("true"));
+		System.out.print(Boolean.valueOf("true"));
+	}
 
 	// --------------------------CRUD----------------------------------------------
 	@Override

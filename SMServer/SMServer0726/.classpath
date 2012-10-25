@@ -61,5 +61,9 @@
 	<classpathentry kind="lib" path="libs/spring/aspectjweaver-1.6.9.jar"/>
 	<classpathentry kind="lib" path="libs/spring/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="libs/spring/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="libs/guava/guava-13.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/guava/guava-gwt-13.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/jmockit/jmockit.jar"/>
+	<classpathentry kind="lib" path="libs/junit/junit-4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
