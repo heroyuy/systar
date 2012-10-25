@@ -1,4 +1,4 @@
-package com.soyomaker.message.handlers.map;
+package com.soyomaker.message.handlers.npc;
 
 import java.util.ArrayList;
 import java.util.Collection;
