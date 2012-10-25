@@ -17,7 +17,7 @@ import com.soyomaker.net.UserSession;
 @Component("messageSender")
 public class MessageSender {
 
-	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "103004";
+	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
 
 	@Autowired
 	protected NetTransceiver netTransceiver;
