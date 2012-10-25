@@ -4,6 +4,9 @@
 	<height>640</height>
 	<fps>50</fps>
 	<showFPS>true</showFPS>
+	<!--
 	<ip>ggggeeqg.vicp.net</ip>
+	-->
+	<ip>www.chenwentao.com</ip>
 	<port>9090</port>
 </config>
