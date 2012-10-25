@@ -265,11 +265,11 @@ function clsSceneMap:buildMap()
       if npc.state == 0 then
       	--普通npc的没有提示图片
       elseif npc.state == 1 then
-      	--有任务的npc有问号提示图片
-      	npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
-      elseif npc.state == 2 then
-      	--没有任务的npc有叹号提示图片
+      	--可接任务-叹号
       	npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc2.png")
+      elseif npc.state == 2 then
+      	--进行任务-问号
+      	npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
       end
       
       self.spriteLayer:addChild(npcSprite)
