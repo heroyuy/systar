@@ -30,7 +30,7 @@ public class GameConfig {
 
 	private boolean showFPS = true;
 
-	private String ip = null;
+	private String host = null;
 
 	private int port = 0;
 
@@ -39,12 +39,26 @@ public class GameConfig {
 	private GameConfig() {
 		try {
 			XMLObject configXMLObject = XMLParser.parse(new File(CONFIG_PATH));
-			this.width = Integer.parseInt(configXMLObject.getChild(0).getValue());
-			this.height = Integer.parseInt(configXMLObject.getChild(1).getValue());
-			this.ratedFPS = Integer.parseInt(configXMLObject.getChild(2).getValue());
-			this.showFPS = Boolean.parseBoolean(configXMLObject.getChild(3).getValue());
-			this.ip = configXMLObject.getChild(4).getValue();
-			this.port = Integer.parseInt(configXMLObject.getChild(5).getValue());
+			this.width = Integer.parseInt(configXMLObject.getChild("width")
+					.getValue());
+			this.height = Integer.parseInt(configXMLObject.getChild("height")
+					.getValue());
+			this.ratedFPS = Integer.parseInt(configXMLObject.getChild("fps")
+					.getValue());
+			this.showFPS = Boolean.parseBoolean(configXMLObject.getChild(
+					"showFPS").getValue());
+			XMLObject serversXMLObject = configXMLObject.getChild("servers");
+			String userServer = configXMLObject.getChild("userServer")
+					.getValue();
+			for (XMLObject serverXMLObject : serversXMLObject.getChildList()) {
+				String id = serverXMLObject.getChild("id").getValue();
+				if (id.equals(userServer)) {
+					this.host = serverXMLObject.getChild("host").getValue();
+					this.port = Integer.parseInt(serverXMLObject.getChild(
+							"port").getValue());
+					break;
+				}
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -66,8 +80,8 @@ public class GameConfig {
 		return height;
 	}
 
-	public String getIp() {
-		return ip;
+	public String getHost() {
+		return host;
 	}
 
 	public int getPort() {

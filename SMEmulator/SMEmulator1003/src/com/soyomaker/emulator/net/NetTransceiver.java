@@ -24,7 +24,7 @@ public class NetTransceiver {
 	}
 
 	private NetTransceiver() {
-		String ip = GameConfig.getInstance().getIp();
+		String ip = GameConfig.getInstance().getHost();
 		int port = GameConfig.getInstance().getPort();
 		this.minaClient = new MinaClient(ip, port);
 	}
