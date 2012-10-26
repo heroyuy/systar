@@ -1,0 +1,16 @@
+if Interpreter:doCommand(102013,20) then
+if Interpreter:doCommand(102008,20) == 89 then
+Interpreter:doCommand(101006,"杜波夫","你叫做修好了，我的侦察车怎么被你改成了这样一个丑东西。","/image/battler/115.png",0)
+Interpreter:doCommand(101006,"哈里森","这车不会在半路上散架了吧。。。","/image/battler/118.png",0)
+Interpreter:doCommand(101006,"老肖","哼！老子是机械师，不是汽车美容师，不喜欢我的车你们可以不要。","/image/battler/134.png",0)
+Interpreter:doCommand(101006,"兰迪","哈哈，终于再次看到肖老板的改装技术了，放心，你绝对不会在地球上找到比他更好的。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"哈里森","可是。。。","/image/battler/118.png",0)
+Interpreter:doCommand(101006,"老肖","兰迪，我对火星殖民地这帮小子很不耐烦，如果他们再说两句，我绝对会打得他们满地找牙。","/image/battler/134.png",0)
+Interpreter:doCommand(101020,127,108,8,5)
+Interpreter:doCommand(102010,20)
+Interpreter:doCommand(101006,"杜波夫","。。。。。。","/image/battler/115.png",0)
+Interpreter:doCommand(101006,"哈里森","。。。。。。","/image/battler/118.png",0)
+end
+else
+
+end

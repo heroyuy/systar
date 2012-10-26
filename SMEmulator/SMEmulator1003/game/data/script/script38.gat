@@ -1,0 +1,8 @@
+if Interpreter:doCommand(102013,6) then
+if Interpreter:doCommand(102008,6) == 30 then
+
+Interpreter:doCommand(102010,6)
+end
+else
+
+end

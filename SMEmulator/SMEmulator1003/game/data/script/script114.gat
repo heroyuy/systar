@@ -1,0 +1,10 @@
+if Interpreter:doCommand(102013,20) then
+if Interpreter:doCommand(102008,20) == 84 then
+Interpreter:doCommand(101006,"兰迪","就是这里，沙漠商队，从这里上去就能到超级旅馆，他的老板叫做老肖，是废土最强大的机修之一。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,20)
+else
+
+end
+else
+
+end

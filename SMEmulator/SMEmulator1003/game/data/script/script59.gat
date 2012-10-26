@@ -1,0 +1,11 @@
+if Interpreter:doCommand(102013,8) then
+if Interpreter:doCommand(102008,8) == 44 then
+Interpreter:doCommand(101006,"<name>[0]","兰迪，看来我们这次真的是有大麻烦了，这是一只蝎子，并且这里好像是他的巢穴。","/image/battler/001.png",0)
+if Interpreter:doCommand(101010,5,1) then
+Interpreter:doCommand(102010,8)
+Interpreter:doCommand(102009,9)
+else
+
+end
+end
+end

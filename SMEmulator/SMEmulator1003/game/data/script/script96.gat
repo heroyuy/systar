@@ -1,0 +1,11 @@
+if Interpreter:doCommand(102013,16) then
+if Interpreter:doCommand(102008,16) == 69 then
+Interpreter:doCommand(101006,"兰迪","你确信就凭这个可以渡过绝望海峡，看起来一个小浪花都能将它打沉。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"希丁克","它当然可以，不要小看它，绝望海盗团就凭着它们称霸绝望海峡。当然你得是个勇士，能够征服海洋的勇士，否则就是给你巡航舰也没有办法，不是吗？","/image/battler/202.png",0)
+Interpreter:doCommand(101006,"兰迪","但愿我是。。。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,16)
+Interpreter:doCommand(102009,17)
+end
+else
+
+end

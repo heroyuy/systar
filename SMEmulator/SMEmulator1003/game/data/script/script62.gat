@@ -1,0 +1,13 @@
+if Interpreter:doCommand(102013,10) then
+if Interpreter:doCommand(102008,10) == 47 then
+Interpreter:doCommand(101006,"杰里米","再有一个月就是“天煞”的选拔了，我可能是过不了了，吉斯和<name>[0]，你们两个要加油啊。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"吉斯","杰里米，尽说些丧气话，没有试过怎么知道？","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","就是，等我们都进了“天煞”，还是要同一个宿舍，你可不要掉链子哦，杰里米。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","可是。。。我自己的实力，我自己知道。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"吉斯","别放弃，我们支持你。","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","对，我们要一起通过选拔，绝不掉下一个。","/image/battler/001.png",0)
+Interpreter:doCommand(102010,10)
+end
+else
+
+end

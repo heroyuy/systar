@@ -1,0 +1,14 @@
+if Interpreter:doCommand(102013,4) then
+if Interpreter:doCommand(102008,4) == 19 then
+
+Interpreter:doCommand(101006,"安利雅","请问你是<name>[0]上尉吗？我是安利雅。","/image/battler/106.png",0)
+Interpreter:doCommand(101006,"<name>[0]","很高兴认识你，安利雅。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"安利雅","镇长先生曾通知我们，你会来到这里，现在就上房间休息吗？","/image/battler/105.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的，现在我就想休息。","/image/battler/001.png",0)
+Interpreter:doCommand(102010,4)
+else
+
+end
+else
+
+end

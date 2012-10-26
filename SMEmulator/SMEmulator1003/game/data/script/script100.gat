@@ -1,0 +1,9 @@
+if Interpreter:doCommand(102013,17) then
+if Interpreter:doCommand(102008,17) == 71 then
+Interpreter:doCommand(101006,"杜波夫","怎么办？我们被吸进了暴风雨的内部。","/image/battler/115.png",0)
+Interpreter:doCommand(101006,"兰迪","别怕，暴风雨中心风力并不是很大，只要我们小心航行，就能走这鬼地方。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,17)
+end
+else
+
+end

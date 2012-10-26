@@ -1,0 +1,32 @@
+if Interpreter:doCommand(102013,10) then
+if Interpreter:doCommand(102008,10) == 50 then
+Interpreter:doCommand(101006,"兰迪","这。。。竟然是机械人？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","不对，这个我们称为“机甲”，是从一个大灾变前的军事基地遗址找到。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"杰里米","和装甲车坦克不同，它的最主要攻击手段不是远程火炮，而是近程攻击，可以通过装备技能程序发出强大的机甲技能。可惜的是，这对驾驶员的要求很高，必须要拥有这方面的天赋才行。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","真的吗？我怎么没有听说过这个，这太酷了！","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","这个在大灾变之前都属于联邦的高度机密，我也是发现它之后才知道的。有记载，大灾变前联邦拥有最先进的机甲可以模拟人类的动作，甚至拥有自己的智慧。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","一个拥有自己“智慧”的机甲？你是说存在着拥有自己灵魂的机甲？这太疯狂了！","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","不，不是灵魂，我想说的应该是所谓人工智能之类的，据记载，拥有这种人工智能的机甲会比起普通的机甲拥有更强大的破坏力，它能够“理解”驾驶员的想法。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","老天，我已经迫不及待的想要一试，不知道我可以坐上去吗？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","当然可以，我手下甚至没有一个人可以开动它，所以我打算将它送给你们。当然，你得拥有这种“天赋”才行。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","哈哈，这倒不是问题，从小我就对枪械和驾驶拥有极强的天赋，如果我说没有我不会用的高科技武器，你相信吗？杰里米。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","相信。。。当然相信!如果你能够驾驶它的话，我想最少它还能有点作用。。。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","杰里米，我想你一定受到了它的打击，我说的对不对？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","哈哈，算是吧，兰迪，我想你还是先试试吧。","/image/battler/119.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(101006,"兰迪","不行，我没法驾驶这东西，控制方式相差太远，好不习惯。杰里米，我想我现在能够理解你的感受，这的确让人诅丧。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","哈哈，是的，比起你来，我还不如呢。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","让我来试试吧。","/image/battler/001.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(101006,"杰里米","<name>[0]，太棒了！你是怎么做到的？","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","对，这让人很惊讶，因为你甚至连吉普车都开不好。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我想应该是我拥有古武术格斗的基础吧，他的控制方式需要整个身体动起来才行，这方面我会比较有优势。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","<name>[0]，想不到你竟然拥有驾驶机甲的天赋。我就将他送给你了，自从得到它之后，这里还没有人能够驾驶这么长的时间。","/image/battler/119.png",0)
+Interpreter:doCommand(102010,10)
+Interpreter:doCommand(102009,11)
+end
+else
+
+end

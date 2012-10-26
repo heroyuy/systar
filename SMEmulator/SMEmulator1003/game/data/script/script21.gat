@@ -1,0 +1,16 @@
+if Interpreter:doCommand(102013,2) then
+if Interpreter:doCommand(102008,2) == 15 then
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(102010,2)
+Interpreter:doCommand(100002,21)
+end
+if Interpreter:doCommand(102008,2) == 16 then
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(101006,"娜娜","<name>[0]，真的要走吗？","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","答应我，要活着回来。","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","为了你，我一定会回来的。","/image/battler/001.png",0)
+Interpreter:doCommand(102010,2)
+Interpreter:doCommand(102009,3)
+end
+end

@@ -1,0 +1,19 @@
+if Interpreter:doCommand(102013,21) then
+if Interpreter:doCommand(102008,21) == 100 then
+Interpreter:doCommand(101006,"兰迪","糟糕，他们的数量越来越多，看来要有一场恶战。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是啊，并且还是一场不知是否能够战胜的恶战。","/image/battler/001.png",0)
+Interpreter:doCommand(101020,143,115,27,19)
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(102010,21)
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(100002,141)
+end
+if Interpreter:doCommand(102008,21) == 101 then
+Interpreter:doCommand(101006,"<name>[0]","那人是谁？他凭什么让食尸鬼这么恐惧？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","不管是谁，看来都不好对付，小心点。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,21)
+Interpreter:doCommand(102009,22)
+end
+else
+
+end

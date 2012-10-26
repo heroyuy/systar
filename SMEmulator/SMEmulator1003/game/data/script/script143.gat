@@ -1,0 +1,26 @@
+if Interpreter:doCommand(102013,22) then
+if Interpreter:doCommand(102008,22) == 102 then
+if Interpreter:doCommand(101010,1,1) then
+
+else
+
+Interpreter:doCommand(101006,"晴天","请放心，我没有恶意，我叫做晴天。","/image/battler/135.png",0)
+Interpreter:doCommand(101006,"兰迪","没有恶意？你突然出现在山谷中，并且攻击我们，这叫做没有恶意吗？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"晴天","我再说一遍，我没有恶意，看，我没有携带武器，并且是你们首先对我攻击。","/image/battler/135.png",0)
+Interpreter:doCommand(101006,"兰迪","这。。。你想要什么？你不会是特地来帮助我们的吧？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"晴天","难道不可以？","/image/battler/135.png",0)
+Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"晴天","我看到你们情况很不好，所以特地出来帮你们解围，不过似乎你们不太领我的情。","/image/battler/135.png",0)
+Interpreter:doCommand(101006,"兰迪","在废土，没有免费的午餐，我不得不怀疑。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"晴天","哈哈，看来在这个世界，做好人是一种罪过。。。","/image/battler/135.png",0)
+Interpreter:doCommand(102010,22)
+Interpreter:doCommand(100002,143)
+Interpreter:doCommand(101006,"<name>[0]","他走了，好快。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","我们不是他的对手，如果他刚才要对我们不利，那么此刻我们可能已经是死人了。","/image/battler/002.png",0)
+Interpreter:doCommand(102009,23)
+Interpreter:doCommand(101006,"晴天","说一遍，我没有恶意，看，我没有携带武器，并且是你们首先对我攻击。","/image/battler/135.png",0)
+Interpreter:doCommand(101006,"兰迪","你到底是谁？","/image/battler/002.png",0)
+end
+end
+else
+end
