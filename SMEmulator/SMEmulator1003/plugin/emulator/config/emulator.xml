@@ -4,12 +4,27 @@
 	<height>640</height>
 	<fps>50</fps>
 	<showFPS>true</showFPS>
-	<!--
-	<ip>ggggeeqg.vicp.net</ip>
-	-->
-	<ip>www.soyomaker.com</ip>
-	<!--
-	<ip>www.chenwentao.com</ip>
-	-->
-	<port>9090</port>
+	<servers>
+		<server>
+			<id>0</id>
+			<host>localhost</host>
+			<port>9090</port>
+		</server>
+		<server>
+			<id>1</id>
+			<host>ggggeeqg.vicp.net</host>
+			<port>9090</port>
+		</server>
+		<server>
+			<id>2</id>
+			<host>www.soyomaker.com</host>
+			<port>9090</port>
+		</server>
+		<server>
+			<id>3</id>
+			<host>www.chenwentao.com</host>
+			<port>9090</port>
+		</server>
+	</servers>
+	<userServer>0</userServer>
 </config>
