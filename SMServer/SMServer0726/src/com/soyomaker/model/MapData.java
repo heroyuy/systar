@@ -1,7 +1,6 @@
 package com.soyomaker.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -51,20 +50,16 @@ public class MapData {
 		return id;
 	}
 
-	public List<MapEntry> getMapEntryList() {
-		List<MapEntry> meList = new ArrayList<MapEntry>();
-		meList.addAll(mapEntryMap.values());
-		return meList;
+	public Collection<MapEntry> getMapEntryList() {
+		return mapEntryMap.values();
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public List<Npc> getNpcList() {
-		List<Npc> npcList = new ArrayList<Npc>();
-		npcList.addAll(npcMap.values());
-		return npcList;
+	public Collection<Npc> getNpcList() {
+		return npcMap.values();
 	}
 
 	public MapEntry getMapEntry(int mapEntryId) {

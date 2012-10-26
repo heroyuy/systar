@@ -1,10 +1,7 @@
 package com.soyomaker.net;
 
 import java.util.Collection;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -41,10 +38,8 @@ public class UserSessionManager {
 		this.sessionMap.remove(userId);
 	}
 
-	public List<UserSession> getAllUserSession() {
-		List<UserSession> usList = new ArrayList<UserSession>();
-		usList.addAll(sessionMap.values());
-		return usList;
+	public Collection<UserSession> getAllUserSession() {
+		return sessionMap.values();
 	}
 
 }

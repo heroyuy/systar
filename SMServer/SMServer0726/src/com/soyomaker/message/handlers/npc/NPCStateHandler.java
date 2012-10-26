@@ -2,7 +2,6 @@ package com.soyomaker.message.handlers.npc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
