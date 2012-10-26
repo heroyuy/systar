@@ -32,9 +32,8 @@ public class NPCStateHandler extends AbHandler {
 		// (1)取当前地图上的所有npc
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
-		Map<Integer, Npc> npcMap = mapData.getNpcMap();
 		Collection<GameObject> stateList = new ArrayList<GameObject>();
-		for (Npc npc : npcMap.values()) {
+		for (Npc npc : mapData.getNpcList()) {
 			// (2)检查NPC的状态
 			int state = this.checkNpcState(player, npc);
 			GameObject stateObj = new GameObject();

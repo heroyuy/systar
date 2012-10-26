@@ -1,5 +1,6 @@
 package com.soyomaker.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +44,9 @@ public class DictManager {
 
 	private Map<Integer, MapData> mapDataMap;// 地图数据
 
-	private Map<Integer, Task> taskMap;
+	private Map<Integer, Task> taskMap;// 任务表
 
-	private Map<Integer, Integer> levelExpMap;
+	private Map<Integer, Integer> levelExpMap;// 等级-经验表
 
 	public Player getPlayer() {
 		return player;
@@ -59,8 +60,10 @@ public class DictManager {
 		return taskMap.get(taskId);
 	}
 
-	public Collection<Task> getTaskList() {
-		return taskMap.values();
+	public List<Task> getTaskList() {
+		List<Task> taskList=new ArrayList<Task>();
+		taskList.addAll(taskMap.values());
+		return taskList;
 	}
 
 	public int getExp(int level) {

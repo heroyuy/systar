@@ -11,8 +11,7 @@ public class NPCDialogueHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		// TODO Auto-generated method stub
-
+		int npcId = msg.getInt("npcId");
 	}
 
 }

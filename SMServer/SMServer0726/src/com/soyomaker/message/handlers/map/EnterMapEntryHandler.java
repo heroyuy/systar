@@ -22,7 +22,7 @@ public class EnterMapEntryHandler extends AbHandler {
 		int mapEnreyId = msg.getInt("mapEntryId");
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
-		MapEntry mapEntry = mapData.getMapEntryMap().get(mapEnreyId);
+		MapEntry mapEntry = mapData.getMapEntry(mapEnreyId);
 		// (1)检查当前地图是否存在此传送点
 		if (mapEntry == null) {
 			this.sendMessage(session, msg, false, "当前地图不存在此传送点");

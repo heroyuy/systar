@@ -30,17 +30,14 @@ public class LoadMapHandler extends AbHandler {
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		GameObject msgSent = this.buildPackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
-		Collection<MapEntry> mapEntryList = mapData.getMapEntryMap().values();
-		if (mapEntryList != null) {
-			for (MapEntry mapEntry : mapEntryList) {
-				GameObject mapEntryObj = new GameObject();
-				mapEntryObj.putInt("id", mapEntry.getId());
-				mapEntryObj.putInt("mapId", mapEntry.getMapId());
-				mapEntryObj.putInt("x", mapEntry.getX());
-				mapEntryObj.putInt("y", mapEntry.getY());
-				mapEntryObj.putInt("avatar", mapEntry.getAvatar());
-				mapEntryObjList.add(mapEntryObj);
-			}
+		for (MapEntry mapEntry : mapData.getMapEntryList()) {
+			GameObject mapEntryObj = new GameObject();
+			mapEntryObj.putInt("id", mapEntry.getId());
+			mapEntryObj.putInt("mapId", mapEntry.getMapId());
+			mapEntryObj.putInt("x", mapEntry.getX());
+			mapEntryObj.putInt("y", mapEntry.getY());
+			mapEntryObj.putInt("avatar", mapEntry.getAvatar());
+			mapEntryObjList.add(mapEntryObj);
 		}
 		msgSent.putObjectArray("mapEntryList", mapEntryObjList);
 		netTransceiver.sendMessage(session, msgSent);
