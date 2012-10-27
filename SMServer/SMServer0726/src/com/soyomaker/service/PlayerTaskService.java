@@ -80,7 +80,10 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 * @param player
 	 *            玩家
 	 * @return 未完成任务列表
+	 * 
+	 * 转移到player对象中去了
 	 */
+	@Deprecated
 	public List<PlayerTask> getUnfinishedTaskList(Player player) {
 		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
 		for (PlayerTask playerTask : player.getPlayerTaskList()) {
