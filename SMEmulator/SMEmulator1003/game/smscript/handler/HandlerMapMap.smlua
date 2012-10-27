@@ -15,8 +15,8 @@ function HandlerMap.loadMap:handleMessage(msg)
   GameData.curNpcList={}
   --(1)传送点
   msg=HandlerMap:msgToLua(msg)
-  local mapEntryList=msg.mapEntryList
-  for i,mapEntry in ipairs(mapEntryList) do
+  local npcList=msg.npcList
+  for i,mapEntry in ipairs(npcList) do
     local npc=clsNpc:new()
     npc.id=mapEntry.id
     npc.mapId=mapEntry.mapId
