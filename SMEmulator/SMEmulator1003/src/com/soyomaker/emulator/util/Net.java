@@ -152,10 +152,10 @@ public class Net {
 	/**
 	 * 进入传送点 103003
 	 */
-	public void enterMapEntry(int mapEntryId) {
+	public void switchMap(int npcId) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_ENTER_MAPENTRY);
-		msg.putInt("mapEntryId", mapEntryId);
+		msg.putInt("npcId", npcId);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 

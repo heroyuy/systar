@@ -563,7 +563,7 @@ function clsSceneMap:doNpcEvent(npc)
   elseif npc.type==clsNpc.TYPE_MAPENTRY then
     --传送点
     Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})
-    smNet:enterMapEntry(npc.id)
+    smNet:switchMap(npc.id)
   end
 end
 

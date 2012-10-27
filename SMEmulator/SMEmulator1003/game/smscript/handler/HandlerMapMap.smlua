@@ -35,9 +35,9 @@ function HandlerMap.loadMap:handleMessage(msg)
 end
 
 --====================================================
-HandlerMap.enterMapEntry={}
+HandlerMap.switchMap={}
 
-function HandlerMap.enterMapEntry:handleMessage(msg)
+function HandlerMap.switchMap:handleMessage(msg)
   smLog:info("进入传送点")
   GameData.curPlayer.mapId=msg:getInt("mapId")
   GameData.curPlayer.col=msg:getInt("x")
