@@ -15,7 +15,6 @@ import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
-import com.soyomaker.service.PlayerTaskService;
 
 @Component("npcStateHandler")
 public class NPCStateHandler extends AbHandler {
@@ -23,8 +22,6 @@ public class NPCStateHandler extends AbHandler {
 	@Autowired
 	private DictManager dictManager;
 
-	@Autowired
-	private PlayerTaskService playerTaskService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -60,26 +57,25 @@ public class NPCStateHandler extends AbHandler {
 	public int checkNpcState(Player player, Npc npc) {
 		int state = Npc.STATE_NORMAL;
 		// 检查NPC是否处于STATE_PROCEED_TASK状态
-		for (PlayerTask pt : playerTaskService.getUnfinishedTaskList(player)) {
-			Task task = pt.getTask();
+		for (PlayerTask pt : player.getUnfinishedTaskList()) {
 			// (1)任务步骤已经结束，在此NPC处完成任务
 			// (2)任务步骤未结束，在此NPC处进行当前步骤
-			if ((pt.isStepOver() && task.getApplyNpcId() == npc.getId())
-					|| (!pt.isStepOver() && pt.getCurTaskStep().getNpcId() == npc
-							.getId())) {
+			if (pt.isStepOver(npc) || (pt.isNotStepOver(npc))) {
 				state = Npc.STATE_PROCEED_TASK;
-				break;
+				return state;
 			}
 		}
+		
 		if (state == Npc.STATE_NORMAL) {
 			// 检查NPC是否处于STATE_PROCEED_TASK状态
-			for (Task task : playerTaskService.getAvailableTaskList(player)) {
+			for (Task task : player.getAvailableTaskList(dictManager.getTaskList())) {
 				if (task.getApplyNpcId() == npc.getId()) {
 					state = Npc.STATE_APPLY_TASK;
-					break;
+					return state;
 				}
 			}
 		}
+		
 		return state;
 	}
 }
