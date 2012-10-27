@@ -127,8 +127,6 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 */
 	public void updatePlayerTaskList(Player player) {
 		if (player != null) {
-			this.delete("delete from PlayerTask pt where pt.playerId=?",
-					player.getId());
 			for (PlayerTask pt : player.getPlayerTaskList()) {
 				this.saveOrUpdate(pt);
 			}
