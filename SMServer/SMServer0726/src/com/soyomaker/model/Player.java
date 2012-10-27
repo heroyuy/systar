@@ -80,6 +80,21 @@ public class Player {
 	}
 
 	public boolean canApplyTask(Task task) {
+		// (1)检查任务是否已经存在
+		if (this.hasPlayerTask(task.getId())) {
+			return false;
+		}
+		// (2)检查前置任务是否完成
+		if (task.getPreTask() != Task.TASK_TAG_NO_PRE_TASK) {
+			// 有前置任务
+			PlayerTask ptPre = this.getPlayerTask(task.getPreTask());
+			if (ptPre == null || !ptPre.isFinished()) {
+				// 前置任务未开始或者未完成
+				return false;
+			}
+		}
+		// (3)检查申请条件
+		// TODO
 		return true;
 	}
 
@@ -263,7 +278,7 @@ public class Player {
 	 *            任务ID
 	 * @return 任务是否存在
 	 */
-	public boolean hasTask(int taskId) {
+	public boolean hasPlayerTask(int taskId) {
 		return playerTaskMap.containsKey(taskId);
 	}
 

@@ -18,7 +18,7 @@ public class PlayerTask {
 	@EmbeddedId
 	private PlayerTaskId id;// playerId-taskId
 
-	private Integer step;// 已经完成的步骤数
+	private int step;// 已经完成的步骤数
 
 	private boolean stepOver;// 步骤是否已经结束
 

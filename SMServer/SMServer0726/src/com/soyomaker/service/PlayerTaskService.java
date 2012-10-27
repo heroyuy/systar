@@ -1,12 +1,13 @@
 package com.soyomaker.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
@@ -20,6 +21,9 @@ import com.soyomaker.model.task.Task;
 @Transactional
 public class PlayerTaskService extends AbstractService<PlayerTask> {
 
+	@Autowired
+	private DictManager dictManager;
+
 	/**
 	 * 查找玩家任务列表
 	 * 
@@ -32,42 +36,20 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	}
 
 	/**
-	 * 同步玩家的任务列表到数据库
-	 * 
-	 * @param player
-	 */
-	public void updatePlayerTaskList(Player player) {
-		if (player != null) {
-			this.delete("delete from PlayerTask pt where pt.id.playerId=?",
-					player.getId());
-			for (PlayerTask pt : player.getPlayerTaskList()) {
-				this.saveOrUpdate(pt);
-			}
-		}
-	}
-
-	public void scanAutoApplyTask(Player player) {
-		List<Task> availableTaskList = this.getAvailableTaskList(player);
-		for (Task task : availableTaskList) {
-			if (task.getType() == Task.TASK_TYPE_PLOTLINE) {
-				// 主线任务自动接收
-			}
-		}
-	}
-
-	/**
-	 * 初始化玩家任务列表
+	 * 获取玩家可接收任务列表
 	 * 
 	 * @param player
 	 *            玩家
+	 * @return 可接收任务列表
 	 */
-	public void initPlayerTaskList(Player player) {
-		// 保证清空上次的
-		player.clearPlayerTaskList();
-		List<PlayerTask> ptList = findByPlayerId(player.getId());
-		for (PlayerTask playerTask : ptList) {
-			player.addPlayerTask(playerTask);
+	public List<Task> getAvailableTaskList(Player player) {
+		List<Task> taskList = new ArrayList<Task>();
+		for (Task task : dictManager.getTaskList()) {
+			if (player.canApplyTask(task)) {
+				taskList.add(task);
+			}
 		}
+		return taskList;
 	}
 
 	/**
@@ -105,14 +87,47 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	}
 
 	/**
-	 * 获取玩家可接收任务列表
+	 * 初始化玩家任务列表
 	 * 
 	 * @param player
 	 *            玩家
-	 * @return 可接收任务列表
 	 */
-	public List<Task> getAvailableTaskList(Player player) {
-		return null;
+	public void initPlayerTaskList(Player player) {
+		// 清空
+		player.clearPlayerTaskList();
+		// 加载已有任务
+		List<PlayerTask> ptList = findByPlayerId(player.getId());
+		for (PlayerTask playerTask : ptList) {
+			player.addPlayerTask(playerTask);
+		}
+		// 扫描自动接收的任务
+		this.scanAutoApplyTask(player);
+	}
+
+	public void scanAutoApplyTask(Player player) {
+		List<Task> availableTaskList = this.getAvailableTaskList(player);
+		for (Task task : availableTaskList) {
+			if (task.getType() == Task.TASK_TYPE_PLOTLINE) {
+				// 主线任务自动接收
+				PlayerTask pt = new PlayerTask(player, task);
+				player.addPlayerTask(pt);
+			}
+		}
+	}
+
+	/**
+	 * 同步玩家的任务列表到数据库
+	 * 
+	 * @param player
+	 */
+	public void updatePlayerTaskList(Player player) {
+		if (player != null) {
+			this.delete("delete from PlayerTask pt where pt.id.playerId=?",
+					player.getId());
+			for (PlayerTask pt : player.getPlayerTaskList()) {
+				this.saveOrUpdate(pt);
+			}
+		}
 	}
 
 }
