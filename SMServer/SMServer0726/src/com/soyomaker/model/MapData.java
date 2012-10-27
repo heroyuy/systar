@@ -71,6 +71,10 @@ public class MapData {
 		return width;
 	}
 
+	public boolean hasNpc(int npcId) {
+		return npcMap.containsKey(npcId);
+	}
+
 	public void setHeight(Integer height) {
 		this.height = height;
 	}
