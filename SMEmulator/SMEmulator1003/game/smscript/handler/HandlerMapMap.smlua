@@ -17,9 +17,34 @@ function HandlerMap.loadMap:handleMessage(msg)
   msg=HandlerMap:msgToLua(msg)
   local npcList=msg.npcList
   for i,mapEntry in ipairs(npcList) do
-    local npc=clsNpc:new()
-    npc.id=mapEntry.id
-    GameData.curNpcList[npc.id]=npc
+    local cnpc=clsNpc:new()
+    local npcDict=Dictionary.npcs[mapEntry.id]
+    cnpc.id=npcDict.id
+    cnpc.row=npcDict.row
+    cnpc.col=npcDict.col
+    cnpc.name=npcDict.name
+    cnpc.charImgName=npcDict.charImg
+    if cnpc.charImgName then
+      cnpc.charImg=smImageFactory:loadImage(cnpc.charImgName)
+    end
+    cnpc.headImgName=npcDict.headImg
+    if cnpc.headImgName then
+      cnpc.headImg=smImageFactory:loadImage(cnpc.headImgName)
+    end
+    cnpc.type=npcDict.type
+    --传送点暂时默认使用同样的图片
+    if cnpc.type==clsNpc.TYPE_MAPENTRY then
+      cnpc.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
+    end
+    cnpc.face=npcDict.face
+    cnpc.moveType=npcDict.moveType
+    cnpc.speedLevel=npcDict.speedLevel
+    cnpc.penetrable=npcDict.penetrable
+    cnpc.targetMapId=npcDict.targetMapId
+    cnpc.targetX=npcDict.targetX
+    cnpc.targetY=npcDict.targetY
+    cnpc.moveDelegate=self
+    GameData.curNpcList[cnpc.id]=cnpc
   end
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end
@@ -45,35 +70,7 @@ function HandlerMap.updateNpcState:handleMessage(msg)
   for k,npc in pairs(stateList) do
     --smLog:info(npc.npcId)
     --smLog:info(npc.state)
-    local cnpc=clsNpc:new()
-    local npcDict=Dictionary.npcs[npc.npcId]
-    cnpc.id=npcDict.id
-    cnpc.row=npcDict.row
-    cnpc.col=npcDict.col
-    cnpc.name=npcDict.name
-    cnpc.charImgName=npcDict.charImg
-    if cnpc.charImgName then
-      cnpc.charImg=smImageFactory:loadImage(cnpc.charImgName)
-    else
-      --没有设置npc图像的暂时设置为默认的图片
-      cnpc.charImgName="/image/character/001-Fighter01.png"
-      cnpc.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
-    end
-    cnpc.headImgName=npcDict.headImg
-    if cnpc.headImgName then
-      cnpc.headImg=smImageFactory:loadImage(cnpc.headImgName)
-    end
-    cnpc.type=npcDict.type
-    cnpc.face=npcDict.face
-    cnpc.moveType=npcDict.moveType
-    cnpc.speedLevel=npcDict.speedLevel
-    cnpc.penetrable=npcDict.penetrable
-    cnpc.targetMapId=npcDict.targetMapId
-    cnpc.targetX=npcDict.targetX
-    cnpc.targetY=npcDict.targetY
-    cnpc.moveDelegate=self
-    GameData.curNpcList[cnpc.id]=cnpc
-  	GameData.curNpcList[cnpc.id].state=npc.state
+  	GameData.curNpcList[npc.npcId].state=npc.state
   end
   Notifier:notify(Const.NotifyCMD.Net.PLACE_NPC)
 end

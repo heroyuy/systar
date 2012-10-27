@@ -229,22 +229,24 @@ function clsSceneMap:placeNpc()
   smLog:info("布置npc")
   --Npc
   for k,npc in pairs(GameData.curNpcList) do
-    local npcSprite=clsSprite:new(npc.charImg,
+  	if npc.charImg then
+  	  local npcSprite=clsSprite:new(npc.charImg,
       npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
-    npcSprite.tag=npc.id
-    npcSprite.delegate=self
-    npcSprite.z=npc.row
-    npcSprite.x,npcSprite.y=self:characherLocation(npc)
-    if npc.state == 0 then
-     --普通npc的没有提示图片
-    elseif npc.state == 1 then
-     --可接任务-叹号
-     npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc2.png")
-    elseif npc.state == 2 then
-     --进行任务-问号
-      npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
+      npcSprite.tag=npc.id
+      npcSprite.delegate=self
+      npcSprite.z=npc.row
+      npcSprite.x,npcSprite.y=self:characherLocation(npc)
+      if npc.state == 0 then
+        --普通npc的没有提示图片
+      elseif npc.state == 1 then
+        --可接任务-叹号
+        npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc2.png")
+      elseif npc.state == 2 then
+        --进行任务-问号
+        npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
+  	  end
+      self.spriteLayer:addChild(npcSprite)
   	end
-    self.spriteLayer:addChild(npcSprite)
   end
   self.spriteLayer:sortChildren()
 end
