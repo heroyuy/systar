@@ -72,6 +72,6 @@ function clsSprite:paintLayer(painter)
   self:paintLayerF(painter)
   if self.promptImage then
   	--TODO 这里的16应该修改
-  	painter:drawImage(self.promptImage,16,0,UIConst.anchor.HV)
+  	painter:drawImage(self.promptImage,16,-16,UIConst.anchor.HV)
   end
 end
