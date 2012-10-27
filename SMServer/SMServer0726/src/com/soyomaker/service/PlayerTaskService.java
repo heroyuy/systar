@@ -32,7 +32,12 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 * @return 玩家的任务列表
 	 */
 	public List<PlayerTask> findByPlayerId(int playerId) {
-		return find("from PlayerTask pt where pt.id.playerId=?", playerId);
+		List<PlayerTask> ptList = find(
+				"from PlayerTask pt where pt.id.playerId=?", playerId);
+		for (PlayerTask pt : ptList) {
+			pt.setTask(dictManager.getTask(pt.getId().getTaskId()));
+		}
+		return ptList;
 	}
 
 	/**

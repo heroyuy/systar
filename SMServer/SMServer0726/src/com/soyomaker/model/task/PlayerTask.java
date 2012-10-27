@@ -27,6 +27,10 @@ public class PlayerTask {
 	@Transient
 	private Task task;
 
+	public PlayerTask() {
+
+	}
+
 	public PlayerTask(Player player, Task task) {
 		this.id = new PlayerTaskId(player.getId(), task.getId());
 		this.task = task;
@@ -80,5 +84,10 @@ public class PlayerTask {
 
 	public void setStepOver(boolean stepOver) {
 		this.stepOver = stepOver;
+	}
+
+	public void setTask(Task task) {
+		// TODO 有安全隐患
+		this.task = task;
 	}
 }
