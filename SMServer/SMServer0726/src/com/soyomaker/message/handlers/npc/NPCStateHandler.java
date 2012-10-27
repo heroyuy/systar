@@ -33,12 +33,14 @@ public class NPCStateHandler extends AbHandler {
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		Collection<GameObject> stateList = new ArrayList<GameObject>();
 		for (Npc npc : mapData.getNpcList()) {
-			// (2)检查NPC的状态
-			int state = this.checkNpcState(player, npc);
-			GameObject stateObj = new GameObject();
-			stateObj.putInt("npcId", npc.getId());
-			stateObj.putInt("state", state);
-			stateList.add(stateObj);
+			if (npc.getType() == Npc.TYPE_NORMAL) {
+				// (2)检查NPC的状态
+				int state = this.checkNpcState(player, npc);
+				GameObject stateObj = new GameObject();
+				stateObj.putInt("npcId", npc.getId());
+				stateObj.putInt("state", state);
+				stateList.add(stateObj);
+			}
 		}
 		// (3)返回消息给客户端
 		GameObject msgSent = new GameObject(msg.getType());
