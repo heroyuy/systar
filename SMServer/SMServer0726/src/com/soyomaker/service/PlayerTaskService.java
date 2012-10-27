@@ -33,7 +33,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 */
 	public List<PlayerTask> findByPlayerId(int playerId) {
 		List<PlayerTask> ptList = find(
-				"from PlayerTask pt where pt.id.playerId=?", playerId);
+				"from PlayerTask pt where pt.playerId=?", playerId);
 		for (PlayerTask pt : ptList) {
 			pt.setTask(dictManager.getTask(pt.getTaskId()));
 		}
@@ -127,7 +127,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 */
 	public void updatePlayerTaskList(Player player) {
 		if (player != null) {
-			this.delete("delete from PlayerTask pt where pt.id.playerId=?",
+			this.delete("delete from PlayerTask pt where pt.playerId=?",
 					player.getId());
 			for (PlayerTask pt : player.getPlayerTaskList()) {
 				this.saveOrUpdate(pt);
