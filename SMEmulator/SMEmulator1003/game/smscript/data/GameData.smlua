@@ -66,9 +66,11 @@ function GameData:update()
   end
   --更新当前地图上的Npc
   if self.curMap then
-    for k,v in pairs(self.curMap.npcs) do
-      local npc=self.curNpcList[v]
-      npc:update()
+    for k,v in pairs(self.curNpcList) do
+      local npc=self.curNpcList[k]
+      if npc then
+      	npc:update()
+      end
     end
   end
 end
@@ -80,7 +82,7 @@ function GameData:checkScript(npc)
     smLog:info("当前有脚本在执行")
     return
   end
-  local scriptId=Dictionary.npcs[npc.id].scriptId
+  local scriptId=Dictionary.npcs[npc.id].scriptIndex
   --锁定当前Npc
   npc.locked=true
   self.curLockedNpc=npc

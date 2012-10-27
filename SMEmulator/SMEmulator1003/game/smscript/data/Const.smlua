@@ -83,6 +83,10 @@ Const.NotifyCMD.Net={}
   --]]
   Const.NotifyCMD.Net.LOAD_MAP="loadMap"			--加载地图
   --[[
+	布置npc，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.PLACE_NPC="placeNpc"			--布置Npc
+  --[[
 	关闭服务器，此通知的参数为{msg}
   --]]
   Const.NotifyCMD.Net.SHUTDOWN_SERVER="shutdownServer"	--关闭服务器

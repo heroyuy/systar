@@ -201,6 +201,7 @@ function clsSceneMap:onStart()
   --注册接收通知
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
+  Notifier:addObserver(Const.NotifyCMD.Net.PLACE_NPC,self,self.placeNpc)
   --定时任务
   Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
@@ -221,6 +222,31 @@ function clsSceneMap:onStop()
   self:syncLocation()
   Notifier:removeObserver(Const.NotifyCMD.Character.MOVE,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
+end
+
+--布置npc
+function clsSceneMap:placeNpc()
+  smLog:info("布置npc")
+  --Npc
+  for k,npc in pairs(GameData.curNpcList) do
+    local npcSprite=clsSprite:new(npc.charImg,
+      npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
+    npcSprite.tag=npc.id
+    npcSprite.delegate=self
+    npcSprite.z=npc.row
+    npcSprite.x,npcSprite.y=self:characherLocation(npc)
+    if npc.state == 0 then
+     --普通npc的没有提示图片
+    elseif npc.state == 1 then
+     --可接任务-叹号
+     npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc2.png")
+    elseif npc.state == 2 then
+     --进行任务-问号
+      npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
+  	end
+    self.spriteLayer:addChild(npcSprite)
+  end
+  self.spriteLayer:sortChildren()
 end
 
 --切换地图
@@ -245,36 +271,16 @@ function clsSceneMap:buildMap()
   --修正精灵层大小
   self.spriteLayer.width=GameData.curMap.cellWidth*GameData.curMap.colNum
   self.spriteLayer.height=GameData.curMap.cellHeight*GameData.curMap.rowNum
-    --主角
-    local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
-       GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
-    playerSprite.tag=GameData.curPlayer.id
-    playerSprite.delegate=self
-    playerSprite.z=GameData.curPlayer.row
-    playerSprite.x,playerSprite.y=self:characherLocation(GameData.curPlayer)
-    self.spriteLayer:addChild(playerSprite)
-    --Npc
-    for k,npc in pairs(GameData.curNpcList) do
-      local npcSprite=clsSprite:new(npc.charImg,
-        npc.charImg:getWidth()/4,npc.charImg:getHeight()/4)
-      npcSprite.tag=npc.id
-      npcSprite.delegate=self
-      npcSprite.z=npc.row
-      npcSprite.x,npcSprite.y=self:characherLocation(npc)
-      
-      if npc.state == 0 then
-      	--普通npc的没有提示图片
-      elseif npc.state == 1 then
-      	--可接任务-叹号
-      	npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc2.png")
-      elseif npc.state == 2 then
-      	--进行任务-问号
-      	npcSprite.promptImage=smImageFactory:loadImage("/image/skin/IconNpc1.png")
-      end
-      
-      self.spriteLayer:addChild(npcSprite)
-    end
-  self.spriteLayer:sortChildren()
+  
+  --主角
+  local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
+     GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
+  playerSprite.tag=GameData.curPlayer.id
+  playerSprite.delegate=self
+  playerSprite.z=GameData.curPlayer.row
+  playerSprite.x,playerSprite.y=self:characherLocation(GameData.curPlayer)
+  self.spriteLayer:addChild(playerSprite)
+    
   self.spriteLayer.x,self.spriteLayer.y=-self.viewport.x,-self.viewport.y
   --加载前景
   local fgLayers=clsList:new()
