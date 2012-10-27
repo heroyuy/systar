@@ -1,0 +1,21 @@
+if Interpreter:doCommand(102013,0) then
+if Interpreter:doCommand(102008,0) == 7 then
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(102010,0)
+Interpreter:doCommand(100002,11)
+end
+if Interpreter:doCommand(102008,0) == 8 then
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(101006,"吉斯","<name>[0]，还有半个月就会被征召，你会去应征吗？","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","当然，我们不是一直在等待这一天吗？我们将会成为废土的英雄！","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"吉斯","哈哈，就知道你会这样说。","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","那么你呢，吉斯？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"吉斯","我？我当然也会去。","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"娜娜","可是我不希望你们去应征，不是说要永远在一起的吗？","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","放心吧，娜娜，我们一定会带着保卫人类的荣誉回来。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"吉斯","对，我们会成为废土的英雄，而你也将分享这份荣誉。","/image/battler/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","之后我们将永远在一起。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","不，我不要什么荣誉，我只想和你们在一起。","/image/battler/101.png",0)
+Interpreter:doCommand(102010,0)
+end
+end

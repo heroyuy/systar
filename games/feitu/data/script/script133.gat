@@ -1,0 +1,24 @@
+if Interpreter:doCommand(102013,21) then
+if Interpreter:doCommand(102008,21) == 95 then
+Interpreter:doCommand(101006,"<name>[0]","你在干什么？快走。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","很快就能完成了，掩护我。","/image/battler/115.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)
+Interpreter:doCommand(102010,21)
+Interpreter:doCommand(100002,133)
+end
+if Interpreter:doCommand(102008,21) == 96 then
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(101006,"<name>[0]","真是麻烦的女人，兰迪，你准备好了吗？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","当然，我的枪在颤抖，我想，它们迫不及待地想要战斗了。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,21)
+end
+if Interpreter:doCommand(102008,21) == 98 then
+Interpreter:doCommand(101006,"杜波夫","好了，血液样本收集完毕，我要先回去了。","/image/battler/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你先回去，我们来看看，这声音到底是什么？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","那就交给你们了，小心点！","/image/battler/115.png",0)
+Interpreter:doCommand(101020,133,112,29,20)
+Interpreter:doCommand(102010,21)
+end
+else
+
+end

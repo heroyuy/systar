@@ -1,0 +1,36 @@
+--------------print--------------
+do
+  local oldPrint=print
+  print=function(arg)
+    oldPrint(arg)
+    io.flush()
+  end
+end
+
+--------------split--------------
+string.split=function(s,regex)
+  local items={}
+  local i=1
+  local j=0
+  local k=0
+  while j~=nil do
+    j,k=string.find(s,regex,i)
+    if j~=nil then
+      table.insert(items,string.sub(s,i,j-1))
+      table.insert(items,string.sub(s,j,k))
+      i=k+1
+    else
+      table.insert(items,string.sub(s,i,-1))
+    end
+  end
+  return items
+end
+
+--定义点与矩形位置判断方法
+isPointInRect=function(x,y,rectX,rectY,rectWidth,rectHeight)
+  if x>=rectX and x<=rectX+rectWidth and y>=rectY and y<=rectY+rectHeight then
+    return true
+  else
+    return false
+  end
+end

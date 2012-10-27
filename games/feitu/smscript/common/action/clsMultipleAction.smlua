@@ -1,0 +1,53 @@
+--[[
+  description:复合动作(复合动作是一系列动作的集合，这些动作同时开始，只有所有动作都结束，复合动作才结束)
+  author:wp_g4
+  date:2012/05/12
+--]]
+
+--结构定义
+clsMultipleAction={}
+setmetatable(clsMultipleAction,clsAction)
+clsMultipleAction.__index = clsMultipleAction
+
+--字段定义
+clsMultipleAction.actionList=nil				--复合动作的动作列表
+
+-- 构造
+function clsMultipleAction:new(...)
+  local self=clsAction:new()
+  setmetatable(self,clsMultipleAction)
+  self.actionList=arg
+  return self
+end
+
+--设置目标
+function clsMultipleAction:reset()
+  for i,v in ipairs(self.actionList) do
+    v:setTarget(self.target)
+  end
+  self.dead=false
+end
+
+--更新
+function clsMultipleAction:update()
+  --(1)检查动作是否结束,标志是动作列表中的所有动作都结束
+  local dead=true
+  for i,v in ipairs(self.actionList) do
+    if not v.dead then
+      --只要有一个动作未结束，则复合动作未结束
+      dead=false
+      break
+    end
+  end
+  self.dead=dead
+  if self.dead then
+    smLog:info("复合动作结束")
+    return
+  end
+  --(2)更新
+  for i,v in ipairs(self.actionList) do
+    if not v.dead then
+      v:update()
+    end
+  end
+end

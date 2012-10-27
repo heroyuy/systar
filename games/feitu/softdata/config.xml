@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+  <name>游戏名称</name>
+  <help>游戏帮助</help>
+  <about>游戏关于</about>
+  <gold>金币</gold>
+  <hp>HP</hp>
+  <sp>SP</sp>
+  <atk>物理攻击</atk>
+  <def>物理防御</def>
+  <matk>魔法攻击</matk>
+  <mdef>魔法防御</mdef>
+  <stre>力量</stre>
+  <inte>智力</inte>
+  <agil>敏捷</agil>
+  <dext>灵巧</dext>
+  <vita>体力</vita>
+  <luck>幸运</luck>
+  <helm>头盔</helm>
+  <armour>铠甲</armour>
+  <weapon>武器</weapon>
+  <shield>盾牌</shield>
+  <boots>战靴</boots>
+  <jewelry>饰品</jewelry>
+  <item>物品</item>
+  <equip>装备</equip>
+  <skill>技能</skill>
+  <frameSkin></frameSkin>
+  <playerInfoSkin></playerInfoSkin>
+  <inputDialogSkin></inputDialogSkin>
+  <startAniIndex>-1</startAniIndex>
+  <endAniIndex>-1</endAniIndex>
+  <titleBackground></titleBackground>
+  <titleMusic></titleMusic>
+  <startBattleSound></startBattleSound>
+  <failSound></failSound>
+  <winSound></winSound>
+  <escapeSound></escapeSound>
+  <selectedSound></selectedSound>
+  <confirmSound></confirmSound>
+  <cancelSound></cancelSound>
+  <warnSound></warnSound>
+  <equipSound></equipSound>
+  <shopSound></shopSound>
+  <readSound></readSound>
+  <saveSound></saveSound>
+  <map index="0" row="0" col="0" face="0"/>
+  <players/>
+  <attributes/>
+</Config>

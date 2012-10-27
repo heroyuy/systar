@@ -1,0 +1,29 @@
+if Interpreter:doCommand(102013,1) then
+if Interpreter:doCommand(102008,1) == 11 then
+Interpreter:doCommand(101006,"佣兵甲","想不到在这鸟不生蛋的地方还能遇到这么漂亮的小姐。","/image/battler/202.png",0)
+Interpreter:doCommand(101006,"娜娜","滚开。。。","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"佣兵乙","嘿嘿，就让哥哥来疼疼你吧，美丽的小姐。","/image/battler/203.png",0)
+Interpreter:doCommand(101006,"<name>[0]","住手！","/image/battler/001.png",0)
+end
+if Interpreter:doCommand(102008,2) == 13 then
+Interpreter:doCommand(101006,"<name>[0]","娜娜，你怎么会在这里？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","你以为我想来这里，还不是因为担心你。","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","镇子周围都是危险之地，以后不要再一个人出来了。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","杰斯丁，留下来，不要走好不好？","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","回去吧，娜娜。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","我已经失去了吉斯，不能再失去你了，我很害怕不知那天你会像吉斯一样。","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","可我必须要走！","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","为什么？","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","为了吉斯，为了其他死去的人。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","哼！我看是为了你自己。","/image/battler/101.png",0)
+Interpreter:doCommand(101020,14,7,17,11)
+Interpreter:doCommand(101006,"娜娜","看，这就是你和吉斯要成为的人，<name>[0]！","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"娜娜","看看他们，只会欺负手无寸铁的镇民们，满足他们渺小的虚荣心。冒着失去生命的危险，远离故乡，但是成为的不是英雄，而是恶棍、流氓！","/image/battler/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"娜娜","<name>[0],你只是个笨蛋！","/image/battler/101.png",0)
+Interpreter:doCommand(101020,14,7,1,18)
+Interpreter:doCommand(102010,1)
+end
+else
+
+end

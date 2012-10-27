@@ -1,0 +1,30 @@
+if Interpreter:doCommand(102013,10) then
+if Interpreter:doCommand(102008,10) == 61 then
+Interpreter:doCommand(101006,"杰里米","<name>[0]，是你吗？你还活着！我真不敢相信。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","杰里米，是我，我们没见面有十年了吧。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","自从当初我落选“天煞”之后，我们就再也没有见过面，之后我就来到这里建立了这个定居点，我叫它--基塔。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我常常听说你的事情。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","吉斯呢？吉斯还活着吗？","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","吉斯。。。吉斯他死了。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","是吗，不过这也是预料之内的事情。四年前，总部与火星殖民政府的战争，总部对外宣布“天煞”全灭，我以为你也死了。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","那是一个不堪的过去，整个“天煞”只有我活了下来。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","活着就好，吉斯。。。过去的一切，就好像昨天发生的一样。。。","/image/battler/119.png",0)
+Interpreter:doCommand(102010,10)
+end
+if Interpreter:doCommand(102008,10) == 48 then
+Interpreter:doCommand(101006,"杰里米","<name>[0]，你好像在发呆？","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","没有，只是想起了我们三个人在一起的那些日子。是啊，就好像发生在昨天一样。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","<name>[0]，你有什么打算吗？","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我想会我会先到总部一趟。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","总部。。。此去一路上危险重重，不知有什么我可以帮忙？","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","此去必须要穿越大荒漠，危机重重，我需要重型的兵器。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","重型兵器。。。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的，比如装甲车之类的。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"杰里米","这里倒是有一件重型兵器，但并非普通的装甲车，但是不知道你们是否能够驾驶。","/image/battler/119.png",0)
+Interpreter:doCommand(101006,"兰迪","太好了，或许我们可以试试。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"杰里米","那好吧，请到酒店之中等候一天，然后去镇中修车厂即可，我需要准备一下。","/image/battler/119.png",0)
+Interpreter:doCommand(102010,10)
+end
+else
+
+end

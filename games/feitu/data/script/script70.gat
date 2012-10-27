@@ -1,0 +1,15 @@
+if Interpreter:doCommand(102013,11) then
+if Interpreter:doCommand(102008,11) == 51 then
+Interpreter:doCommand(101006,"痞子艾利","欢迎来到海港佣兵团，我叫艾利，人们都叫我“痞子艾利”。请问有什么可以帮到你们吗？","/image/battler/121.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我想知道这里有什么特别的去处，毕竟这里号称是废土最安全的定居点，总得看看。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"痞子艾利","对，海港市是废土最安全和最自由的地方，只要你不触犯法律的情况下。","/image/battler/121.png",0)
+Interpreter:doCommand(101006,"兰迪","犯法？难道废土还有法律？当然，我这样说只是好久没有听到这个词了，有点意外，我们可是真正的良民。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"痞子艾利","嘿嘿，如果你不喜欢“法律”这个词的话，可以理解为“规矩”，我们海港佣兵团的规矩。而只要不触犯我们的规矩，那么这里将保证你们的安全，还有自由。","/image/battler/121.png",0)
+Interpreter:doCommand(101006,"兰迪","好吧，我们就去医院看看，废土唯一的医院，没去看过还真不敢对人说来过海港市。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"痞子艾利","祝你玩的愉快，尊敬的先生们。","/image/battler/121.png",0)
+Interpreter:doCommand(102010,11)
+Interpreter:doCommand(102009,12)
+end
+else
+
+end

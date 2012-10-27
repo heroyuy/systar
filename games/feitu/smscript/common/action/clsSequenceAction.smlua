@@ -1,0 +1,69 @@
+--[[
+  description:序列动作(序列动作是一系列动作的集合，这些动作依次开始，只有所有动作都结束，序列动作才结束)
+  author:wp_g4
+  date:2012/05/12
+--]]
+
+--结构定义
+clsSequenceAction={}
+setmetatable(clsSequenceAction,clsAction)
+clsSequenceAction.__index = clsSequenceAction
+
+--字段定义
+clsSequenceAction.actionList=nil				--序列动作的动作列表
+clsSequenceAction.times=1						--序列动作的循环次数
+
+clsSequenceAction.remnantTimes=nil				--剩余循环次数
+
+-- 构造
+function clsSequenceAction:new(times,...)
+  local self=clsAction:new()
+  setmetatable(self,clsSequenceAction)
+  self.times=times
+  self.actionList=arg
+  return self
+end
+
+--设置目标
+function clsSequenceAction:reset()
+  for i,v in ipairs(self.actionList) do
+    v:setTarget(self.target)
+  end
+  if self.times<0 then
+    self.remnantTimes=99999999
+  else
+    self.remnantTimes=self.times
+  end
+  self.dead=false
+end
+
+--更新
+function clsSequenceAction:update()
+  --(1)检查动作是否结束,标志是动作列表中的最后一个动作结束
+  local dead=self.actionList[table.getn(self.actionList)].dead
+  if dead then
+    --最后一个动作结束则判断是循环次数
+    self.remnantTimes=self.remnantTimes-1
+    if self.remnantTimes<=0 then
+      --循环结束
+      self.dead=dead
+    else
+      --循环未结束，从头开始执行动作
+      --重置所有动作
+      for i,v in ipairs(self.actionList) do
+        v:setTarget(self.target)
+      end
+    end
+  end
+  if self.dead then
+    smLog:info("序列动作结束")
+    return
+  end
+  --(2)确定当前应该执行的动作
+  for i,v in ipairs(self.actionList) do
+    if not v.dead then
+      v:update()
+      break
+    end
+  end
+end

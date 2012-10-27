@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<feituzhige>
+  <Map ID="0" Name="世界地图">
+    <Map ID="1" Name="废土"/>
+  </Map>
+  <Map ID="2" Name="后山树林">
+    <Map ID="3" Name="后山树林">
+      <Map ID="4" Name="墓地"/>
+    </Map>
+    <Map ID="5" Name="后山树林">
+      <Map ID="6" Name="神秘之地"/>
+      <Map ID="7" Name="矿坑前">
+        <Map ID="8" Name="矿坑入口">
+          <Map ID="9" Name="废旧矿坑">
+            <Map ID="10" Name="矿坑尽头"/>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="11" Name="拉姆镇">
+    <Map ID="12" Name="拉姆镇">
+      <Map ID="13" Name="娜娜家">
+        <Map ID="14" Name="娜娜家二楼"/>
+      </Map>
+      <Map ID="15" Name="学校"/>
+      <Map ID="16" Name="酒吧">
+        <Map ID="17" Name="旅店"/>
+      </Map>
+      <Map ID="18" Name="佣兵协会"/>
+      <Map ID="19" Name="修理厂">
+        <Map ID="20" Name="地下室"/>
+      </Map>
+      <Map ID="21" Name="拉姆镇政府">
+        <Map ID="22" Name="镇长办公室"/>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="23" Name="兰特镇">
+    <Map ID="24" Name="兰特镇">
+      <Map ID="25" Name="民家"/>
+      <Map ID="26" Name="民家"/>
+      <Map ID="27" Name="商会"/>
+      <Map ID="28" Name="酒吧">
+        <Map ID="29" Name="旅馆"/>
+      </Map>
+      <Map ID="30" Name="佣兵协会"/>
+      <Map ID="31" Name="教堂"/>
+      <Map ID="32" Name="修理厂">
+        <Map ID="33" Name="地下室"/>
+      </Map>
+      <Map ID="34" Name="兰特镇政府"/>
+      <Map ID="35" Name="兰特镇">
+        <Map ID="36" Name="兰迪奴隶贸易公司"/>
+      </Map>
+      <Map ID="37" Name="城墙"/>
+    </Map>
+  </Map>
+  <Map ID="38" Name="地下铁">
+    <Map ID="39" Name="地下铁入口">
+      <Map ID="40" Name="地下铁">
+        <Map ID="41" Name="地下铁">
+          <Map ID="42" Name="地下铁">
+            <Map ID="43" Name="控制中心"/>
+          </Map>
+          <Map ID="44" Name="地下铁">
+            <Map ID="45" Name="电子门">
+              <Map ID="46" Name="车站大厅">
+                <Map ID="47" Name="地下铁出口"/>
+              </Map>
+            </Map>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="48" Name="基塔镇">
+    <Map ID="49" Name="基塔镇">
+      <Map ID="50" Name="化学研究所"/>
+      <Map ID="51" Name="民家"/>
+      <Map ID="52" Name="民家"/>
+      <Map ID="53" Name="民家"/>
+      <Map ID="54" Name="酒吧">
+        <Map ID="55" Name="旅馆"/>
+      </Map>
+      <Map ID="56" Name="修理厂">
+        <Map ID="57" Name="地下室"/>
+      </Map>
+      <Map ID="58" Name="基塔镇政府"/>
+      <Map ID="59" Name="佣兵协会"/>
+    </Map>
+  </Map>
+  <Map ID="60" Name="海港市">
+    <Map ID="61" Name="海港市">
+      <Map ID="62" Name="龙马家"/>
+      <Map ID="63" Name="民家"/>
+      <Map ID="64" Name="民家"/>
+      <Map ID="65" Name="机修工会"/>
+      <Map ID="66" Name="佣兵协会"/>
+      <Map ID="67" Name="酒吧">
+        <Map ID="68" Name="旅馆"/>
+      </Map>
+      <Map ID="69" Name="修理厂">
+        <Map ID="70" Name="地下室"/>
+      </Map>
+      <Map ID="71" Name="海港市政府">
+        <Map ID="72" Name="市长办公室">
+          <Map ID="73" Name="罗格尔的密室"/>
+        </Map>
+      </Map>
+      <Map ID="74" Name="海港市">
+        <Map ID="75" Name="医院"/>
+      </Map>
+      <Map ID="310" Name="海港市码头">
+        <Map ID="311" Name="码头办事处"/>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="76" Name="兰心镇">
+    <Map ID="77" Name="兰心镇">
+      <Map ID="78" Name="民家"/>
+      <Map ID="79" Name="民家"/>
+      <Map ID="80" Name="酒吧">
+        <Map ID="81" Name="旅店"/>
+      </Map>
+      <Map ID="82" Name="兰心镇政府"/>
+      <Map ID="83" Name="佣兵协会"/>
+      <Map ID="84" Name="修理厂">
+        <Map ID="85" Name="地下室"/>
+      </Map>
+    </Map>
+    <Map ID="86" Name="兰心镇码头">
+      <Map ID="87" Name="海盗工会"/>
+    </Map>
+  </Map>
+  <Map ID="88" Name="暴风雨">
+    <Map ID="89" Name="暴风雨">
+      <Map ID="90" Name="暴风雨"/>
+      <Map ID="91" Name="暴风雨"/>
+    </Map>
+  </Map>
+  <Map ID="92" Name="死亡沙漠">
+    <Map ID="93" Name="死亡沙漠入口"/>
+    <Map ID="94" Name="死亡峡谷">
+      <Map ID="95" Name="死亡峡谷">
+        <Map ID="96" Name="死亡峡谷"/>
+        <Map ID="97" Name="死亡峡谷">
+          <Map ID="98" Name="重炮阵地">
+            <Map ID="99" Name="炮兵指挥部"/>
+            <Map ID="100" Name="死亡峡谷"/>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="101" Name="沙漠商队">
+    <Map ID="102" Name="沙漠商队">
+      <Map ID="103" Name="帐篷"/>
+      <Map ID="104" Name="帐篷"/>
+      <Map ID="105" Name="沙漠商店"/>
+      <Map ID="106" Name="沙漠商队">
+        <Map ID="107" Name="沙漠商队">
+          <Map ID="108" Name="超级旅馆">
+            <Map ID="109" Name="超级旅馆"/>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="110" Name="食尸鬼峡谷">
+    <Map ID="111" Name="食尸鬼峡谷">
+      <Map ID="112" Name="食尸鬼峡谷">
+        <Map ID="113" Name="食尸鬼峡谷"/>
+        <Map ID="114" Name="食尸鬼峡谷">
+          <Map ID="115" Name="食尸鬼峡谷">
+            <Map ID="116" Name="食尸鬼峡谷">
+              <Map ID="117" Name="食尸鬼峡谷">
+                <Map ID="118" Name="食尸鬼临时营地"/>
+              </Map>
+            </Map>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="119" Name="黄沙镇">
+    <Map ID="120" Name="黄沙镇">
+      <Map ID="121" Name="民居"/>
+      <Map ID="122" Name="民居"/>
+      <Map ID="123" Name="民居"/>
+      <Map ID="124" Name="佣兵协会"/>
+      <Map ID="125" Name="酒吧">
+        <Map ID="126" Name="旅店"/>
+      </Map>
+      <Map ID="127" Name="机械研究所"/>
+      <Map ID="128" Name="修理厂">
+        <Map ID="129" Name="地下室"/>
+      </Map>
+      <Map ID="130" Name="黄沙镇政府"/>
+    </Map>
+    <Map ID="131" Name="地下水道">
+      <Map ID="132" Name="监狱"/>
+    </Map>
+  </Map>
+  <Map ID="133" Name="黄沙树林">
+    <Map ID="134" Name="黄沙树林">
+      <Map ID="135" Name="黄沙树林"/>
+      <Map ID="136" Name="黄沙树林">
+        <Map ID="137" Name="黄沙树林"/>
+        <Map ID="138" Name="黄沙树林"/>
+        <Map ID="139" Name="黄沙树林">
+          <Map ID="140" Name="黄沙树林"/>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="141" Name="高塔市">
+    <Map ID="142" Name="高塔市">
+      <Map ID="143" Name="民家"/>
+      <Map ID="144" Name="民家"/>
+      <Map ID="145" Name="佣兵协会"/>
+      <Map ID="146" Name="酒吧">
+        <Map ID="147" Name="旅馆"/>
+      </Map>
+      <Map ID="148" Name="民家"/>
+      <Map ID="149" Name="修理厂">
+        <Map ID="150" Name="地下室"/>
+      </Map>
+      <Map ID="151" Name="黑手党理事会"/>
+      <Map ID="152" Name="兰迪奴隶贸易公司"/>
+      <Map ID="153" Name="崔氏奴隶贸易公司"/>
+      <Map ID="154" Name="海港市政府">
+        <Map ID="155" Name="市政府后花园"/>
+      </Map>
+    </Map>
+    <Map ID="156" Name="高塔市码头">
+      <Map ID="157" Name="码头办事处"/>
+    </Map>
+  </Map>
+  <Map ID="158" Name="塔拉镇">
+    <Map ID="159" Name="塔拉镇">
+      <Map ID="160" Name="民居"/>
+      <Map ID="161" Name="民家"/>
+      <Map ID="162" Name="修理厂">
+        <Map ID="163" Name="地下室"/>
+      </Map>
+      <Map ID="164" Name="塔拉镇政府"/>
+      <Map ID="165" Name="酒吧">
+        <Map ID="166" Name="旅馆">
+          <Map ID="167" Name="天台"/>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="168" Name="漩涡">
+    <Map ID="169" Name="漩涡"/>
+    <Map ID="170" Name="漩涡"/>
+    <Map ID="171" Name="漩涡"/>
+  </Map>
+  <Map ID="172" Name="沙漠酒吧">
+    <Map ID="173" Name="沙漠酒吧"/>
+    <Map ID="174" Name="沙漠酒吧"/>
+  </Map>
+  <Map ID="175" Name="噩梦树海">
+    <Map ID="176" Name="噩梦树海">
+      <Map ID="177" Name="噩梦树海">
+        <Map ID="178" Name="噩梦树海">
+          <Map ID="179" Name="噩梦树海"/>
+          <Map ID="180" Name="噩梦树海"/>
+          <Map ID="181" Name="噩梦树海"/>
+        </Map>
+        <Map ID="182" Name="噩梦树海"/>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="183" Name="海风城">
+    <Map ID="184" Name="海风城">
+      <Map ID="185" Name="修理厂">
+        <Map ID="186" Name="地下室"/>
+      </Map>
+      <Map ID="187" Name="新人类理事会"/>
+      <Map ID="188" Name="民家"/>
+      <Map ID="189" Name="酒吧">
+        <Map ID="190" Name="旅店"/>
+      </Map>
+      <Map ID="191" Name="民家"/>
+      <Map ID="192" Name="民居"/>
+      <Map ID="193" Name="海风城市政府">
+        <Map ID="194" Name="市政府后花园"/>
+      </Map>
+      <Map ID="195" Name="高级学校"/>
+    </Map>
+  </Map>
+  <Map ID="196" Name="金枪鱼山谷">
+    <Map ID="197" Name="金枪鱼山谷">
+      <Map ID="198" Name="金枪鱼山谷">
+        <Map ID="199" Name="金枪鱼山谷">
+          <Map ID="200" Name="金枪鱼山谷">
+            <Map ID="201" Name="金枪鱼山谷"/>
+            <Map ID="202" Name="搜捕者营地"/>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="203" Name="圣城">
+    <Map ID="204" Name="圣地平原"/>
+    <Map ID="205" Name="圣城">
+      <Map ID="206" Name="民居"/>
+      <Map ID="207" Name="酒吧">
+        <Map ID="208" Name="旅馆"/>
+      </Map>
+      <Map ID="209" Name="虔诚者的家"/>
+      <Map ID="210" Name="修理厂">
+        <Map ID="211" Name="地下室"/>
+      </Map>
+      <Map ID="212" Name="民居"/>
+      <Map ID="213" Name="圣城总坛">
+        <Map ID="214" Name="教皇办公室"/>
+        <Map ID="215" Name="监狱"/>
+      </Map>
+      <Map ID="216" Name="科技之神教堂"/>
+      <Map ID="217" Name="主教议会"/>
+    </Map>
+    <Map ID="218" Name="圣城">
+      <Map ID="219" Name="科技基地"/>
+      <Map ID="220" Name="科技基地"/>
+      <Map ID="221" Name="科技基地"/>
+      <Map ID="222" Name="科技基地"/>
+      <Map ID="223" Name="科技基地"/>
+      <Map ID="224" Name="科技基地"/>
+    </Map>
+  </Map>
+  <Map ID="225" Name="圣地峡谷">
+    <Map ID="226" Name="圣地峡谷">
+      <Map ID="227" Name="圣地峡谷"/>
+      <Map ID="228" Name="圣地峡谷">
+        <Map ID="229" Name="圣地峡谷"/>
+        <Map ID="230" Name="圣地峡谷">
+          <Map ID="231" Name="野外码头"/>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="232" Name="多拿镇">
+    <Map ID="233" Name="沙漠码头"/>
+    <Map ID="234" Name="多拿镇">
+      <Map ID="235" Name="酒吧">
+        <Map ID="236" Name="旅馆"/>
+      </Map>
+      <Map ID="237" Name="民居"/>
+      <Map ID="238" Name="民家"/>
+      <Map ID="239" Name="修理厂"/>
+      <Map ID="240" Name="多拿镇政府"/>
+    </Map>
+    <Map ID="241" Name="地下密道">
+      <Map ID="242" Name="地下密道"/>
+      <Map ID="243" Name="地下密道">
+        <Map ID="244" Name="地下密道"/>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="245" Name="沙巴镇">
+    <Map ID="246" Name="沙巴镇">
+      <Map ID="247" Name="修理厂">
+        <Map ID="248" Name="地下室"/>
+      </Map>
+      <Map ID="249" Name="民居"/>
+      <Map ID="250" Name="酒吧">
+        <Map ID="251" Name="旅馆"/>
+      </Map>
+      <Map ID="252" Name="沙巴镇政府"/>
+    </Map>
+  </Map>
+  <Map ID="253" Name="椰树峡谷">
+    <Map ID="254" Name="椰树峡谷">
+      <Map ID="255" Name="椰树峡谷">
+        <Map ID="256" Name="椰树峡谷">
+          <Map ID="257" Name="椰树峡谷"/>
+          <Map ID="258" Name="椰树峡谷">
+            <Map ID="259" Name="椰树峡谷"/>
+          </Map>
+        </Map>
+        <Map ID="260" Name="椰树峡谷">
+          <Map ID="261" Name="废弃地堡"/>
+        </Map>
+      </Map>
+      <Map ID="262" Name="椰树峡谷"/>
+    </Map>
+  </Map>
+  <Map ID="263" Name="光辉之城">
+    <Map ID="264" Name="光辉之城">
+      <Map ID="265" Name="酒吧">
+        <Map ID="266" Name="旅店"/>
+      </Map>
+      <Map ID="267" Name="军法处">
+        <Map ID="268" Name="监狱">
+          <Map ID="269" Name="监狱"/>
+        </Map>
+      </Map>
+    </Map>
+    <Map ID="270" Name="光辉之城外部"/>
+  </Map>
+  <Map ID="271" Name="无边树海">
+    <Map ID="272" Name="无边树海">
+      <Map ID="273" Name="无边树海">
+        <Map ID="274" Name="无边树海"/>
+        <Map ID="275" Name="无边树海"/>
+        <Map ID="276" Name="无边树海">
+          <Map ID="277" Name="无边树海"/>
+          <Map ID="278" Name="无边树海">
+            <Map ID="279" Name="无边树海"/>
+            <Map ID="280" Name="无边树海"/>
+          </Map>
+        </Map>
+      </Map>
+    </Map>
+  </Map>
+  <Map ID="281" Name="佣兵之城">
+    <Map ID="282" Name="佣兵之城">
+      <Map ID="283" Name="修理厂">
+        <Map ID="284" Name="地下室"/>
+      </Map>
+      <Map ID="285" Name="酒吧">
+        <Map ID="286" Name="旅馆"/>
+      </Map>
+      <Map ID="287" Name="佣兵协会">
+        <Map ID="288" Name="佣兵办公室"/>
+      </Map>
+      <Map ID="289" Name="佣兵之城市政府"/>
+      <Map ID="290" Name="档案管理处"/>
+      <Map ID="291" Name="参谋总部">
+        <Map ID="292" Name="会议室"/>
+      </Map>
+      <Map ID="293" Name="杰斯丁的宿舍">
+        <Map ID="294" Name="杰斯丁的宿舍"/>
+      </Map>
+      <Map ID="295" Name="禁闭室">
+        <Map ID="296" Name="监狱">
+          <Map ID="297" Name="监狱"/>
+        </Map>
+      </Map>
+    </Map>
+    <Map ID="298" Name="佣兵之城"/>
+  </Map>
+  <Map ID="299" Name="空港基地">
+    <Map ID="300" Name="空港基地">
+      <Map ID="301" Name="空港指挥部"/>
+    </Map>
+  </Map>
+  <Map ID="302" Name="冰封树海">
+    <Map ID="303" Name="冰封树海">
+      <Map ID="304" Name="冰封树海"/>
+      <Map ID="305" Name="前线兵营"/>
+    </Map>
+  </Map>
+  <Map ID="306" Name="剧情用地图">
+    <Map ID="307" Name="监狱"/>
+    <Map ID="308" Name="矿坑尽头"/>
+    <Map ID="309" Name="杰斯丁的宿舍"/>
+  </Map>
+</feituzhige>

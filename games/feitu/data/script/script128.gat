@@ -1,0 +1,17 @@
+if Interpreter:doCommand(102013,20) then
+if Interpreter:doCommand(102008,20) == 91 then
+if Interpreter:doCommand(101010,1,1) then
+Interpreter:doCommand(101006,"兰迪","给我滚！","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"佣兵","是，我再也不敢了。","/image/battler/120.png",0)
+Interpreter:doCommand(101020,128,108,12,19)
+Interpreter:doCommand(101018,255,255,248,255,20)
+Interpreter:doCommand(102010,20)
+Interpreter:doCommand(101018,0,0,0,0,20)
+Interpreter:doCommand(102009,21)
+else
+
+end
+end
+else
+
+end

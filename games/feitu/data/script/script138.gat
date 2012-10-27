@@ -1,0 +1,11 @@
+if Interpreter:doCommand(102013,21) then
+if Interpreter:doCommand(102008,21) == 99 then
+if Interpreter:doCommand(101010,1,1) then
+Interpreter:doCommand(102010,21)
+else
+
+end
+end
+else
+
+end

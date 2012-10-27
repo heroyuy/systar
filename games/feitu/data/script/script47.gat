@@ -1,0 +1,15 @@
+if Interpreter:doCommand(102013,6) then
+if Interpreter:doCommand(102008,6) == 32 then
+
+Interpreter:doCommand(101006,"雷尔","<name>[0]，兰迪，你们都给我滚蛋，这是我的镇子，由我来保护。","/image/battler/105.png",0)
+Interpreter:doCommand(101006,"兰迪","雷尔，你这个蠢货，你拿的可是珍贵的火神机枪？子弹很金贵。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"雷尔","快走，兰迪，兰特保不住了，带着<name>[0]逃出镇子，给老子有多远滚多远。","/image/battler/105.png",0)
+Interpreter:doCommand(101006,"兰迪","雷尔。。。","/image/battler/002.png",0)
+Interpreter:doCommand(101020,47,37,14,14)
+Interpreter:doCommand(101006,"雷尔","哈哈哈，回去告诉爱丽丝，我比你这小子强多了。","/image/battler/105.png",0)
+Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","不，要走一起走。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","快走，<name>[0]，我们帮不了雷尔。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,6)
+end
+end

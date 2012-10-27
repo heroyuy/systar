@@ -1,0 +1,151 @@
+--[[
+  description:动作
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+--结构定义
+clsAction={}
+clsAction.__index = clsAction
+
+--字段定义
+clsAction.TYPE_LINEAR_TO=0			--类型：线性、直到
+clsAction.TYPE_LINEAR_BY=1			--类型：线性、追加
+clsAction.TYPE_ACCELERATE_TO=2		--类型：加速、直到
+clsAction.TYPE_ACCELERATE_BY=3		--类型：加速、追加
+clsAction.TYPE_DECELERATE_TO=4		--类型：减速、直到
+clsAction.TYPE_DECELERATE_BY=5		--类型：减速、追加
+clsAction.TYPE_MAX=6				--类型编号最大值
+
+clsAction.target=nil			--动作的目标
+clsAction.dead=false			--动作是否结束
+
+-- 构造
+function clsAction:new()
+  local self={}
+  setmetatable(self,clsAction)
+  return self
+end
+
+--设置目标
+function clsAction:setTarget(target)
+  self.target=target
+  self:reset()
+end
+
+--重置动作
+function clsAction:reset()
+  --根据参数重置动作:子类实现
+end
+
+--更新
+function clsAction:update()
+  --根据具体action更新target的属性:子类实现
+end
+
+--==================================================
+--[[
+  description:动作工厂
+  author:wp_g4
+  date:2012/05/11
+--]]
+
+require("clsPropertyAction")
+require("clsShakeAction")
+require("clsMultipleAction")
+require("clsSequenceAction")
+
+Action={}
+
+--淡入淡出动作
+function Action:newFadeAction(alpha,time,type)
+  return clsPropertyAction:new(alpha,time,type,"alpha")
+end
+
+--翻转动作
+function Action:newFlipAction(flip,time,type)
+  local res={}
+  for i=1,2 do
+    table.insert(res,clsPropertyAction:new(flip[i],time,type,"flip",i))
+  end
+  return Action:newMultipleAction(unpack(res))
+end
+
+--移动动作
+function Action:newMoveAction(location,time,type)
+  local str={"x","y"}
+  local res={}
+  for i=1,2 do
+    table.insert(res,clsPropertyAction:new(location[i],time,type,str[i]))
+  end
+  return Action:newMultipleAction(unpack(res))
+end
+
+--旋转动作
+function Action:newRotateAction(rotate,time,type)
+  return clsPropertyAction:new(rotate,time,type,"rotate")
+end
+
+--缩放动作
+function Action:newScaleAction(scale,time,type)
+  return clsPropertyAction:new(scale,time,type,"scale")
+end
+
+--变色动作
+function Action:newTintAction(tint,time,type)
+  local res={}
+  for i=1,6 do
+    table.insert(res,clsPropertyAction:new(tint[i],time,type,"tint",i))
+  end
+  return Action:newMultipleAction(unpack(res))
+end
+
+--明暗动作
+function Action:newShadeAction(shade,time,type)
+  tint={shade,shade,shade,0,0,0}
+  return Action:newTintAction(tint,time,type)
+end
+
+--震动动作
+function Action:newShakeAction(range,interval,times,type)
+  return clsShakeAction:new(range,interval,times,type)
+end
+
+--复合动作
+function Action:newMultipleAction(...)
+  return clsMultipleAction:new(unpack(arg))
+end
+
+--序列动作
+function Action:newSequenceAction(times,...)
+  return clsSequenceAction:new(times,unpack(arg))
+end
+
+--==================================================
+--[[
+  description:动作播放器
+  author:wp_g4
+  date:2012/05/07
+--]]
+
+ActionPlayer={}
+
+ActionPlayer.actionList={}					--动作列表
+
+--播放动作
+function ActionPlayer:run(action)
+  self.actionList[tostring(action)]=action
+  action.dead=false
+end
+
+--更新
+function ActionPlayer:update()
+  for k,action in pairs(self.actionList) do
+    if action.dead then
+      self.actionList[k]=nil
+      smLog:info("移除动作")
+    else
+      action:update()
+    end
+  end
+end

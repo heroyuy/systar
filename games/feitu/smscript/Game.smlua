@@ -1,0 +1,134 @@
+Game={}
+
+--标志常量：场景
+Game.SCENE_TITLE=0 --标题场景
+Game.SCENE_MAP=1   --地图场景
+Game.SCENE_STATUS=2   --状态场景
+
+--成员
+Game.curScene=nil
+
+Game.path=nil						--游戏路径
+Game.inputDialogDelegate=nil		--输入框事件委托
+
+--脚本启动  lua层不应该调用
+function Game:onStart()
+  self.path=smGame:getPath()
+  --导入需要的文件
+  package.path = package.path .. ";"..self.path.."/smscript/?.smlua"
+  require("requires")
+  --配置引擎
+  smLog:setDebug(true)
+  smLog:info("game-start")
+  --初始化游戏
+  Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,self,self.scriptEnd)
+  GameLayer:init()
+  --加载游戏数据
+  DataLoader:init()
+  --初始化皮肤
+  Skin:init(Dictionary.config.skin)
+  --切换到标题场景
+  self:changeScene(self.SCENE_TITLE)
+end
+
+--触屏事件  lua层不应该调用
+function Game:onTouch(x,y,type)
+  GameLayer:dispatchEvent(x,y,type)
+end
+
+--输入事件  lua层不应该调用
+function Game:onInput(value)
+  if self.inputDialogDelegate then
+    self.inputDialogDelegate:onInput(value)
+  end
+end
+
+--更新model  lua层不应该调用
+function Game:onUpdate()
+  --更新数据模型
+  GameData:update()
+  --更新任务调度器
+  Scheduler:update()
+  --更新动作播放器
+  ActionPlayer:update()
+  --更新场景
+  if self.curScene then
+    self.curScene:update()
+  end
+end
+
+--绘制屏幕  lua层不应该调用
+function Game:onPaint(painter)
+  GameLayer:paint(painter)
+end
+
+--退出  lua层不应该调用
+function Game:onStop()
+  if self.curScene then
+    self.curScene:onStop()
+    GameLayer:clear()
+  end
+  smLog:info("game-stop")
+end
+
+--内存警报 lua层不应该调用
+function Game:onLowMemory()
+  Image:clean()
+end
+
+--获取屏幕宽度
+function Game:getWidth()
+  return smGame:getWidth()
+end
+
+--获取屏幕高度
+function Game:getHeight()
+  return smGame:getHeight()
+end
+
+--获取游戏运行时间
+function Game:getTime()
+  return smGame:getTime()
+end
+
+--显示输入框
+function Game:showInputDialog(tip,inputDialogDelegate)
+  self.inputDialogDelegate=inputDialogDelegate
+  smGame:showInputDialog(tip)
+end
+
+--切换场景  lua调用
+function Game:changeScene(index)
+  --(1)原场景onStop
+  if self.curScene then
+    self.curScene:onStop()
+    GameLayer:clear()
+  end
+  --(2)切换场景
+  self:createScene(index)
+  --(3)新场景onStart
+  if self.curScene then
+    self.curScene:onStart()
+  end
+end
+
+--辅助方法:创建场景(非当前Chunk不应该调用)
+function Game:createScene(index)
+  if index==self.SCENE_TITLE then
+    self.curScene=clsSceneTitle:new()
+  elseif index==self.SCENE_MAP then
+    self.curScene=clsSceneMap:new()
+  elseif index==self.SCENE_STATUS then
+    self.curScene=clsSceneStatus:new()
+  end
+end
+
+----------接收通知------------
+--Const.NotifyCMD.System.SCRIPT_END
+function Game:scriptEnd()
+  --解锁playerTroop
+  GameData.playerTroop:unlock()
+  --解锁NPC
+  GameData.curLockedNPC.locked=false
+  GameData.curLockedNPC=nil
+end

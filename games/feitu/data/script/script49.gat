@@ -1,0 +1,25 @@
+if Interpreter:doCommand(102013,7) then
+if Interpreter:doCommand(102008,7) == 34 then
+Interpreter:doCommand(101006,"<name>[0]","啊。。。我死了吗？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","你没有死，不过特兰镇的人全死了。。。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","怎么？觉得很内疚？觉得自己没有帮得上忙？","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是有点。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","你的同情心和正义感过于泛滥了，这很不好，其实这种事情在废土每天都在发生，区别在于是否在我们的身边发生而已。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","这是雷尔的墓碑？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","是的，多年的兄弟，今天又少了一个。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","虽然我并不赞同雷尔的某些做法，但雷尔是个值得一交的朋友。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","不，你不懂雷尔，你不懂，<name>[0]。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","或许他在别人眼中是个很糟糕的统治者，他在兰特霸占水源，横征暴敛，但我知道他是个好人。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","在这方面他的确十分糟糕，虽然这个世界已经变成这样了，但我们没有欺凌弱者的权力。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","哈哈，糟糕？收起你那高高在上的正义感，现在就是弱肉强食的世界。何况雷尔。。。他有苦衷，该死！我竟然为雷尔这个混蛋说话了。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","苦衷？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","你有没有想过，如果雷尔不在兰特横征暴敛，那么他根本无法养起他的部队。你看那些镇民，那些所谓的弱者，他们在镇子备受攻击的时候做了什么？！","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"兰迪","他们将自己关在房子里，并唱圣诗赞美上帝，以为这样就能够远离危险和死亡。看啊，他们就是这样看待废土的，可笑吧！","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"兰迪","而每次都是雷尔带着他的军队顶在前面，最终他们得救了，这就是真实。在废土最大的正义在于拿起武器保护自己，雷尔他做得很好，我们不应再苛求。。。","/image/battler/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","兰迪，我很抱歉，请节哀，雷尔已经走了。","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"兰迪","哈哈，可怜的雷尔，这该死的正义。。。","/image/battler/002.png",0)
+Interpreter:doCommand(102010,7)
+end
+end

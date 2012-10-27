@@ -1,0 +1,12 @@
+if Interpreter:doCommand(102013,19) then
+if Interpreter:doCommand(102008,19) == 82 then
+if Interpreter:doCommand(101010,1,1) then
+Interpreter:doCommand(101006,"兰迪","该死！他们竟有机甲！","/image/battler/002.png",0)
+Interpreter:doCommand(102010,19)
+else
+
+end
+end
+else
+
+end

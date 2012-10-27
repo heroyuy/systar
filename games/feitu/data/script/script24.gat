@@ -1,0 +1,19 @@
+if Interpreter:doCommand(102013,3) then
+if Interpreter:doCommand(102008,3) == 17 then
+Interpreter:doCommand(100001,20)
+Interpreter:doCommand(101006,"守卫","这里是兰特镇城门，不过这里现在已经被封锁！","/image/battler/104.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你是在开玩笑吗？为什么？","/image/battler/001.png",0)
+Interpreter:doCommand(101006,"守卫","我奉劝你最好乖乖呆在镇上，小子！或者你可以找镇长问问。","/image/battler/104.png",0)
+Interpreter:doCommand(102010,3)
+Interpreter:doCommand(102009,4)
+end
+else
+
+Interpreter:doCommand(101006,"守卫","这里是兰特镇城门。","/image/battler/104.png",0)
+if  then
+
+end
+end
+else
+
+Interpreter:doCommand(101006,"守卫","这里是兰特镇城门。","/image/battler/104.png",0)

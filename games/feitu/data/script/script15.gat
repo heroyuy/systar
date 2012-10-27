@@ -1,0 +1,15 @@
+if Interpreter:doCommand(102013,1) then
+if Interpreter:doCommand(102008,1) == 11 then
+if Interpreter:doCommand(101010,1,1) then
+Interpreter:doCommand(102010,1)
+else
+
+end
+else
+
+Interpreter:doCommand(101006,"Ó¶±ø¼×","ºÃÆ¯ÁÁµÄÐ¡æ¤£¡","/image/battler/202.png",0)
+end
+else
+
+Interpreter:doCommand(101006,"Ó¶±ø¼×","ºÃÆ¯ÁÁµÄÐ¡æ¤£¡","/image/battler/202.png",0)
+end
