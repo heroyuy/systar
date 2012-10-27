@@ -60,7 +60,7 @@ public class NPCStateHandler extends AbHandler {
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {
 			// (1)任务步骤已经结束，在此NPC处完成任务
 			// (2)任务步骤未结束，在此NPC处进行当前步骤
-			if (pt.isStepOver(npc) || (pt.isNotStepOver(npc))) {
+			if (pt.isStepOver(npc) || pt.isNotStepOver(npc)) {
 				state = Npc.STATE_PROCEED_TASK;
 				return state;
 			}
