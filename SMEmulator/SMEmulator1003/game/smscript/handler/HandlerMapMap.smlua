@@ -19,17 +19,7 @@ function HandlerMap.loadMap:handleMessage(msg)
   for i,mapEntry in ipairs(npcList) do
     local npc=clsNpc:new()
     npc.id=mapEntry.id
-    npc.mapId=mapEntry.mapId
-    npc.col=mapEntry.x
-    npc.row=mapEntry.y
-    npc.avatar=mapEntry.avatar
-    npc.type=clsNpc.TYPE_MAPENTRY
-    npc.penetrable=false
-    npc.charImgName="/image/character/001-Fighter01.png"
-    if npc.charImgName then
-      npc.charImg=smImageFactory:loadImage(npc.charImgName)
-    end
-    GameData.curNpcList[npc.id+101000]=npc	--取得传送点id后，为了与地图npc区别，加上前缀10100
+    GameData.curNpcList[npc.id]=npc
   end
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end
@@ -64,15 +54,23 @@ function HandlerMap.updateNpcState:handleMessage(msg)
     cnpc.charImgName=npcDict.charImg
     if cnpc.charImgName then
       cnpc.charImg=smImageFactory:loadImage(cnpc.charImgName)
+    else
+      --没有设置npc图像的暂时设置为默认的图片
+      cnpc.charImgName="/image/character/001-Fighter01.png"
+      cnpc.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
     end
     cnpc.headImgName=npcDict.headImg
     if cnpc.headImgName then
       cnpc.headImg=smImageFactory:loadImage(cnpc.headImgName)
     end
+    cnpc.type=npcDict.type
     cnpc.face=npcDict.face
     cnpc.moveType=npcDict.moveType
     cnpc.speedLevel=npcDict.speedLevel
     cnpc.penetrable=npcDict.penetrable
+    cnpc.targetMapId=npcDict.targetMapId
+    cnpc.targetX=npcDict.targetX
+    cnpc.targetY=npcDict.targetY
     cnpc.moveDelegate=self
     GameData.curNpcList[cnpc.id]=cnpc
   	GameData.curNpcList[cnpc.id].state=npc.state
