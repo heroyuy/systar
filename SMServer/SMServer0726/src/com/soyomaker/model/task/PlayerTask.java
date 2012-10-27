@@ -2,8 +2,9 @@ package com.soyomaker.model.task;
 
 import java.util.List;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -11,12 +12,16 @@ import javax.persistence.Transient;
 import com.soyomaker.model.Player;
 
 @Entity
-@Table(name = "task_player")
+@Table(name = "player_task")
 public class PlayerTask {
 
 	@Id
-	@EmbeddedId
-	private PlayerTaskId id;// playerId-taskId
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+	private int playerId;// 玩家ID
+
+	private int taskId;// 任务ID
 
 	private int step;// 已经完成的步骤数
 
@@ -32,7 +37,8 @@ public class PlayerTask {
 	}
 
 	public PlayerTask(Player player, Task task) {
-		this.id = new PlayerTaskId(player.getId(), task.getId());
+		this.playerId = player.getId();
+		this.taskId = task.getId();
 		this.task = task;
 	}
 
@@ -50,16 +56,24 @@ public class PlayerTask {
 		return ts;
 	}
 
-	public PlayerTaskId getId() {
+	public int getId() {
 		return id;
 	}
 
-	public Integer getStep() {
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public int getStep() {
 		return step;
 	}
 
 	public Task getTask() {
 		return task;
+	}
+
+	public int getTaskId() {
+		return taskId;
 	}
 
 	public boolean isFinished() {
@@ -74,11 +88,15 @@ public class PlayerTask {
 		this.finished = finished;
 	}
 
-	public void setId(PlayerTaskId id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public void setStep(Integer step) {
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
+
+	public void setStep(int step) {
 		this.step = step;
 	}
 
@@ -89,5 +107,9 @@ public class PlayerTask {
 	public void setTask(Task task) {
 		// TODO 有安全隐患
 		this.task = task;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
 	}
 }

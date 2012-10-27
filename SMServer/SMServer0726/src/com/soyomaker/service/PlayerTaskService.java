@@ -35,7 +35,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 		List<PlayerTask> ptList = find(
 				"from PlayerTask pt where pt.id.playerId=?", playerId);
 		for (PlayerTask pt : ptList) {
-			pt.setTask(dictManager.getTask(pt.getId().getTaskId()));
+			pt.setTask(dictManager.getTask(pt.getTaskId()));
 		}
 		return ptList;
 	}

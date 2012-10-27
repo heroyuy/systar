@@ -25,7 +25,7 @@ public class ListTaskHandler extends AbHandler {
 		for (PlayerTask pt : session.getUser().getPlayer().getPlayerTaskList()) {
 			if (!pt.isFinished()) {
 				GameObject taskObj = new GameObject();
-				Task task = dictManager.getTask(pt.getId().getTaskId());
+				Task task = dictManager.getTask(pt.getTaskId());
 				taskObj.putInt("id", task.getId());
 				taskObj.putString("name", task.getName());
 				taskObj.putString("desc", task.getIntro());

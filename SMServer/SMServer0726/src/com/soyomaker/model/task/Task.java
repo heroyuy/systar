@@ -46,9 +46,11 @@ public class Task {
 
 	private String intro;
 
-	private int npcId;
+	private int applyNpcId;
 
 	private String applyCnd;
+
+	private int finishNpcId;
 
 	private String finishCnd;
 
@@ -61,8 +63,16 @@ public class Task {
 		return applyCnd;
 	}
 
+	public int getApplyNpcId() {
+		return applyNpcId;
+	}
+
 	public String getFinishCnd() {
 		return finishCnd;
+	}
+
+	public int getFinishNpcId() {
+		return finishNpcId;
 	}
 
 	public int getId() {
@@ -79,10 +89,6 @@ public class Task {
 
 	public int getNextTask() {
 		return nextTask;
-	}
-
-	public int getNpcId() {
-		return npcId;
 	}
 
 	public int getPreTask() {
@@ -105,8 +111,16 @@ public class Task {
 		this.applyCnd = applyCnd;
 	}
 
+	public void setApplyNpcId(int npcId) {
+		this.applyNpcId = npcId;
+	}
+
 	public void setFinishCnd(String finishCnd) {
 		this.finishCnd = finishCnd;
+	}
+
+	public void setFinishNpcId(int finishNpcId) {
+		this.finishNpcId = finishNpcId;
 	}
 
 	public void setId(int id) {
@@ -123,10 +137,6 @@ public class Task {
 
 	public void setNextTask(int nextTask) {
 		this.nextTask = nextTask;
-	}
-
-	public void setNpcId(int npcId) {
-		this.npcId = npcId;
 	}
 
 	public void setPreTask(int preId) {

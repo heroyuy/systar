@@ -76,7 +76,7 @@ public class Player {
 	 *            任务
 	 */
 	public void addPlayerTask(PlayerTask playerTask) {
-		this.playerTaskMap.put(playerTask.getId().getTaskId(), playerTask);
+		this.playerTaskMap.put(playerTask.getTaskId(), playerTask);
 	}
 
 	public boolean canApplyTask(Task task) {
