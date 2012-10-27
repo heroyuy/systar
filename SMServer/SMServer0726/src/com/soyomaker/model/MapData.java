@@ -37,9 +37,6 @@ public class MapData {
 	private int[][] wayMatrix;
 
 	@Transient
-	private Map<Integer, MapEntry> mapEntryMap;
-
-	@Transient
 	private Map<Integer, Npc> npcMap;
 
 	public Integer getHeight() {
@@ -50,20 +47,16 @@ public class MapData {
 		return id;
 	}
 
-	public Collection<MapEntry> getMapEntryList() {
-		return mapEntryMap.values();
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public Collection<Npc> getNpcList() {
-		return npcMap.values();
+	public Npc getNpc(int npcId) {
+		return npcMap.get(npcId);
 	}
 
-	public MapEntry getMapEntry(int mapEntryId) {
-		return mapEntryMap.get(mapEntryId);
+	public Collection<Npc> getNpcList() {
+		return npcMap.values();
 	}
 
 	public int getWay(int x, int y) {
@@ -84,10 +77,6 @@ public class MapData {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public void setMapEntryMap(Map<Integer, MapEntry> mapEntryMap) {
-		this.mapEntryMap = mapEntryMap;
 	}
 
 	public void setName(String name) {

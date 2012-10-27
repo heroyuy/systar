@@ -11,6 +11,16 @@ public class Npc {
 	/**
 	 * 普通
 	 */
+	public static final int TYPE_NORMAL = 0;
+
+	/**
+	 * 传送点
+	 */
+	public static final int TYPE_ENTRY = 1;
+
+	/**
+	 * 普通
+	 */
 	public static final int STATE_NORMAL = 0;
 
 	/**
@@ -28,7 +38,15 @@ public class Npc {
 
 	private String name;
 
+	private int type;
+
 	private int mapId;
+
+	private int targetMapId;
+
+	private int targetX;
+
+	private int targetY;
 
 	public int getId() {
 		return id;
@@ -42,6 +60,22 @@ public class Npc {
 		return name;
 	}
 
+	public int getTargetMapId() {
+		return targetMapId;
+	}
+
+	public int getTargetX() {
+		return targetX;
+	}
+
+	public int getTargetY() {
+		return targetY;
+	}
+
+	public int getType() {
+		return type;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -52,6 +86,22 @@ public class Npc {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setTargetMapId(int targetMapId) {
+		this.targetMapId = targetMapId;
+	}
+
+	public void setTargetX(int targetX) {
+		this.targetX = targetX;
+	}
+
+	public void setTargetY(int targetY) {
+		this.targetY = targetY;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }

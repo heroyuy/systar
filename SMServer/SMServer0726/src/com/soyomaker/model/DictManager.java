@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
-import com.soyomaker.service.MapEntryService;
 import com.soyomaker.service.NpcService;
 import com.soyomaker.service.PlayerService;
 import com.soyomaker.service.TaskService;
@@ -32,9 +31,6 @@ public class DictManager {
 
 	@Autowired
 	private LevelExpService levelExpService;
-
-	@Autowired
-	private MapEntryService mapEntryService;
 
 	@Autowired
 	private NpcService npcService;
@@ -110,16 +106,6 @@ public class DictManager {
 		}
 		// 加载等级经验配置
 		levelExpMap = levelExpService.getLevelExpMap();
-		// 加载传送点
-		for (MapData mapData : list) {
-			List<MapEntry> mapEntryList = mapEntryService.findByMapId(mapData
-					.getId());
-			Map<Integer, MapEntry> mapEntryMap = new HashMap<Integer, MapEntry>();
-			for (MapEntry mapEntry : mapEntryList) {
-				mapEntryMap.put(mapEntry.getId(), mapEntry);
-			}
-			mapData.setMapEntryMap(mapEntryMap);
-		}
 		// 加载Npc
 		for (MapData mapData : list) {
 			List<Npc> npcList = npcService.findByMapId(mapData.getId());

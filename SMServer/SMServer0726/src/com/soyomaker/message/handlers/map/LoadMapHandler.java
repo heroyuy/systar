@@ -10,7 +10,7 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessageSender;
 import com.soyomaker.model.DictManager;
 import com.soyomaker.model.MapData;
-import com.soyomaker.model.MapEntry;
+import com.soyomaker.model.Npc;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
@@ -30,13 +30,9 @@ public class LoadMapHandler extends AbHandler {
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		GameObject msgSent = this.buildPackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
-		for (MapEntry mapEntry : mapData.getMapEntryList()) {
+		for (Npc npc : mapData.getNpcList()) {
 			GameObject mapEntryObj = new GameObject();
-			mapEntryObj.putInt("id", mapEntry.getId());
-			mapEntryObj.putInt("mapId", mapEntry.getMapId());
-			mapEntryObj.putInt("x", mapEntry.getX());
-			mapEntryObj.putInt("y", mapEntry.getY());
-			mapEntryObj.putInt("avatar", mapEntry.getAvatar());
+			mapEntryObj.putInt("id", npc.getId());
 			mapEntryObjList.add(mapEntryObj);
 		}
 		msgSent.putObjectArray("mapEntryList", mapEntryObjList);
