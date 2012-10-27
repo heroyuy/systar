@@ -11,19 +11,36 @@ import javax.persistence.Transient;
 @Table(name = "task")
 public class Task {
 
+	/**
+	 * 普通
+	 */
+	public static final int TASK_TYPE_NORMAL = 0;
+	/**
+	 * 主线
+	 */
+	public static final int TASK_TYPE_PLOTLINE = 1;
+	/**
+	 * 支线
+	 */
+	public static final int TASK_TYPE_BTANCH = 2;
+	/**
+	 * 日常
+	 */
+	public static final int TASK_TYPE_DAILY = 3;
+
 	@Id
 	private int id;
 
 	private String name;
 
 	private int type;
-	
+
 	private int preTask;
 
 	private int nextTask;
-	
+
 	private String intro;
-	
+
 	private int npcId;
 
 	private String applyCnd;

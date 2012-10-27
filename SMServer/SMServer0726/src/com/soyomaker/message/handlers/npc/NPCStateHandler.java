@@ -71,8 +71,8 @@ public class NPCStateHandler extends AbHandler {
 		}
 		if (state == Npc.STATE_NORMAL) {
 			// 检查NPC是否处于STATE_PROCEED_TASK状态
-			for (PlayerTask pt : playerTaskService.getAvailableTaskList(player)) {
-				if (pt.getTask().getNpcId() == npc.getId()) {
+			for (Task task : playerTaskService.getAvailableTaskList(player)) {
+				if (task.getNpcId() == npc.getId()) {
 					state = Npc.STATE_APPLY_TASK;
 					break;
 				}

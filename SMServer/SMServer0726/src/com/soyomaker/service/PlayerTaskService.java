@@ -1,6 +1,7 @@
 package com.soyomaker.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
+import com.soyomaker.model.task.Task;
 
 /**
  * 
@@ -40,6 +42,15 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 					player.getId());
 			for (PlayerTask pt : player.getPlayerTaskList()) {
 				this.saveOrUpdate(pt);
+			}
+		}
+	}
+
+	public void scanAutoApplyTask(Player player) {
+		List<Task> availableTaskList = this.getAvailableTaskList(player);
+		for (Task task : availableTaskList) {
+			if (task.getType() == Task.TASK_TYPE_PLOTLINE) {
+				// 主线任务自动接收
 			}
 		}
 	}
@@ -100,7 +111,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	 *            玩家
 	 * @return 可接收任务列表
 	 */
-	public List<PlayerTask> getAvailableTaskList(Player player) {
+	public List<Task> getAvailableTaskList(Player player) {
 		return null;
 	}
 
