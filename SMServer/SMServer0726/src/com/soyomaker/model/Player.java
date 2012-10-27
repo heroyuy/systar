@@ -1,8 +1,10 @@
 package com.soyomaker.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -108,6 +110,63 @@ public class Player {
 	public void clearPlayerTaskList() {
 		playerTaskMap.clear();
 	}
+	
+	/**
+	 * 获取任务
+	 * 
+	 * @param taskId
+	 *            任务ID
+	 * @return 任务
+	 */
+	public PlayerTask getPlayerTask(int taskId) {
+		return playerTaskMap.get(taskId);
+	}
+	
+	/**
+	 * 获取玩家未完成任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 未完成任务列表
+	 */
+	public List<PlayerTask> getUnfinishedTaskList() {
+		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
+		for (PlayerTask playerTask : this.getPlayerTaskList()) {
+			if (!playerTask.isFinished()) {
+				ptList.add(playerTask);
+			}
+		}
+		return ptList;
+	}
+	
+
+	/**
+	 * 获取玩家可接收任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 可接收任务列表
+	 */
+	public List<Task> getAvailableTaskList(Collection<Task> tasks) {
+		List<Task> avaliTaskList = new ArrayList<Task>();
+		for (Task task : tasks) {
+			if (this.canApplyTask(task)) {
+				avaliTaskList.add(task);
+			}
+		}
+
+		return avaliTaskList;
+	}
+
+	/**
+	 * 获取任务列表
+	 * 
+	 * @return 任务列表
+	 */
+	public Collection<PlayerTask> getPlayerTaskList() {
+		return playerTaskMap.values();
+	}
+
 
 	public Integer getAgil() {
 		return agil;
@@ -225,26 +284,6 @@ public class Player {
 
 	public String getName() {
 		return name;
-	}
-
-	/**
-	 * 获取任务
-	 * 
-	 * @param taskId
-	 *            任务ID
-	 * @return 任务
-	 */
-	public PlayerTask getPlayerTask(int taskId) {
-		return playerTaskMap.get(taskId);
-	}
-
-	/**
-	 * 获取任务列表
-	 * 
-	 * @return 任务列表
-	 */
-	public Collection<PlayerTask> getPlayerTaskList() {
-		return playerTaskMap.values();
 	}
 
 	public Integer getSp() {

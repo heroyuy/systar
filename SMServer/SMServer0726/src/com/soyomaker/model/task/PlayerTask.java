@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.soyomaker.model.Npc;
 import com.soyomaker.model.Player;
 
 @Entity
@@ -54,6 +55,37 @@ public class PlayerTask {
 			ts = tsList.get(this.step);
 		}
 		return ts;
+	}
+	
+	/**
+	 * 判断是否任务步骤已经结束，在此NPC处完成任务
+	 * 
+	 * @param npcId
+	 */
+	public boolean isStepOver(Npc npc) {
+		//如果申请不相等直接返回false
+		if (task.getApplyNpcId() != npc.getId()) {
+			return false;
+		}
+		//是否结束
+		return isStepOver();
+	}
+	
+	/**
+	 * @param npc
+	 * @return
+	 */
+	public boolean isNotStepOver(Npc npc) {
+		TaskStep curTaskStep=getCurTaskStep();
+		if(curTaskStep==null){
+			return false;
+		}
+		
+		if(curTaskStep.getNpcId()!=npc.getId()){
+			return false;
+		}
+		
+		return !isStepOver();
 	}
 
 	public int getId() {
