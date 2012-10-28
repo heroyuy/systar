@@ -35,7 +35,7 @@ function HandlerMap.loadMap:handleMessage(msg)
 	    cnpc.type=npcDict.type
         --传送点暂时默认使用同样的图片
         if cnpc.type==clsNpc.TYPE_MAPENTRY then
-          cnpc.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
+          cnpc.charImg=smImageFactory:loadImage("/image/character/198-Support06.png")
         end
         cnpc.face=npcDict.face
         cnpc.moveType=npcDict.moveType
