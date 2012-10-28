@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
+import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 
@@ -26,7 +27,12 @@ public class GiveUpTaskHandler extends AbHandler {
 			this.sendMessage(session, msg, false, "任务已完成，不能放弃");
 			return;
 		}
-		// (3)移除任务
+		// (3)检查任务是否是主线任务，主线任务不能放弃
+		if (pt.getTask().getType() == Task.TYPE_PLOTLINE) {
+			this.sendMessage(session, msg, false, "主线任务不能放弃");
+			return;
+		}
+		// (4)移除任务
 		player.removePlayerTask(id);
 		this.sendMessage(session, msg, true, "放弃任务成功");
 	}
