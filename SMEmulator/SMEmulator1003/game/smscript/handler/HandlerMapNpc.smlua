@@ -19,4 +19,16 @@ HandlerMap.dialogWithNpc={}
 
 function HandlerMap.dialogWithNpc:handleMessage(msg)
   smLog:info("与NPC对话")
+  msg=HandlerMap:msgToLua(msg)
+  if msg.res then
+    local taskList=msg.taskList
+    local taskSize=table.getn(taskList)
+    if taskSize==0 then
+    smLog:info("调用npc的脚本")
+    elseif taskSize==1 then
+    smLog:info("直接对话")
+    elseif taskSize==2 then
+    smLog:info("给出列表")
+    end
+  end
 end

@@ -370,7 +370,6 @@ end
 --按钮点击事件
 function clsSceneMap:buttonTapped(button)
   local index=button.tag
-  smLog:info("index "..index)
   if index==self.TAG_BAG then
     --背包
     if self.bagPanelLayer.alpha==0 then

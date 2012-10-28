@@ -308,7 +308,11 @@ function clsSceneTitle:refreshListPlayer()
     	end
   	}
   	self.listPlayerTable:refresh()
-  	self.listPlayerTable:setSelectedIndex(1)
+  	if GameData.playerList:size()==0 then
+  	  self.listPlayerTable.selectedIndex=nil
+  	else
+  	  self.listPlayerTable:setSelectedIndex(1)
+  	end
 end
 
 function clsSceneTitle:handleListPlayer(msg)
