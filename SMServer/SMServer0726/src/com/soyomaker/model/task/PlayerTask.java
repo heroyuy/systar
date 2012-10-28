@@ -9,6 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * <pre>
+ *      PlayerTask:Task=N:1
+ * </pre>
+ * @author chenwentao
+ */
 @Entity
 @Table(name = "player_task")
 public class PlayerTask {

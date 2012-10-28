@@ -28,7 +28,7 @@ public class ChoosePlayerHandler extends AbHandler {
 			this.sendMessage(session, msg, false, "选择角色不存在 ");
 			return;
 		}
-		if (player.getUserId() != session.getUser().getId()) {
+		if (!player.getUserId().equals(session.getUser().getId())) {
 			this.sendMessage(session, msg, false, "这个角色不属于你 ");
 			return;
 		}

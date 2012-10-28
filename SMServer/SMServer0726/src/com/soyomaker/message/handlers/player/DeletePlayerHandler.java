@@ -24,7 +24,7 @@ public class DeletePlayerHandler extends AbHandler {
 			this.sendMessage(session, msg, false, "角色不存在");
 		}
 		// (2)检查角色是否属于user
-		if (player.getUserId() != session.getUser().getId()) {
+		if (!player.getUserId().equals(session.getUser().getId())) {
 			this.sendMessage(session, msg, false, "这个角色不属于你");
 		}
 		// (3)删除

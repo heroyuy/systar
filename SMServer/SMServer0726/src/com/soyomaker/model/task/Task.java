@@ -7,6 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * <pre>
+ *      任务由以下构成
+ *		1、申请  2、进行任务步骤  3、完成
+ *		任务可以有N(n>0)个任务步骤
+ * </pre>
+ * @author chenwentao
+ */
+
 @Entity
 @Table(name = "task")
 public class Task {
