@@ -29,10 +29,10 @@ public class NPCDialogueHandler extends AbHandler {
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
 		int npcId = msg.getInt("npcId");
-		MapData mapData = dictManager.getMapData(session.getUser().getPlayer()
-				.getMapId());
+		Player player = session.getUser().getPlayer();
+		MapData mapData = dictManager.getMapData(player.getMapId());
 		// (1)检查NPC是否存在
-		if (mapData.hasNpc(npcId)) {
+		if (!mapData.hasNpc(npcId)) {
 			this.sendMessage(session, msg, false, "当前地图上不存在此NPC");
 			return;
 		}
@@ -43,7 +43,6 @@ public class NPCDialogueHandler extends AbHandler {
 			return;
 		}
 		// (3)进行中的任务
-		Player player = session.getUser().getPlayer();
 		Collection<GameObject> taskObjs = new ArrayList<GameObject>();
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {
 			if (pt.getCurTaskStep().getNpcId() == npc.getId()) {
