@@ -63,7 +63,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 		for (Task task : availableTaskList) {
 			if (task.getType() == Task.TYPE_PLOTLINE) {
 				// 主线任务自动接收
-				PlayerTask pt = new PlayerTask(player, task);
+				PlayerTask pt = new PlayerTask(player.getId(), task);
 				player.addPlayerTask(pt);
 			}
 		}

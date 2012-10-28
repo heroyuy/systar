@@ -22,7 +22,6 @@ public class NPCStateHandler extends AbHandler {
 	@Autowired
 	private DictManager dictManager;
 
-
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
 		// (1)取当前地图上的所有npc
@@ -58,24 +57,30 @@ public class NPCStateHandler extends AbHandler {
 		int state = Npc.STATE_NORMAL;
 		// 检查NPC是否处于STATE_PROCEED_TASK状态
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {
-			// (1)任务步骤已经结束，在此NPC处完成任务
-			// (2)任务步骤未结束，在此NPC处进行当前步骤
-			if (pt.isStepOver(npc) || pt.isNotStepOver(npc)) {
+			// 以下两种情况 NPC处于 STATE_PROCEED_TASK 状态
+			// (1)任务步骤已经结束并且在此NPC处完成任务
+			if (pt.isStepOver() && pt.getTask().getFinishNpcId() == npc.getId()) {
 				state = Npc.STATE_PROCEED_TASK;
-				return state;
+				break;
+			}
+			// (2)任务步骤未结束并且在此NPC处进行当前步骤
+			if (!pt.isStepOver()
+					&& pt.getCurTaskStep().getNpcId() == npc.getId()) {
+				state = Npc.STATE_PROCEED_TASK;
+				break;
 			}
 		}
-		
 		if (state == Npc.STATE_NORMAL) {
 			// 检查NPC是否处于STATE_PROCEED_TASK状态
-			for (Task task : player.getAvailableTaskList(dictManager.getTaskList())) {
+			for (Task task : player.getAvailableTaskList(dictManager
+					.getTaskList())) {
+				// 有可申请的任务在此NPC处申请
 				if (task.getApplyNpcId() == npc.getId()) {
 					state = Npc.STATE_APPLY_TASK;
-					return state;
+					break;
 				}
 			}
 		}
-		
 		return state;
 	}
 }
