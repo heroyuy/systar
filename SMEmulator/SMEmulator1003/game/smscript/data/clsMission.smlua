@@ -17,7 +17,7 @@ clsMission.DAILY=3		--日常任务
 clsMission.name=nil	--任务名称
 clsMission.desc=nil	--任务描述
 clsMission.type=0			--任务类型（普通，主线，Boss）
-clsMission.finished=false	--任务完成情况
+clsMission.stepOver=false	--任务完成情况
 clsMission.step=0			--任务进行步骤
 
 --构造器
