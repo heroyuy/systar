@@ -38,7 +38,7 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
         function delegate:onSelected(OkOrCancle)
           --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
     	  if OkOrCancle then
-    	  else
+    	  end
   		end
         GameLayer:showTaskApplyDialog("","",taskList[1],delegate,"onSelected")
       else
