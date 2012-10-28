@@ -22,9 +22,14 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
   msg=HandlerMap:msgToLua(msg)
   if msg.res then
     local taskList=msg.taskList
+    local msgSent=msg.msgSent
     local taskSize=table.getn(taskList)
     if taskSize==0 then
-    smLog:info("调用npc的脚本")
+      smLog:info("调用npc的脚本")
+      local npc = Dictionary.npcs[msgSent.npcId]
+      if npc then
+        GameData:checkScript(npc)
+      end
     elseif taskSize==1 then
     smLog:info("直接对话")
     elseif taskSize==2 then
