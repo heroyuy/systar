@@ -1,0 +1,97 @@
+--[[
+  description:选项对话框
+  author:cokey
+  date:2011/04/21
+--]]
+
+--类结构定义
+clsOptionPanel={}
+setmetatable(clsOptionPanel,clsUILayer)
+clsOptionPanel.__index=clsOptionPanel
+
+clsOptionPanel.dialogDisappearAction = nil
+clsOptionPanel.dialogAppearAction = nil
+
+--构造器
+function clsOptionPanel:new(name,content,bustPath,optionItems)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self = clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsOptionPanel)
+  local n=table.getn(optionItems)
+  --对选项数目做限制，2~5之间
+  if n<2 then
+  	n=2
+  end
+  if n>5 then
+  	n=5
+  end
+  local bgImage=smImageFactory:loadImage("/image/skin/no"..n.."_dialog.png")
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,bgImage:getHeight())
+  bgLayer.anchor={0,1}
+  bgLayer.image=bgImage
+  self:addChild(bgLayer)
+  --头像
+  local bustLayer=clsUILayer:new(85,75,96,96)
+  bustLayer.anchor={0.5,0.5}
+  bustLayer.image=smImageFactory:loadImage(bustPath)
+  bustLayer.enabled=false
+  bgLayer:addChild(bustLayer)
+  --姓名
+  local nameLabel=clsUILabel:new(235,37,80,20)
+  nameLabel.anchor={0.5,0.5}
+  nameLabel.text=name
+  nameLabel.textSize=20
+  nameLabel.textColor="0xffffffff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.enabled=false
+  bgLayer:addChild(nameLabel)
+  --内容 TODO TextArea换行有问题？
+  self.contentLabel=clsUITextArea:new(170,60,710,100)
+  self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.contentLabel.anchor={0,0}
+  self.contentLabel.text=content
+  self.contentLabel.textSize=18
+  self.contentLabel.textColor="0xffffffff"
+  self.contentLabel:refresh()
+  self.contentLabel.enabled=false
+  bgLayer:addChild(self.contentLabel)
+  --选项
+  local normalImage=smImageFactory:loadImage("/image/skin/button_dialog_up.png")
+  local highlightImage=smImageFactory:loadImage("/image/skin/button_dialog_down.png")
+  for i,v in ipairs(optionItems) do
+    local button=clsUIButton:new(170,88+(i-1)*(37+2),normalImage:getWidth(),normalImage:getHeight())
+    button.anchor={0,0}
+    button.normalImage=normalImage
+    button.highlightImage=highlightImage
+    button.text=v
+    button.textSize=18
+    button.textColor="0xffffffff"
+    button.alignment=clsUILabel.ALIGN_LEFT
+    button.tag=i
+    button.delegate=self
+    button.enabled=true
+    bgLayer:addChild(button)
+  end
+  --初始化动作
+  self.dialogDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.dialogAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置选项框的可见性
+function clsOptionPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.dialogAppearAction)
+	else
+		self:runAction(self.dialogDisappearAction)
+	end
+end
+
+function clsOptionPanel:onTouch(event)
+end
+
+function clsOptionPanel:buttonTapped(target)
+  local index=target.tag
+  callFunction(self.delegate,self.delegate.onSelected,index)
+end

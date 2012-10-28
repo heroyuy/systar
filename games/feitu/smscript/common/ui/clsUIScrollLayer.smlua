@@ -1,0 +1,99 @@
+--[[
+  description:标签
+  author:wp_g4
+  date:2012/08/30
+--]]
+
+--类结构定义
+clsUIScrollLayer={}
+setmetatable(clsUIScrollLayer,clsUILayer)
+clsUIScrollLayer.__index=clsUIScrollLayer
+
+--重定向需要覆盖的父类方法
+clsUIScrollLayer.dispatchEventF=clsUIScrollLayer.dispatchEvent
+
+--字段
+clsUIScrollLayer.contentLayer=nil
+clsUIScrollLayer.horizontalScrollable=true
+clsUIScrollLayer.verticalScrollable=true
+
+clsUIScrollLayer.lastX=nil
+clsUIScrollLayer.lastY=nil
+
+--构造器
+function clsUIScrollLayer:new(x,y,width,height)
+  local self = clsUILayer:new(x,y,width,height)
+  setmetatable(self,clsUIScrollLayer)
+  self.contentLayer=clsUILayer:new(0,0,width,height)
+  self.contentLayer.anchor={0,0}
+  self:addChild(self.contentLayer)
+  self.clipBounds=true
+  return self
+end
+
+--事件分发（lua层不应该调用此方法）
+function clsUIScrollLayer:dispatchEvent(event)
+  self:scrollWithEvent(event)
+  --调用父类事件分发
+  self:dispatchEventF(event)
+end
+
+--处理滚动（lua层不应该调用此方法）
+function clsUIScrollLayer:scrollWithEvent(event)
+  local x,y,type=event:getX(),event:getY(),event:getType()
+  if type==UIConst.eventType.DOWN then
+    self.lastX,self.lastY=x,y
+  else
+    local offsetX,offsetY=x-self.lastX,y-self.lastY
+    self.lastX,self.lastY=x,y
+    self:scroll(offsetX,offsetY)
+  end
+end
+
+--滚动ScrollLayer
+function clsUIScrollLayer:scroll(offsetX,offsetY)
+  --x方向
+  if self.horizontalScrollable and self.contentLayer.width>self.width then
+    self.contentLayer.x=self.contentLayer.x+offsetX
+    if self.contentLayer.x>0 then
+      self.contentLayer.x=0
+    elseif self.contentLayer.x+self.contentLayer.width<self.width then
+      self.contentLayer.x=self.width-self.contentLayer.width
+    end
+  end
+  --y方向
+  if self.verticalScrollable and self.contentLayer.height>self.height then
+    self.contentLayer.y=self.contentLayer.y+offsetY
+    if self.contentLayer.y>0 then
+      self.contentLayer.y=0
+    elseif self.contentLayer.y+self.contentLayer.height<self.height then
+      self.contentLayer.y=self.height-self.contentLayer.height
+    end
+  end
+end
+
+--滚动ScrollLayer到顶部
+function clsUIScrollLayer:scrollToTop()
+  self.contentLayer.y=0
+end
+
+--滚动ScrollLayer到底部
+function clsUIScrollLayer:scrollToBottom()
+  self.contentLayer.y=self.height-self.contentLayer.height
+  if self.contentLayer.y>0 then
+    self.contentLayer.y=0
+  end
+end
+
+--滚动ScrollLayer到左边
+function clsUIScrollLayer:scrollToLeft()
+  self.contentLayer.x=0
+end
+
+--滚动ScrollLayer到右边
+function clsUIScrollLayer:scrollToRight()
+  self.contentLayer.x=self.width-self.contentLayer.width
+  if self.contentLayer.x>0 then
+    self.contentLayer.x=0
+  end
+end

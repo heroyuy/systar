@@ -1,0 +1,14 @@
+HandlerMap.login={}
+
+function HandlerMap.login:handleMessage(msg)
+  smLog:info("登录")
+  Notifier:notify(Const.NotifyCMD.Net.LOGIN,HandlerMap:msgToLua(msg))
+end
+
+--====================================================
+HandlerMap.register={}
+
+function HandlerMap.register:handleMessage(msg)
+  smLog:info("注册")
+  Notifier:notify(Const.NotifyCMD.Net.REGISTER,HandlerMap:msgToLua(msg))
+end

@@ -1,0 +1,46 @@
+MsgHandlerFactory={}
+
+HandlerMap={}
+
+function HandlerMap:msgToLua(msg)
+  local msgLuaString=msg:toLua()
+  local fun=loadstring("Msg="..msgLuaString)
+  fun()
+  return Msg
+end
+
+--加载handler配置
+require("HandlerMapLogin")
+require("HandlerMapPlayer")
+require("HandlerMapChat")
+require("HandlerMapTask")
+require("HandlerMapMap")
+require("HandlerMapServer")
+require("HandlerMapNpc")
+
+MsgHandlerFactory["100000"]=HandlerMap.shutdownServer
+MsgHandlerFactory["101001"]=HandlerMap.register
+MsgHandlerFactory["101002"]=HandlerMap.login
+MsgHandlerFactory["102001"]=HandlerMap.createPlayer
+MsgHandlerFactory["102002"]=HandlerMap.deletePlayer
+MsgHandlerFactory["102003"]=HandlerMap.listPlayer
+MsgHandlerFactory["102004"]=HandlerMap.choosePlayer
+MsgHandlerFactory["103001"]=HandlerMap.movePlayer
+MsgHandlerFactory["103002"]=HandlerMap.loadMap
+MsgHandlerFactory["103003"]=HandlerMap.switchMap
+MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
+MsgHandlerFactory["105001"]=HandlerMap.applyTask
+MsgHandlerFactory["105002"]=HandlerMap.giveUpTask
+MsgHandlerFactory["105003"]=HandlerMap.listTask
+MsgHandlerFactory["105004"]=HandlerMap.nextStepTask
+MsgHandlerFactory["106001"]=HandlerMap.updateNpcState
+MsgHandlerFactory["106002"]=HandlerMap.dialogWithNpc
+
+function MsgHandlerFactory:dispatchMessage(msg)
+  --显示消息
+  local msgLuaString=msg:toLua()
+  smLog:info("dispatchMessage->"..msgLuaString)
+  --分发消息
+  local id=msg:getType()
+  self[id]:handleMessage(msg)
+end

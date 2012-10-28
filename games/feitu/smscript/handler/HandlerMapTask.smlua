@@ -1,0 +1,44 @@
+HandlerMap.applyTask={}
+
+function HandlerMap.applyTask:handleMessage(msg)
+  smLog:info("申请任务")
+  Notifier:notify(Const.NotifyCMD.Net.APPLY_TASK,HandlerMap:msgToLua(msg))
+end
+
+--====================================================
+HandlerMap.listTask={}
+
+function HandlerMap.listTask:handleMessage(msg)
+  smLog:info("获取任务列表")
+  msg=HandlerMap:msgToLua(msg)
+  GameData.curPlayer.taskList=clsList:new()
+  for i=table.getn(msg.taskList),1,-1 do
+  	if not msg.taskList[i].stepOver then
+  		local task=clsMission:new()
+  		task.index=msg.taskList[i].id
+  		task.name=msg.taskList[i].name
+  		task.desc=msg.taskList[i].intro
+  		task.stepOver=msg.taskList[i].stepOver
+  		task.step=msg.taskList[i].step
+  		task.type=msg.taskList[i].type
+  		GameData.curPlayer.taskList:add(task)
+  	end
+  end
+  Notifier:notify(Const.NotifyCMD.Net.LIST_TASK,msg)
+end
+
+--====================================================
+HandlerMap.giveUpTask={}
+
+function HandlerMap.giveUpTask:handleMessage(msg)
+  smLog:info("放弃任务")
+  Notifier:notify(Const.NotifyCMD.Net.GIVE_UP_TASK,HandlerMap:msgToLua(msg))
+end
+
+--====================================================
+HandlerMap.nextStepTask={}
+
+function HandlerMap.nextStepTask:handleMessage(msg)
+  smLog:info("下一步任务")
+  Notifier:notify(Const.NotifyCMD.Net.NEXT_STEP_TASK,HandlerMap:msgToLua(msg))
+end

@@ -61,7 +61,7 @@ end
 
 --has方法
 function clsList:has(obj)
-  local status=false;
+  local status=false
   for _,v in ipairs(self) do
     if v==obj then
       status = true

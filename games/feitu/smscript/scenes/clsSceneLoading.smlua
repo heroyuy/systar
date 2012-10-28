@@ -1,0 +1,52 @@
+--[[
+  description:加载进度场景
+  author:wp_g4
+  date:2012/09/23
+--]]
+
+--结构定义
+clsSceneLoading = {}
+setmetatable(clsSceneLoading,clsScene)
+clsSceneLoading.__index = clsSceneLoading
+
+clsSceneLoading.eventCommand=nil
+clsSceneLoading.nextSceneId=nil
+
+--背景层
+clsSceneLoading.bgLayer=nil
+
+--构造器 (应该有两个参数，依次是：事件名称、下一场景ID)
+function clsSceneLoading:new(param)
+	local self = {}
+	self = clsScene:new()
+	setmetatable(self,clsSceneLoading)
+	self.eventCommand=param[1]
+	self.nextSceneId=param[2]
+	return self
+end
+
+-- 开始
+function clsSceneLoading:onStart()
+  smLog:info("加载进度场景启动")
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  --背景大图 
+  self.bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  self.bgLayer.image=smImageFactory:loadImage("/image/title/001-Title01.jpg")
+  GameLayer:addChildToScene(self.bgLayer)
+  Notifier:addObserver(self.eventCommand,self,"gotoNextScene")
+end
+
+-- 更新
+function clsSceneLoading:update()
+  --smLog:info("加载进度场景更新")
+end
+
+-- 退出
+function clsSceneLoading:onStop()
+  smLog:info("加载进度场景退出")
+  Notifier:removeObserver(self.eventCommand,self)
+end
+
+function clsSceneLoading:gotoNextScene()
+  Game:changeScene(self.nextSceneId)
+end

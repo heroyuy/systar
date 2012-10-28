@@ -1,0 +1,89 @@
+--[[
+  description:背包
+  author:wp_g4
+  date:2012/06/30
+--]]
+
+--类结构定义
+clsBag={}
+setmetatable(clsBag,clsUILayer)
+clsBag.__index=clsBag
+
+--字段
+clsBag.equipButtonList=nil		--玩家装备按钮
+
+clsBag.tableBag=nil				--道具表格
+clsBag.labelItemName=nil		--道具名称
+clsBag.textAreaItemDesc=nil		--道具描述
+clsBag.buttonUse=nil			--使用
+clsBag.buttonThrow=nil			--丢弃
+
+--构造器
+function clsBag:new()
+  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
+  setmetatable(self,clsBag)
+  self.image=Skin.BG_WINDOW
+  self.image=Skin.BG_WINDOW
+  local btnClose=clsUIButton:new(Game:getWidth()/2-32-2,2,32,32)
+  btnClose.anchor={0,0}
+  btnClose.normalImage=Skin.BUTTON_CLOSE
+  btnClose.delegate=self
+  btnClose.callback="buttonCloseTapped"
+  self:addChild(btnClose)
+  self.equipButtonList={}
+  local gap=10						--间距
+  local w=(self.width-4*gap)/2		--分区宽度
+  local cw,ch=32,32					--单元格尺寸
+  local startY=50					--内容区起始y坐标
+  --装备区背景
+  local equipLayer=clsUILayer:new(3*gap/2,startY,w,self.height-startY-3*gap/2)
+  equipLayer.anchor={0,0}
+  equipLayer.image=Skin.BG_HALF
+  self:addChild(equipLayer)
+  --装备背景
+  for i=1,6 do
+    local equipCell=clsUILayer:new(2*gap+(i-1)%2*(w-4*gap-cw),gap+(gap+32)*math.floor((i-1)/2),cw,ch)
+    equipCell.anchor={0,0}
+    equipCell.image=Skin.BG_CELL
+    self.equipButtonList[i]=clsUIButton:new(equipCell.width/2,equipCell.height/2,cw,ch)
+    local itemCell=GameData.curPlayer:itemAt(i)
+    local itemDict=Dictionary.items[itemCell.id]
+    self.equipButtonList[i].normalImage=smImageFactory:loadImage(itemDict.icon)
+    equipCell:addChild(self.equipButtonList[i])
+    equipLayer:addChild(equipCell)
+  end
+  --物品区
+  self.tableBag=clsUITable:new(3*gap/2+w+gap,startY,w,self.height-startY-3*gap/2)
+  self.tableBag.anchor={0,0}
+  self.tableBag.gap={10,10,10,10,10,10}
+  self.tableBag.image=Skin.BG_HALF
+  self.tableBag.dataSource=self
+  self.tableBag.delegate=self
+  self.tableBag.cellWidth,self.tableBag.cellHeight=cw,ch
+  self.tableBag.colNum=5
+  self.tableBag.cellBackground=Skin.BG_CELL
+  self.tableBag.cellSelectedBackground=Skin:createSelectedBg(self.tableBag.cellWidth,self.tableBag.cellHeight)
+  self:addChild(self.tableBag)
+  self:refresh()
+  return self
+end
+
+function clsBag:refresh()
+  self.tableBag.cellNum=math.ceil(table.getn(GameData.curPlayer.itemList)/self.tableBag.colNum)*self.tableBag.colNum
+  self.tableBag:refresh()
+end
+
+function clsBag:cellLayerAtIndex(table,cellLayer,i)
+  local itemCell=GameData.curPlayer:itemAt(i)
+  if itemCell then
+    local itemDict=Dictionary.items[itemCell.id]
+    local layerIcon=clsUILayer:new(cellLayer.width/2,cellLayer.height/2,32,32)
+    layerIcon.image=smImageFactory:loadImage(itemDict.icon)
+    layerIcon.enabled=false
+    cellLayer:addChild(layerIcon)
+  end
+end
+
+function clsBag:buttonCloseTapped()
+  self:removeFromParent()
+end

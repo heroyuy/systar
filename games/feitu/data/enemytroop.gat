@@ -1,1 +1,12 @@
-globalDictionary.enemytroops={}
+Dictionary.enemytroops={
+[106000001]={
+id=106000001,
+name="狂暴分队",
+enemyList={
+{id=105000001,x=160,y=320},
+{id=105000002,x=320,y=320},
+{id=105000003,x=160,y=416},
+{id=105000004,x=320,y=416}
+}
+}
+}

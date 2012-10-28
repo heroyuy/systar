@@ -1,0 +1,82 @@
+--[[
+  description:信息面板。
+  author:wp_g4
+  date:2012/06/25
+--]]
+
+--类结构定义
+clsBasicInfo={}
+setmetatable(clsBasicInfo,clsUILayer)
+clsBasicInfo.__index=clsBasicInfo
+
+--字段
+clsBasicInfo.imageHead=nil			--头像
+clsBasicInfo.labelLev=nil			--Lev
+clsBasicInfo.labelHp=nil			--HP
+clsBasicInfo.labelSp=nil			--SP
+
+clsBasicInfo.propertyList={"str","agi","int","dex","vit","luck",
+							"atk","def","matk","mdef","hit","flee",
+							"aspd","mspd","cri","sta"}
+
+--构造器
+function clsBasicInfo:new(player)
+  local self = clsUILayer:new(Game:getWidth()/2,Game:getHeight()/2,Game:getWidth()/2,Game:getHeight()/2)
+  setmetatable(self,clsBasicInfo)
+  self.image=Skin.BG_WINDOW
+  local btnClose=clsUIButton:new(Game:getWidth()/2-32-2,2,32,32)
+  btnClose.anchor={0,0}
+  btnClose.normalImage=Skin.BUTTON_CLOSE
+  btnClose.delegate=self
+  btnClose.callback="buttonCloseTapped"
+  self:addChild(btnClose)
+  local y,gap=50,10
+  --头像
+  local headW,headH=64,64
+  self.imageHead=clsUILayer:new(2*gap,y,headW,headH)
+  self.imageHead.anchor={0,0}
+  self.imageHead.image=player.headImg
+  self:addChild(self.imageHead)
+  --Lev HP SP
+  local labelW,labelH=120,24
+  self.labelLev=clsUILabel:new(2*gap+headW+2*gap,y,2*labelW/3,labelH)
+  self.labelLev.anchor={0,0}
+  self.labelLev.alignment=clsUILabel.ALIGN_LEFT
+  self.labelLev.text=Dictionary.config.level..":"..player.level
+  self:addChild(self.labelLev)
+  self.labelHp=clsUILabel:new(2*gap+headW+2*gap+(2*labelW/3+gap),y,labelW,labelH)
+  self.labelHp.anchor={0,0}
+  self.labelHp.alignment=clsUILabel.ALIGN_LEFT
+  self.labelHp.text=Dictionary.config.hp..":"..player.hp.."/"..player:getProperty(clsCharacter.HP)
+  self:addChild(self.labelHp)
+  self.labelSp=clsUILabel:new(2*gap+headW+2*gap+(2*labelW/3+gap)+(labelW+gap),y,labelW,labelH)
+  self.labelSp.anchor={0,0}
+  self.labelSp.alignment=clsUILabel.ALIGN_LEFT
+  self.labelSp.text=Dictionary.config.sp..":"..player.sp.."/"..player:getProperty(clsCharacter.SP)
+  self:addChild(self.labelSp)
+  --装备
+  local cw,ch=32,32 --单元格尺寸
+  for i=1,6 do
+    local equipCell=clsUILayer:new(2*gap+headW+2*gap+(i-1)*(cw+gap),y+cw,cw,ch)
+    equipCell.anchor={0,0}
+    equipCell.image=Skin.BG_CELL
+    local iconButton=clsUIButton:new(equipCell.width/2,equipCell.height/2,cw,ch)
+    equipCell:addChild(iconButton)
+    self:addChild(equipCell)
+  end
+  --Propertys
+  local num=4
+  local labelW=(self.width-(num+3)*gap)/num
+  for i,v in ipairs(self.propertyList) do
+    local label=clsUILabel:new(2*gap+(math.mod(i-1,num))*(labelW+gap),y+4*gap+headH+(math.floor((i-1)/num))*(labelH+gap),labelW,labelH)
+    label.anchor={0,0}
+    label.alignment=clsUILabel.ALIGN_LEFT
+    label.text=Dictionary.config[v]..":"..player:getProperty(v)
+    self:addChild(label)
+  end
+  return self
+end
+
+function clsBasicInfo:buttonCloseTapped()
+  self:removeFromParent()
+end

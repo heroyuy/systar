@@ -1,0 +1,57 @@
+--[[
+  description:队列面板
+  author:cokey
+  date:2012/09/16
+--]]
+
+--类结构定义
+clsPartyPanel={}
+setmetatable(clsPartyPanel,clsUILayer)
+clsPartyPanel.__index=clsPartyPanel
+
+clsPartyPanel.TAG_PARTY_CLOSE=0
+
+clsPartyPanel.partyMenuPanelCloseButton=nil
+
+--动作
+clsPartyPanel.partyMenuPanelDisappearAction=nil
+clsPartyPanel.partyMenuPanelAppearAction=nil
+
+--构造器
+function clsPartyPanel:new(x,y)
+  local self = clsUILayer:new(x,y,367,410)
+  setmetatable(self,clsPartyPanel)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  self.image=smImageFactory:loadImage("/image/skin/party_window.png")
+  self.alpha=0
+  
+  self.partyMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.partyMenuPanelCloseButton.anchor={1,0}
+  self.partyMenuPanelCloseButton.delegate=self
+  self.partyMenuPanelCloseButton.tag=self.TAG_PARTY_CLOSE
+  self.partyMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.partyMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.partyMenuPanelCloseButton)
+  
+  --初始化动作
+  self.partyMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.partyMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsPartyPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.partyMenuPanelAppearAction)
+	else
+		self:runAction(self.partyMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsPartyPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_PARTY_CLOSE then
+  		self:setVisible(false)
+  	end
+end

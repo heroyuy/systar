@@ -27,113 +27,31 @@
 GameData={}
 
 --字段
+GameData.updateSwitch=false  				--模型更新开关
+
+GameData.playerList=nil						--玩家角色列表
+GameData.curPlayer=nil          			--当前角色
 GameData.curMap=nil          				--当前地图
-GameData.npcs=nil            				--当前npc列表
-GameData.curLockedNPC=nil					--当前锁定的NPC（当执行一个NPC身上的脚本时，NPC即进入锁定状态）
+GameData.curNpcList=nil						--当前npc列表
 
-GameData.updateSwitch=false  				-- 模型更新开关
+GameData.curLockedNpc=nil					--当前锁定的Npc（当执行一个Npc身上的脚本时，Npc即进入锁定状态）
 
---字段：私有
-GameData.gameType=-1         				--游戏类型（-1 新游戏   0-n 游戏存档）
+GameData.switchs={}							--游戏开关
+GameData.variables={}						--游戏变量
 
---============游戏加载、保存============
---新游戏：从字典中初始化游戏
-function GameData:newGame()
-  smLog:info("newGame");
-  self.gameType=-1
-  --初始化PlayerTroop
-  for _,v in ipairs(Dictionary.config.playersIndex) do
-    smLog:info("new player")
-    local player=clsPlayer:new()
-    local playerDict=Dictionary.players[v]
-    --直接取值字段值
-    player.id=playerDict.index
-    player.name=playerDict.name
-    player.desc=playerDict.intro
-    player.headImageName=playerDict.headImg
-    if player.headImageName then
-      player.headImage=Image:getImage(player.headImageName)
+--============Npc相关操作============
+--获取指定位置的Npc
+function GameData:getNpcAt(row,col)
+  local npc=nil
+  if self.curNpcList then
+    for k,v in pairs(self.curNpcList) do
+      if v.row==row and v.col==col then
+        npc=v
+        break
+      end 
     end
-    player.charImageName=playerDict.charImg
-    if player.charImageName then
-      player.charImage=Image:getImage(player.charImageName)
-    end
-    player.battlerImageName=playerDict.battlerImg
-    if player.battlerImageName then
-      player.battlerImage=Image:getImage(player.battlerImageName)
-    end
-    player.vocationId=playerDict.vocationIndex
-    player.level=playerDict.startLev
-    --查表获取字段值
-    player.exp=playerDict.expList[player.level]
-    player.maxHp=playerDict.maxHpList[player.level]
-    player.maxSp=playerDict.maxSpList[player.level]
-    player.hp=playerDict.maxHpList[player.level]
-    player.sp=playerDict.maxSpList[player.level]
-    player.str=playerDict.strList[player.level]
-    player.agi=playerDict.agiList[player.level]
-    player.int=playerDict.intList[player.level]
-    player.vit=playerDict.vitList[player.level]
-    player.dex=playerDict.dexList[player.level]
-    player.luck=playerDict.lucList[player.level]
-    --查配置获取字段值
-    player.mapId=Dictionary.config.curMapIndex
-    player.row=Dictionary.config.row
-    player.col=Dictionary.config.col
-    player.face=Dictionary.config.face
-    player.moveDelegate=self
-    self.playerTroop.players[player.id]=player
   end
-  self.playerTroop.curDisplayPlayerId=Dictionary.config.playersIndex[1] --TODO 此值应该读配置
-  --初始化NPC信息表
-  self.npcs={}
-  --打开Model更新开关
-  self.updateSwitch=true
-end
-
---加载游戏:从第index个存档初始化游戏
-function GameData:loadGame(index)
-end
-
---保存游戏:保存游戏到第index个存档
-function GameData:saveGame(index)
-end
-
---============NPC相关操作============
---获取指定id的NPC
-function GameData:getNPC(id)
-  if self.npcs[id]==nil then
-    --指定id的NPC不存在
-    local npc=clsNPC:new()
-    local npcDict=nil
-    if self.gameType==-1 then
-      --新游戏
-      npcDict=Dictionary.npcs[id]
-    else
-      --加载存档
-      npcDict=nil  --TODO 从存档加载NPC信息
-    end
-    npc.id=npcDict.index
-    npc.mapId=npcDict.mapIndex
-    npc.row=npcDict.row
-    npc.col=npcDict.col
-    npc.name=npcDict.name
-    npc.charImageName=npcDict.charImg
-    if npc.charImageName then
-      npc.charImage=Image:getImage(npc.charImageName)
-    end
-    npc.headImageName=npcDict.headImg
-    if npc.headImageName then
-      npc.headImage=Image:getImage(npc.headImageName)
-    end
-    npc.face=npcDict.face
-    npc.moveType=npcDict.moveType
-    npc.speedLevel=npcDict.speedLevel
-    npc.penetrable=npcDict.penetrable
-    npc.moveDelegate=self
-    self.npcs[id]=npc
-  end
-  return self.npcs[id]
+  return npc
 end
 
 --更新游戏模型
@@ -143,114 +61,31 @@ function GameData:update()
     return
   end
   --更新玩家
-  if self.playerTroop:curDisplayPlayer() then
-    self.playerTroop:curDisplayPlayer():update()
+  if self.curPlayer then
+    self.curPlayer:update()
   end
-  --更新当前地图上的NPC
+  --更新当前地图上的Npc
   if self.curMap then
-    for k,v in pairs(self.curMap.npcs) do
-      local npc=self:getNPC(v)
-      npc:update()
+    for k,v in pairs(self.curNpcList) do
+      local npc=self.curNpcList[k]
+      if npc then
+      	npc:update()
+      end
     end
   end
 end
 
---============character的moveDelegate============
---检查目的地是否可达
-function GameData:checkCellBeforeMove(character)
-  local cRow,cCol=character:getHoldingCell()
-  --检查地图边界
-  if cRow<0 or cRow>self.curMap.rowNum-1 or cCol<0 or cCol>self.curMap.colNum-1 then
-    return false
-  end
-  --检查地图通行度
-  if self.curMap.areas[cRow+1][cCol+1]==-1 then
-    return false
-  end
-  --检查精灵的碰撞
-  local player=self.playerTroop:curDisplayPlayer()
-  local pRow,pCol=player:getHoldingCell()
-    --(1)、player即将移动
-    if character==player then
-      --玩家撞到NPC，条件:player的目标格子中有不可穿透的NPC
-      for k,v in pairs(self.curMap.npcs) do
-        local npc=self:getNPC(v)
-        local nRow,nCol=npc:getHoldingCell()
-        if pRow==nRow and pCol==nCol and not npc.penetrable then
-          smLog:info("玩家撞到NPC")
-          self:checkScript(npc)
-          return false
-        end
-      end
-    else
-    --(2)、npc即将移动
-      --NPC撞到玩家，条件：player在不可穿透的NPC的目标格子中
-      if not character.penetrable and cRow==pRow and cCol==pCol then
-        smLog:info("NPC撞到玩家")
-        self:checkScript(character)
-        return false
-      end
-      --NPC撞到NPC，条件:有一个不可穿透的NPC在当前移动中的不可穿透NPC的目标格子中
-      for k,v in pairs(self.curMap.npcs) do
-        local npc=self:getNPC(v)
-        local nRow,nCol=npc:getHoldingCell()
-        if not character.penetrable and character~=npc and nRow==cRow and nCol==cCol and not npc.penetrable then
-          smLog:info("NPC撞到NPC")
-          return false
-        end
-      end
-    end
-  return true
-end
-
---检查是否可以继续行走
-function GameData:checkCellAfterMove(character)
-  local player=self.playerTroop:curDisplayPlayer()
-  local pRow,pCol=player:getHoldingCell()
-  local cRow,cCol=character:getHoldingCell()
-  --(1)、player移动结束
-  if character==player then
-    --player踩到NPC，条件：player当前位置有一个可穿透的NPC
-    for k,v in pairs(self.curMap.npcs) do
-      local npc=self:getNPC(v)
-      local nRow,nCol=npc:getHoldingCell()
-      if nRow==pRow and nCol==pCol and npc.penetrable then
-        smLog:info("玩家踩到NPC")
-        self:checkScript(npc)
-        return true
-      end
-    end
-  else
-  --(2)、npc移动结束
-    --NPC走到player脚下，条件：当前移动中的NPC可穿透并且player也在当前位置
-    if cRow==pRow and cCol==pCol and character.penetrable then
-      smLog:info("NPC走到玩家脚下")
-      self:checkScript(character)
-      return true
-    end
-  end
-  return true
-end
-
---NPC和玩家接触(碰撞、重叠)后检查脚本
+--Npc和玩家接触(碰撞、重叠)后检查脚本
 function GameData:checkScript(npc)
-  if self.curLockedNPC then
+  if self.curLockedNpc then
     --当前有脚本在执行则直接返回
+    smLog:info("当前有脚本在执行")
     return
   end
-  local id=npc.id
-  local scriptId=Dictionary.npcs[id].scriptIndex
-  --锁定playerTroop
-  self.playerTroop:lock()
-  --锁定当前NPC
+  local scriptId=Dictionary.npcs[npc.id].scriptIndex
+  --锁定当前Npc
   npc.locked=true
-  self.curLockedNPC=npc  
+  self.curLockedNpc=npc
+  smLog:info("运行脚本:"..scriptId)
   Interpreter:runScript(scriptId)
 end
-
---获取当前玩家的位置
-function GameData:curPlayerLocation()
-  return self.playerTroop:curDisplayPlayer():getHoldingCell()
-end
-
-

@@ -1,0 +1,56 @@
+--[[
+  description:天赋面板窗体
+  author:cokey
+  date:2012/09/16
+--]]
+
+--类结构定义
+clsTalentPanel={}
+setmetatable(clsTalentPanel,clsUILayer)
+clsTalentPanel.__index=clsTalentPanel
+
+clsTalentPanel.TAG_TALENT_CLOSE=0
+
+clsTalentPanel.talentMenuPanelCloseButton=nil
+
+--动作
+clsTalentPanel.talentMenuPanelDisappearAction=nil
+clsTalentPanel.talentMenuPanelAppearAction=nil
+
+--构造器
+function clsTalentPanel:new(x,y)
+  local self = clsUILayer:new(x,y,517,348)
+  setmetatable(self,clsTalentPanel)
+  self.image=smImageFactory:loadImage("/image/skin/tianfu_window.png")
+  self.alpha=0
+  
+  self.talentMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.talentMenuPanelCloseButton.anchor={1,0}
+  self.talentMenuPanelCloseButton.delegate=self
+  self.talentMenuPanelCloseButton.tag=self.TAG_TALENT_CLOSE
+  self.talentMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.talentMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.talentMenuPanelCloseButton)
+
+  --初始化动作
+  self.talentMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.talentMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsTalentPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.talentMenuPanelAppearAction)
+	else
+		self:runAction(self.talentMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsTalentPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_TALENT_CLOSE then
+  		self:setVisible(false)
+  	end
+end

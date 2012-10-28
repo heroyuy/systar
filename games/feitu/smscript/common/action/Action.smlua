@@ -17,8 +17,11 @@ clsAction.TYPE_DECELERATE_TO=4		--类型：减速、直到
 clsAction.TYPE_DECELERATE_BY=5		--类型：减速、追加
 clsAction.TYPE_MAX=6				--类型编号最大值
 
-clsAction.target=nil			--动作的目标
-clsAction.dead=false			--动作是否结束
+clsAction.target=nil				--动作的目标
+clsAction.tag=nil					--动作的标志
+
+clsAction.delegate=nil				--委托(内部使用)
+clsAction.callback="onActionEnd"	--回调
 
 -- 构造
 function clsAction:new()
@@ -27,21 +30,21 @@ function clsAction:new()
   return self
 end
 
---设置目标
-function clsAction:setTarget(target)
-  self.target=target
-  self:reset()
-end
-
 --重置动作
 function clsAction:reset()
-  --根据参数重置动作:子类实现
+  --根据参数重置动作，执行动作之前被调用
 end
 
 --更新
 function clsAction:update()
-  --根据具体action更新target的属性:子类实现
+  --根据action参数更新target的属性
 end
+
+--结束动作(主动结束)
+function clsAction:stop()
+  --结束action。
+end
+
 
 --==================================================
 --[[
@@ -50,23 +53,30 @@ end
   date:2012/05/11
 --]]
 
-require("clsPropertyAction")
+require("clsCallbackAction")
+require("clsGradientAction")
+require("clsIntervalAction")
 require("clsShakeAction")
 require("clsMultipleAction")
 require("clsSequenceAction")
 
 Action={}
 
+--回调动作
+function Action:newCallbackAction(delegate,callback,...)
+  return clsCallbackAction:new(delegate,callback,unpack(arg))
+end
+
 --淡入淡出动作
 function Action:newFadeAction(alpha,time,type)
-  return clsPropertyAction:new(alpha,time,type,"alpha")
+  return clsGradientAction:new(alpha,time,type,"alpha")
 end
 
 --翻转动作
 function Action:newFlipAction(flip,time,type)
   local res={}
   for i=1,2 do
-    table.insert(res,clsPropertyAction:new(flip[i],time,type,"flip",i))
+    table.insert(res,clsGradientAction:new(flip[i],time,type,"flip",i))
   end
   return Action:newMultipleAction(unpack(res))
 end
@@ -76,26 +86,26 @@ function Action:newMoveAction(location,time,type)
   local str={"x","y"}
   local res={}
   for i=1,2 do
-    table.insert(res,clsPropertyAction:new(location[i],time,type,str[i]))
+    table.insert(res,clsGradientAction:new(location[i],time,type,str[i]))
   end
   return Action:newMultipleAction(unpack(res))
 end
 
 --旋转动作
 function Action:newRotateAction(rotate,time,type)
-  return clsPropertyAction:new(rotate,time,type,"rotate")
+  return clsGradientAction:new(rotate,time,type,"rotate")
 end
 
 --缩放动作
 function Action:newScaleAction(scale,time,type)
-  return clsPropertyAction:new(scale,time,type,"scale")
+  return clsGradientAction:new(scale,time,type,"scale")
 end
 
 --变色动作
 function Action:newTintAction(tint,time,type)
   local res={}
   for i=1,6 do
-    table.insert(res,clsPropertyAction:new(tint[i],time,type,"tint",i))
+    table.insert(res,clsGradientAction:new(tint[i],time,type,"tint",i))
   end
   return Action:newMultipleAction(unpack(res))
 end
@@ -106,9 +116,21 @@ function Action:newShadeAction(shade,time,type)
   return Action:newTintAction(tint,time,type)
 end
 
+--闪烁动作(TODO BY动作有问题)
+function Action:newBlinkAction()
+  local t1=Action:newShadeAction(2,100,clsAction.TYPE_LINEAR_TO)
+  local t2=Action:newShadeAction(1,100,clsAction.TYPE_LINEAR_TO)
+  return Action:newSequenceAction(1,t1,t2)
+end
+
 --震动动作
 function Action:newShakeAction(range,interval,times,type)
   return clsShakeAction:new(range,interval,times,type)
+end
+
+--动画动作
+function Action:newAnimateAction(images,interval)
+  return clsIntervalAction:new(images,interval,"image")
 end
 
 --复合动作
@@ -130,22 +152,50 @@ end
 
 ActionPlayer={}
 
-ActionPlayer.actionList={}					--动作列表
+ActionPlayer.actionList={}						--动作列表
 
 --播放动作
 function ActionPlayer:run(action)
+  --事件委托
+  action.delegate=self
+  --重置动作
+  action:reset()
+  --加入播放列表
   self.actionList[tostring(action)]=action
-  action.dead=false
 end
 
 --更新
 function ActionPlayer:update()
   for k,action in pairs(self.actionList) do
-    if action.dead then
-      self.actionList[k]=nil
-      smLog:info("移除动作")
-    else
-      action:update()
+    action:update()
+  end
+end
+
+--停止动作
+function ActionPlayer:stopAction(action)
+  action:stop()
+  --移除动作
+  self.actionList[tostring(action)]=nil
+end
+
+--停止目标的动作
+function ActionPlayer:stopActionForTarget(target,tag)
+  for k,action in pairs(self.actionList) do
+    if action.target==target and (tag==nil or action.tag==tag) then
+      self:stopAction(action)
     end
   end
+end
+
+--停止所有动作
+function ActionPlayer:stopAllAction()
+  for k,action in pairs(self.actionList) do
+    self:stopAction(action)
+  end
+end
+
+--action回调
+function ActionPlayer:onActionEnd(action)
+  --移除动作
+  self.actionList[tostring(action)]=nil
 end

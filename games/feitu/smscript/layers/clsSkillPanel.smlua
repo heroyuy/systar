@@ -1,0 +1,65 @@
+--[[
+  description:人物技能面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsSkillPanel={}
+setmetatable(clsSkillPanel,clsUILayer)
+clsSkillPanel.__index=clsSkillPanel
+
+clsSkillPanel.TAG_SKILL_CLOSE=0
+
+clsSkillPanel.skillMenuPanelCloseButton=nil
+
+clsSkillPanel.statusPanelLayer=nil	--人物状态面板
+
+--动作
+clsSkillPanel.skillMenuPanelDisappearAction=nil
+clsSkillPanel.skillMenuPanelAppearAction=nil
+
+--构造器
+function clsSkillPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsSkillPanel)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  self.image=smImageFactory:loadImage("/image/skin/skill_window.png")
+  self.alpha=0
+  
+  self.skillMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.skillMenuPanelCloseButton.anchor={1,0}
+  self.skillMenuPanelCloseButton.delegate=self
+  self.skillMenuPanelCloseButton.tag=self.TAG_SKILL_CLOSE
+  self.skillMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.skillMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.skillMenuPanelCloseButton)
+  
+  self.statusPanelLayer=clsStatusPanel:new(screenWidth-8-258,screenHeight-48)
+  self.statusPanelLayer.anchor={1,1}
+  GameLayer:addChildToScene(self.statusPanelLayer)
+  
+  --初始化动作
+  self.skillMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.skillMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsSkillPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.skillMenuPanelAppearAction)
+		self.statusPanelLayer:setVisible(true)
+	else
+		self:runAction(self.skillMenuPanelDisappearAction)
+		self.statusPanelLayer:setVisible(false)
+	end
+end
+
+--按钮点击事件
+function clsSkillPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_SKILL_CLOSE then
+  		self:setVisible(false)
+  	end
+end

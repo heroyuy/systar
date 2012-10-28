@@ -1,0 +1,96 @@
+--[[
+  description:地图菜单面板窗体
+  author:cokey
+  date:2012/09/10
+--]]
+
+--类结构定义
+clsMapPanel={}
+setmetatable(clsMapPanel,clsUILayer)
+clsMapPanel.__index=clsMapPanel
+
+clsMapPanel.TAG_MAP_CLOSE=0
+clsMapPanel.TAG_MAP_DUIWU=1
+clsMapPanel.TAG_MAP_ZHANCHE=2
+clsMapPanel.TAG_MAP_XIAOCHUAN=3
+clsMapPanel.TAG_MAP_FEITING=4
+clsMapPanel.TAG_MAP_RENWU=5
+
+--动作
+clsMapPanel.mapMenuPanelDisappearAction=nil
+clsMapPanel.mapMenuPanelAppearAction=nil
+
+clsMapPanel.mapMenuPanelCloseButton=nil
+clsMapPanel.buttonLayer=nil
+clsMapPanel.descriptionTextArea=nil
+clsMapPanel.humanLabel=nil
+
+--构造器
+function clsMapPanel:new(x,y)
+  local self = clsUILayer:new(x,y,628,478)
+  setmetatable(self,clsMapPanel)
+  self.image=smImageFactory:loadImage("/image/skin/map_menu_window.png")
+  self.alpha=0
+  
+  self.mapMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.mapMenuPanelCloseButton.anchor={1,0}
+  self.mapMenuPanelCloseButton.delegate=self
+  self.mapMenuPanelCloseButton.tag=self.TAG_MAP_CLOSE
+  self.mapMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.mapMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.mapMenuPanelCloseButton)
+
+  self.descriptionTextArea=clsUITextArea:new(self.width,305,130,100)
+  self.descriptionTextArea.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.descriptionTextArea.anchor={1,0}
+  self.descriptionTextArea.gap=12
+  self.descriptionTextArea.textSize=14
+  self.descriptionTextArea.textColor="0xffffffff"
+  self.descriptionTextArea.text="说明：黄色标志<n>[1]所示位置即为队<n>[1]伍现在所在位置。"
+  self.descriptionTextArea:refresh()
+  self:addChild(self.descriptionTextArea)
+  
+  self.humanLabel=clsUILabel:new(self.width-20,445,120,20)
+  self.humanLabel.anchor={1,0}
+  self.humanLabel.textSize=20
+  self.humanLabel.textColor="0xffffffff"
+  self.humanLabel.text="H:Human"
+  self:addChild(self.humanLabel)
+  
+  --队伍 战车 小船 飞艇 任务
+  local imageUp={"/image/skin/duiwuanniu_up.png","/image/skin/zhancheanniu_up.png","/image/skin/xiaochuananniu_up.png",
+                 "/image/skin/feitinganniu_up.png","/image/skin/renwuanniu_up.png"}
+  local imageDown={"/image/skin/duiwuanniu_down.png","/image/skin/zhancheanniu_down.png","/image/skin/xiaochuananniu_down.png",
+                   "/image/skin/feitinganniu_down.png","/image/skin/renwuanniu_down.png"}
+  local bw,bh,num=94,36,5
+  for i=1,num do
+    local button=clsUIButton:new(self.width-77,48*i+32,bw,bh)
+    button.delegate=sel
+    button.normalImage=smImageFactory:loadImage(imageUp[i])
+    button.highlightImage=smImageFactory:loadImage(imageDown[i])
+    button.tag=i
+    self:addChild(button)
+  end
+  
+  --初始化动作
+  self.mapMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.mapMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--按钮点击事件
+function clsMapPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_MAP_CLOSE then
+  		self:setVisible(false)
+  	end
+end
+
+--设置地图窗口的可见性
+function clsMapPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.mapMenuPanelAppearAction)
+	else
+		self:runAction(self.mapMenuPanelDisappearAction)
+	end
+end

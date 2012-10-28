@@ -5,6 +5,7 @@ package.path = package.path .. ";"..Game.path.."/smscript/common/ui/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/util/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/common/action/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/data/?.smlua"
+package.path = package.path .. ";"..Game.path.."/smscript/handler/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/layers/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/scenes/?.smlua"
 package.path = package.path .. ";"..Game.path.."/smscript/script/?.smlua"
@@ -18,18 +19,20 @@ require("clsStack")
 
 --common\ui
 require("UIConst")
-require("Image")
-require("Skin")
 require("clsUILayer")
 require("clsUILabel")
+require("clsUITextArea")
 require("clsUIButton")
-require("clsUISprite")
+require("clsUITable")
+require("clsUIEditText")
+require("clsUIButtonGroup")
+require("clsUIScrollLayer")
+require("clsUIImageNumber")
 
 --common\util
 require("clsAStar")
 require("Notifier")
 require("Scheduler")
-require("AnimationPlayer")
 
 --common\action
 require("Action")
@@ -40,20 +43,43 @@ require("DataLoader")
 require("clsModel")
 require("clsCharacter")
 require("clsPlayer")
-require("clsNPC")
+require("clsNpc")
+require("clsMission")
 require("GameData")
-require("GameData_player")
+require("GameData_battle")
+require("MsgHandlerFactory")
 
 --layers
-require("clsTiledLayer")
-require("clsOptionLayer")
-require("clsDialogLayer")
+require("clsTiled")
+require("clsPlayerInfo")
+require("clsPicker")
+require("clsBasicInfo")
+require("clsSprite")
+require("clsBag")
+require("clsChatPanel")
+require("clsPlayerPanel")
+require("clsMapPanel")
+require("clsDialogPanel")
+require("clsOptionPanel")
+require("clsAsidePanel")
+require("clsTaskPanel")
+require("clsSystemPanel")
+require("clsStatusPanel")
+require("clsBagPanel")
+require("clsEquipPanel")
+require("clsSkillPanel")
+require("clsTalentPanel")
+require("clsStatusAddPanel")
+require("clsTankBagPanel")
+require("clsTankEquipPanel")
+require("clsPartyPanel")
 
 --scenes
 require("clsScene")
 require("clsSceneTitle")
+require("clsSceneLoading")
 require("clsSceneMap")
-require("clsSceneStatus")
+require("clsSceneBattle")
 
 --script
 require("ScriptThread")

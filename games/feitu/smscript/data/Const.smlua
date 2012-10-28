@@ -7,20 +7,6 @@
 --初始化
 Const={}
 
---============对象类型============
-Const.ObjectType={}
-Const.ObjectType.VOCATION=0           --职业
-Const.ObjectType.PLAYER=1             --玩家
-Const.ObjectType.SKILL=2              --技能
-Const.ObjectType.ITEM=3               --物品
-Const.ObjectType.EQUIP=4              --装备
-Const.ObjectType.ENEMY=5              --敌人
-Const.ObjectType.ENEMYTROOP=6         --敌人队伍
-Const.ObjectType.STATUS=7             --状态
-Const.ObjectType.MAP=8                --地图
-Const.ObjectType.NPC=9                --NPC
-Const.ObjectType.ANIMATION=10         --动画
-
 --============消息命令============
 Const.NotifyCMD={}
 --System
@@ -33,16 +19,74 @@ Const.NotifyCMD.System={}
 --Character
 Const.NotifyCMD.Character={}
   --[[
-    character移动，此通知的参数为{character=player/npc,direction,rowChanged=true}
-            第一个参数是移动的目标 第二个标识是移动的方向 第三个标识移动后character的行号是否变化
+    character移动，此通知的参数为{character=player/npc,direction}
+            第一个参数是移动的目标 第二个标识是移动的方向
   --]]
-  Const.NotifyCMD.Character.MOVED="characterMoved"    --角色移动
+  Const.NotifyCMD.Character.MOVE="characterMove"    			   --角色移动
   --[[
     character面向改变，此通知的参数为{character=player/npc}
   --]]
   Const.NotifyCMD.Character.FACE_CHANGED="characterFaceChanged"    --角色面向改变
+  
+--Net
+Const.NotifyCMD.Net={}
   --[[
-    character所在地图改变，此通知的参数为{character=player/npc}
+	登录，此通知的参数为{msg}
   --]]
-  Const.NotifyCMD.Character.MAP_CHANGED="characterMapChanged"      --角色地图改变
-
+  Const.NotifyCMD.Net.LOGIN="login"					--登录命令
+  --[[
+	注册，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.REGISTER="register"			--注册命令
+  --[[
+	创建角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CREATE_PLAYER="createPlayer"	--创建角色
+  --[[
+	删除角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.DELETE_PLAYER="deletePlayer"	--删除角色
+  --[[
+	获取角色列表，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LIST_PLAYER="listPlayer"		--获取角色列表
+  --[[
+	选择角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CHOOSE_PLAYER="choosePlayer"	--选择角色
+  --[[
+	移动角色，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.MOVE_PLAYER="movePlayer"		--移动角色
+  --[[
+	发送聊天内容，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.CHAT_SEND="sendChatContent"	--发送聊天内容
+  --[[
+	申请任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.APPLY_TASK="applyTask"		--申请任务
+  --[[
+	获取任务列表，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LIST_TASK="listTask"			--获取角色列表
+  --[[
+	放弃任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.GIVE_UP_TASK="giveUpTask"		--放弃任务
+  --[[
+	下一步任务，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.NEXT_STEP_TASK="nextStepTask"	--下一步任务
+  --[[
+	加载地图，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.LOAD_MAP="loadMap"			--加载地图
+  --[[
+	布置npc，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.PLACE_NPC="placeNpc"			--布置Npc
+  --[[
+	关闭服务器，此通知的参数为{msg}
+  --]]
+  Const.NotifyCMD.Net.SHUTDOWN_SERVER="shutdownServer"	--关闭服务器

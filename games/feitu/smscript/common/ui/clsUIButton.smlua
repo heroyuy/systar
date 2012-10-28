@@ -6,71 +6,105 @@
 
 --类结构定义
 clsUIButton={}
-setmetatable(clsUIButton,clsUILayer)
+setmetatable(clsUIButton,clsUILabel)
 clsUIButton.__index=clsUIButton
 
---重定向父类paintLayer(painter)方法
-clsUIButton.paintLayerF=clsUIButton.paintLayer
+--重定向需要覆盖的父类方法
+clsUIButton.paintLayerFF=clsUIButton.paintLayer
 
 --字段
-clsUIButton.STATE_NORMAL=0                       --普通状态
-clsUIButton.STATE_HIGHLIGHT=1                    --高亮状态
+clsUIButton.STATE_NORMAL=0                			--普通状态
+clsUIButton.STATE_HIGHLIGHT=1             			--高亮状态
 
-clsUIButton.text=nil                             --按钮文字
-clsUIButton.highlightImage=nil                   --高亮时图片
-clsUIButton.normalImage=nil                      --普通时图片
-clsUIButton.textColor="0xffffffff"               --文字颜色
-clsUIButton.textSize=-1                          --文字大小
-clsUIButton.buttonState=clsUIButton.STATE_NORMAL   --按钮状态
-clsUIButton.highlightBoundTimes=1.5              --按钮高亮范围倍数
+clsUIButton.callback="buttonTapped"					--事件回调
+clsUIButton.highlightImage=nil             			--高亮时图片
+clsUIButton.normalImage=nil               			--普通时图片
+
+clsUIButton.buttonState=clsUIButton.STATE_NORMAL	--按钮状态
+clsUIButton.highlightBoundTimes=1.5              	--按钮高亮范围倍数
+clsUIButton.toggleMode=false						--开关模式
+clsUIButton.buttonGroup=nil							--按钮组
+
+--构造器
+function clsUIButton:standardButton(x,y,width,height,title)
+  local button=clsUIButton:new(x,y,width,height)
+  button.text=title
+  return button
+end
 
 --构造器
 function clsUIButton:new(x,y,width,height)
-  local self = clsUILayer:new(x,y,width,height)
+  local self = clsUILabel:new(x,y,width,height)
   setmetatable(self,clsUIButton)
+  self.enabled=true
   return self
 end
 
---绘制自身
+
+--绘制Button
 function clsUIButton:paintLayer(painter)
-  --调用父类的paintLayer方法
-  self:paintLayerF(painter)
-  --绘制图片
-  if self.buttonState==clsUIButton.STATE_NORMAL then
+  if self.highlightImage==nil then
     if self.normalImage then
-      painter:drawImage(self.normalImage,0,0,UIConst.anchor.LT)
-    end
-  elseif self.buttonState==clsUIButton.STATE_HIGHLIGHT then
-    if self.highlightImage then
-      painter:drawImage(self.highlightImage,0,0,UIConst.anchor.LT)
+      self.highlightImage=self.normalImage:tone(0.5,0.5,0.5)
     end
   end
-  --绘制文字
-  painter:setColor(self.textColor)
-  if self.textSize > 0 then
-    painter:setTextSize(self.textSize)
+  if self.image==nil then
+    self.image=self.normalImage
   end
-  if self.text then
-    painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
+  --调用父类绘制方法
+  self:paintLayerFF(painter)
+end
+
+--改变按钮状态
+function clsUIButton:changeButtonState()
+  if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+  	self.buttonState=clsUIButton.STATE_NORMAL
+  	self.image=self.normalImage
+  else
+  	self.buttonState=clsUIButton.STATE_HIGHLIGHT
+  	self.image=self.highlightImage
+  	if self.buttonGroup then
+  		for i=table.getn(self.buttonGroup.buttonList),1,-1 do
+    		local button=self.buttonGroup.buttonList[i]
+    		if button~=self then
+    			button.buttonState=clsUIButton.STATE_NORMAL
+  				button.image=self.normalImage
+    		end
+  		end
+  	end
   end
 end
 
 --处理触屏事件（lua层不应该调用此方法）
-function clsUIButton:onTouch(x,y,type)
-  if type==UIConst.eventType.DOWN then
-    self.buttonState=clsUIButton.STATE_HIGHLIGHT
-  elseif type==UIConst.eventType.MOVE then
-    local offsetWidth=(self.highlightBoundTimes-1)*self.width
-    local offsetHeight=(self.highlightBoundTimes-1)*self.height
-    if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
-      self.buttonState=clsUIButton.STATE_HIGHLIGHT
-    else
-      self.buttonState=clsUIButton.STATE_NORMAL
+function clsUIButton:onTouch(event)
+  local x,y,type=event:getX(),event:getY(),event:getType()
+  if self.toggleMode then
+  	if type==UIConst.eventType.DOWN then
+    	self:changeButtonState()
+    	if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      		callFunction(self.delegate,self.callback,self)
+    	end
     end
-  elseif type==UIConst.eventType.UP then
-    if self.delegate and self.buttonState==clsUIButton.STATE_HIGHLIGHT then
-      self.delegate:buttonTapped(self)
-    end
-    self.buttonState=clsUIButton.STATE_NORMAL
+  else
+  	if type==UIConst.eventType.DOWN then
+    	self.buttonState=clsUIButton.STATE_HIGHLIGHT
+    	self.image=self.highlightImage
+  	elseif type==UIConst.eventType.MOVE then
+    	local offsetWidth=(self.highlightBoundTimes-1)*self.width
+    	local offsetHeight=(self.highlightBoundTimes-1)*self.height
+    	if isPointInRect(x,y,-offsetWidth,-offsetHeight,self.width+2*offsetWidth,self.height+2*offsetHeight) then
+      		self.buttonState=clsUIButton.STATE_HIGHLIGHT
+      		self.image=self.highlightImage
+    	else
+      		self.buttonState=clsUIButton.STATE_NORMAL
+      		self.image=self.normalImage
+    	end
+  	elseif type==UIConst.eventType.UP then
+    	if self.buttonState==clsUIButton.STATE_HIGHLIGHT then
+      		callFunction(self.delegate,self.callback,self)
+    	end
+    	self.buttonState=clsUIButton.STATE_NORMAL
+    	self.image=self.normalImage
+  	end
   end
 end

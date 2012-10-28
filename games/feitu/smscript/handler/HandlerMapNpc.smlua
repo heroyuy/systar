@@ -1,0 +1,34 @@
+HandlerMap.updateNpcState={}
+
+function HandlerMap.updateNpcState:handleMessage(msg)
+  smLog:info("服务器通知更新地图NPC信息")
+  msg=HandlerMap:msgToLua(msg)
+  local stateList=msg.stateList
+  for k,npc in pairs(stateList) do
+    --smLog:info(npc.npcId)
+    --smLog:info(npc.state)
+    if GameData.curNpcList[npc.npcId] then
+      GameData.curNpcList[npc.npcId].state=npc.state
+    end
+  end
+  Notifier:notify(Const.NotifyCMD.Net.PLACE_NPC)
+end
+
+--====================================================
+HandlerMap.dialogWithNpc={}
+
+function HandlerMap.dialogWithNpc:handleMessage(msg)
+  smLog:info("与NPC对话")
+  msg=HandlerMap:msgToLua(msg)
+  if msg.res then
+    local taskList=msg.taskList
+    local taskSize=table.getn(taskList)
+    if taskSize==0 then
+    smLog:info("调用npc的脚本")
+    elseif taskSize==1 then
+    smLog:info("直接对话")
+    elseif taskSize==2 then
+    smLog:info("给出列表")
+    end
+  end
+end

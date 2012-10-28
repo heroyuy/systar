@@ -1,0 +1,80 @@
+--[[
+  description:系统菜单面板窗体
+  author:cokey
+  date:2012/09/10
+--]]
+
+--类结构定义
+clsSystemPanel={}
+setmetatable(clsSystemPanel,clsUILayer)
+clsSystemPanel.__index=clsSystemPanel
+
+clsSystemPanel.TAG_SYSTEM_CLOSE=0
+clsSystemPanel.TAG_SYSTEM_CHANGE_PLAYER=1
+clsSystemPanel.TAG_SYSTEM_EXIT_GAME=2
+
+clsSystemPanel.systemMenuPanelCloseButton=nil
+clsSystemPanel.systemMenuPanelMusicVolumeSeekBar=nil
+clsSystemPanel.systemMenuPanelSoundVolumeSeekBar=nil
+clsSystemPanel.systemMenuPanelChangePlayerButton=nil
+clsSystemPanel.systemMenuPanelExitGameButton=nil
+
+--动作
+clsSystemPanel.systemMenuPanelDisappearAction=nil
+clsSystemPanel.systemMenuPanelAppearAction=nil
+
+--构造器
+function clsSystemPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsSystemPanel)
+  self.image=smImageFactory:loadImage("/image/skin/system_window.png")
+  self.alpha=0
+  
+  self.systemMenuPanelCloseButton=clsUIButton:new(self.width-16,12,27,27)
+  self.systemMenuPanelCloseButton.anchor={1,0}
+  self.systemMenuPanelCloseButton.delegate=self
+  self.systemMenuPanelCloseButton.tag=self.TAG_SYSTEM_CLOSE
+  self.systemMenuPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.systemMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  self:addChild(self.systemMenuPanelCloseButton)
+
+  self.systemMenuPanelChangePlayerButton=clsUIButton:new(self.width-20,221,41,42)
+  self.systemMenuPanelChangePlayerButton.anchor={1,0}
+  self.systemMenuPanelChangePlayerButton.delegate=self
+  self.systemMenuPanelChangePlayerButton.tag=self.TAG_SYSTEM_CHANGE_PLAYER
+  self.systemMenuPanelChangePlayerButton.normalImage=smImageFactory:loadImage("/image/skin/go_up.png")
+  self.systemMenuPanelChangePlayerButton.highlightImage=smImageFactory:loadImage("/image/skin/go_down.png")
+  self:addChild(self.systemMenuPanelChangePlayerButton)
+  
+  self.systemMenuPanelExitGameButton=clsUIButton:new(self.width-20,279,41,42)
+  self.systemMenuPanelExitGameButton.anchor={1,0}
+  self.systemMenuPanelExitGameButton.delegate=self
+  self.systemMenuPanelExitGameButton.tag=self.TAG_SYSTEM_EXIT_GAME
+  self.systemMenuPanelExitGameButton.normalImage=smImageFactory:loadImage("/image/skin/go_up.png")
+  self.systemMenuPanelExitGameButton.highlightImage=smImageFactory:loadImage("/image/skin/go_down.png")
+  self:addChild(self.systemMenuPanelExitGameButton)
+
+  --初始化动作
+  self.systemMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.systemMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsSystemPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.systemMenuPanelAppearAction)
+	else
+		self:runAction(self.systemMenuPanelDisappearAction)
+	end
+end
+
+--按钮点击事件
+function clsSystemPanel:buttonTapped(button)
+	local index=button.tag
+	if index==self.TAG_SYSTEM_CLOSE then
+  		self:setVisible(false)
+  	elseif index==self.TAG_SYSTEM_CHANGE_PLAYER then
+  	elseif index==self.TAG_SYSTEM_EXIT_GAME then
+  	end
+end

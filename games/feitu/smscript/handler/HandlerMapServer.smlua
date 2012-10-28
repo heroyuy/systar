@@ -1,0 +1,6 @@
+HandlerMap.shutdownServer={}
+
+function HandlerMap.shutdownServer:handleMessage(msg)
+  smLog:info("服务器关机")
+  Notifier:notify(Const.NotifyCMD.Net.SHUTDOWN_SERVER,msg)
+end

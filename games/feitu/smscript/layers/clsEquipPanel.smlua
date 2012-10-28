@@ -1,0 +1,61 @@
+--[[
+  description:人物装备面板
+  author:cokey
+  date:2012/09/13
+--]]
+
+--类结构定义
+clsEquipPanel={}
+setmetatable(clsEquipPanel,clsUILayer)
+clsEquipPanel.__index=clsEquipPanel
+
+clsEquipPanel.playerFaceLayer=nil
+clsEquipPanel.expBar=nil
+clsEquipPanel.expTag=nil
+clsEquipPanel.expNumber=nil
+
+--动作
+clsEquipPanel.equipMenuPanelDisappearAction=nil
+clsEquipPanel.equipMenuPanelAppearAction=nil
+
+--构造器
+function clsEquipPanel:new(x,y)
+  local self = clsUILayer:new(x,y,258,348)
+  setmetatable(self,clsEquipPanel)
+  self.image=smImageFactory:loadImage("/image/skin/equip_window.png")
+  self.alpha=0
+  
+  self.playerFaceLayer=clsUILayer:new(129,123,96,96)
+  self.playerFaceLayer.anchor={0.5,0.5}
+  self.playerFaceLayer.image=smImageFactory:loadImage("/image/skin/头像1.png")
+  self:addChild(self.playerFaceLayer)
+  
+  self.expBar=clsUILayer:new(29,187,201,16)
+  self.expBar.anchor={0,0}
+  self.expBar.image=smImageFactory:loadImage("/image/skin/green_bar.png")
+  self:addChild(self.expBar)
+  
+  self.expTag=clsUILayer:new(5,-7,39,24)
+  self.expTag.anchor={0,0}
+  self.expTag.image=smImageFactory:loadImage("/image/skin/EXP.png")
+  self.expBar:addChild(self.expTag)
+  
+  local exp = GameData.curPlayer.exp.."/"..GameData.curPlayer.exp
+  self.expNumber=clsUIImageNumber:new(60,1,100,16,exp,smImageFactory:loadImage("/image/skin/greenword.png"))
+  self.expNumber.anchor={0.5,0}
+  self.expBar:addChild(self.expNumber)
+  
+  --初始化动作
+  self.equipMenuPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.equipMenuPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置系统窗口的可见性
+function clsEquipPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.equipMenuPanelAppearAction)
+	else
+		self:runAction(self.equipMenuPanelDisappearAction)
+	end
+end

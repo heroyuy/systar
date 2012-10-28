@@ -1,0 +1,111 @@
+--[[
+  description:渐变动作。
+  author:wp_g4
+  date:2012/05/09
+--]]
+
+--结构定义
+clsGradientAction={}
+setmetatable(clsGradientAction,clsAction)
+clsGradientAction.__index = clsGradientAction
+
+--字段定义
+clsGradientAction.propertyTable=nil			--参数 属性所属的table 大多数情况此值等于target 这取决于构造中的可变参数
+clsGradientAction.propertyKey=nil			--参数 属性的key string或number
+clsGradientAction.value=nil					--参数 值
+clsGradientAction.time=nil					--参数 时间
+clsGradientAction.type=nil  				--参数 类型
+clsGradientAction.arg=nil					--参数中的可变参数列表
+
+clsGradientAction.startValue=nil			--属性值起点
+clsGradientAction.endValue=nil				--属性值终点
+clsGradientAction.t0=nil					--动作开始时间
+clsGradientAction.v0=nil					--动作开始时速度
+clsGradientAction.a=nil						--动作加速度
+
+-- 构造
+function clsGradientAction:new(value,time,type,...)
+  local self=clsAction:new()
+  setmetatable(self,clsGradientAction)
+  self.value=value
+  self.time=time
+  self.type=type
+  self.arg=arg
+  return self
+end
+
+--设置目标
+function clsGradientAction:reset()
+  if self.type<0 or self.type>=clsAction.TYPE_MAX then
+    --未知的属性类型
+    smLog:info("未知的属性类型")
+  else
+    --从可变参数中分离出propertyTable和propertyKey
+    local n=table.getn(self.arg)
+    --<1>最后一个是propertyKey
+    self.propertyKey=self.arg[n]
+    --<2>循环以确定propertyTable
+    self.propertyTable=self.target
+    for i,v in ipairs(self.arg) do
+      if i<n then
+        self.propertyTable=self.propertyTable[v]
+      end
+    end
+    --(1)起始值
+    self.startValue=self.propertyTable[self.propertyKey]
+    --(2)终点值
+    if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_ACCELERATE_TO 
+         or self.type==clsAction.TYPE_DECELERATE_TO then
+      --TO
+      self.endValue=self.value
+    else
+      --BY
+      self.endValue=self.startValue+self.value
+    end
+    --(3)初始速度
+    if self.type==clsAction.TYPE_LINEAR_TO or self.type==clsAction.TYPE_LINEAR_BY then
+      --线性
+      self.v0=(self.endValue-self.startValue)/self.time
+    elseif self.type==clsAction.TYPE_ACCELERATE_TO or self.type==clsAction.TYPE_ACCELERATE_BY then
+      --加速
+      self.v0=(self.endValue-self.startValue)/(3*self.time/2)
+    else
+      --减速
+      self.v0=(self.endValue-self.startValue)/(2*self.time/3)  --注意，系数必需大于0.5
+    end
+    --(4)加速度
+    self.a=2*(self.endValue-self.startValue-self.v0*self.time)/(self.time*self.time)
+    self.t0=nil
+  end
+end
+
+--更新
+function clsGradientAction:update()
+  --更新的属性
+  if self.t0==nil then
+    --尚未开始属性
+    self.t0=Game:getTime()
+  end
+  local delta=Game:getTime()-self.t0
+  local value=self.startValue+self.v0*delta+1/2*self.a*delta*delta
+  local v=self.v0+self.a*delta
+  if self.endValue-self.startValue>=0 then
+    --增加
+    if value>=self.endValue then
+      self.propertyTable[self.propertyKey]=self.endValue
+    else
+      self.propertyTable[self.propertyKey]=value
+    end
+  else
+    --减少
+    if value<=self.endValue then
+      self.propertyTable[self.propertyKey]=self.endValue
+    else
+      self.propertyTable[self.propertyKey]=value
+    end
+  end
+  if self.propertyTable[self.propertyKey]==self.endValue then
+    callFunction(self.delegate,self.callback,self)
+    --smLog:info("动作结束")
+  end
+end

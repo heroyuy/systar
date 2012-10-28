@@ -9,12 +9,13 @@ clsPlayer = {}
 setmetatable(clsPlayer,clsCharacter)
 clsPlayer.__index = clsPlayer
 
+--字段
+clsPlayer.itemList=nil
+clsPlayer.partnerList=nil
+clsPlayer.taskList=nil
 
 --重定向需要覆盖的父类方法
 clsPlayer.updateFF=clsPlayer.update
-
---字段定义
-clsPlayer.vocationId=0 					--职业ID
 
 --构造器
 function clsPlayer:new()
@@ -30,3 +31,34 @@ function clsPlayer:update()
   --TODO 其它更新
 end
 
+--获取指定id的物品单元结构
+function clsPlayer:itemWithId(itemId)
+  local index=0  --下标为0自动返回nil
+  for i,itemCell in ipairs(self.itemList) do
+    if itemCell.id==itemId then
+      index=i
+      break
+    end
+  end
+  return self.itemList[index]
+end
+
+--获取指定位置的物品单元结构
+function clsPlayer:itemAt(index)
+  return self.itemList[index]
+end
+
+--增加道具
+function clsPlayer:addItem(itemId,num)
+  local itemCell=self:itemWithId(itemId)
+  if itemCell then
+    itemCell.num=itemCell.num+num
+  else
+    table.insert(self.itemList,{id=itemId,num=num})
+  end
+end
+
+--删除道具
+function clsPlayer:removeItem(itemId,num)
+  
+end

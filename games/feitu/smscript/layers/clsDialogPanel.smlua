@@ -1,0 +1,72 @@
+--[[
+  description:对话框。
+  author:cokey
+  date:2012/09/06
+--]]
+
+--类结构定义
+clsDialogPanel={}
+setmetatable(clsDialogPanel,clsUILayer)
+clsDialogPanel.__index=clsDialogPanel
+
+clsDialogPanel.contentLabel=nil
+clsDialogPanel.dialogDisappearAction = nil
+clsDialogPanel.dialogAppearAction = nil
+  
+--构造器
+function clsDialogPanel:new(name,content,bustPath,position)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsDialogPanel)
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,173)
+  bgLayer.anchor={0,1}
+  bgLayer.image=smImageFactory:loadImage("/image/skin/no2_dialog.png")
+  bgLayer.enabled=false
+  self:addChild(bgLayer)
+  --头像
+  local bustLayer=clsUILayer:new(85,75,96,96)
+  bustLayer.anchor={0.5,0.5}
+  bustLayer.image=smImageFactory:loadImage(bustPath)
+  bustLayer.enabled=false
+  bgLayer:addChild(bustLayer)
+  --姓名
+  local nameLabel=clsUILabel:new(235,37,80,20)
+  nameLabel.anchor={0.5,0.5}
+  nameLabel.text=name
+  nameLabel.textSize=20
+  nameLabel.textColor="0xffffffff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.enabled=false
+  bgLayer:addChild(nameLabel)
+  --内容
+  self.contentLabel=clsUITextArea:new(170,60,710,100)
+  self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.contentLabel.anchor={0,0}
+  self.contentLabel.text=content
+  self.contentLabel.textSize=18
+  self.contentLabel.textColor="0xffffffff"
+  self.contentLabel:refresh()
+  self.contentLabel.enabled=false
+  bgLayer:addChild(self.contentLabel)
+  --初始化动作
+  self.dialogDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.dialogAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置对话框的可见性
+function clsDialogPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.dialogAppearAction)
+	else
+		self:runAction(self.dialogDisappearAction)
+	end
+end
+
+function clsDialogPanel:onTouch(event)
+  local type=event:getType()
+  if type==UIConst.eventType.UP then
+      callFunction(self.delegate,self.callback)
+  end
+end

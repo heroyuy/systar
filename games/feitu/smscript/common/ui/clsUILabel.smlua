@@ -1,7 +1,7 @@
 --[[
-  description:按钮。
+  description:标签
   author:wp_g4
-  date:2011/04/21
+  date:2011/05/13
 --]]
 
 --类结构定义
@@ -9,149 +9,45 @@ clsUILabel={}
 setmetatable(clsUILabel,clsUILayer)
 clsUILabel.__index=clsUILabel
 
---重定向父类paintLayer(painter)方法
+--重定向需要覆盖的父类方法
 clsUILabel.paintLayerF=clsUILabel.paintLayer
 
 --字段
-clsUILabel.REGEX="<.->%[.-%]"                  	--功能正则表达式
-
 clsUILabel.ALIGN_LEFT=0                         --左对齐
 clsUILabel.ALIGN_CENTER=1                       --居中
 clsUILabel.ALIGN_RIGHT=2                        --右对齐
 
 clsUILabel.text=nil                             --标签文字
 clsUILabel.textColor="0xffffffff"               --文字颜色
-clsUILabel.textSize=-1                          --文字大小
-clsUILabel.alignment=clsUILabel.ALIGN_LEFT		--对齐方式
-clsUILabel.singleLine=true						--是否是单行模式
-clsUILabel.gap=4								--间距
-clsUILabel.textItemList={}						--多行文本数组
-
-clsUILabel.maxLineNum=1							--多行模式下可以显示的最大行数
-clsUILabel.startItemIndex=1						--多行模式下当前显示的第一行的行号
-clsUILabel.endItemIndex=1						--多行模式下当前显示的最后一行的行号
-clsUILabel.cursorX=0							--光标X坐标
-clsUILabel.cursorY=0							--光标Y坐标
-clsUILabel.pStart=1								--字符起始位置
-clsUILabel.p=1
-clsUILabel.hasNextPage=false					--是否还有下一页
-
+clsUILabel.textSize=16                          --文字大小
+clsUILabel.alignment=clsUILabel.ALIGN_CENTER	--对齐方式
 
 --构造器
 function clsUILabel:new(x,y,width,height)
   local self = clsUILayer:new(x,y,width,height)
   setmetatable(self,clsUILabel)
+  self.enabled=false
   return self
 end
 
---绘制自身
+--绘制Label
 function clsUILabel:paintLayer(painter)
-  --调用父类的paintLayer方法
+  --调用父类绘制方法
   self:paintLayerF(painter)
-  --绘制文字
-  painter:setColor(self.textColor)
-  if self.textSize > 0 then
-    painter:setTextSize(self.textSize)
-  end
   if self.text then
-    if self.singleLine then
-      --单行模式
-      if self.alignment==clsUILabel.ALIGN_LEFT then
-        --左对齐
-        painter:drawString(self.text, self.gap, self.height/2, UIConst.anchor.LV)
-      elseif self.alignment==clsUILabel.ALIGN_LEFT then
-        --居中
-        painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
-      else
-        --右对齐
-        painter:drawString(self.text, self.width-self.gap, self.height/2, UIConst.anchor.RV)
-      end
+    painter:setColor(self.textColor)
+    if self.textSize>0 then
+      painter:setTextSize(self.textSize)
+    end
+    if self.alignment==clsUILabel.ALIGN_LEFT then
+      --左对齐
+      painter:drawString(self.text, 0, self.height/2, UIConst.anchor.LV)
+    elseif self.alignment==clsUILabel.ALIGN_CENTER then
+      --居中
+      painter:drawString(self.text, self.width/2, self.height/2, UIConst.anchor.HV)
     else
-      --多行自动换行模式
-      --(1)计算最大行数
-      local textSize=painter:getTextSize()
-      while self.maxLineNum*(textSize+self.gap)+self.gap<self.height do
-        self.maxLineNum=self.maxLineNum+1
-      end
-      --(2)重置光标
-      self.cursorX,self.cursorY=gap,gap
-      self.p=self.pStart
-      --(3)开始绘制
-      local lineNum=1
-      for i=self.startItemIndex,table.getn(self.textItemList) do
-        local text=self.textItemList[i]
-        if string.find(text,clsUILabel.REGEX) then
-          --功能字符串
-          self:parseString(text,painter)
-        else
-          --显示字符串
-          if i~=self.startItemIndex then
-            self.p=1
-          end
-          for q=self.p,smString:length(text) do
-            local char=smString:subString(text,q,q)
-            --(a)检查是否需要换行
-            if self.cursorX+painter:stringWidth(char)>self.width-2*self.gap then
-              self.cursorX=0
-              self.cursorY=self.cursorY+textSize+self.gap
-              self.p=q
-              lineNum=lineNum+1
-            end
-            --(b)绘制
-            if lineNum<=self.maxLineNum then
-              painter:drawString(char, self.cursorX, self.cursorY, UIConst.anchor.LT)
-              self.cursorX=self.cursorX+painter:stringWidth(char)
-            else
-              self.endItemIndex=i
-              self.hasNextPage=true
-              break
-            end
-          end
-          if lineNum>self.maxLineNum then
-            self.endItemIndex=i
-            self.hasNextPage=true
-            break
-          end
-        end
-      end
+      --右对齐
+      painter:drawString(self.text, self.width, self.height/2, UIConst.anchor.RV)
     end
   end
 end
-
-function clsUILabel:nextPage()
-  local hasNextPage=self.hasNextPage
-  self.hasNextPage=false
-  self.startItemIndex=self.endItemIndex
-  self.pStart=self.p
-  return hasNextPage
-end
-
---解析功能字符串  <...>[...]
-function clsUILabel:parseString(text,painter)
-  local items=string.split(text,">%[")
-  local len=smString:length(items[1])
-  local funStr=smString:subString(items[1],2,len)
-  len=smString:length(items[3])
-  local argStr=smString:subString(items[3],1,len-1)
-  if funStr=="c" then
-    painter:setColor(argStr)
-  elseif funStr=="n" then
-    local textSize=painter:getTextSize()
-    self.cursorX=0
-    for i=1,argStr do
-      self.cursorY=self.cursorY+textSize+self.gap
-    end
-  end
-end
-
---重构数据，准备重绘
-function clsUILabel:needDisplay()
-  if not self.singleLine then
-    --多行模式
-    self.textItemList=string.split(self.text,clsUILabel.REGEX)
-    self.pStart=1
-    self.startItemIndex=1
-  end
-end
-
-

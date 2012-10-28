@@ -14,6 +14,7 @@ clsSequenceAction.actionList=nil				--序列动作的动作列表
 clsSequenceAction.times=1						--序列动作的循环次数
 
 clsSequenceAction.remnantTimes=nil				--剩余循环次数
+clsSequenceAction.curIndex=nil					--当前应该运行的动作在列表中的下标
 
 -- 构造
 function clsSequenceAction:new(times,...)
@@ -26,44 +27,56 @@ end
 
 --设置目标
 function clsSequenceAction:reset()
-  for i,v in ipairs(self.actionList) do
-    v:setTarget(self.target)
+  for i,action in ipairs(self.actionList) do
+    action.target=self.target
+    action.delegate=self
+    action.finished=false
+    action:reset()
   end
   if self.times<0 then
     self.remnantTimes=99999999
   else
     self.remnantTimes=self.times
   end
-  self.dead=false
+  self.curIndex=1
 end
 
 --更新
 function clsSequenceAction:update()
-  --(1)检查动作是否结束,标志是动作列表中的最后一个动作结束
-  local dead=self.actionList[table.getn(self.actionList)].dead
-  if dead then
-    --最后一个动作结束则判断是循环次数
-    self.remnantTimes=self.remnantTimes-1
-    if self.remnantTimes<=0 then
-      --循环结束
-      self.dead=dead
+  local action=self:curAction()
+  if action then
+    action:update()
+  end
+end
+
+--获取当前运行的动作
+function clsSequenceAction:curAction()
+  local action=self.actionList[self.curIndex]
+  if action.finished then
+    --当前任务已结束
+    self.curIndex=self.curIndex+1
+    if self.curIndex <= table.getn(self.actionList) then
+      action=self.actionList[self.curIndex]
+      action:reset()
     else
-      --循环未结束，从头开始执行动作
-      --重置所有动作
-      for i,v in ipairs(self.actionList) do
-        v:setTarget(self.target)
+      --最后一个动作结束则判断是循环次数
+      self.remnantTimes=self.remnantTimes-1
+      if self.remnantTimes>0 then
+        self.curIndex=1
+        action=self.actionList[self.curIndex]
+        action:reset()
+      else
+        --序列任务结束
+        action=nil
+        callFunction(self.delegate,self.callback,self)
       end
     end
   end
-  if self.dead then
-    smLog:info("序列动作结束")
-    return
-  end
-  --(2)确定当前应该执行的动作
-  for i,v in ipairs(self.actionList) do
-    if not v.dead then
-      v:update()
-      break
-    end
-  end
+  return action
+end
+
+--action回调
+function clsSequenceAction:onActionEnd(action)
+  action.finished=true
+  self:update()
 end

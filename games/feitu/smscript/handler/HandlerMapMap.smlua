@@ -1,0 +1,63 @@
+HandlerMap.movePlayer={}
+
+function HandlerMap.movePlayer:handleMessage(msg)
+  smLog:info("移动角色")
+  Notifier:notify(Const.NotifyCMD.Net.MOVE_PLAYER,HandlerMap:msgToLua(msg))
+end
+
+--====================================================
+HandlerMap.loadMap={}
+
+function HandlerMap.loadMap:handleMessage(msg)
+  smLog:info("加载地图")
+  GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
+  --加载地图后更新NPC列表
+  GameData.curNpcList={}
+  --(1)传送点
+  msg=HandlerMap:msgToLua(msg)
+  local npcList=msg.npcList
+  for i,mapEntry in ipairs(npcList) do
+    local cnpc=clsNpc:new()
+    local npcDict=Dictionary.npcs[mapEntry.id]
+    if npcDict then
+      	cnpc.id=npcDict.id
+	    cnpc.row=npcDict.row
+	    cnpc.col=npcDict.col
+	    cnpc.name=npcDict.name
+	    cnpc.charImgName=npcDict.charImg
+	    if cnpc.charImgName then
+	      cnpc.charImg=smImageFactory:loadImage(cnpc.charImgName)
+	    end
+	    cnpc.headImgName=npcDict.headImg
+	    if cnpc.headImgName then
+	      cnpc.headImg=smImageFactory:loadImage(cnpc.headImgName)
+	    end
+	    cnpc.type=npcDict.type
+        --传送点暂时默认使用同样的图片
+        if cnpc.type==clsNpc.TYPE_MAPENTRY then
+          cnpc.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
+        end
+        cnpc.face=npcDict.face
+        cnpc.moveType=npcDict.moveType
+        cnpc.speedLevel=npcDict.speedLevel
+        cnpc.penetrable=npcDict.penetrable
+        cnpc.targetMapId=npcDict.targetMapId
+        cnpc.targetX=npcDict.targetX
+        cnpc.targetY=npcDict.targetY
+        cnpc.moveDelegate=self
+        GameData.curNpcList[cnpc.id]=cnpc
+    end
+  end
+  Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
+end
+
+--====================================================
+HandlerMap.switchMap={}
+
+function HandlerMap.switchMap:handleMessage(msg)
+  smLog:info("进入传送点")
+  GameData.curPlayer.mapId=msg:getInt("mapId")
+  GameData.curPlayer.col=msg:getInt("x")
+  GameData.curPlayer.row=msg:getInt("y")
+  smNet:loadMap()
+end

@@ -7,6 +7,62 @@ do
   end
 end
 
+--------------math.floor--------------
+do
+  local floor=math.floor
+  math.floor=function(value,num)
+    if num==nil or num<0 then
+      num=0
+    end
+    num=math.pow(10,num)
+    value=floor(value*num)
+    value=value/num
+    return value
+  end
+end
+
+--------------math.ceil--------------
+do
+  local ceil=math.ceil
+  math.ceil=function(value,num)
+    if num==nil or num<0 then
+      num=0
+    end
+    num=math.pow(10,num)
+    value=ceil(value*num)
+    value=value/num
+    return value
+  end
+end
+
+--------------math.limit--------------
+math.limit=function(value,value1,value2)
+  local min=math.min(value1,value2)
+  local max=math.max(value1,value2)
+  value=math.max(value,min)
+  value=math.min(value,max)
+  return value
+end
+
+--------------callback--------------
+function callFunction(target,callback,...)
+  if callback then
+    if type(callback)=="string" then
+      if target then
+        if target[callback] then
+          return target[callback](target,unpack(arg))
+        end
+      end
+    else
+      if target then
+        return callback(target,unpack(arg))
+      else
+        return callback(unpack(arg))
+      end
+    end
+  end
+end
+
 --------------split--------------
 string.split=function(s,regex)
   local items={}

@@ -56,11 +56,10 @@ end
 
 Scheduler={}
 
-Scheduler.taskList=clsList:new()          --任务列表
+Scheduler.taskList={}          --任务列表
 
 function Scheduler:update()
-  for i,v in ipairs(self.taskList) do
-    local task=v
+  for k,task in pairs(self.taskList) do
     --smLog:info(task:toStrnig())
     --计算上一次加入或者执行任务距离现在的时间间隔
     local currentTime=Game:getTime()
@@ -80,8 +79,7 @@ function Scheduler:update()
     task.times=task.times-times
     --清除剩余次数为0的任务
     if task.times==0 then
-      --TODO
-      --self.taskList:removeObject(task)
+      self.taskList[tostring(task.target)..tostring(task.callback)]=nil
     end
   end
 end
@@ -89,5 +87,9 @@ end
 function Scheduler:scheduleTask(target,callback,interval,times)
   local task=clsTask:new(target,callback,interval,times)
   task.timestamp=Game:getTime()
-  self.taskList:add(task)
+  self.taskList[tostring(target)..tostring(callback)]=task
+end
+
+function Scheduler:unScheduleTask(target,callback)
+  self.taskList[tostring(target)..tostring(callback)]=nil
 end
