@@ -1,0 +1,17 @@
+Interpreter:doCommand(101006,"杰里米","<name>[0],你好像在发呆。。。？","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","哦，不，我只是想起了以前我们还在一起的事情。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","是啊，那时候真好。。。","/image/face/119.png",0)
+Interpreter:doCommand(101006,"杰里米","<name>[0]，以后有什么打算吗？","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我想我会回总部一次。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","总部。。。就凭你们两个人？！","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的，就我们两个，无论有多么危险，我都一定要回去。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","此去一路上危险重重，不知有什么我可以帮忙？","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我们必须要穿越大荒漠，危机重重，需要重型的兵器。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","你指的是？","/image/face/119.png",0)
+Interpreter:doCommand(101006,"兰迪","坦克，或者装甲车之类的。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"杰里米","原来是这样，说起来我还真有一个“重型兵器”。","/image/face/119.png",0)
+Interpreter:doCommand(101006,"兰迪","那太好了，在哪里？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"杰里米","如果你们要看的话，必须等到明天，现在你们在酒店先住下吧，明天到修理厂找我，我必须要准备下。","/image/face/119.png",0)
+
+
+

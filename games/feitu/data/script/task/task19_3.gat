@@ -1,0 +1,4 @@
+Interpreter:doCommand(101006,"兰迪","很好，我们来到了沙漠商队，前面是我朋友开的一家旅馆，叫做超级旅馆，在哪里就可以修理了。"/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","兰迪，别开玩笑了，我们要的是修理店，不是旅馆！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","它就是个修理店，老板是我的熟人，叫做老肖。","/image/face/002.png",0)
+

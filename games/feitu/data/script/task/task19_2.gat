@@ -1,0 +1,7 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"兰迪","我们的侦测车被机甲击中，我们必须修好它，这次损失惨重啊。","/image/face/002.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","可这里全是沙漠，根本没有修理店啊！","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"兰迪","这里有个商队的营地，我们去那里，应该有人能够修好。","/image/face/002.png",0)
+else
+end
+

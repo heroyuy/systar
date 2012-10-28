@@ -1,0 +1,4 @@
+Interpreter:doCommand(101006,"<name>[0]","老天，这是什么？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","章鱼。。。！？好大的章鱼。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","是深海巨章，受到辐射的章鱼变异而成，巨大无比。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","看来我们必须干掉它，或者死在这里。","/image/face/001.png",0)

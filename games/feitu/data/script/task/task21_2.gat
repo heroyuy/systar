@@ -1,0 +1,12 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101021,134,0)                -- 53号NPC显示
+   Interpreter:doCommand(101021,135,0)                -- 53号NPC显示
+   Interpreter:doCommand(101021,136,0)                -- 53号NPC显示
+   Interpreter:doCommand(101021,137,0)                -- 53号NPC显示
+   Interpreter:doCommand(101006,"杜波夫","好了，收集完毕。","/image/face/115.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","你先回去，让我们来看看，这到底是什么？","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"杜波夫","好，那就交给你们了。","/image/face/115.png",0)
+   Interpreter:doCommand(101020,133,112,29,20)            -- 37号NPC移动到（11，17）
+   Interpreter:doCommand(101021,133,0)                -- 57号NPC显示
+else
+end

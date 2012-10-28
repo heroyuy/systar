@@ -1,0 +1,7 @@
+Interpreter:doCommand(101006,"守卫","这里是基塔镇。","/image/face/104.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我要到镇政府去，这里的镇长是我的故友。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","唉，你说我们怎么混的这么背，好像我们的朋友都是镇长、市长什么的，统治一方，手下一帮，就我们孤身一人。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","别这样，现在我们不是有两个人吗？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/face/002.png",0)
+
+

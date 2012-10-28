@@ -1,0 +1,7 @@
+Interpreter:doCommand(101006,"<name>[0]","你在干什么？快走。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"怪物？难道是变异野兽？","/image/face/115.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,144,1)                -- 53号NPC显示
+Interpreter:doCommand(101021,145,1)                -- 53号NPC显示
+Interpreter:doCommand(101021,146,1)                -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

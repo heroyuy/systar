@@ -1,0 +1,8 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"克雷斯丁娜","你们是谁？","/image/face/003.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","<name>[0]，这是兰迪，来救你的人。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"克雷斯丁娜","感谢，我叫克雷斯丁娜。","/image/face/003.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","跟我们走，离开这个鬼地方。","/image/face/001.png",0)
+else
+end
+

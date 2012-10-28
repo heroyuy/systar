@@ -1,0 +1,11 @@
+Interpreter:doCommand(101006,"老人","什么？！你们想要知道怎么进入监狱？","/image/face/128.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的，我们很想知道。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"老人","年轻人，难道你不知道这样做如果被发现会被烧死的吗？","/image/face/128.png",0)
+Interpreter:doCommand(101006,"兰迪","我们当然知道，不过我们还是很想进去。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"老人","你们是想救那个女孩子吧？唉，我也算是熬过大灾变的人，真怀念以前，那是人们友善而宽容。罢了，看在那个可怜的小女孩份上，我就帮帮你们吧。","/image/face/128.png",0)
+Interpreter:doCommand(101006,"兰迪","那么老人家，要怎么样才能进入监狱呢？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"老人","这个你没有找错人，黄沙镇的监狱是大灾变前下水道改建而成，所以你们只要打开镇政府前的下水道盖子就能进入监狱了。","/image/face/128.png",0)
+Interpreter:doCommand(101006,"兰迪","感谢老人家。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"老人","呵呵，我也年轻过，我懂的。英雄救美的桥段通常都是最能打动女人的，祝你抱得美人归，年轻人。","/image/face/128.png",0)
+Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/face/002.png",0)
+
