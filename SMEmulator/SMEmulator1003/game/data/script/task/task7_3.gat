@@ -1,0 +1,8 @@
+Interpreter:doCommand(101006,"<name>[0]","这扇门我应该能开。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","光看你这开锁的手艺，还以为你是个惯偷。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我有这么不堪么？我看你的枪法不错，还以为你是武装抢劫的悍匪呢？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","我是一个奴隶商人，至于抢劫，那只是我的业余爱好。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","。。。。。","/image/face/001.png",0)
+
+
+

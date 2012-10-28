@@ -1,0 +1,10 @@
+Interpreter:doCommand(101006,"稻草","<name>[0]先生，请问这咖啡怎么样？是我手工现磨的。","/image/face/133.png",0)
+Interpreter:doCommand(101006,"<name>[0]","手工现磨？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"稻草","本人亲手磨制。","/image/face/133.png",0)
+Interpreter:doCommand(101006,"<name>[0]","嗯，渣都没滤干净，所以没有小费。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"稻草","您厉害，说实话您小气程度和兰迪先生一样，而挑剔程度却和您隔壁那位小妞有得一比，唉，这年头做个小斯也不容易啊。","/image/face/133.png",0)
+Interpreter:doCommand(101006,"<name>[0]","看来，你们的车已经修好了。","/image/face/001.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,122,0)                -- 53号NPC显示
+Interpreter:doCommand(101021,123,0)                -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

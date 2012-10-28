@@ -84,6 +84,14 @@ function Interpreter:runScript(scriptId)
   ScriptThread:start(scriptFunction)
 end
 
+function Interpreter:runTaskStep(taskId,stepId)
+  smLog:info(taskId.." "..taskId)
+  local file=Game.path.."/data/script/task/task"..taskId.."_"..(stepId+1)..".gat"
+  local scriptFunction=loadfile(file)
+  --将脚本调入子线程运行
+  ScriptThread:start(scriptFunction)
+end
+
 --结束当前正在执行的事件,比如对话框、选择框等。执行此方法后，主线程阻塞，脚本继续运行
 function Interpreter:endCurrentEvent(...)
   ScriptThread:resume(unpack(arg))

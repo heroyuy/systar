@@ -1,0 +1,9 @@
+Interpreter:doCommand(101006,"<name>[0]","兰迪，我们不能走。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","<name>[0]，再不走大家都得死在这里。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","如果我们也走了，那么兰特镇的镇民怎么办？我们还有机会，只要动员镇民！我们就能成功。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","<name>[0]，你这个白痴，听听这里的歌声。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","圣诗！？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","看看你要守护的兰特镇镇民们，他们宁愿将自己锁在家里唱“圣诗”，也不愿意拿起武器守卫故乡，他们不值得同情，就让上帝去保护他们吧。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","可是。。。","/image/face/001.png",0)
+
+

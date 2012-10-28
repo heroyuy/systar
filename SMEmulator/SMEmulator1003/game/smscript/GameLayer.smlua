@@ -62,6 +62,22 @@ function GameLayer:removeChildFromScene(layer)
   self.sceneLayer:removeChild(layer)
 end
 
+--显示任务申请对话框
+function GameLayer:showTaskApplyDialog(name,bustPath,task,target,callback)
+  local taskApplyDialog=clsTaskApplyPanel:new(name,bustPath,task)
+  local delegate={}
+  function delegate:onSelected(OkOrCancle)
+    taskApplyDialog:removeFromParent()
+    callFunction(target,callback,OkOrCancle)
+  end
+  taskApplyDialog.delegate=delegate
+  taskApplyDialog.callback=delegate.onSelected
+  taskApplyDialog.enabled=true
+  taskApplyDialog.alpha=0
+  self.rootLayer:addChild(taskApplyDialog)
+  taskApplyDialog:setVisible(true)
+end
+
 --显示普通对话框
 function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
   local normalDialog=clsDialogPanel:new(name,content,bustPath,position)

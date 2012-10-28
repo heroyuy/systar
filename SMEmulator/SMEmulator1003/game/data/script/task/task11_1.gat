@@ -1,0 +1,6 @@
+Interpreter:doCommand(101006,"痞子艾利","欢迎来到海港佣兵团，我叫艾利，人们都叫我“痞子艾利”。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你好，艾利，我叫<name>[0]。我想知道这里有没有特别的去处，不知可否为我介绍下？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"痞子艾利","或许你可以先去参观一下废土唯一的医院，它就在海港市。”。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","兰迪，你认为呢？我一直都想去看看。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","我也是，就先去看看吧，反正要离开海港市必须要有船，不差在一时。","/image/face/002.png",0)
+

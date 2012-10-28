@@ -31,9 +31,26 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
         GameData:checkScript(npc)
       end
     elseif taskSize==1 then
-    smLog:info("直接对话")
+      smLog:info("直接对话")
+      if not taskList[1].has then
+        --没有该任务的时候显示申请任务对话框
+        local delegate={}
+        function delegate:onSelected(OkOrCancle)
+          --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
+    	  if OkOrCancle then
+    	  else
+  		end
+        GameLayer:showTaskApplyDialog("","",taskList[1],delegate,"onSelected")
+      else
+        if not taskList[1].stepOver then
+          --有该任务，但没完成的时候
+          Interpreter:runTaskStep(taskList[1].id,taskList[1].step)
+        else
+          --有该任务，已经完成的时候，显示完成任务对话框
+        end
+      end
     elseif taskSize==2 then
-    smLog:info("给出列表")
+      smLog:info("给出列表")
     end
   end
 end

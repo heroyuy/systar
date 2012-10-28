@@ -1,0 +1,102 @@
+--[[
+  description:任务申请面板窗体
+  author:cokey
+  date:2012/09/10
+--]]
+
+--类结构定义
+clsTaskApplyPanel={}
+setmetatable(clsTaskApplyPanel,clsUILayer)
+clsTaskApplyPanel.__index=clsTaskApplyPanel
+
+clsTaskApplyPanel.TAG_TASK_OK=0
+clsTaskApplyPanel.TAG_TASK_CANCLE=1
+
+--动作
+clsTaskApplyPanel.taskApplyPanelDisappearAction=nil
+clsTaskApplyPanel.taskApplyPanelAppearAction=nil
+
+clsTaskApplyPanel.taskApplyPanelOkButton=nil
+clsTaskApplyPanel.taskApplyPanelCancleButton=nil
+
+clsTaskApplyPanel.taskApplyPanelTaskName=nil
+clsTaskApplyPanel.taskApplyPanelTaskInfo=nil
+clsTaskApplyPanel.taskApplyPanelTaskType=nil
+clsTaskApplyPanel.taskApplyPanelTaskTip=nil
+clsTaskApplyPanel.taskApplyPanelTaskNeed=nil
+clsTaskApplyPanel.taskApplyPanelTaskReward=nil
+
+--构造器
+function clsTaskApplyPanel:new(name,bustPath,task)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsTaskApplyPanel)
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,287)
+  bgLayer.anchor={0,1}
+  bgLayer.image=smImageFactory:loadImage("/image/skin/no5_dialog.png")
+  self:addChild(bgLayer)
+  
+  self.taskApplyPanelTaskName=clsUILabel:new(235,37,80,20)
+  self.taskApplyPanelTaskName.anchor={0.5,0.5}
+  self.taskApplyPanelTaskName.text=task.name
+  self.taskApplyPanelTaskName.textSize=20
+  self.taskApplyPanelTaskName.textColor="0xffffffff"
+  self.taskApplyPanelTaskName.alignment=clsUILabel.ALIGN_LEFT
+  self.taskApplyPanelTaskName.enabled=false
+  bgLayer:addChild(self.taskApplyPanelTaskName)
+  
+  self.taskApplyPanelTaskInfo=clsUITextArea:new(170,60,710,100)
+  self.taskApplyPanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.taskApplyPanelTaskInfo.anchor={0,0}
+  self.taskApplyPanelTaskInfo.text=task.intro
+  self.taskApplyPanelTaskInfo.textSize=18
+  self.taskApplyPanelTaskInfo.textColor="0xffffffff"
+  self.taskApplyPanelTaskInfo:refresh()
+  self.taskApplyPanelTaskInfo.enabled=false
+  bgLayer:addChild(self.taskApplyPanelTaskInfo)
+  
+  local okNormalImage=smImageFactory:loadImage("/image/skin/queding_up.png")
+  local okHighlightImage=smImageFactory:loadImage("/image/skin/queding_down.png")
+  self.taskApplyPanelOkButton=clsUIButton:new(600,250,okNormalImage:getWidth(),okHighlightImage:getHeight())
+  self.taskApplyPanelOkButton.anchor={0,0}
+  self.taskApplyPanelOkButton.normalImage=okNormalImage
+  self.taskApplyPanelOkButton.highlightImage=okHighlightImage
+  self.taskApplyPanelOkButton.tag=true
+  self.taskApplyPanelOkButton.delegate=self
+  self.taskApplyPanelOkButton.enabled=true
+  bgLayer:addChild(self.taskApplyPanelOkButton)
+  
+  local cancleNormalImage=smImageFactory:loadImage("/image/skin/quxiao_up.png")
+  local cancleHighlightImage=smImageFactory:loadImage("/image/skin/quxiao_down.png")
+  self.taskApplyPanelCancleButton=clsUIButton:new(700,250,cancleNormalImage:getWidth(),cancleHighlightImage:getHeight())
+  self.taskApplyPanelCancleButton.anchor={0,0}
+  self.taskApplyPanelCancleButton.normalImage=cancleNormalImage
+  self.taskApplyPanelCancleButton.highlightImage=cancleHighlightImage
+  self.taskApplyPanelCancleButton.tag=false
+  self.taskApplyPanelCancleButton.delegate=self
+  self.taskApplyPanelCancleButton.enabled=true
+  bgLayer:addChild(self.taskApplyPanelCancleButton)
+  
+  --初始化动作
+  self.taskApplyPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.taskApplyPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置任务窗口的可见性
+function clsTaskApplyPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.taskApplyPanelAppearAction)
+	else
+		self:runAction(self.taskApplyPanelDisappearAction)
+	end
+end
+
+function clsTaskApplyPanel:onTouch(event)
+end
+
+function clsTaskApplyPanel:buttonTapped(target)
+  local OkOrCancle=target.tag
+  callFunction(self.delegate,self.delegate.onSelected,OkOrCancle)
+end

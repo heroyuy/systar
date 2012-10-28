@@ -1,0 +1,23 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"罗格尔","。。。。。。","/image/face/124.png",0)
+   Interpreter:doCommand(101006,"兰迪","你伤到了我，你输了。","/image/face/002.png",0)
+   Interpreter:doCommand(101006,"罗格尔","你故意用一只手来换这个结局，值得吗？你有没有想过，也许那一枪就把你的左手给废掉了。","/image/face/124.png",0)
+   Interpreter:doCommand(101006,"兰迪","有希望，就值得。那怕只是一个希望，你不愿意给，但是我愿意给他。何况，我对你的枪法有信心。","/image/face/002.png",0)
+   Interpreter:doCommand(101006,"龙马","兰迪，你用这种卑鄙的手段赢了又怎么样？你以为你可以走出海港市吗？","/image/face/123.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","龙马，你这是在威胁我们，如果我们走不出海港市，你以为你自己走得出么？","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"龙马","小子，你。。。","/image/face/123.png",0)
+   Interpreter:doCommand(101006,"罗格尔","好了，龙马，是他赢了。","/image/face/124.png",0)
+   Interpreter:doCommand(101020,76,74,10,12)
+   Interpreter:doCommand(101006,"罗格尔","孩子，我要你做到的，我首先必须做到。记住，真正的男人是不会逃避责任的，当然也不会耍赖。所以，孩子，你自由了。","/image/face/124.png",0)
+   Interpreter:doCommand(101006,"吉米","谢谢你，市长先生，这是辐射药剂，还给你。","/image/face/122.png",0)
+   Interpreter:doCommand(101006,"罗格尔","拿着吧，这是我送给你的。。。","/image/face/124.png",0)
+   Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+   Interpreter:doCommand(101021,71,0)                -- 53号NPC显示
+   Interpreter:doCommand(101021,72,0)                -- 54号NPC显示
+   Interpreter:doCommand(101021,73,0)                -- 55号NPC显示
+   Interpreter:doCommand(101021,76,0)                -- 152号NPC显示
+   Interpreter:doCommand(101021,75,0)                -- 153号NPC显示
+   Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+else
+end
+
