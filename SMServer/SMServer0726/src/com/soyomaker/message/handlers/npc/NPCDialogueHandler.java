@@ -56,7 +56,7 @@ public class NPCDialogueHandler extends AbHandler {
 			}
 		}
 		// (5)反馈消息给客户端
-		GameObject msgSent = new GameObject(msg.getType());
+		GameObject msgSent = this.buildPackage(msg, true, "对话成功");
 		msgSent.putObjectArray("taskList", taskObjs);
 		netTransceiver.sendMessage(session, msgSent);
 	}
