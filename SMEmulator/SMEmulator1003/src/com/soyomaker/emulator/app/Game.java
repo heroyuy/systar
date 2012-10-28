@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.soyomaker.emulator.net.IHandler;
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
-import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.lang.GameObject;
 
 public class Game implements IGame, Runnable, IHandler {
