@@ -561,7 +561,8 @@ end
 function clsSceneMap:doNpcEvent(npc)
   if npc.type == clsNpc.TYPE_NORMAL then
     --普通NPC
-    GameData:checkScript(npc)
+    --GameData:checkScript(npc)
+    smNet:dialogWithNpc(npc.id)
   elseif npc.type==clsNpc.TYPE_MAPENTRY then
     --传送点
     Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})

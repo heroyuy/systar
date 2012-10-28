@@ -16,6 +16,7 @@ require("HandlerMapChat")
 require("HandlerMapTask")
 require("HandlerMapMap")
 require("HandlerMapServer")
+require("HandlerMapNpc")
 
 MsgHandlerFactory["100000"]=HandlerMap.shutdownServer
 MsgHandlerFactory["101001"]=HandlerMap.register
@@ -33,6 +34,7 @@ MsgHandlerFactory["105002"]=HandlerMap.giveUpTask
 MsgHandlerFactory["105003"]=HandlerMap.listTask
 MsgHandlerFactory["105004"]=HandlerMap.nextStepTask
 MsgHandlerFactory["106001"]=HandlerMap.updateNpcState
+MsgHandlerFactory["106002"]=HandlerMap.dialogWithNpc
 
 function MsgHandlerFactory:dispatchMessage(msg)
   --显示消息

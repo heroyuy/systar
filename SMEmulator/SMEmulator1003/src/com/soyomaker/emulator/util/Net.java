@@ -38,6 +38,8 @@ public class Net {
 
 	private static final String MSG_ID_TASK_NEXT_STEP = "105004";
 
+	private static final String MSG_ID_NPC_DIALOGUE = "106002";
+
 	private static Net instance = new Net();
 
 	public static Net getInstance() {
@@ -205,6 +207,16 @@ public class Net {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_NEXT_STEP);
 		msg.putInt("taskId", id);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * NPC 对话 106002
+	 */
+	public void dialogWithNpc(int npcId) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_NPC_DIALOGUE);
+		msg.putInt("npcId", npcId);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
 

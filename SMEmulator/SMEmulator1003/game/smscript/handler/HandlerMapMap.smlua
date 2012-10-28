@@ -61,20 +61,3 @@ function HandlerMap.switchMap:handleMessage(msg)
   GameData.curPlayer.row=msg:getInt("y")
   smNet:loadMap()
 end
-
---====================================================
-HandlerMap.updateNpcState={}
-
-function HandlerMap.updateNpcState:handleMessage(msg)
-  smLog:info("服务器通知更新地图NPC信息")
-  msg=HandlerMap:msgToLua(msg)
-  local stateList=msg.stateList
-  for k,npc in pairs(stateList) do
-    --smLog:info(npc.npcId)
-    --smLog:info(npc.state)
-    if GameData.curNpcList[npc.npcId] then
-      GameData.curNpcList[npc.npcId].state=npc.state
-    end
-  end
-  Notifier:notify(Const.NotifyCMD.Net.PLACE_NPC)
-end

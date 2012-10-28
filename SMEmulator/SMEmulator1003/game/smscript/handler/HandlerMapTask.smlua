@@ -17,7 +17,7 @@ function HandlerMap.listTask:handleMessage(msg)
   		local task=clsMission:new()
   		task.index=msg.taskList[i].id
   		task.name=msg.taskList[i].name
-  		task.desc=msg.taskList[i].desc
+  		task.desc=msg.taskList[i].intro
   		task.finished=msg.taskList[i].finished
   		task.step=msg.taskList[i].step
   		task.type=msg.taskList[i].type
