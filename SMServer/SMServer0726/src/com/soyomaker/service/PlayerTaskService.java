@@ -1,6 +1,5 @@
 package com.soyomaker.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,60 +40,6 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	}
 
 	/**
-	 * 获取玩家可接收任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 可接收任务列表
-	 */
-	public List<Task> getAvailableTaskList(Player player) {
-		List<Task> taskList = new ArrayList<Task>();
-		for (Task task : dictManager.getTaskList()) {
-			if (player.canApplyTask(task)) {
-				taskList.add(task);
-			}
-		}
-		return taskList;
-	}
-
-	/**
-	 * 获取玩家已完成任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 已完成任务列表
-	 */
-	public List<PlayerTask> getFinishedTaskList(Player player) {
-		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
-		for (PlayerTask playerTask : player.getPlayerTaskList()) {
-			if (playerTask.isFinished()) {
-				ptList.add(playerTask);
-			}
-		}
-		return ptList;
-	}
-
-	/**
-	 * 获取玩家未完成任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 未完成任务列表
-	 * 
-	 * 转移到player对象中去了
-	 */
-	@Deprecated
-	public List<PlayerTask> getUnfinishedTaskList(Player player) {
-		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
-		for (PlayerTask playerTask : player.getPlayerTaskList()) {
-			if (!playerTask.isFinished()) {
-				ptList.add(playerTask);
-			}
-		}
-		return ptList;
-	}
-
-	/**
 	 * 初始化玩家任务列表
 	 * 
 	 * @param player
@@ -113,9 +58,10 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 	}
 
 	public void scanAutoApplyTask(Player player) {
-		List<Task> availableTaskList = this.getAvailableTaskList(player);
+		List<Task> availableTaskList = player.getAvailableTaskList(dictManager
+				.getTaskList());
 		for (Task task : availableTaskList) {
-			if (task.getType() == Task.TASK_TYPE_PLOTLINE) {
+			if (task.getType() == Task.TYPE_PLOTLINE) {
 				// 主线任务自动接收
 				PlayerTask pt = new PlayerTask(player, task);
 				player.addPlayerTask(pt);

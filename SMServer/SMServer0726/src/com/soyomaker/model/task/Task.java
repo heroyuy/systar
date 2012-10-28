@@ -14,24 +14,24 @@ public class Task {
 	/**
 	 * 普通
 	 */
-	public static final int TASK_TYPE_NORMAL = 0;
+	public static final int TYPE_NORMAL = 0;
 	/**
 	 * 主线
 	 */
-	public static final int TASK_TYPE_PLOTLINE = 1;
+	public static final int TYPE_PLOTLINE = 1;
 	/**
 	 * 支线
 	 */
-	public static final int TASK_TYPE_BTANCH = 2;
+	public static final int TYPE_BTANCH = 2;
 	/**
 	 * 日常
 	 */
-	public static final int TASK_TYPE_DAILY = 3;
+	public static final int TYPE_DAILY = 3;
 
 	/**
 	 * 没有前置任务标志
 	 */
-	public static final int TASK_TAG_NO_PRE_TASK = -1;
+	public static final int TAG_NO_PRE_TASK = -1;
 
 	@Id
 	private int id;

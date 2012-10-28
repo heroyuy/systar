@@ -87,7 +87,7 @@ public class Player {
 			return false;
 		}
 		// (2)检查前置任务是否完成
-		if (task.getPreTask() != Task.TASK_TAG_NO_PRE_TASK) {
+		if (task.getPreTask() != Task.TAG_NO_PRE_TASK) {
 			// 有前置任务
 			PlayerTask ptPre = this.getPlayerTask(task.getPreTask());
 			if (ptPre == null || !ptPre.isFinished()) {
@@ -110,63 +110,6 @@ public class Player {
 	public void clearPlayerTaskList() {
 		playerTaskMap.clear();
 	}
-	
-	/**
-	 * 获取任务
-	 * 
-	 * @param taskId
-	 *            任务ID
-	 * @return 任务
-	 */
-	public PlayerTask getPlayerTask(int taskId) {
-		return playerTaskMap.get(taskId);
-	}
-	
-	/**
-	 * 获取玩家未完成任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 未完成任务列表
-	 */
-	public List<PlayerTask> getUnfinishedTaskList() {
-		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
-		for (PlayerTask playerTask : this.getPlayerTaskList()) {
-			if (!playerTask.isFinished()) {
-				ptList.add(playerTask);
-			}
-		}
-		return ptList;
-	}
-	
-
-	/**
-	 * 获取玩家可接收任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 可接收任务列表
-	 */
-	public List<Task> getAvailableTaskList(Collection<Task> tasks) {
-		List<Task> avaliTaskList = new ArrayList<Task>();
-		for (Task task : tasks) {
-			if (this.canApplyTask(task)) {
-				avaliTaskList.add(task);
-			}
-		}
-
-		return avaliTaskList;
-	}
-
-	/**
-	 * 获取任务列表
-	 * 
-	 * @return 任务列表
-	 */
-	public Collection<PlayerTask> getPlayerTaskList() {
-		return playerTaskMap.values();
-	}
-
 
 	public Integer getAgil() {
 		return agil;
@@ -184,6 +127,24 @@ public class Player {
 			atk += item.getAtk();
 		}
 		return this.getStre() + atk;
+	}
+
+	/**
+	 * 获取玩家可接收任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 可接收任务列表
+	 */
+	public List<Task> getAvailableTaskList(Collection<Task> tasks) {
+		List<Task> avaliTaskList = new ArrayList<Task>();
+		for (Task task : tasks) {
+			if (this.canApplyTask(task)) {
+				avaliTaskList.add(task);
+			}
+		}
+
+		return avaliTaskList;
 	}
 
 	public Integer getAvatar() {
@@ -206,6 +167,23 @@ public class Player {
 
 	public Integer getExp() {
 		return exp;
+	}
+
+	/**
+	 * 获取玩家已完成任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 已完成任务列表
+	 */
+	public List<PlayerTask> getFinishedTaskList() {
+		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
+		for (PlayerTask playerTask : this.getPlayerTaskList()) {
+			if (playerTask.isFinished()) {
+				ptList.add(playerTask);
+			}
+		}
+		return ptList;
 	}
 
 	/**
@@ -286,12 +264,49 @@ public class Player {
 		return name;
 	}
 
+	/**
+	 * 获取任务
+	 * 
+	 * @param taskId
+	 *            任务ID
+	 * @return 任务
+	 */
+	public PlayerTask getPlayerTask(int taskId) {
+		return playerTaskMap.get(taskId);
+	}
+
+	/**
+	 * 获取任务列表
+	 * 
+	 * @return 任务列表
+	 */
+	public Collection<PlayerTask> getPlayerTaskList() {
+		return playerTaskMap.values();
+	}
+
 	public Integer getSp() {
 		return sp;
 	}
 
 	public Integer getStre() {
 		return stre;
+	}
+
+	/**
+	 * 获取玩家未完成任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 未完成任务列表
+	 */
+	public List<PlayerTask> getUnfinishedTaskList() {
+		List<PlayerTask> ptList = new ArrayList<PlayerTask>();
+		for (PlayerTask playerTask : this.getPlayerTaskList()) {
+			if (!playerTask.isFinished()) {
+				ptList.add(playerTask);
+			}
+		}
+		return ptList;
 	}
 
 	public Long getUserId() {

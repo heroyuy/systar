@@ -80,7 +80,7 @@ public class PlayerTask {
 		if(curTaskStep==null){
 			return false;
 		}
-		
+
 		if(curTaskStep.getNpcId()!=npc.getId()){
 			return false;
 		}
