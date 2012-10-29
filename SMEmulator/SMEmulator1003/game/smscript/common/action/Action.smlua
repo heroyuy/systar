@@ -154,6 +154,8 @@ function ActionPlayer:run(action)
   action.delegate=self
   --重置动作
   action:reset()
+  --立即执行一次
+  action:update()
   --加入播放列表
   self.actionList[tostring(action)]=action
 end

@@ -54,6 +54,8 @@ function clsMultipleAction:checkEnd()
   if finished then
     callFunction(self.delegate,self.callback,self)
     --smLog:info("复合动作结束")
+  else
+    self:update()
   end
 end
 
