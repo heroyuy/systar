@@ -46,7 +46,7 @@ function HandlerMap.listPlayer:handleMessage(msg)
     player.int=msg.playerList[i].inte;
     player.vit=msg.playerList[i].vita;
     player.headImg=smImageFactory:loadImage("/image/face/姜维.png")
-	player.charImg=smImageFactory:loadImage("/image/character/001-Fighter01.png")
+	player.charImg=smImageFactory:loadImage("/image/character/player1.png")
 	player.actionImg=smImageFactory:loadImage("/image/character/player1_action.png")
 	player.moveDelegate=GameData
 	GameData.playerList:add(player)
