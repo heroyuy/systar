@@ -40,12 +40,6 @@ function clsAction:update()
   --根据action参数更新target的属性
 end
 
---结束动作(主动结束)
-function clsAction:stop()
-  --结束action。
-end
-
-
 --==================================================
 --[[
   description:动作工厂
@@ -173,7 +167,6 @@ end
 
 --停止动作
 function ActionPlayer:stopAction(action)
-  action:stop()
   --移除动作
   self.actionList[tostring(action)]=nil
 end
