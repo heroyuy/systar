@@ -1,5 +1,9 @@
 package com.soyomaker.net.mina;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +18,29 @@ public class MinaServer implements INetService {
 	
 	public void setAcceptor(SocketAcceptor acceptor) {
 		this.acceptor = acceptor;
+	}
+	
+	public static void main(String[] args) {
+		Person p=new Person();
+		p.name="chenwentao";
+		HashMap  map=new HashMap();
+		map.put("1", p);
+		List<Person> persons=new ArrayList<Person>();
+		persons.addAll(map.values());
+		
+	Person p2=	persons.get(0);
+	p2.name="dddd";
+	
+	System.out.println(p);
+	System.out.println(p2);
+	
+	System.out.println(p.name);
+	System.out.println(p2.name);
+	}
+	
+	static class Person{
+		
+		public String name;
 	}
 
 	@Override

@@ -8,8 +8,8 @@ import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
 
-@Component("messagePushHandler")
-public class MessagePushHandler extends AbHandler {
+@Component("notificationPushHandler")
+public class NotificationPushHandler extends AbHandler {
 
 	@Autowired
 	private UserSessionManager userSessionManager;
@@ -18,6 +18,8 @@ public class MessagePushHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
+		
+		netTransceiver.sendMessage(session, msg);
 		
 		/*
 		GameObject pushMessageObject=new GameObject();

@@ -9,7 +9,9 @@ public class Bootstrap {
 
 	public static void main(String[] args) {
 		String[] applications = { "applicationContext.xml",
-				"applicationContext-mina.xml","applicationContext-protocol.xml" };
+				"applicationContext-mina.xml",
+				"applicationContext-protocol.xml",
+				"applicationContext_task.xml" };
 		try {
 			logger.info("系统准备启动");
 			new ClassPathXmlApplicationContext(applications);

@@ -34,12 +34,24 @@ public class Message {
 	 */
 	public static final int SYSTEM_NOTIFICATION = 2;
 
+	/**
+	 * 未读取的信息
+	 */
+	public static final int UNREAD = 0;
+
+	/**
+	 * 已读取的信息
+	 */
+	public static final int READ = 1;
+
 	@Id
 	private Integer id;
 
 	private String title;
 
 	private String content;
+
+	private Integer isRead;
 
 	/**
 	 * 创建时间
@@ -82,6 +94,22 @@ public class Message {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Integer getIsRead() {
+		return isRead;
+	}
+
+	public void setIsRead(Integer isRead) {
+		this.isRead = isRead;
 	}
 
 }
