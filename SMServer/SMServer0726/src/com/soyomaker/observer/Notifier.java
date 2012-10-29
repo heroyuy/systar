@@ -5,9 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 通知中心类
@@ -73,32 +71,21 @@ public class Notifier {
 	}
 
 	public void removeObserverForAllCommands(Observer observer) {
-		Set<Map.Entry<String, Collection<Observer>>> set = observerMap
-				.entrySet();
-		for (Iterator<Map.Entry<String, Collection<Observer>>> it = set
-				.iterator(); it.hasNext();) {
-			Map.Entry<String, Collection<Observer>> entry = (Map.Entry<String, Collection<Observer>>) it
-					.next();
-			entry.getValue().remove(observer);
+		for (Collection<Observer> c : observerMap.values()) {
+			c.remove(observer);
 		}
 	}
 
 	public void removeObserverForCommand(Observer observer,
 			ArrayList<String> commands) {
 		for (String command : commands) {
-			Collection<Observer> c = observerMap.get(command);
-			if (c != null && c.contains(observer)) {
-				c.remove(observer);
-			}
+			this.removeObserverForCommand(observer, command);
 		}
 	}
 
 	public void removeObserverForCommand(Observer observer, String... commands) {
 		for (String command : commands) {
-			Collection<Observer> c = observerMap.get(command);
-			if (c != null && c.contains(observer)) {
-				c.remove(observer);
-			}
+			this.removeObserverForCommand(observer, command);
 		}
 	}
 
