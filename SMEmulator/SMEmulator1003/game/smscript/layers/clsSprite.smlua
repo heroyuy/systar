@@ -17,6 +17,7 @@ clsSprite.colNum=1               			--帧列数
 clsSprite.rowNum=1            				--帧行数
 clsSprite.frameImages=nil					--帧列表
 clsSprite.promptImage=nil					--头顶的提示图片
+
 --构造器
 function clsSprite:new(spriteImage,frameWidth,frameHeight)
   local self = clsUILayer:new(0,0,frameWidth,frameHeight)
