@@ -2,6 +2,7 @@ package com.soyomaker.observer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,156 +11,101 @@ import java.util.Set;
 
 /**
  * 通知中心类
- *
+ * 
  * @author cokey
  */
 public class Notifier {
 
-    private static Notifier mInstance = new Notifier();
-    private Map<String, Collection<Observer>> mObserverMap = new HashMap<String, Collection<Observer>>();
+	private static Notifier instance = new Notifier();
 
-    private Notifier() {
-    }
+	public static Notifier getInstance() {
+		return instance;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public static Notifier getInstance() {
-        return mInstance;
-    }
+	private Map<String, Collection<Observer>> observerMap;
 
-    /**
-     *
-     * @param observer
-     * @param command
-     */
-    public synchronized void addObserver(Observer observer, String command) {
-        Collection<Observer> c = mObserverMap.get(command);
-        if (c == null) {
-            c = new HashSet<Observer>(); // 注：此处一定要使用禁止重复元素的Collection子类
-            mObserverMap.put(command, c);
-        }
-        c.add(observer);
-    }
+	private Notifier() {
+		observerMap = new HashMap<String, Collection<Observer>>();
+		observerMap = Collections.synchronizedMap(observerMap);// 线程安全包装
+	}
 
-    /**
-     *
-     * @param observer
-     * @param commands
-     */
-    public synchronized void addObserver(Observer observer, String... commands) {
-        for (String command : commands) {
-            Collection<Observer> c = mObserverMap.get(command);
-            if (c == null) {
-                c = new HashSet<Observer>(); // 注：此处一定要使用禁止重复元素的Collection子类
-                mObserverMap.put(command, c);
-            }
-            c.add(observer);
-        }
-    }
+	public void addObserver(Observer observer, ArrayList<String> commands) {
+		for (String command : commands) {
+			this.addObserver(observer, command);
+		}
+	}
 
-    /**
-     *
-     * @param observer
-     * @param commands
-     */
-    public synchronized void addObserver(Observer observer, ArrayList<String> commands) {
-        for (String command : commands) {
-            Collection<Observer> c = mObserverMap.get(command);
-            if (c == null) {
-                c = new HashSet<Observer>(); // 注：此处一定要使用禁止重复元素的Collection子类
-                mObserverMap.put(command, c);
-            }
-            c.add(observer);
-        }
-    }
+	public void addObserver(Observer observer, String command) {
+		Collection<Observer> c = observerMap.get(command);
+		if (c == null) {
+			c = new HashSet<Observer>(); // 禁止重复元素的Collection
+			c = Collections.synchronizedCollection(c);// 线程安全包装
+			observerMap.put(command, c);
+		}
+		c.add(observer);
+	}
 
-    /**
-     *
-     * @param observer
-     * @param commands
-     */
-    public synchronized void removeObserverForCommand(Observer observer, String... commands) {
-        for (String command : commands) {
-            Collection<Observer> c = mObserverMap.get(command);
-            if (c != null && c.contains(observer)) {
-                c.remove(observer);
-            }
-        }
-    }
+	public void addObserver(Observer observer, String... commands) {
+		for (String command : commands) {
+			this.addObserver(observer, command);
+		}
+	}
 
-    /**
-     *
-     * @param observer
-     * @param commands
-     */
-    public synchronized void removeObserverForCommand(Observer observer, ArrayList<String> commands) {
-        for (String command : commands) {
-            Collection<Observer> c = mObserverMap.get(command);
-            if (c != null && c.contains(observer)) {
-                c.remove(observer);
-            }
-        }
-    }
+	public void notifyEvent(String command, Object... param) {
+		Event e = Event.createEvent(command, param);
+		Collection<Observer> c = observerMap.get(command);
+		if (c != null) {
+			for (Observer observer : c) {
+				observer.handleEvent(e);
+			}
+		}
+	}
 
-    /**
-     *
-     * @param observer
-     * @param command
-     */
-    public synchronized void removeObserverForCommand(Observer observer, String command) {
-        Collection<Observer> c = mObserverMap.get(command);
-        if (c != null && c.contains(observer)) {
-            c.remove(observer);
-        }
-    }
+	public void removeAllObservers() {
+		observerMap.clear();
+	}
 
-    /**
-     *
-     * @param observer
-     */
-    public synchronized void removeObserverForAllCommands(Observer observer) {
-        Set<Map.Entry<String, Collection<Observer>>> set = mObserverMap.entrySet();
-        for (Iterator<Map.Entry<String, Collection<Observer>>> it = set.iterator(); it.hasNext();) {
-            Map.Entry<String, Collection<Observer>> entry = (Map.Entry<String, Collection<Observer>>) it.next();
-            entry.getValue().remove(observer);
-        }
-    }
+	public void removeAllObserversForCommand(String command) {
+		Collection<Observer> c = observerMap.get(command);
+		if (c != null) {
+			c.clear();
+		}
+	}
 
-    /**
-     *
-     * @param command
-     */
-    public synchronized void removeAllObserversForCommand(String command) {
-        Collection<Observer> c = mObserverMap.get(command);
-        if (c != null && !c.isEmpty()) {
-            c.clear();
-        }
-    }
+	public void removeObserverForAllCommands(Observer observer) {
+		Set<Map.Entry<String, Collection<Observer>>> set = observerMap
+				.entrySet();
+		for (Iterator<Map.Entry<String, Collection<Observer>>> it = set
+				.iterator(); it.hasNext();) {
+			Map.Entry<String, Collection<Observer>> entry = (Map.Entry<String, Collection<Observer>>) it
+					.next();
+			entry.getValue().remove(observer);
+		}
+	}
 
-    /**
-     *
-     */
-    public synchronized void removeAllObservers() {
-        if (!mObserverMap.isEmpty()) {
-            mObserverMap.clear();
-        }
-    }
+	public void removeObserverForCommand(Observer observer,
+			ArrayList<String> commands) {
+		for (String command : commands) {
+			Collection<Observer> c = observerMap.get(command);
+			if (c != null && c.contains(observer)) {
+				c.remove(observer);
+			}
+		}
+	}
 
-    /**
-     *
-     * @param command
-     * @param param
-     */
-    public synchronized void notifyEvent(String command, Object... param) {
-        // 注:此方法要考虑线程同步
-        Event e = Event.createEvent(command, param);
-        Collection<Observer> c = mObserverMap.get(command);
-        if (c != null) {
-            for (Observer observer : c) {
-                observer.handleEvent(e);
-            }
-        }
-    }
+	public void removeObserverForCommand(Observer observer, String... commands) {
+		for (String command : commands) {
+			Collection<Observer> c = observerMap.get(command);
+			if (c != null && c.contains(observer)) {
+				c.remove(observer);
+			}
+		}
+	}
+
+	public void removeObserverForCommand(Observer observer, String command) {
+		Collection<Observer> c = observerMap.get(command);
+		if (c != null && c.contains(observer)) {
+			c.remove(observer);
+		}
+	}
 }
