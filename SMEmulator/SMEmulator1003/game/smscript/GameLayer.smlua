@@ -78,6 +78,23 @@ function GameLayer:showTaskApplyDialog(name,bustPath,task,target,callback)
   taskApplyDialog:setVisible(true)
 end
 
+--显示任务完成对话框
+function GameLayer:showTaskCompleteDialog(name,bustPath,task,target,callback)
+  local taskCompleteDialog=clsTaskCompletePanel:new(name,bustPath,task)
+  local delegate={}
+  function delegate:onSelected(OkOrCancle)
+    taskCompleteDialog:removeFromParent()
+    callFunction(target,callback,OkOrCancle)
+  end
+  taskCompleteDialog.delegate=delegate
+  taskCompleteDialog.callback=delegate.onSelected
+  taskCompleteDialog.enabled=true
+  taskCompleteDialog.alpha=0
+  self.rootLayer:addChild(taskCompleteDialog)
+  taskCompleteDialog:setVisible(true)
+end
+
+
 --显示普通对话框
 function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
   local normalDialog=clsDialogPanel:new(name,content,bustPath,position)

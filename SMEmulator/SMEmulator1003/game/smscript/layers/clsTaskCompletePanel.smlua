@@ -1,0 +1,102 @@
+--[[
+  description:任务完成面板窗体
+  author:cokey
+  date:2012/10/30
+--]]
+
+--类结构定义
+clsTaskCompletePanel={}
+setmetatable(clsTaskCompletePanel,clsUILayer)
+clsTaskCompletePanel.__index=clsTaskCompletePanel
+
+clsTaskCompletePanel.TAG_TASK_OK=0
+clsTaskCompletePanel.TAG_TASK_CANCLE=1
+
+--动作
+clsTaskCompletePanel.taskCompletePanelDisappearAction=nil
+clsTaskCompletePanel.taskCompletePanelAppearAction=nil
+
+clsTaskCompletePanel.taskCompletePanelOkButton=nil
+clsTaskCompletePanel.taskCompletePanelCancleButton=nil
+
+clsTaskCompletePanel.taskCompletePanelTaskName=nil
+clsTaskCompletePanel.taskCompletePanelTaskInfo=nil
+clsTaskCompletePanel.taskCompletePanelTaskType=nil
+clsTaskCompletePanel.taskCompletePanelTaskTip=nil
+clsTaskCompletePanel.taskCompletePanelTaskNeed=nil
+clsTaskCompletePanel.taskCompletePanelTaskReward=nil
+
+--构造器
+function clsTaskCompletePanel:new(name,bustPath,task)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsTaskCompletePanel)
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,960,287)
+  bgLayer.anchor={0,1}
+  bgLayer.image=smImageFactory:loadImage("/image/skin/no5_dialog.png")
+  self:addChild(bgLayer)
+  
+  self.taskCompletePanelTaskName=clsUILabel:new(235,37,80,20)
+  self.taskCompletePanelTaskName.anchor={0.5,0.5}
+  self.taskCompletePanelTaskName.text=task.name
+  self.taskCompletePanelTaskName.textSize=20
+  self.taskCompletePanelTaskName.textColor="0xffffffff"
+  self.taskCompletePanelTaskName.alignment=clsUILabel.ALIGN_LEFT
+  self.taskCompletePanelTaskName.enabled=false
+  bgLayer:addChild(self.taskCompletePanelTaskName)
+  
+  self.taskCompletePanelTaskInfo=clsUITextArea:new(170,60,710,100)
+  self.taskCompletePanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.taskCompletePanelTaskInfo.anchor={0,0}
+  self.taskCompletePanelTaskInfo.text=task.intro
+  self.taskCompletePanelTaskInfo.textSize=18
+  self.taskCompletePanelTaskInfo.textColor="0xffffffff"
+  self.taskCompletePanelTaskInfo:refresh()
+  self.taskCompletePanelTaskInfo.enabled=false
+  bgLayer:addChild(self.taskCompletePanelTaskInfo)
+  
+  local okNormalImage=smImageFactory:loadImage("/image/skin/queding_up.png")
+  local okHighlightImage=smImageFactory:loadImage("/image/skin/queding_down.png")
+  self.taskCompletePanelOkButton=clsUIButton:new(600,250,okNormalImage:getWidth(),okHighlightImage:getHeight())
+  self.taskCompletePanelOkButton.anchor={0,0}
+  self.taskCompletePanelOkButton.normalImage=okNormalImage
+  self.taskCompletePanelOkButton.highlightImage=okHighlightImage
+  self.taskCompletePanelOkButton.tag=true
+  self.taskCompletePanelOkButton.delegate=self
+  self.taskCompletePanelOkButton.enabled=true
+  bgLayer:addChild(self.taskCompletePanelOkButton)
+  
+  local cancleNormalImage=smImageFactory:loadImage("/image/skin/quxiao_up.png")
+  local cancleHighlightImage=smImageFactory:loadImage("/image/skin/quxiao_down.png")
+  self.taskCompletePanelCancleButton=clsUIButton:new(700,250,cancleNormalImage:getWidth(),cancleHighlightImage:getHeight())
+  self.taskCompletePanelCancleButton.anchor={0,0}
+  self.taskCompletePanelCancleButton.normalImage=cancleNormalImage
+  self.taskCompletePanelCancleButton.highlightImage=cancleHighlightImage
+  self.taskCompletePanelCancleButton.tag=false
+  self.taskCompletePanelCancleButton.delegate=self
+  self.taskCompletePanelCancleButton.enabled=true
+  bgLayer:addChild(self.taskCompletePanelCancleButton)
+  
+  --初始化动作
+  self.taskCompletePanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.taskCompletePanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置任务窗口的可见性
+function clsTaskCompletePanel:setVisible(visible)
+	if visible then
+		self:runAction(self.taskCompletePanelAppearAction)
+	else
+		self:runAction(self.taskCompletePanelDisappearAction)
+	end
+end
+
+function clsTaskCompletePanel:onTouch(event)
+end
+
+function clsTaskCompletePanel:buttonTapped(target)
+  local OkOrCancle=target.tag
+  callFunction(self.delegate,self.delegate.onSelected,OkOrCancle)
+end

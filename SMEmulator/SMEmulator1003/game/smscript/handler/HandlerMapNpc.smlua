@@ -47,6 +47,13 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
           Interpreter:runTaskStep(taskList[1].id,taskList[1].step)
         else
           --有该任务，已经完成的时候，显示完成任务对话框
+          local delegate={}
+          function delegate:onSelected(OkOrCancle)
+            --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
+    	    if OkOrCancle then
+    	    end
+  		  end
+          GameLayer:showTaskCompleteDialog("","",taskList[1],delegate,"onSelected")
         end
       end
     elseif taskSize==2 then
