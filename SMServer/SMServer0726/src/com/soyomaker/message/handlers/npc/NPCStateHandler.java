@@ -15,12 +15,16 @@ import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.PlayerTaskService;
 
 @Component("npcStateHandler")
 public class NPCStateHandler extends AbHandler {
 
 	@Autowired
 	private DictManager dictManager;
+
+	@Autowired
+	private PlayerTaskService playerTaskService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -72,8 +76,7 @@ public class NPCStateHandler extends AbHandler {
 		}
 		if (state == Npc.STATE_NORMAL) {
 			// 检查NPC是否处于STATE_PROCEED_TASK状态
-			for (Task task : player.getAvailableTaskList(dictManager
-					.getTaskList())) {
+			for (Task task : playerTaskService.getAvailableTaskList(player)) {
 				// 有可申请的任务在此NPC处申请
 				if (task.getApplyNpcId() == npc.getId()) {
 					state = Npc.STATE_APPLY_TASK;

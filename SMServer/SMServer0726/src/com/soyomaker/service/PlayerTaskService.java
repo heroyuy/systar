@@ -1,5 +1,6 @@
 package com.soyomaker.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +58,26 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 		this.scanAutoApplyTask(player);
 	}
 
+	/**
+	 * 获取玩家可接收任务列表
+	 * 
+	 * @param player
+	 *            玩家
+	 * @return 可接收任务列表
+	 */
+	public List<Task> getAvailableTaskList(Player player) {
+		List<Task> avaliTaskList = new ArrayList<Task>();
+		for (Task task : dictManager.getTaskList()) {
+			if (player.canApplyTask(task)) {
+				avaliTaskList.add(task);
+			}
+		}
+
+		return avaliTaskList;
+	}
+
 	public void scanAutoApplyTask(Player player) {
-		List<Task> availableTaskList = player.getAvailableTaskList(dictManager
-				.getTaskList());
+		List<Task> availableTaskList = this.getAvailableTaskList(player);
 		for (Task task : availableTaskList) {
 			if (task.getType() == Task.TYPE_PLOTLINE) {
 				// 主线任务自动接收

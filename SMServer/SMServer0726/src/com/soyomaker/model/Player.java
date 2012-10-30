@@ -129,24 +129,6 @@ public class Player {
 		return this.getStre() + atk;
 	}
 
-	/**
-	 * 获取玩家可接收任务列表
-	 * 
-	 * @param player
-	 *            玩家
-	 * @return 可接收任务列表
-	 */
-	public List<Task> getAvailableTaskList(Collection<Task> tasks) {
-		List<Task> avaliTaskList = new ArrayList<Task>();
-		for (Task task : tasks) {
-			if (this.canApplyTask(task)) {
-				avaliTaskList.add(task);
-			}
-		}
-
-		return avaliTaskList;
-	}
-
 	public Integer getAvatar() {
 		return avatar;
 	}

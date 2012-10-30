@@ -16,6 +16,7 @@ import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.PlayerTaskService;
 
 @Component("npcDialogueHandler")
 public class NPCDialogueHandler extends AbHandler {
@@ -25,6 +26,9 @@ public class NPCDialogueHandler extends AbHandler {
 
 	@Autowired
 	private TaskUtil taskUtil;
+
+	@Autowired
+	private PlayerTaskService playerTaskService;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -50,7 +54,7 @@ public class NPCDialogueHandler extends AbHandler {
 			}
 		}
 		// (4)可以接的任务
-		for (Task task : player.getAvailableTaskList(dictManager.getTaskList())) {
+		for (Task task : playerTaskService.getAvailableTaskList(player)) {
 			if (task.getApplyNpcId() == npc.getId()) {
 				taskObjs.add(taskUtil.convertTask(player, task));
 			}
