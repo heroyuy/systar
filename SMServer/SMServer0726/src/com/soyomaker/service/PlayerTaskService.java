@@ -87,6 +87,11 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 		}
 	}
 
+	public void removePlayerTask(Player player, PlayerTask pt) {
+		player.removePlayerTask(pt.getTaskId());
+		this.delete(pt);
+	}
+
 	/**
 	 * 同步玩家的任务列表到数据库
 	 * 
