@@ -8,8 +8,8 @@ import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
 
-@Component("notificationPushHandler")
-public class NotificationPushHandler extends AbHandler {
+@Component("noticeHandler")
+public class NoticeHandler extends AbHandler {
 
 	@Autowired
 	private UserSessionManager userSessionManager;

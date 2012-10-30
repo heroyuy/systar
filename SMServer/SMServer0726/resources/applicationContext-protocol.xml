@@ -116,11 +116,11 @@
 		<property name="handler" ref="chatHandler" />
 	</bean>
 	
-	<bean id="p104001" class="com.soyomaker.net.Protocol">
+	<bean id="p104002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="104001" />
 		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
-		<property name="handler" ref="chatHandler" />
+		<property name="handler" ref="noticeHandler" />
 	</bean>
 
 	<bean id="p105001" class="com.soyomaker.net.Protocol">
