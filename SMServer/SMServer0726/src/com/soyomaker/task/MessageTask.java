@@ -37,7 +37,7 @@ public class MessageTask {
 	@Autowired
 	private UserSessionManager sessionManager;
 
-	@Scheduled(fixedDelay = 3000)
+	@Scheduled(fixedDelay = 10000)
 	public void sendNotification() {
 		List<Message> messages = messageService.findUnreadNotification();
 		// TODO ConcurrentException等后期处理
