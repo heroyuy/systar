@@ -55,13 +55,13 @@ Interpreter.functionList={
   [101014]="playAnimation",
   [101015]="toneScene",
   [101016]="shakeScene",
-  [101017]="npcForceMove",
+  [101017]="autoMove",
   [101018]="showNpc",
   
   [102001]="getPlayerProperty",
   [102002]="getPlayerName",
-  [102003]="getPlayerSkillStatus",
-  [102004]="getPlayerEquipStatus",
+  [102003]="getPlayerSkillState",
+  [102004]="getPlayerEquipState",
   [102005]="getMoneyNum",
   [102006]="getItemNum",
   [102007]="getEquipNum"
@@ -77,16 +77,8 @@ Interpreter.functionList={
 
 ---------------------------------------------------------------
 --运行脚本,必需运行在主线程
-function Interpreter:runScript(scriptId)
-  local file=Game.path.."/data/script/script"..scriptId..".gat"
-  local scriptFunction=loadfile(file)
-  --将脚本调入子线程运行
-  ScriptThread:start(scriptFunction)
-end
-
-function Interpreter:runTaskStep(taskId,stepId)
-  smLog:info(taskId.." "..taskId)
-  local file=Game.path.."/data/script/task/task"..taskId.."_"..(stepId+1)..".gat"
+function Interpreter:runScript(file)
+  local file=Game.path..file
   local scriptFunction=loadfile(file)
   --将脚本调入子线程运行
   ScriptThread:start(scriptFunction)
@@ -219,7 +211,7 @@ function Interpreter:shakeScene(range,millisecond,times)
 end
 
 --Npc强制移动
-function Interpreter:npcForceMove(npcId,mapId,row,col)
+function Interpreter:autoMove(npcId,mapId,row,col)
 end
 
 --显示/隐藏Npc
@@ -236,11 +228,11 @@ function Interpreter:getPlayerName(playerId)
 end
 
 --获取技能状态
-function Interpreter:getPlayerSkillStatus(playerId,skillId)
+function Interpreter:getPlayerSkillState(playerId,skillId)
 end
 
 --获取装备状态 
-function Interpreter:getPlayerEquipStatus(playerId,equipId)
+function Interpreter:getPlayerEquipState(playerId,equipId)
 end
 
 --获取金钱数量

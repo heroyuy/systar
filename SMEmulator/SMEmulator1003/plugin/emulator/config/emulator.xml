@@ -26,5 +26,5 @@
 			<port>9090</port>
 		</server>
 	</servers>
-	<userServer>2</userServer>
+	<userServer>1</userServer>
 </config>
