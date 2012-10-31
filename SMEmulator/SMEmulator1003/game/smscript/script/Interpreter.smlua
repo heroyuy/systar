@@ -118,7 +118,7 @@ end
 
 --============异常处理类============
 function Interpreter:unknownCommand(commandId)
-  print("unknownCommand:"..commandId)
+  print("unknownCommand:".. tostring(commandId))
 end
 
 --============流程控制类============
