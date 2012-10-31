@@ -105,11 +105,22 @@ end
 
 --执行命令,executeScript运行在子线程，其它运行在主线程中
 function Interpreter:executeCommand(id,...)
-  local fun=Interpreter[Interpreter.functionList[id]]
+  local funName=Interpreter.functionList[id]
+  if not funName then
+    funName="unknownCommand"
+    table.insert(arg,id,1)
+  end
+  local fun=Interpreter[funName]
   return fun(self,unpack(arg))
 end
 
 --注:以下方法中executeScript运行在子线程，其它均运行在主线程中
+
+--============异常处理类============
+function Interpreter:unknownCommand(commandId)
+  print("unknownCommand:"..commandId)
+end
+
 --============流程控制类============
 --执行公共脚本
 function Interpreter:executeScript(scriptId)
