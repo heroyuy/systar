@@ -96,7 +96,7 @@ end
 
 
 --显示普通对话框
-function GameLayer:showNormalDialog(name,content,bustPath,position,target,callback)
+function GameLayer:showMessageDialog(name,content,bustPath,position,target,callback)
   local normalDialog=clsDialogPanel:new(name,content,bustPath,position)
   local delegate={}
   function delegate:dialogEnd()

@@ -77,8 +77,8 @@ Interpreter.functionList={
 
 ---------------------------------------------------------------
 --运行脚本,必需运行在主线程
-function Interpreter:runScript(file)
-  local file=Game.path..file
+function Interpreter:runScript(path)
+  local file=Game.path..path
   local scriptFunction=loadfile(file)
   --将脚本调入子线程运行
   ScriptThread:start(scriptFunction)
@@ -128,14 +128,17 @@ end
 --============游戏表现类============
 --显示倒计时
 function Interpreter:showTimer(millisecond)
+  return true
 end
 
 --播放音乐
 function Interpreter:playMusic(name,loop)
+  return true
 end
 
 --停止音乐
 function Interpreter:stopMusic(name)
+  return true
 end
 
 --显示对话
@@ -144,13 +147,13 @@ function Interpreter:showMessageDialog(name,content,bustPath,position)
   function delegate:dialogEnd()
     Interpreter:endCurrentEvent()
   end
-  GameLayer:showNormalDialog(name,content,bustPath,position,delegate,"dialogEnd")
+  GameLayer:showMessageDialog(name,content,bustPath,position,delegate,"dialogEnd")
   return false  --返回值为flase表示此方法不立即返回
 end
 
 --显示输入框
 function Interpreter:showInputDialog(tip)
-  return false  --返回值为flase表示此方法不立即返回
+  return true
 end
 
 --显示选项框 e.g  {"yes","no","cancel"}
@@ -180,69 +183,86 @@ end
 
 --显示图片
 function Interpreter:showImage(name,x,y,millisecond)
+  return true
 end
 
 --移除图片
 function Interpreter:removeImage(name)
+  return true
 end
 
 --移动图片
 function Interpreter:moveImage(name,x,y,millisecond)
+  return true
 end
 
 --旋转图片
 function Interpreter:rotateImage(name,type,degree,millisecond)
+  return true
 end
 
 --更改图片色调
 function Interpreter:toneImage(name,a,r,g,b,millisecond)
+  return true
 end
 
 --显示动画
 function Interpreter:playAnimation(animationId,x,y)
+  return true
 end
 
 --更改画面色调
 function Interpreter:toneScene(a,r,g,b,millisecond)
+  return true
 end
 
 --画面震动
 function Interpreter:shakeScene(range,millisecond,times)
+  return true
 end
 
 --Npc强制移动
 function Interpreter:autoMove(npcId,mapId,row,col)
+  return true
 end
 
 --显示/隐藏Npc
 function Interpreter:showNpc(npcId,visible,mapId,row,col)
+  return true
 end
 
 --============数据处理类============
 --获取玩家属性
 function Interpreter:getPlayerProperty(playerId,propertyType)
+  return true
 end
 
 --获取玩家名称
 function Interpreter:getPlayerName(playerId)
+  return true
 end
 
 --获取技能状态
 function Interpreter:getPlayerSkillState(playerId,skillId)
+  return true
 end
 
 --获取装备状态 
 function Interpreter:getPlayerEquipState(playerId,equipId)
+  return true
 end
 
 --获取金钱数量
 function Interpreter:getMoneyNum()
+  return true
 end
 
 --获取物品数量
 function Interpreter:getItemNum(itemId)
+  return true
 end
 
 --获取装备数量
 function Interpreter:getEquipNum(equipId)
+  return true
 end
