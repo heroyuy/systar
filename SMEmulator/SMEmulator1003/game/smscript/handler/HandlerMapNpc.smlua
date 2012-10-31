@@ -45,7 +45,7 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
       else
         if not taskList[1].stepOver then
           --有该任务，但没完成的时候
-          --Interpreter:runTaskStep(taskList[1].id,taskList[1].step)
+          Interpreter:runScript("/data/script/task/task"..taskList[1].id.."_"..taskList[1].step..".gat")
           smNet:nextStepTask(taskList[1].id)
         else
           --有该任务，已经完成的时候，显示完成任务对话框
