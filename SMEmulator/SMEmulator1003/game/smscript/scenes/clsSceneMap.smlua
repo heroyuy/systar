@@ -227,6 +227,13 @@ end
 --布置npc
 function clsSceneMap:placeNpc()
   smLog:info("布置npc")
+  for k,npc in pairs(GameData.curNpcList) do
+    if npc.charImg then
+      if npc.type == clsNpc.TYPE_NORMAL then
+        self.spriteLayer:removeChildWithTag(npc.id)
+      end
+    end
+  end
   --Npc
   for k,npc in pairs(GameData.curNpcList) do
   	if npc.charImg then

@@ -67,6 +67,17 @@ function clsUILayer:childAt(index)
   return self.children[index]
 end
 
+--获取传入layer的index序号
+function clsUILayer:indexOfChild(lay)
+  local index=-1
+  for i,layer in ipairs(self.children) do
+    if layer.tag==lay.tag then
+      return i
+    end
+  end
+  return index
+end
+
 --根据tag获取子layer
 function clsUILayer:childWithTag(tag)
   local child=nil
@@ -86,6 +97,18 @@ function clsUILayer:removeChildAt(index)
   layer:stopAllAction()					--停止层上的所有动作
   layer.parent=nil						--移除父层引用
   table.remove(self.children,index)		--移除列表
+end
+
+--移除指定Tag的子Layer
+function clsUILayer:removeChildWithTag(tag)
+  local layer=self:childWithTag(tag)
+  if layer then
+  	layer:clear()							--清理待移除的层
+  	layer:stopAllAction()					--停止层上的所有动作
+  	layer.parent=nil						--移除父层引用
+  	local index=self:indexOfChild(layer)
+  	table.remove(self.children,index)		--移除列表
+  end
 end
 
 --移除子Layer

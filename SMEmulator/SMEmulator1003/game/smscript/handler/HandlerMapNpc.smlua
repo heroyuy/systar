@@ -38,19 +38,22 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
         function delegate:onSelected(OkOrCancle)
           --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
     	  if OkOrCancle then
+    	    smNet:applyTask(taskList[1].id)
     	  end
   		end
         GameLayer:showTaskApplyDialog("","",taskList[1],delegate,"onSelected")
       else
         if not taskList[1].stepOver then
           --有该任务，但没完成的时候
-          Interpreter:runTaskStep(taskList[1].id,taskList[1].step)
+          --Interpreter:runTaskStep(taskList[1].id,taskList[1].step)
+          smNet:nextStepTask(taskList[1].id)
         else
           --有该任务，已经完成的时候，显示完成任务对话框
           local delegate={}
           function delegate:onSelected(OkOrCancle)
-            --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
+            --如果点击确定按钮，提交完成任务，此时需要检查任务的完成条件，条件不满足，弹出提示框提醒
     	    if OkOrCancle then
+    	      
     	    end
   		  end
           GameLayer:showTaskCompleteDialog("","",taskList[1],delegate,"onSelected")
@@ -58,6 +61,10 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
       end
     elseif taskSize==2 then
       smLog:info("给出列表")
+  	  local delegate={}
+  	  function delegate:optionSelected(index)
+  	  end
+  	  GameLayer:showOptionDialog("任务列表","","",taskList,delegate,"optionSelected")
     end
   end
 end
