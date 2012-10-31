@@ -78,6 +78,7 @@ Interpreter.functionList={
 ---------------------------------------------------------------
 --运行脚本,必需运行在主线程
 function Interpreter:runScript(path)
+  print("运行脚本:"..path)
   local file=Game.path..path
   local scriptFunction=loadfile(file)
   --将脚本调入子线程运行
