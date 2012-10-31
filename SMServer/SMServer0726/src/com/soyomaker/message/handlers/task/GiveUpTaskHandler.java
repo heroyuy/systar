@@ -1,16 +1,25 @@
 package com.soyomaker.message.handlers.task;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.message.MessageSender;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
+import com.soyomaker.service.PlayerTaskService;
 
 @Component("giveUpTaskHandler")
 public class GiveUpTaskHandler extends AbHandler {
+
+	@Autowired
+	private PlayerTaskService playerTaskService;
+
+	@Autowired
+	private MessageSender messageSender;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -33,8 +42,10 @@ public class GiveUpTaskHandler extends AbHandler {
 			return;
 		}
 		// (4)移除任务
-		player.removePlayerTask(id);
+		playerTaskService.removePlayerTask(player, pt);
 		this.sendMessage(session, msg, true, "放弃任务成功");
+		// 触发更新NPC状态
+		messageSender.updateNPCStatus(session);
 	}
 
 }

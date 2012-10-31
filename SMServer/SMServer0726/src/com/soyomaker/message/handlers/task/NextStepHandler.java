@@ -1,14 +1,19 @@
 package com.soyomaker.message.handlers.task;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.message.MessageSender;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 
 @Component("nextStepHandler")
 public class NextStepHandler extends AbHandler {
+
+	@Autowired
+	private MessageSender messageSender;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -39,6 +44,8 @@ public class NextStepHandler extends AbHandler {
 		GameObject msgSent = this.buildPackage(msg, true, "步骤完成");
 		msgSent.putBool("stepOver", pt.isStepOver());
 		netTransceiver.sendMessage(session, msgSent);
+		// 触发更新NPC状态
+		messageSender.updateNPCStatus(session);
 	}
 
 }
