@@ -14,47 +14,58 @@ public class NoticeHandler extends AbHandler {
 
 	@Autowired
 	private UserSessionManager userSessionManager;
-	
-	
-	@Listener(hint="doPayment")
-	public void doSomeThing(String str){
+
+	@Listener(hint = "doPayment")
+	public void doSomeThing(String str) {
 		System.out.println(str);
+		// List<Message> messages = messageService.findUnreadNotification();
+		// // TODO ConcurrentException等后期处理
+		// Collection<UserSession> userSessions = sessionManager
+		// .getAllUserSession();
+		// for (UserSession session : userSessions) {
+		// for (Message msg : messages) {
+		// GameObject go = new GameObject(Protocol.PUSH_MESSAGE);
+		// go.putString("title", msg.getTitle());
+		// go.putString("content", msg.getContent());
+		// go.putString("date", formatDate(msg.getTime(), DATE_TYPE));
+		// netTransceiver.sendMessage(session, go);
+		// }
+		// }
 	}
-	
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		
+
 		netTransceiver.sendMessage(session, msg);
-		
+
 		/*
-		GameObject pushMessageObject=new GameObject();
-		pushMessageObject.setType(Protocol.PUSH_MESSAGE);
-		pushMessageObject.putString("title", value);
-		pushMessageObject.putString("content", player.getName());
-		pushMessageObject.putString("date", content);
-		*/
-		
-//		//获得聊天信息的序列号
-//		int sn = msg.getInt(SN_KEY);
-//		String content = msg.getString("content");
-//		Player player = session.getUser().getPlayer();
-//		GameObject msgSent = new GameObject(msg.getType());
-//		msgSent.putInt("playerId", player.getId());
-//		msgSent.putString("playerName", player.getName());
-//		msgSent.putString("content", content);
-//		Collection<UserSession> userSessions = userSessionManager
-//				.getAllUserSession();
-//		for (UserSession userSession : userSessions) {
-//			if (userSession.equals(session)) {
-//				msgSent.putInt(SN_KEY, sn);
-//			} else {
-//				msgSent.remove(SN_KEY);
-//			}
-//			netTransceiver.sendMessage(userSession, msgSent);
-//		}
+		 * GameObject pushMessageObject=new GameObject();
+		 * pushMessageObject.setType(Protocol.PUSH_MESSAGE);
+		 * pushMessageObject.putString("title", value);
+		 * pushMessageObject.putString("content", player.getName());
+		 * pushMessageObject.putString("date", content);
+		 */
+
+		// //获得聊天信息的序列号
+		// int sn = msg.getInt(SN_KEY);
+		// String content = msg.getString("content");
+		// Player player = session.getUser().getPlayer();
+		// GameObject msgSent = new GameObject(msg.getType());
+		// msgSent.putInt("playerId", player.getId());
+		// msgSent.putString("playerName", player.getName());
+		// msgSent.putString("content", content);
+		// Collection<UserSession> userSessions = userSessionManager
+		// .getAllUserSession();
+		// for (UserSession userSession : userSessions) {
+		// if (userSession.equals(session)) {
+		// msgSent.putInt(SN_KEY, sn);
+		// } else {
+		// msgSent.remove(SN_KEY);
+		// }
+		// netTransceiver.sendMessage(userSession, msgSent);
+		// }
 	}
-	
+
 	/**
 	 * 根据收到的包构造回复包，初始化回复包的序列号和协议ID
 	 * 
@@ -67,6 +78,5 @@ public class NoticeHandler extends AbHandler {
 		msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
 		return msgSent;
 	}
-
 
 }

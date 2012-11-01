@@ -55,7 +55,7 @@ public class PlayerTaskService extends AbstractService<PlayerTask> {
 			player.addPlayerTask(playerTask);
 		}
 		// 扫描自动接收的任务
-		this.scanAutoApplyTask(player);
+//		this.scanAutoApplyTask(player);
 	}
 
 	/**
