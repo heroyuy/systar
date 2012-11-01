@@ -1,5 +1,6 @@
 package com.soyomaker.message.handlers.chat;
 
+import org.rribbit.Listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,11 @@ public class NoticeHandler extends AbHandler {
 	@Autowired
 	private UserSessionManager userSessionManager;
 	
+	
+	@Listener(hint="doPayment")
+	public void doSomeThing(String str){
+		System.out.println(str);
+	}
 	
 
 	@Override

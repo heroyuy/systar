@@ -16,4 +16,20 @@
 
 	<task:annotation-driven />
 
+	<bean id="creator"
+		class="org.rribbit.creation.SpringBeanClassBasedListenerObjectCreator">
+		<property name="classNames">
+			<list>
+				<value>com.soyomaker.message.handlers.chat.NoticeHandler</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="requestResponseBus" class="org.rribbit.RRiBbitUtil"
+		factory-method="createRequestResponseBusForLocalUse">
+		<constructor-arg ref="creator" />
+		<constructor-arg value="true" />
+	</bean>
+
+
 </beans>
