@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.rribbit.RequestResponseBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -36,22 +37,27 @@ public class MessageTask {
 
 	@Autowired
 	private UserSessionManager sessionManager;
+	
+	@Autowired
+	private RequestResponseBus rrb;
 
-	@Scheduled(fixedDelay = 100000)
+
+	@Scheduled(fixedDelay = 3000)
 	public void sendNotification() {
-		List<Message> messages = messageService.findUnreadNotification();
-		// TODO ConcurrentException等后期处理
-		Collection<UserSession> userSessions = sessionManager
-				.getAllUserSession();
-		for (UserSession session : userSessions) {
-			for (Message msg : messages) {
-				GameObject go = new GameObject(Protocol.PUSH_MESSAGE);
-				go.putString("title", msg.getTitle());
-				go.putString("content", msg.getContent());
-				go.putString("date", formatDate(msg.getTime(), DATE_TYPE));
-				netTransceiver.sendMessage(session, go);
-			}
-		}
+		rrb.send("doPayment", "1231");
+//		List<Message> messages = messageService.findUnreadNotification();
+//		// TODO ConcurrentException等后期处理
+//		Collection<UserSession> userSessions = sessionManager
+//				.getAllUserSession();
+//		for (UserSession session : userSessions) {
+//			for (Message msg : messages) {
+//				GameObject go = new GameObject(Protocol.PUSH_MESSAGE);
+//				go.putString("title", msg.getTitle());
+//				go.putString("content", msg.getContent());
+//				go.putString("date", formatDate(msg.getTime(), DATE_TYPE));
+//				netTransceiver.sendMessage(session, go);
+//			}
+//		}
 	}
 
 	private String formatDate(Date date, String format) {
