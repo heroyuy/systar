@@ -7,19 +7,6 @@
 Interpreter={}
 
 --常量
-Interpreter.OperateType={}
-Interpreter.OperateType.ASSIGN=0
-Interpreter.OperateType.PLUS=1
-Interpreter.OperateType.MINUS=2
-Interpreter.OperateType.MULTIPLY=3
-Interpreter.OperateType.DIVIDE=4
-Interpreter.OperateType.MOD=5
-
-Interpreter.ValueType={}
-Interpreter.ValueType.CONST=0
-Interpreter.ValueType.VARIABLE=1
-Interpreter.ValueType.SWITCH=2
-
 Interpreter.PropertyType={}
 Interpreter.PropertyType.STR=0
 Interpreter.PropertyType.AGI=1
