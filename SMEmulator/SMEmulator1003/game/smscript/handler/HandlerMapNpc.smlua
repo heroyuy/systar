@@ -41,12 +41,18 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
     	    smNet:applyTask(taskList[1].id)
     	  end
   		end
-        GameLayer:showTaskApplyDialog("","",taskList[1],delegate,"onSelected")
+        GameLayer:showTaskApplyDialog("申请任务","",taskList[1],delegate,"onSelected")
       else
         if not taskList[1].stepOver then
           --有该任务，但没完成的时候
+          local delegate={}
+          function delegate:scriptEnd()
+            smLog:info("下一步任务")
+            smNet:nextStepTask(taskList[1].id)
+            Notifier:removeObserver(Const.NotifyCMD.System.SCRIPT_END,self)
+          end
+          Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,delegate,"scriptEnd")
           Interpreter:runScript("/data/script/task/task"..taskList[1].id.."_"..(taskList[1].step+1)..".gat")
-          smNet:nextStepTask(taskList[1].id)
         else
           --有该任务，已经完成的时候，显示完成任务对话框
           local delegate={}
@@ -56,7 +62,7 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
     	      
     	    end
   		  end
-          GameLayer:showTaskCompleteDialog("","",taskList[1],delegate,"onSelected")
+          GameLayer:showTaskCompleteDialog("完成任务","",taskList[1],delegate,"onSelected")
         end
       end
     elseif taskSize==2 then
