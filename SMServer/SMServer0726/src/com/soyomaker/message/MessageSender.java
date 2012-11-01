@@ -32,4 +32,12 @@ public class MessageSender {
 				PROTOCOL_ID_UPDATE_NPC_STATUS));
 	}
 
+	/**
+	 * 发送公告
+	 */
+	public void sendNotice() {
+		// TODO UserSession 为空会异常
+		netTransceiver.dispatchMessage(null, new GameObject(
+				PROTOCOL_ID_UPDATE_NPC_STATUS));
+	}
 }

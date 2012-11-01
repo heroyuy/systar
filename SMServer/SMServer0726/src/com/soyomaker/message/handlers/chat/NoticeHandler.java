@@ -1,10 +1,15 @@
 package com.soyomaker.message.handlers.chat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.rribbit.Listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.soyomaker.event.EventIdConst;
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.message.MessageSender;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.UserSession;
 import com.soyomaker.net.UserSessionManager;
@@ -12,12 +17,17 @@ import com.soyomaker.net.UserSessionManager;
 @Component("noticeHandler")
 public class NoticeHandler extends AbHandler {
 
+	private static final String DATE_TYPE = "yyyy-MM-dd HH:mm";
+
+	@Autowired
+	private MessageSender messageSender;
+
 	@Autowired
 	private UserSessionManager userSessionManager;
 
-	@Listener(hint = "doPayment")
-	public void doSomeThing(String str) {
-		System.out.println(str);
+	@Listener(hint = EventIdConst.EventIdNoticePolling)
+	public void pollingNotice() {
+
 		// List<Message> messages = messageService.findUnreadNotification();
 		// // TODO ConcurrentException等后期处理
 		// Collection<UserSession> userSessions = sessionManager
@@ -77,6 +87,11 @@ public class NoticeHandler extends AbHandler {
 		msgSent.setType(msgReceived.getType());
 		msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
 		return msgSent;
+	}
+
+	private String formatDate(Date date, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(date);
 	}
 
 }
