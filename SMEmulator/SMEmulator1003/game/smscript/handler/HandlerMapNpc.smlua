@@ -15,39 +15,39 @@ end
 --====================================================
 HandlerMap.dialogWithNpc={}
 
-function HandlerMap.dialogWithNpc:doApplyTask(taskList)
+function HandlerMap.dialogWithNpc:doApplyTask(task)
   --没有该任务的时候显示申请任务对话框
   local delegate={}
   function delegate:onSelected(OkOrCancle)
     --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
     if OkOrCancle then
-      smNet:applyTask(taskList[1].id)
+      smNet:applyTask(task.id)
     end
   end
-  GameLayer:showTaskApplyDialog("申请任务","",taskList[1],delegate,"onSelected")
+  GameLayer:showTaskApplyDialog("申请任务","",task,delegate,"onSelected")
 end
 
-function HandlerMap.dialogWithNpc:doNextStep(taskList)
-  if not taskList[1].stepOver then
+function HandlerMap.dialogWithNpc:doNextStep(task)
+  if not task.stepOver then
 	--有该任务，但没完成的时候
 	local delegate={}
 	function delegate:scriptEnd()
 	  smLog:info("下一步任务")
-	  smNet:nextStepTask(taskList[1].id)
+	  smNet:nextStepTask(task.id)
 	  Notifier:removeObserver(Const.NotifyCMD.System.SCRIPT_END,self)
 	end
 	Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,delegate,"scriptEnd")
-	Interpreter:runScript("/data/script/task/task"..taskList[1].id.."_"..(taskList[1].step+1)..".gat")
+	Interpreter:runScript("/data/script/task/task"..task.id.."_"..(task.step+1)..".gat")
   else
 	--有该任务，已经完成的时候，显示完成任务对话框
 	local delegate={}
 	function delegate:onSelected(OkOrCancle)
 	  --如果点击确定按钮，提交完成任务，此时需要检查任务的完成条件，条件不满足，弹出提示框提醒
 	  if OkOrCancle then
-	    smNet:completeTask(taskList[1].id)
+	    smNet:completeTask(task.id)
 	  end
 	end
-	GameLayer:showTaskCompleteDialog("完成任务","",taskList[1],delegate,"onSelected")
+	GameLayer:showTaskCompleteDialog("完成任务","",task,delegate,"onSelected")
   end		  
 end
 
@@ -56,10 +56,11 @@ function HandlerMap.dialogWithNpc:doTaskList(taskList)
 	local taskSize=table.getn(taskList)
 	function delegate:optionSelected(index)
 	  smLog:info("你选择了"..index)
-	  if not taskList[index].has then
-        HandlerMap.dialogWithNpc:doApplyTask(taskList)
+	  local task = taskList[index]
+	  if not task.has then
+        HandlerMap.dialogWithNpc:doApplyTask(task)
 	  else
-        HandlerMap.dialogWithNpc:doNextStep(taskList)
+        HandlerMap.dialogWithNpc:doNextStep(task)
 	  end
 	end
 	local list={}
@@ -96,9 +97,9 @@ function HandlerMap.dialogWithNpc:handleMessage(msg)
     elseif taskSize==1 then
       smLog:info("直接对话")
       if not taskList[1].has then
-        HandlerMap.dialogWithNpc:doApplyTask(taskList)
+        HandlerMap.dialogWithNpc:doApplyTask(taskList[1])
 	  else
-        HandlerMap.dialogWithNpc:doNextStep(taskList)
+        HandlerMap.dialogWithNpc:doNextStep(taskList[1])
 	  end
     elseif taskSize>=2 then
       smLog:info("给出列表")
