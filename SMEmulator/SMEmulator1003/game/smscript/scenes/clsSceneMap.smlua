@@ -205,6 +205,7 @@ function clsSceneMap:onStart()
   --定时任务
   Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
+  self:placeNpc()
 end
 
 -- 更新

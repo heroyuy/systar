@@ -5,8 +5,6 @@ function HandlerMap.updateNpcState:handleMessage(msg)
   msg=HandlerMap:msgToLua(msg)
   local stateList=msg.stateList
   for k,npc in pairs(stateList) do
-    --smLog:info(npc.npcId)
-    --smLog:info(npc.state)
     if GameData.curNpcList[npc.npcId] then
       GameData.curNpcList[npc.npcId].state=npc.state
     end
@@ -46,6 +44,7 @@ function HandlerMap.dialogWithNpc:doNextStep(taskList)
 	function delegate:onSelected(OkOrCancle)
 	  --如果点击确定按钮，提交完成任务，此时需要检查任务的完成条件，条件不满足，弹出提示框提醒
 	  if OkOrCancle then
+	    smNet:completeTask(taskList[1].id)
 	  end
 	end
 	GameLayer:showTaskCompleteDialog("完成任务","",taskList[1],delegate,"onSelected")
@@ -65,7 +64,18 @@ function HandlerMap.dialogWithNpc:doTaskList(taskList)
 	end
 	local list={}
 	for num=1,taskSize do
-	  list[#list+1]=taskList[num].intro
+	  local task = taskList[num]
+	  local tip = ""
+	  if not task.has then
+	    tip = "[可申请]"
+	  elseif not task.finish then
+	    if task.stepOver then
+	      tip = "[可完成]"
+	    else
+	      tip = "[进行中]"
+	    end
+	  end
+	  list[#list+1]=task.intro..tip
 	end
 	GameLayer:showOptionDialog("任务列表","","",list,delegate,"optionSelected")
 end

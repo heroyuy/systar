@@ -38,6 +38,8 @@ public class Net {
 
 	private static final String MSG_ID_TASK_NEXT_STEP = "105004";
 
+	private static final String MSG_ID_TASK_COMPLETE = "105005";
+
 	private static final String MSG_ID_NPC_DIALOGUE = "106002";
 
 	private static Net instance = new Net();
@@ -206,6 +208,16 @@ public class Net {
 	public void nextStepTask(int id) {
 		GameObject msg = new GameObject();
 		msg.setType(MSG_ID_TASK_NEXT_STEP);
+		msg.putInt("taskId", id);
+		NetTransceiver.getInstance().sendMessage(msg);
+	}
+
+	/**
+	 * 任务完成 105005
+	 */
+	public void completeTask(int id) {
+		GameObject msg = new GameObject();
+		msg.setType(MSG_ID_TASK_COMPLETE);
 		msg.putInt("taskId", id);
 		NetTransceiver.getInstance().sendMessage(msg);
 	}
