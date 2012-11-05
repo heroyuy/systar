@@ -39,7 +39,7 @@ MsgHandlerFactory["106002"]=HandlerMap.dialogWithNpc
 function MsgHandlerFactory:dispatchMessage(msg)
   --显示消息
   local msgLuaString=msg:toLua()
-  smLog:info("dispatchMessage->"..msgLuaString)
+  smLog:info("msg to lua:"..msgLuaString)
   --分发消息
   local id=msg:getType()
   self[id]:handleMessage(msg)
