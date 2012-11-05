@@ -19,38 +19,25 @@ public class ChatHandler extends AbHandler {
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
-		//获得聊天信息的序列号
-		int sn = msg.getInt(SN_KEY);
 		String content = msg.getString("content");
 		Player player = session.getUser().getPlayer();
-		GameObject msgSent = new GameObject(msg.getType());
-		msgSent.putInt("playerId", player.getId());
-		msgSent.putString("playerName", player.getName());
-		msgSent.putString("content", content);
+		GameObject msgResponse = this.buildNormalPackage(msg);
+		msgResponse.putInt("playerId", player.getId());
+		msgResponse.putString("playerName", player.getName());
+		msgResponse.putString("content", content);
+		GameObject msgPush = this.buildPushPackage(msg);
+		msgPush.putInt("playerId", player.getId());
+		msgPush.putString("playerName", player.getName());
+		msgPush.putString("content", content);
 		Collection<UserSession> userSessions = userSessionManager
 				.getAllUserSession();
 		for (UserSession userSession : userSessions) {
 			if (userSession.equals(session)) {
-				msgSent.putInt(SN_KEY, sn);
+				netTransceiver.sendMessage(userSession, msgResponse);
 			} else {
-				msgSent.remove(SN_KEY);
+				netTransceiver.sendMessage(userSession, msgPush);
 			}
-			netTransceiver.sendMessage(userSession, msgSent);
 		}
 	}
-	
-	/**
-	 * 根据收到的包构造回复包，初始化回复包的序列号和协议ID
-	 * 
-	 * @param msgReceived
-	 *            收到的包
-	 */
-	public GameObject buildResponsePackage(GameObject msgReceived) {
-		GameObject msgSent = new GameObject();
-		msgSent.setType(msgReceived.getType());
-		msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
-		return msgSent;
-	}
-
 
 }

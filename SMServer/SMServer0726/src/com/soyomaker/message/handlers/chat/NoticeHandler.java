@@ -44,13 +44,13 @@ public class NoticeHandler extends AbHandler {
 		// TODO ConcurrentException等后期处理
 		Collection<UserSession> userSessions = sessionManager
 				.getAllUserSession();
-		for (UserSession us : userSessions) {
-			for (Message message : messages) {
-				GameObject go = new GameObject(msg.getType());
-				go.putString("title", message.getTitle());
-				go.putString("content", message.getContent());
-				go.putString("date", formatDate(message.getTime(), DATE_TYPE));
-				netTransceiver.sendMessage(us, go);
+		GameObject msgPush = this.buildPushPackage(msg);
+		for (Message message : messages) {
+			msgPush.putString("title", message.getTitle());
+			msgPush.putString("content", message.getContent());
+			msgPush.putString("date", formatDate(message.getTime(), DATE_TYPE));
+			for (UserSession us : userSessions) {
+				netTransceiver.sendMessage(us, msgPush);
 			}
 		}
 	}
