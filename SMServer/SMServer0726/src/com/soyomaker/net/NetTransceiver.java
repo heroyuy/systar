@@ -42,7 +42,7 @@ public class NetTransceiver {
 		}
 		// (2)检查协议是否是应答协议
 		if (protocol.getType() != Protocol.TYPE_RESPONSE_ONLY
-				&& protocol.getType() != Protocol.TYPE_PUSH_AND_RESPONSE) {
+				&& protocol.getType() != Protocol.TYPE_RESPONSE_AND_PUSH) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a response protocol");
 			return;
@@ -79,7 +79,7 @@ public class NetTransceiver {
 		}
 		// (2)检查协议是否是推送协议
 		if (protocol.getType() != Protocol.TYPE_PUSH_ONLY
-				&& protocol.getType() != Protocol.TYPE_PUSH_AND_RESPONSE) {
+				&& protocol.getType() != Protocol.TYPE_RESPONSE_AND_PUSH) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a push protocol");
 			return;

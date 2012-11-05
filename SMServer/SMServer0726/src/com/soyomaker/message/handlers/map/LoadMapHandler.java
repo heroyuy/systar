@@ -28,7 +28,7 @@ public class LoadMapHandler extends AbHandler {
 	public void handleMessage(UserSession session, GameObject msg) {
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
-		GameObject msgSent = this.buildPackage(msg);
+		GameObject msgSent = this.buildNormalPackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
 		for (Npc npc : mapData.getNpcList()) {
 			GameObject mapEntryObj = new GameObject();
@@ -38,7 +38,7 @@ public class LoadMapHandler extends AbHandler {
 		msgSent.putObjectArray("npcList", mapEntryObjList);
 		netTransceiver.sendMessage(session, msgSent);
 		// 触发更新NPC状态
-		messagePusher.updateNPCStatus(session);
+		messagePusher.updateNpcStatus(session);
 	}
 
 }

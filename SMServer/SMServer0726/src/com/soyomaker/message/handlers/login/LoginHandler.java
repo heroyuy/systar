@@ -31,20 +31,20 @@ public class LoginHandler extends AbHandler {
 		// (2)取用户名为 userName 的帐户
 		User user = userService.findByUsername(username);
 		if (user == null) {
-			this.sendMessage(session, msg, false, "帐号不存在");
+			this.sendNormalMessage(session, msg, false, "帐号不存在");
 			return;
 		}
 		// (3)验证
 		if (Config.isDebug() == false) {
 			if (!user.getPassword().equals(password)) {
-				this.sendMessage(session, msg, false, "密码不正确");
+				this.sendNormalMessage(session, msg, false, "密码不正确");
 				return;
 			}
 		}
 		// (4)登录成功
 		session.setUser(user);
 		userSessionManager.putUserSession(user.getId(), session);
-		GameObject msgSent = this.buildPackage(msg, true, "登录成功");
+		GameObject msgSent = this.buildNormalPackage(msg, true, "登录成功");
 		msgSent.putLong("userId", user.getId());
 		netTransceiver.sendMessage(session, msgSent);
 	}

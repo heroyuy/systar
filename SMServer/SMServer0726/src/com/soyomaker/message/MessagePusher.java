@@ -17,7 +17,15 @@ import com.soyomaker.net.session.UserSession;
 @Component("messagePusher")
 public class MessagePusher {
 
+	/**
+	 * 更新NPC状态
+	 */
 	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
+
+	/**
+	 * 发送公告
+	 */
+	private static final String PROTOCOL_ID_SEND_NOTICE = "104002";
 
 	@Autowired
 	protected NetTransceiver netTransceiver;
@@ -27,8 +35,8 @@ public class MessagePusher {
 	 * 
 	 * @param session
 	 */
-	public void updateNPCStatus(UserSession session) {
-		netTransceiver.dispatchMessage(session, new GameObject(
+	public void updateNpcStatus(UserSession session) {
+		netTransceiver.pushMessage(session, new GameObject(
 				PROTOCOL_ID_UPDATE_NPC_STATUS));
 	}
 
@@ -36,8 +44,7 @@ public class MessagePusher {
 	 * 发送公告
 	 */
 	public void sendNotice() {
-		// TODO UserSession 为空会异常
-		netTransceiver.dispatchMessage(null, new GameObject(
-				PROTOCOL_ID_UPDATE_NPC_STATUS));
+		netTransceiver.pushMessage(null,
+				new GameObject(PROTOCOL_ID_SEND_NOTICE));
 	}
 }

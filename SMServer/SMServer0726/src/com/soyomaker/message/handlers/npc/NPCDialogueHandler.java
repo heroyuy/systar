@@ -37,13 +37,13 @@ public class NPCDialogueHandler extends AbHandler {
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		// (1)检查NPC是否存在
 		if (!mapData.hasNpc(npcId)) {
-			this.sendMessage(session, msg, false, "当前地图上不存在此NPC");
+			this.sendNormalMessage(session, msg, false, "当前地图上不存在此NPC");
 			return;
 		}
 		// (2)检查NPC是否可以对话
 		Npc npc = mapData.getNpc(npcId);
 		if (npc.getType() != Npc.TYPE_NORMAL) {
-			this.sendMessage(session, msg, false, "此NPC不能对话");
+			this.sendNormalMessage(session, msg, false, "此NPC不能对话");
 			return;
 		}
 		// (3)进行中的任务
@@ -60,7 +60,7 @@ public class NPCDialogueHandler extends AbHandler {
 			}
 		}
 		// (5)反馈消息给客户端
-		GameObject msgSent = this.buildPackage(msg, true, "对话成功");
+		GameObject msgSent = this.buildNormalPackage(msg, true, "对话成功");
 		msgSent.putObjectArray("taskList", taskObjs);
 		netTransceiver.sendMessage(session, msgSent);
 	}

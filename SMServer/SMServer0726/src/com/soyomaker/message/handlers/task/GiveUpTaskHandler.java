@@ -28,24 +28,24 @@ public class GiveUpTaskHandler extends AbHandler {
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);
 		if (pt == null) {
-			this.sendMessage(session, msg, false, "任务不存在");
+			this.sendNormalMessage(session, msg, false, "任务不存在");
 			return;
 		}
 		// (2)检查任务是否已经完成
 		if (pt.isFinished()) {
-			this.sendMessage(session, msg, false, "任务已完成，不能放弃");
+			this.sendNormalMessage(session, msg, false, "任务已完成，不能放弃");
 			return;
 		}
 		// (3)检查任务是否是主线任务，主线任务不能放弃
 		if (pt.getTask().getType() == Task.TYPE_PLOTLINE) {
-			this.sendMessage(session, msg, false, "主线任务不能放弃");
+			this.sendNormalMessage(session, msg, false, "主线任务不能放弃");
 			return;
 		}
 		// (4)移除任务
 		playerTaskService.removePlayerTask(player, pt);
-		this.sendMessage(session, msg, true, "放弃任务成功");
+		this.sendNormalMessage(session, msg, true, "放弃任务成功");
 		// 触发更新NPC状态
-		messagePusher.updateNPCStatus(session);
+		messagePusher.updateNpcStatus(session);
 	}
 
 }

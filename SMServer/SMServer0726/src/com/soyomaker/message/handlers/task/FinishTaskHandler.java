@@ -25,7 +25,7 @@ public class FinishTaskHandler extends AbHandler {
 		// TODO Auto-generated method stub
 
 		// 触发更新NPC状态
-		messagePusher.updateNPCStatus(session);
+		messagePusher.updateNpcStatus(session);
 	}
 
 }

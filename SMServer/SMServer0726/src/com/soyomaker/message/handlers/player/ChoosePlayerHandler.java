@@ -25,17 +25,17 @@ public class ChoosePlayerHandler extends AbHandler {
 		Integer playerId = msg.getInt("playerId");
 		Player player = playerService.get(playerId);
 		if (player == null) {
-			this.sendMessage(session, msg, false, "选择角色不存在 ");
+			this.sendNormalMessage(session, msg, false, "选择角色不存在 ");
 			return;
 		}
 		if (!player.getUserId().equals(session.getUser().getId())) {
-			this.sendMessage(session, msg, false, "这个角色不属于你 ");
+			this.sendNormalMessage(session, msg, false, "这个角色不属于你 ");
 			return;
 		}
 		session.getUser().setPlayer(player);
 		// 初始化任务列表
 		playerTaskService.initPlayerTaskList(player);
-		this.sendMessage(session, msg, true, "选择角色成功");
+		this.sendNormalMessage(session, msg, true, "选择角色成功");
 	}
 
 }

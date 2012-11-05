@@ -12,7 +12,7 @@ public class Protocol {
 
 	public static final String TYPE_PUSH_ONLY = "PushOnly";
 
-	public static final String TYPE_PUSH_AND_RESPONSE = "PushAndResponse";
+	public static final String TYPE_RESPONSE_AND_PUSH = "ResponseAndPush";
 
 	/**
 	 * 协议ID
@@ -76,7 +76,15 @@ public class Protocol {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (type == TYPE_RESPONSE_ONLY || type == TYPE_PUSH_ONLY
+				|| type == TYPE_RESPONSE_AND_PUSH) {
+			this.type = type;
+		} else {
+			throw new IllegalArgumentException(
+					"protocol type must be one of \"" + TYPE_RESPONSE_ONLY
+							+ "\"、\"" + TYPE_PUSH_ONLY + "\"、\""
+							+ TYPE_RESPONSE_AND_PUSH + "\"");
+		}
 	}
 
 	public String toString() {

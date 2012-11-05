@@ -66,10 +66,10 @@ public class MoveHandler extends AbHandler {
 			// 验证通过
 			player.setX(x);
 			player.setY(y);
-			this.sendMessage(session, msg, false, "行走验证成功");
+			this.sendNormalMessage(session, msg, false, "行走验证成功");
 		} else {
 			// 验证失败
-			this.sendMessage(session, msg, false, "行走验证失败");
+			this.sendNormalMessage(session, msg, false, "行走验证失败");
 		}
 	}
 

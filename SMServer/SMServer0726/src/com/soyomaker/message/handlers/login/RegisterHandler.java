@@ -25,18 +25,18 @@ public class RegisterHandler extends AbHandler {
 		}
 		// (2)检查用户名长度
 		if (username.length() < 3) {
-			this.sendMessage(session, msg, false, "用户名长度不能小于3");
+			this.sendNormalMessage(session, msg, false, "用户名长度不能小于3");
 			return;
 		}
 		// (3)检查密码长度
 		if (password.equals("")) {
-			this.sendMessage(session, msg, false, "密码不能为空");
+			this.sendNormalMessage(session, msg, false, "密码不能为空");
 			return;
 		}
 		// (4)检查用户名是否已经存在
 		User user = userService.findByUsername(username);
 		if (user != null) {
-			this.sendMessage(session, msg, false, "用户名已存在");
+			this.sendNormalMessage(session, msg, false, "用户名已存在");
 			return;
 		}
 		// (5)添加用户到数据库
@@ -44,7 +44,7 @@ public class RegisterHandler extends AbHandler {
 		user.setUsername(username);
 		user.setPassword(password);
 		boolean status = userService.save(user);
-		this.sendMessage(session, msg, status, status ? "注册成功" : "注册失败");
+		this.sendNormalMessage(session, msg, status, status ? "注册成功" : "注册失败");
 	}
 
 }

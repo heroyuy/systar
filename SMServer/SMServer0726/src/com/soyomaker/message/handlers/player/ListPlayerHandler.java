@@ -26,7 +26,7 @@ public class ListPlayerHandler extends AbHandler {
 	public void handleMessage(UserSession session, GameObject msg) {
 		List<Player> list = playerService.findByUserId(session.getUser()
 				.getId());
-		GameObject msgSent = this.buildPackage(msg);
+		GameObject msgSent = this.buildNormalPackage(msg);
 		msgSent.putObjectArray("playerList", this.convertPlayerList(list));
 		netTransceiver.sendMessage(session, msgSent);
 	}
