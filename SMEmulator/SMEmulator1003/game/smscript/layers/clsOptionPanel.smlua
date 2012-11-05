@@ -32,11 +32,13 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   bgLayer.image=bgImage
   self:addChild(bgLayer)
   --头像
-  local bustLayer=clsUILayer:new(85,75,96,96)
-  bustLayer.anchor={0.5,0.5}
-  bustLayer.image=smImageFactory:loadImage(bustPath)
-  bustLayer.enabled=false
-  bgLayer:addChild(bustLayer)
+  if bustPath and bustPath ~= "" then
+    local bustLayer=clsUILayer:new(85,75,96,96)
+    bustLayer.anchor={0.5,0.5}
+    bustLayer.image=smImageFactory:loadImage(bustPath)
+    bustLayer.enabled=false
+    bgLayer:addChild(bustLayer)
+  end
   --姓名
   local nameLabel=clsUILabel:new(235,37,80,20)
   nameLabel.anchor={0.5,0.5}
