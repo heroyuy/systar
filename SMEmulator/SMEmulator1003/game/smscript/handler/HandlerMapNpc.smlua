@@ -75,7 +75,7 @@ function HandlerMap.dialogWithNpc:doTaskList(taskList)
 	      tip = "[进行中]"
 	    end
 	  end
-	  list[#list+1]=task.intro..tip
+	  list[#list+1]=task.name..tip
 	end
 	GameLayer:showOptionDialog("任务列表","","",list,delegate,"optionSelected")
 end
