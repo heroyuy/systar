@@ -15,24 +15,14 @@ import com.soyomaker.net.session.UserSession;
  * 
  */
 public class NetTransceiver {
-	
+
 	private static final Logger log = Logger.getLogger(NetTransceiver.class);
 
 	private Map<String, Protocol> protocolMap = new HashMap<String, Protocol>();
-	
 
 	private NetTransceiver() {
 
 	}
-
-	public Map<String, Protocol> getProtocolMap() {
-		return protocolMap;
-	}
-
-	public void setProtocolMap(Map<String, Protocol> protocolMap) {
-		this.protocolMap = protocolMap;
-	}
-
 
 	/**
 	 * 业务逻辑层发送消息
@@ -76,7 +66,7 @@ public class NetTransceiver {
 			return;
 		}
 		// (3)检查协议是否允许
-		if (protocol.isNeedLogin() && session.getUser()==null) {
+		if (protocol.isNeedLogin() && session.getUser() == null) {
 			log.debug("protocol [" + protocol.getId() + "] need login");
 		} else {
 			handler.handleMessage(session, msg);
