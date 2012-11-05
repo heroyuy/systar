@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessageSender;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 /**
  * 完成任务

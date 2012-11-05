@@ -14,7 +14,7 @@ import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 import com.soyomaker.service.PlayerTaskService;
 
 @Component("npcStateHandler")

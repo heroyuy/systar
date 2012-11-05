@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.net.session.UserSession;
 
 /**
  * 网络收发器。 负责发送和接收消息.

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 @Component("testHandler")
 public class TestHandler extends AbHandler {

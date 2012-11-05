@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.net.session.UserSession;
 
 @Component
 public abstract class AbHandler implements IHandler {

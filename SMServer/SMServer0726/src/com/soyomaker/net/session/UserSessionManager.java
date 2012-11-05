@@ -1,4 +1,4 @@
-package com.soyomaker.net;
+package com.soyomaker.net.session;
 
 import java.util.Collection;
 import java.util.HashMap;

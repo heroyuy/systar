@@ -7,7 +7,7 @@ import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessageSender;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 @Component("nextStepHandler")
 public class NextStepHandler extends AbHandler {

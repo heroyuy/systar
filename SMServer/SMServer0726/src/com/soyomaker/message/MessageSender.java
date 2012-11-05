@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 /**
  * 此类模拟客户端发包，触发服务器响应，达到push的目的

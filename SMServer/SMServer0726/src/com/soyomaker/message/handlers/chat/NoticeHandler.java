@@ -11,8 +11,8 @@ import com.soyomaker.event.EventIdConst;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessageSender;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
-import com.soyomaker.net.UserSessionManager;
+import com.soyomaker.net.session.UserSession;
+import com.soyomaker.net.session.UserSessionManager;
 
 @Component("noticeHandler")
 public class NoticeHandler extends AbHandler {

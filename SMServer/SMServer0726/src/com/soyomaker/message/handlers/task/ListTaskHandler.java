@@ -11,7 +11,7 @@ import com.soyomaker.message.util.TaskUtil;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 @Component("listTaskHandler")
 public class ListTaskHandler extends AbHandler {

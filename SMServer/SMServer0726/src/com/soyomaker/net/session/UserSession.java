@@ -1,4 +1,4 @@
-package com.soyomaker.net;
+package com.soyomaker.net.session;
 
 import org.apache.mina.core.session.IoSession;
 

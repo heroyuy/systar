@@ -11,7 +11,7 @@ import com.soyomaker.model.DictManager;
 import com.soyomaker.model.MapData;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
-import com.soyomaker.net.UserSession;
+import com.soyomaker.net.session.UserSession;
 
 @Component("moveHandler")
 public class MoveHandler extends AbHandler {

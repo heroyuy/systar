@@ -16,8 +16,8 @@ import com.soyomaker.message.handlers.login.LoginHandler;
 import com.soyomaker.model.User;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.NetTransceiver;
-import com.soyomaker.net.UserSession;
-import com.soyomaker.net.UserSessionManager;
+import com.soyomaker.net.session.UserSession;
+import com.soyomaker.net.session.UserSessionManager;
 import com.soyomaker.service.UserService;
 
 /**

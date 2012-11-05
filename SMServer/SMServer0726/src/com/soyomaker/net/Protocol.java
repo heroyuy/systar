@@ -8,10 +8,21 @@ package com.soyomaker.net;
  */
 public class Protocol {
 
+	public static final String TYPE_RESPONSE_ONLY = "ResponseOnly";
+
+	public static final String TYPE_PUSH_ONLY = "PushOnly";
+
+	public static final String TYPE_PUSH_AND_RESPONSE = "PushAndResponse";
+
 	/**
 	 * 协议ID
 	 */
 	private String id = null;
+
+	/**
+	 * 协议类型
+	 */
+	private String type = TYPE_RESPONSE_ONLY;
 
 	/**
 	 * 协议通道
@@ -40,6 +51,10 @@ public class Protocol {
 		return netService;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public boolean isNeedLogin() {
 		return needLogin;
 	}
@@ -60,9 +75,13 @@ public class Protocol {
 		this.netService = netService;
 	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String toString() {
-		return "id:" + id + " netService:" + netService + " needLogin:"
-				+ needLogin + " handler:" + handler;
+		return "id:" + id + " type:" + type + " netService:" + netService
+				+ " needLogin:" + needLogin + " handler:" + handler;
 	}
 
 }
