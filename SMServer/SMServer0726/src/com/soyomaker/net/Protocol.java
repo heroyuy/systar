@@ -76,14 +76,17 @@ public class Protocol {
 	}
 
 	public void setType(String type) {
-		if (type == TYPE_RESPONSE_ONLY || type == TYPE_PUSH_ONLY
-				|| type == TYPE_RESPONSE_AND_PUSH) {
+		if (type.equalsIgnoreCase(TYPE_RESPONSE_ONLY)
+				|| type.equalsIgnoreCase(TYPE_PUSH_ONLY)
+				|| type.equalsIgnoreCase(TYPE_RESPONSE_AND_PUSH)) {
 			this.type = type;
 		} else {
 			throw new IllegalArgumentException(
-					"protocol type must be one of \"" + TYPE_RESPONSE_ONLY
-							+ "\"、\"" + TYPE_PUSH_ONLY + "\"、\""
-							+ TYPE_RESPONSE_AND_PUSH + "\"");
+					"\""
+							+ type
+							+ "\" is illegal protocol type,protocol type must be one of \""
+							+ TYPE_RESPONSE_ONLY + "\"、\"" + TYPE_PUSH_ONLY
+							+ "\"、\"" + TYPE_RESPONSE_AND_PUSH + "\"");
 		}
 	}
 

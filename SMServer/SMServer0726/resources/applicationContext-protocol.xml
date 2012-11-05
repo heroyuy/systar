@@ -62,112 +62,99 @@
 
 	<bean id="p102001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="102001" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="createPlayerHandler" />
 	</bean>
 
 	<bean id="p102002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="102001" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="deletePlayerHandler" />
 	</bean>
 
 	<bean id="p102003" class="com.soyomaker.net.Protocol">
 		<property name="id" value="102003" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="listPlayerHandler" />
 	</bean>
 
 	<bean id="p102004" class="com.soyomaker.net.Protocol">
 		<property name="id" value="102004" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="choosePlayerHandler" />
 	</bean>
 
 	<bean id="p103001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="103001" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="moveHandler" />
 	</bean>
 
 	<bean id="p103002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="103002" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="loadMapHandler" />
 	</bean>
 
 	<bean id="p103003" class="com.soyomaker.net.Protocol">
 		<property name="id" value="103003" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="switchMapHandler" />
 	</bean>
 
 	<bean id="p104001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="104001" />
-		<property name="needLogin" value="true" />
+		<property name="type" value="ResponseAndPush" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="chatHandler" />
 	</bean>
-	
+
 	<bean id="p104002" class="com.soyomaker.net.Protocol">
-		<property name="id" value="104001" />
-		<property name="needLogin" value="true" />
+		<property name="id" value="104002" />
+		<property name="type" value="PushOnly" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="noticeHandler" />
 	</bean>
 
 	<bean id="p105001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="105001" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="applyTaskHandler" />
 	</bean>
 
 	<bean id="p105002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="105002" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="giveUpTaskHandler" />
 	</bean>
 
 	<bean id="p105003" class="com.soyomaker.net.Protocol">
 		<property name="id" value="105003" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="listTaskHandler" />
 	</bean>
 
 	<bean id="p105004" class="com.soyomaker.net.Protocol">
 		<property name="id" value="105004" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="nextStepHandler" />
 	</bean>
 
 	<bean id="p105005" class="com.soyomaker.net.Protocol">
 		<property name="id" value="105005" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="finishTaskHandler" />
 	</bean>
 
 	<bean id="p106001" class="com.soyomaker.net.Protocol">
 		<property name="id" value="106001" />
-		<property name="needLogin" value="true" />
+		<property name="type" value="ResponseAndPush" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="npcStateHandler" />
 	</bean>
 
 	<bean id="p106002" class="com.soyomaker.net.Protocol">
 		<property name="id" value="106002" />
-		<property name="needLogin" value="true" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="npcDialogueHandler" />
 	</bean>
