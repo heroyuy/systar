@@ -1,10 +1,17 @@
 HandlerMap.sendChatContent={}
 
 function HandlerMap.sendChatContent:handleMessage(msg)
-  smLog:info("收到聊天内容")
+  smLog:info("收到聊天消息")
   local chatMsg={}
   chatMsg.playerId=msg:getInt("playerId")
   chatMsg.playerName=msg:getString("playerName")
   chatMsg.content=msg:getString("content")
   Notifier:notify(Const.NotifyCMD.Net.CHAT_SEND,chatMsg)
+end
+
+--====================================================
+HandlerMap.notice={}
+
+function HandlerMap.notice:handleMessage(msg)
+  smLog:info("收到公告")
 end

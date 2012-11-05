@@ -29,6 +29,7 @@ MsgHandlerFactory["103001"]=HandlerMap.movePlayer
 MsgHandlerFactory["103002"]=HandlerMap.loadMap
 MsgHandlerFactory["103003"]=HandlerMap.switchMap
 MsgHandlerFactory["104001"]=HandlerMap.sendChatContent
+MsgHandlerFactory["104002"]=HandlerMap.notice
 MsgHandlerFactory["105001"]=HandlerMap.applyTask
 MsgHandlerFactory["105002"]=HandlerMap.giveUpTask
 MsgHandlerFactory["105003"]=HandlerMap.listTask
