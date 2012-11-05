@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.event.EventIdConst;
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.MessageSender;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.session.UserSession;
 import com.soyomaker.net.session.UserSessionManager;
@@ -20,7 +20,7 @@ public class NoticeHandler extends AbHandler {
 	private static final String DATE_TYPE = "yyyy-MM-dd HH:mm";
 
 	@Autowired
-	private MessageSender messageSender;
+	private MessagePusher messagePusher;
 
 	@Autowired
 	private UserSessionManager userSessionManager;

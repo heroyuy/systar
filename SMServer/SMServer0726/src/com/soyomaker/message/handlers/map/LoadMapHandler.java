@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.MessageSender;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.model.DictManager;
 import com.soyomaker.model.MapData;
 import com.soyomaker.model.Npc;
@@ -22,7 +22,7 @@ public class LoadMapHandler extends AbHandler {
 	private DictManager dictManager;
 
 	@Autowired
-	private MessageSender messageSender;
+	private MessagePusher messagePusher;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -38,7 +38,7 @@ public class LoadMapHandler extends AbHandler {
 		msgSent.putObjectArray("npcList", mapEntryObjList);
 		netTransceiver.sendMessage(session, msgSent);
 		// 触发更新NPC状态
-		messageSender.updateNPCStatus(session);
+		messagePusher.updateNPCStatus(session);
 	}
 
 }

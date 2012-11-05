@@ -8,14 +8,14 @@ import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.session.UserSession;
 
 /**
- * 此类模拟客户端发包，触发服务器响应，达到push的目的
+ * 消息推送器。用于服务器主动向客户端发消息
  * 
  * @author wp_g4
  * 
  */
 
-@Component("messageSender")
-public class MessageSender {
+@Component("messagePusher")
+public class MessagePusher {
 
 	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
 

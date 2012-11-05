@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.MessageSender;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
@@ -19,7 +19,7 @@ public class ApplyTaskHandler extends AbHandler {
 	private DictManager dictManager;
 
 	@Autowired
-	private MessageSender messageSender;
+	private MessagePusher messagePusher;
 	
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -43,7 +43,7 @@ public class ApplyTaskHandler extends AbHandler {
 		player.addPlayerTask(pt);
 		this.sendMessage(session, msg, true, "任务申请成功");
 		// 触发更新NPC状态
-		messageSender.updateNPCStatus(session);
+		messagePusher.updateNPCStatus(session);
 	}
 
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.MessageSender;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.session.UserSession;
 
@@ -18,14 +18,14 @@ import com.soyomaker.net.session.UserSession;
 public class FinishTaskHandler extends AbHandler {
 
 	@Autowired
-	private MessageSender messageSender;
+	private MessagePusher messagePusher;
 	
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
 		// TODO Auto-generated method stub
 
 		// 触发更新NPC状态
-		messageSender.updateNPCStatus(session);
+		messagePusher.updateNPCStatus(session);
 	}
 
 }

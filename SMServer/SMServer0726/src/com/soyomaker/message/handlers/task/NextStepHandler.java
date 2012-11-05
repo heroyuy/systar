@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.MessageSender;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.session.UserSession;
@@ -13,7 +13,7 @@ import com.soyomaker.net.session.UserSession;
 public class NextStepHandler extends AbHandler {
 
 	@Autowired
-	private MessageSender messageSender;
+	private MessagePusher messagePusher;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {
@@ -45,7 +45,7 @@ public class NextStepHandler extends AbHandler {
 		msgSent.putBool("stepOver", pt.isStepOver());
 		netTransceiver.sendMessage(session, msgSent);
 		// 触发更新NPC状态
-		messageSender.updateNPCStatus(session);
+		messagePusher.updateNPCStatus(session);
 	}
 
 }
