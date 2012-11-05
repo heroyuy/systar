@@ -76,10 +76,12 @@ public class Protocol {
 	}
 
 	public void setType(String type) {
-		if (type.equalsIgnoreCase(TYPE_RESPONSE_ONLY)
-				|| type.equalsIgnoreCase(TYPE_PUSH_ONLY)
-				|| type.equalsIgnoreCase(TYPE_RESPONSE_AND_PUSH)) {
-			this.type = type;
+		if (type.equalsIgnoreCase(TYPE_RESPONSE_ONLY)) {
+			this.type = TYPE_RESPONSE_ONLY;
+		} else if (type.equalsIgnoreCase(TYPE_PUSH_ONLY)) {
+			this.type = TYPE_PUSH_ONLY;
+		} else if (type.equalsIgnoreCase(TYPE_RESPONSE_AND_PUSH)) {
+			this.type = TYPE_RESPONSE_AND_PUSH;
 		} else {
 			throw new IllegalArgumentException(
 					"\""

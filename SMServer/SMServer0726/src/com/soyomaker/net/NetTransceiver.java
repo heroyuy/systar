@@ -41,9 +41,8 @@ public class NetTransceiver {
 			return;
 		}
 		// (2)检查协议是否是应答协议
-		if (!protocol.getType().equalsIgnoreCase(Protocol.TYPE_RESPONSE_ONLY)
-				&& !protocol.getType().equalsIgnoreCase(
-						Protocol.TYPE_RESPONSE_AND_PUSH)) {
+		if (!protocol.getType().equals(Protocol.TYPE_RESPONSE_ONLY)
+				&& !protocol.getType().equals(Protocol.TYPE_RESPONSE_AND_PUSH)) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a response protocol");
 			return;
@@ -79,9 +78,8 @@ public class NetTransceiver {
 			return;
 		}
 		// (2)检查协议是否是推送协议
-		if (!protocol.getType().equalsIgnoreCase(Protocol.TYPE_PUSH_ONLY)
-				&& !protocol.getType().equalsIgnoreCase(
-						Protocol.TYPE_RESPONSE_AND_PUSH)) {
+		if (!protocol.getType().equals(Protocol.TYPE_PUSH_ONLY)
+				&& !protocol.getType().equals(Protocol.TYPE_RESPONSE_AND_PUSH)) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a push protocol");
 			return;
