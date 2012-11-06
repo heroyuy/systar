@@ -1,14 +1,22 @@
 package com.soyomaker.message.util;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
+import com.soyomaker.message.MessagePusher;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
+import com.soyomaker.model.task.TaskCommand;
 
 @Component("taskUtil")
 public class TaskUtil {
+
+	@Autowired
+	private MessagePusher messagePusher;
 
 	public GameObject convertTask(Player player, Task task) {
 		GameObject taskObj = new GameObject();
@@ -25,6 +33,43 @@ public class TaskUtil {
 			taskObj.putBool("finished", pt.isFinished());
 		}
 		return taskObj;
+	}
+
+	public void executeTaskCommandList(Player player,
+			List<TaskCommand> taskCommandList) {
+		for (TaskCommand taskCommand : taskCommandList) {
+			this.executeTaskCommand(player, taskCommand);
+		}
+	}
+
+	public void executeTaskCommand(Player player, TaskCommand taskCommand) {
+		if (taskCommand == null) {
+			return;
+		}
+		switch (taskCommand.getType()) {
+		case TaskCommand.TYPE_SWITCH_MAP: {
+			this.switchMap(taskCommand.getParamList());
+		}
+			break;
+		case TaskCommand.TYPE_OPERATE_NPC: {
+			this.operateNpc(taskCommand.getParamList());
+		}
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void switchMap(List<String> paramList) {
+		int mapId = Integer.parseInt(paramList.get(0));
+		int x = Integer.parseInt(paramList.get(1));
+		int y = Integer.parseInt(paramList.get(2));
+
+	}
+
+	private void operateNpc(List<String> paramList) {
+
 	}
 
 }

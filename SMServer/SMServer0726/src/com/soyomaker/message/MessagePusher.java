@@ -31,6 +31,20 @@ public class MessagePusher {
 	protected NetTransceiver netTransceiver;
 
 	/**
+	 * 切换地图
+	 * 
+	 * @param mapId
+	 *            地图ID
+	 * @param x
+	 *            x坐标
+	 * @param y
+	 *            y坐标
+	 */
+	public void switchMap(int mapId, int x, int y) {
+
+	}
+
+	/**
 	 * 发送NPC状态信息
 	 * 
 	 * @param session

@@ -25,10 +25,10 @@ public class NPCDialogueHandler extends AbHandler {
 	private DictManager dictManager;
 
 	@Autowired
-	private TaskUtil taskUtil;
+	private PlayerTaskService playerTaskService;
 
 	@Autowired
-	private PlayerTaskService playerTaskService;
+	private TaskUtil taskUtil;
 
 	@Override
 	public void handleMessage(UserSession session, GameObject msg) {

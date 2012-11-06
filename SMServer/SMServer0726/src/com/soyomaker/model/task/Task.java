@@ -10,9 +10,10 @@ import javax.persistence.Transient;
 /**
  * <pre>
  *      任务由以下构成
- *		1、申请  2、进行任务步骤  3、完成
- *		任务可以有N(n>0)个任务步骤
+ * 	1、申请  2、进行任务步骤  3、完成
+ * 	任务可以有N(n>0)个任务步骤
  * </pre>
+ * 
  * @author chenwentao
  */
 
@@ -59,14 +60,28 @@ public class Task {
 
 	private String applyCnd;
 
+	private String applyCmd;
+
 	private int finishNpcId;
 
 	private String finishCnd;
 
+	private String finishCmd;
+
 	private String reward;
 
 	@Transient
+	public List<TaskCommand> applyTaskCommandList;
+
+	@Transient
+	public List<TaskCommand> finishTaskCommandList;
+
+	@Transient
 	private List<TaskStep> steps;
+
+	public String getApplyCmd() {
+		return applyCmd;
+	}
 
 	public String getApplyCnd() {
 		return applyCnd;
@@ -76,12 +91,24 @@ public class Task {
 		return applyNpcId;
 	}
 
+	public List<TaskCommand> getApplyTaskCommandList() {
+		return applyTaskCommandList;
+	}
+
+	public String getFinishCmd() {
+		return finishCmd;
+	}
+
 	public String getFinishCnd() {
 		return finishCnd;
 	}
 
 	public int getFinishNpcId() {
 		return finishNpcId;
+	}
+
+	public List<TaskCommand> getFinishTaskCommandList() {
+		return finishTaskCommandList;
 	}
 
 	public int getId() {
@@ -116,12 +143,24 @@ public class Task {
 		return type;
 	}
 
+	public void setApplyCmd(String applyCmd) {
+		this.applyCmd = applyCmd;
+		this.applyTaskCommandList = TaskCommand
+				.parseStringToCommands(this.applyCmd);
+	}
+
 	public void setApplyCnd(String applyCnd) {
 		this.applyCnd = applyCnd;
 	}
 
 	public void setApplyNpcId(int npcId) {
 		this.applyNpcId = npcId;
+	}
+
+	public void setFinishCmd(String finishCmd) {
+		this.finishCmd = finishCmd;
+		this.finishTaskCommandList = TaskCommand
+				.parseStringToCommands(this.finishCmd);
 	}
 
 	public void setFinishCnd(String finishCnd) {

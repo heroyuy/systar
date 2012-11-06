@@ -1,10 +1,13 @@
 package com.soyomaker.model.task;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "task_step")
@@ -20,7 +23,14 @@ public class TaskStep {
 
 	private String script;
 
-	private String operate;
+	private String command;
+
+	@Transient
+	public List<TaskCommand> taskCommandList;
+
+	public String getCommand() {
+		return command;
+	}
 
 	public int getId() {
 		return id;
@@ -30,16 +40,21 @@ public class TaskStep {
 		return npcId;
 	}
 
-	public String getOperate() {
-		return operate;
-	}
-
 	public String getScript() {
 		return script;
 	}
 
+	public List<TaskCommand> getTaskCommandList() {
+		return taskCommandList;
+	}
+
 	public int getTaskId() {
 		return taskId;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
+		this.taskCommandList = TaskCommand.parseStringToCommands(this.command);
 	}
 
 	public void setId(int id) {
@@ -48,10 +63,6 @@ public class TaskStep {
 
 	public void setNpcId(int npcId) {
 		this.npcId = npcId;
-	}
-
-	public void setOperate(String operate) {
-		this.operate = operate;
 	}
 
 	public void setScript(String script) {
