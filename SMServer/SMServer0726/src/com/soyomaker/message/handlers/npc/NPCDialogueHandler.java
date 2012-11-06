@@ -49,7 +49,12 @@ public class NPCDialogueHandler extends AbHandler {
 		// (3)进行中的任务
 		Collection<GameObject> taskObjs = new ArrayList<GameObject>();
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {
-			if (pt.getCurTaskStep().getNpcId() == npc.getId()) {
+			// (a)任务步骤已经结束并且在此NPC处完成任务
+			// (b)任务步骤未结束并且在此NPC处进行当前步骤
+			if ((pt.isStepOver() && pt.getTask().getFinishNpcId() == npc
+					.getId())
+					|| (!pt.isStepOver() && pt.getCurTaskStep().getNpcId() == npc
+							.getId())) {
 				taskObjs.add(taskUtil.convertTask(player, pt.getTask()));
 			}
 		}
