@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessagePusher;
+import com.soyomaker.message.util.TaskUtil;
 import com.soyomaker.model.DictManager;
 import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
@@ -20,7 +21,10 @@ public class ApplyTaskHandler extends AbHandler {
 
 	@Autowired
 	private MessagePusher messagePusher;
-	
+
+	@Autowired
+	private TaskUtil taskUtil;
+
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		int id = msg.getInt("taskId");
@@ -42,8 +46,10 @@ public class ApplyTaskHandler extends AbHandler {
 		PlayerTask pt = new PlayerTask(player.getId(), task);
 		player.addPlayerTask(pt);
 		this.sendResponseMessage(session, msg, true, "任务申请成功");
-		// 触发更新NPC状态
-		messagePusher.updateNpcStatus(session);
+		// (4)触发更新NPC状态
+		messagePusher.updateNpcState(session);
+		// (5)执行任务申请的服务器命令
+		taskUtil.executeTaskCommandList(player, task.getApplyTaskCommandList());
 	}
 
 }

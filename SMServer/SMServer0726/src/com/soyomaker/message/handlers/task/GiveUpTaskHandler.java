@@ -45,7 +45,7 @@ public class GiveUpTaskHandler extends AbHandler {
 		playerTaskService.removePlayerTask(player, pt);
 		this.sendResponseMessage(session, msg, true, "放弃任务成功");
 		// 触发更新NPC状态
-		messagePusher.updateNpcStatus(session);
+		messagePusher.updateNpcState(session);
 	}
 
 }

@@ -28,6 +28,20 @@ public class NPCStateHandler extends AbHandler {
 
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
+		this.sendNpcState(session, msg);
+	}
+
+	public void doPush(UserSession session, GameObject msg) {
+		this.sendNpcState(session, msg);
+	}
+
+	/**
+	 * 发送npc状态
+	 * 
+	 * @param session
+	 * @param msg
+	 */
+	private void sendNpcState(UserSession session, GameObject msg) {
 		// (1)取当前地图上的所有npc
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
@@ -43,6 +57,7 @@ public class NPCStateHandler extends AbHandler {
 			}
 		}
 		// (3)返回消息给客户端
+		// TODO此处有问题
 		GameObject msgSent = new GameObject(msg.getType());
 		msgSent.putObjectArray("stateList", stateList);
 		netTransceiver.sendMessage(session, msgSent);

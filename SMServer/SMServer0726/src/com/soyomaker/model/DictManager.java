@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.soyomaker.model.task.Task;
+import com.soyomaker.model.task.TaskCommand;
+import com.soyomaker.model.task.TaskStep;
 import com.soyomaker.service.LevelExpService;
 import com.soyomaker.service.MapDataService;
 import com.soyomaker.service.NpcService;
@@ -101,7 +103,17 @@ public class DictManager {
 		taskMap = new HashMap<Integer, Task>();
 		List<Task> taskList = taskService.findAll();
 		for (Task task : taskList) {
-			task.setSteps(taskStepService.findByTaskId(task.getId()));
+			task.setApplyTaskCommandList(TaskCommand.parseStringToCommands(task
+					.getApplyCmd()));
+			task.setFinishTaskCommandList(TaskCommand
+					.parseStringToCommands(task.getFinishCmd()));
+			List<TaskStep> taskStepList = taskStepService.findByTaskId(task
+					.getId());
+			for (TaskStep taskStep : taskStepList) {
+				taskStep.setTaskCommandList(TaskCommand
+						.parseStringToCommands(taskStep.getCommand()));
+			}
+			task.setSteps(taskStepList);
 			taskMap.put(task.getId(), task);
 		}
 		// 加载等级经验配置

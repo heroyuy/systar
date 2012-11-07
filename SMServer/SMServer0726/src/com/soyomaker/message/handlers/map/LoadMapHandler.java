@@ -38,7 +38,7 @@ public class LoadMapHandler extends AbHandler {
 		msgSent.putObjectArray("npcList", mapEntryObjList);
 		netTransceiver.sendMessage(session, msgSent);
 		// 触发更新NPC状态
-		messagePusher.updateNpcStatus(session);
+		messagePusher.updateNpcState(session);
 	}
 
 }

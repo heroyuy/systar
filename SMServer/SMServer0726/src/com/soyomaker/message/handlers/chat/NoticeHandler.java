@@ -38,7 +38,7 @@ public class NoticeHandler extends AbHandler {
 	}
 
 	@Override
-	public void doRequest(UserSession sessaion, GameObject msg) {
+	public void doPush(UserSession sessaion, GameObject msg) {
 
 		List<Message> messages = messageService.findUnreadNotification();
 		// TODO ConcurrentException等后期处理

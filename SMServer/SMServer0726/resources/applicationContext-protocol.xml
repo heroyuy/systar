@@ -98,6 +98,7 @@
 
 	<bean id="p103003" class="com.soyomaker.net.Protocol">
 		<property name="id" value="103003" />
+		<property name="type" value="ResponseAndPush" />
 		<property name="netService" ref="minaServer" />
 		<property name="handler" ref="switchMapHandler" />
 	</bean>

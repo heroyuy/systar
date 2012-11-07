@@ -54,7 +54,6 @@ public class TaskStep {
 
 	public void setCommand(String command) {
 		this.command = command;
-		this.taskCommandList = TaskCommand.parseStringToCommands(this.command);
 	}
 
 	public void setId(int id) {
@@ -67,6 +66,10 @@ public class TaskStep {
 
 	public void setScript(String script) {
 		this.script = script;
+	}
+
+	public void setTaskCommandList(List<TaskCommand> taskCommandList) {
+		this.taskCommandList = taskCommandList;
 	}
 
 	public void setTaskId(int taskId) {

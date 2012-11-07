@@ -28,10 +28,27 @@ public class SwitchMapHandler extends AbHandler {
 			this.sendResponseMessage(session, msg, false, "当前地图不存在此传送点");
 			return;
 		}
+		int mapId = npc.getTargetMapId();
+		int x = npc.getTargetX();
+		int y = npc.getTargetY();
 		// (2)移动主角
-		player.setMapId(npc.getTargetMapId());
-		player.setX(npc.getTargetX());
-		player.setY(npc.getTargetY());
+		this.switchMap(session, msg, mapId, x, y);
+	}
+
+	public void doPush(UserSession session, GameObject msg) {
+		int mapId = msg.getInt("mapId");
+		int x = msg.getInt("x");
+		int y = msg.getInt("y");
+		this.switchMap(session, msg, mapId, x, y);
+	}
+
+	private void switchMap(UserSession session, GameObject msg, int mapId,
+			int x, int y) {
+		Player player = session.getUser().getPlayer();
+		player.setMapId(mapId);
+		player.setX(x);
+		player.setY(y);
+		// TODO此处有问题
 		GameObject msgSent = this.buildResponsePackage(msg, true, "成功");
 		msgSent.putInt("mapId", player.getMapId());
 		msgSent.putInt("x", player.getX());

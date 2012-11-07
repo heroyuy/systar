@@ -35,7 +35,9 @@ public class AbHandler implements IHandler {
 	public GameObject buildResponsePackage(GameObject msgReceived) {
 		GameObject msgSent = new GameObject();
 		msgSent.setType(msgReceived.getType());
-		msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
+		if (msgReceived.containsKey(SN_KEY)) {
+			msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
+		}
 		return msgSent;
 	}
 

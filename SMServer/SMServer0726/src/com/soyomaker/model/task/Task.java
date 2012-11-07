@@ -145,8 +145,6 @@ public class Task {
 
 	public void setApplyCmd(String applyCmd) {
 		this.applyCmd = applyCmd;
-		this.applyTaskCommandList = TaskCommand
-				.parseStringToCommands(this.applyCmd);
 	}
 
 	public void setApplyCnd(String applyCnd) {
@@ -157,10 +155,12 @@ public class Task {
 		this.applyNpcId = npcId;
 	}
 
+	public void setApplyTaskCommandList(List<TaskCommand> applyTaskCommandList) {
+		this.applyTaskCommandList = applyTaskCommandList;
+	}
+
 	public void setFinishCmd(String finishCmd) {
 		this.finishCmd = finishCmd;
-		this.finishTaskCommandList = TaskCommand
-				.parseStringToCommands(this.finishCmd);
 	}
 
 	public void setFinishCnd(String finishCnd) {
@@ -169,6 +169,10 @@ public class Task {
 
 	public void setFinishNpcId(int finishNpcId) {
 		this.finishNpcId = finishNpcId;
+	}
+
+	public void setFinishTaskCommandList(List<TaskCommand> finishTaskCommandList) {
+		this.finishTaskCommandList = finishTaskCommandList;
 	}
 
 	public void setId(int id) {

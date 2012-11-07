@@ -12,9 +12,9 @@ import java.util.List;
 public class TaskCommand {
 
 	/**
-	 * 任务命令文本的命令间分隔符
+	 * 任务命令文本的命令间分隔符,正则表达式，“|”
 	 */
-	private static final String TASK_COMMAND_SEPARATOR_COMMAND = "|";
+	private static final String TASK_COMMAND_SEPARATOR_COMMAND = "\\|";
 
 	/**
 	 * 任务命令文本的参数间分隔符
@@ -38,6 +38,7 @@ public class TaskCommand {
 	 * @return
 	 */
 	public static TaskCommand parseStringToCommand(String command) {
+		command = command.trim();
 		TaskCommand taskCommand = new TaskCommand();
 		String[] strs = command.split(TASK_COMMAND_SEPARATOR_PARAM);
 		// (1)解析type
@@ -58,10 +59,11 @@ public class TaskCommand {
 	 * @return
 	 */
 	public static List<TaskCommand> parseStringToCommands(String multiCommand) {
-		List<TaskCommand> taskComamndList = null;
+		multiCommand = multiCommand.trim();
+		List<TaskCommand> taskComamndList = new ArrayList<TaskCommand>();
 		if (multiCommand != null && !multiCommand.equals("")) {
-			taskComamndList = new ArrayList<TaskCommand>();
-			String[] commands = multiCommand.split(TASK_COMMAND_SEPARATOR_COMMAND);
+			String[] commands = multiCommand
+					.split(TASK_COMMAND_SEPARATOR_COMMAND);
 			for (String cmd : commands) {
 				taskComamndList.add(TaskCommand.parseStringToCommand(cmd));
 			}
@@ -98,4 +100,5 @@ public class TaskCommand {
 	public void setType(int type) {
 		this.type = type;
 	}
+
 }

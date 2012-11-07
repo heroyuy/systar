@@ -87,7 +87,7 @@ public class NetTransceiver {
 			return;
 		}
 		// (2)检查协议是否是推送协议
-		if (protocol.isPushable()) {
+		if (!protocol.isPushable()) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a push protocol");
 			return;

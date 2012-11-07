@@ -11,12 +11,17 @@ import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.model.task.TaskCommand;
+import com.soyomaker.net.session.UserSession;
+import com.soyomaker.net.session.UserSessionManager;
 
 @Component("taskUtil")
 public class TaskUtil {
 
 	@Autowired
 	private MessagePusher messagePusher;
+
+	@Autowired
+	private UserSessionManager userSessionManager;
 
 	public GameObject convertTask(Player player, Task task) {
 		GameObject taskObj = new GameObject();
@@ -48,11 +53,11 @@ public class TaskUtil {
 		}
 		switch (taskCommand.getType()) {
 		case TaskCommand.TYPE_SWITCH_MAP: {
-			this.switchMap(taskCommand.getParamList());
+			this.switchMap(player, taskCommand.getParamList());
 		}
 			break;
 		case TaskCommand.TYPE_OPERATE_NPC: {
-			this.operateNpc(taskCommand.getParamList());
+			this.operateNpc(player, taskCommand.getParamList());
 		}
 			break;
 
@@ -61,14 +66,16 @@ public class TaskUtil {
 		}
 	}
 
-	private void switchMap(List<String> paramList) {
+	private void switchMap(Player player, List<String> paramList) {
 		int mapId = Integer.parseInt(paramList.get(0));
 		int x = Integer.parseInt(paramList.get(1));
 		int y = Integer.parseInt(paramList.get(2));
-
+		messagePusher.switchMap(
+				userSessionManager.getUserSession(player.getUserId()), mapId,
+				x, y);
 	}
 
-	private void operateNpc(List<String> paramList) {
+	private void operateNpc(Player player, List<String> paramList) {
 
 	}
 

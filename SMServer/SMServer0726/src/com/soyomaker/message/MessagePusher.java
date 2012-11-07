@@ -23,6 +23,10 @@ public class MessagePusher {
 	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
 
 	/**
+	 * 切换地图
+	 */
+	private static final String PROTOCOL_ID_SWITCH_MAP = "103003";
+	/**
 	 * 发送公告
 	 */
 	private static final String PROTOCOL_ID_SEND_NOTICE = "104002";
@@ -34,8 +38,8 @@ public class MessagePusher {
 	 * 发送公告
 	 */
 	public void sendNotice() {
-		netTransceiver.dispatchPushMessage(null,
-				new GameObject(PROTOCOL_ID_SEND_NOTICE));
+		netTransceiver.dispatchPushMessage(null, new GameObject(
+				PROTOCOL_ID_SEND_NOTICE));
 	}
 
 	/**
@@ -48,8 +52,12 @@ public class MessagePusher {
 	 * @param y
 	 *            y坐标
 	 */
-	public void switchMap(int mapId, int x, int y) {
-
+	public void switchMap(UserSession session, int mapId, int x, int y) {
+		GameObject msgPush = new GameObject(PROTOCOL_ID_SWITCH_MAP);
+		msgPush.putInt("mapId", mapId);
+		msgPush.putInt("x", x);
+		msgPush.putInt("y", y);
+		netTransceiver.dispatchPushMessage(session, msgPush);
 	}
 
 	/**
@@ -57,7 +65,7 @@ public class MessagePusher {
 	 * 
 	 * @param session
 	 */
-	public void updateNpcStatus(UserSession session) {
+	public void updateNpcState(UserSession session) {
 		netTransceiver.dispatchPushMessage(session, new GameObject(
 				PROTOCOL_ID_UPDATE_NPC_STATUS));
 	}
