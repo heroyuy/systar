@@ -5,6 +5,8 @@ import com.soyomaker.net.session.UserSession;
 
 public interface INetService {
 
+	public void sendMessage(UserSession session, GameObject msg);
+
 	/**
 	 * 启动服务
 	 */
@@ -14,7 +16,5 @@ public interface INetService {
 	 * 停止服务
 	 */
 	public void stop();
-
-	public void sendMessage(UserSession session, GameObject msg);
 
 }

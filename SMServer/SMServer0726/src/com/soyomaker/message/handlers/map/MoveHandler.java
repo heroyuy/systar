@@ -22,7 +22,7 @@ public class MoveHandler extends AbHandler {
 	private DictManager dictManager;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		// 角色行走，只发行走序列
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
@@ -66,10 +66,10 @@ public class MoveHandler extends AbHandler {
 			// 验证通过
 			player.setX(x);
 			player.setY(y);
-			this.sendNormalMessage(session, msg, false, "行走验证成功");
+			this.sendResponseMessage(session, msg, false, "行走验证成功");
 		} else {
 			// 验证失败
-			this.sendNormalMessage(session, msg, false, "行走验证失败");
+			this.sendResponseMessage(session, msg, false, "行走验证失败");
 		}
 	}
 

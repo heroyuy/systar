@@ -18,10 +18,10 @@ public class ChatHandler extends AbHandler {
 	private UserSessionManager userSessionManager;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		String content = msg.getString("content");
 		Player player = session.getUser().getPlayer();
-		GameObject msgResponse = this.buildNormalPackage(msg);
+		GameObject msgResponse = this.buildResponsePackage(msg);
 		msgResponse.putInt("playerId", player.getId());
 		msgResponse.putString("playerName", player.getName());
 		msgResponse.putString("content", content);

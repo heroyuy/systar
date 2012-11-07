@@ -27,7 +27,7 @@ public class NPCStateHandler extends AbHandler {
 	private PlayerTaskService playerTaskService;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		// (1)取当前地图上的所有npc
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());

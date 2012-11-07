@@ -18,21 +18,21 @@ public class SwitchMapHandler extends AbHandler {
 	private DictManager dictManager;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		int npcId = msg.getInt("npcId");
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		Npc npc = mapData.getNpc(npcId);
 		// (1)检查当前地图是否存在此传送点
 		if (npc == null || npc.getType() != Npc.TYPE_ENTRY) {
-			this.sendNormalMessage(session, msg, false, "当前地图不存在此传送点");
+			this.sendResponseMessage(session, msg, false, "当前地图不存在此传送点");
 			return;
 		}
 		// (2)移动主角
 		player.setMapId(npc.getTargetMapId());
 		player.setX(npc.getTargetX());
 		player.setY(npc.getTargetY());
-		GameObject msgSent = this.buildNormalPackage(msg, true, "成功");
+		GameObject msgSent = this.buildResponsePackage(msg, true, "成功");
 		msgSent.putInt("mapId", player.getMapId());
 		msgSent.putInt("x", player.getX());
 		msgSent.putInt("y", player.getY());

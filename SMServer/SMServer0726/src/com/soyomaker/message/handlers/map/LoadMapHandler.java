@@ -25,10 +25,10 @@ public class LoadMapHandler extends AbHandler {
 	private MessagePusher messagePusher;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
-		GameObject msgSent = this.buildNormalPackage(msg);
+		GameObject msgSent = this.buildResponsePackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
 		for (Npc npc : mapData.getNpcList()) {
 			GameObject mapEntryObj = new GameObject();

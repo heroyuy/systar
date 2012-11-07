@@ -81,7 +81,7 @@ public class LoginHandlerTest {
 			}
 		};
 
-		handler.handleMessage(userSession, gObject);
+		handler.doRequest(userSession, gObject);
 	}
 
 	// 测试完整流程
@@ -97,7 +97,7 @@ public class LoginHandlerTest {
 			}
 		};
 
-		handler.handleMessage(userSession, gObject);
+		handler.doRequest(userSession, gObject);
 
 		new Verifications() {
 			{

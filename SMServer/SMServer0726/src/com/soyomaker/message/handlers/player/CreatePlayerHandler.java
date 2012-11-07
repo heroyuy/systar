@@ -20,7 +20,7 @@ public class CreatePlayerHandler extends AbHandler {
 	private PlayerUtil playerUtil;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		String name = msg.getString("name");
 		// (1)检查包是否完整
 		if (name == null) {
@@ -28,24 +28,24 @@ public class CreatePlayerHandler extends AbHandler {
 		}
 		// (2)检查呢称长度
 		if (name.length() < 2) {
-			this.sendNormalMessage(session, msg, false, "呢称长度不能小于2");
+			this.sendResponseMessage(session, msg, false, "呢称长度不能小于2");
 			return;
 		}
 		// (3)检查呢称是否已被使用
 		Player player = playerService.findByName(name);
 		if (player != null) {
-			this.sendNormalMessage(session, msg, false, "呢称已被使用");
+			this.sendResponseMessage(session, msg, false, "呢称已被使用");
 			return;
 		}
 		// (4)新建角色
 		player = playerService.newPlayer(session.getUser().getId(), name);
 		if (player != null) {
-			GameObject msgSent = this.buildNormalPackage(msg, true, "创建成功");
+			GameObject msgSent = this.buildResponsePackage(msg, true, "创建成功");
 			GameObject playerObject = playerUtil.getPlayerInfo(player);
 			msgSent.putObject("player", playerObject);
 			netTransceiver.sendMessage(session, msgSent);
 		} else {
-			this.sendNormalMessage(session, msg, false, "创建失败");
+			this.sendResponseMessage(session, msg, false, "创建失败");
 		}
 
 	}

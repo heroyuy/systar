@@ -31,6 +31,14 @@ public class MessagePusher {
 	protected NetTransceiver netTransceiver;
 
 	/**
+	 * 发送公告
+	 */
+	public void sendNotice() {
+		netTransceiver.pushMessage(null,
+				new GameObject(PROTOCOL_ID_SEND_NOTICE));
+	}
+
+	/**
 	 * 切换地图
 	 * 
 	 * @param mapId
@@ -52,13 +60,5 @@ public class MessagePusher {
 	public void updateNpcStatus(UserSession session) {
 		netTransceiver.pushMessage(session, new GameObject(
 				PROTOCOL_ID_UPDATE_NPC_STATUS));
-	}
-
-	/**
-	 * 发送公告
-	 */
-	public void sendNotice() {
-		netTransceiver.pushMessage(null,
-				new GameObject(PROTOCOL_ID_SEND_NOTICE));
 	}
 }

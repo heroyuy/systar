@@ -58,7 +58,11 @@ public class NetTransceiver {
 			log.debug("protocol [" + protocol.getId() + "] need login");
 			return;
 		}
-		handler.handleMessage(session, msg);
+		handler.doRequest(session, msg);
+	}
+
+	public Map<String, Protocol> getProtocolMap() {
+		return protocolMap;
 	}
 
 	/**
@@ -90,11 +94,7 @@ public class NetTransceiver {
 			log.debug("no handler for this message");
 			return;
 		}
-		handler.handleMessage(session, msg);
-	}
-
-	public Map<String, Protocol> getProtocolMap() {
-		return protocolMap;
+		handler.doRequest(session, msg);
 	}
 
 	/**

@@ -20,7 +20,7 @@ public class ListTaskHandler extends AbHandler {
 	private TaskUtil taskUtil;
 
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		Player player = session.getUser().getPlayer();
 		Collection<GameObject> taskObjs = new ArrayList<GameObject>();
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {

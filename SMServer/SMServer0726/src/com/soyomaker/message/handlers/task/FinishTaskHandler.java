@@ -21,7 +21,7 @@ public class FinishTaskHandler extends AbHandler {
 	private MessagePusher messagePusher;
 	
 	@Override
-	public void handleMessage(UserSession session, GameObject msg) {
+	public void doRequest(UserSession session, GameObject msg) {
 		// TODO Auto-generated method stub
 
 		// 触发更新NPC状态
