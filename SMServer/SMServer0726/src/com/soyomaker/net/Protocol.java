@@ -92,6 +92,26 @@ public class Protocol {
 		}
 	}
 
+	/**
+	 * 协议是否可推送
+	 * 
+	 * @return
+	 */
+	public boolean isPushable() {
+		return this.type.equals(Protocol.TYPE_PUSH_ONLY)
+				|| this.type.equals(Protocol.TYPE_RESPONSE_AND_PUSH);
+	}
+
+	/**
+	 * 协议是否可应答
+	 * 
+	 * @return
+	 */
+	public boolean isRespondent() {
+		return this.type.equals(Protocol.TYPE_RESPONSE_ONLY)
+				|| this.type.equals(Protocol.TYPE_RESPONSE_AND_PUSH);
+	}
+
 	public String toString() {
 		return "id:" + id + " type:" + type + " netService:" + netService
 				+ " needLogin:" + needLogin + " handler:" + handler;

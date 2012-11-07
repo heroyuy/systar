@@ -37,12 +37,11 @@ public class NetTransceiver {
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
 		if (protocol == null) {
-			log.debug("unknow protocol message");
+			log.debug("unknow protocol["+id+"] message");
 			return;
 		}
 		// (2)检查协议是否是应答协议
-		if (!protocol.getType().equals(Protocol.TYPE_RESPONSE_ONLY)
-				&& !protocol.getType().equals(Protocol.TYPE_RESPONSE_AND_PUSH)) {
+		if (!protocol.isRespondent()) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a response protocol");
 			return;
@@ -50,7 +49,7 @@ public class NetTransceiver {
 		// (3)检查协议是否有handler处理
 		IHandler handler = protocol.getHandler();
 		if (handler == null) {
-			log.debug("no handler for this message");
+			log.debug("no handler for this protocol["+protocol.getId()+"] message");
 			return;
 		}
 		// (4)检查协议是否允许
@@ -78,12 +77,11 @@ public class NetTransceiver {
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
 		if (protocol == null) {
-			log.debug("unknow protocol message");
+			log.debug("unknow protocol[" + id + "] message");
 			return;
 		}
 		// (2)检查协议是否是推送协议
-		if (!protocol.getType().equals(Protocol.TYPE_PUSH_ONLY)
-				&& !protocol.getType().equals(Protocol.TYPE_RESPONSE_AND_PUSH)) {
+		if (protocol.isPushable()) {
 			log.debug("protocol [" + protocol.getId()
 					+ "] is not a push protocol");
 			return;
@@ -91,7 +89,8 @@ public class NetTransceiver {
 		// (3)检查协议是否有handler处理
 		IHandler handler = protocol.getHandler();
 		if (handler == null) {
-			log.debug("no handler for this message");
+			log.debug("no handler for this protocol[" + protocol.getId()
+					+ "] message");
 			return;
 		}
 		handler.doRequest(session, msg);
