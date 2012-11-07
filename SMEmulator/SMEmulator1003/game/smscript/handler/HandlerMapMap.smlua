@@ -59,5 +59,6 @@ function HandlerMap.switchMap:handleMessage(msg)
   GameData.curPlayer.mapId=msg:getInt("mapId")
   GameData.curPlayer.col=msg:getInt("x")
   GameData.curPlayer.row=msg:getInt("y")
+  Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})
   smNet:loadMap()
 end
