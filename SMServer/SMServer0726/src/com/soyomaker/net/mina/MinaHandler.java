@@ -64,11 +64,11 @@ public class MinaHandler implements IoHandler {
 				Collection<GameObject> c = message
 						.getObjectArray(PackageConst.PACKAGE_ARRAY_KEY);
 				for (GameObject msg : c) {
-					netTransceiver.dispatchMessage(userSession, msg);
+					netTransceiver.dispatchResquestMessage(userSession, msg);
 				}
 			} else {
 				// 单包
-				netTransceiver.dispatchMessage(userSession, message);
+				netTransceiver.dispatchResquestMessage(userSession, message);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class MessagePusher {
 	 * 发送公告
 	 */
 	public void sendNotice() {
-		netTransceiver.pushMessage(null,
+		netTransceiver.dispatchPushMessage(null,
 				new GameObject(PROTOCOL_ID_SEND_NOTICE));
 	}
 
@@ -58,7 +58,7 @@ public class MessagePusher {
 	 * @param session
 	 */
 	public void updateNpcStatus(UserSession session) {
-		netTransceiver.pushMessage(session, new GameObject(
+		netTransceiver.dispatchPushMessage(session, new GameObject(
 				PROTOCOL_ID_UPDATE_NPC_STATUS));
 	}
 }

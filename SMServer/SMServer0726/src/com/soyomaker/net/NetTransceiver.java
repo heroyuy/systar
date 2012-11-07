@@ -25,19 +25,19 @@ public class NetTransceiver {
 	}
 
 	/**
-	 * 分发收到的客户端消息到业务逻辑层
+	 * 分发客户端请求消息到业务逻辑层
 	 * 
 	 * @param session
 	 *            会话
 	 * @param msg
 	 *            消息
 	 */
-	public void dispatchMessage(UserSession session, GameObject msg) {
+	public void dispatchResquestMessage(UserSession session, GameObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
 		if (protocol == null) {
-			log.debug("unknow protocol["+id+"] message");
+			log.debug("unknow protocol[" + id + "] message");
 			return;
 		}
 		// (2)检查协议是否是应答协议
@@ -49,12 +49,18 @@ public class NetTransceiver {
 		// (3)检查协议是否有handler处理
 		IHandler handler = protocol.getHandler();
 		if (handler == null) {
-			log.debug("no handler for this protocol["+protocol.getId()+"] message");
+			log.debug("no handler for protocol[" + protocol.getId()
+					+ "] message");
 			return;
 		}
 		// (4)检查协议是否允许
 		if (protocol.isNeedLogin() && session.getUser() == null) {
 			log.debug("protocol [" + protocol.getId() + "] need login");
+			return;
+		}
+		// (5)检查包
+		if (!handler.checkRequestPackage(msg)) {
+			log.debug("invalid protocol[" + protocol.getId() + "] message");
 			return;
 		}
 		handler.doRequest(session, msg);
@@ -65,14 +71,14 @@ public class NetTransceiver {
 	}
 
 	/**
-	 * 推送消息到业务逻辑层
+	 * 分发推送消息到业务逻辑层
 	 * 
 	 * @param session
 	 *            会话
 	 * @param msg
 	 *            消息
 	 */
-	public void pushMessage(UserSession session, GameObject msg) {
+	public void dispatchPushMessage(UserSession session, GameObject msg) {
 		String id = msg.getType();
 		Protocol protocol = protocolMap.get(id);
 		// (1)检查是否有对应的协议
@@ -89,11 +95,16 @@ public class NetTransceiver {
 		// (3)检查协议是否有handler处理
 		IHandler handler = protocol.getHandler();
 		if (handler == null) {
-			log.debug("no handler for this protocol[" + protocol.getId()
+			log.debug("no handler for protocol[" + protocol.getId()
 					+ "] message");
 			return;
 		}
-		handler.doRequest(session, msg);
+		// (4)检查包
+		if (!handler.checkPushPackage(msg)) {
+			log.debug("invalid protocol[" + protocol.getId() + "] message");
+			return;
+		}
+		handler.doPush(session, msg);
 	}
 
 	/**
