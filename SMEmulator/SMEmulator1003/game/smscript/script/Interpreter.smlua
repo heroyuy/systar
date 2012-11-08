@@ -44,6 +44,8 @@ Interpreter.functionList={
   [101016]="shakeScene",
   [101017]="autoMove",
   [101018]="showNpc",
+  [101019]="showPlayer",
+  [101020]="changeNpcAvatar",
   
   [102001]="getProperty",
   [102002]="getName",
@@ -225,7 +227,17 @@ function Interpreter:autoMove(npcId,mapId,row,col)
 end
 
 --显示/隐藏Npc
-function Interpreter:showNpc(npcId,visible,mapId,row,col)
+function Interpreter:showNpc(npcId,visible)
+  return true
+end
+
+--显示/隐藏Player
+function Interpreter:showPlayer(visible)
+  return true
+end
+
+--改变npc形象
+function Interpreter:changeNpcAvatar(npcId,path,face)
   return true
 end
 
