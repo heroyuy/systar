@@ -29,7 +29,7 @@ public class TaskCommand {
 	 */
 	public static TaskCommand parseStringToCommand(String command) {
 		command = command.trim();
-		command.replace(")", "");
+		command = command.replace(")", "");
 		TaskCommand taskCommand = new TaskCommand();
 		String[] strs = command.split("\\(");
 		String strType = strs[0];
@@ -93,4 +93,5 @@ public class TaskCommand {
 	public void setType(String type) {
 		this.type = type;
 	}
+
 }
