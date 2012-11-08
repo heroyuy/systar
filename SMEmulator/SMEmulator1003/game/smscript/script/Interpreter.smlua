@@ -45,13 +45,12 @@ Interpreter.functionList={
   [101017]="autoMove",
   [101018]="showNpc",
   
-  [102001]="getPlayerProperty",
-  [102002]="getPlayerName",
-  [102003]="getPlayerSkillState",
-  [102004]="getPlayerEquipState",
-  [102005]="getMoneyNum",
-  [102006]="getItemNum",
-  [102007]="getEquipNum"
+  [102001]="getProperty",
+  [102002]="getName",
+  [102003]="getSkillState",
+  [102004]="getEquipState",
+  [102005]="getMoney",
+  [102006]="getItemNum"
 }
 
 --[[
@@ -232,36 +231,31 @@ end
 
 --============数据处理类============
 --获取玩家属性
-function Interpreter:getPlayerProperty(playerId,propertyType)
+function Interpreter:getProperty(playerId,propertyType)
   return true
 end
 
 --获取玩家名称
-function Interpreter:getPlayerName(playerId)
+function Interpreter:getName(playerId)
   return true
 end
 
 --获取技能状态
-function Interpreter:getPlayerSkillState(playerId,skillId)
+function Interpreter:getSkillState(playerId,skillId)
   return true
 end
 
 --获取装备状态 
-function Interpreter:getPlayerEquipState(playerId,equipId)
+function Interpreter:getEquipState(playerId,equipId)
   return true
 end
 
 --获取金钱数量
-function Interpreter:getMoneyNum()
+function Interpreter:getMoney()
   return true
 end
 
 --获取物品数量
 function Interpreter:getItemNum(itemId)
-  return true
-end
-
---获取装备数量
-function Interpreter:getEquipNum(equipId)
   return true
 end
