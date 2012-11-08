@@ -19,7 +19,7 @@ public class MessageTask {
 	@Autowired
 	private RequestResponseBus rrb;
 
-	@Scheduled(fixedDelay = 1000000)
+	@Scheduled(fixedDelay = 300000)
 	public void sendNotification() {
 		rrb.send(EventIdConst.EventIdNoticePolling);
 	}
