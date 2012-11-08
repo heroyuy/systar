@@ -12,24 +12,14 @@ import java.util.List;
 public class TaskCommand {
 
 	/**
-	 * 任务命令文本的命令间分隔符,正则表达式，“|”
+	 * 切换地图 switchMap(307,6,7)
 	 */
-	private static final String TASK_COMMAND_SEPARATOR_COMMAND = "\\|";
+	public static final String TYPE_SWITCH_MAP = "switchMap";
 
 	/**
-	 * 任务命令文本的参数间分隔符
+	 * 操作NPC operateNpc(6,1)
 	 */
-	private static final String TASK_COMMAND_SEPARATOR_PARAM = ":";
-
-	/**
-	 * 切换地图 1:307:6:7
-	 */
-	public static final int TYPE_SWITCH_MAP = 1;
-
-	/**
-	 * 操作NPC 3:6:1
-	 */
-	public static final int TYPE_OPERATE_NPC = 3;
+	public static final String TYPE_OPERATE_NPC = "operateNpc";
 
 	/**
 	 * 解析字符串为任务命令
@@ -39,14 +29,18 @@ public class TaskCommand {
 	 */
 	public static TaskCommand parseStringToCommand(String command) {
 		command = command.trim();
+		command.replace(")", "");
 		TaskCommand taskCommand = new TaskCommand();
-		String[] strs = command.split(TASK_COMMAND_SEPARATOR_PARAM);
+		String[] strs = command.split("\\(");
+		String strType = strs[0];
+		String strParam = strs[1];
 		// (1)解析type
-		taskCommand.setType(Integer.parseInt(strs[0]));
+		taskCommand.setType(strType);
 		// (2)解析参数
+		String[] paramStrs = strParam.split(",");
 		List<String> params = new ArrayList<String>();
-		for (int i = 1; i < strs.length; i++) {
-			params.add(strs[i]);
+		for (int i = 0; i < paramStrs.length; i++) {
+			params.add(paramStrs[i]);
 		}
 		taskCommand.setParamList(params);
 		return taskCommand;
@@ -62,8 +56,7 @@ public class TaskCommand {
 		multiCommand = multiCommand.trim();
 		List<TaskCommand> taskComamndList = new ArrayList<TaskCommand>();
 		if (multiCommand != null && !multiCommand.equals("")) {
-			String[] commands = multiCommand
-					.split(TASK_COMMAND_SEPARATOR_COMMAND);
+			String[] commands = multiCommand.split("\\|");
 			for (String cmd : commands) {
 				taskComamndList.add(TaskCommand.parseStringToCommand(cmd));
 			}
@@ -74,7 +67,7 @@ public class TaskCommand {
 	/**
 	 * 命令类型
 	 */
-	public int type;
+	public String type;
 
 	/**
 	 * 命令参数列表
@@ -89,7 +82,7 @@ public class TaskCommand {
 		return paramList;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
@@ -97,8 +90,7 @@ public class TaskCommand {
 		this.paramList = paramList;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
-
 }

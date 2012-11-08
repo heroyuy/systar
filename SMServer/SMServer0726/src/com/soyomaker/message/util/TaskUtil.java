@@ -50,18 +50,11 @@ public class TaskUtil {
 		if (taskCommand == null) {
 			return;
 		}
-		switch (taskCommand.getType()) {
-		case TaskCommand.TYPE_SWITCH_MAP: {
+		if (taskCommand.getType().equalsIgnoreCase(TaskCommand.TYPE_SWITCH_MAP)) {
 			this.switchMap(player, taskCommand.getParamList());
-		}
-			break;
-		case TaskCommand.TYPE_OPERATE_NPC: {
+		} else if (taskCommand.getType().equalsIgnoreCase(
+				TaskCommand.TYPE_OPERATE_NPC)) {
 			this.operateNpc(player, taskCommand.getParamList());
-		}
-			break;
-
-		default:
-			break;
 		}
 	}
 
