@@ -15,49 +15,35 @@ public class AbHandler implements IHandler {
 	protected NetTransceiver netTransceiver;
 
 	/**
-	 * 根据收到的包构造回复包，初始化回复包的协议ID
+	 * 构造待发包，包括协议ID、序列号（如果存在）
 	 * 
-	 * @param msgReceived
-	 *            收到的包
+	 * @param msg
+	 *            收到包，request或者push
+	 * @return 待发包
 	 */
-	public GameObject buildPushPackage(GameObject msgReceived) {
+	public GameObject buildPackage(GameObject msg) {
 		GameObject msgSent = new GameObject();
-		msgSent.setType(msgReceived.getType());
-		return msgSent;
-	}
-
-	/**
-	 * 根据收到的包构造回复包，初始化回复包的序列号和协议ID
-	 * 
-	 * @param msgReceived
-	 *            收到的包
-	 */
-	public GameObject buildResponsePackage(GameObject msgReceived) {
-		GameObject msgSent = new GameObject();
-		msgSent.setType(msgReceived.getType());
-		if (msgReceived.containsKey(SN_KEY)) {
-			msgSent.putInt(SN_KEY, msgReceived.getInt(SN_KEY));
+		msgSent.setType(msg.getType());
+		if (msg.containsKey(SN_KEY)) {
+			msgSent.putInt(SN_KEY, msg.getInt(SN_KEY));
 		}
 		return msgSent;
 	}
 
 	/**
+	 * 添加操作结果到待发包
 	 * 
-	 * 根据收到的包构造回复包，初始化回复包的序列号、协议ID、操作状态、操作信息
-	 * 
-	 * @param msgReceived
-	 *            收到的包
+	 * @param msgSent
+	 *            待发包
 	 * @param status
 	 *            操作状态
 	 * @param message
-	 *            操作信息
+	 *            操作描述
 	 */
-	public GameObject buildResponsePackage(GameObject msgReceived,
-			boolean status, String message) {
-		GameObject msgSent = this.buildResponsePackage(msgReceived);
+	public void addOperateResultToPackage(GameObject msgSent, boolean status,
+			String message) {
 		msgSent.putBool("res", status);
 		msgSent.putString("msg", message);
-		return msgSent;
 	}
 
 	@Override
@@ -78,24 +64,6 @@ public class AbHandler implements IHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 
-	}
-
-	/**
-	 * 发送普通消息
-	 * 
-	 * @param session
-	 *            会话
-	 * @param msgReceived
-	 *            收到的包
-	 * @param status
-	 *            操作状态
-	 * @param message
-	 *            操作信息
-	 */
-	public void sendResponseMessage(UserSession session,
-			GameObject msgReceived, boolean status, String message) {
-		netTransceiver.sendMessage(session,
-				this.buildResponsePackage(msgReceived, status, message));
 	}
 
 }

@@ -15,37 +15,42 @@ public class CreatePlayerHandler extends AbHandler {
 
 	@Autowired
 	private PlayerService playerService;
-	
+
 	@Autowired
 	private PlayerUtil playerUtil;
 
 	@Override
+	public boolean checkRequestPackage(GameObject msg) {
+		return msg.containsKey("name");
+	}
+
+	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		String name = msg.getString("name");
-		// (1)检查包是否完整
-		if (name == null) {
-			return;
-		}
-		// (2)检查呢称长度
+		GameObject msgSent = this.buildPackage(msg);
+		// (1)检查呢称长度
 		if (name.length() < 2) {
-			this.sendResponseMessage(session, msg, false, "呢称长度不能小于2");
+			this.addOperateResultToPackage(msgSent, false, "呢称长度不能小于2");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
-		// (3)检查呢称是否已被使用
+		// (2)检查呢称是否已被使用
 		Player player = playerService.findByName(name);
 		if (player != null) {
-			this.sendResponseMessage(session, msg, false, "呢称已被使用");
+			this.addOperateResultToPackage(msgSent, false, "呢称已被使用");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
-		// (4)新建角色
+		// (3)新建角色
 		player = playerService.newPlayer(session.getUser().getId(), name);
-		if (player != null) {
-			GameObject msgSent = this.buildResponsePackage(msg, true, "创建成功");
+		if (player == null) {
+			this.addOperateResultToPackage(msgSent, false, "创建失败");
+			netTransceiver.sendMessage(session, msgSent);
+		} else {
+			this.addOperateResultToPackage(msgSent, false, "创建成功");
 			GameObject playerObject = playerUtil.getPlayerInfo(player);
 			msgSent.putObject("player", playerObject);
 			netTransceiver.sendMessage(session, msgSent);
-		} else {
-			this.sendResponseMessage(session, msg, false, "创建失败");
 		}
 
 	}

@@ -20,31 +20,34 @@ public class LoginHandler extends AbHandler {
 	@Autowired
 	private UserSessionManager userSessionManager;
 
+	public boolean checkRequestPackage(GameObject msg) {
+		return msg.containsKey("username") && msg.containsKey("password");
+	}
+
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
-		// (1)检查包是否完整
-		if (username == null || password == null) {
-			return;
-		}
-		// (2)取用户名为 userName 的帐户
+		GameObject msgSent = this.buildPackage(msg);
+		// (1)取用户名为 userName 的帐户
 		User user = userService.findByUsername(username);
 		if (user == null) {
-			this.sendResponseMessage(session, msg, false, "帐号不存在");
+			this.addOperateResultToPackage(msgSent, false, "帐号不存在");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
-		// (3)验证
+		// (2)验证
 		if (Config.isDebug() == false) {
 			if (!user.getPassword().equals(password)) {
-				this.sendResponseMessage(session, msg, false, "密码不正确");
+				this.addOperateResultToPackage(msgSent, false, "密码不正确");
+				netTransceiver.sendMessage(session, msgSent);
 				return;
 			}
 		}
-		// (4)登录成功
+		// (3)登录成功
 		session.setUser(user);
 		userSessionManager.putUserSession(user.getId(), session);
-		GameObject msgSent = this.buildResponsePackage(msg, true, "登录成功");
+		this.addOperateResultToPackage(msgSent, true, "登录成功");
 		msgSent.putLong("userId", user.getId());
 		netTransceiver.sendMessage(session, msgSent);
 	}

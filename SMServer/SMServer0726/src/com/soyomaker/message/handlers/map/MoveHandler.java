@@ -29,9 +29,9 @@ public class MoveHandler extends AbHandler {
 		// 验证行走序列
 		int x = player.getX();
 		int y = player.getY();
-		boolean res = true;
-		// 1s发送一次,客户端的行走发送的数据
 		Collection<Integer> steps = msg.getIntArray("steps");
+		boolean res = true;
+		GameObject msgSent = this.buildPackage(msg);
 		for (int step : steps) {
 			switch (step) {
 			case Player.UP: {
@@ -66,11 +66,12 @@ public class MoveHandler extends AbHandler {
 			// 验证通过
 			player.setX(x);
 			player.setY(y);
-			this.sendResponseMessage(session, msg, false, "行走验证成功");
+			this.addOperateResultToPackage(msgSent, true, "行走验证成功");
 		} else {
 			// 验证失败
-			this.sendResponseMessage(session, msg, false, "行走验证失败");
+			this.addOperateResultToPackage(msgSent, false, "行走验证失败");
 		}
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 }

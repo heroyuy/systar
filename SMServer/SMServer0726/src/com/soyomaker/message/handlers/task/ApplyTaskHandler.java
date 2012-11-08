@@ -28,24 +28,28 @@ public class ApplyTaskHandler extends AbHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		int id = msg.getInt("taskId");
+		GameObject msgSent = this.buildPackage(msg);
 		// (1)检查是否存在指定id的任务
 		Task task = dictManager.getTask(id);
 		if (task == null) {
-			this.sendResponseMessage(session, msg, false, "任务不存在");
+			this.addOperateResultToPackage(msgSent, false, "任务不存在");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (2)是否已经申请(正在进行或者已经完成)
 		Player player = session.getUser().getPlayer();
 		PlayerTask playerTask = player.getPlayerTask(id);
 		if (playerTask != null) {
-			this.sendResponseMessage(session, msg, false, "任务正在进行或者已经完成");
+			this.addOperateResultToPackage(msgSent, false, "任务正在进行或者已经完成");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// TODO 检查申请条件
 		// (3)注册任务
 		PlayerTask pt = new PlayerTask(player.getId(), task);
 		player.addPlayerTask(pt);
-		this.sendResponseMessage(session, msg, true, "任务申请成功");
+		this.addOperateResultToPackage(msgSent, true, "任务申请成功");
+		netTransceiver.sendMessage(session, msgSent);
 		// (4)触发更新NPC状态
 		messagePusher.updateNpcState(session);
 		// (5)执行任务申请的服务器命令

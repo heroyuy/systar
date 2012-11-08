@@ -18,15 +18,15 @@ public class ListPlayerHandler extends AbHandler {
 
 	@Autowired
 	private PlayerService playerService;
-	
+
 	@Autowired
 	private PlayerUtil playerUtil;
 
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
+		GameObject msgSent = this.buildPackage(msg);
 		List<Player> list = playerService.findByUserId(session.getUser()
 				.getId());
-		GameObject msgSent = this.buildResponsePackage(msg);
 		msgSent.putObjectArray("playerList", this.convertPlayerList(list));
 		netTransceiver.sendMessage(session, msgSent);
 	}

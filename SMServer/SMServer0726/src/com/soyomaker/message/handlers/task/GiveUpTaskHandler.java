@@ -24,26 +24,31 @@ public class GiveUpTaskHandler extends AbHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		int id = msg.getInt("taskId");
+		GameObject msgSent = this.buildPackage(msg);
 		// (1)检查是否有此任务
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);
 		if (pt == null) {
-			this.sendResponseMessage(session, msg, false, "任务不存在");
+			this.addOperateResultToPackage(msgSent, false, "任务不存在");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (2)检查任务是否已经完成
 		if (pt.isFinished()) {
-			this.sendResponseMessage(session, msg, false, "任务已完成，不能放弃");
+			this.addOperateResultToPackage(msgSent, false, "任务已完成，不能放弃");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (3)检查任务是否是主线任务，主线任务不能放弃
 		if (pt.getTask().getType() == Task.TYPE_PLOTLINE) {
-			this.sendResponseMessage(session, msg, false, "主线任务不能放弃");
+			this.addOperateResultToPackage(msgSent, false, "主线任务不能放弃");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (4)移除任务
 		playerTaskService.removePlayerTask(player, pt);
-		this.sendResponseMessage(session, msg, true, "放弃任务成功");
+		this.addOperateResultToPackage(msgSent, true, "放弃任务成功");
+		netTransceiver.sendMessage(session, msgSent);
 		// 触发更新NPC状态
 		messagePusher.updateNpcState(session);
 	}

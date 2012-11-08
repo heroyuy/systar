@@ -33,17 +33,20 @@ public class NPCDialogueHandler extends AbHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		int npcId = msg.getInt("npcId");
+		GameObject msgSent = this.buildPackage(msg);
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		// (1)检查NPC是否存在
 		if (!mapData.hasNpc(npcId)) {
-			this.sendResponseMessage(session, msg, false, "当前地图上不存在此NPC");
+			this.addOperateResultToPackage(msgSent, false, "当前地图上不存在此NPC");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (2)检查NPC是否可以对话
 		Npc npc = mapData.getNpc(npcId);
 		if (npc.getType() != Npc.TYPE_NORMAL) {
-			this.sendResponseMessage(session, msg, false, "此NPC不能对话");
+			this.addOperateResultToPackage(msgSent, false, "此NPC不能对话");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (3)进行中的任务
@@ -65,7 +68,7 @@ public class NPCDialogueHandler extends AbHandler {
 			}
 		}
 		// (5)反馈消息给客户端
-		GameObject msgSent = this.buildResponsePackage(msg, true, "对话成功");
+		this.addOperateResultToPackage(msgSent, true, "对话成功");
 		msgSent.putObjectArray("taskList", taskObjs);
 		netTransceiver.sendMessage(session, msgSent);
 	}

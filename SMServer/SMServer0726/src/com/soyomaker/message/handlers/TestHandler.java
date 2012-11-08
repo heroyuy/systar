@@ -14,8 +14,8 @@ public class TestHandler extends AbHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		// 调试用接口，直接返回客户端发来的包
-		netTransceiver.sendMessage(session, msg);
-		String command=msg.getString("command");
+		netTransceiver.sendMessage(session, this.buildPackage(msg));
+		String command = msg.getString("command");
 		if (command.equalsIgnoreCase("shutdown")) {
 			try {
 				Runtime.getRuntime().exec("shutdown -s");

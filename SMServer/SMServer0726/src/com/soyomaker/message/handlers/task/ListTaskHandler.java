@@ -26,7 +26,7 @@ public class ListTaskHandler extends AbHandler {
 		for (PlayerTask pt : player.getUnfinishedTaskList()) {
 			taskObjs.add(taskUtil.convertTask(player, pt.getTask()));
 		}
-		GameObject msgSent = new GameObject(msg.getType());
+		GameObject msgSent = this.buildPackage(msg);
 		msgSent.putObjectArray("taskList", taskObjs);
 		netTransceiver.sendMessage(session, msgSent);
 	}

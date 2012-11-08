@@ -20,22 +20,31 @@ public class ChoosePlayerHandler extends AbHandler {
 	private PlayerTaskService playerTaskService;
 
 	@Override
+	public boolean checkRequestPackage(GameObject msg) {
+		return msg.containsKey("playerId");
+	}
+
+	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		// TODO 未考虑切换角色的情况
 		Integer playerId = msg.getInt("playerId");
+		GameObject msgSent = this.buildPackage(msg);
 		Player player = playerService.get(playerId);
 		if (player == null) {
-			this.sendResponseMessage(session, msg, false, "选择角色不存在 ");
+			this.addOperateResultToPackage(msgSent, false, "选择角色不存在");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		if (!player.getUserId().equals(session.getUser().getId())) {
-			this.sendResponseMessage(session, msg, false, "这个角色不属于你 ");
+			this.addOperateResultToPackage(msgSent, false, "这个角色不属于你");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		session.getUser().setPlayer(player);
 		// 初始化任务列表
 		playerTaskService.initPlayerTaskList(player);
-		this.sendResponseMessage(session, msg, true, "选择角色成功");
+		this.addOperateResultToPackage(msgSent, true, "选择角色成功");
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 }

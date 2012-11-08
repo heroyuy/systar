@@ -42,6 +42,7 @@ public class NPCStateHandler extends AbHandler {
 	 * @param msg
 	 */
 	private void sendNpcState(UserSession session, GameObject msg) {
+		GameObject msgSent = this.buildPackage(msg);
 		// (1)取当前地图上的所有npc
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
@@ -57,8 +58,6 @@ public class NPCStateHandler extends AbHandler {
 			}
 		}
 		// (3)返回消息给客户端
-		// TODO此处有问题
-		GameObject msgSent = new GameObject(msg.getType());
 		msgSent.putObjectArray("stateList", stateList);
 		netTransceiver.sendMessage(session, msgSent);
 	}

@@ -20,30 +20,27 @@ import com.soyomaker.net.session.UserSession;
 public class MessagePusher {
 
 	/**
-	 * 更新NPC状态
-	 */
-	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
-
-	/**
 	 * 切换地图
 	 */
 	private static final String PROTOCOL_ID_SWITCH_MAP = "103003";
+
+	/**
+	 * 发送聊天消息
+	 */
+	private static final String PROTOCOL_ID_SEND_CHAT_MESSAGE = "104001";
+
 	/**
 	 * 发送公告
 	 */
 	private static final String PROTOCOL_ID_SEND_NOTICE = "104002";
 
+	/**
+	 * 更新NPC状态
+	 */
+	private static final String PROTOCOL_ID_UPDATE_NPC_STATUS = "106001";
+
 	@Autowired
 	protected NetTransceiver netTransceiver;
-
-	/**
-	 * 发送公告
-	 */
-	@Listener(hint = EventIdConst.EventIdNoticePolling)
-	public void sendNotice() {
-		netTransceiver.dispatchPushMessage(null, new GameObject(
-				PROTOCOL_ID_SEND_NOTICE));
-	}
 
 	/**
 	 * 切换地图
@@ -61,6 +58,36 @@ public class MessagePusher {
 		msgPush.putInt("x", x);
 		msgPush.putInt("y", y);
 		netTransceiver.dispatchPushMessage(session, msgPush);
+	}
+
+	/**
+	 * 发送聊天消息
+	 * 
+	 * @param userSession
+	 *            会话
+	 * @param playerId
+	 *            玩家ID
+	 * @param playerName
+	 *            玩家呢称
+	 * @param content
+	 *            消息内容
+	 */
+	public void sendChatMessage(UserSession session, int playerId,
+			String playerName, String content) {
+		GameObject msgPush = new GameObject(PROTOCOL_ID_SEND_CHAT_MESSAGE);
+		msgPush.putInt("playerId", playerId);
+		msgPush.putString("playerName", playerName);
+		msgPush.putString("content", content);
+		netTransceiver.dispatchPushMessage(session, msgPush);
+	}
+
+	/**
+	 * 发送公告
+	 */
+	@Listener(hint = EventIdConst.EventIdNoticePolling)
+	public void sendNotice() {
+		netTransceiver.dispatchPushMessage(null, new GameObject(
+				PROTOCOL_ID_SEND_NOTICE));
 	}
 
 	/**

@@ -11,7 +11,6 @@ import com.soyomaker.model.Player;
 import com.soyomaker.model.task.PlayerTask;
 import com.soyomaker.model.task.Task;
 import com.soyomaker.model.task.TaskCommand;
-import com.soyomaker.net.session.UserSession;
 import com.soyomaker.net.session.UserSessionManager;
 
 @Component("taskUtil")

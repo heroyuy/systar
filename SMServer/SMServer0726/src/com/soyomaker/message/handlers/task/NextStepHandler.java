@@ -24,21 +24,25 @@ public class NextStepHandler extends AbHandler {
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		int id = msg.getInt("taskId");
+		GameObject msgSent = this.buildPackage(msg);
 		Player player = session.getUser().getPlayer();
 		PlayerTask pt = player.getPlayerTask(id);
 		// (1)检查任务是否存在
 		if (pt == null) {
-			this.sendResponseMessage(session, msg, false, "没有此任务");
+			this.addOperateResultToPackage(msgSent, false, "没有此任务");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (2)检查任务是否已经完成
 		if (pt.isFinished()) {
-			this.sendResponseMessage(session, msg, false, "此任务已经完成");
+			this.addOperateResultToPackage(msgSent, false, "此任务已经完成");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (3)检查任务步骤是否已经结束
 		if (pt.isStepOver()) {
-			this.sendResponseMessage(session, msg, false, "此任务步骤已经结束");
+			this.addOperateResultToPackage(msgSent, false, "此任务步骤已经结束");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		TaskStep curTaskStep = pt.getCurTaskStep();
@@ -49,14 +53,14 @@ public class NextStepHandler extends AbHandler {
 		}
 		pt.setStep(step);
 		// (5)反馈消息
-		GameObject msgSent = this.buildResponsePackage(msg, true, "步骤完成");
+		this.addOperateResultToPackage(msgSent, true, "步骤完成");
 		msgSent.putBool("stepOver", pt.isStepOver());
 		netTransceiver.sendMessage(session, msgSent);
-		// (4)执行任务申请的服务器命令
+		// (6)触发更新NPC状态
+		messagePusher.updateNpcState(session);
+		// (7)执行任务申请的服务器命令
 		taskUtil.executeTaskCommandList(player,
 				curTaskStep.getTaskCommandList());
-		// 触发更新NPC状态
-		messagePusher.updateNpcState(session);
 	}
 
 }

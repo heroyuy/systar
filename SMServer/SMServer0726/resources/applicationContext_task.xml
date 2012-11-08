@@ -20,7 +20,7 @@
 		class="org.rribbit.creation.SpringBeanClassBasedListenerObjectCreator">
 		<property name="classNames">
 			<list>
-				<value>com.soyomaker.message.handlers.chat.NoticeHandler</value>
+				<value>com.soyomaker.message.MessagePusher</value>
 			</list>
 		</property>
 	</bean>

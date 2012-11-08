@@ -15,28 +15,32 @@ public class RegisterHandler extends AbHandler {
 	@Autowired
 	private UserService userService;
 
+	public boolean checkRequestPackage(GameObject msg) {
+		return msg.containsKey("username") && msg.containsKey("password");
+	}
+
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		String username = msg.getString("username");
 		String password = msg.getString("password");
-		// (1)检查包是否完整
-		if (username == null || password == null) {
-			return;
-		}
+		GameObject msgSent = this.buildPackage(msg);
 		// (2)检查用户名长度
 		if (username.length() < 3) {
-			this.sendResponseMessage(session, msg, false, "用户名长度不能小于3");
+			this.addOperateResultToPackage(msgSent, false, "用户名长度不能小于3");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (3)检查密码长度
 		if (password.equals("")) {
-			this.sendResponseMessage(session, msg, false, "密码不能为空");
+			this.addOperateResultToPackage(msgSent, false, "密码不能为空");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (4)检查用户名是否已经存在
 		User user = userService.findByUsername(username);
 		if (user != null) {
-			this.sendResponseMessage(session, msg, false, "用户名已存在");
+			this.addOperateResultToPackage(msgSent, false, "用户名已存在");
+			netTransceiver.sendMessage(session, msgSent);
 			return;
 		}
 		// (5)添加用户到数据库
@@ -44,7 +48,9 @@ public class RegisterHandler extends AbHandler {
 		user.setUsername(username);
 		user.setPassword(password);
 		boolean status = userService.save(user);
-		this.sendResponseMessage(session, msg, status, status ? "注册成功" : "注册失败");
+		this.addOperateResultToPackage(msgSent, status, status ? "注册成功"
+				: "注册失败");
+		netTransceiver.sendMessage(session, msgSent);
 	}
 
 }
