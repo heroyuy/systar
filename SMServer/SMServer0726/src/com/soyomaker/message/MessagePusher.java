@@ -1,8 +1,10 @@
 package com.soyomaker.message;
 
+import org.rribbit.Listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.soyomaker.event.EventIdConst;
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.net.NetTransceiver;
 import com.soyomaker.net.session.UserSession;
@@ -37,6 +39,7 @@ public class MessagePusher {
 	/**
 	 * 发送公告
 	 */
+	@Listener(hint = EventIdConst.EventIdNoticePolling)
 	public void sendNotice() {
 		netTransceiver.dispatchPushMessage(null, new GameObject(
 				PROTOCOL_ID_SEND_NOTICE));
