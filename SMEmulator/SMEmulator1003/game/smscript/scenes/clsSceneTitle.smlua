@@ -412,7 +412,17 @@ function clsSceneTitle:buttonTapped(button)
   		end
   elseif button==self.loginCancleButton then
   		--退出游戏
-  		smGame:stop()
+  		--smGame:stop()
+  		local task = {name="凯米拉",type=2,intro="人类贪婪欲望所造成的灾难，前联邦动物基因计划的产物，拥有蛇和狮子的基因，经过大灾变辐射的变异，凯米拉变得如神话的模块一样恐怖而致命"}
+  		local delegate={}
+  		function delegate:onSelected(OkOrCancle)
+  		  smLog:info(OkOrCancle)
+    	  --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
+    	  if OkOrCancle then
+      	    --smNet:applyTask(task.id)
+    	  end
+  		end
+  		GameLayer:showTaskApplyDialog("任务名称","/image/skin/头像3.png",task,delegate,"onSelected")
   elseif button==self.listPlayerDeleteButton then
   		if self.listPlayerTable.selectedIndex then
   			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).index)
