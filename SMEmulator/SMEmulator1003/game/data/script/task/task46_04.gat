@@ -1,0 +1,53 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,0)
+Interpreter:doCommand(101021,354,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,355,1)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"克雷斯丁娜","兰迪，怎么样了？","/image/face/003.png",0)
+Interpreter:doCommand(101006,"兰迪","还能怎么样？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","我是说那个“潜伏者”。","/image/face/003.png",0)
+Interpreter:doCommand(101006,"兰迪","死了，子弹虽然没有直接击中心脏，但是失血过多。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","是吗。。。”。","/image/face/003.png",0)
+Interpreter:doCommand(101006,"兰迪","他呢？他怎么样了？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","还是老样子，这几天都没有看到他出来过，我没有办法了。","/image/face/003.png",0)
+Interpreter:doCommand(101006,"兰迪","唉，我知道他心理很难受。他受吉斯死前重托，却没有办法实现诺言，换做是我，我想也会想不开。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","兰迪，求求你，劝劝他，看着他这样子，我好难受。","/image/face/003.png",0)
+Interpreter:doCommand(101006,"兰迪","嗯。","/image/face/002.png",0)
+Interpreter:doCommand(101020,354,294,18,10)
+Interpreter:doCommand(101006,"兰迪","<name>[0]。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","哈哈。。。兰迪。。。兰迪你来了。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","振作点，<name>[0]，这已是无法挽回了。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","兰迪，你说我还振作来有什么用。。。还是让我醉死算了。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","你在说什么傻话？还有很多事情等着你，难道你不想报仇吗？杀死吉斯和娜娜的凶手是火星人！他们为了从你的口中获得情报，将娜娜杀了，然后用潜伏者四号代替了她，我们都被她骗了。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"兰迪","如果你还是一个男人的话，就给我振作起来，战争就要开始，难道你要放弃这个机会吗？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","不，我不要报仇！兰迪，我现在才发现，报仇有意义吗？如果当时我回到娜娜身边，或许她就不会死。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","<name>[0]，这世界没有如果！就算你不去找他们报仇，火星殖民地那帮家伙也不会放过你。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我倒是宁愿是我死了，这样娜娜就能很安全的生存下去。。。是我害了她。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","好了，<name>[0]，站起来！你知道你现在像什么样子吗？像堆烂泥。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","兰迪，我本身就是一堆烂泥，吉斯让我活着就是为了照顾娜娜，而我。。。我没有保护好她。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","这不是你的错！","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我不仅没有替吉斯讨回公道，甚至连他最后的愿望都没有办法完成。。。我就是一堆烂泥。。。你知道吗？娜娜她是我最重要的人，从吉斯死去的那一刻开始。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","她说的对，我只关心自己，从来就没有关心过她，是我错了。。。都怪我！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","我知道你很不好受，如果换做我的话，可能我也好不了多少。。。唉，我到底在说什么？！","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","什么都不要说了，来，陪我喝一杯！这可是高级红酒，嘿嘿，我特地在教官那里偷来的。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","好吧，也给我一杯。","/image/face/002.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,354,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,356,1)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"兰迪","啊！真是不错啊，这样的好酒平日难得一见，我们喝。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你喝的太多了，留点给我。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","<name>[0]，你是个吝啬鬼，真不知道我怎么会认识你。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","好酒。。。好酒。。。","/image/face/001.png",0)
+Interpreter:doCommand(101020,353,294,18,10)
+Interpreter:doCommand(101006,"克雷斯丁娜","<name>[0]！你在干什么？！","/image/face/003.png",0)
+Interpreter:doCommand(101006,"<name>[0]","嘻嘻，克雷斯丁娜，我只是多喝了两杯而已。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","是啊，很久都没有这样痛快了。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","兰迪！怎么连你也这样。。。哎哟。。。都是些什么人啊！","/image/face/003.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,1)
+Interpreter:doCommand(101021,355,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,353,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,356,0)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

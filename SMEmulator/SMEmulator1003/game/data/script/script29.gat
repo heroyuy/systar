@@ -1,8 +1,0 @@
-if Interpreter:doCommand(102013,4) then
-if Interpreter:doCommand(102008,4) == 20 then
-Interpreter:doCommand(101006,"<name>[0]","这是怎么回事？我好想听见街上有人呼救！","/image/battler/001.png",0)
-Interpreter:doCommand(101006,"<name>[0]","还是去看看吧，可以从栏杆上跳下去，这样就可以跳到大街上去。","/image/battler/001.png",0)
-Interpreter:doCommand(102010,4)
-Interpreter:doCommand(102009,5)
-end
-end

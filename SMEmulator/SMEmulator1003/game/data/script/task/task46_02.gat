@@ -1,0 +1,12 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"阿奎那","别过来！不然我就杀了她！","/image/face/156.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","你的手下都死光了，士兵们马上就会追上来，带着人质你根本跑不远！","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"阿奎那","想得美！既然任务已经失败了，我走不了，你的小情人也活不了！","/image/face/156.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","这可未必！","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"阿奎那","你。。。好手段。。。","/image/face/156.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","我没有告诉你，在这种距离，我可以做很多事情，比如说杀了你。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"阿奎那","是我小看你了。。。","/image/face/156.png",0)
+   Interpreter:doCommand(101024,346,"\image\character\404-damage04.png",0)
+else
+end
+

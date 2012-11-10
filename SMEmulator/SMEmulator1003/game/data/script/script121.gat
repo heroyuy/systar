@@ -1,7 +1,0 @@
-if Interpreter:doCommand(102013,20) then
-if Interpreter:doCommand(102008,20) == 87 then
-Interpreter:doCommand(102010,20)
-end
-else
-
-end

@@ -1,0 +1,4 @@
+Interpreter:doCommand(101006,"<name>[0]","这里似乎可以打开某个电子门。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","嗯，那么我们必须要调查这些电脑。","/image/face/110.png",0)
+
+

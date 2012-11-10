@@ -1,0 +1,11 @@
+Interpreter:doCommand(101006,"安娜","阿曼达大人刚晋升主教，我早就看好她了。","/image/face/109.png",0)
+Interpreter:doCommand(101006,"<name>[0]","在那里可以找到阿曼达主教？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"安娜","主教们一般都在圣城科学基地之中。","/image/face/110.png",0)
+Interpreter:doCommand(101006,"<name>[0]","圣城科学基地怎么走？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"安娜","圣城科学基地？往上面走就是了，但是守卫森严，普通人是进不去的。","/image/face/110.png",0)
+Interpreter:doCommand(101006,"<name>[0]","这样吗。。。？那谢谢。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"安娜","不过科学基地曾发生失窃事件，有人趁守卫换班的时候在潜入科学基地，听说有机密文件失窃。啊。。。不好，我又多嘴了。","/image/face/110.png",0)
+Interpreter:doCommand(101006,"<name>[0]","看来必须要去一趟圣城科学基地。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","我们先去旅馆看看，最少要等守卫换班的时候吧。","/image/face/002.png",0)
+
+

@@ -1,9 +1,0 @@
-if Interpreter:doCommand(102013,5) then
-if Interpreter:doCommand(102008,5) == 21 then
-Interpreter:doCommand(101006,"阿明","女人，放弃吧，你是跑不掉的。","/image/battler/114.png",0)
-Interpreter:doCommand(101006,"女奴隶","不，我不想跟你回去，我才不要被卖掉。","/image/battler/113.png",0)
-Interpreter:doCommand(101006,"阿明","闭嘴，兰迪奴隶公司的货物不应该有思想。","/image/battler/114.png",0)
-Interpreter:doCommand(101006,"女奴隶","救我，谁来救救我。","/image/battler/113.png",0)
-Interpreter:doCommand(102010,5)
-end
-end
