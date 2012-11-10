@@ -22,7 +22,7 @@ clsUITextArea.textSize=12                   		--文字大小
 clsUITextArea.gap=4									--间距
 
 clsUITextArea.textImage=nil							--用于显示文本的图片
-clsUITextArea.textItemList=nil						--多行文本数组
+clsUITextArea.strList=nil							--多行文本数组
 clsUITextArea.cursorX=0								--当前要绘制的字符在图片上的位置x
 clsUITextArea.cursorY=0								--当前要绘制的字符在图片上的位置y
 clsUITextArea.rowNum=0				 				--当前已绘制的行数
@@ -37,22 +37,24 @@ end
 --更新TextArea
 function clsUITextArea:refresh()
   --(1)拆分字符串
-  self.textItemList=string.split(self.text,clsUITextArea.REGEX)
+  self.strList=string.split(self.text,clsUITextArea.REGEX)
   --(2)创建足够大的缓冲图并初始化
-  local num=table.getn(self.textItemList)
+  local num=0
+  for k,str in pairs(self.strList) do
+    num=num+self:getNeedRowNum(str)
+  end
   local width,height=self.width,num*self.textSize+(num+1)*self.gap
-
   self.textImage=smImageFactory:createImage(width,height)
   local painter=self.textImage:getPainter()
   painter:setColor(self.textColor)
   painter:setTextSize(self.textSize)
   --(3)重置辅助标志
-  local rowIndex,colIndex=1,1    --当前正在绘制的字符在textItemList中的位置
+  local rowIndex,colIndex=1,1    --当前正在绘制的字符在strList中的位置
   self.cursorX,self.cursorY=0,self.gap
   self.rowNum=0
   --(4)绘制
-  while rowIndex<=num do
-    local text=self.textItemList[rowIndex]  --取当前行文本
+  while rowIndex<=table.getn(self.strList) do
+    local text=self.strList[rowIndex]  --取当前行文本
     if string.find(text,clsUITextArea.REGEX) then
       --功能字符串
       self:parseString(text,painter)
@@ -74,8 +76,8 @@ function clsUITextArea:refresh()
     rowIndex=rowIndex+1
   end
   --(5)修正图片大小
-  num=self.rowNum+1 --图片上的文本行数
-  height=num*self.textSize+(num+1)*self.gap
+  local totalRowNum=self.rowNum+1 --图片上的文本行数
+  height=totalRowNum*self.textSize+(totalRowNum+1)*self.gap
   self.textImage=self.textImage:clip(0,0,width,height)
   --(6)根据类型确定表现
   if self.type==clsUITextArea.TYPE_AUTOPAGING then
@@ -85,6 +87,27 @@ function clsUITextArea:refresh()
     self.height=height
     self.image=self.textImage
   end
+end
+
+--获取字符串绘制需要的行数
+function clsUITextArea:getNeedRowNum(str)
+  local rowNum=0
+  if string.find(str,clsUITextArea.REGEX) then
+    local items=string.split(str,">%[")
+    local len=smString:length(items[1])
+    local funStr=smString:subString(items[1],2,len)
+    len=smString:length(items[3])
+    local argStr=smString:subString(items[3],1,len-1)
+    if funStr=="c" then
+      rowNum=0
+    elseif funStr=="n" then
+      rowNum=1
+    end
+  else
+    local len=smString:length(str)
+    rowNum=math.ceil(len*self.textSize/self.width)
+  end
+  return rowNum
 end
 
 --解析功能字符串  <...>[...]
