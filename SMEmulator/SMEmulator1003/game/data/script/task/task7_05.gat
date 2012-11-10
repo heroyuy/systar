@@ -1,32 +1,32 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,0)                   -- 隐藏主角
-Interpreter:doCommand(101021,57,1)                -- 57号NPC显示
-Interpreter:doCommand(101021,151,1)               -- 151号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"兰迪","我突然想起来，我们好像惹上了大麻烦。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","什么麻烦？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","大灾变之后，联邦彻底瓦解，所有的制造科技都近乎消亡。能有这样一辆车的势力，绝对是大势力，别忘了，还有那支能量枪。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","管他什么大势力，要对付我，我虽然打不过什么大势力，也能恶心恶心他们。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","哈哈哈，说的对，管他的，今日不知明日事，我们只能让活着的每一天都不能太憋屈。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"兰迪","你以后有什么打算？","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","我要到佣兵之城佣兵协会总部去。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","去那里干嘛？","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","为一个朋友的死。。。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","朋友？","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","是的，我的朋友死了，死得不明不白，所以我要为他讨回公道，你呢？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","哈哈哈，我也正想去下佣兵协会总部，雷尔死前给我一封信，要我将它带到总部。不过在此之前，我要回到家乡，将雷尔的死讯带给爱丽丝，这是雷尔死前的愿望。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","就是“回去告诉爱丽丝，我比你这小子强多了”的那句话？爱丽丝是雷尔的女朋友？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","爱丽丝。。。其实她是。。。我的女朋友，哈哈。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","这。。。那雷尔？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","雷尔。。。他是我的情敌，但同时还是兄弟。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","或许这很傻，但雷尔将生存的机会让给了我，我一定会将他的话带给爱丽丝。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","不，这不傻，雷尔有一个令人羡慕的兄弟。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","哈哈哈。。。雷尔是个傻瓜，我也是。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"兰迪","不过眼前这电子门，你打算怎么办？用炸药炸开它？我们没法前进了。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","这里是一个荒废的地下铁，根据经验在这里内部可以找到打开它的办法。","/image/face/001.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,1)                   -- 显示主角
-Interpreter:doCommand(101021,57,0)                -- 53号NPC显示
-Interpreter:doCommand(101021,151,0)               -- 151号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",0)                   -- 隐藏主角
+Interpreter:doCommand("showNpc",57,1)                -- 57号NPC显示
+Interpreter:doCommand("showNpc",151,1)               -- 151号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","兰迪","我突然想起来，我们好像惹上了大麻烦。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","什么麻烦？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","大灾变之后，联邦彻底瓦解，所有的制造科技都近乎消亡。能有这样一辆车的势力，绝对是大势力，别忘了，还有那支能量枪。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","管他什么大势力，要对付我，我虽然打不过什么大势力，也能恶心恶心他们。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","哈哈哈，说的对，管他的，今日不知明日事，我们只能让活着的每一天都不能太憋屈。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","你以后有什么打算？","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","我要到佣兵之城佣兵协会总部去。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","去那里干嘛？","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","为一个朋友的死。。。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","朋友？","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","是的，我的朋友死了，死得不明不白，所以我要为他讨回公道，你呢？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","哈哈哈，我也正想去下佣兵协会总部，雷尔死前给我一封信，要我将它带到总部。不过在此之前，我要回到家乡，将雷尔的死讯带给爱丽丝，这是雷尔死前的愿望。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","就是“回去告诉爱丽丝，我比你这小子强多了”的那句话？爱丽丝是雷尔的女朋友？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","爱丽丝。。。其实她是。。。我的女朋友，哈哈。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","这。。。那雷尔？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","雷尔。。。他是我的情敌，但同时还是兄弟。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","或许这很傻，但雷尔将生存的机会让给了我，我一定会将他的话带给爱丽丝。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","不，这不傻，雷尔有一个令人羡慕的兄弟。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","哈哈哈。。。雷尔是个傻瓜，我也是。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","不过眼前这电子门，你打算怎么办？用炸药炸开它？我们没法前进了。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","这里是一个荒废的地下铁，根据经验在这里内部可以找到打开它的办法。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",1)                   -- 显示主角
+Interpreter:doCommand("showNpc",57,0)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",151,0)               -- 151号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

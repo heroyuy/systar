@@ -1,12 +1,12 @@
 if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101006,"阿曼达","为什么不杀了我？","/image/face/206.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","正如教皇陛下所说，你我虽然理念不一样，但并非生死仇敌，而我也答应他不会伤害科学神教的教徒。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"阿曼达","不杀我，你会后悔的！","/image/face/206.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","我们从不后悔，而现在你也尽力了，可以回去跟你的神还有你的教徒们交代了。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"阿曼达","。。。。。。","/image/face/206.png",0)
-   Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-   Interpreter:doCommand(101021,266,0)                -- 54号NPC显示
-   Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+   Interpreter:doCommand("showMessageDialog","阿曼达","为什么不杀了我？","/image/face/206.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","正如教皇陛下所说，你我虽然理念不一样，但并非生死仇敌，而我也答应他不会伤害科学神教的教徒。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","阿曼达","不杀我，你会后悔的！","/image/face/206.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","我们从不后悔，而现在你也尽力了，可以回去跟你的神还有你的教徒们交代了。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","阿曼达","。。。。。。","/image/face/206.png",0)
+   Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+   Interpreter:doCommand("showNpc",266,0)                -- 54号NPC显示
+   Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 else
 end
 

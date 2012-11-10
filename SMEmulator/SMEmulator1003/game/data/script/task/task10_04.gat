@@ -1,24 +1,24 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,67,1)                -- 53号NPC显示
-Interpreter:doCommand(101021,68,1)                -- 54号NPC显示
-Interpreter:doCommand(101021,69,1)                -- 55号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"旅店老板","<name>[0]上尉，是否现在休息？","/image/face/106.png",0)
-Interpreter:doCommand(101006,"<name>[0]","好，我正好想要休息。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",67,1)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",68,1)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",69,1)                -- 55号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","旅店老板","<name>[0]上尉，是否现在休息？","/image/face/106.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","好，我正好想要休息。","/image/face/001.png",0)
 Interpreter:doCommand(101001,54,6,8)              -- 主角移动到楼梯
-Interpreter:doCommand(101022,0)                   -- 隐藏主角
-Interpreter:doCommand(101006,"杜波夫","我好像又看到了哪两个卑鄙的劫匪，你们有没有看到？","/image/face/115.png",0)
-Interpreter:doCommand(101006,"尼尔","没有啊，是队长的心理作用吧？","/image/face/117.png",0)
-Interpreter:doCommand(101006,"哈里森","在火星的时候，我曾经听说过，作为受害者会对曾加害他的人产生爱慕，甚至爱情，叫做什么受害者综合症。队长，你是不是对他们两个心动了？从而产生幻觉？","/image/face/118.png",0)
-Interpreter:doCommand(101006,"杜波夫","呸，我怎么可能会去想两个卑鄙小人！哈里森，你正事不做，就会乱讲！","/image/face/115.png",0)
-Interpreter:doCommand(101006,"哈里森","哦。","/image/face/118.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,1)                   -- 显示主角
+Interpreter:doCommand("showPlayer",0)                   -- 隐藏主角
+Interpreter:doCommand("showMessageDialog","杜波夫","我好像又看到了哪两个卑鄙的劫匪，你们有没有看到？","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","尼尔","没有啊，是队长的心理作用吧？","/image/face/117.png",0)
+Interpreter:doCommand("showMessageDialog","哈里森","在火星的时候，我曾经听说过，作为受害者会对曾加害他的人产生爱慕，甚至爱情，叫做什么受害者综合症。队长，你是不是对他们两个心动了？从而产生幻觉？","/image/face/118.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","呸，我怎么可能会去想两个卑鄙小人！哈里森，你正事不做，就会乱讲！","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","哈里森","哦。","/image/face/118.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",1)                   -- 显示主角
 Interpreter:doCommand(101001,54,8,7)              -- 主角移动到楼梯
-Interpreter:doCommand(101021,67,0)                -- 53号NPC显示
-Interpreter:doCommand(101021,68,0)                -- 54号NPC显示
-Interpreter:doCommand(101021,69,0)                -- 55号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showNpc",67,0)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",68,0)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",69,0)                -- 55号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 
 
 

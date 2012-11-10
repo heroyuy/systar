@@ -1,8 +1,8 @@
 if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101006,"兰迪","啊。。。！！！为什么！为什么要我一天亲手杀死两个兄弟！！","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"兰迪","呜呜。。。都是同生共死过的，为什么要逼我。。。呜呜。。。","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","走吧，去将他们安葬了才是现在最重要的事情，节哀顺变，兰迪。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"兰迪","呜呜。。。<name>[0]，我到底做错了什么？！！","/image/face/002.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","啊。。。！！！为什么！为什么要我一天亲手杀死两个兄弟！！","/image/face/002.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","呜呜。。。都是同生共死过的，为什么要逼我。。。呜呜。。。","/image/face/002.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","走吧，去将他们安葬了才是现在最重要的事情，节哀顺变，兰迪。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","呜呜。。。<name>[0]，我到底做错了什么？！！","/image/face/002.png",0)
 else
 end
 

@@ -1,12 +1,12 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,172,1)               -- 53号NPC显示
-Interpreter:doCommand(101021,179,1)               -- 53号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"杜波夫","停一下。。。不行了。。。我跑不动了。。。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"兰迪","<name>[0]。。。我也是。。。别跑了。。。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","也好。。。跑了这么远。。。他们也追不上来。。。就在前面一点扎营吧。。。","/image/face/001.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,172,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,171,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,179,0)               -- 53号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",172,1)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",179,1)               -- 53号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","杜波夫","停一下。。。不行了。。。我跑不动了。。。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","<name>[0]。。。我也是。。。别跑了。。。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","也好。。。跑了这么远。。。他们也追不上来。。。就在前面一点扎营吧。。。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",172,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",171,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",179,0)               -- 53号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

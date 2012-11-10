@@ -1,32 +1,32 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,0)
-Interpreter:doCommand(101021,341,1)                -- 54号NPC显示
-Interpreter:doCommand(101021,342,1)                -- 54号NPC显示
-Interpreter:doCommand(101021,343,1)                -- 54号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"<name>[0]","奇怪！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","有什么发现吗？","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","这本档案里面写着，“天煞”在上次战争之中立下了很大的功劳。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","难道有什么奇怪吗？作为最强的特种部队，参与了那场战争，如果没有点功劳那才是最奇怪的事情。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","不，这里面很有问题！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","为什么？说来听听，我不觉得有什么问题。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","四年前的战争期间，我们只出动过一次，也正是这次的任务，让所有人都死了，只剩下我一个。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","这。。。可这也不能说明什么。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","问题在于那次任务失败了，并且失败的十分彻底，甚至没有找到任何有价值的目标。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","。。。。。。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","兰迪，你现在还觉得没有问题吗？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","无功而受禄，这的确很有问题！","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","所有的这些档案都必须要经过总部审批，而我相信总部不可能犯下这种低级错误，所以或许能够从这份档案上面寻找出什么线索。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","<name>[0]，你打算怎么做？","/image/face/002.png",0)
-Interpreter:doCommand(101021,340,1)                -- 54号NPC显示
-Interpreter:doCommand(101020,340,290,11,12)
-Interpreter:doCommand(101006,"琳达","<name>[0]，总部已答应新人类协会并入佣兵协会了，兰蒂尔上将要见你们。","/image/face/154.png",0)
-Interpreter:doCommand(101006,"克雷斯丁娜","那太好了，以后我也是佣兵，和<name>[0]一样的人。","/image/face/003.png",0)
-Interpreter:doCommand(101006,"<name>[0]","好，那么我们走吧，可不要让上将等太久了。","/image/face/001.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,1)
-Interpreter:doCommand(101021,341,0)                -- 54号NPC显示
-Interpreter:doCommand(101021,342,0)                -- 54号NPC显示
-Interpreter:doCommand(101021,343,0)                -- 54号NPC显示
-Interpreter:doCommand(101021,340,0)                -- 54号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",0)
+Interpreter:doCommand("showNpc",341,1)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",342,1)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",343,1)                -- 54号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","<name>[0]","奇怪！","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","有什么发现吗？","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","这本档案里面写着，“天煞”在上次战争之中立下了很大的功劳。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","难道有什么奇怪吗？作为最强的特种部队，参与了那场战争，如果没有点功劳那才是最奇怪的事情。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","不，这里面很有问题！","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","为什么？说来听听，我不觉得有什么问题。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","四年前的战争期间，我们只出动过一次，也正是这次的任务，让所有人都死了，只剩下我一个。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","这。。。可这也不能说明什么。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","问题在于那次任务失败了，并且失败的十分彻底，甚至没有找到任何有价值的目标。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","。。。。。。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","兰迪，你现在还觉得没有问题吗？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","无功而受禄，这的确很有问题！","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","所有的这些档案都必须要经过总部审批，而我相信总部不可能犯下这种低级错误，所以或许能够从这份档案上面寻找出什么线索。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","<name>[0]，你打算怎么做？","/image/face/002.png",0)
+Interpreter:doCommand("showNpc",340,1)                -- 54号NPC显示
+Interpreter:doCommand("autoMove",340,290,11,12)
+Interpreter:doCommand("showMessageDialog","琳达","<name>[0]，总部已答应新人类协会并入佣兵协会了，兰蒂尔上将要见你们。","/image/face/154.png",0)
+Interpreter:doCommand("showMessageDialog","克雷斯丁娜","那太好了，以后我也是佣兵，和<name>[0]一样的人。","/image/face/003.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","好，那么我们走吧，可不要让上将等太久了。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",1)
+Interpreter:doCommand("showNpc",341,0)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",342,0)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",343,0)                -- 54号NPC显示
+Interpreter:doCommand("showNpc",340,0)                -- 54号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

@@ -1,23 +1,23 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,147,1)               -- 53号NPC显示
-Interpreter:doCommand(101021,149,1)               -- 53号NPC显示
-Interpreter:doCommand(101021,148,1)               -- 53号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"男子","烧死她！","/image/face/126.png",0)
-Interpreter:doCommand(101006,"女子","烧死这个怪物！","/image/face/127.png",0)
-Interpreter:doCommand(101006,"<name>[0]","他们竟然要烧死这个可怜的女人。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","老天，我只在废旧的历史书上面看到过这种事情，在中世纪人们会烧死那些他们认为很危险的女巫。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"杜波夫","我们要救她，地球竟然变成了这样，迷信，暴力还有愚昧的安乐窝？","/image/face/115.png",0)
-Interpreter:doCommand(101006,"兰迪","这难道不是你们火星殖民地的功劳吗？","/image/face/002.png",0)
-Interpreter:doCommand(101006,"杜波夫","兰迪，你。。。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"<name>[0]","我们还是去镇上看看怎么进入监狱吧。","/image/face/001.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,144,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,145,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,146,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,147,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,149,0)               -- 53号NPC显示
-Interpreter:doCommand(101021,148,0)               -- 53号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",147,1)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",149,1)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",148,1)               -- 53号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","男子","烧死她！","/image/face/126.png",0)
+Interpreter:doCommand("showMessageDialog","女子","烧死这个怪物！","/image/face/127.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","他们竟然要烧死这个可怜的女人。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","老天，我只在废旧的历史书上面看到过这种事情，在中世纪人们会烧死那些他们认为很危险的女巫。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","我们要救她，地球竟然变成了这样，迷信，暴力还有愚昧的安乐窝？","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","这难道不是你们火星殖民地的功劳吗？","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","兰迪，你。。。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","我们还是去镇上看看怎么进入监狱吧。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",144,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",145,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",146,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",147,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",149,0)               -- 53号NPC显示
+Interpreter:doCommand("showNpc",148,0)               -- 53号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 
 

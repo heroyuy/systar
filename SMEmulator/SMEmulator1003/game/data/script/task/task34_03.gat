@@ -1,7 +1,7 @@
-Interpreter:doCommand(101006,"基地守卫","唉，醉了。。。看来等下是不能去换班了。","/image/face/120.png",0)
-Interpreter:doCommand(101006,"酒客","少去一次不会被发现的，这么久不见，我们不醉不归。","/image/face/121.png",0)
-Interpreter:doCommand(101006,"基地守卫","好吧，希望不要被阿曼达主教发现，不然一定会受罚的。","/image/face/120.png",0)
-Interpreter:doCommand(101006,"<name>[0]","守卫等下无法换班，看来我们偷偷进去基地，窃取手令。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","其实何必这么麻烦，就凭这些歪瓜裂枣的东西，怎么能够阻挡我们？","/image/face/110.png",0)
+Interpreter:doCommand("showMessageDialog","基地守卫","唉，醉了。。。看来等下是不能去换班了。","/image/face/120.png",0)
+Interpreter:doCommand("showMessageDialog","酒客","少去一次不会被发现的，这么久不见，我们不醉不归。","/image/face/121.png",0)
+Interpreter:doCommand("showMessageDialog","基地守卫","好吧，希望不要被阿曼达主教发现，不然一定会受罚的。","/image/face/120.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","守卫等下无法换班，看来我们偷偷进去基地，窃取手令。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","其实何必这么麻烦，就凭这些歪瓜裂枣的东西，怎么能够阻挡我们？","/image/face/110.png",0)
 
 

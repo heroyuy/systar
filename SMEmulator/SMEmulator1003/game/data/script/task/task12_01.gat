@@ -1,17 +1,17 @@
 if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101006,"佣兵乙","好强！快去通知老板！","/image/face/103.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","你们都是混口饭吃，我也不想与你们为难，去叫你们老板过来吧，就说这里的规矩被破坏了。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"兰迪","记住，要大老板，海港市佣兵团的大老板，那个叫什么罗格尔的。","/image/face/002.png",0)
-   Interpreter:doCommand(101020,74,74,2,14)
-   Interpreter:doCommand(101021,74,0)
-   Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-   Interpreter:doCommand(101021,75,1)                -- 53号NPC显示
-   Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-   Interpreter:doCommand(101006,"龙马","是你们要见老板吗？不过要见大老板你似乎不够格吧？","/image/face/123.png",0)
-   Interpreter:doCommand(101006,"佣兵乙","是龙马先生。","/image/face/103.png",0)
-   Interpreter:doCommand(101006,"龙马","我叫龙马，是海港市佣兵团负责人之一，我可以认为你们的行为是在挑战海港市的规矩么？","/image/face/123.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","人很傲气，废话却很多，通常这种人都不是大老板，而不是大老板就不够资格过问此事。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"龙马","对你们这种人的确不必多话。","/image/face/123.png",0)
+   Interpreter:doCommand("showMessageDialog","佣兵乙","好强！快去通知老板！","/image/face/103.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","你们都是混口饭吃，我也不想与你们为难，去叫你们老板过来吧，就说这里的规矩被破坏了。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","记住，要大老板，海港市佣兵团的大老板，那个叫什么罗格尔的。","/image/face/002.png",0)
+   Interpreter:doCommand("autoMove",74,74,2,14)
+   Interpreter:doCommand("showNpc",74,0)
+   Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+   Interpreter:doCommand("showNpc",75,1)                -- 53号NPC显示
+   Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+   Interpreter:doCommand("showMessageDialog","龙马","是你们要见老板吗？不过要见大老板你似乎不够格吧？","/image/face/123.png",0)
+   Interpreter:doCommand("showMessageDialog","佣兵乙","是龙马先生。","/image/face/103.png",0)
+   Interpreter:doCommand("showMessageDialog","龙马","我叫龙马，是海港市佣兵团负责人之一，我可以认为你们的行为是在挑战海港市的规矩么？","/image/face/123.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","人很傲气，废话却很多，通常这种人都不是大老板，而不是大老板就不够资格过问此事。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","龙马","对你们这种人的确不必多话。","/image/face/123.png",0)
 else
 end
 

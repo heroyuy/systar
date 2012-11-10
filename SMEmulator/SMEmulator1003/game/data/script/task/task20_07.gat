@@ -1,26 +1,26 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,0)                    -- 隐藏主角
-Interpreter:doCommand(101021,131,1)                -- 53号NPC显示
-Interpreter:doCommand(101021,132,1)                -- 53号NPC显示
-Interpreter:doCommand(101021,164,1)                -- 53号NPC显示
-Interpreter:doCommand(101021,165,1)                -- 53号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"杜波夫","不好！战车无法通过。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"兰迪","路障，真是老土！","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","可架不住好使啊，现在我们不得不跟他们短兵想接了！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","他们和“死亡沙盗”不一样，因为没有办法和任何人做交易，他们没有重武器。所以他们不敢直接面对我们的战车，只能够使用这种下三滥的手段。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"杜波夫","峡谷上有人！","/image/face/115.png",0)
-Interpreter:doCommand(101006,"<name>[0]","看来只有清除了这帮杂碎之后才能够重新打开通道了。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","杜波夫大小姐，请你和你的队员在这里清理道路，让我们去顶住他们。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"杜波夫","不，我也要跟着去！","/image/face/115.png",0)
-Interpreter:doCommand(101006,"<name>[0]","你要去干什么？你只需要呆在这里就行了，我可没有那么多精力去保护你。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"杜波夫","这也许是某种疾病，或者他们的血液需要某种物质，而这种物质之存在于正常人的血液之中。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"<name>[0]","这和你有关系？现在没有时间研究他们的病。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"杜波夫","也许采集到了样本就可以凭借火星上技术开发对症的药品，这是我的责任。。。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"<name>[0]","或许吧。。。","/image/face/001.png",0)
-Interpreter:doCommand(101020,131,111,22,3)            -- 37号NPC移动到（11，17）
-Interpreter:doCommand(101021,131,0)                -- 53号NPC显示
-Interpreter:doCommand(101006,"<name>[0]","呃。。。小妞，你在干什么？快回来，他们太危险了，你不能这样干。。。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","好了，别再牢骚了，追上去，帮她一把，最好这个小妞能够快点。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","该死！我们上。","/image/face/001.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",0)                    -- 隐藏主角
+Interpreter:doCommand("showNpc",131,1)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",132,1)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",164,1)                -- 53号NPC显示
+Interpreter:doCommand("showNpc",165,1)                -- 53号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","杜波夫","不好！战车无法通过。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","路障，真是老土！","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","可架不住好使啊，现在我们不得不跟他们短兵想接了！","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","他们和“死亡沙盗”不一样，因为没有办法和任何人做交易，他们没有重武器。所以他们不敢直接面对我们的战车，只能够使用这种下三滥的手段。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","峡谷上有人！","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","看来只有清除了这帮杂碎之后才能够重新打开通道了。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","杜波夫大小姐，请你和你的队员在这里清理道路，让我们去顶住他们。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","不，我也要跟着去！","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","你要去干什么？你只需要呆在这里就行了，我可没有那么多精力去保护你。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","这也许是某种疾病，或者他们的血液需要某种物质，而这种物质之存在于正常人的血液之中。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","这和你有关系？现在没有时间研究他们的病。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","也许采集到了样本就可以凭借火星上技术开发对症的药品，这是我的责任。。。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","或许吧。。。","/image/face/001.png",0)
+Interpreter:doCommand("autoMove",131,111,22,3)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("showNpc",131,0)                -- 53号NPC显示
+Interpreter:doCommand("showMessageDialog","<name>[0]","呃。。。小妞，你在干什么？快回来，他们太危险了，你不能这样干。。。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","好了，别再牢骚了，追上去，帮她一把，最好这个小妞能够快点。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","该死！我们上。","/image/face/001.png",0)
 

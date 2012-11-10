@@ -1,2 +1,2 @@
-Interpreter:doCommand(101006,"杜波夫","怎么办？我们被吸入暴风雨的中心。","/image/face/115.png",0)
-Interpreter:doCommand(101006,"兰迪","别紧张，暴风雨中心风力并不是很大，只要我们小心航行，就不会出问题。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","杜波夫","怎么办？我们被吸入暴风雨的中心。","/image/face/115.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","别紧张，暴风雨中心风力并不是很大，只要我们小心航行，就不会出问题。","/image/face/002.png",0)

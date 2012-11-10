@@ -1,6 +1,6 @@
 if Interpreter:doCommand(101010,1,1) then
-Interpreter:doCommand(101006,"兰迪","看不出来，竟是个高手。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","为什么不亲身试试？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","既然你打伤我的手下，那么就变成他们的奴隶，一直服侍他们直到老死。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","看不出来，竟是个高手。","/image/face/002.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","为什么不亲身试试？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","兰迪","既然你打伤我的手下，那么就变成他们的奴隶，一直服侍他们直到老死。","/image/face/002.png",0)
 else
 end

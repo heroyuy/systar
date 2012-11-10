@@ -1,11 +1,11 @@
 if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101024,237,"\image\character\404-damage04.png",0)
-   Interpreter:doCommand(101006,"兰迪","他们是荣耀军团的人。","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","荣耀军团！？","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"克雷斯丁娜","刚来就遇到伏击，我们是不是惹到什么人了？","/image/face/003.png",0)
-   Interpreter:doCommand(101006,"兰迪","难道我们惹的人还少？","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","管他的，是福不是祸，是祸躲不过。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"克雷斯丁娜","。。。。。。","/image/face/003.png",0)
+   Interpreter:doCommand("changeNpcAvatar",237,"\image\character\404-damage04.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","他们是荣耀军团的人。","/image/face/002.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","荣耀军团！？","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","克雷斯丁娜","刚来就遇到伏击，我们是不是惹到什么人了？","/image/face/003.png",0)
+   Interpreter:doCommand("showMessageDialog","兰迪","难道我们惹的人还少？","/image/face/002.png",0)
+   Interpreter:doCommand("showMessageDialog","<name>[0]","管他的，是福不是祸，是祸躲不过。","/image/face/001.png",0)
+   Interpreter:doCommand("showMessageDialog","克雷斯丁娜","。。。。。。","/image/face/003.png",0)
 else
 end
 

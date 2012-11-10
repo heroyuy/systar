@@ -1,31 +1,31 @@
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101022,0)
-Interpreter:doCommand(101021,328,1)                -- 54号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"吉斯","<name>[0]，你这个笨蛋！拜你所赐，我又来到了这里。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","吉斯，这不是十分正常吗？我们又不是第一次被关禁闭。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"吉斯","<name>[0]，我想你就不能够放聪明点？如果不是你的笨手笨脚，现在我们应该在酒吧里风流快活着。该死！我又想起了那些舞女的大腿。。。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","吉斯，我想不是我不够聪明，而是我们的行动一开始就被获知了。蓝堂那老家伙就是那样的人，他喜欢折磨我们，这是他的一个圈套，难道你以为就凭军营守卫那些个货色能拦得住我们吗？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"吉斯","唉，说的也是，该死的蓝堂老鬼！","/image/face/102.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,329,1)                -- 54号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101006,"蓝堂","哼！刚才是谁叫我老鬼，老鬼的？！","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","报告教官，是吉斯！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"吉斯","<name>[0]，你。。。！","/image/face/102.png",0)
-Interpreter:doCommand(101006,"蓝堂","只有吉斯一个人吗？我刚才可是听到你们的全部对话。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","呃！教官，偷听别人讲话可是非常没有礼貌的行为。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"吉斯","哈哈，对，教官，<name>[0]也有份。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","吉斯，你太过分了。。。！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"吉斯","大家彼此彼此。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"蓝堂","笨蛋！你们以为我会这么小气吗？不过你们真是令我失望，你们就是这样对待同伴的吗？互相揭发很光荣是吧？看来你们果然是很好的伙伴啊！","/image/face/102.png",0)
-Interpreter:doCommand(101006,"吉斯","是，教官，我们再也不敢了。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","教官，下次就算吉斯再次称呼教官为“该死的老鬼”，我也绝对不会说出来。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"蓝堂","你。。。咳咳。。。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"吉斯","。。。。。。。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"蓝堂","咳咳。。。算了，这次就放过你们，如有下次我绝不会让你们好过。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"吉斯","是，教官。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","知道了，教官。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"蓝堂","吃饭吧，这是给你们带来的，冷了就不好吃。","/image/face/102.png",0)
-Interpreter:doCommand(101006,"<name>[0]","谢谢教官。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"蓝堂","哼！吃！吃！吃！就会吃！唉，我怎么会有这样的学生。。。","/image/face/102.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showPlayer",0)
+Interpreter:doCommand("showNpc",328,1)                -- 54号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","吉斯","<name>[0]，你这个笨蛋！拜你所赐，我又来到了这里。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","吉斯，这不是十分正常吗？我们又不是第一次被关禁闭。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","<name>[0]，我想你就不能够放聪明点？如果不是你的笨手笨脚，现在我们应该在酒吧里风流快活着。该死！我又想起了那些舞女的大腿。。。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","吉斯，我想不是我不够聪明，而是我们的行动一开始就被获知了。蓝堂那老家伙就是那样的人，他喜欢折磨我们，这是他的一个圈套，难道你以为就凭军营守卫那些个货色能拦得住我们吗？","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","唉，说的也是，该死的蓝堂老鬼！","/image/face/102.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",329,1)                -- 54号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","蓝堂","哼！刚才是谁叫我老鬼，老鬼的？！","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","报告教官，是吉斯！","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","<name>[0]，你。。。！","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","只有吉斯一个人吗？我刚才可是听到你们的全部对话。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","呃！教官，偷听别人讲话可是非常没有礼貌的行为。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","哈哈，对，教官，<name>[0]也有份。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","吉斯，你太过分了。。。！","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","大家彼此彼此。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","笨蛋！你们以为我会这么小气吗？不过你们真是令我失望，你们就是这样对待同伴的吗？互相揭发很光荣是吧？看来你们果然是很好的伙伴啊！","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","是，教官，我们再也不敢了。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","教官，下次就算吉斯再次称呼教官为“该死的老鬼”，我也绝对不会说出来。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","你。。。咳咳。。。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","。。。。。。。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","咳咳。。。算了，这次就放过你们，如有下次我绝不会让你们好过。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","吉斯","是，教官。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","知道了，教官。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","吃饭吧，这是给你们带来的，冷了就不好吃。","/image/face/102.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","谢谢教官。","/image/face/001.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","哼！吃！吃！吃！就会吃！唉，我怎么会有这样的学生。。。","/image/face/102.png",0)

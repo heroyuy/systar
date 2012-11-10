@@ -1,18 +1,18 @@
-Interpreter:doCommand(101006,"<name>[0]","教官，你是说。。。你就是那个内奸！出卖我们的人就是你，创建“天煞”的你。。。","/image/face/155.png",0)
-Interpreter:doCommand(101006,"蓝堂","是的，<name>[0]，你所说的内奸就是我。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"<name>[0]","你疯了！所有人就这样悲惨的死去，就是为了布置这样一个骗局？而你早就知道结果会是这样的？！","/image/face/155.png",0)
-Interpreter:doCommand(101006,"蓝堂","是的，我一直都知道结果。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/face/155.png",0)
-Interpreter:doCommand(101006,"<name>[0]","你知道吗？这四年来，我无时无刻想要将你找出来，不过我没有想到结果竟然会是这样。。。我想过了所有的可能，却没有想到竟然会是你！","/image/face/155.png",0)
-Interpreter:doCommand(101006,"<name>[0]","呜呜呜。。。这到底是为什么。。。！","/image/face/155.png",0)
-Interpreter:doCommand(101006,"蓝堂","动手吧！既然已经造成了这样的后果，我会承担全部的责任。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/face/155.png",0)
-Interpreter:doCommand(101006,"蓝堂","这是我的错，对你造成的困扰，我深感抱歉，来，就用我教你的方法，只要一刀就行了。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"蓝堂","只要一刀，你我就都可以解脱了，你不用再为仇恨所束缚，而我也不必再去面对内心的邪恶。。。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"<name>[0]","。。。。。。","/image/face/155.png",0)
-Interpreter:doCommand(101006,"<name>[0]","这一刀，我会保留着！等战争结束，如果我还活着，一定会来要你的命！现在你给我滚出去！","/image/face/155.png",0)
-Interpreter:doCommand(101006,"蓝堂","<name>[0]。。。","/image/face/132.png",0)
-Interpreter:doCommand(101006,"<name>[0]","滚。。。在我改变主意之前！","/image/face/155.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101021,359,0)                -- 54号NPC显示
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand("showMessageDialog","<name>[0]","教官，你是说。。。你就是那个内奸！出卖我们的人就是你，创建“天煞”的你。。。","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","是的，<name>[0]，你所说的内奸就是我。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","你疯了！所有人就这样悲惨的死去，就是为了布置这样一个骗局？而你早就知道结果会是这样的？！","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","是的，我一直都知道结果。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","你知道吗？这四年来，我无时无刻想要将你找出来，不过我没有想到结果竟然会是这样。。。我想过了所有的可能，却没有想到竟然会是你！","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","呜呜呜。。。这到底是为什么。。。！","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","动手吧！既然已经造成了这样的后果，我会承担全部的责任。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","这是我的错，对你造成的困扰，我深感抱歉，来，就用我教你的方法，只要一刀就行了。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","只要一刀，你我就都可以解脱了，你不用再为仇恨所束缚，而我也不必再去面对内心的邪恶。。。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","这一刀，我会保留着！等战争结束，如果我还活着，一定会来要你的命！现在你给我滚出去！","/image/face/155.png",0)
+Interpreter:doCommand("showMessageDialog","蓝堂","<name>[0]。。。","/image/face/132.png",0)
+Interpreter:doCommand("showMessageDialog","<name>[0]","滚。。。在我改变主意之前！","/image/face/155.png",0)
+Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
+Interpreter:doCommand("showNpc",359,0)                -- 54号NPC显示
+Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
