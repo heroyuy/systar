@@ -1,9 +1,0 @@
-Interpreter:doCommand(101006,"海盗","这里是兰心镇，也是绝望海盗团驻地。","/image/face/104.png",0)
-Interpreter:doCommand(101006,"<name>[0]","终于来到这里了，这船真是糟糕，摇摇晃晃的，让我现在还是很晕。","/image/face/001.png",0)
--- 这里应该让阿曼达身上发生动画，看起来好像在飞。
-Interpreter:doCommand(101006,"兰迪","<name>[0]，看！有人在飞！","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","看到了，不过兰迪，你相信吗？","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","我不信！","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","我也不信，看得出来，她后面背着一个单人飞行器。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","哈哈，我也看到了，我想我们得去拆穿这个神棍。","/image/face/002.png",0)
--- 这里消除阿曼达身上的动画。

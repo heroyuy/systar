@@ -1,4 +1,0 @@
-Interpreter:doCommand(101006,"阿明","女人，放弃吧，你是跑不掉的。","/image/face/114.png",0)
-Interpreter:doCommand(101006,"女奴隶","不，我不想跟你回去，我才不要被卖掉。","/image/face/113.png",0)
-Interpreter:doCommand(101006,"阿明","闭嘴，兰迪奴隶公司的货物不应该拥有思想。","/image/face/114.png",0)
-Interpreter:doCommand(101006,"女奴隶","救命，谁来救救我。","/image/face/113.png",0)

@@ -1,5 +1,0 @@
-if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101024,20,"\image\character\404-damage04.png",0)
-else
-end
-

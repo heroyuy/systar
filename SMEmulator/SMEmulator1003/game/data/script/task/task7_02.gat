@@ -1,8 +1,0 @@
-Interpreter:doCommand(101006,"兰迪","尽量不要碰那些发光的骨头，还有一些辐射残余。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","我知道，这些都是大灾变时避难与地下的人们，他们避过了陨石雨的袭击，却死于陨石雨带来的致命辐射。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"兰迪","我和雷尔也在类似的地铁之中呆过，那年我们只有五岁。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"<name>[0]","走吧，无论如何，我们还活着。","/image/face/001.png",0)
-
-
-
-

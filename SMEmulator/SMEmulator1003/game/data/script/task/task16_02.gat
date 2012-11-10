@@ -1,7 +1,0 @@
-Interpreter:doCommand(101006,"水手","<name>[0]先生，兰迪先生，这就是你们的船。","/image/face/108.png",0)
-Interpreter:doCommand(101006,"兰迪","你确信就凭这个可以渡过绝望海峡，看起来一个小风浪都能将它打沉。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"水手","它当然可以，不要小看它，绝望海盗团就凭着它们称霸绝望海峡。","/image/face/108.png",0)
-Interpreter:doCommand(101006,"兰迪","人家说上梁不正下梁歪，作为希丁克的手下，你和他一样，让人觉得很不靠谱。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"水手","别这样说，兰迪先生。当然要驾驶它必须要有很强的技术，不然就算是这个让我们绝望海盗团称霸的船，也没办法！","/image/face/108.png",0)
-Interpreter:doCommand(101006,"兰迪","好吧，那么你讲讲需要注意的事项。","/image/face/002.png",0)
-Interpreter:doCommand(101006,"水手","呵呵，好的，其实这个很简单，可以驾驶的小船上面会有红色的“乘降”字样，只要上去调查就能够弹出菜单，这样你就可以上船了。","/image/face/108.png",0)

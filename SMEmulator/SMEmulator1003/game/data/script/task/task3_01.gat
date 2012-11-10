@@ -1,3 +1,0 @@
-Interpreter:doCommand(101006,"守卫","这里是兰特镇城门，但这里已经被封锁了！","/image/face/104.png",0)
-Interpreter:doCommand(101006,"<name>[0]","为什么？你在开玩笑吗？这可是唯一可以通过大荒漠的要道！","/image/face/001.png",0)
-Interpreter:doCommand(101006,"守卫","这是镇长的命令，小子！我奉劝你最好怪怪呆在镇上，别乱跑。","/image/face/104.png",0)

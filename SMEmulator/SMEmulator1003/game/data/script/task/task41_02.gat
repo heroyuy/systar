@@ -1,9 +1,0 @@
-if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101024,316,"\image\character\404-damage04.png",0)
-   Interpreter:doCommand(101006,"兰迪","搞定！这是他们的军官证还有身份卡。","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"<name>[0]","杰森。。。大卫。。。安琪儿。。。很好，我们就以他们的身份潜入光辉之城。我是杰森，兰迪你是大卫，而克雷斯丁娜你是安琪儿，你们都是我的卫士。","/image/face/001.png",0)
-   Interpreter:doCommand(101006,"兰迪","明白。","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"克雷斯丁娜","知道了。","/image/face/003.png",0)
-else
-end
-

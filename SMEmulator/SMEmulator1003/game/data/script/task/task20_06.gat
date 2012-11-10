@@ -1,8 +1,0 @@
-if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101006,"Ó¶±ø","°¡£¡ÈÄÃü°¡£¡","/image/face/120.png",0)
-   Interpreter:doCommand(101006,"À¼µÏ","ºß£¡¸øÎÒ¹ö£¡","/image/face/002.png",0)
-   Interpreter:doCommand(101006,"Ó¶±ø","¿ì×ß¡£¡£¡£","/image/face/120.png",0)
-   Interpreter:doCommand(101020,128,108,12,19)            -- 37ºÅNPCÒÆ¶¯µ½£¨11£¬17£©
-else
-end
-

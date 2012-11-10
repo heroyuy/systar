@@ -1,3 +1,0 @@
-Interpreter:doCommand(101006,"旅馆老板","为了支持总部的作战，今天旅馆免费！请客人好好休息。","/image/face/125.png",0)
-Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

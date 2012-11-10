@@ -1,7 +1,0 @@
-Interpreter:doCommand(101006,"士兵","如果要进入监狱的话，请出示证件！","/image/face/136.png",0)
-Interpreter:doCommand(101006,"<name>[0]","士兵，这就是我们三人的证件，我是杰森上校，这是大卫和安琪儿，我的卫士，我们奉命将重犯娜娜押解受审。","/image/face/001.png",0)
-Interpreter:doCommand(101006,"士兵","是，长官！","/image/face/136.png",0)
-Interpreter:doCommand(101020,315,267,8,5)
-
-
-

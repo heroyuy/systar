@@ -1,7 +1,0 @@
-Interpreter:doCommand(101006,"<name>[0]","兰迪，这里有一股很难闻的气味！你说对了，看来我们遇到了大麻烦！","/image/face/001.png",0)
-if Interpreter:doCommand(101010,1,1) then
-   Interpreter:doCommand(101024,59,"\image\character\404-damage04.png",0)
-   Interpreter:doCommand(101006,"兰迪","其实。。。这也不算什么大麻烦。","/image/face/002.png",0)
-else
-end
-
