@@ -1,0 +1,17 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,0)
+Interpreter:doCommand(101021,274,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,275,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,276,1)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"兰迪","你好，尊敬的阿曼达主教，你怎么会在这里？难道是为了欢送我们吗？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"阿曼达","我在这里等你们很久了，我来，是为了要你们的命！","/image/face/206.png",0)
+Interpreter:doCommand(101006,"<name>[0]","主教大人，你不觉得你这是在违抗教皇陛下的命令吗？我想他一定告诉你，之所以我们能够逃出圣城，完全是他一手导演的。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿曼达","我的确知道此事，甚至参与了你们的逃亡计划。我不知道为什么教皇陛下要这样做，但是作为一个主教，我得对我主与及信徒们负责，所以我来了。","/image/face/206.png",0)
+Interpreter:doCommand(101006,"兰迪","就算是教皇陛下，好像也并不相信拥有什么科技之神。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"阿曼达","闭嘴！你这个卑鄙的渎神者，我相信，即有主！","/image/face/206.png",0)
+Interpreter:doCommand(101006,"<name>[0]","阿曼达主教，我想这可不是聪明的选择，你认为你能留下我们吗？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿曼达","是否能够留下你们，这并不是我所要考虑的，我只知道我必须要击杀渎神者！","/image/face/206.png",0)
+Interpreter:doCommand(101006,"兰迪","笨蛋！难道你不知道你这是在送死！","/image/face/002.png",0)
+Interpreter:doCommand(101006,"阿曼达","你有你的理念，我也有我的信仰，所以我们必须在这里决一死战。","/image/face/206.png",0)
+Interpreter:doCommand(101006,"兰迪","好吧，那么我们只有成全你！","/image/face/002.png",0)

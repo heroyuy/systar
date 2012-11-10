@@ -1,0 +1,55 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,0)
+Interpreter:doCommand(101021,347,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,348,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,349,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,350,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,351,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,352,1)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"娜娜","<name>[0]！救我！","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","娜娜，别害怕，我在这里！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","别动！你这婊子，再动我我就杀了你！","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","别碰她！如果她少了一根汗毛，我保证你们走不出这里。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","哦？如果我偏要碰她呢？你又能怎么样？","/image/face/156.png",0)
+Interpreter:doCommand(101006,"娜娜","不要。。。不要。。。<name>[0]，救我！","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","哈哈哈。。。我碰了她，而你毫无办法。我知道你很想杀了我，但我劝你最好别做傻事。因为既然我能来，就没有想过活着回去！而你的小情人可是只有一次生命！","/image/face/1556.png",0)
+Interpreter:doCommand(101006,"<name>[0]","可恶。。。！好吧，你想怎么样？既然你知道我的名字，那么你一定对我很了解，我猜你是冲我而来的吧？放开她，有什么要求我们可以聊聊。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","<name>[0]上尉果然是个聪明人，我们的目标的确是你！","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你是谁？既然你已经知道我，公平起见，最少也要让我知道你的名字。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","我是火星殖民地的人，我叫做阿奎那。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","那么阿奎那，你想要在我身上得到什么？钱？武器？只要我有的，我都给你。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","哈哈哈。。。我并不是绑匪，所以我不会要这些东西。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","那么你要什么？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","我想知道四年前你们是否已经得到了辐射能量转化方程式？","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","四年前？辐射能量转化方程式？你在说什么？我怎么一句都听不懂！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","再想想，<name>[0]上尉，别用这种语气对我说话，你要知道你的小情人还在我的手上。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","好吧，我想想，或者你给点提示，因为我根本就没有听说过什么狗屁能量方程式！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","四年前，你们在废弃军事基地的任务，记得吧，让你们全军覆没的那次任务。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","什么？！原来是你们！是你们阻击了我们？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","废话少说，我要知道的是你们是否找到了方程式，而不是你的心情如何，这不关我的事。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"娜娜","啊。。。不要。。。<name>[0]。。。救我，救我啊。","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","娜娜。。。！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","说！到底你们在那里找到了什么？","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","（如果被他知道我们什么都没有找到，那么娜娜就危险了，要想办法骗骗他，所谓的方程式应该是一些图纸和资料。）","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","在想什么呢？别给我耍花样，否则你的小情人。。。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我们在那里找到了一些图纸和资料，但我们一出来就被你们给包围了，大家都知道可能没有机会逃出去了，所以将所有的东西都放到我的身上。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","继续说！我就知道你在骗我。","/image/face/156.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我没有骗你，我是个军人，那些什么乱七八糟的方程式我根本就不知道，也不想知道。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"<name>[0]","（看来他上当了。）","/image/face/001.png",0)
+Interpreter:doCommand(101006,"<name>[0]","后来就是他们拼命抵抗，制造机会让我逃了出来。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"阿奎那","很好，既然如此。弟兄们，将他给我抓起来！一起带回去！","/image/face/156.png",0)
+Interpreter:doCommand(101006,"间谍甲","是，阿奎那大人。","/image/face/103.png",0)
+Interpreter:doCommand(101006,"间谍乙","遵命。","/image/face/104.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,1)
+Interpreter:doCommand(101021,347,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,348,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,349,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,350,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,351,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,352,0)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+
+

@@ -1,0 +1,18 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+
+Interpreter:doCommand(101021,192,1)               -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101020,192,312,14,11)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand(101006,"达理昂","这么说来，我们的客人已经来了。","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","是的，先生，他们已经安全进城，但据说他们在途中遇到了“死亡沙盗”的袭击，死了一个队员。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","哦？能够在“死亡沙盗”的袭击中生存下来，看来我们的客人很不简单啊，你认为呢？卡洛斯。","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","先生，我并不知道他们是如何做到的，但我发现他们请了两个护卫，他们相当的厉害，其中还有一位是你的熟人。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","相当厉害。。。熟人。。。是谁呢？","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","据说是希丁克请的护卫，有两个人，其中有一个是不知道来历的年轻人，另外一个是您曾经非常看好的兰迪。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","哦，就是那个桀骜不驯的兰迪？不是传闻他死了吗？","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","是的，似乎他没有死，又回来了，并且他还不知道奴隶公司发生的那些事情。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","那你就去拜访他，表达达理昂家族的善意，顺便告诉他，达理昂家族的门永远为他开着。","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","达理昂先生，恕我直言，他不会答应的，而且他并不是一个很好控制的人。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","卡洛斯，也许你并不相信，我从来不想控制任何人，就如我要的是被尊敬而不是被恐惧。","/image/face/138.png",0)
+Interpreter:doCommand(101006,"卡洛斯","是，达理昂先生。","/image/face/139.png",0)
+Interpreter:doCommand(101006,"达理昂","去告诉兰迪，我想见见他。","/image/face/138.png",0)

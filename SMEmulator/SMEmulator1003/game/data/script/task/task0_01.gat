@@ -1,0 +1,3 @@
+﻿Interpreter:doCommand(101006,"<name>[0]","吉斯，我来了，带来了百合花。你曾经说过最爱百合，因为百合会让你想起故乡的娜娜。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"<name>[0]","现在你就在这里陪伴着娜娜，直到我再次回来，而我将会查出真相，为你讨回公道。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"<name>[0]","而凶手还有背叛者必将付出代价！","/image/face/001.png",0)

@@ -1,0 +1,5 @@
+Interpreter:doCommand(101006,"安利雅","<name>[0]上尉，房间已经准备好了，是否现在就休息？","/image/face/106.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的，我现在就想休息。","/image/face/001.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(100001,20)                  -- 等待20桢
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

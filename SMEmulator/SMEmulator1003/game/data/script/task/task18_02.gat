@@ -1,0 +1,4 @@
+if Interpreter:doCommand(101010,1,1) then
+else
+end
+

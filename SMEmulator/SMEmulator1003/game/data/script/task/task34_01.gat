@@ -1,0 +1,5 @@
+Interpreter:doCommand(101006,"洛尔","你说要打开水闸？那需要主教的令牌。","/image/face/110.png",0)
+Interpreter:doCommand(101006,"<name>[0]","没有其他的办法了吗？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"洛尔","如果你能够获得教皇的手令也是可以的。","/image/face/110.png",0)
+
+

@@ -1,0 +1,7 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101024,213,"\image\character\404-damage04.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","究竟是什么事情？海盗？","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"兰迪","此地不宜久留，我们快走。","/image/face/002.png",0)
+else
+end
+

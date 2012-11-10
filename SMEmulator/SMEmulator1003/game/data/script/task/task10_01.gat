@@ -1,0 +1,11 @@
+Interpreter:doCommand(101006,"杰里米","<name>[0]，是你！？你还活着！真不敢相信。","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","对，是我，杰里米。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","<name>[0]，对不起，因为总部说你们都死了。自从我落选“天煞”，我们再也没有见过面了。回来之后，我就建立了这个定居点，我叫它--基塔。","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我常常听说你的事情。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","那么吉斯呢？吉斯还活着吗？","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","吉斯。。。吉斯他死了。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","是吗。。。你回来就好，四年前与火星的战争之后，总部宣布“天煞”全军覆没，我还。。。我还以为再也见不到你了。","/image/face/119.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是啊，全死了，只有我一个活了下来。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杰里米","过去的一切，就好像是昨天发生的一样。","/image/face/119.png",0)
+
+

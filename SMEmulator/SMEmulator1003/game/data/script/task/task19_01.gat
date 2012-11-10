@@ -1,0 +1,6 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"兰迪","该死！他们竟然有机甲！？","/image/face/002.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","冲到机甲前面，将它们摧毁，否则我们走不出这里。","/image/face/001.png",0)
+else
+end
+

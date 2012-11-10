@@ -1,0 +1,28 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101021,15,0)   -- 15号NPC隐藏
+   Interpreter:doCommand(101021,16,0)   -- 16号NPC隐藏
+   Interpreter:doCommand(101021,17,1)   -- 17号NPC显示
+   Interpreter:doCommand(101021,18,1)   -- 18号NPC显示
+   Interpreter:doCommand(101006,"<name>[0]","娜娜，你怎么会在这里？","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","我。。。你以为我很想出现在这里？我只是关心你。","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","镇子周围都是危险之地，以后不要再一个人出来了。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","<name>[0]，留下来，好不好？我已经失去了吉斯，不能再失去你了，我很害怕不知那天你会像吉斯一样。。。","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","回去吧，娜娜，我必须走！","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","为什么？别说是为了保卫人类！","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","为了吉斯还有其他死去的人。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","为了吉斯？哼！我看是为了你自己。","/image/face/101.png",0)
+   Interpreter:doCommand(101020,14,7,17,11)            -- 14号NPC移动到（17，11）
+   Interpreter:doCommand(101006,"娜娜","看，这就是你和吉斯要成为的人，<name>[0]。看看他们，只会欺负手无寸铁的镇民们，满足他们渺小的虚荣心，然后。。","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"娜娜","然后像这样死在不知名的地方，或是被人杀了，或是被变异野兽吞进了肚子里面。冒着失去生命的危险，远离故乡，但是成为的不是英雄，而是恶棍、流氓！","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","我。。。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","<name>[0]，我不希望你成为这样的人，留下来好吗？和我在一起，我们再也不要分开了。","/image/face/101.png",0)
+   Interpreter:doCommand(101006,"<name>[0]","对不起，娜娜，如果我能够再回来，我一定不会再走。","/image/face/001.png",0)
+   Interpreter:doCommand(101006,"娜娜","<name>[0]，你这个笨蛋。。。","/image/face/101.png",0)
+   Interpreter:doCommand(101020,14,7,2,18)            -- 14号NPC移动到（2，18）
+   Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+   Interpreter:doCommand(101021,17,0)   -- 17号NPC隐藏
+   Interpreter:doCommand(101021,18,0)   -- 18号NPC隐藏
+   Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+else
+end
+

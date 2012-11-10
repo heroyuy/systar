@@ -1,0 +1,8 @@
+if Interpreter:doCommand(101010,1,1) then
+   Interpreter:doCommand(101006,"兰迪","美丽的女士，看来科技之神也没有将我们如何。","/image/face/002.png",0)
+   Interpreter:doCommand(101006,"阿曼达","咱们走着瞧。。。","/image/face/206.png",0)
+   Interpreter:doCommand(101020,89,77,19,12)            -- 4号NPC移动到（13，9）
+   Interpreter:doCommand(101021,89,0)                -- 54号NPC显示
+else
+end
+

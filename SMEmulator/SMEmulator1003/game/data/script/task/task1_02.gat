@@ -1,0 +1,4 @@
+Interpreter:doCommand(101006,"佣兵甲","想不到在这鸟不生蛋的地方还能遇到这么漂亮的小姐。","/image/face/202.png",0)
+Interpreter:doCommand(101006,"娜娜","滚开。。。","/image/face/101.png",0)
+Interpreter:doCommand(101006,"佣兵乙","嘿嘿，就让哥哥来疼疼你吧，美丽的小姐。","/image/face/203.png",0)
+Interpreter:doCommand(101006,"<name>[0]","住手！","/image/face/001.png",0)

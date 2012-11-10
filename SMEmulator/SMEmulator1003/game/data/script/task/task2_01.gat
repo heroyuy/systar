@@ -1,0 +1,14 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,0)                   -- 隐藏主角
+Interpreter:doCommand(101021,22,1)                -- 22号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"娜娜","<name>[0]，真的要走吗？","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","是的。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"娜娜","那答应我，一定要回来。","/image/face/101.png",0)
+Interpreter:doCommand(101006,"我一定会回来的，娜娜。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"娜娜","<name>[0]，记住你说的话！","/image/face/101.png",0)
+Interpreter:doCommand(101020,21,3,25,15)            -- 21号NPC移动到（25，15）
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,1)                   -- 显示主角
+Interpreter:doCommand(101021,22,0)                -- 22号NPC隐藏
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

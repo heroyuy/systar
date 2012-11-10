@@ -1,0 +1,6 @@
+Interpreter:doCommand(101006,"兰迪","奇怪，这里怎么会一人都没有？难道是遇到了兽潮？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我看不像，地上没有尸体和血迹，并且这里也没受到破坏。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","那会是怎么回事呢？","/image/face/003.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我们调查一下吧，或许会有收获。","/image/face/001.png",0)
+
+

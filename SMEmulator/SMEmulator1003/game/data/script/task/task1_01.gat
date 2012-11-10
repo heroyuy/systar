@@ -1,0 +1,7 @@
+Interpreter:doCommand(101006,"娜娜","杰斯丁，很高兴你还能记得这里，真是让人意外。","/image/face/101.png",0)
+Interpreter:doCommand(101006,"娜娜","说吧，你准备在这里住多久，是不是佣兵协会将你踢了出来？如果是的话，我这里还差一个佣人，包吃包住。","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","今天我就走。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"娜娜","什么？难得回来一次，你。。。哼！","/image/face/101.png",0)
+Interpreter:doCommand(101006,"<name>[0]","娜娜，我想知道吉斯的吉普车放在那里，我要穿越大荒漠。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"娜娜","没啥用的破铜烂铁，我一般都扔在后山山洞。","/image/face/101.png",0)
+Interpreter:doCommand(101020,5,13,19,3)            -- 5号NPC移动到（19，3）

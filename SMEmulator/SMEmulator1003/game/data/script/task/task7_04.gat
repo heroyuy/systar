@@ -1,0 +1,71 @@
+Interpreter:doCommand(101006,"兰迪","这里有辆车。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","小声点，也许有人，看看情况再说。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","古怪，这辆车大灾变以前还是一种设计，现在还有谁能够拥有这种技术？不可能啊。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","嗯？！还是热的。","/image/face/001.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,0)                   -- 隐藏主角
+Interpreter:doCommand(101021,53,1)                -- 53号NPC显示
+Interpreter:doCommand(101021,54,1)                -- 54号NPC显示
+Interpreter:doCommand(101021,55,1)                -- 55号NPC显示
+Interpreter:doCommand(101021,152,1)               -- 152号NPC显示
+Interpreter:doCommand(101021,153,1)               -- 153号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"杜波夫","举手别动，谁动！谁死！","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","（好先进的激光枪，还不需要用子弹。。。）","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","（好漂亮的美女，多美妙的身材。。。）","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","去搜他们的身。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"尼尔","是，队长！","/image/face/117.png",0)
+Interpreter:doCommand(101020,54,44,14,14)         -- 尼尔走到兰迪身边
+Interpreter:doCommand(101020,54,44,15,14)         -- 尼尔后退一步
+Interpreter:doCommand(101006,"尼尔","队长！他们有枪。。。是火神机枪！？","/image/face/117.png",0)
+Interpreter:doCommand(101006,"杜波夫","果然是两个杀人越货的暴徒。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","美女，我想说我们不是暴徒！","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","住口，不是暴徒，随身携带这种重火力武器？","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你误会了，我是一个自由佣兵，大大的良民。至于他，只是一个奴隶商人，武装抢劫只是他的业余爱好。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","<name>[0]，我终于知道，其实你是想杀了我。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"杜波夫","好啊，果然是些败类。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"哈里森","队长，要怎么处置他们？","/image/face/118.png",0)
+Interpreter:doCommand(101006,"杜波夫","绑在铁轨上，会有变异野兽乐于帮我们清理掉这些垃圾的。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","等等，我有话要说。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","你还有什么话好说？！别想玩什么花样！","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我有三件事要说，我不说出来的话，我会死不瞑目。你不听的话，会遗憾终身。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","这。。。说吧，到底什么事情？","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","第一件事，请你记住，任何人都没有任何特权剥夺他人的生存权力，哪怕这个人是个美女也不行。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","找死。。。！","/image/face/115.png",0)
+Interpreter:doCommand(101020,152,44,16,11)         -- 杰斯丁走到杜波夫身边
+Interpreter:doCommand(101006,"尼尔","可恶，放开队长！","/image/face/117.png",0)
+Interpreter:doCommand(101006,"<name>[0]","队长美女，如果你让他们放下枪的话，我们的地位就平等了，然后我们就可以谈另外两个话题。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","他们不会放下武器的，没有我的命令，他们不会放下武器，而我这个人从来都不会下投降的命令。","/image/face/115.png",0)
+Interpreter:doCommand(101020,153,44,14,14)         -- 兰迪走到尼尔身边
+Interpreter:doCommand(101006,"兰迪","不愿意放下枪？我并不介意来帮他们一把，就算你兰迪爷爷虎落平阳，也轮不到狗欺负。","/image/face/002.png",0)
+Interpreter:doCommand(101020,53,44,18,11)         -- 杜波夫后退一步
+Interpreter:doCommand(101006,"杜波夫","你。。。你们想干什么。。。？！","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","现在我们自由了，那么我们之间的关系也平等了，那么我们可以来讨论第二个问题。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","你是我所见过的最卑鄙的匪徒，自由平等？这是我所听过的最可笑的笑话，你还想说什么？","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","第二件事情就是，我们不是匪徒，我们只是两个很有原则的佣兵。刚刚你想杀了我们，但是现在我们不会杀你，如果你肯向我们道歉，我们将会原谅你。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","。。。。。。！","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","不过呢，年轻的美女通常都是死不认错的人，我知道你一定不肯道歉，于是我们只好采取另一种方式略施小惩。","/image/face/001.png",0)
+Interpreter:doCommand(101020,152,44,17,11)         -- 杰斯丁逼近一步
+Interpreter:doCommand(101006,"杜波夫","你想干什么？你不要乱来。。。！","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","放心吧，虽然你的确很漂亮，但我们可不是色狼。不过你刚才想谋杀我们，现在我们决定打劫你们的武器和车辆，这个报复不算过份吧？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","说那么多废话干嘛？你们就是劫匪，而且是最卑鄙的劫匪，抢劫都要找个理由。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","不错，想杀我们，活该被我们抢。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","想杀我的人，一般我都会把他们买到高塔城做了奴隶。不过，那些都是做苦力的，如果是这么漂亮的女奴。嘿嘿，总有其他的地方可以去。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"杜波夫","不要。。。我才不要做女奴。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你看我们还是很仁慈的，现在我们来讨论第三件事情。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","有话快说，有屁快放。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","第三件事。。。小姐，请问芳名？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","杜波夫。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","哦，杜波夫小姐，有男朋友了吗？有时间的话，我们约个会，喝酒谈心怎么样？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","我。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","哦，你不说我也知道，这需要一个考虑的过程。你尽管考虑一下，但是不要太久哦，你知道，像我这种优秀的男人总是非常抢手的。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","你。。。你。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","老天，<name>[0]，你又在丢人现眼了。。。","/image/face/002.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101022,1)                   -- 显示主角
+Interpreter:doCommand(101021,53,0)                -- 53号NPC显示
+Interpreter:doCommand(101021,54,0)                -- 54号NPC显示
+Interpreter:doCommand(101021,55,0)                -- 55号NPC显示
+Interpreter:doCommand(101021,152,0)               -- 152号NPC显示
+Interpreter:doCommand(101021,153,0)               -- 153号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

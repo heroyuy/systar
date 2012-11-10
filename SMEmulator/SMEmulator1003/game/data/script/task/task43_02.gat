@@ -1,0 +1,5 @@
+Interpreter:doCommand(101006,"娜娜","<name>[0]，你又在发什么呆啊？","/image/face/102.png",0)
+Interpreter:doCommand(101006,"<name>[0]","蓝堂教官他，他将我们视作子侄，而我们也将他视作父亲一般，他就是那样的人。","/image/face/001.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,330,0)                -- 54号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入

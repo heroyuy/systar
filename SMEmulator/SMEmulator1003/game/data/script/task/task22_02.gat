@@ -1,0 +1,8 @@
+Interpreter:doCommand(101006,"杜波夫","道路已经打通，车辆可以通过。根据定位仪显示，我们下一站应该是黄沙镇。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","嗯，那我们走吧。","/image/face/002.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,132,0)               -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+
+
+

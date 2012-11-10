@@ -1,0 +1,30 @@
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,181,1)               -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
+Interpreter:doCommand(101006,"<name>[0]","等等，大家有没有觉得这里很奇怪？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"兰迪","没有觉得，只是一个很安静的树林。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","你不觉得太安静了点？","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","这样说来，好像真的是。。。进来这么久，连一个动物都没有看到。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","何止没有“动物”，甚至连昆虫都没有看到一个。。。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","好像。。。真的连一个虫子都没有看到。。。让我测试下这里的辐射量。。。","/image/face/115.png",0)
+Interpreter:doCommand(100001,50)
+Interpreter:doCommand(101006,"杜波夫","有点偏高。。。但还没有到达让生物都无法生存的状态。。。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"<name>[0]","杜波夫小姐，你们留在这里警界，让我们上去查探下，这里上下都透露着古怪。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","为什么要让我们留在这里，我信不过你们。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","哼！这句话应该由我们来说，你去那里问问，现在废土还有谁会愿意相信火星殖民地的人？当年你们背叛的可是整个世界，你觉得你们还有信誉吗？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"哈里森","不，兰迪，你不能这样说，当年移民火星的时候，我们都还只有几岁，根本不存在背叛。火星上还有很多人，当年他们甚至不知道是逃离地球，只是单纯的以为这一个移民计划。","/image/face/118.png",0)
+Interpreter:doCommand(101006,"哈里森","而且殖民火星早在大灾变前两百年就开始筹备了，你不能以此来指责火星上的其他民众。还有就是，帮助地球上的灾民摆脱苦难，火星殖民地的很多人付出了不懈的努力。","/image/face/118.png",0)
+Interpreter:doCommand(101006,"兰迪","哼！我怎么没有看到在大灾变期间，火星为帮助地球幸存者哪怕动用过一颗子弹。。。还有，你怎么解释四年前的战争，当我们站稳脚跟，形势好转的时候，在我们背后插上一刀。这就是你们的“不懈努力”吗？ 在地球元气大伤的时候发动战争，妄想再次统治地球？","/image/face/002.png",0)
+Interpreter:doCommand(101006,"哈里森","可是我们。。。","/image/face/118.png",0)
+Interpreter:doCommand(101006,"杜波夫","够了，哈里森，我们没有必要作出解释，尤其向他这样的人做出解释。没有人要求你喜欢我们，也没有人要求你帮助我们，如果你不愿意现在就可以走。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"兰迪","你。。。。","/image/face/002.png",0)
+Interpreter:doCommand(101006,"<name>[0]","我们虽然不堪，但最少言出必行，答应过护送你们到高塔城，就一定会实现诺言。不像有些人做着联邦高官，垄断占据了世界上绝大多数财富，受到民众的支持和拥护。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"<name>[0]","却不肯担负其相应的责任，在你们眼中我们只是唯利是图的佣兵，但最少我们会履行一个佣兵的义务。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"杜波夫","你。。。好，你们要上去也可以，但是我也要跟过去，让哈里森两个在这里警戒。","/image/face/115.png",0)
+Interpreter:doCommand(101006,"哈里森","队长。。。","/image/face/118.png",0)
+Interpreter:doCommand(101006,"<name>[0]","好吧，那么你就跟上去吧，克里斯丁娜，你留在这里吧。","/image/face/001.png",0)
+Interpreter:doCommand(101006,"克雷斯丁娜","哦。。。","/image/face/003.png",0)
+Interpreter:doCommand(101018,255,255,255,255,20)  -- 淡出
+Interpreter:doCommand(101021,180,0)               -- 53号NPC显示
+Interpreter:doCommand(101021,182,1)               -- 53号NPC显示
+Interpreter:doCommand(101018,0,0,0,0,20)          -- 淡入
