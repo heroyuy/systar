@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","兰迪","啊。。。！！！为什么！为什么要我一天亲手杀死两个兄弟！！","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","呜呜。。。都是同生共死过的，为什么要逼我。。。呜呜。。。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","走吧，去将他们安葬了才是现在最重要的事情，节哀顺变，兰迪。","/image/face/001.png",0)

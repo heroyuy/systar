@@ -1,8 +1,8 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","兰迪","该死，看起来无穷无尽，这次我们都得交代在这里。。。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","兰迪，别废话了，还是省点力气留着对付它们。","/image/face/001.png",0)
    Interpreter:doCommand("showNpc",47,1)                -- 显示47号NPC
-   Interpreter:doCommand("autoMove",47,37,14,16)          -- 移动47号NPC至（14，16）
+   Interpreter:doCommand("moveNpc",47,37,14,16)          -- 移动47号NPC至（14，16）
    Interpreter:doCommand("showMessageDialog","雷尔","<name>[0]，兰迪，你们都给我滚蛋，这是我的镇子，由我来保护。","/image/face/105.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","雷尔，你疯了吗？这是送死！","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","雷尔","快走，兰迪，兰特保不住了，带着杰斯丁逃出镇子，给老子有多远滚多远。","/image/face/105.png",0)
@@ -11,7 +11,7 @@ if Interpreter:doCommand(101010,1,1) then
    Interpreter:doCommand("showMessageDialog","兰迪","。。。。。。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","不，我不走！","/image/face/001.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","走吧，<name>[0]，我们帮不了雷尔。","/image/face/002.png",0)
-   Interpreter:doCommand(101023,1,1)           -- 兰迪暂时退出队伍
+   --Interpreter:doCommand(101023,1,1)           -- 兰迪暂时退出队伍
 else
 end
 

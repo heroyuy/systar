@@ -6,7 +6,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","。。。如果你不忍�
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showNpc",196,1)               -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",196,142,27,18)
+Interpreter:doCommand("moveNpc",196,142,27,18)
 Interpreter:doCommand("showMessageDialog","卡洛斯","的确，像老崔这种人没有活下去的权力，至少在高塔城，可以完全剥夺他这种权力。","/image/face/139.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","卡洛斯，你是来嘲笑我的吗？","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","卡洛斯","当然不是，兰迪，我代表达理昂教父向您表示整个家族的友善。教父想请你过去一趟，<name>[0]先生也可以一起去。","/image/face/139.png",0)
@@ -15,13 +15,13 @@ Interpreter:doCommand("showMessageDialog","卡洛斯","但是达理昂教父说�
 Interpreter:doCommand("showMessageDialog","兰迪","可我说的不是现在！是明天！今天我有事要处理，你怎么回复你的老板是你的事情，再多说一句，我让你回不去，就这样！","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","卡洛斯","。。。。。。","/image/face/139.png",0)
 Interpreter:doCommand("showMessageDialog","卡洛斯","好，既然你这样说，我不坚持，明天，市政府见。","/image/face/139.png",0)
-Interpreter:doCommand("autoMove",196,142,25,13)
+Interpreter:doCommand("moveNpc",196,142,25,13)
 Interpreter:doCommand("showNpc",196,0)               -- 53号NPC显示
 Interpreter:doCommand("showMessageDialog","<name>[0]","达理昂的人？","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","你抬举他了，达理昂的狗而已！","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","来，去找老崔，不要帮忙，我要亲手杀了这个畜牲！！","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","我知道。","/image/face/001.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101023,1,0)    -- 兰迪暂时退出队伍
+--Interpreter:doCommand(101023,1,0)    -- 兰迪暂时退出队伍
 Interpreter:doCommand("showNpc",195,0)               -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

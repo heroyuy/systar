@@ -1,6 +1,6 @@
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101001,165,11,16)
-Interpreter:doCommand(101001,165,11,14)
+Interpreter:doCommand("movePlayer",165,11,16)
+Interpreter:doCommand("movePlayer",165,11,14)
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 Interpreter:doCommand("showMessageDialog","兰迪","爱丽丝她就在塔拉的酒馆，她是酒馆的老板娘。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","酒客甲","刚才在镇子上，我好像看到了兰迪那个小子。","/image/face/104.png",0)
@@ -11,14 +11,14 @@ Interpreter:doCommand("showMessageDialog","酒客丙","爱丽丝大姐，何必�
 Interpreter:doCommand("showMessageDialog","酒客乙","对，不如就在哥几个中挑一个，保证比兰迪那混蛋要好得多，哈哈哈。","/image/face/103.png",0)
 Interpreter:doCommand("showMessageDialog","爱丽丝","闭嘴，再说一句，我就将你们都扔出去。","/image/face/143.png",0)
 Interpreter:doCommand("showMessageDialog","酒客乙","好，好，遵命，爱丽丝大姐，我们继续喝。","/image/face/103.png",0)
-Interpreter:doCommand(101001,165,9,9)
+Interpreter:doCommand("movePlayer",165,9,9)
 Interpreter:doCommand("showMessageDialog","兰迪","爱丽丝，我回来了。","/image/face/002.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showPlayer",0)
 Interpreter:doCommand("showNpc",205,1)
 Interpreter:doCommand("showNpc",206,1)
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",201,165,8,8)
+Interpreter:doCommand("moveNpc",201,165,8,8)
 Interpreter:doCommand("showMessageDialog","爱丽丝","兰迪。。。真的是你吗？","/image/face/143.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","对，是我，我回来了。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","爱丽丝","。。。。。。","/image/face/143.png",0)

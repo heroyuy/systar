@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("changeNpcAvatar",225,"\image\character\404-damage04.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","他们是荣耀军团的人。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","荣耀军团！？","/image/face/001.png",0)

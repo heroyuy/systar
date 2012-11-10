@@ -1,8 +1,8 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","佣兵","啊！饶命啊！","/image/face/120.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","哼！给我滚！","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","佣兵","快走。。。","/image/face/120.png",0)
-   Interpreter:doCommand("autoMove",128,108,12,19)            -- 37号NPC移动到（11，17）
+   Interpreter:doCommand("moveNpc",128,108,12,19)            -- 37号NPC移动到（11，17）
 else
 end
 

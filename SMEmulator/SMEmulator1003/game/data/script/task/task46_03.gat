@@ -10,7 +10,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","根本没有什么方程�
 Interpreter:doCommand("showMessageDialog","潜伏者","什么？！你说的是真的？","/image/face/101.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","是的，我没有必要骗你。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","潜伏者","那么你也没有了价值，再见了！<name>[0]，我会想念你的。。。","/image/face/101.png",0)
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","潜伏者","哈哈。。。<name>[0]，你赢了！能死在你的手上，我也没有什么遗憾了。","/image/face/101.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","不。。。！你告诉我，这不是真的。","/image/face/001.png",0)
    Interpreter:doCommand("showMessageDialog","潜伏者","可惜了。。。！","/image/face/101.png",0)

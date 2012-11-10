@@ -14,7 +14,7 @@ Interpreter:doCommand("showMessageDialog","杜波夫","什么？！他们还有�
 Interpreter:doCommand("showMessageDialog","<name>[0]","不怪的连希丁克都不敢用自己的人来接这次任务，这那是护送，这简直就是战争。。。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","对，这就是战争，所以我们必须要打起十二分精神，否则我们都得折在这里。","/image/face/002.png",0)
 Interpreter:doCommand("showNpc",113,1)                -- 57号NPC显示
-Interpreter:doCommand("autoMove",113,97,26,9)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",113,97,26,9)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showMessageDialog","哈里森","不。。。不好了，队长。。。","/image/face/118.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","哈里森，干什么？慌慌张张的。","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","哈里森","侦测前方四十二度有多处金属反应，初步识别为旧式反坦克炮，俗称“RPG”。那些枯草垛里面有大量生命反应，这是盗匪的一个临时营地，并且。。。","/image/face/118.png",0)

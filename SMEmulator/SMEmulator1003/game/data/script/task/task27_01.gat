@@ -1,6 +1,6 @@
 Interpreter:doCommand("showMessageDialog","<name>[0]","杜波夫小姐。。。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","哼！让开！","/image/face/115.png",0)
-Interpreter:doCommand("autoMove",199,154,16,18)
+Interpreter:doCommand("moveNpc",199,154,16,18)
 Interpreter:doCommand("showNpc",199,0)
 Interpreter:doCommand("showMessageDialog","兰迪","我说这小妞是怎么了。。。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","我听说这达理昂教父，在大灾前也是个知名学者，想不到现在竟变了黑手党教父。","/image/face/001.png",0)

@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","希丁克","看，我给你找的保镖很不错吧。","/image/face/202.png",0)
    Interpreter:doCommand("showMessageDialog","杜波夫","不知道你们怎么想的？我找的是保镖，不是劫匪，你最好给我个解释。","/image/face/115.png",0)
    Interpreter:doCommand("showMessageDialog","希丁克","第一，他们肯做这个任务。第二，他们也有能力做这个任务。","/image/face/202.png",0)

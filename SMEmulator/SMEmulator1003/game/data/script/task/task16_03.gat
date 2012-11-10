@@ -4,7 +4,7 @@ Interpreter:doCommand("showNpc",99,1)                -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 Interpreter:doCommand("showMessageDialog","罗格尔","报告！","/image/face/124.png",0)
 Interpreter:doCommand("showMessageDialog","蓝堂","进来吧。","/image/face/132.png",0)
-Interpreter:doCommand("autoMove",99,73,15,9)
+Interpreter:doCommand("moveNpc",99,73,15,9)
 Interpreter:doCommand("showMessageDialog","蓝堂","辛苦你了，都办妥了吗？","/image/face/132.png",0)
 Interpreter:doCommand("showMessageDialog","罗格尔","都办妥了，火星殖民地的观察组成员和杰斯丁都将在今天离开，前往高塔城。","/image/face/124.png",0)
 Interpreter:doCommand("showMessageDialog","蓝堂","离开就好。","/image/face/132.png",0)

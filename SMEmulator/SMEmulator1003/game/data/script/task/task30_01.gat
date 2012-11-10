@@ -32,7 +32,7 @@ Interpreter:doCommand("showMessageDialog","酒保","你知不知道你们吃东�
 Interpreter:doCommand("showMessageDialog","<name>[0]","不好意思，好多天没有吃过这么好的东西了。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","酒保","。。。。。。","/image/face/144.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","看看啊，我这就将这个家伙给扔出去。","/image/face/001.png",0)
-Interpreter:doCommand("autoMove",216,173,17,7)
+Interpreter:doCommand("moveNpc",216,173,17,7)
 Interpreter:doCommand("showMessageDialog","<name>[0]","嗨嗨！吃好了没有？说你呢！","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","吃完了，不过吃得太饱，有点不想动。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","嗨嗨！吃好了没有？说你呢！既然这样，只能将你拖出去了。","/image/face/001.png",0)

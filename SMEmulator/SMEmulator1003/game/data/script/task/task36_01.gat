@@ -29,11 +29,11 @@ Interpreter:doCommand("showMessageDialog","克雷斯丁娜","不，我不是在�
 Interpreter:doCommand("showMessageDialog","<name>[0]","对不起。。。我想。。。我不能够接受。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","克雷斯丁娜","为什么？因为我是新人类？！","/image/face/003.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","不为什么，我回去了，你也早点休息吧。","/image/face/001.png",0)
-Interpreter:doCommand("autoMove",272,228,30,13)
+Interpreter:doCommand("moveNpc",272,228,30,13)
 Interpreter:doCommand("showNpc",272,0)                -- 54号NPC显示
 Interpreter:doCommand("changeNpcAvatar",272,"\image\character\002-Actor02.png",0)
 Interpreter:doCommand("showNpc",272,1)                -- 54号NPC显示
-Interpreter:doCommand("autoMove",272,228,29,16)
+Interpreter:doCommand("moveNpc",272,228,29,16)
 Interpreter:doCommand("showMessageDialog","兰迪","克雷斯丁娜，怎么了？","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","克雷斯丁娜","没。。。没什么。。。","/image/face/003.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","你的眼睛出卖了你，克雷斯丁娜，有什么不开心的，可以对我说。","/image/face/002.png",0)

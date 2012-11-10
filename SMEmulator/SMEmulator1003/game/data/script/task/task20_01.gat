@@ -10,7 +10,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","兰迪，你真不是个�
 Interpreter:doCommand("showMessageDialog","兰迪","你见过那个奴隶贩子是个好东西？","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","。。。。。。","/image/face/115.png",0)
-Interpreter:doCommand("autoMove",116,106,13,3)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",116,106,13,3)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showMessageDialog","哈里森","“你们快看，是房子。。。那里。。。","/image/face/118.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","对，就是那里，老肖的店。","/image/face/002.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出

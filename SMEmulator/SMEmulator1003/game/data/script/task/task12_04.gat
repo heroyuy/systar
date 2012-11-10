@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","罗格尔","。。。。。。","/image/face/124.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","你伤到了我，你输了。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","罗格尔","你故意用一只手来换这个结局，值得吗？你有没有想过，也许那一枪就把你的左手给废掉了。","/image/face/124.png",0)
@@ -7,7 +7,7 @@ if Interpreter:doCommand(101010,1,1) then
    Interpreter:doCommand("showMessageDialog","<name>[0]","龙马，你这是在威胁我们，如果我们走不出海港市，你以为你自己走得出么？","/image/face/001.png",0)
    Interpreter:doCommand("showMessageDialog","龙马","小子，你。。。","/image/face/123.png",0)
    Interpreter:doCommand("showMessageDialog","罗格尔","好了，龙马，是他赢了。","/image/face/124.png",0)
-   Interpreter:doCommand("autoMove",76,74,10,12)
+   Interpreter:doCommand("moveNpc",76,74,10,12)
    Interpreter:doCommand("showMessageDialog","罗格尔","孩子，我要你做到的，我首先必须做到。记住，真正的男人是不会逃避责任的，当然也不会耍赖。所以，孩子，你自由了。","/image/face/124.png",0)
    Interpreter:doCommand("showMessageDialog","吉米","谢谢你，市长先生，这是辐射药剂，还给你。","/image/face/122.png",0)
    Interpreter:doCommand("showMessageDialog","罗格尔","拿着吧，这是我送给你的。。。","/image/face/124.png",0)

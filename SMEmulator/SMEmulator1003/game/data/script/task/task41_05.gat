@@ -3,7 +3,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","荣耀军团上校杰森�
 Interpreter:doCommand("showMessageDialog","杰克","（好像有点不对。。。照片看起来不是很像。。。）","/image/face/152.png",0)
 Interpreter:doCommand("showMessageDialog","杰克","杰森上校，请问可有手令？","/image/face/152.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","有，长官。。。我的刀就是！","/image/face/001.png",0)
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("changeNpcAvatar",319,"\image\character\404-damage04.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","快走！此地不宜久留！","/image/face/001.png",0)
 else

@@ -5,7 +5,7 @@ Interpreter:doCommand("showNpc",69,1)                -- 55号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 Interpreter:doCommand("showMessageDialog","旅店老板","<name>[0]上尉，是否现在休息？","/image/face/106.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","好，我正好想要休息。","/image/face/001.png",0)
-Interpreter:doCommand(101001,54,6,8)              -- 主角移动到楼梯
+Interpreter:doCommand("movePlayer",54,6,8)              -- 主角移动到楼梯
 Interpreter:doCommand("showPlayer",0)                   -- 隐藏主角
 Interpreter:doCommand("showMessageDialog","杜波夫","我好像又看到了哪两个卑鄙的劫匪，你们有没有看到？","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","尼尔","没有啊，是队长的心理作用吧？","/image/face/117.png",0)
@@ -14,7 +14,7 @@ Interpreter:doCommand("showMessageDialog","杜波夫","呸，我怎么可能会�
 Interpreter:doCommand("showMessageDialog","哈里森","哦。","/image/face/118.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showPlayer",1)                   -- 显示主角
-Interpreter:doCommand(101001,54,8,7)              -- 主角移动到楼梯
+Interpreter:doCommand("movePlayer",54,8,7)              -- 主角移动到楼梯
 Interpreter:doCommand("showNpc",67,0)                -- 53号NPC显示
 Interpreter:doCommand("showNpc",68,0)                -- 54号NPC显示
 Interpreter:doCommand("showNpc",69,0)                -- 55号NPC显示

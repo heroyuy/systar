@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    
 else
    Interpreter:doCommand("showMessageDialog","<name>[0]","该死！放开克里斯丁娜，我要杀了你。。。","/image/face/001.png",0)

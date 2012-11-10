@@ -1,8 +1,8 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","佣兵乙","好强！快去通知老板！","/image/face/103.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","你们都是混口饭吃，我也不想与你们为难，去叫你们老板过来吧，就说这里的规矩被破坏了。","/image/face/001.png",0)
    Interpreter:doCommand("showMessageDialog","兰迪","记住，要大老板，海港市佣兵团的大老板，那个叫什么罗格尔的。","/image/face/002.png",0)
-   Interpreter:doCommand("autoMove",74,74,2,14)
+   Interpreter:doCommand("moveNpc",74,74,2,14)
    Interpreter:doCommand("showNpc",74,0)
    Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
    Interpreter:doCommand("showNpc",75,1)                -- 53号NPC显示

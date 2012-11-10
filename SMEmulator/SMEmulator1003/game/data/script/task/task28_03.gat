@@ -12,7 +12,7 @@ Interpreter:doCommand("showMessageDialog","兰迪","。。。。。。","/image/
 Interpreter:doCommand("showMessageDialog","爱丽丝","要活着回来。","/image/face/143.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","当然，我保证。","/image/face/002.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand("autoMove",201,165,9,5)
+Interpreter:doCommand("moveNpc",201,165,9,5)
 Interpreter:doCommand("showPlayer",1)
 Interpreter:doCommand("showNpc",205,0)
 Interpreter:doCommand("showNpc",206,0)

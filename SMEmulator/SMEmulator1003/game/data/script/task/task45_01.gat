@@ -19,7 +19,7 @@ Interpreter:doCommand("showMessageDialog","兰迪","无功而受禄，这的确�
 Interpreter:doCommand("showMessageDialog","<name>[0]","所有的这些档案都必须要经过总部审批，而我相信总部不可能犯下这种低级错误，所以或许能够从这份档案上面寻找出什么线索。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","<name>[0]，你打算怎么做？","/image/face/002.png",0)
 Interpreter:doCommand("showNpc",340,1)                -- 54号NPC显示
-Interpreter:doCommand("autoMove",340,290,11,12)
+Interpreter:doCommand("moveNpc",340,290,11,12)
 Interpreter:doCommand("showMessageDialog","琳达","<name>[0]，总部已答应新人类协会并入佣兵协会了，兰蒂尔上将要见你们。","/image/face/154.png",0)
 Interpreter:doCommand("showMessageDialog","克雷斯丁娜","那太好了，以后我也是佣兵，和<name>[0]一样的人。","/image/face/003.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","好，那么我们走吧，可不要让上将等太久了。","/image/face/001.png",0)

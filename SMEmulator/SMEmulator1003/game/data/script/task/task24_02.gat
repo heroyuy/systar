@@ -55,5 +55,5 @@ Interpreter:doCommand("showNpc",174,0)               -- 53号NPC显示
 Interpreter:doCommand("showNpc",175,0)               -- 53号NPC显示
 Interpreter:doCommand("showNpc",177,0)               -- 53号NPC显示
 Interpreter:doCommand("showNpc",178,0)               -- 53号NPC显示
-Interpreter:doCommand(101023,2,0)                 -- 克雷斯丁娜加入
+--Interpreter:doCommand(101023,2,0)                 -- 克雷斯丁娜加入
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

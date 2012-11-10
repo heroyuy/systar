@@ -2,7 +2,7 @@ Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 
 Interpreter:doCommand("showNpc",192,1)               -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",192,312,14,11)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",192,312,14,11)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showMessageDialog","达理昂","这么说来，我们的客人已经来了。","/image/face/138.png",0)
 Interpreter:doCommand("showMessageDialog","卡洛斯","是的，先生，他们已经安全进城，但据说他们在途中遇到了“死亡沙盗”的袭击，死了一个队员。","/image/face/139.png",0)
 Interpreter:doCommand("showMessageDialog","达理昂","哦？能够在“死亡沙盗”的袭击中生存下来，看来我们的客人很不简单啊，你认为呢？卡洛斯。","/image/face/138.png",0)

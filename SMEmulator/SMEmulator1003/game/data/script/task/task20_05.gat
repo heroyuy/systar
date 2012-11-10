@@ -10,7 +10,7 @@ Interpreter:doCommand("showMessageDialog","老肖","哼！老子是机械师，�
 Interpreter:doCommand("showMessageDialog","兰迪","哈哈，终于再次看到肖老板的改装技术了，放心，你绝对不会在地球上找到比他更好的。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","哈里森","“可是。。。","/image/face/118.png",0)
 Interpreter:doCommand("showMessageDialog","老肖","兰迪，我对火星殖民地这帮小子很不耐烦，如果他们再说两句，我绝对会打得他们满地找牙。","/image/face/134.png",0)
-Interpreter:doCommand("autoMove",127,108,8,5)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",127,108,8,5)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showNpc",127,0)                -- 53号NPC显示
 Interpreter:doCommand("showNpc",128,1)                -- 53号NPC显示
 Interpreter:doCommand("showMessageDialog","杜波夫","。。。。。。","/image/face/115.png",0)
@@ -19,7 +19,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","稻草，你们的老板�
 Interpreter:doCommand("showMessageDialog","稻草","岂止是麻烦，简直麻烦得要命，你是怎么知道的？","/image/face/133.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","因为他现在就有麻烦了，外面最少来了四个人。并且他们身上带着血腥味，很重很重的那种血腥味。看起来很不怀好意。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","稻草","。。。。。。","/image/face/133.png",0)
-Interpreter:doCommand("autoMove",128,108,12,15)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",128,108,12,15)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showMessageDialog","佣兵","给我叫你们老板出来，竟然敲诈到老子头上了，一杯茶要我五百克黄金。今天我就拆了你们这家黑店，让你们知道老子不是好欺负的。","/image/face/120.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","我说兄弟，人家打开门做生意，明码标价，一杯茶就是那么贵，没有逼着你喝啊。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","佣兵","你去问问整个废土有哪一家店一杯茶就要五百克黄金，这分明就是黑店。这位弟兄这么面生，想必也给这家黑店坑了不少吧，何必要为他们说话呢？","/image/face/120.png",0)

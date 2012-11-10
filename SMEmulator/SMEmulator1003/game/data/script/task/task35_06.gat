@@ -20,7 +20,7 @@ Interpreter:doCommand("showMessageDialog","克里斯多","是的，为了两个�
 Interpreter:doCommand("showMessageDialog","阿曼达","难道就这样放过他们吗？他们公开诬陷科学神教，如果他们不受惩罚，我教权威何存？请陛下三思。","/image/face/206.png",0)
 Interpreter:doCommand("showMessageDialog","克里斯多","这我自有办法，你下去吧。另外是，如果你不想便宜他们，可以在放人之前狠狠的打一顿。","/image/face/146.png",0)
 Interpreter:doCommand("showMessageDialog","阿曼达","是，陛下。","/image/face/206.png",0)
-Interpreter:doCommand("autoMove",255,315,21,9)
+Interpreter:doCommand("moveNpc",255,315,21,9)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showNpc",256,0)                -- 54号NPC显示
 Interpreter:doCommand("showNpc",255,1)                -- 54号NPC显示

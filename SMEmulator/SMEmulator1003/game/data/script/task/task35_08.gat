@@ -19,7 +19,7 @@ Interpreter:doCommand("showMessageDialog","阿曼达","以下我来宣判：<nam
 Interpreter:doCommand("showMessageDialog","阿曼达","兰迪，佣兵协会自由佣兵，军衔中尉，此人曾是死亡沙漠的奴隶贩子，罪行累累。并且犯有渎神罪，武力阻挠我教传教自由，判处火刑。","/image/face/206.png",0)
 Interpreter:doCommand("showMessageDialog","教众丙","我主万岁！科学神教万岁！阿曼达大人万岁！","/image/face/126.png",0)
 Interpreter:doCommand("showMessageDialog","阿曼达","行刑！","/image/face/206.png",0)
-Interpreter:doCommand("autoMove",265,205,12,27)
+Interpreter:doCommand("moveNpc",265,205,12,27)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showPlayer",0)
 Interpreter:doCommand("showNpc",260,0)                -- 54号NPC显示

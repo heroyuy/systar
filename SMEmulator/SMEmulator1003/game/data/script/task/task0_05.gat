@@ -4,4 +4,4 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","今天我就走。","/ima
 Interpreter:doCommand("showMessageDialog","娜娜","什么？难得回来一次，你。。。哼！","/image/face/101.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","娜娜，我想知道吉斯的吉普车放在那里，我要穿越大荒漠。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","娜娜","没啥用的破铜烂铁，我一般都扔在后山山洞。","/image/face/101.png",0)
-Interpreter:doCommand("autoMove",5,13,19,3)            -- 5号NPC移动到（19，3）
+Interpreter:doCommand("moveNpc",5,13,19,3)            -- 5号NPC移动到（19，3）

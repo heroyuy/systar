@@ -4,7 +4,7 @@ Interpreter:doCommand("showNpc",119,1)                -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 Interpreter:doCommand("showMessageDialog","哈里森","“兰迪。。。这就是你说的那个什么老肖的店？好破烂啊。","/image/face/118.png",0)
 Interpreter:doCommand("showNpc",118,1)                -- 53号NPC显示
-Interpreter:doCommand("autoMove",118,108,22,11)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",118,108,22,11)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showMessageDialog","老肖","小子，敢在我的地盘说我的坏话？","/image/face/134.png",0)
 Interpreter:doCommand("showMessageDialog","哈里森","“你怎么打人？","/image/face/118.png",0)
 Interpreter:doCommand("showMessageDialog","老肖","嘿嘿，没想到吧，我这店里装了声控装置，凡是有人说了老肖之类的马上就会报警。","/image/face/134.png",0)

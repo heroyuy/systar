@@ -16,7 +16,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","克雷斯丁娜，等下�
 Interpreter:doCommand("showMessageDialog","克雷斯丁娜","那你们怎么办？","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","我们怎么办？靠你憋，你逃走之后再想办法救我们。","/image/face/001.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101023,2,1)              -- 53号NPC显示
+--Interpreter:doCommand(101023,2,1)              -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
 Interpreter:doCommand("showMessageDialog","阿曼达","混账！竟然跑了一个，将他们两个捆起来，然后给我追！","/image/face/206.png",0)
 

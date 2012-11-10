@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showNpc",76,1)                -- 53号NPC显示
    Interpreter:doCommand("showMessageDialog","龙马","两位到底是谁？","/image/face/123.png",0)
    Interpreter:doCommand("showMessageDialog","罗格尔","他是高塔市的兰迪，死亡沙漠最出名的奴隶贩子；至于这位，我就不知道了，我清楚的是，如果刚才他用全力，你下半辈子就要用拐杖了。","/image/face/124.png",0)

@@ -9,7 +9,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","杜波夫小姐，我们�
 Interpreter:doCommand("showMessageDialog","杜波夫","哼！还真以为没有你们不行，不过你们这次做得很好，剩下的佣金请到镇政府问达理昂要吧。","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","客户的满意，即是我们的追求，如果下次还有什么委托的话，也可以来找我们。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","虽然你安全将我送到这里，但我是再也不会找两个土匪护送了，哼！","/image/face/115.png",0)
-Interpreter:doCommand("autoMove",189,142,25,19)
+Interpreter:doCommand("moveNpc",189,142,25,19)
 Interpreter:doCommand("showMessageDialog","兰迪","正好我也不想再和火星的人扯上关系。。。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","现在回去公司看看吧，这次和我出去的弟兄都死光了，我要将善后的事情安排了。算是让自己心里舒服一点。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","好，这才是我辈的本色，兰迪，我们生逢末世，都没有选择，看开点。","/image/face/001.png",0)

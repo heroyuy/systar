@@ -3,7 +3,7 @@ Interpreter:doCommand("showNpc",2,1)                 -- 2号NPC显示
 Interpreter:doCommand("showNpc",3,1)                 -- 3号NPC显示
 Interpreter:doCommand("showNpc",4,1)                 -- 4号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",4,4,13,9)            -- 4号NPC移动到（13，9）
+Interpreter:doCommand("moveNpc",4,4,13,9)            -- 4号NPC移动到（13，9）
 Interpreter:doCommand("showMessageDialog","娜娜","哥哥他从不喜欢百合花，喜欢的是我。","/image/face/101.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","娜娜，是你来了。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","娜娜","想不到，原来你还记得我。","/image/face/101.png",0)
@@ -13,4 +13,4 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","或许我是，但吉斯�
 Interpreter:doCommand("showMessageDialog","娜娜","你们两个都是，你知道你们走后，我过的多么辛苦吗？","/image/face/101.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","娜娜","为了你们的英雄梦想，你们抛弃了故乡，而哥哥他。。。","/image/face/101.png",0)
-Interpreter:doCommand("autoMove",4,4,19,16)            -- 4号NPC移动到（19，6）
+Interpreter:doCommand("moveNpc",4,4,19,16)            -- 4号NPC移动到（19，6）

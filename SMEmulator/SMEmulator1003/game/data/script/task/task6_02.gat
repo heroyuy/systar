@@ -10,10 +10,10 @@ Interpreter:doCommand("showMessageDialog","雷尔","根据过往经验，兽潮�
 Interpreter:doCommand("showMessageDialog","兰迪","让镇子的士兵和我的手下顶在城墙上，然后我们三人则在这里准备随时支援，只要兽潮不过于强大，我们定然能够安然度过。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","那么就这样吧。","/image/face/001.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand(101001,34,12,7)             -- 主角移动至（12，7）
+Interpreter:doCommand("movePlayer",34,12,7)             -- 主角移动至（12，7）
 Interpreter:doCommand("showNpc",39,1)                -- 显示39号NPC
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",39,34,10,9)          -- 移动39号NPC至（10，9）
+Interpreter:doCommand("moveNpc",39,34,10,9)          -- 移动39号NPC至（10，9）
 Interpreter:doCommand("showMessageDialog","士兵","镇长，大事不好，城墙再次被攻破，弟兄们伤亡惨重，请立刻加派援军。。。","/image/face/103.png",0)
 Interpreter:doCommand("showMessageDialog","雷尔","知道了，下去吧。","/image/face/105.png",0)
 Interpreter:doCommand("showMessageDialog","士兵","镇长，弟兄们快要顶不住了，如果再没有援军。。。","/image/face/103.png",0)
@@ -23,7 +23,7 @@ Interpreter:doCommand("showMessageDialog","兰迪","是吗。。。阿明。。�
 Interpreter:doCommand("showMessageDialog","士兵","镇长，我死不足惜，请可怜可怜弟兄们。。。呜呜。。。","/image/face/103.png",0)
 Interpreter:doCommand("showMessageDialog","雷尔","知道了，请下去，我自有分寸。","/image/face/105.png",0)
 Interpreter:doCommand("showMessageDialog","士兵","是！","/image/face/103.png",0)
-Interpreter:doCommand("autoMove",39,34,11,18)          -- 移动39号NPC至（11，18）
+Interpreter:doCommand("moveNpc",39,34,11,18)          -- 移动39号NPC至（11，18）
 Interpreter:doCommand("showNpc",39,0)                 -- 隐藏39号NPC
 Interpreter:doCommand("showMessageDialog","雷尔","所有的预备役都顶了上去，唉。。。我们已经没有士兵了。","/image/face/105.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","为什么不发动镇民？","/image/face/001.png",0)

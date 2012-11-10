@@ -9,7 +9,7 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","这里是佣兵之城，�
 Interpreter:doCommand("showMessageDialog","娜娜","我喜欢，这里真漂亮！不过杰斯丁，我要走了。","/image/face/003.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","为什么？娜娜！","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","娜娜","不为什么，我要走了。。。","/image/face/003.png",0)
-Interpreter:doCommand("autoMove",357,320,9,20)
+Interpreter:doCommand("moveNpc",357,320,9,20)
 Interpreter:doCommand("showNpc",357,0)                -- 54号NPC显示
 Interpreter:doCommand("showMessageDialog","<name>[0]","娜娜！别走。。。","/image/face/001.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出

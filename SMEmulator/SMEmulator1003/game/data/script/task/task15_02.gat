@@ -1,7 +1,7 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","兰迪","美丽的女士，看来科技之神也没有将我们如何。","/image/face/002.png",0)
    Interpreter:doCommand("showMessageDialog","阿曼达","咱们走着瞧。。。","/image/face/206.png",0)
-   Interpreter:doCommand("autoMove",89,77,19,12)            -- 4号NPC移动到（13，9）
+   Interpreter:doCommand("moveNpc",89,77,19,12)            -- 4号NPC移动到（13，9）
    Interpreter:doCommand("showNpc",89,0)                -- 54号NPC显示
 else
 end

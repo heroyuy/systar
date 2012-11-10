@@ -11,7 +11,7 @@ Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showPlayer",0)
 Interpreter:doCommand("showNpc",298,1)                -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand("autoMove",297,250,11,10)
+Interpreter:doCommand("moveNpc",297,250,11,10)
 Interpreter:doCommand("showMessageDialog","娜娜","<name>[0]，我们不要再分开了，好吗？","/image/face/101.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","明白了。","/image/face/001.png",0)
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出

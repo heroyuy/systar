@@ -18,7 +18,7 @@ Interpreter:doCommand("showMessageDialog","杜波夫","这也许是某种疾病�
 Interpreter:doCommand("showMessageDialog","<name>[0]","这和你有关系？现在没有时间研究他们的病。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","也许采集到了样本就可以凭借火星上技术开发对症的药品，这是我的责任。。。","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","或许吧。。。","/image/face/001.png",0)
-Interpreter:doCommand("autoMove",131,111,22,3)            -- 37号NPC移动到（11，17）
+Interpreter:doCommand("moveNpc",131,111,22,3)            -- 37号NPC移动到（11，17）
 Interpreter:doCommand("showNpc",131,0)                -- 53号NPC显示
 Interpreter:doCommand("showMessageDialog","<name>[0]","呃。。。小妞，你在干什么？快回来，他们太危险了，你不能这样干。。。","/image/face/001.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","好了，别再牢骚了，追上去，帮她一把，最好这个小妞能够快点。","/image/face/002.png",0)

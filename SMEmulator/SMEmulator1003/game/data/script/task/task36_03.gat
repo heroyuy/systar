@@ -1,4 +1,4 @@
-if Interpreter:doCommand(101010,1,1) then
+if Interpreter:doCommand("startFight",1,1) then
    Interpreter:doCommand("showMessageDialog","阿曼达","为什么不杀了我？","/image/face/206.png",0)
    Interpreter:doCommand("showMessageDialog","<name>[0]","正如教皇陛下所说，你我虽然理念不一样，但并非生死仇敌，而我也答应他不会伤害科学神教的教徒。","/image/face/001.png",0)
    Interpreter:doCommand("showMessageDialog","阿曼达","不杀我，你会后悔的！","/image/face/206.png",0)

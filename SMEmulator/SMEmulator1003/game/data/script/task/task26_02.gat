@@ -5,7 +5,7 @@ Interpreter:doCommand("showMessageDialog","兰迪","血腥味？！有古怪，<
 Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
 Interpreter:doCommand("showNpc",194,1)               -- 53号NPC显示
 Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入
-Interpreter:doCommand(101001,152,14,5)
+Interpreter:doCommand("movePlayer",152,14,5)
 Interpreter:doCommand("showMessageDialog","兰迪","孢子，是我！这到底怎么回事？你竟然向我开枪？！","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","孢子","老大。。。是你。。。你终于回来了吗？","/image/face/142.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","孢子，没事了，这是<name>[0]，我的朋友。快说，到底是怎么回事？老崔呢？","/image/face/002.png",0)
@@ -28,4 +28,4 @@ Interpreter:doCommand("showMessageDialog","孢子","我的头好痛。。。你�
 Interpreter:doCommand("showMessageDialog","孢子","快啊。。。我忍受不了啦。。。！！！","/image/face/142.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","<name>[0]，到楼下等我一会，很快，我们兄弟有点事情要处理。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","<name>[0]","嗯。","/image/face/001.png",0)
-Interpreter:doCommand(101023,1,1)    -- 兰迪暂时退出队伍
+--Interpreter:doCommand(101023,1,1)    -- 兰迪暂时退出队伍

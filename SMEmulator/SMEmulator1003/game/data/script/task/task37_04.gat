@@ -20,6 +20,6 @@ Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/ima
 Interpreter:doCommand("showMessageDialog","杜波夫","我要走了！","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","兰迪","没人阻止你啊！虽然你是个大美人，但我已名花有主，只能哀叹有缘无份了。","/image/face/002.png",0)
 Interpreter:doCommand("showMessageDialog","杜波夫","你。。。","/image/face/115.png",0)
-Interpreter:doCommand("autoMove",292,250,17,15)
+Interpreter:doCommand("moveNpc",292,250,17,15)
 Interpreter:doCommand("showNpc",292,0)                -- 53号NPC显示
 Interpreter:doCommand("showMessageDialog","<name>[0]","现在这住下吧，看来暂时是没法出城了。","/image/face/001.png",0)

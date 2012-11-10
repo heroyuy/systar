@@ -28,7 +28,7 @@ Interpreter:doCommand("showMessageDialog","卢卡尔","他们在地球拥有军�
 Interpreter:doCommand("showMessageDialog","佣兵乙","打倒他们！砍去他们的爪子！","/image/face/103.png",0)
 Interpreter:doCommand("showMessageDialog","卢卡尔","弟兄们，请踊跃参战，将他们永远留在火星那个苦寒之地，好不好？","/image/face/150.png",0)
 Interpreter:doCommand("showMessageDialog","佣兵丙","好！打倒火星！佣兵协会万岁！兰蒂尔上将万岁！蓝堂上将万岁！","/image/face/114.png",0)
-Interpreter:doCommand("autoMove",291,246,25,15)
+Interpreter:doCommand("moveNpc",291,246,25,15)
 Interpreter:doCommand("showMessageDialog","杜波夫","等等！你们都在做什么？战争只会带给人类毁灭！","/image/face/115.png",0)
 Interpreter:doCommand("showMessageDialog","佣兵甲","哼！对付背叛者，我们绝不能原谅！","/image/face/104.png",0)
 Interpreter:doCommand("showMessageDialog","佣兵乙","对，小妞，大灾变发生的时候，你还在穿着开裆裤呢!少来这里搅和，滚出去！","/image/face/103.png",0)
