@@ -28,13 +28,15 @@ public class GameConfig {
 
 	private int actualFPS = 0;
 
-	private boolean showFPS = true;
+	private boolean debug = true;
 
 	private String host = null;
 
 	private int port = 0;
 
 	private String gamePath = null;
+
+	private int luaMemory;
 
 	private GameConfig() {
 		try {
@@ -45,8 +47,8 @@ public class GameConfig {
 					.getValue());
 			this.ratedFPS = Integer.parseInt(configXMLObject.getChild("fps")
 					.getValue());
-			this.showFPS = Boolean.parseBoolean(configXMLObject.getChild(
-					"showFPS").getValue());
+			this.debug = Boolean.parseBoolean(configXMLObject.getChild("debug")
+					.getValue());
 			XMLObject serversXMLObject = configXMLObject.getChild("servers");
 			String userServer = configXMLObject.getChild("userServer")
 					.getValue();
@@ -84,6 +86,10 @@ public class GameConfig {
 		return host;
 	}
 
+	public int getLuaMemory() {
+		return luaMemory;
+	}
+
 	public int getPort() {
 		return port;
 	}
@@ -96,8 +102,8 @@ public class GameConfig {
 		return width;
 	}
 
-	public boolean isShowFPS() {
-		return showFPS;
+	public boolean isDebug() {
+		return debug;
 	}
 
 	public void setActualFPS(int actualFps) {
@@ -106,6 +112,10 @@ public class GameConfig {
 
 	public void setGamePath(String gamePath) {
 		this.gamePath = gamePath;
+	}
+
+	public void setLuaMemory(int luaMemory) {
+		this.luaMemory = luaMemory;
 	}
 
 }

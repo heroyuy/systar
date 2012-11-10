@@ -32,7 +32,9 @@ public class UIScreen extends JPanel {
 
 	private UIScreen() {
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(GameConfig.getInstance().getWidth(), GameConfig.getInstance().getHeight()));
+		this.setPreferredSize(new Dimension(
+				GameConfig.getInstance().getWidth(), GameConfig.getInstance()
+						.getHeight()));
 		// 游戏渲染层
 		gamePanel = new JPanel() {
 
@@ -51,9 +53,12 @@ public class UIScreen extends JPanel {
 				game.onPaint(this.painter);
 				// FPS
 				GameConfig gameInfo = GameConfig.getInstance();
-				if (gameInfo.isShowFPS()) {
+				if (gameInfo.isDebug()) {
 					painter.setColor(ColorFactory.getInstance().WHITE);
-					painter.drawString("FPS:" + gameInfo.getActualFPS(), 10, gameInfo.getHeight() - 10, Painter.LB);
+					painter.drawString("FPS:" + gameInfo.getActualFPS()
+							+ " LuaMemory:" + gameInfo.getLuaMemory() + "KB",
+							10, gameInfo.getHeight() - 10, Painter.LB);
+
 				}
 			}
 		};
@@ -66,11 +71,13 @@ public class UIScreen extends JPanel {
 			}
 
 			public void mouseDragged(MouseEvent e) {
-				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_MOVE));
+				game.onEvent(new Event(e.getX(), e.getY(),
+						Event.EVENT_TYPE_MOVE));
 			}
 
 			public void mousePressed(MouseEvent e) {
-				game.onEvent(new Event(e.getX(), e.getY(), Event.EVENT_TYPE_DOWN));
+				game.onEvent(new Event(e.getX(), e.getY(),
+						Event.EVENT_TYPE_DOWN));
 			}
 
 			public void mouseReleased(MouseEvent e) {
@@ -86,7 +93,8 @@ public class UIScreen extends JPanel {
 		gamePanel.addMouseMotionListener(mouseAdapter);
 		gamePanel.addMouseListener(mouseAdapter);
 		gamePanel.addKeyListener(keyAdapter);
-		gamePanel.setSize(new Dimension(GameConfig.getInstance().getWidth(), GameConfig.getInstance().getHeight()));
+		gamePanel.setSize(new Dimension(GameConfig.getInstance().getWidth(),
+				GameConfig.getInstance().getHeight()));
 		gamePanel.setLocation(0, 0);
 		gamePanel.setLayout(null);
 		this.add(gamePanel);

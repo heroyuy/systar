@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.soyomaker.emulator.net.IHandler;
 import com.soyomaker.emulator.net.NetTransceiver;
 import com.soyomaker.emulator.ui.Painter;
+import com.soyomaker.emulator.util.SMLog;
 import com.soyomaker.lang.GameObject;
 
 public class Game implements IGame, Runnable, IHandler {
@@ -95,9 +96,12 @@ public class Game implements IGame, Runnable, IHandler {
 				} else {
 					gameConfig.setActualFPS((int) (1000 * 1.0 / t));
 					if (gameConfig.getActualFPS() < gameConfig.getRatedFPS()) {
-						//SMLog.getInstance().info("FPS警告:" + gameConfig.getActualFPS());
+						SMLog.getInstance().info(
+								"FPS警告:" + gameConfig.getActualFPS());
 					}
 				}
+				luaAdapter.onLowMemory();
+				gameConfig.setLuaMemory(luaAdapter.getLuaMemory());
 			}
 			// 此处调用lua的onStop()方法
 			luaAdapter.onStop();

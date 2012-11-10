@@ -3,7 +3,7 @@
 	<width>960</width>
 	<height>640</height>
 	<fps>50</fps>
-	<showFPS>true</showFPS>
+	<debug>true</debug>
 	<servers>
 		<server>
 			<id>0</id>

@@ -91,7 +91,7 @@ public class LuaAdapter {
 		}
 	}
 
-	public float getLuaMemory() {
+	public int getLuaMemory() {
 		luaState.getGlobal("collectgarbage");
 		try {
 			luaState.pushObjectValue("count");
@@ -101,7 +101,7 @@ public class LuaAdapter {
 		luaState.call(1, 1);
 		luaState.setField(LuaState.LUA_GLOBALSINDEX, "result");
 		LuaObject lobj = luaState.getLuaObject("result");
-		return (float) (lobj.getNumber() * 1024);
+		return (int) lobj.getNumber();
 	}
 
 	/**
