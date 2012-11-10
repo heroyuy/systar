@@ -21,40 +21,6 @@ Interpreter.PropertyType.SP=9
 Interpreter.PropertyType.LEVEL=10
 Interpreter.PropertyType.EXP=11
 
---方法列表
-Interpreter.functionList={
-  [100000]="executeScript",
-  [100001]="sleep",
-  
-  [101001]="showTimer",
-  [101002]="playMusic",
-  [101003]="stopMusic",
-  [101004]="showMessageDialog",
-  [101005]="showInputDialog",
-  [101006]="showOptionDialog",
-  [101007]="changeFace",
-  [101008]="startFight",
-  [101009]="showImage",
-  [101010]="removeImage",
-  [101011]="moveImage",
-  [101012]="rotateImage",
-  [101013]="toneImage",
-  [101014]="playAnimation",
-  [101015]="toneScene",
-  [101016]="shakeScene",
-  [101017]="autoMove",
-  [101018]="showNpc",
-  [101019]="showPlayer",
-  [101020]="changeNpcAvatar",
-  
-  [102001]="getProperty",
-  [102002]="getName",
-  [102003]="getSkillState",
-  [102004]="getEquipState",
-  [102005]="getMoney",
-  [102006]="getItemNum"
-}
-
 --[[
 ===============================================================
 注意事项:
@@ -94,17 +60,15 @@ end
 
 --执行命令,executeScript运行在子线程，其它运行在主线程中
 function Interpreter:executeCommand(id,...)
-  local funName=Interpreter.functionList[id]
-  if not funName then
-    funName="unknownCommand"
+  local fun=Interpreter[id]
+  if not fun then
+    fun=Interpreter.unknownCommand
     table.insert(arg,id,1)
   end
-  local fun=Interpreter[funName]
   return fun(self,unpack(arg))
 end
 
 --注:以下方法中executeScript运行在子线程，其它均运行在主线程中
-
 --============异常处理类============
 function Interpreter:unknownCommand(commandId)
   print("unknownCommand:".. tostring(commandId))
@@ -221,8 +185,13 @@ function Interpreter:shakeScene(range,millisecond,times)
   return true
 end
 
+--Player强制移动
+function Interpreter:movePlayer(mapId,row,col)
+  return true
+end
+
 --Npc强制移动
-function Interpreter:autoMove(npcId,mapId,row,col)
+function Interpreter:moveNpc(npcId,mapId,row,col)
   return true
 end
 
