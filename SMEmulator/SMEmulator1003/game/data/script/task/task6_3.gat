@@ -1,2 +1,0 @@
-Interpreter:doCommand("showNpc",38,0)   -- 隐藏38号NPC
---Interpreter:doCommand(101023,1,0)    -- 兰迪加入队伍

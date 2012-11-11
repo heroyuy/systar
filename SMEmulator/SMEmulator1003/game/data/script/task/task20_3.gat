@@ -1,4 +1,0 @@
-Interpreter:doCommand("toneScene",255,255,255,255,20)  -- 淡出
-Interpreter:doCommand("showNpc",122,1)                -- 53号NPC显示
-Interpreter:doCommand("showNpc",123,1)                -- 53号NPC显示
-Interpreter:doCommand("toneScene",0,0,0,0,20)          -- 淡入

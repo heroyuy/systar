@@ -1,4 +1,0 @@
-Interpreter:doCommand("showMessageDialog","<name>[0]","看，这好像是一条密道！","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","克雷斯丁娜","我们进去看看吧！","/image/face/003.png",0)
-
-

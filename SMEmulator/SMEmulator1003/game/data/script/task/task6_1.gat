@@ -1,4 +1,0 @@
-Interpreter:doCommand("showMessageDialog","士兵","<name>[0]上尉，镇长有要事请阁下到镇政府一趟。","/image/face/103.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","好的，我马上过去！","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","士兵","那么就不打搅上尉了，我这就回去复命。","/image/face/103.png",0)
-Interpreter:doCommand("moveNpc",37,28,11,17)            -- 37号NPC移动到（11，17）

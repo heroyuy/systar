@@ -1,8 +1,0 @@
-Interpreter:doCommand("showMessageDialog","兰迪","我的天！酒吧呢？你竟然能将一间就酒吧变走！！","/image/face/002.png",0)
-Interpreter:doCommand("showMessageDialog","爱玛","欢迎来到真实的世界，虽然我觉得那个幻境更适合我们谈话。","/image/face/145.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","幻境？！了不起，真是了不起，我们都上了你的当。","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","爱玛","雕虫小技，我们新人类都有一些特殊技巧，比如我就能让其他人看到幻觉。另外，我也是利用两位饥渴难耐，防备心松懈的情况，才能制造这个幻境。现在请跟我来，我带你们去海风城，新人类的城市。","/image/face/145.png",0)
-Interpreter:doCommand("showMessageDialog","兰迪","我们就这样跟着她，一个不知道是男是女的家伙？","/image/face/002.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","跟着她吧，最少能够确定她对我们并无恶意。","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","爱玛","兰迪先生，请注意你的言辞，人家可是一个很漂亮的女孩子，什么不男不女的。","/image/face/145.png",0)
-Interpreter:doCommand("showMessageDialog","兰迪","。。。。。。","/image/face/002.png",0)

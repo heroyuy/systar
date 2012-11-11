@@ -1,9 +1,0 @@
-Interpreter:doCommand("showMessageDialog","<name>[0]","娜娜在哪里？","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","克雷斯丁娜","娜娜并没有掉下来，我想她被荣耀军团的人抓走了。","/image/face/003.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","。。。。。。","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","兰迪","别担心，她还活着。","/image/face/002.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","你怎么知道？！","/image/face/001.png",0)
-Interpreter:doCommand("showMessageDialog","兰迪","很简单，大多数时候荣耀军团的人很少杀死他们抓获的适龄男女，他们只会强迫他们加入而已。","/image/face/002.png",0)
-Interpreter:doCommand("showMessageDialog","<name>[0]","。。。看来我们有必要去一趟光辉之城。。。","/image/face/001.png",0)
-
-
