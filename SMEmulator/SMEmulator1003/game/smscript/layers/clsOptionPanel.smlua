@@ -48,10 +48,10 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
-  self.optionContentScrollLayer=clsUIScrollLayer:new(170,60,710,100)
+  self.optionContentScrollLayer=clsUIScrollLayer:new(170,60,710,180)
   self.optionContentScrollLayer.anchor={0,0}
   --内容
-  self.contentLabel=clsUITextArea:new(170,60,710,100)
+  self.contentLabel=clsUITextArea:new(0,0,710,180)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content

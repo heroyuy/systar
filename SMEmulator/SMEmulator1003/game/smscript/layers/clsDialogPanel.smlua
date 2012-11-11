@@ -12,7 +12,7 @@ clsDialogPanel.__index=clsDialogPanel
 clsDialogPanel.contentLabel=nil
 clsDialogPanel.dialogDisappearAction = nil
 clsDialogPanel.dialogAppearAction = nil
-  
+clsDialogPanel.dialogContentScrollLayer=nil
 --构造器
 function clsDialogPanel:new(name,content,bustPath,position)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
@@ -41,8 +41,10 @@ function clsDialogPanel:new(name,content,bustPath,position)
   nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
+  self.dialogContentScrollLayer=clsUIScrollLayer:new(170,60,710,180)
+  self.dialogContentScrollLayer.anchor={0,0}
   --内容
-  self.contentLabel=clsUITextArea:new(170,60,710,100)
+  self.contentLabel=clsUITextArea:new(0,0,710,180)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
@@ -50,7 +52,10 @@ function clsDialogPanel:new(name,content,bustPath,position)
   self.contentLabel.textColor="0xffffffff"
   self.contentLabel:refresh()
   self.contentLabel.enabled=false
-  bgLayer:addChild(self.contentLabel)
+  self.dialogContentScrollLayer.contentLayer:addChild(self.contentLabel)
+  self.dialogContentScrollLayer.contentLayer.height=self.contentLabel.height
+  self.dialogContentScrollLayer:scrollToBottom()
+  bgLayer:addChild(self.dialogContentScrollLayer)
   --初始化动作
   self.dialogDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
   self.dialogAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)

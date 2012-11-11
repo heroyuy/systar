@@ -52,10 +52,10 @@ function clsTaskListPanel:new(name,content,bustPath,optionItems)
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
   
-  self.taskListPanelContentScrollLayer=clsUIScrollLayer:new(140,60,260,220)
+  self.taskListPanelContentScrollLayer=clsUIScrollLayer:new(136,60,260,220)
   self.taskListPanelContentScrollLayer.anchor={0,0}
   --内容
-  self.contentLabel=clsUITextArea:new(140,60,260,220)
+  self.contentLabel=clsUITextArea:new(0,0,260,220)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
   self.contentLabel.text=content
@@ -67,8 +67,6 @@ function clsTaskListPanel:new(name,content,bustPath,optionItems)
   self.taskListPanelContentScrollLayer.contentLayer.height=self.contentLabel.height
   self.taskListPanelContentScrollLayer:scrollToBottom()
   bgLayer:addChild(self.taskListPanelContentScrollLayer)
-  
-  bgLayer:addChild(self.contentLabel)
   --选项
   local normalImage=smImageFactory:loadImage("/image/skin/misson_list_button_up.png")
   local highlightImage=smImageFactory:loadImage("/image/skin/misson_list_button_down.png")
