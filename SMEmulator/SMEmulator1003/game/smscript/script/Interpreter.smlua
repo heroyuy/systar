@@ -35,7 +35,6 @@ function Interpreter:runScript(path)
   print("运行脚本:"..path)
   local file=Game.path..path
   local scriptFunction=loadfile(file)
-  print(scriptFunction)
   --将脚本调入子线程运行
   ScriptThread:start(scriptFunction)
 end
