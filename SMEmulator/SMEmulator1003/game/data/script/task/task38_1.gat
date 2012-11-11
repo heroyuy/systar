@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","士兵","<name>[0]上尉，卢卡尔镇长请你到镇政府一行。","/image/face/136.png",0)Interpreter:doCommand("showMessageDialog","<name>[0]","好的，我这就过去。","/image/face/001.png",0)Interpreter:doCommand("showMessageDialog","士兵","那么就不打搅上尉，我这就回去复命。","/image/face/136.png",0)Interpreter:doCommand("moveNpc",294,250,8,16)Interpreter:doCommand("showNpc",294,0)

@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","军官","是什么人？胆敢擅闯监狱！","/image/face/137.png",0)Interpreter:doCommand("showMessageDialog","兰迪","既然我们来劫狱，还能告诉你名字吗？你当我们傻瓜？","/image/face/002.png",0)

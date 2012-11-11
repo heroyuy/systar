@@ -1,0 +1,1 @@
+if Interpreter:doCommand("startFight",1,1) then   Interpreter:doCommand("changeNpcAvatar",20,"\image\character\404-damage04.png",0)elseend

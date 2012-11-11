@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","<name>[0]","终于打开了中央电子门，可以进入基地办公室了。","/image/face/001.png",0)

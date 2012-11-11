@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","<name>[0]","这是怎么回事？我好像听到有人呼救！并且是个女人。","/image/face/001.png",0)Interpreter:doCommand("showMessageDialog","<name>[0]","还是去看看吧，就从二楼的栏杆上跳下去。","/image/face/001.png",0)

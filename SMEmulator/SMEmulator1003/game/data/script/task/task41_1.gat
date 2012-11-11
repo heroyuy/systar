@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","士兵","如果要进入监狱的话，请出示证件！","/image/face/136.png",0)Interpreter:doCommand("showMessageDialog","兰迪","哈哈，不好意思，忘记带了，我们回去一下就来。","/image/face/002.png",0)

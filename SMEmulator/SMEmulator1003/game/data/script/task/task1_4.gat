@@ -1,0 +1,1 @@
+Interpreter:doCommand("showMessageDialog","系统","当你看到战车的时候，请上前调查，并在弹出菜单上选择人物，即可驾驶战车，战车将让你拥有强大的战斗力。","/image/face/101.png",0)Interpreter:doCommand("showMessageDialog","系统","牵引选项则是没有人驾驶的时候，让战车随队伍移动，要牵引战车那么队伍之中必须有人正在驾驶战车。","/image/face/101.png",0)Interpreter:doCommand("showMessageDialog","系统","现在请驾驶你的第一辆战车，击败你眼前的敌人吧！","/image/face/101.png",0)
