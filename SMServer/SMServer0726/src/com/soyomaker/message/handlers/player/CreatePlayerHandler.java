@@ -47,7 +47,7 @@ public class CreatePlayerHandler extends AbHandler {
 			this.addOperateResultToPackage(msgSent, false, "创建失败");
 			netTransceiver.sendMessage(session, msgSent);
 		} else {
-			this.addOperateResultToPackage(msgSent, false, "创建成功");
+			this.addOperateResultToPackage(msgSent, true, "创建成功");
 			GameObject playerObject = playerUtil.getPlayerInfo(player);
 			msgSent.putObject("player", playerObject);
 			netTransceiver.sendMessage(session, msgSent);
