@@ -20,6 +20,7 @@ clsTaskApplyPanel.taskApplyPanelAppearAction=nil
 
 clsTaskApplyPanel.taskApplyPanelOkButton=nil
 clsTaskApplyPanel.taskApplyPanelCancleButton=nil
+clsTaskApplyPanel.taskApplyPanelCloseButton=nil
 
 clsTaskApplyPanel.taskApplyPanelTaskName=nil
 clsTaskApplyPanel.taskApplyPanelTaskInfo=nil
@@ -60,7 +61,7 @@ function clsTaskApplyPanel:new(name,bustPath,task)
   
   self.taskApplyPanelTaskInfoScrollLayer=clsUIScrollLayer:new(137,80,350,180)
   self.taskApplyPanelTaskInfoScrollLayer.anchor={0,0}
-  
+  --内容
   self.taskApplyPanelTaskInfo=clsUITextArea:new(0,0,350,180)
   self.taskApplyPanelTaskInfo.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.taskApplyPanelTaskInfo.anchor={0,0}
@@ -128,7 +129,7 @@ function clsTaskApplyPanel:new(name,bustPath,task)
   self.taskApplyPanelCancleButton.enabled=true
   bgLayer:addChild(self.taskApplyPanelCancleButton)
   
-  self.taskApplyPanelCloseButton=clsUIButton:new(bgLayer.x+bgLayer.width-16,12,27,27)
+  self.taskApplyPanelCloseButton=clsUIButton:new(bgLayer.width-16,12,27,27)
   self.taskApplyPanelCloseButton.anchor={1,0}
   self.taskApplyPanelCloseButton.delegate=self
   self.taskApplyPanelCloseButton.tag=self.TAG_TASK_CLOSE

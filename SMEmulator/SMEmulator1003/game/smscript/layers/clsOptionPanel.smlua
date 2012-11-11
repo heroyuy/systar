@@ -11,7 +11,7 @@ clsOptionPanel.__index=clsOptionPanel
 
 clsOptionPanel.dialogDisappearAction = nil
 clsOptionPanel.dialogAppearAction = nil
-
+clsOptionPanel.optionContentScrollLayer=nil
 --构造器
 function clsOptionPanel:new(name,content,bustPath,optionItems)
   local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
@@ -48,7 +48,9 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   nameLabel.alignment=clsUILabel.ALIGN_LEFT
   nameLabel.enabled=false
   bgLayer:addChild(nameLabel)
-  --内容 TODO TextArea换行有问题？
+  self.optionContentScrollLayer=clsUIScrollLayer:new(170,60,710,100)
+  self.optionContentScrollLayer.anchor={0,0}
+  --内容
   self.contentLabel=clsUITextArea:new(170,60,710,100)
   self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
   self.contentLabel.anchor={0,0}
@@ -57,7 +59,10 @@ function clsOptionPanel:new(name,content,bustPath,optionItems)
   self.contentLabel.textColor="0xffffffff"
   self.contentLabel:refresh()
   self.contentLabel.enabled=false
-  bgLayer:addChild(self.contentLabel)
+  self.optionContentScrollLayer.contentLayer:addChild(self.contentLabel)
+  self.optionContentScrollLayer.contentLayer.height=self.contentLabel.height
+  self.optionContentScrollLayer:scrollToBottom()
+  bgLayer:addChild(self.optionContentScrollLayer)
   --选项
   local normalImage=smImageFactory:loadImage("/image/skin/button_dialog_up.png")
   local highlightImage=smImageFactory:loadImage("/image/skin/button_dialog_down.png")

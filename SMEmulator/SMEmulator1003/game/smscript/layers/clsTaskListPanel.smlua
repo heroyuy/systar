@@ -1,0 +1,120 @@
+--[[
+  description:任务列表面板窗体
+  author:cokey
+  date:2012/09/10
+--]]
+
+--类结构定义
+clsTaskListPanel={}
+setmetatable(clsTaskListPanel,clsUILayer)
+clsTaskListPanel.__index=clsTaskListPanel
+
+--动作
+clsTaskListPanel.taskListPanelDisappearAction=nil
+clsTaskListPanel.taskListPanelAppearAction=nil
+
+clsTaskListPanel.taskListPanelCloseButton=nil
+clsTaskListPanel.taskListPanelContentScrollLayer=nil
+--构造器
+function clsTaskListPanel:new(name,content,bustPath,optionItems)
+  local screenWidth,screenHeight=Game:getWidth(),Game:getHeight()
+  local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
+  setmetatable(self,clsTaskListPanel)
+  local n=table.getn(optionItems)
+  --对选项数目做限制，2~5之间
+  if n<2 then
+  	n=2
+  end
+  if n>5 then
+  	n=5
+  end
+  local bgImage=smImageFactory:loadImage("/image/skin/misson_list_"..n.."_window.png")
+  --背景
+  local bgLayer=clsUILayer:new(0,self.height,408,bgImage:getHeight())
+  bgLayer.anchor={0,1}
+  bgLayer.image=bgImage
+  self:addChild(bgLayer)
+  --头像
+  if bustPath and bustPath ~= "" then
+    local bustLayer=clsUILayer:new(75,110,96,96)
+    bustLayer.anchor={0.5,0.5}
+    bustLayer.image=smImageFactory:loadImage(bustPath)
+    bustLayer.enabled=false
+    bgLayer:addChild(bustLayer)
+  end
+  --姓名
+  local nameLabel=clsUILabel:new(0,0,80,20)
+  nameLabel.anchor={0,0}
+  nameLabel.text=name
+  nameLabel.textSize=20
+  nameLabel.textColor="0xffffffff"
+  nameLabel.alignment=clsUILabel.ALIGN_LEFT
+  nameLabel.enabled=false
+  bgLayer:addChild(nameLabel)
+  
+  self.taskListPanelContentScrollLayer=clsUIScrollLayer:new(140,60,260,220)
+  self.taskListPanelContentScrollLayer.anchor={0,0}
+  --内容
+  self.contentLabel=clsUITextArea:new(140,60,260,220)
+  self.contentLabel.type=clsUITextArea.TYPE_AUTOHEIGHT
+  self.contentLabel.anchor={0,0}
+  self.contentLabel.text=content
+  self.contentLabel.textSize=18
+  self.contentLabel.textColor="0xffffffff"
+  self.contentLabel:refresh()
+  self.contentLabel.enabled=false
+  self.taskListPanelContentScrollLayer.contentLayer:addChild(self.contentLabel)
+  self.taskListPanelContentScrollLayer.contentLayer.height=self.contentLabel.height
+  self.taskListPanelContentScrollLayer:scrollToBottom()
+  bgLayer:addChild(self.taskListPanelContentScrollLayer)
+  
+  bgLayer:addChild(self.contentLabel)
+  --选项
+  local normalImage=smImageFactory:loadImage("/image/skin/misson_list_button_up.png")
+  local highlightImage=smImageFactory:loadImage("/image/skin/misson_list_button_down.png")
+  for i,v in ipairs(optionItems) do
+    local button=clsUIButton:new(20,168+(i-1)*(37+2),normalImage:getWidth(),normalImage:getHeight())
+    button.anchor={0,0}
+    button.normalImage=normalImage
+    button.highlightImage=highlightImage
+    button.text=v
+    button.textSize=18
+    button.textColor="0xffffffff"
+    button.alignment=clsUILabel.ALIGN_LEFT
+    button.tag=i
+    button.delegate=self
+    button.enabled=true
+    bgLayer:addChild(button)
+  end
+  
+  self.taskListPanelCloseButton=clsUIButton:new(bgLayer.width-16,12,27,27)
+  self.taskListPanelCloseButton.anchor={1,0}
+  self.taskListPanelCloseButton.delegate=self
+  self.taskListPanelCloseButton.tag=-1
+  self.taskListPanelCloseButton.enabled=true
+  self.taskListPanelCloseButton.normalImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_up.png")
+  self.taskListPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
+  bgLayer:addChild(self.taskListPanelCloseButton)
+  
+  --初始化动作
+  self.taskListPanelDisappearAction = Action:newFadeAction(0,250,clsAction.TYPE_LINEAR_TO)
+  self.taskListPanelAppearAction = Action:newFadeAction(1,250,clsAction.TYPE_LINEAR_TO)
+  return self
+end
+
+--设置选项框的可见性
+function clsTaskListPanel:setVisible(visible)
+	if visible then
+		self:runAction(self.taskListPanelAppearAction)
+	else
+		self:runAction(self.taskListPanelDisappearAction)
+	end
+end
+
+function clsTaskListPanel:onTouch(event)
+end
+
+function clsTaskListPanel:buttonTapped(target)
+  local index=target.tag
+  callFunction(self.delegate,self.delegate.onSelected,index)
+end
