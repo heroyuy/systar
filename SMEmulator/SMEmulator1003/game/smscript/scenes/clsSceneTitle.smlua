@@ -417,21 +417,23 @@ function clsSceneTitle:buttonTapped(button)
   		--local delegate={}
   		--function delegate:onSelected(OkOrCancle)
   		--  smLog:info(OkOrCancle)
-    	--  --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
-    	--  if OkOrCancle then
-      	--    --smNet:applyTask(task.id)
-    	--  end
   		--end
   		--GameLayer:showTaskApplyDialog("任务名称","/image/skin/头像3.png",task,delegate,"onSelected")
+  		--local delegate={}
+		--function delegate:optionSelected(index)
+		--  smLog:info("你选择了"..index)
+		--end  		
+		--local list={}
+		--list[1]="   归乡".."[可申请]"
+		--list[2]="   吃饭".."[进行中]"
+		--list[3]="   喝水".."[已完成]"
+  		--GameLayer:showTaskListDialog("","这里是基塔市佣兵协会分会，请选择任务。自由的佣兵啊！为挽救废土，挽救人类而奋战吧！","/image/skin/头像3.png",list,delegate,"optionSelected")
+  		local task = {name="凯米拉",type=2,intro="人类贪婪欲望所造成的灾难，前联邦动物基因计划的产物，拥有蛇和狮子的基因，经过大灾变辐射的变异，凯米拉变得如神话的模块一样恐怖而致命"}
   		local delegate={}
-		function delegate:optionSelected(index)
-		  smLog:info("你选择了"..index)
-		end  		
-		local list={}
-		list[1]="   归乡".."[可申请]"
-		list[2]="   吃饭".."[进行中]"
-		list[3]="   喝水".."[已完成]"
-  		GameLayer:showTaskListDialog("","这里是基塔市佣兵协会分会，请选择任务。自由的佣兵啊！为挽救废土，挽救人类而奋战吧！","/image/skin/头像3.png",list,delegate,"optionSelected")
+		function delegate:onSelected(OkOrCancle)
+		  smLog:info(OkOrCancle)
+		end
+		GameLayer:showTaskCompleteDialog("完成任务","",task,delegate,"onSelected")
   elseif button==self.listPlayerDeleteButton then
   		if self.listPlayerTable.selectedIndex then
   			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).index)

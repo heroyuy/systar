@@ -78,13 +78,13 @@ function clsTaskApplyPanel:new(name,bustPath,task)
   self.taskApplyPanelTaskType=clsUILabel:new(336,68,80,20)
   self.taskApplyPanelTaskType.anchor={0.5,0.5}
   if task.type == clsMission.MAIN_LINE then
-    self.taskApplyPanelTaskType.text="类型:主线"
+    self.taskApplyPanelTaskType.text="类型：主线"
   elseif task.type == clsMission.BOSS then
-    self.taskApplyPanelTaskType.text="类型:通缉令"
+    self.taskApplyPanelTaskType.text="类型：通缉令"
   elseif task.type == clsMission.DAILY then
-    self.taskApplyPanelTaskType.text="类型:日常"
+    self.taskApplyPanelTaskType.text="类型：日常"
   else
-    self.taskApplyPanelTaskType.text="类型:普通"
+    self.taskApplyPanelTaskType.text="类型：普通"
   end
   self.taskApplyPanelTaskType.textSize=17
   self.taskApplyPanelTaskType.textColor="0xffffffff"
