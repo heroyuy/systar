@@ -1,6 +1,6 @@
-Dictionary.maps[11]={
-id=11,
-name="拉姆镇",
+Dictionary.maps[0]={
+id=0,
+name="世界地图",
 musicName=nil,
 battleBack=nil,
 battleMusic=nil,
