@@ -18,11 +18,6 @@ function HandlerMap.loadMap:handleMessage(msg)
   for i,npcData in ipairs(msg.npcList) do
     local npc=clsNpc:new()
     --npc数据
-    --此处因为客户端与服务器命名不一致，待改进
-    npcData.col=npcData.x
-    npcData.row=npcData.y
-    npcData.x=nil
-    npcData.y=nil
     table.scopy(npc,npcData)
     --npc形象
     local npcDict=Dictionary.npcs[npcData.id]
@@ -48,8 +43,8 @@ HandlerMap.switchMap={}
 function HandlerMap.switchMap:handleMessage(msg)
   smLog:info("进入传送点")
   GameData.curPlayer.mapId=msg:getInt("mapId")
-  GameData.curPlayer.col=msg:getInt("x")
-  GameData.curPlayer.row=msg:getInt("y")
+  GameData.curPlayer.col=msg:getInt("col")
+  GameData.curPlayer.row=msg:getInt("row")
   Game:changeScene(Game.SCENE_LOADING,{Const.NotifyCMD.Net.LOAD_MAP,Game.SCENE_MAP})
   smNet:loadMap()
 end
