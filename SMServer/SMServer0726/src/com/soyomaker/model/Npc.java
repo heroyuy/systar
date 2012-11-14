@@ -42,11 +42,27 @@ public class Npc {
 
 	private int mapId;
 
+	private int x;
+
+	private int y;
+
 	private int targetMapId;
 
 	private int targetX;
 
 	private int targetY;
+
+	private int face;
+
+	private int moveType;
+
+	private int speedLevel;
+
+	private boolean penetrable;
+
+	public int getFace() {
+		return face;
+	}
 
 	public int getId() {
 		return id;
@@ -56,8 +72,16 @@ public class Npc {
 		return mapId;
 	}
 
+	public int getMoveType() {
+		return moveType;
+	}
+
 	public String getName() {
 		return name;
+	}
+
+	public int getSpeedLevel() {
+		return speedLevel;
 	}
 
 	public int getTargetMapId() {
@@ -76,6 +100,22 @@ public class Npc {
 		return type;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public boolean isPenetrable() {
+		return penetrable;
+	}
+
+	public void setFace(int face) {
+		this.face = face;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -84,8 +124,20 @@ public class Npc {
 		this.mapId = mapId;
 	}
 
+	public void setMoveType(int moveType) {
+		this.moveType = moveType;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setPenetrable(boolean penetrable) {
+		this.penetrable = penetrable;
+	}
+
+	public void setSpeedLevel(int speedLevel) {
+		this.speedLevel = speedLevel;
 	}
 
 	public void setTargetMapId(int targetMapId) {
@@ -102,6 +154,14 @@ public class Npc {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 
 }

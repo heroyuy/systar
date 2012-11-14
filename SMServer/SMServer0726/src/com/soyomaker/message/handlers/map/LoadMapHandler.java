@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
 import com.soyomaker.message.MessagePusher;
+import com.soyomaker.message.util.NpcUtil;
 import com.soyomaker.model.DictManager;
 import com.soyomaker.model.MapData;
 import com.soyomaker.model.Npc;
@@ -24,6 +25,9 @@ public class LoadMapHandler extends AbHandler {
 	@Autowired
 	private MessagePusher messagePusher;
 
+	@Autowired
+	private NpcUtil npcUtil;
+
 	@Override
 	public void doRequest(UserSession session, GameObject msg) {
 		Player player = session.getUser().getPlayer();
@@ -31,9 +35,7 @@ public class LoadMapHandler extends AbHandler {
 		GameObject msgSent = this.buildPackage(msg);
 		Collection<GameObject> mapEntryObjList = new ArrayList<GameObject>();
 		for (Npc npc : mapData.getNpcList()) {
-			GameObject mapEntryObj = new GameObject();
-			mapEntryObj.putInt("id", npc.getId());
-			mapEntryObjList.add(mapEntryObj);
+			mapEntryObjList.add(npcUtil.convertNpc(npc));
 		}
 		msgSent.putObjectArray("npcList", mapEntryObjList);
 		netTransceiver.sendMessage(session, msgSent);
