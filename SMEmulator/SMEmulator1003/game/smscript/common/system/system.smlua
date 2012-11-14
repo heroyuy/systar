@@ -90,3 +90,16 @@ isPointInRect=function(x,y,rectX,rectY,rectWidth,rectHeight)
     return false
   end
 end
+
+--浅拷贝 t2->t1(t2中的键值copy到t1)
+function table.scopy(t1,t2)
+  if t1 and t2 then
+    for k,v in pairs(t2) do
+      t1[k]=v
+    end
+  end
+end
+
+--深拷贝 t2->t1(t2中的键值copy到t1)
+function table.dcopy(t1,t2)
+end

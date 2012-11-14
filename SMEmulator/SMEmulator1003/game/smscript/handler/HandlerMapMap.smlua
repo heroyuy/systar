@@ -15,38 +15,29 @@ function HandlerMap.loadMap:handleMessage(msg)
   GameData.curNpcList={}
   --(1)传送点
   msg=HandlerMap:msgToLua(msg)
-  local npcList=msg.npcList
-  for i,mapEntry in ipairs(npcList) do
-    local cnpc=clsNpc:new()
-    local npcDict=Dictionary.npcs[mapEntry.id]
-    if npcDict then
-      	cnpc.id=npcDict.id
-	    cnpc.row=npcDict.row
-	    cnpc.col=npcDict.col
-	    cnpc.name=npcDict.name
-	    cnpc.charImgName=npcDict.charImg
-	    if cnpc.charImgName then
-	      cnpc.charImg=smImageFactory:loadImage(cnpc.charImgName)
-	    end
-	    cnpc.headImgName=npcDict.headImg
-	    if cnpc.headImgName then
-	      cnpc.headImg=smImageFactory:loadImage(cnpc.headImgName)
-	    end
-	    cnpc.type=npcDict.type
-        --传送点暂时默认使用同样的图片
-        if cnpc.type==clsNpc.TYPE_MAPENTRY then
-          cnpc.charImg=smImageFactory:loadImage("/image/character/198-Support06.png")
-        end
-        cnpc.face=npcDict.face
-        cnpc.moveType=npcDict.moveType
-        cnpc.speedLevel=npcDict.speedLevel
-        cnpc.penetrable=npcDict.penetrable
-        cnpc.targetMapId=npcDict.targetMapId
-        cnpc.targetX=npcDict.targetX
-        cnpc.targetY=npcDict.targetY
-        cnpc.moveDelegate=self
-        GameData.curNpcList[cnpc.id]=cnpc
+  for i,npcData in ipairs(msg.npcList) do
+    local npc=clsNpc:new()
+    --npc数据
+    --此处因为客户端与服务器命名不一致，待改进
+    npcData.col=npcData.x
+    npcData.row=npcData.y
+    npcData.x=nil
+    npcData.y=nil
+    table.scopy(npc,npcData)
+    --npc形象
+    local npcDict=Dictionary.npcs[npcData.id]
+    table.scopy(npc,npcDict)
+    --传送点暂时默认使用同样的图片
+    if npc.type==clsNpc.TYPE_MAPENTRY then
+      npc.charImg="/image/character/198-Support06.png"
     end
+    if npc.charImg then
+	  npc.charImg=smImageFactory:loadImage(npc.charImg)
+	end
+	if npc.headImg then
+	  npc.headImg=smImageFactory:loadImage(npc.headImg)
+	end
+    GameData.curNpcList[npc.id]=npc
   end
   Notifier:notify(Const.NotifyCMD.Net.LOAD_MAP)
 end
