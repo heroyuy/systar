@@ -14,11 +14,11 @@ public class NpcUtil {
 		npcObj.putString("name", npc.getName());
 		npcObj.putInt("type", npc.getType());
 		npcObj.putInt("mapId", npc.getMapId());
-		npcObj.putInt("x", npc.getX());
-		npcObj.putInt("y", npc.getY());
+		npcObj.putInt("col", npc.getCol());
+		npcObj.putInt("row", npc.getRow());
 		npcObj.putInt("targetMapId", npc.getTargetMapId());
-		npcObj.putInt("targetX", npc.getTargetX());
-		npcObj.putInt("targetY", npc.getTargetY());
+		npcObj.putInt("targetCol", npc.getTargetCol());
+		npcObj.putInt("targetRow", npc.getTargetRow());
 		npcObj.putInt("face", npc.getFace());
 		npcObj.putInt("moveType", npc.getMoveType());
 		npcObj.putInt("speedLevel", npc.getSpeedLevel());

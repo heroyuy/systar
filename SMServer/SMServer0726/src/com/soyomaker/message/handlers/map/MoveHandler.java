@@ -27,27 +27,27 @@ public class MoveHandler extends AbHandler {
 		Player player = session.getUser().getPlayer();
 		MapData mapData = dictManager.getMapData(player.getMapId());
 		// 验证行走序列
-		int x = player.getX();
-		int y = player.getY();
+		int col = player.getCol();
+		int row = player.getRow();
 		Collection<Integer> steps = msg.getIntArray("steps");
 		boolean res = true;
 		GameObject msgSent = this.buildPackage(msg);
 		for (int step : steps) {
 			switch (step) {
 			case Player.UP: {
-				y--;
+				row--;
 			}
 				break;
 			case Player.DOWN: {
-				y++;
+				row++;
 			}
 				break;
 			case Player.LEFT: {
-				x--;
+				col--;
 			}
 				break;
 			case Player.RIGHT: {
-				x++;
+				col++;
 			}
 				break;
 
@@ -56,7 +56,7 @@ public class MoveHandler extends AbHandler {
 			}
 				break;
 			}
-			int way = mapData.getWay(x, y);
+			int way = mapData.getWay(col, row);
 			if (way == MapData.IMPASSABLE) {
 				res = false;
 				break;
@@ -64,8 +64,8 @@ public class MoveHandler extends AbHandler {
 		}
 		if (res) {
 			// 验证通过
-			player.setX(x);
-			player.setY(y);
+			player.setCol(col);
+			player.setRow(row);
 			this.addOperateResultToPackage(msgSent, true, "行走验证成功");
 		} else {
 			// 验证失败

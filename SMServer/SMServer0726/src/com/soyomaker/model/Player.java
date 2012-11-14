@@ -41,9 +41,9 @@ public class Player {
 
 	private String mapName;
 
-	private Integer x;
+	private Integer col;
 
-	private Integer y;
+	private Integer row;
 
 	private Integer avatar;
 
@@ -299,12 +299,12 @@ public class Player {
 		return vita;
 	}
 
-	public Integer getX() {
-		return x;
+	public Integer getCol() {
+		return col;
 	}
 
-	public Integer getY() {
-		return y;
+	public Integer getRow() {
+		return row;
 	}
 
 	/**
@@ -388,11 +388,11 @@ public class Player {
 		this.vita = vita;
 	}
 
-	public void setX(Integer x) {
-		this.x = x;
+	public void setCol(Integer x) {
+		this.col = x;
 	}
 
-	public void setY(Integer y) {
-		this.y = y;
+	public void setRow(Integer y) {
+		this.row = y;
 	}
 }

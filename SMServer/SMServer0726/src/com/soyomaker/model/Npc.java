@@ -42,15 +42,15 @@ public class Npc {
 
 	private int mapId;
 
-	private int x;
+	private int col;
 
-	private int y;
+	private int row;
 
 	private int targetMapId;
 
-	private int targetX;
+	private int targetCol;
 
-	private int targetY;
+	private int targetRow;
 
 	private int face;
 
@@ -88,24 +88,24 @@ public class Npc {
 		return targetMapId;
 	}
 
-	public int getTargetX() {
-		return targetX;
+	public int getTargetCol() {
+		return targetCol;
 	}
 
-	public int getTargetY() {
-		return targetY;
+	public int getTargetRow() {
+		return targetRow;
 	}
 
 	public int getType() {
 		return type;
 	}
 
-	public int getX() {
-		return x;
+	public int getCol() {
+		return col;
 	}
 
-	public int getY() {
-		return y;
+	public int getRow() {
+		return row;
 	}
 
 	public boolean isPenetrable() {
@@ -144,24 +144,24 @@ public class Npc {
 		this.targetMapId = targetMapId;
 	}
 
-	public void setTargetX(int targetX) {
-		this.targetX = targetX;
+	public void setTargetCol(int targetCol) {
+		this.targetCol = targetCol;
 	}
 
-	public void setTargetY(int targetY) {
-		this.targetY = targetY;
+	public void setTargetRow(int targetRow) {
+		this.targetRow = targetRow;
 	}
 
 	public void setType(int type) {
 		this.type = type;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setCol(int col) {
+		this.col = col;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setRow(int row) {
+		this.row = row;
 	}
 
 }

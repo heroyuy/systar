@@ -40,8 +40,8 @@ public class PlayerService extends AbstractService<Player> {
 		Player playerDict = dictManager.getPlayer();
 		player.setMapId(playerDict.getMapId());
 		player.setMapName(playerDict.getMapName());
-		player.setX(playerDict.getX());
-		player.setY(playerDict.getY());
+		player.setCol(playerDict.getCol());
+		player.setRow(playerDict.getRow());
 		player.setAvatar(playerDict.getAvatar());
 		player.setLevel(playerDict.getLevel());
 		player.setExp(playerDict.getExp());

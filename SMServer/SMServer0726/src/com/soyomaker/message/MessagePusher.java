@@ -47,16 +47,16 @@ public class MessagePusher {
 	 * 
 	 * @param mapId
 	 *            地图ID
-	 * @param x
+	 * @param col
 	 *            x坐标
-	 * @param y
+	 * @param row
 	 *            y坐标
 	 */
-	public void switchMap(UserSession session, int mapId, int x, int y) {
+	public void switchMap(UserSession session, int mapId, int col, int row) {
 		GameObject msgPush = new GameObject(PROTOCOL_ID_SWITCH_MAP);
 		msgPush.putInt("mapId", mapId);
-		msgPush.putInt("x", x);
-		msgPush.putInt("y", y);
+		msgPush.putInt("col", col);
+		msgPush.putInt("row", row);
 		netTransceiver.dispatchPushMessage(session, msgPush);
 	}
 

@@ -1,4 +1,4 @@
-package com.soyomaker.message.handlers.utils;
+package com.soyomaker.message.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,8 +19,8 @@ public class PlayerUtil {
 		playerObj.putString("name", player.getName());
 		playerObj.putInt("mapId", player.getMapId());
 		playerObj.putString("mapName", player.getMapName());
-		playerObj.putInt("x", player.getX());
-		playerObj.putInt("y", player.getY());
+		playerObj.putInt("col", player.getCol());
+		playerObj.putInt("row", player.getRow());
 		playerObj.putInt("avatar", player.getAvatar());
 		playerObj.putInt("level", player.getLevel());
 		playerObj.putInt("exp", player.getExp());

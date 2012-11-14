@@ -31,30 +31,30 @@ public class SwitchMapHandler extends AbHandler {
 			return;
 		}
 		int mapId = npc.getTargetMapId();
-		int x = npc.getTargetX();
-		int y = npc.getTargetY();
+		int col = npc.getTargetCol();
+		int row = npc.getTargetRow();
 		// (2)移动主角
 		this.addOperateResultToPackage(msgSent, true, "切换地图成功");
-		this.switchMap(session, msgSent, mapId, x, y);
+		this.switchMap(session, msgSent, mapId, col, row);
 	}
 
 	public void doPush(UserSession session, GameObject msg) {
 		GameObject msgSent = this.buildPackage(msg);
 		int mapId = msg.getInt("mapId");
-		int x = msg.getInt("x");
-		int y = msg.getInt("y");
-		this.switchMap(session, msgSent, mapId, x, y);
+		int col = msg.getInt("col");
+		int row = msg.getInt("row");
+		this.switchMap(session, msgSent, mapId, col, row);
 	}
 
 	private void switchMap(UserSession session, GameObject msgSent, int mapId,
-			int x, int y) {
+			int col, int row) {
 		Player player = session.getUser().getPlayer();
 		player.setMapId(mapId);
-		player.setX(x);
-		player.setY(y);
+		player.setCol(col);
+		player.setRow(row);
 		msgSent.putInt("mapId", player.getMapId());
-		msgSent.putInt("x", player.getX());
-		msgSent.putInt("y", player.getY());
+		msgSent.putInt("col", player.getCol());
+		msgSent.putInt("row", player.getRow());
 		netTransceiver.sendMessage(session, msgSent);
 	}
 

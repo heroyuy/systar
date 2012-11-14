@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soyomaker.lang.GameObject;
-import com.soyomaker.message.handlers.utils.PlayerUtil;
+import com.soyomaker.message.util.PlayerUtil;
 import com.soyomaker.model.Player;
 import com.soyomaker.net.AbHandler;
 import com.soyomaker.net.session.UserSession;
