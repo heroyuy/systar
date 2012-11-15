@@ -199,6 +199,7 @@ end
 function clsSceneMap:onStart()
   smLog:info("地图场景启动")
   --注册接收通知
+  Notifier:addObserver(Const.NotifyCMD.Npc.DIALOG,self,self.dialogWithNpc)
   Notifier:addObserver(Const.NotifyCMD.Character.MOVE,self,self.characterMove)
   Notifier:addObserver(Const.NotifyCMD.Character.FACE_CHANGED,self,self.characterFaceChanged)
   Notifier:addObserver(Const.NotifyCMD.Net.PLACE_NPC,self,self.placeNpc)
@@ -206,6 +207,97 @@ function clsSceneMap:onStart()
   Scheduler:scheduleTask(self,"syncLocation",1000,-1)
   self:buildMap()
   self:placeNpc()
+end
+
+function clsSceneMap:doApplyTask(task)
+  --没有该任务的时候显示申请任务对话框
+  local delegate={}
+  function delegate:onSelected(OkOrCancle)
+    --如果点击确定按钮，提交申请任务，此时需要检查任务的申请条件，条件不满足，弹出提示框提醒
+    if OkOrCancle then
+      smNet:applyTask(task.id)
+    end
+  end
+  GameLayer:showTaskApplyDialog("申请任务","",task,delegate,"onSelected")
+end
+
+function clsSceneMap:doNextStep(task)
+  if not task.stepOver then
+	--有该任务，但没完成的时候
+	local delegate={}
+	function delegate:scriptEnd()
+	  smLog:info("下一步任务")
+	  smNet:nextStepTask(task.id)
+	  Notifier:removeObserver(Const.NotifyCMD.System.SCRIPT_END,self)
+	end
+	Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,delegate,"scriptEnd")
+	Interpreter:runScript("/data/script/task/task"..task.id.."_"..(task.step+1)..".gat")
+  else
+	--有该任务，已经完成的时候，显示完成任务对话框
+	local delegate={}
+	function delegate:onSelected(OkOrCancle)
+	  --如果点击确定按钮，提交完成任务，此时需要检查任务的完成条件，条件不满足，弹出提示框提醒
+	  if OkOrCancle then
+	    smNet:completeTask(task.id)
+	  end
+	end
+	GameLayer:showTaskCompleteDialog("完成任务","",task,delegate,"onSelected")
+  end		  
+end
+
+function clsSceneMap:doTaskList(taskList)
+	local delegate={}
+	local taskSize=table.getn(taskList)
+	function delegate:optionSelected(index)
+	  smLog:info("你选择了"..index)
+	  local task = taskList[index]
+	  if not task.has then
+        HandlerMap.dialogWithNpc:doApplyTask(task)
+	  else
+        HandlerMap.dialogWithNpc:doNextStep(task)
+	  end
+	end
+	local list={}
+	for num=1,taskSize do
+	  local task = taskList[num]
+	  local tip = ""
+	  if not task.has then
+	    tip = "[可申请]"
+	  elseif not task.finish then
+	    if task.stepOver then
+	      tip = "[可完成]"
+	    else
+	      tip = "[进行中]"
+	    end
+	  end
+	  list[#list+1]="   "..task.name..tip
+	end
+	GameLayer:showTaskListDialog("","","",list,delegate,"optionSelected")
+end
+
+function clsSceneMap:dialogWithNpc(msg)
+  if msg.res then
+    local taskList=msg.taskList
+    local msgSent=msg.msgSent
+    local taskSize=table.getn(taskList)
+    if taskSize==0 then
+      smLog:info("调用npc的脚本")
+      local npc = Dictionary.npcs[msgSent.npcId]
+      if npc then
+        GameData:checkScript(npc)
+      end
+    elseif taskSize==1 then
+      smLog:info("直接对话")
+      if not taskList[1].has then
+        self:doApplyTask(taskList[1])
+	  else
+        self:doNextStep(taskList[1])
+	  end
+    elseif taskSize>=2 then
+      smLog:info("给出列表")
+      self:doTaskList(taskList)
+    end
+  end
 end
 
 -- 更新
@@ -228,13 +320,15 @@ end
 --布置npc
 function clsSceneMap:placeNpc()
   smLog:info("布置npc")
-  for k,npc in pairs(GameData.curNpcList) do
-    if npc.charImg then
-      if npc.type == clsNpc.TYPE_NORMAL then
-        self.spriteLayer:removeChildWithTag(npc.id)
-      end
-    end
-  end
+  self.spriteLayer:clear()
+  --主角
+  local playerSprite=clsSprite:new(GameData.curPlayer.charImg,
+     GameData.curPlayer.charImg:getWidth()/4,GameData.curPlayer.charImg:getHeight()/4)
+  playerSprite.tag=GameData.curPlayer.id
+  playerSprite.delegate=self
+  playerSprite.z=GameData.curPlayer.row
+  playerSprite.x,playerSprite.y=self:characherLocation(GameData.curPlayer)
+  self.spriteLayer:addChild(playerSprite)
   --Npc
   for k,npc in pairs(GameData.curNpcList) do
   	if npc.charImg then

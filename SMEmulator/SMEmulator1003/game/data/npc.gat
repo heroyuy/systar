@@ -7,7 +7,7 @@ charImg=nil,
 headImg=nil,
 },
 [1]={
-charImg=nil,
+charImg="/image/character/403-damage03.png",
 headImg=nil,
 },
 [113000029]={

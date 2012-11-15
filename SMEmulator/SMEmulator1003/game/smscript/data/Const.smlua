@@ -28,6 +28,13 @@ Const.NotifyCMD.Character={}
   --]]
   Const.NotifyCMD.Character.FACE_CHANGED="characterFaceChanged"    --角色面向改变
   
+--npc
+Const.NotifyCMD.Npc={}
+  --[[
+            与npc对话
+  --]]
+  Const.NotifyCMD.Npc.DIALOG="dialogWithNpc"
+
 --Net
 Const.NotifyCMD.Net={}
   --[[
