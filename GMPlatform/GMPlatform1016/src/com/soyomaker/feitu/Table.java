@@ -12,6 +12,8 @@ public class Table {
 
 	private static final int COLUMN_TYPE_INT = 4;
 
+	private static final int COLUMN_TYPE_TINYINT = -6;
+
 	private static final int COLUMN_TYPE_VARCHAR = 12;
 
 	private static final int COLUMN_TYPE_TEXT = -1;
@@ -80,7 +82,7 @@ public class Table {
 			for (int i = 0; i < valueNum; i++) {
 				String key = keys[i];
 				int type = columnTypeMap.get(key);
-				if (type == COLUMN_TYPE_INT) {
+				if (type == COLUMN_TYPE_INT || type == COLUMN_TYPE_TINYINT) {
 					ps.setInt(i + 1, Integer.parseInt(valueMap.get(key)));
 				} else if (type == COLUMN_TYPE_VARCHAR
 						|| type == COLUMN_TYPE_TEXT) {
