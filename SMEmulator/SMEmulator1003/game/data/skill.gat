@@ -14,7 +14,7 @@ targetAniId=-1,
 attackDistance=0,
 eventId=-1,
 datas={
-str=-12,
+stre=-12,
 sp=-100
 },
 buffs={}

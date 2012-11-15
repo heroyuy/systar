@@ -15,7 +15,7 @@ clsBasicInfo.labelLev=nil			--Lev
 clsBasicInfo.labelHp=nil			--HP
 clsBasicInfo.labelSp=nil			--SP
 
-clsBasicInfo.propertyList={"str","agi","int","dex","vit","luck",
+clsBasicInfo.propertyList={"str","agil","int","dex","vita","luck",
 							"atk","def","matk","mdef","hit","flee",
 							"aspd","mspd","cri","sta"}
 

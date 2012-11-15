@@ -42,10 +42,10 @@ clsCharacter.nextExp=0 --升到下一级需要的经验值
 clsCharacter.money=0 --金钱
 clsCharacter.equipList=nil  --装备列表[头盔	饰品	武器	盾牌	铠甲	战靴]
                    
-clsCharacter.str=0 		--力量(基本值，不考虑装备和Buff的)
-clsCharacter.agi=0 		--敏捷(基本值，不考虑装备和Buff的)
-clsCharacter.int=0		--智力(基本值，不考虑装备和Buff的)
-clsCharacter.vit=0 		--体力(基本值，不考虑装备和Buff的)
+clsCharacter.stre=0 		--力量(基本值，不考虑装备和Buff的)
+clsCharacter.agil=0 		--敏捷(基本值，不考虑装备和Buff的)
+clsCharacter.inte=0		--智力(基本值，不考虑装备和Buff的)
+clsCharacter.vita=0 		--体力(基本值，不考虑装备和Buff的)
 
 clsCharacter.locked=false					--角色是否被锁定（被锁定的角色属性不更新，不接收普通行走命令）
 clsCharacter.moveSequence=nil				--角色当前移动序列

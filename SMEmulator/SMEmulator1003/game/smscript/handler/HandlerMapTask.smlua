@@ -14,8 +14,8 @@ function HandlerMap.listTask:handleMessage(msg)
   GameData.curPlayer.taskList=clsList:new()
   for i=table.getn(msg.taskList),1,-1 do
   	if not msg.taskList[i].stepOver then
-  		local task=clsMission:new()
-  		task.index=msg.taskList[i].id
+  		local task=clsTask:new()
+  		task.id=msg.taskList[i].id
   		task.name=msg.taskList[i].name
   		task.desc=msg.taskList[i].intro
   		task.stepOver=msg.taskList[i].stepOver

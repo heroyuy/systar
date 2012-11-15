@@ -20,31 +20,11 @@ function HandlerMap.listPlayer:handleMessage(msg)
   smLog:info("获取角色列表")
   msg=HandlerMap:msgToLua(msg)
   GameData.playerList=clsList:new()
-  for i=table.getn(msg.playerList),1,-1 do
+  for k,playerData in pairs(msg.playerList) do
   	local player=clsPlayer:new()
-  	player.index=msg.playerList[i].playerId;
-    player.col=msg.playerList[i].x;
-    player.row=msg.playerList[i].y;
-    player.atk=msg.playerList[i].atk;
-    player.def=msg.playerList[i].def;
-    player.hit=msg.playerList[i].hit;
-    player.flee=msg.playerList[i].flee;
-    player.hp=msg.playerList[i].hp;
-    player.sp=msg.playerList[i].sp;
-    player.maxHP=msg.playerList[i].maxHP;
-    player.maxSP=msg.playerList[i].maxSP;
-    player.agi=msg.playerList[i].agil;
-    player.mapId=msg.playerList[i].mapId;
-    player.mapName=msg.playerList[i].mapName;
-    player.x=msg.playerList[i].x;
-    player.y=msg.playerList[i].y;
-    player.exp=msg.playerList[i].exp;
-    player.str=msg.playerList[i].stre;
-    player.level=msg.playerList[i].level;
-    player.name=msg.playerList[i].name;
-    player.money=msg.playerList[i].money;
-    player.int=msg.playerList[i].inte;
-    player.vit=msg.playerList[i].vita;
+  	playerData.id=playerData.playerId
+  	playerData.playerId=nil
+  	table.scopy(player,playerData)
     player.headImg=smImageFactory:loadImage("/image/face/姜维.png")
 	player.charImg=smImageFactory:loadImage("/image/character/player1.png")
 	player.actionImg=smImageFactory:loadImage("/image/character/player1_action.png")

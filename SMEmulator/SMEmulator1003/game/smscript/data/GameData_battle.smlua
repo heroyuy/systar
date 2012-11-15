@@ -42,10 +42,10 @@ function GameData.battle:initEnemyTroop()
       enemy.actionImg=smImageFactory:loadImage(enemy.actionImgName)
     end
     enemy.lev=enemyDict.lev
-    enemy.str=enemyDict.str
-    enemy.agi=enemyDict.agi
-    enemy.int=enemyDict.int
-    enemy.vit=enemyDict.vit
+    enemy.stre=enemyDict.stre
+    enemy.agil=enemyDict.agil
+    enemy.inte=enemyDict.inte
+    enemy.vita=enemyDict.vita
     enemy.dex=enemyDict.dex
     enemy.luck=enemyDict.luck
     enemy.exp=enemyDict.exp

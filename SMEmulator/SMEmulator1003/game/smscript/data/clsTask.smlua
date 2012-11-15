@@ -1,0 +1,28 @@
+--[[
+  description:任务类
+  author:cokey
+  date:2012/09/11
+--]]
+
+--结构定义
+clsTask = {}
+setmetatable(clsTask,clsModel)
+clsTask.__index = clsTask
+
+clsTask.NORMAL=0		--普通任务
+clsTask.MAIN_LINE=1	--主线任务
+clsTask.BOSS=2		--通缉令任务
+clsTask.DAILY=3		--日常任务
+
+clsTask.name=nil	--任务名称
+clsTask.desc=nil	--任务描述
+clsTask.type=0			--任务类型（普通，主线，Boss）
+clsTask.stepOver=false	--任务完成情况
+clsTask.step=0			--任务进行步骤
+
+--构造器
+function clsTask:new()
+	local self = clsModel:new()
+	setmetatable(self,clsTask)
+	return self
+end

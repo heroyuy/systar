@@ -129,13 +129,13 @@ function clsTaskPanel:refreshTaskInfo(task)
 	self.taskMenuPanelTaskNeed:refresh()
 	self.taskMenuPanelTaskReward.text="任务奖励<n>[1]"
 	self.taskMenuPanelTaskReward:refresh()
-	if task.type==clsMission.NORMAL then
+	if task.type==clsTask.NORMAL then
 		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/putong.png")
-	elseif task.type==clsMission.MAIN_LINE then
+	elseif task.type==clsTask.MAIN_LINE then
 		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/zhuxian.png")
-	elseif task.type==clsMission.BOSS then
+	elseif task.type==clsTask.BOSS then
 		self.taskMenuPanelTaskType.image=smImageFactory:loadImage("/image/skin/tongjiling.png")
-	elseif task.type==clsMission.DAILY then
+	elseif task.type==clsTask.DAILY then
 		self.taskMenuPanelTaskType.image=nil	--由于没有日常的图片，这里不显示
 	end
 	self.taskMenuPanelTaskInfo.text=task.desc
@@ -150,16 +150,16 @@ function clsTaskPanel:refreshListTask()
       		local label1 = nil
       		local taskType = GameData.curPlayer.taskList:get(index).type
       		local taskName = ""
-      		if taskType==clsMission.NORMAL then
+      		if taskType==clsTask.NORMAL then
       			taskName = GameData.curPlayer.taskList:get(index).name
       			label1=clsUILabel:new(w/2,h/2,w,h)
-      		elseif taskType==clsMission.MAIN_LINE then
+      		elseif taskType==clsTask.MAIN_LINE then
       			taskName = "【主】"..GameData.curPlayer.taskList:get(index).name
       			label1=clsUILabel:new(w/2-3,h/2,w,h)
-      		elseif taskType==clsMission.BOSS then
+      		elseif taskType==clsTask.BOSS then
       			taskName = "【令】"..GameData.curPlayer.taskList:get(index).name
       			label1=clsUILabel:new(w/2-3,h/2,w,h)
-      		elseif taskType==clsMission.DAILY then
+      		elseif taskType==clsTask.DAILY then
       			taskName = "【日】"..GameData.curPlayer.taskList:get(index).name
       			label1=clsUILabel:new(w/2-3,h/2,w,h)
       		end
@@ -230,7 +230,7 @@ function clsTaskPanel:buttonTapped(button)
   		self:setVisible(false)
     elseif index==self.TAG_TASK_GIVE_UP then
     	if GameData.curPlayer.taskList:size()>0 then
-    		smNet:giveUpTask(GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).index)
+    		smNet:giveUpTask(GameData.curPlayer.taskList:get(self.taskMenuPanelTaskTable.selectedIndex).id)
     	end
   	end
 end

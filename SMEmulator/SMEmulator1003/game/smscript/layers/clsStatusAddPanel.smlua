@@ -20,10 +20,10 @@ clsStatusAddPanel.addStrButton=nil			--增加力量按钮
 clsStatusAddPanel.addSpeedButton=nil		--增加速度按钮
 clsStatusAddPanel.addIntButton=nil			--增加智力按钮
 clsStatusAddPanel.addVitButton=nil			--增加体力按钮
-clsStatusAddPanel.strLabel=nil				
+clsStatusAddPanel.streLabel=nil				
 clsStatusAddPanel.speedLabel=nil			
-clsStatusAddPanel.intLabel=nil				
-clsStatusAddPanel.vitLabel=nil
+clsStatusAddPanel.inteLabel=nil				
+clsStatusAddPanel.vitaLabel=nil
 clsStatusAddPanel.atkLabel=nil				
 clsStatusAddPanel.defLabel=nil			
 clsStatusAddPanel.fleeLabel=nil				
@@ -52,33 +52,33 @@ function clsStatusAddPanel:new(x,y)
   self.statusAddMenuPanelCloseButton.highlightImage=smImageFactory:loadImage("/image/skin/tuichuxiaoanniu_down.png")
   self:addChild(self.statusAddMenuPanelCloseButton)
   
-  self.strLabel=clsUILabel:new(180,60,60,20)
-  self.strLabel.anchor={0.5,0}
-  self.strLabel.textSize=17
-  self.strLabel.textColor="0xffffffff"
-  self.strLabel.text=""..GameData.curPlayer.str
-  self:addChild(self.strLabel)
+  self.streLabel=clsUILabel:new(180,60,60,20)
+  self.streLabel.anchor={0.5,0}
+  self.streLabel.textSize=17
+  self.streLabel.textColor="0xffffffff"
+  self.streLabel.text=""..GameData.curPlayer.stre
+  self:addChild(self.streLabel)
   
   self.speedLabel=clsUILabel:new(180,90,60,20)
   self.speedLabel.anchor={0.5,0}
   self.speedLabel.textSize=17
   self.speedLabel.textColor="0xffffffff"
-  self.speedLabel.text=""..GameData.curPlayer.agi
+  self.speedLabel.text=""..GameData.curPlayer.agil
   self:addChild(self.speedLabel)
   
-  self.intLabel=clsUILabel:new(180,120,60,20)
-  self.intLabel.anchor={0.5,0}
-  self.intLabel.textSize=17
-  self.intLabel.textColor="0xffffffff"
-  self.intLabel.text=""..GameData.curPlayer.int
-  self:addChild(self.intLabel)
+  self.inteLabel=clsUILabel:new(180,120,60,20)
+  self.inteLabel.anchor={0.5,0}
+  self.inteLabel.textSize=17
+  self.inteLabel.textColor="0xffffffff"
+  self.inteLabel.text=""..GameData.curPlayer.inte
+  self:addChild(self.inteLabel)
   
-  self.vitLabel=clsUILabel:new(180,150,60,20)
-  self.vitLabel.anchor={0.5,0}
-  self.vitLabel.textSize=17
-  self.vitLabel.textColor="0xffffffff"
-  self.vitLabel.text=""..GameData.curPlayer.vit
-  self:addChild(self.vitLabel)
+  self.vitaLabel=clsUILabel:new(180,150,60,20)
+  self.vitaLabel.anchor={0.5,0}
+  self.vitaLabel.textSize=17
+  self.vitaLabel.textColor="0xffffffff"
+  self.vitaLabel.text=""..GameData.curPlayer.vita
+  self:addChild(self.vitaLabel)
   
   self.availablePointLabel=clsUILabel:new(self.width-18,self.height-12,60,20)
   self.availablePointLabel.anchor={1,1}

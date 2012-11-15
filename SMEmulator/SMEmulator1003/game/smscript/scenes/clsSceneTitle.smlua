@@ -408,7 +408,7 @@ function clsSceneTitle:buttonTapped(button)
     	self.listPlayerLayer:runAction(self.listPlayerDisappearAction)
   elseif button==self.joinGameButton then
   		if self.listPlayerTable.selectedIndex then
-  			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).index)
+  			smNet:choosePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).id)
   		end
   elseif button==self.loginCancleButton then
   		--退出游戏
@@ -436,7 +436,7 @@ function clsSceneTitle:buttonTapped(button)
 		GameLayer:showTaskCompleteDialog("完成任务","",task,delegate,"onSelected")
   elseif button==self.listPlayerDeleteButton then
   		if self.listPlayerTable.selectedIndex then
-  			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).index)
+  			smNet:deletePlayer(GameData.playerList:get(self.listPlayerTable.selectedIndex).id)
   		end
   end
 end
