@@ -36,8 +36,8 @@ function clsTaskApplyPanel:new(name,bustPath,task)
   local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsTaskApplyPanel)
   --背景
-  local bgLayer=clsUILayer:new(0,self.height,508,338)
-  bgLayer.anchor={0,1}
+  local bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,508,338)
+  bgLayer.anchor={0.5,0.5}
   bgLayer.image=smImageFactory:loadImage("/image/skin/re_misson_window.png")
   self:addChild(bgLayer)
   

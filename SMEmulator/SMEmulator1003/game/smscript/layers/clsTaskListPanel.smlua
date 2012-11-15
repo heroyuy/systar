@@ -30,8 +30,8 @@ function clsTaskListPanel:new(name,content,bustPath,optionItems)
   end
   local bgImage=smImageFactory:loadImage("/image/skin/misson_list_"..n.."_window.png")
   --背景
-  local bgLayer=clsUILayer:new(0,self.height,408,bgImage:getHeight())
-  bgLayer.anchor={0,1}
+  local bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,408,bgImage:getHeight())
+  bgLayer.anchor={0.5,0.5}
   bgLayer.image=bgImage
   self:addChild(bgLayer)
   --头像

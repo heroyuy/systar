@@ -32,8 +32,8 @@ function clsTaskCompletePanel:new(name,bustPath,task)
   local self=clsUILayer:new(screenWidth/2,screenHeight/2,screenWidth,screenHeight)
   setmetatable(self,clsTaskCompletePanel)
   --背景
-  local bgLayer=clsUILayer:new(0,self.height,248,288)
-  bgLayer.anchor={0,1}
+  local bgLayer=clsUILayer:new(screenWidth/2,screenHeight/2,248,288)
+  bgLayer.anchor={0.5,0.5}
   bgLayer.image=smImageFactory:loadImage("/image/skin/misson_pay_window.png")
   self:addChild(bgLayer)
   
