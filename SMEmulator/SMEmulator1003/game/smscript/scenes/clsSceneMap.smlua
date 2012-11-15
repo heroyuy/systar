@@ -133,7 +133,7 @@ function clsSceneMap:new()
   self.mapButton.normalImage=smImageFactory:loadImage("/image/skin/map_up.png")
   self.mapButton.highlightImage=smImageFactory:loadImage("/image/skin/map_down.png")
   self.mapButtonBackgroundLayer:addChild(self.mapButton)
-  
+
   self.mapNameLable=clsUILabel:new(72,14,90,20)
   self.mapNameLable.textSize=14
   self.mapNameLable.textColor="0xffffffff"

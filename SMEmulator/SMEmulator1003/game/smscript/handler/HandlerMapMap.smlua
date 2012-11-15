@@ -11,6 +11,7 @@ HandlerMap.loadMap={}
 function HandlerMap.loadMap:handleMessage(msg)
   smLog:info("加载地图")
   GameData.curMap=Dictionary:getMap(GameData.curPlayer.mapId)
+  GameData.curPlayer.mapName=GameData.curMap.name
   --加载地图后更新NPC列表
   GameData.curNpcList={}
   --(1)传送点
@@ -25,6 +26,9 @@ function HandlerMap.loadMap:handleMessage(msg)
     --传送点暂时默认使用同样的图片
     if npc.type==clsNpc.TYPE_MAPENTRY then
       npc.charImg="/image/character/198-Support06.png"
+    end
+    if not npc.charImg then
+      npc.charImg="/image/character/403-damage03.png";
     end
     if npc.charImg then
 	  npc.charImg=smImageFactory:loadImage(npc.charImg)
