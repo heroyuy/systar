@@ -42,3 +42,10 @@ function HandlerMap.nextStepTask:handleMessage(msg)
   smLog:info("下一步任务")
   Notifier:notify(Const.NotifyCMD.Net.NEXT_STEP_TASK,HandlerMap:msgToLua(msg))
 end
+
+--====================================================
+HandlerMap.finishTask={}
+
+function HandlerMap.finishTask:handleMessage(msg)
+  smLog:info("完成任务")
+end

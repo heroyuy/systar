@@ -48,11 +48,11 @@ function clsTaskCompletePanel:new(name,bustPath,task)
   
   self.taskCompletePanelTaskType=clsUILabel:new(66,90,80,20)
   self.taskCompletePanelTaskType.anchor={0.5,0.5}
-  if task.type == clsMission.MAIN_LINE then
+  if task.type == clsTask.MAIN_LINE then
     self.taskCompletePanelTaskType.text="类型：主线"
-  elseif task.type == clsMission.BOSS then
+  elseif task.type == clsTask.BOSS then
     self.taskCompletePanelTaskType.text="类型：通缉令"
-  elseif task.type == clsMission.DAILY then
+  elseif task.type == clsTask.DAILY then
     self.taskCompletePanelTaskType.text="类型：日常"
   else
     self.taskCompletePanelTaskType.text="类型：普通"

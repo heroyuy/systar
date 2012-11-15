@@ -34,6 +34,7 @@ MsgHandlerFactory["105001"]=HandlerMap.applyTask
 MsgHandlerFactory["105002"]=HandlerMap.giveUpTask
 MsgHandlerFactory["105003"]=HandlerMap.listTask
 MsgHandlerFactory["105004"]=HandlerMap.nextStepTask
+MsgHandlerFactory["105005"]=HandlerMap.finishTask
 MsgHandlerFactory["106001"]=HandlerMap.updateNpcState
 MsgHandlerFactory["106002"]=HandlerMap.dialogWithNpc
 
