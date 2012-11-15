@@ -223,7 +223,7 @@ end
 
 function clsSceneMap:doNextStep(task)
   if not task.stepOver then
-	--有该任务，但没完成的时候
+	--有该任务，但步骤没完成的时候
 	local delegate={}
 	function delegate:scriptEnd()
 	  smLog:info("下一步任务")
@@ -233,7 +233,7 @@ function clsSceneMap:doNextStep(task)
 	Notifier:addObserver(Const.NotifyCMD.System.SCRIPT_END,delegate,"scriptEnd")
 	Interpreter:runScript("/data/script/task/task"..task.id.."_"..(task.step+1)..".gat")
   else
-	--有该任务，已经完成的时候，显示完成任务对话框
+	--有该任务，步骤已经完成的时候，显示完成任务对话框
 	local delegate={}
 	function delegate:onSelected(OkOrCancle)
 	  --如果点击确定按钮，提交完成任务，此时需要检查任务的完成条件，条件不满足，弹出提示框提醒
@@ -315,6 +315,8 @@ function clsSceneMap:onStop()
   self:syncLocation()
   Notifier:removeObserver(Const.NotifyCMD.Character.MOVE,self)
   Notifier:removeObserver(Const.NotifyCMD.Character.FACE_CHANGED,self)
+  Notifier:removeObserver(Const.NotifyCMD.Npc.DIALOG,self)
+  Notifier:removeObserver(Const.NotifyCMD.Net.PLACE_NPC,self)
 end
 
 --布置npc

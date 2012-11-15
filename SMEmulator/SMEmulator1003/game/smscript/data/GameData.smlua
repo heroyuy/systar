@@ -86,6 +86,5 @@ function GameData:checkScript(npc)
   --锁定当前Npc
   npc.locked=true
   self.curLockedNpc=npc
-  smLog:info("运行脚本:"..scriptId)
   Interpreter:runScript("/data/script/script"..scriptId..".gat")
 end
